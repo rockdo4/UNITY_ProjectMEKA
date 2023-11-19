@@ -15,7 +15,7 @@ public static class SaveLoadSystem
         EncryptedBinary
     }
     public static Modes FileMode { get; } = Modes.Json;
-    public static int SaveDataVersion { get; } = 2; // 교체
+    public static int SaveDataVersion { get; } = 1; // 교체
     private static string[] SaveSlotFileNames =
     {
         "Save0.json",
@@ -63,7 +63,6 @@ public static class SaveLoadSystem
             var Serialize = new JsonSerializer();
             Serialize.Converters.Add(new Vector3Converter());
             Serialize.Converters.Add(new QuaternionConverter());
-            //Serialize.Converters.Add(new ReinforceDataDictionaryConverter());
             Serialize.Serialize(writer, data);
         }
     }
@@ -90,7 +89,6 @@ public static class SaveLoadSystem
             var serialize = new JsonSerializer();
             serialize.Converters.Add(new Vector3Converter());
             serialize.Converters.Add(new QuaternionConverter());
-            //serialize.Converters.Add(new ReinforceDataDictionaryConverter());
             switch (version) // 추가해줘야 함
             {
                 case 1:

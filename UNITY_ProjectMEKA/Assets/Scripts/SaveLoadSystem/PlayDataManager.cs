@@ -7,17 +7,13 @@ using SaveDataVC = SaveDataV1;
 public class PlayDataManager
 {
     public static SaveDataVC data;
-    private static int reinforceCount = 6;
 
     public static void Init()
     {
         data = SaveLoadSystem.Load("savefile.json") as SaveDataVC;
         if (data == null)
         {
-            data = new SaveDataVC();
-            FirstGameSet();
-            //data.isFirstGame = true;
-            SaveLoadSystem.Save(data, "savefile.json");
+            Reset();
         }
     }
 
@@ -29,11 +25,19 @@ public class PlayDataManager
     public static void Reset()
     {
         data = new SaveDataVC();
+        FirstGameSet();
         Save();
     }
 
     private static void FirstGameSet()
     {
-
+        data.IsFirstGame = true;
+        data.Money = 0;
+        data.BGMVolume = 0.5f;
+        data.SEVolume = 0.5f;
+        data.MasterVolume = 0.5f;
+        data.IsMasterVolumMute = false;
+        data.IsBGMVolumMute = false;
+        data.IsSEVolumMute = false;
     }
 }

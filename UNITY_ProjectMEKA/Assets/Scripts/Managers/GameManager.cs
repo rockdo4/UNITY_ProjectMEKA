@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject player { get; private set; }
 
-    public static GameManager instance = null;
+    public static GameManager instance { get; private set; }
 
     public bool IsGameover { get; private set; }
 
@@ -60,12 +60,6 @@ public class GameManager : MonoBehaviour
     // 게임 오버 처리
     public void EndGame()
     {
-        // 게임 오버 상태를 참으로 변경
-        IsGameover = true;
-        // 게임 오버 UI 활성화
-        Time.timeScale = 0f;
-        UIManager.instance.SetActiveGameoverUI(true);
-        SoundManager.instance.PlayUiWindowAudio();
     }
 
     public void Init()

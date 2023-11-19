@@ -10,22 +10,15 @@ using UnityEngine.UI;
 // ΩÃ±€≈Ê
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance;
+    public static UIManager instance { get; private set; }
 
     private TextMeshProUGUI fps;
     public GameObject gameoverUI;
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void Update()

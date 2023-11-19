@@ -1,102 +1,117 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.Playables;
 
-public enum AudioType
+public enum bgmType
 {
-    SoundEffectSingle,
-    SoundEffectLoop,
-    BGM,
-    UI
+}
+
+public enum seType
+{
 }
 
 // 싱글톤
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance = null;
-    public AudioClip uiButton;
-    public AudioClip uiUpgrade;
-    public AudioClip uiWindow;
-    public AudioClip play;
-    public bool isUIWindow;
-    private static AudioSource[] audioSource;
+    public static SoundManager instance { get; private set; }
+
+    public AudioMixer audioMixer;
+    public List<AudioSource> bgmAudioSource;
+    public List<AudioSource> seAudioSource;
 
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-
-        audioSource = GetComponents<AudioSource>();
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
+        Init();
     }
 
-    public void PlaySingleAudio(AudioClip clip)
+    public void Init()
     {
-        audioSource[(int)AudioType.SoundEffectSingle].PlayOneShot(clip);
+        PlayDataManager.Init();
+
+        SetMasterVolume(PlayDataManager.data.MasterVolume);
+        SetBGMVolume(PlayDataManager.data.BGMVolume);
+        SetSEVolume(PlayDataManager.data.SEVolume);
+        OnOffMasterVolume(PlayDataManager.data.IsMasterVolumMute);
+        OnOffBGMVolume(PlayDataManager.data.IsBGMVolumMute);
+        OnOffSEVolume(PlayDataManager.data.IsSEVolumMute);
     }
 
-    public void PlayLoopAudio(AudioClip clip)
+    public void OnOffMasterVolume(bool value)
     {
-        audioSource[(int)AudioType.SoundEffectLoop].clip = clip;
-        audioSource[(int)AudioType.SoundEffectLoop].loop = true;
-        audioSource[(int)AudioType.SoundEffectLoop].Play();
+        if(value)
+        {
+            SetMasterVolume(PlayDataManager.data.MasterVolume);
+        }
+        else
+        {
+            SetMasterVolume(0.001f);
+        }
+        PlayDataManager.data.IsMasterVolumMute = value;
     }
 
-    public void StopLoopAudio()
+    public void OnOffBGMVolume(bool value)
     {
-        audioSource[(int)AudioType.SoundEffectLoop].Stop();
+        if (value)
+        {
+            SetBGMVolume(PlayDataManager.data.BGMVolume);
+        }
+        else
+        {
+            SetMasterVolume(0.001f);
+        }
+        PlayDataManager.data.IsBGMVolumMute = value;
     }
 
-    public void PlayBgm()
+    public void OnOffSEVolume(bool value)
     {
-        audioSource[(int)AudioType.BGM].clip = play;
-        audioSource[(int)AudioType.BGM].loop = true;
-        audioSource[(int)AudioType.BGM].Play();
+        if (value)
+        {
+            SetSEVolume(PlayDataManager.data.SEVolume);
+        }
+        else
+        {
+            SetSEVolume(0.001f);
+        }
+        PlayDataManager.data.IsSEVolumMute = value;
     }
 
-    public void PlayUiWindowAudio()
+    public void SetMasterVolume(float volume)
     {
-        audioSource[(int)AudioType.SoundEffectSingle].Pause();
-        audioSource[(int)AudioType.SoundEffectLoop].Pause();
-        audioSource[(int)AudioType.BGM].Pause();
-
-        audioSource[(int)AudioType.UI].clip = uiWindow;
-        audioSource[(int)AudioType.UI].loop = true;
-        audioSource[(int)AudioType.UI].Play();
+        audioMixer.SetFloat("master", Mathf.Log10(volume) * 40);
     }
 
-    public void CloseUiWindowAudio()
+    public void SetBGMVolume(float volume)
     {
-        audioSource[(int)AudioType.SoundEffectSingle].UnPause();
-        audioSource[(int)AudioType.SoundEffectLoop].UnPause();
-        audioSource[(int)AudioType.BGM].UnPause();
-
-        audioSource[(int)AudioType.UI].Stop();
+        audioMixer.SetFloat("bgm", Mathf.Log10(volume) * 40);
     }
 
-    public void PlayUIButtonAudio()
+    public void SetSEVolume(float volume)
     {
-        audioSource[(int)AudioType.SoundEffectSingle].PlayOneShot(uiButton);
+        audioMixer.SetFloat("se", Mathf.Log10(volume) * 40);
     }
 
-    public void PlayUIUpgradeAudio()
+    public void SaveVolumes() // 창 닫는 버튼 누를 때 호출해주기
     {
-        audioSource[(int)AudioType.SoundEffectSingle].PlayOneShot(uiUpgrade);
-    }
+        float value;
 
-    public void StopSoundEffect()
-    {
-        audioSource[(int)AudioType.SoundEffectSingle].Stop();
+        audioMixer.GetFloat("master",out value);
+        PlayDataManager.data.MasterVolume = value;
+
+        audioMixer.GetFloat("bgm", out value);
+        PlayDataManager.data.BGMVolume = value;
+
+        audioMixer.GetFloat("se", out value);
+        PlayDataManager.data.SEVolume = value;
+
+        PlayDataManager.Save();
     }
 }
