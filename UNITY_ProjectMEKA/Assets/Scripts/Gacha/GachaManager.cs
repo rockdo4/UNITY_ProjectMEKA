@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -5,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public struct GachaTestCharacter
+public class GachaTestCharacter
 {
     public int id;
     public string name;
@@ -16,6 +17,17 @@ public struct GachaTestCharacter
         this.name = name;
         this.weight = weight;
         id = 0;
+    }
+
+	public override int GetHashCode()
+	{
+		return name.GetHashCode() + name.GetHashCode();
+	}
+
+    public override bool Equals(object obj)
+    {
+        GachaTestCharacter o = obj as GachaTestCharacter;
+        return o != null && (o.name == this.name);
     }
 }
 
@@ -42,11 +54,6 @@ public class GachaManager : MonoBehaviour
         }
 
         count = new int[20];
-    }
-
-    private void Update()
-    {
-
     }
 
     public void Gacha1()
@@ -100,7 +107,7 @@ public class GachaManager : MonoBehaviour
 
         for(int i=0; i<count.Length; i++)
         {
-            stringBuilder.Append($"[{i} : {count[i]}] / ");
+            stringBuilder.Append($"[{i + 1} : {count[i]}] / ");
         }
 
         resultText.SetText(stringBuilder.ToString());
