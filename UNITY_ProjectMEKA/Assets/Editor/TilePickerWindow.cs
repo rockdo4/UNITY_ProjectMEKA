@@ -86,6 +86,7 @@ public class TilePickerWindow : EditorWindow
             selectTileIndex.y = Mathf.Clamp(selectTileIndex.y, 0, (int)counts.y - 1);
 
             TileMap.SelectedTileIndex = selectTileIndex.y * (int)counts.x + selectTileIndex.x;
+            //TileMap.selectedTileType = TileMap.sprites[]
 
             isRepaint = true;
         }

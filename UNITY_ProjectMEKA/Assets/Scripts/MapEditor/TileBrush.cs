@@ -5,7 +5,7 @@ using UnityEngine;
 public class TileBrush : MonoBehaviour
 {
     public Vector2 brushSize = Vector2.zero;
-    public SpriteRenderer spriteRenderer;
+    //public SpriteRenderer spriteRenderer;
     public Vector2Int gridIndex;
 
     private void OnDrawGizmos()
@@ -14,8 +14,8 @@ public class TileBrush : MonoBehaviour
         Gizmos.DrawCube(transform.position, brushSize);
     }
     
-    public void UpdateBrush(Sprite sprite)
-    {
-        spriteRenderer.sprite = sprite;
-    }
+    //public void UpdateBrush(Sprite sprite)
+    //{
+    //    spriteRenderer.sprite = sprite;
+    //}
 }
