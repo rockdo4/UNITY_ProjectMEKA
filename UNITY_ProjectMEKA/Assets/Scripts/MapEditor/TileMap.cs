@@ -35,7 +35,7 @@ public class TileMap : MonoBehaviour
     {
         var pos = transform.position;
         var center = new Vector2(pos.x + gridSize.x * 0.5f, pos.y - gridSize.y * 0.5f);
-        Gizmos.color = Color.white;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireCube(center, gridSize);
 
         Gizmos.color = Color.cyan;
