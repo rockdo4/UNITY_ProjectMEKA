@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 45506233}
   m_Layer: 0
   m_Name: playerpro (1)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,14 +159,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   property: 0
-  occupation: 3
-  maxHp: 10
+  occupation: 0
+  maxHp: 100
   amror: 0
   ID: 0
   cooldown: 0
-  range: 10
+  range: 1
   minDamage: 0
-  damage: 3
+  damage: 5
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
@@ -294,7 +294,7 @@ Transform:
   m_GameObject: {fileID: 45506232}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.62, y: 0.8407955, z: -6.49}
+  m_LocalPosition: {x: 5, y: 1, z: 1.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -500,13 +500,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   property: 0
   occupation: 0
-  maxHp: 10
+  maxHp: 50
   amror: 0
   ID: 0
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 3
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
@@ -697,15 +697,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a0656a1c812c841ae81882061b8b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property: 0
+  property: 1
   occupation: 0
-  maxHp: 10
+  maxHp: 50
   amror: 0
   ID: 0
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 3
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
@@ -896,15 +896,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a0656a1c812c841ae81882061b8b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property: 0
+  property: 2
   occupation: 0
-  maxHp: 10
+  maxHp: 50
   amror: 0
   ID: 0
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 3
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
@@ -1209,15 +1209,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a0656a1c812c841ae81882061b8b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property: 0
+  property: 1
   occupation: 0
-  maxHp: 10
+  maxHp: 50
   amror: 0
   ID: 0
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 3
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
@@ -1296,13 +1296,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   property: 0
   occupation: 0
-  maxHp: 10
+  maxHp: 50
   amror: 0
   ID: 0
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 3
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
@@ -1451,7 +1451,7 @@ GameObject:
   - component: {fileID: 595344889}
   m_Layer: 0
   m_Name: playerpro
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1782,11 +1782,11 @@ MonoBehaviour:
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 5
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
-  attackDelay: 0.5
+  attackDelay: 0.3
 --- !u!114 &911480839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1954,13 +1954,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   property: 0
   occupation: 0
-  maxHp: 10
+  maxHp: 50
   amror: 0
   ID: 0
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 3
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
@@ -2151,15 +2151,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a0656a1c812c841ae81882061b8b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property: 0
+  property: 1
   occupation: 0
-  maxHp: 10
+  maxHp: 50
   amror: 0
   ID: 0
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 3
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
@@ -2308,7 +2308,7 @@ GameObject:
   - component: {fileID: 1254117204}
   m_Layer: 0
   m_Name: playerpro (2)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2527,15 +2527,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a0656a1c812c841ae81882061b8b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property: 0
+  property: 2
   occupation: 0
-  maxHp: 10
+  maxHp: 50
   amror: 0
   ID: 0
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 3
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
@@ -2822,13 +2822,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   property: 0
   occupation: 0
-  maxHp: 10
+  maxHp: 50
   amror: 0
   ID: 0
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 3
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
@@ -3019,15 +3019,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a0656a1c812c841ae81882061b8b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property: 0
+  property: 2
   occupation: 0
-  maxHp: 10
+  maxHp: 50
   amror: 0
   ID: 0
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 3
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
@@ -3410,11 +3410,11 @@ MonoBehaviour:
   cooldown: 0
   range: 1
   minDamage: 1
-  damage: 1
+  damage: 5
   criticalChance: 0
   criticalMultiplier: 0
   Hp: 0
-  attackDelay: 0.5
+  attackDelay: 0.3
 --- !u!114 &2145303259
 MonoBehaviour:
   m_ObjectHideFlags: 0
