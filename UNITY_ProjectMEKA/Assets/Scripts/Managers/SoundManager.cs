@@ -4,14 +4,6 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Playables;
 
-public enum bgmType
-{
-}
-
-public enum seType
-{
-}
-
 // ΩÃ±€≈Ê
 public class SoundManager : MonoBehaviour
 {

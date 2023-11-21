@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4384122078698788938}
   - component: {fileID: 6419996941733692263}
   - component: {fileID: 3731376469268301466}
+  - component: {fileID: -8802157018840115586}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Enemy
@@ -167,6 +168,7 @@ MonoBehaviour:
   maxHp: 50
   amror: 0
   ID: 0
+  name: MonsterTest
   cooldown: 0
   range: 1
   minDamage: 1
@@ -197,5 +199,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fee8558a6fb1898438df23bef7bf7101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8802157018840115586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081454164716724637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea3ed2ceb5637048b4ee3a5b3166a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -64,12 +64,12 @@ public class EnemyController : MonoBehaviour
 
         switch (state.property)
         {
-            case CharacterState.Property.Prime:
-                return (enemy.state.property == CharacterState.Property.Edila) ? compatibility : -compatibility;
-            case CharacterState.Property.Edila:
-                return (enemy.state.property == CharacterState.Property.Grieve) ? compatibility : -compatibility;
-            case CharacterState.Property.Grieve:
-                return (enemy.state.property == CharacterState.Property.Prime) ? compatibility : -compatibility;
+            case Defines.Property.Prime:
+                return (enemy.state.property == Defines.Property.Edila) ? compatibility : -compatibility;
+            case Defines.Property.Edila:
+                return (enemy.state.property == Defines.Property.Grieve) ? compatibility : -compatibility;
+            case Defines.Property.Grieve:
+                return (enemy.state.property == Defines.Property.Prime) ? compatibility : -compatibility;
             default:
                 return 0;
         }
