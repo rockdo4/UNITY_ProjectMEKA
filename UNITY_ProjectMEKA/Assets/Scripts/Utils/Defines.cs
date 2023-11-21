@@ -21,7 +21,7 @@ public class Defines
     public enum EnemyType
     {
         None,
-        MonsterTest,
+        Monster,
         Enemy1,
         Enemy2,
         Enemy3,
