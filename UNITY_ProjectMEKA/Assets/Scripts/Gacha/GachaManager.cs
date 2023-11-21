@@ -1,4 +1,3 @@
-using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -11,24 +10,24 @@ public class GachaManager : MonoBehaviour
     public GameObject resultPanel;
     public Image imagePrefab;
     public TextMeshProUGUI resultText;
-    public int[] count;
 
     private GachaSystem<int> testPicker;
+    private TestCharacterTable characterTable;
 
     private void Awake()
     {
-		testPicker = new GachaSystem<int>();
+        testPicker = new GachaSystem<int>();
+		characterTable = DataTableMgr.GetTable<TestCharacterTable>();
 	}
 
     private void Start()
     {
-        var items = DataTableMgr.GetTable<TestCharacterTable>();
-		for (int i = 1; i <= 20; i++) 
+        var items = characterTable.GetOriginalTable();
+        
+        foreach(var item in items)
         {
-            //testPicker.Add(items[i].id, items[i].weight);
+            testPicker.Add(item.Key, item.Value.Weight);
         }
-
-        count = new int[20];
     }
 
     public void Gacha1()
@@ -40,20 +39,16 @@ public class GachaManager : MonoBehaviour
 			Destroy(it.gameObject);
         }
 
-		var item = testPicker.GetItem();
+		var itemID = testPicker.GetItem();
 
+        var item = characterTable.GetCharacterData(itemID);
 
+        Debug.Log($"이름 : {item.Name}, 가중치 : {item.Weight}");
 
-
-		//Debug.Log($"이름 : {item.name}, 가중치 : {item.weight}");
-
-  //      var itemImage = Instantiate(imagePrefab);
-  //      itemImage.transform.SetParent(resultPanel.transform);
-		//itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.name);
-  //      itemImage.color = Color.red * (30 - int.Parse(item.name)) / 30;
-		//count[int.Parse(item.name) - 1]++;
-		//SetText();
-	}
+        var itemImage = Instantiate(imagePrefab);
+        itemImage.transform.SetParent(resultPanel.transform);
+        itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.Name);
+    }
 
     public void Gacha10()
     {
@@ -64,31 +59,16 @@ public class GachaManager : MonoBehaviour
 			Destroy(it.gameObject);
 		}
 
-		var item = testPicker.GetItem(10);
+		var itemIDs = testPicker.GetItem(10);
 
-		//foreach (var it in item)
-		//{
-		//	Debug.Log($"이름 : {it.name}, 가중치 : {it.weight}");
-		//	var itemImage = Instantiate(imagePrefab);
-		//	itemImage.transform.SetParent(resultPanel.transform);
-  //          itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(it.name);
-		//	itemImage.color = Color.red * (30 - int.Parse(it.name)) / 30;
-
-  //          count[int.Parse(it.name) - 1]++;
-		//}
-
-        SetText();
-	}
-
-    public void SetText()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for(int i=0; i<count.Length; i++)
+        foreach (var itemID in itemIDs)
         {
-            stringBuilder.Append($"[{i + 1} : {count[i]}] / ");
-        }
+			var item = characterTable.GetCharacterData(itemID);
 
-        resultText.SetText(stringBuilder.ToString());
+			Debug.Log($"이름 : {item.Name}, 가중치 : {item.Weight}");
+            var itemImage = Instantiate(imagePrefab);
+            itemImage.transform.SetParent(resultPanel.transform);
+            itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.Name);
+        }
     }
 }

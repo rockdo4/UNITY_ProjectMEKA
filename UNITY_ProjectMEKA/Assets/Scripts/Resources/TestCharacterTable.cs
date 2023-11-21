@@ -9,11 +9,11 @@ using UnityEngine;
 
 public class TestCharacter
 {
-	public int _ID { get; set; }
-	public int _Level { get; set; }
-	public int _Rare { get; set; }
-	public string _Name { get; set; }
-	public int _Weight { get; set; }
+	public int ID { get; set; }
+	public int Level { get; set; }
+	public int Rare { get; set; }
+	public string Name { get; set; }
+	public int Weight { get; set; }
 }
 
 public class TestCharacterTable : DataTable
@@ -46,7 +46,7 @@ public class TestCharacterTable : DataTable
 			{
 				var temp = new TestCharacter();
 				temp = record;
-				testCharDict.Add(temp._ID, temp);
+				testCharDict.Add(temp.ID, temp);
 			}
 		}
 		catch (Exception ex)
@@ -56,7 +56,7 @@ public class TestCharacterTable : DataTable
 		}
 	}
 
-	public TestCharacter GetMonsterData(int ID)
+	public TestCharacter GetCharacterData(int ID)
 	{
 		var data = testCharDict[ID];
 		if (data == null)
@@ -64,5 +64,10 @@ public class TestCharacterTable : DataTable
 			return null;
 		}
 		return data;
+	}
+
+	public Dictionary<int, TestCharacter> GetOriginalTable()
+	{
+		return new Dictionary<int, TestCharacter>(testCharDict);
 	}
 }
