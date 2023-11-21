@@ -105,24 +105,5 @@ public class GateController : MonoBehaviour
             waveTimer = waveInfos[currentWave].waveInterval;
             currentWave++;
         }
-
-
-
-        //// 기존 코드
-        //foreach (var wave in waveInfos)
-        //{
-        //    foreach(var waveEnemyInfo in wave.enemySpawnInfos)
-        //    {
-        //        for(int i = 0; i < waveEnemyInfo.count; ++i)
-        //        {
-        //            var enemy = ObjectPoolManager.instance.GetGo(waveEnemyInfo.type.ToString());
-        //            enemy.transform.position = transform.position;
-        //            // enemy 웨이포인트 세팅
-
-        //            // interval 후 다음 몬스터 생성
-        //        }
-        //    }
-        //    // spawnInterval 후 다음 웨이브 몬스터 생성
-        //}
     }
 }
