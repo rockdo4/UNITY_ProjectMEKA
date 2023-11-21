@@ -48,10 +48,13 @@ public class EnemyController : MonoBehaviour
             return;
         }
         TakeDamage co = target.GetComponent<TakeDamage>();
-        co.OnAttack(state.damage+ Rockpaperscissors());
+        co.OnAttack(state.damage + Rockpaperscissors());
+        Debug.Log("EnemyAttack" + (state.damage + Rockpaperscissors()));
     }
     public float Rockpaperscissors()
     {
+        float compatibility = state.damage * 0.1f;
+
         PlayerController enemy = target.GetComponent<PlayerController>();
 
         if (state.property == enemy.state.property)
@@ -62,11 +65,11 @@ public class EnemyController : MonoBehaviour
         switch (state.property)
         {
             case CharacterState.Property.Prime:
-                return (enemy.state.property == CharacterState.Property.Edila) ? 1 : -1;
+                return (enemy.state.property == CharacterState.Property.Edila) ? compatibility : -compatibility;
             case CharacterState.Property.Edila:
-                return (enemy.state.property == CharacterState.Property.Grieve) ? 1 : -1;
+                return (enemy.state.property == CharacterState.Property.Grieve) ? compatibility : -compatibility;
             case CharacterState.Property.Grieve:
-                return (enemy.state.property == CharacterState.Property.Prime) ? 1 : -1;
+                return (enemy.state.property == CharacterState.Property.Prime) ? compatibility : -compatibility;
             default:
                 return 0;
         }

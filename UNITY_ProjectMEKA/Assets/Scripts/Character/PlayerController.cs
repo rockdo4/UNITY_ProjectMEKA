@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private PlayableStateManager stateManager = new PlayableStateManager();
     private List<PlayableBaseState> states = new List<PlayableBaseState>();
     public GameObject projectilePrefab;
+
     [HideInInspector]
     public CharacterState state;
     [HideInInspector]
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
         Idle,
         Die,
         Attack,
+        Healing,
     }
     private void Awake()
     {
@@ -42,7 +44,7 @@ public class PlayerController : MonoBehaviour
         {
             states.Add(new PlayableAttackState(this));
         }
-        
+        states.Add(new PlayableHealingState(this));
 
         SetState(CharacterStates.Idle);
     }
@@ -69,9 +71,12 @@ public class PlayerController : MonoBehaviour
         TakeDamage take = target.GetComponent<TakeDamage>();
 
         take.OnAttack(state.damage + Rockpaperscissors());
+        Debug.Log("PlayerAttack" + (state.damage + Rockpaperscissors()));
     }
     public float Rockpaperscissors()
     {
+        float compatibility = state.damage * 0.1f;
+
         EnemyController enemy = target.GetComponent<EnemyController>();
 
         if (state.property == enemy.state.property)
@@ -82,11 +87,11 @@ public class PlayerController : MonoBehaviour
         switch (state.property)
         {
             case CharacterState.Property.Prime:
-                return (enemy.state.property == CharacterState.Property.Edila) ? 1 :  -1;
+                return (enemy.state.property == CharacterState.Property.Edila) ? compatibility :  -compatibility;
             case CharacterState.Property.Edila:
-                return (enemy.state.property == CharacterState.Property.Grieve) ? 1 : -1;
+                return (enemy.state.property == CharacterState.Property.Grieve) ? compatibility : -compatibility;
             case CharacterState.Property.Grieve:
-                return (enemy.state.property == CharacterState.Property.Prime) ? 1 : -1;
+                return (enemy.state.property == CharacterState.Property.Prime) ? compatibility : -compatibility;
             default:
                 return 0;
         }
@@ -122,5 +127,19 @@ public class PlayerController : MonoBehaviour
         Bullet projectile = projectileObject.GetComponent<Bullet>();
         projectile.damage = state.damage;
         projectile.target = target.transform;
+    }
+
+    public void Healing()
+    {
+        if(target==null)
+        {
+            return;
+        }
+        TakeDamage heal = target.GetComponent<TakeDamage>();
+        if (heal != null) 
+        {
+            Debug.Log("HEALING!!!");
+            heal.OnAttack(-1f*state.damage);
+        }
     }
 }

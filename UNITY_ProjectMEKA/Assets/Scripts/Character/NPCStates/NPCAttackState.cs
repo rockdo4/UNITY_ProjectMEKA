@@ -11,7 +11,7 @@ public class NPCAttackState : NPCBaseState
 
     public override void Enter()
     {
-        Debug.Log("NPCATTACK!!");
+        
         timer = 0;
     }
 

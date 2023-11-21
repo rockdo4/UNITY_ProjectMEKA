@@ -11,7 +11,7 @@ public class PlayableAttackState : PlayableBaseState
 
     public override void Enter()
     {
-        Debug.Log("playerAttack");
+        
         timer = 0;
     }
 

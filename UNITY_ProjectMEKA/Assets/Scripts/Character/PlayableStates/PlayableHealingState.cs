@@ -1,24 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class PlayableProjectileAttackState : PlayableBaseState
+public class PlayableHealingState : PlayableBaseState
 {
-    private float timer;
-    public PlayableProjectileAttackState(PlayerController player) : base(player)
+    float timer;
+    public PlayableHealingState(PlayerController player) : base(player)
     {
     }
 
     public override void Enter()
     {
-        
+        timer = 0;
     }
 
     public override void Exit()
     {
-        timer = 0;
     }
 
     public override void Update()
@@ -27,11 +24,7 @@ public class PlayableProjectileAttackState : PlayableBaseState
         if(timer > playerCtrl.state.attackDelay)
         {
             timer = 0;
-            playerCtrl.Fire();
-            playerCtrl.SetState(PlayerController.CharacterStates.Idle);
-        }
-        if (playerCtrl.target == null)
-        {
+            playerCtrl.Healing();
             playerCtrl.SetState(PlayerController.CharacterStates.Idle);
         }
     }
