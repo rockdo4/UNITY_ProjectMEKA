@@ -2,21 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterDict : MonoBehaviour
+public class CharacterDict<T>
 {
-	public Dictionary<GachaTestCharacter, bool> charDict;
+	public Dictionary<int, T> charDict;
 
-	private void Awake()
+	public CharacterDict(int[] idArr, T[] arr)
 	{
-		charDict = new Dictionary<GachaTestCharacter, bool>();
-	}
+		charDict = new Dictionary<int, T>();
 
-	private void Start()
-	{
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < arr.Length; i++)
 		{
-			var item = new GachaTestCharacter(i.ToString(), i * 10);
-			charDict.Add(item, false);
+			charDict.Add(idArr[i], arr[i]);
 		}
 	}
 }

@@ -13,6 +13,9 @@ public static class DataTableMgr
 
         //var reinforceTable = new ReinforceTable();
         //tables.Add(typeof(ReinforceTable), reinforceTable);
+
+        var testCharTable = new TestCharacterTable();
+        tables.Add(typeof(TestCharacterTable) , testCharTable);
     }
 
     public static T GetTable<T>() where T : DataTable
