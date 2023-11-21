@@ -26,6 +26,8 @@ public class PlayableIdleState : PlayableBaseState
     public override void Update()
     {
         Collider[] colliders = Physics.OverlapSphere(playerCtrl.transform.position, playerCtrl.state.range);
+        
+
         if (playerCtrl.state.occupation == CharacterState.Occupation.Supporters)
         {
             foreach (Collider co in colliders)
@@ -73,4 +75,5 @@ public class PlayableIdleState : PlayableBaseState
         }
 
     }
+    
 }

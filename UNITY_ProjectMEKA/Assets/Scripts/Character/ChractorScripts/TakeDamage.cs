@@ -12,9 +12,17 @@ public class TakeDamage : MonoBehaviour, IAttackable
     }
     public void OnAttack(float damage)
     {
-        state.Hp -= damage;
+       
+        state.Hp -= damage - state.amror;
 
-
+    }
+   public void OnHealing(float healValue)
+    {
+        if (state.Hp > state.maxHp)
+        {
+            return;
+        }
+        state.Hp += healValue;
     }
 
 }
