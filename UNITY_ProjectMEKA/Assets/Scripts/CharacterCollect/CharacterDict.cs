@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterDict<T>
+public class CharacterDict
 {
-	public Dictionary<int, T> charDict;
+	public Dictionary<int, TestCharacter> charDict;
 
-	public CharacterDict(int[] idArr, T[] arr)
+	public CharacterDict(TestCharacterTable dict)
 	{
-		charDict = new Dictionary<int, T>();
+		charDict = new Dictionary<int, TestCharacter>();
 
-		for (int i = 0; i < arr.Length; i++)
+		var items = dict.GetOriginalTable();
+
+		foreach(var item in items)
 		{
-			charDict.Add(idArr[i], arr[i]);
+			charDict.Add(item.Key, item.Value);
 		}
 	}
 }
