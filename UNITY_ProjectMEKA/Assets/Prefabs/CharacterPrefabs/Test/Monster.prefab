@@ -34,8 +34,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 21.77, y: 1, z: 0.32}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1690930069034389339}
   m_Father: {fileID: 0}
@@ -147,10 +147,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38a402ef5031524cb76e3bec1e47542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  initPos: {x: 0, y: 0, z: 0}
+  waypointCount: 0
   state: {fileID: 0}
   wayPoint:
   - {fileID: 0}
   target: {fileID: 0}
+  CurrentGridPos: {x: 0, y: 0, z: 0}
 --- !u!114 &6419996941733692263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +196,7 @@ MonoBehaviour:
   occupation: 0
   maxHp: 50
   amror: 0
+  speed: 0
   cooldown: 0
   range: 1
   damage: 1.5

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7440457766656669075}
   - component: {fileID: 2347251130623418966}
   - component: {fileID: 7412421216694384119}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 4501781502827546939}
   - component: {fileID: 7066652227565697164}
   - component: {fileID: 7862840620650879851}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: MonsterTest
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -220,6 +220,7 @@ MonoBehaviour:
   wayPoint:
   - {fileID: 0}
   target: {fileID: 0}
+  CurrentGridPos: {x: 0, y: 0, z: 0}
 --- !u!114 &6271874953063695432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +240,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882442091640361615}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fee8558a6fb1898438df23bef7bf7101, type: 3}
   m_Name: 
@@ -264,7 +265,7 @@ MonoBehaviour:
   speed: 5
   cooldown: 0
   range: 1
-  damage: 1.5
+  damage: 2
   attackDelay: 0.5
   exp: 500
   level: 0
@@ -296,7 +297,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
@@ -312,7 +313,7 @@ GameObject:
   - component: {fileID: 5719851251315478695}
   - component: {fileID: 2913131804686937788}
   - component: {fileID: 7681671066565631102}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -412,7 +413,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5498109862683488934}
   - component: {fileID: 4133709914685506337}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: MonsterTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
