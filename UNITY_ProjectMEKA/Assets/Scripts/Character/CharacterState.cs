@@ -4,22 +4,11 @@ using UnityEngine;
 
 public class CharacterState : MonoBehaviour
 {
-    public enum Property
-    {
-        Prime,
-        Edila,
-        Grieve,
-    }
-    public enum Occupation
-    {
-        Guardian,
-        Striker,
-        Castor,
-        Hunter,
-        Supporters,
-    }
-    public Property property;
-    public Occupation occupation;
+
+    public Defines.Property property;
+    public Defines.Occupation occupation;
+    // 231121, 김민지, 적 스폰 시 필요해서 추가함
+    public Defines.EnemyType enemyType;
 
     public float maxHp;
     public float amror;

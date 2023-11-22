@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     {
         states.Add(new PlayableIdleState(this));
         states.Add(new PlayableDieState(this));
-        if(state.occupation == CharacterState.Occupation.Hunter || state.occupation == CharacterState.Occupation.Castor)
+        if(state.occupation == Defines.Occupation.Hunter || state.occupation == Defines.Occupation.Castor)
         {
             states.Add(new PlayableProjectileAttackState(this));
         }
@@ -86,12 +86,12 @@ public class PlayerController : MonoBehaviour
      
         switch (state.property)
         {
-            case CharacterState.Property.Prime:
-                return (enemy.state.property == CharacterState.Property.Edila) ? compatibility :  -compatibility;
-            case CharacterState.Property.Edila:
-                return (enemy.state.property == CharacterState.Property.Grieve) ? compatibility : -compatibility;
-            case CharacterState.Property.Grieve:
-                return (enemy.state.property == CharacterState.Property.Prime) ? compatibility : -compatibility;
+            case Defines.Property.Prime:
+                return (enemy.state.property == Defines.Property.Edila) ? compatibility :  -compatibility;
+            case Defines.Property.Edila:
+                return (enemy.state.property == Defines.Property.Grieve) ? compatibility : -compatibility;
+            case Defines.Property.Grieve:
+                return (enemy.state.property == Defines.Property.Prime) ? compatibility : -compatibility;
             default:
                 return 0;
         }
@@ -101,19 +101,19 @@ public class PlayerController : MonoBehaviour
     {
         switch (state.occupation)
         {
-            case CharacterState.Occupation.Guardian:
+            case Defines.Occupation.Guardian:
                 maxBlockCount = 4;
                 break;
-            case CharacterState.Occupation.Striker:
+            case Defines.Occupation.Striker:
                 maxBlockCount = 2;
                 break;
-            case CharacterState.Occupation.Castor:
+            case Defines.Occupation.Castor:
                 maxBlockCount = 0;
                 break;
-            case CharacterState.Occupation.Hunter:
+            case Defines.Occupation.Hunter:
                 maxBlockCount = 0;
                 break;
-            case CharacterState.Occupation.Supporters:
+            case Defines.Occupation.Supporters:
                 break;
             default:
                 break;

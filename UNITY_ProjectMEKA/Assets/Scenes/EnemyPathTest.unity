@@ -253,6 +253,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gateType: 3
+--- !u!1 &1028897420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1028897422}
+  - component: {fileID: 1028897421}
+  m_Layer: 0
+  m_Name: ObjectPoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1028897421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028897420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5b4bc54e2e04347b614608b7c2366d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: Monster
+    perfab: {fileID: 9081454164716724637, guid: f39209f114ac3eb4689d6e8cc2779d02, type: 3}
+    count: 10
+--- !u!4 &1028897422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028897420}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.8010516, y: 2.9923847, z: -2.1131806}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1376628901 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2006151241502915850, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
@@ -279,6 +327,54 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.data[0].waveInterval
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].count
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].interval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].interval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].enemyName
+      value: MonsterTest
+      objectReference: {fileID: 0}
+    - target: {fileID: 434058808263433684, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].enemyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2006151241502915850, guid: e95131e797bb4ec4fba1950695bf7d11, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -461,3 +557,4 @@ SceneRoots:
   - {fileID: 2020321416}
   - {fileID: 91142735}
   - {fileID: 1829126718}
+  - {fileID: 1028897422}
