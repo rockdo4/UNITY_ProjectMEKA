@@ -10,8 +10,8 @@ using UnityEngine;
 /*
 	public
 
-    - GetCharacterData(int) : Dictionary<int, TestCharacter> 에서 int 키 값 찾아서 리턴
-    - GetOriginalTable() : Dictionary<int, TestCharacter> 복사 생성해서 리턴
+    - TestCharacterInfo GetCharacterData(int) : Dictionary<int, TestCharacterInfo> 에서 int 키 값 찾아서 리턴
+    - Dictionary<int, TestCharacterInfo> GetOriginalTable() : Dictionary<int, TestCharacterInfo> 복사 생성해서 리턴
 */
 
 public class TestCharacterTable : DataTable

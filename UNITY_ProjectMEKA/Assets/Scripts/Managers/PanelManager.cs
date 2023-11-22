@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+	public
+
+	- void ChangePanelMain() : 메인화면으로 돌아가기 ex) ESC 버튼 눌러서 돌아가기
+	- void ChangePanelCharacterWindow() : 캐릭터 창으로 가기
+	- void ChangePanelGacha() : 가챠 창으로 가기
+
+*/
+
+
 public class PanelManager : MonoBehaviour
 {
 	public RectTransform mainPanel;

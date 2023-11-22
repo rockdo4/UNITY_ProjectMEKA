@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/*
+	public
+
+
+*/
+
 public class CharacterManager : MonoBehaviour
 {
     public TestCharacterTable dict;

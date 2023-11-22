@@ -10,14 +10,13 @@ using UnityEngine;
     - void Remove(T) : 아이템을 목록에서 제거.
 
     - T GetItem() : 랜덤으로 아이템 하나 Return.
+	- ReadOnlyDictionary<T, double> GetNormalizedItemDictReadonly()
+		: 가중치가 정규화된 딕셔너리 읽기전용 0 ~ 1
 
 	private
 
-    - WeightNormalize() : 가중치 정규화.
-	- CalculateSum() : 가중치 합 계산.
-
-    - ReadOnlyDictionary<T, double> GetNormalizedItemDictReadonly()
-		: 가중치가 정규화된 딕셔너리 읽기전용 0 ~ 1
+    - void WeightNormalize() : 가중치 정규화.
+	- void CalculateSum() : 가중치 합 계산.
 */
 
 
