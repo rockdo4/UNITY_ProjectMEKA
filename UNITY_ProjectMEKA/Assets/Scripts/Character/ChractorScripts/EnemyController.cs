@@ -9,9 +9,15 @@ public class EnemyController : MonoBehaviour
 { 
     private StateManager stateManager = new StateManager();
     private List<NPCBaseState> states = new List<NPCBaseState>();
+
+    // 11.22, 김민지, 이동방식 변경으로 인해 추가
+    [HideInInspector]
+    public Rigidbody rb;
+
     public CharacterState state;
     public Transform[] wayPoint;
     public GameObject target;
+
     public enum NPCStates
     {
         Idle,
@@ -22,6 +28,7 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         state = GetComponent<CharacterState>();
+        rb = GetComponent<Rigidbody>();
     }
     void Start()
     {
@@ -31,6 +38,12 @@ public class EnemyController : MonoBehaviour
         
         SetState(NPCStates.Move);
     }
+
+    private void FixedUpdate()
+    {
+        stateManager.FixedUpdate();
+    }
+
     private void Update()
     {
         stateManager.Update();

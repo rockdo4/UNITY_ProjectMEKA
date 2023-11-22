@@ -19,6 +19,10 @@ public class NPCAttackState : NPCBaseState
     {
     }
 
+    public override void FixedUpdate()
+    {
+    }
+
     public override void Update()
     {
         timer += Time.deltaTime;

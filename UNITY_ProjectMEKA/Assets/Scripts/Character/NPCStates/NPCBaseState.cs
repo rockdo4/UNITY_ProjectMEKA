@@ -13,6 +13,10 @@ public abstract class NPCBaseState
     protected Transform[] wayPoint;
 
     abstract public void Enter();
+
+    // 11.22, ±ËπŒ¡ˆ, ¿ÃµøΩ√ « ø‰
+    abstract public void FixedUpdate();
+
     abstract public void Update();
     abstract public void Exit();
 

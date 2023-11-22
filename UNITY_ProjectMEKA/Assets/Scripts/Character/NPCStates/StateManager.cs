@@ -15,6 +15,15 @@ public class StateManager
         currentNPCBase.Enter();
     }
 
+    // 11.22, 김민지, 이동구현시 필요
+    public void FixedUpdate()
+    {
+        if (currentNPCBase != null)
+        {
+            currentNPCBase.FixedUpdate();
+        }
+    }
+
     public void Update()
     {
         if (currentNPCBase != null)

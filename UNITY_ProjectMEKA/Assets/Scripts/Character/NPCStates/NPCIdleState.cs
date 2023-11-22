@@ -18,6 +18,10 @@ public class NPCIdleState : NPCBaseState
     {
     }
 
+    public override void FixedUpdate()
+    {
+    }
+
     public override void Update()
     {
     }

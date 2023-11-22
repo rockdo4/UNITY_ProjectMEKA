@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -50,12 +51,12 @@ public class GateController : MonoBehaviour
             if(waypointParent.gateType == gateType)
             {
                 var waypointChildCount = waypointParent.transform.childCount;
+                waypoints = new Transform[waypointChildCount];
                 for (int i = 0; i< waypointChildCount; ++i)
                 {
-                    waypoints = new Transform[waypointChildCount];
-                    waypoints[i] = waypointParent.transform.GetChild(i);
+                    waypoints[i] = waypointParent.transform.GetChild(i).transform;
                 }
-                break;
+                return;
             }
         }
     }
@@ -86,7 +87,7 @@ public class GateController : MonoBehaviour
     private void SpawnEnemies()
     {
         var enemyInfo = waveInfos[currentWave].enemySpawnInfos[currentEnemyType];
-        var enemyName = enemyInfo.prefab.GetComponent<CharacterState>().enemyType.ToString();
+        var enemyName = enemyInfo.prefab.transform.GetChild(0).GetComponent<CharacterState>().enemyType.ToString();
         if(!once)
         {
             var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
@@ -121,8 +122,9 @@ public class GateController : MonoBehaviour
     private void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo)
     {
         enemyGo.transform.position = transform.position;
-        enemyGo.GetComponent<EnemyController>().wayPoint = waypoints;
-        enemyGo.GetComponent<CharacterState>().property = spawnInfo.attribute;
-        enemyGo.GetComponent<CharacterState>().level = spawnInfo.level;
+        var enemyWaypoint = enemyGo.transform.GetChild(0).GetComponent<EnemyController>().wayPoint = new Transform[waypoints.Length];
+        Array.Copy(waypoints, enemyWaypoint, waypoints.Length);
+        enemyGo.transform.GetChild(0).GetComponent<CharacterState>().property = spawnInfo.attribute;
+        enemyGo.transform.GetChild(0).GetComponent<CharacterState>().level = spawnInfo.level;
     }
 }
