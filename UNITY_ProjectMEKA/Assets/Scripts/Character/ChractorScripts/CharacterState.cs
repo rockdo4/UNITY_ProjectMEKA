@@ -19,6 +19,10 @@ public class CharacterState : MonoBehaviour
     [SerializeField, Header("방어력 설정")]
     public float amror;
 
+    // 11.22, 김민지, 적 이동시 필요
+    [SerializeField, Header("이동속력 설정")]
+    public float speed;
+
     [SerializeField, Header("스킬 쿨타입 설정")]
     public float cooldown;
 

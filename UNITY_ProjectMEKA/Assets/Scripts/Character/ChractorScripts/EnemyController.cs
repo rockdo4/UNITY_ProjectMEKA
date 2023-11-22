@@ -6,12 +6,22 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
-{
+{ 
     private StateManager stateManager = new StateManager();
     private List<NPCBaseState> states = new List<NPCBaseState>();
+
+    // 11.22, 김민지, 이동방식 변경으로 인해 추가
+    [HideInInspector]
+    public Rigidbody rb;
+    [HideInInspector]
+    public Vector3 initPos;
+    [HideInInspector]
+    public int waypointCount = 0;
+
     public CharacterState state;
     public Transform[] wayPoint;
     public GameObject target;
+
     public enum NPCStates
     {
         Idle,
@@ -19,18 +29,32 @@ public class EnemyController : MonoBehaviour
         Attack,
 
     }
+    private void OnEnable()
+    {
+        // 11.22, 김민지, enemy 재활용 시 move상태 enter 함수 호출용도
+        if (states.Count != 0)
+        {
+            SetState(NPCStates.Move);
+        }
+    }
     private void Awake()
     {
         state = GetComponent<CharacterState>();
+        rb = GetComponent<Rigidbody>();
     }
     void Start()
     {
         states.Add(new NPCIdleState(this));
         states.Add(new NPCDestinationStates(this));
         states.Add(new NPCAttackState(this));
-        
         SetState(NPCStates.Move);
     }
+
+    private void FixedUpdate()
+    {
+        stateManager.FixedUpdate();
+    }
+
     private void Update()
     {
         stateManager.Update();

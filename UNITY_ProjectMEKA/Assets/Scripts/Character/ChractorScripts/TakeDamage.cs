@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TakeDamage : MonoBehaviour, IAttackable
-{
+{ 
     private CharacterState state;
 
     private void Awake()

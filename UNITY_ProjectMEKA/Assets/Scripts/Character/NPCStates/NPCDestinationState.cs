@@ -1,39 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class NPCDestinationStates : NPCBaseState
 {
-    private float timer;
-    private float timerange;
-    
+    // 11.22, ±è¹ÎÁö, ÇÊ¿ä ¾øÀ» °Í °°¾Æ¼­ »èÁ¦
+    //private float timer;
+    //private float timerange;
+
+    // 11.22, ±è¹ÎÁö, ÀÌµ¿½Ã ÇÊ¿ä
+    private Vector3 targetPos;
+    private float threshold = 0.1f;
+
     public NPCDestinationStates(EnemyController enemy) : base(enemy)
     {
     }
 
     public override void Enter()
     {
-        timerange = 1;
-        agent.isStopped = false;
+        // 11.22, ±è¹ÎÁö, ÀÌµ¿ ±â´É º¯°æ
+        targetPos = wayPoint[enemyCtrl.waypointCount].position;
     }
 
     public override void Exit()
     {
-        agent.isStopped = true;
+        // 11.22, ±è¹ÎÁö, ÀÌµ¿ ±â´É º¯°æ
+        //agent.isStopped = true;
     }
 
-    public override void Update()
+    public override void FixedUpdate()
     {
-        timer += Time.deltaTime;
-        if (timer > timerange)
-        {
-            timer = 0;
-            agent.SetDestination(wayPoint[0].position);
-            if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
-            {
-                enemyCtrl.SetState(EnemyController.NPCStates.Idle);
-            }
-        }
+        MoveEnemy();
 
         Collider[] colliders = Physics.OverlapSphere(enemyCtrl.transform.position, enemyCtrl.state.range);
 
@@ -42,14 +41,43 @@ public class NPCDestinationStates : NPCBaseState
             if (co.CompareTag("Player"))
             {
                 enemyCtrl.target = co.gameObject;
-                PlayerController pl = co.GetComponent<PlayerController>();  
-                if(pl.blockCount < pl.maxBlockCount)
+                PlayerController pl = co.GetComponent<PlayerController>();
+                if (pl.blockCount < pl.maxBlockCount)
                 {
                     enemyCtrl.SetState(EnemyController.NPCStates.Attack);
                 }
 
                 break;
             }
+        }
+    }
+
+    public override void Update()
+    {
+
+    }
+
+    public void MoveEnemy()
+    {
+        targetPos.y = enemyCtrl.transform.position.y;
+        enemyCtrl.transform.LookAt(targetPos);
+        var speed = enemyCtrl.gameObject.GetComponent<CharacterState>().speed;
+        var pos = enemyCtrl.rb.position;
+        pos += enemyCtrl.transform.forward * speed * Time.deltaTime;
+        enemyCtrl.rb.MovePosition(pos);
+
+        if (Vector3.Distance(pos, targetPos) < threshold)
+        {
+            enemyCtrl.waypointCount++;
+
+            if (enemyCtrl.waypointCount >= wayPoint.Length)
+            {
+                enemyCtrl.waypointCount = 0;
+                enemyCtrl.transform.position = enemyCtrl.initPos;
+                enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
+                return;
+            }
+            targetPos = wayPoint[enemyCtrl.waypointCount].position;
         }
     }
 }
