@@ -21,14 +21,15 @@ public class PlayableAttackState : PlayableBaseState
 
     public override void Update()
     {
-        //적이 범위안에 없으면 다시 idle상태로
+        
+        
         timer += Time.deltaTime;
         if (timer > playerCtrl.state.attackDelay)
         {
             timer = 0;
             playerCtrl.Hit();//test
         }
-        if(playerCtrl.target == null)
+        if(playerCtrl.target == null)//현재 때리고 있는 적이 죽으면 상태 변경
         {
             playerCtrl.SetState(PlayerController.CharacterStates.Idle);
         }

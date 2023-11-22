@@ -18,11 +18,11 @@ public class TakeDamage : MonoBehaviour, IAttackable
     }
    public void OnHealing(float healValue)
     {
-        if (state.Hp > state.maxHp)
-        {
-            return;
-        }
         state.Hp += healValue;
+        if (state.Hp >= state.maxHp)
+        {
+            state.Hp = state.maxHp;
+        }
     }
 
 }

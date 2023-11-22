@@ -23,7 +23,9 @@ public abstract class NPCBaseState
     public NPCBaseState(EnemyController enemy)
     {
         this.enemyCtrl = enemy;
+
         // 11.22, ±ËπŒ¡ˆ, ¿Ãµø ±‚¥… ∫Ø∞Ê
+
         //agent = enemyCtrl.GetComponent<NavMeshAgent>();
 
         wayPoint = enemyCtrl.wayPoint;

@@ -8,10 +8,13 @@ public class Bullet : MonoBehaviour
     public Transform target;
     public float damage;
     private Vector3 pos;
+    private bool isHit = false;
+   
     void Update()
     {
         if (target != null)
         {
+            transform.LookAt(target.position);
             Vector3 direction = target.position - transform.position;
             pos = direction;
             transform.position += direction.normalized * speed * Time.deltaTime;
@@ -19,9 +22,14 @@ public class Bullet : MonoBehaviour
             if (Vector3.Distance(transform.position, target.position) < 0.5f)
             {
                 
-                TakeDamage dd = target.GetComponent<TakeDamage>();
-                dd.OnAttack(damage);
-                HitTarget();
+                IAttackable dd = target.GetComponent<IAttackable>();
+                if (!isHit)
+                {
+                    isHit = true;
+                    dd.OnAttack(damage);
+                }
+                
+                //HitTarget();
             }
         }
         if(target == null)

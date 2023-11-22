@@ -6,50 +6,69 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class NPCDestinationStates : NPCBaseState
 {
-    // 11.22, 김민지, 필요 없을 것 같아서 삭제
-    //private float timer;
-    //private float timerange;
 
-    // 11.22, 김민지, 이동시 필요
     private Vector3 targetPos;
     private float threshold = 0.1f;
 
+    private float timer;
+    private float timerange;
+    GameObject[] players;
     public NPCDestinationStates(EnemyController enemy) : base(enemy)
     {
     }
 
     public override void Enter()
     {
-        // 11.22, 김민지, 이동 기능 변경
         targetPos = wayPoint[enemyCtrl.waypointCount].position;
+
+
     }
 
     public override void Exit()
     {
-        // 11.22, 김민지, 이동 기능 변경
-        //agent.isStopped = true;
     }
 
     public override void FixedUpdate()
     {
         MoveEnemy();
+        
+        CheckEnemy();
+    }
+    void CheckEnemy()
+    {
+        players = GameObject.FindGameObjectsWithTag("Player");
 
-        Collider[] colliders = Physics.OverlapSphere(enemyCtrl.transform.position, enemyCtrl.state.range);
+        Vector3Int playerGridPos = enemyCtrl.CurrentGridPos;
 
-        foreach (Collider co in colliders)
+        // 사정거리 내의 타일을 확인
+        int tileRange = Mathf.FloorToInt(enemyCtrl.state.range); // 타일 사정거리
+        for (int i = 1; i <= tileRange; i++)
         {
-            if (co.CompareTag("Player"))
+            Vector3Int forwardGridPos = playerGridPos + Vector3Int.RoundToInt(enemyCtrl.transform.forward) * i;
+
+            foreach (GameObject pl in players)
             {
                 enemyCtrl.target = co.gameObject;
                 PlayerController pl = co.GetComponent<PlayerController>();
-                if (pl.blockCount < pl.maxBlockCount)
-                {
-                    enemyCtrl.SetState(EnemyController.NPCStates.Attack);
-                }
+                PlayerController player = pl.GetComponent<PlayerController>();
 
-                break;
+                if (player != null&& pl.blockCount < pl.maxBlockCount)
+                {
+                    Vector3Int enemyGridPos = player.CurrentGridPos;
+
+                    if (enemyGridPos == forwardGridPos)
+                    {
+                        enemyCtrl.target = pl;
+                        if (player.blockCount < player.maxBlockCount)
+                        {
+                            enemyCtrl.SetState(EnemyController.NPCStates.Attack);
+                        }
+                        return; 
+                    }
+                }
             }
         }
+        
     }
 
     public override void Update()

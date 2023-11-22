@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 using System.Linq;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayableIdleState : PlayableBaseState
 {
 
     //Dictionary<float, GameObject> players;
     List<KeyValuePair<float, GameObject>> players;
+    GameObject[] enemys;
+    GameObject[] playerses;
+
     public PlayableIdleState(PlayerController player) : base(player)
     {
     }
 
     public override void Enter()
     {
-        players = new List<KeyValuePair<float, GameObject>>();
+        
     }
 
     public override void Exit()
@@ -25,53 +29,93 @@ public class PlayableIdleState : PlayableBaseState
 
     public override void Update()
     {
-        Collider[] colliders = Physics.OverlapSphere(playerCtrl.transform.position, playerCtrl.state.range);
-        if (playerCtrl.state.occupation == Defines.Occupation.Supporters)
+        players = new List<KeyValuePair<float, GameObject>>();
+        SetPlayers();
+        switch (playerCtrl.state.occupation)
         {
-            foreach (Collider co in colliders)
-            {
-                if (co.CompareTag("Player"))
-                {
-                    PlayerController pc = co.gameObject.GetComponent<PlayerController>();
-                    float healthRatio = pc.state.Hp / pc.state.maxHp;
-                    players.Add(new KeyValuePair<float, GameObject>(healthRatio, co.gameObject));
-                }
-            }
-
-            if (players.Count == 0)
-            {
-                return;
-            }
-
-            players.Sort((pair1, pair2) => pair1.Key.CompareTo(pair2.Key));
-            if(players[0].Key >= 1f)
-            {
-                return;
-            }
-            GameObject go = players[0].Value;
-
-            if (go == null)
-            {
-                return;
-            }
-
-            playerCtrl.target = go;
-            playerCtrl.SetState(PlayerController.CharacterStates.Healing);
+            case Defines.Occupation.Supporters:
+                CheckHealing();
+                break;
+            default:
+                CheckEnemy();
+                break;
 
         }
-        else
+    }
+    void CheckEnemy()
+    {
+        enemys = GameObject.FindGameObjectsWithTag("Enemy");
+
+        Vector3Int playerGridPos = playerCtrl.CurrentGridPos;
+
+        int tileRange = Mathf.FloorToInt(playerCtrl.state.range); // 타일 사정거리
+        for (int i = 1; i <= tileRange; i++)
         {
-            foreach (Collider co in colliders)
+            Vector3Int forwardGridPos = playerGridPos + Vector3Int.RoundToInt(playerCtrl.transform.forward) * i;
+
+            foreach (GameObject en in enemys)
             {
-                if (co.CompareTag("Enemy"))
+                EnemyController enemy = en.GetComponent<EnemyController>();
+                if (enemy != null)
                 {
-                    playerCtrl.target = co.gameObject;
-                    playerCtrl.SetState(PlayerController.CharacterStates.Attack);
-                    break;
+                    Vector3Int enemyGridPos = enemy.CurrentGridPos;
+
+                    if (enemyGridPos == forwardGridPos)
+                    {
+                        playerCtrl.target = en;
+                        playerCtrl.SetState(PlayerController.CharacterStates.Attack);
+                        return; 
+                    }
                 }
             }
+        }
+        
+    }
+    void SetPlayers()
+    {
+        playerses = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject co in playerses)
+        {
+           
+            PlayerController pc = co.GetComponent<PlayerController>();
+            float healthRatio = pc.state.Hp / pc.state.maxHp;
+            players.Add(new KeyValuePair<float, GameObject>(healthRatio, co.gameObject));
+            
         }
 
     }
-    
+    void CheckHealing()
+    {
+        Vector3Int playerGridPos = playerCtrl.CurrentGridPos;
+        float minHealthRatio = float.MaxValue;
+        GameObject targetPlayer = null;
+
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int z = -1; z <= 1; z++)
+            {
+                Vector3Int checkPos = new Vector3Int(playerGridPos.x + x, playerGridPos.y, playerGridPos.z + z);
+
+                foreach (var player in players)
+                {
+                    PlayerController pc = player.Value.GetComponent<PlayerController>();
+                    if (pc != null && pc.CurrentGridPos == checkPos)
+                    {
+                        float healthRatio = pc.state.Hp / pc.state.maxHp;
+                        if (healthRatio < minHealthRatio)
+                        {
+                            minHealthRatio = healthRatio;
+                            targetPlayer = player.Value;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (targetPlayer != null && minHealthRatio < 1f)
+        {
+            playerCtrl.target = targetPlayer;
+            playerCtrl.SetState(PlayerController.CharacterStates.Healing);
+        }
+    }
 }
