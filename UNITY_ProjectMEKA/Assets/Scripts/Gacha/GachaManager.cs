@@ -42,31 +42,21 @@ public class GachaManager : MonoBehaviour
 
     public void Gacha1()
     {
-        var arr = resultPanel.GetComponentsInChildren<Image>();
-        foreach(var it in arr)
-        {
-			if (it.gameObject == resultPanel) continue;
-			Destroy(it.gameObject);
-        }
+        ClearPanel();
 
 		var itemID = testPicker.GetItem();
 
         var item = characterTable.GetCharacterData(itemID);
         characterManager.PickUpCharacter(itemID);
 
-		var itemImage = Instantiate(imagePrefab);
-        itemImage.transform.SetParent(resultPanel.transform);
+        var itemImage = ObjectPoolManager.instance.GetGo("GachaCard");
+		itemImage.transform.SetParent(resultPanel.transform);
         itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.Name);
     }
 
     public void Gacha10()
     {
-		var arr = resultPanel.GetComponentsInChildren<Image>();
-		foreach (var it in arr)
-		{
-            if (it.gameObject == resultPanel) continue;
-			Destroy(it.gameObject);
-		}
+        ClearPanel();
 
 		var itemIDs = testPicker.GetItem(10);
 
@@ -75,9 +65,19 @@ public class GachaManager : MonoBehaviour
 			var item = characterTable.GetCharacterData(itemID);
 			characterManager.PickUpCharacter(itemID);
 
-			var itemImage = Instantiate(imagePrefab);
-            itemImage.transform.SetParent(resultPanel.transform);
+			var itemImage = ObjectPoolManager.instance.GetGo("GachaCard");
+			itemImage.transform.SetParent(resultPanel.transform);
             itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.Name);
         }
     }
+
+    public void ClearPanel()
+    {
+		var arr = resultPanel.GetComponentsInChildren<Image>();
+		foreach (var it in arr)
+		{
+			if (it.gameObject == resultPanel) continue;
+			it.gameObject.GetComponent<PoolAble>().ReleaseObject();
+		}
+	}
 }
