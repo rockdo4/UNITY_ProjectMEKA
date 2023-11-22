@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
             if (Vector3.Distance(transform.position, target.position) < 0.5f)
             {
                 
-                TakeDamage dd = target.GetComponent<TakeDamage>();
+                IAttackable dd = target.GetComponent<IAttackable>();
                 if (!isHit)
                 {
                     isHit = true;

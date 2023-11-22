@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        TakeDamage take = target.GetComponent<TakeDamage>();
+        IAttackable take = target.GetComponent<IAttackable>();
 
         take.OnAttack(state.damage + Rockpaperscissors());
         
@@ -130,16 +130,47 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+    //var obj = ObjectPoolManager.instance.GetGo("bullet");
 
+    //obj.GetComponent<PoolAble>().ReleaseObject();지우는것
     public void Fire()
     {
-        //transform.LookAt(target.transform.position);
+        //GameObject projectileObject = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        //projectileObject.transform.LookAt(target.transform.position);
+
+        //Bullet projectile = projectilePrefab.GetComponent<Bullet>();
+        //if (projectile == null)
+        //{
+        //    AOE boom = projectilePrefab.GetComponent<AOE>();
+        //    if (boom == null)
+        //    {
+        //        PiercingShot piercingShot = projectilePrefab.GetComponent<PiercingShot>();
+        //        var objp = ObjectPoolManager.instance.GetGo("sp");
+        //        objp.transform.LookAt(target.transform.position);
+        //        piercingShot.damage = state.damage;
+        //        piercingShot.target = target.transform;
+        //        return;
+        //    }
+        //    var obja = ObjectPoolManager.instance.GetGo("aoe");
+        //    obja.transform.LookAt(target.transform.position);
+        //    boom.damage = state.damage;
+        //    boom.target = target.transform;
+        //    return;
+        //}
+        //var obj = ObjectPoolManager.instance.GetGo("bullet");
+        //obj.transform.LookAt(target.transform.position);
+        //projectile.damage = state.damage;
+        //projectile.target = target.transform;
+
+
         GameObject projectileObject = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        projectileObject.transform.LookAt(target.transform.position);
+
         Bullet projectile = projectileObject.GetComponent<Bullet>();
-        if(projectile == null)
+        if (projectile == null)
         {
             AOE boom = projectileObject.GetComponent<AOE>();
-            if(boom == null)
+            if (boom == null)
             {
                 PiercingShot piercingShot = projectileObject.GetComponent<PiercingShot>();
                 piercingShot.damage = state.damage;
@@ -160,7 +191,8 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        TakeDamage heal = target.GetComponent<TakeDamage>();
+        IAttackable heal = target.GetComponent<IAttackable>();
+
         if (heal != null) 
         {
             heal.OnHealing(1f*state.damage);

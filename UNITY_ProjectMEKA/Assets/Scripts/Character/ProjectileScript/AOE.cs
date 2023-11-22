@@ -8,6 +8,7 @@ public class AOE : MonoBehaviour
     public Transform target;
     public float damage;
     private Vector3 pos;
+    private GameObject[] enemys;
     void Update()
     {
         if (target != null)
@@ -20,20 +21,24 @@ public class AOE : MonoBehaviour
             {
                 TakeDamage dd = target.GetComponent<TakeDamage>();
                 dd.OnAttack(damage);
-                HitTarget();
-                //광역공격
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 3f);
-                foreach (Collider co in colliders)
+                //HitTarget();
+                Vector3 pos = transform.position;
+                Vector3Int CurrentGridPos = new Vector3Int(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y), Mathf.FloorToInt(pos.z));
+
+                enemys = GameObject.FindGameObjectsWithTag("Enemy");
+
+                foreach (var enemy in enemys) 
                 {
-                    if (co.CompareTag("Enemy"))
+                    if(CurrentGridPos == enemy.GetComponent<EnemyController>().CurrentGridPos)
                     {
-                        TakeDamage areaDamage = co.GetComponent<TakeDamage>();
-                        if (areaDamage != null && co.gameObject != target.gameObject)
+                        IAttackable aoeDamage = enemy.GetComponent<IAttackable>();
+                        if(aoeDamage != null && enemy.gameObject != target.gameObject)
                         {
-                            areaDamage.OnAttack(damage * 0.7f); 
+                            aoeDamage.OnAttack(damage);//추후 주변 몬스터의 개수만큼 배율변경되도록 수정
                         }
                     }
                 }
+
             }
         }
         if (target == null)
@@ -46,7 +51,7 @@ public class AOE : MonoBehaviour
 
     void HitTarget()
     {
-        // 타겟에 도달했을 때의 로직 구현, 예: 타겟에 피해 주기
-        Destroy(gameObject); // 발사체 제거
+        
+        Destroy(gameObject); 
     }
 }
