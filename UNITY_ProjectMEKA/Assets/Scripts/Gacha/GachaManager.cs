@@ -16,7 +16,6 @@ public class GachaManager : MonoBehaviour
 {
     public GameObject resultPanel;
     public Image imagePrefab;
-    public TextMeshProUGUI resultText;
 
     public CharacterManager characterManager;
 
