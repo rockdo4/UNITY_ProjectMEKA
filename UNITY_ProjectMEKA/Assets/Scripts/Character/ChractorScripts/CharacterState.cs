@@ -4,32 +4,21 @@ using UnityEngine;
 
 public class CharacterState : MonoBehaviour
 {
-    public enum Property
-    {
-        Prime,
-        Edila,
-        Grieve,
-    }
-    public enum Occupation
-    {
-        Guardian,
-        Striker,
-        Castor,
-        Hunter,
-        Supporters,
-    }
+    [SerializeField, Header("적 타입 설정")]
+    public Defines.EnemyType enemyType;
+    
     [SerializeField, Header("속성 설정")]
-    public Property property;
+    public Defines.Property property;
 
     [SerializeField, Header("캐릭터 클래스 설정")]
-    public Occupation occupation;
+    public Defines.Occupation occupation;
 
     [SerializeField, Header("체력 설정")]
     public float maxHp;
 
     [SerializeField, Header("방어력 설정")]
     public float amror;
-   
+
     [SerializeField, Header("스킬 쿨타입 설정")]
     public float cooldown;
 
