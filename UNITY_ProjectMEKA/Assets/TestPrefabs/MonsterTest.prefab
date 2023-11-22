@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7440457766656669075}
   - component: {fileID: 2347251130623418966}
   - component: {fileID: 7412421216694384119}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 4501781502827546939}
   - component: {fileID: 7066652227565697164}
   - component: {fileID: 7862840620650879851}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: MonsterTest
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -214,6 +214,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
+  initPos: {x: 0, y: 0, z: 0}
+  waypointCount: 0
   state: {fileID: 0}
   wayPoint:
   - {fileID: 0}
@@ -259,7 +261,7 @@ MonoBehaviour:
   occupation: 0
   maxHp: 50
   amror: 0
-  speed: 10
+  speed: 5
   cooldown: 0
   range: 1
   damage: 1.5
@@ -310,7 +312,7 @@ GameObject:
   - component: {fileID: 5719851251315478695}
   - component: {fileID: 2913131804686937788}
   - component: {fileID: 7681671066565631102}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5498109862683488934}
   - component: {fileID: 4133709914685506337}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: MonsterTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}

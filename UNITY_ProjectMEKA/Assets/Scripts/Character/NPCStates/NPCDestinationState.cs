@@ -2,27 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class NPCDestinationStates : NPCBaseState
 {
-    private float timer;
-    private float timerange;
+    // 11.22, ±ËπŒ¡ˆ, « ø‰ æ¯¿ª ∞Õ ∞∞æ∆º≠ ªË¡¶
+    //private float timer;
+    //private float timerange;
 
     // 11.22, ±ËπŒ¡ˆ, ¿ÃµøΩ√ « ø‰
     private Vector3 targetPos;
     private float threshold = 0.1f;
-    private int waypointCount = 0;
 
     public NPCDestinationStates(EnemyController enemy) : base(enemy)
     {
-        targetPos = wayPoint[0].position;
     }
 
     public override void Enter()
     {
         // 11.22, ±ËπŒ¡ˆ, ¿Ãµø ±‚¥… ∫Ø∞Ê
-        //timerange = 1;
-        //agent.isStopped = false;
+        targetPos = wayPoint[enemyCtrl.waypointCount].position;
     }
 
     public override void Exit()
@@ -33,20 +32,7 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void FixedUpdate()
     {
-        timer += Time.deltaTime;
-        if (timer > timerange)
-        {
-            timer = 0;
-
-            // 11.22, ±ËπŒ¡ˆ, ¿Ãµø ±‚¥… ∫Ø∞Ê
-            //agent.SetDestination(wayPoint[0].position);
-            //if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
-            //{
-            //    enemyCtrl.SetState(EnemyController.NPCStates.Idle);
-            //}
-            MoveEnemy();
-
-        }
+        MoveEnemy();
 
         Collider[] colliders = Physics.OverlapSphere(enemyCtrl.transform.position, enemyCtrl.state.range);
 
@@ -73,6 +59,7 @@ public class NPCDestinationStates : NPCBaseState
 
     public void MoveEnemy()
     {
+        targetPos.y = enemyCtrl.transform.position.y;
         enemyCtrl.transform.LookAt(targetPos);
         var speed = enemyCtrl.gameObject.GetComponent<CharacterState>().speed;
         var pos = enemyCtrl.rb.position;
@@ -81,18 +68,16 @@ public class NPCDestinationStates : NPCBaseState
 
         if (Vector3.Distance(pos, targetPos) < threshold)
         {
-            waypointCount++;
-            if (waypointCount >= wayPoint.Length)
+            enemyCtrl.waypointCount++;
+
+            if (enemyCtrl.waypointCount >= wayPoint.Length)
+            {
+                enemyCtrl.waypointCount = 0;
+                enemyCtrl.transform.position = enemyCtrl.initPos;
+                enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
                 return;
-
-            targetPos = wayPoint[waypointCount].position;
+            }
+            targetPos = wayPoint[enemyCtrl.waypointCount].position;
         }
-
-        //if ()
-        //{
-        //    enemyCtrl.SetState(EnemyController.NPCStates.Idle);
-        //    Debug.Log("idle state");
-        //}
-
     }
 }

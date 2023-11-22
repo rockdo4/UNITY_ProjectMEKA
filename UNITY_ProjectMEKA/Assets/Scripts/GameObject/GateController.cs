@@ -122,9 +122,11 @@ public class GateController : MonoBehaviour
     private void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo)
     {
         enemyGo.transform.position = transform.position;
-        var enemyWaypoint = enemyGo.transform.GetChild(0).GetComponent<EnemyController>().wayPoint = new Transform[waypoints.Length];
-        Array.Copy(waypoints, enemyWaypoint, waypoints.Length);
+        enemyGo.transform.GetChild(0).GetComponent<EnemyController>().wayPoint = waypoints;
+
+        //Debug.Log(enemyGo.transform.GetChild(0).GetComponent<EnemyController>().enabled);
         enemyGo.transform.GetChild(0).GetComponent<CharacterState>().property = spawnInfo.attribute;
         enemyGo.transform.GetChild(0).GetComponent<CharacterState>().level = spawnInfo.level;
+        enemyGo.transform.GetChild(0).GetComponent<EnemyController>().initPos = transform.position;
     }
 }
