@@ -43,9 +43,18 @@ public class GateController : MonoBehaviour
     private float waveTimer = 0f;
     private bool once = false;
 
+    // 이동 경로
+    private GameObject enemyPath;
+    private Rigidbody enemyPathRb;
+    public float pathSpeed;
+    private Vector3 targetPos = Vector3.zero;
+    private float threshold = 0.1f;
+    private int waypointIndex = 0;
+    private Vector3 initPos;
+
     private void Awake()
     {
-        // wapoints 할당
+        // waypoints 할당
         foreach (var waypointParent in transform.parent.parent.GetComponentsInChildren<Waypoint>())
         {
             if(waypointParent.gateType == gateType)
@@ -56,21 +65,45 @@ public class GateController : MonoBehaviour
                 {
                     waypoints[i] = waypointParent.transform.GetChild(i).transform;
                 }
-                return;
+                break;
             }
         }
+
+        // enemyPath 연결
+        enemyPath = transform.GetChild(1).gameObject;
+        enemyPathRb = enemyPath.GetComponent<Rigidbody>();
+        initPos = enemyPathRb.position;
+        if (enemyPath == null)
+        {
+            Debug.Log("enemyPath gameObject is null");
+        }
+        targetPos = waypoints[waypointIndex].position;
     }
 
     private void Start()
     {
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        startInterval -= Time.deltaTime;
+        // 이동경로 가이드 전 대기 시간
         if (startInterval > 0f)
+        {
+            startInterval -= Time.deltaTime;
             return;
+        }
+        else
+        {
+            startInterval = 0f;
+        }
 
+        // 이동경로 가이드
+        if(waveInfos[currentWave].pathGuideOn && currentWave < waveInfos.Count)
+        {
+            ShowEnemyPath();
+        }
+
+        // 웨이브 타이머
         if (currentWave >= waveInfos.Count)
             return;
 
@@ -123,10 +156,37 @@ public class GateController : MonoBehaviour
     {
         enemyGo.transform.position = transform.position;
         enemyGo.transform.GetChild(0).GetComponent<EnemyController>().wayPoint = waypoints;
-
-        //Debug.Log(enemyGo.transform.GetChild(0).GetComponent<EnemyController>().enabled);
         enemyGo.transform.GetChild(0).GetComponent<CharacterState>().property = spawnInfo.attribute;
         enemyGo.transform.GetChild(0).GetComponent<CharacterState>().level = spawnInfo.level;
         enemyGo.transform.GetChild(0).GetComponent<EnemyController>().initPos = transform.position;
+    }
+
+    private void ShowEnemyPath()
+    {
+        if (!enemyPath.active)
+        {
+            enemyPath.SetActive(true);
+            targetPos = waypoints[waypointIndex].position;
+        }
+
+        targetPos.y = initPos.y;
+        enemyPath.transform.LookAt(targetPos);
+        var pos = enemyPathRb.position;
+        pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
+        enemyPathRb.MovePosition(pos);
+
+        if(Vector3.Distance(pos, targetPos) < threshold)
+        {
+            waypointIndex++;
+
+            if(waypointIndex >= waypoints.Length)
+            {
+                waypointIndex = 0;
+                enemyPath.transform.localPosition = initPos;
+                enemyPath.SetActive(false);
+                //return;
+            }
+            targetPos = waypoints[waypointIndex].position;
+        }
     }
 }
