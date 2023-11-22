@@ -7,19 +7,17 @@ using System.Globalization;
 using System.IO;
 using UnityEngine;
 
-public class TestCharacter
-{
-	public int ID { get; set; }
-	public int Level { get; set; }
-	public int Rare { get; set; }
-	public string Name { get; set; }
-	public int Weight { get; set; }
-}
+/*
+	public
+
+    - GetCharacterData(int) : Dictionary<int, TestCharacter> 에서 int 키 값 찾아서 리턴
+    - GetOriginalTable() : Dictionary<int, TestCharacter> 복사 생성해서 리턴
+*/
 
 public class TestCharacterTable : DataTable
 {
 	//protected List<DropData> m_DropTableList = new List<DropData>();
-	protected Dictionary<int, TestCharacter> testCharDict = new Dictionary<int, TestCharacter>();
+	protected Dictionary<int, TestCharacterInfo> testCharDict = new Dictionary<int, TestCharacterInfo>();
 
 	public TestCharacterTable()
 	{
@@ -44,9 +42,15 @@ public class TestCharacterTable : DataTable
 
 			foreach (var record in records)
 			{
-				var temp = new TestCharacter();
-				temp = record;
-				testCharDict.Add(temp.ID, temp);
+				TestCharacter temp = new TestCharacterInfo();
+
+				temp.ID = record.ID;
+				temp.Level = record.Level;
+				temp.Rare = record.Rare;
+				temp.Name = record.Name;
+				temp.Weight	= record.Weight;
+
+				testCharDict.Add(temp.ID, temp as TestCharacterInfo);
 			}
 		}
 		catch (Exception ex)
@@ -56,7 +60,7 @@ public class TestCharacterTable : DataTable
 		}
 	}
 
-	public TestCharacter GetCharacterData(int ID)
+	public TestCharacterInfo GetCharacterData(int ID)
 	{
 		var data = testCharDict[ID];
 		if (data == null)
@@ -66,8 +70,8 @@ public class TestCharacterTable : DataTable
 		return data;
 	}
 
-	public Dictionary<int, TestCharacter> GetOriginalTable()
+	public Dictionary<int, TestCharacterInfo> GetOriginalTable()
 	{
-		return new Dictionary<int, TestCharacter>(testCharDict);
+		return new Dictionary<int, TestCharacterInfo>(testCharDict);
 	}
 }

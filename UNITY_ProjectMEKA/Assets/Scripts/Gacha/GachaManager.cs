@@ -5,11 +5,20 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+	public
+
+    - Gacha1() : testPicker에서 아이템 1개 받아서 패널에 추가
+    - Gacha10() : testPicker에서 아이템 10개 받아서 패널에 추가
+*/
+
 public class GachaManager : MonoBehaviour
 {
     public GameObject resultPanel;
     public Image imagePrefab;
     public TextMeshProUGUI resultText;
+
+    public CharacterManager characterManager;
 
     private GachaSystem<int> testPicker;
     private TestCharacterTable characterTable;
@@ -42,10 +51,9 @@ public class GachaManager : MonoBehaviour
 		var itemID = testPicker.GetItem();
 
         var item = characterTable.GetCharacterData(itemID);
+        characterManager.PickUpCharacter(itemID);
 
-        Debug.Log($"이름 : {item.Name}, 가중치 : {item.Weight}");
-
-        var itemImage = Instantiate(imagePrefab);
+		var itemImage = Instantiate(imagePrefab);
         itemImage.transform.SetParent(resultPanel.transform);
         itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.Name);
     }
@@ -64,9 +72,9 @@ public class GachaManager : MonoBehaviour
         foreach (var itemID in itemIDs)
         {
 			var item = characterTable.GetCharacterData(itemID);
+			characterManager.PickUpCharacter(itemID);
 
-			Debug.Log($"이름 : {item.Name}, 가중치 : {item.Weight}");
-            var itemImage = Instantiate(imagePrefab);
+			var itemImage = Instantiate(imagePrefab);
             itemImage.transform.SetParent(resultPanel.transform);
             itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.Name);
         }

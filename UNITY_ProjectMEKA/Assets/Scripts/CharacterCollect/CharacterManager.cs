@@ -1,27 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
-    public CharacterDict<TestCharacter> dict;
+    public TestCharacterTable dict;
+	public Dictionary<int, TestCharacterInfo> charDict;
+	public GameObject characterCardPrefab;
 
-    void Start()
-    {
-        var items = DataTableMgr.GetTable<TestCharacterTable>();
+	private void Awake()
+	{
+		dict = DataTableMgr.GetTable<TestCharacterTable>();
+		charDict = dict.GetOriginalTable();
 
-  //      int[] ids = new int[items];
+		foreach(var item in charDict)
+		{
+			var card = Instantiate(characterCardPrefab);
+			card.transform.SetParent(transform);
 
-  //      for (int i = 0; i < items.Length; i++)
-  //      {
-  //          ids[i] = items[i].id;
-  //      }
-
-		//dict = new CharacterDict<TestCharacter>(ids, items);
+			card.name = item.Key.ToString();
+			card.GetComponentInChildren<TextMeshProUGUI>().SetText($"{item.Value.Name}\n{item.Value.count}");
+		}
 	}
 
-    void Update()
-    {
-        
-    }
+	public void PickUpCharacter(int ID)
+	{
+		var chara = dict.GetCharacterData(ID);
+		chara.count++;
+		Debug.Log("ÀÌ¸§ :" + chara.Name + " »ÌÀº È½¼ö : " + chara.count);
+
+		var item = transform.Find($"{chara.ID}");
+		item.GetComponentInChildren<TextMeshProUGUI>().SetText($"{chara.Name}\n{chara.count}");
+	}
 }
