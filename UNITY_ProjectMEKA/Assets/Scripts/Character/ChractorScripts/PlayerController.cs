@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerController : MonoBehaviour
 {
@@ -170,7 +171,9 @@ public class PlayerController : MonoBehaviour
         if (state != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, state.range);
+            Vector3 endPos = transform.position + transform.forward * state.range;
+
+            Gizmos.DrawLine(transform.position,  endPos);
         }
         
     }

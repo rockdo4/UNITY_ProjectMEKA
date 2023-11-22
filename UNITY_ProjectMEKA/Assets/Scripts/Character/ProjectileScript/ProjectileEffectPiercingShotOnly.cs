@@ -73,12 +73,12 @@ public class ProjectileEffectPiercingShotOnly : MonoBehaviour
             var hitPs = hitInstance.GetComponent<ParticleSystem>();
             if (hitPs != null)
             {
-                //Destroy(hitInstance, hitPs.main.duration);
+                Destroy(hitInstance, hitPs.main.duration);
             }
             else
             {
                 var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                //Destroy(hitInstance, hitPsParts.main.duration);
+                Destroy(hitInstance, hitPsParts.main.duration);
             }
         }
 

@@ -64,7 +64,6 @@ public class PlayableIdleState : PlayableBaseState
                     {
                         playerCtrl.target = en;
                         playerCtrl.SetState(PlayerController.CharacterStates.Attack);
-                        Debug.Log("attack");
                         return; 
                     }
                 }
@@ -117,7 +116,6 @@ public class PlayableIdleState : PlayableBaseState
         {
             playerCtrl.target = targetPlayer;
             playerCtrl.SetState(PlayerController.CharacterStates.Healing);
-            Debug.Log("Healing");
         }
     }
 }
