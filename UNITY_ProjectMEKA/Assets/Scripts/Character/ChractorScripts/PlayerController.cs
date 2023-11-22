@@ -9,7 +9,10 @@ public class PlayerController : MonoBehaviour
     private PlayableStateManager stateManager = new PlayableStateManager();
     private List<PlayableBaseState> states = new List<PlayableBaseState>();
     public GameObject projectilePrefab;
+    private Vector3 CurrentPos;
 
+    [HideInInspector]
+    public Vector3Int CurrentGridPos;
     [HideInInspector]
     public CharacterState state;
     [HideInInspector]
@@ -31,6 +34,12 @@ public class PlayerController : MonoBehaviour
         state = GetComponent<CharacterState>();
         SetBlockCount();
 
+    }
+    private void OnEnable()//인게임에서 배치할때 오브젝트풀링을 고려함
+    {
+        CurrentPos = transform.position;
+        CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
+        
     }
     void Start()
     {
@@ -123,11 +132,19 @@ public class PlayerController : MonoBehaviour
 
     public void Fire()
     {
+        //transform.LookAt(target.transform.position);
         GameObject projectileObject = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         Bullet projectile = projectileObject.GetComponent<Bullet>();
         if(projectile == null)
         {
             AOE boom = projectileObject.GetComponent<AOE>();
+            if(boom == null)
+            {
+                PiercingShot piercingShot = projectileObject.GetComponent<PiercingShot>();
+                piercingShot.damage = state.damage;
+                piercingShot.target = target.transform;
+                return;
+            }
             boom.damage = state.damage;
             boom.target = target.transform;
             return;

@@ -20,11 +20,23 @@ public class PiercingShot : MonoBehaviour
         if (target == null)
         {
             transform.position += pos.normalized * speed * Time.deltaTime;
-            Destroy(gameObject, 1f);
+            //Destroy(gameObject, 1f);
         }
 
     }
-
+    public void OnCollisionEnter(Collision collision)
+    {
+        target = null;
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage dd = collision.gameObject.GetComponent<TakeDamage>();
+            dd.OnAttack(damage);
+        }
+        else if (collision.gameObject.CompareTag("Wall"))
+        {
+            Destroy(gameObject);
+        }
+    }
     public void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Enemy"))

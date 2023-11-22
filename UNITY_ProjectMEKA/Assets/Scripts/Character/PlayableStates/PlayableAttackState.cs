@@ -21,6 +21,7 @@ public class PlayableAttackState : PlayableBaseState
 
     public override void Update()
     {
+        
         //적이 범위안에 없으면 다시 idle상태로
         timer += Time.deltaTime;
         if (timer > playerCtrl.state.attackDelay)

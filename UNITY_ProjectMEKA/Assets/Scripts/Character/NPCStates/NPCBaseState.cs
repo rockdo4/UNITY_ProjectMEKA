@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public abstract class NPCBaseState 
 {
     protected EnemyController enemyCtrl;
-    protected NavMeshAgent agent;
+    //protected NavMeshAgent agent;
     protected Transform[] players;
     protected Transform[] wayPoint;
 
@@ -18,7 +18,7 @@ public abstract class NPCBaseState
     public NPCBaseState(EnemyController enemy)
     {
         this.enemyCtrl = enemy;
-        agent = enemyCtrl.GetComponent<NavMeshAgent>();
+        //agent = enemyCtrl.GetComponent<NavMeshAgent>();
 
         wayPoint = enemyCtrl.wayPoint;
 

@@ -12,6 +12,11 @@ public class EnemyController : MonoBehaviour
     public CharacterState state;
     public Transform[] wayPoint;
     public GameObject target;
+
+    private Vector3 CurrentPos;
+    [HideInInspector]
+    public Vector3Int CurrentGridPos;//유니티 상 현제 위치의  타일위치
+
     public enum NPCStates
     {
         Idle,
@@ -23,6 +28,7 @@ public class EnemyController : MonoBehaviour
     {
         state = GetComponent<CharacterState>();
     }
+    
     void Start()
     {
         states.Add(new NPCIdleState(this));
@@ -34,6 +40,8 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         stateManager.Update();
+        CurrentPos = transform.position;
+        CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
     }
 
     public void SetState(NPCStates state)
