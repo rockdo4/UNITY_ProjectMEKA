@@ -6,7 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
-{
+{ 
     private StateManager stateManager = new StateManager();
     private List<NPCBaseState> states = new List<NPCBaseState>();
     public CharacterState state;

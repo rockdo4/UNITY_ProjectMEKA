@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
 public struct EnemySpawnInfo
 {
-    public Defines.EnemyType type;
+    public GameObject prefab;
     public int count;
+    public Defines.Property attribute;
+    public int level;
     public int interval;
 }
 
@@ -15,14 +18,18 @@ public struct WaveInfo
 {
     public List<EnemySpawnInfo> enemySpawnInfos;
     public float waveInterval;
+    public bool pathGuideOn;
 }
 
 public class GateController : MonoBehaviour
 {
+    // 시작 전 대기시간
+    public float startInterval;
+
     // 이동 관련
     [HideInInspector]
     public Defines.GateType gateType;
-    private GameObject[] waypoints;
+    private Transform[] waypoints;
 
     // 몬스터 스폰 관련
     [SerializeField]
@@ -45,8 +52,8 @@ public class GateController : MonoBehaviour
                 var waypointChildCount = waypointParent.transform.childCount;
                 for (int i = 0; i< waypointChildCount; ++i)
                 {
-                    waypoints = new GameObject[waypointChildCount];
-                    waypoints[i] = waypointParent.transform.GetChild(i).gameObject;
+                    waypoints = new Transform[waypointChildCount];
+                    waypoints[i] = waypointParent.transform.GetChild(i);
                 }
                 break;
             }
@@ -59,10 +66,14 @@ public class GateController : MonoBehaviour
 
     private void Update()
     {
+        startInterval -= Time.deltaTime;
+        if (startInterval > 0f)
+            return;
+
         if (currentWave >= waveInfos.Count)
             return;
 
-        if (waveTimer > 0)
+        if (waveTimer > 0f)
         {
             waveTimer -= Time.deltaTime;
             return;
@@ -75,12 +86,11 @@ public class GateController : MonoBehaviour
     private void SpawnEnemies()
     {
         var enemyInfo = waveInfos[currentWave].enemySpawnInfos[currentEnemyType];
+        var enemyName = enemyInfo.prefab.GetComponent<CharacterState>().enemyType.ToString();
         if(!once)
         {
-            Debug.Log(enemyInfo.type.ToString());
-            var enemyGo = ObjectPoolManager.instance.GetGo(enemyInfo.type.ToString());
-            enemyGo.transform.position = transform.position;
-
+            var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
+            SetEnemy(enemyGo, enemyInfo);
             once = true;
         }
 
@@ -88,8 +98,9 @@ public class GateController : MonoBehaviour
         if (spawnTimer < waveInfos[currentWave].enemySpawnInfos[currentEnemyType].interval)
             return;
 
-        var enemy = ObjectPoolManager.instance.GetGo(enemyInfo.type.ToString());
-        enemy.transform.position = transform.position;
+        var enemy = ObjectPoolManager.instance.GetGo(enemyName);
+        SetEnemy(enemy, enemyInfo);
+
         currentEnemyCount++;
         spawnTimer = 0f;
 
@@ -105,5 +116,13 @@ public class GateController : MonoBehaviour
             waveTimer = waveInfos[currentWave].waveInterval;
             currentWave++;
         }
+    }
+
+    private void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo)
+    {
+        enemyGo.transform.position = transform.position;
+        enemyGo.GetComponent<EnemyController>().wayPoint = waypoints;
+        enemyGo.GetComponent<CharacterState>().property = spawnInfo.attribute;
+        enemyGo.GetComponent<CharacterState>().level = spawnInfo.level;
     }
 }

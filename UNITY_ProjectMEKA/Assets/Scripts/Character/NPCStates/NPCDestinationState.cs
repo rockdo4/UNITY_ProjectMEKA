@@ -14,12 +14,14 @@ public class NPCDestinationStates : NPCBaseState
     public override void Enter()
     {
         timerange = 1;
-        agent.isStopped = false;
+        // 11.22, ±è¹ÎÁö, ÀÌµ¿ ±â´É º¯°æ
+        //agent.isStopped = false;
     }
 
     public override void Exit()
     {
-        agent.isStopped = true;
+        // 11.22, ±è¹ÎÁö, ÀÌµ¿ ±â´É º¯°æ
+        //agent.isStopped = true;
     }
 
     public override void Update()
@@ -27,12 +29,15 @@ public class NPCDestinationStates : NPCBaseState
         timer += Time.deltaTime;
         if (timer > timerange)
         {
-            timer = 0;
-            agent.SetDestination(wayPoint[0].position);
-            if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
-            {
-                enemyCtrl.SetState(EnemyController.NPCStates.Idle);
-            }
+            // 11.22, ±è¹ÎÁö, ÀÌµ¿ ±â´É º¯°æ
+            //timer = 0;
+            //agent.SetDestination(wayPoint[0].position);
+            //if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+            //{
+            //    enemyCtrl.SetState(EnemyController.NPCStates.Idle);
+            //}
+
+            // 
         }
 
         Collider[] colliders = Physics.OverlapSphere(enemyCtrl.transform.position, enemyCtrl.state.range);
@@ -52,4 +57,6 @@ public class NPCDestinationStates : NPCBaseState
             }
         }
     }
+
+
 }
