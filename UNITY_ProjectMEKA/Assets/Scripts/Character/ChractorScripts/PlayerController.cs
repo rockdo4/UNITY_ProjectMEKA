@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         TakeDamage take = target.GetComponent<TakeDamage>();
 
         take.OnAttack(state.damage + Rockpaperscissors());
-        Debug.Log("PlayerAttack" + (state.damage + Rockpaperscissors()));
+        
     }
     public float Rockpaperscissors()
     {
@@ -125,6 +125,13 @@ public class PlayerController : MonoBehaviour
     {
         GameObject projectileObject = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         Bullet projectile = projectileObject.GetComponent<Bullet>();
+        if(projectile == null)
+        {
+            AOE boom = projectileObject.GetComponent<AOE>();
+            boom.damage = state.damage;
+            boom.target = target.transform;
+            return;
+        }
         projectile.damage = state.damage;
         projectile.target = target.transform;
     }
@@ -138,8 +145,16 @@ public class PlayerController : MonoBehaviour
         TakeDamage heal = target.GetComponent<TakeDamage>();
         if (heal != null) 
         {
-            Debug.Log("HEALING!!!");
-            heal.OnAttack(-1f*state.damage);
+            heal.OnHealing(1f*state.damage);
         }
+    }
+    public void OnDrawGizmos()
+    {
+        if (state != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, state.range);
+        }
+        
     }
 }

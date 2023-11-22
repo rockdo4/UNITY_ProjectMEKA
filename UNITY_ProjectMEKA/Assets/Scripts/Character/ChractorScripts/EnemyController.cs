@@ -49,7 +49,6 @@ public class EnemyController : MonoBehaviour
         }
         TakeDamage co = target.GetComponent<TakeDamage>();
         co.OnAttack(state.damage + Rockpaperscissors());
-        Debug.Log("EnemyAttack" + (state.damage + Rockpaperscissors()));
     }
     public float Rockpaperscissors()
     {
