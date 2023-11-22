@@ -48,11 +48,10 @@ public class NPCDestinationStates : NPCBaseState
 
             foreach (GameObject pl in players)
             {
-                enemyCtrl.target = co.gameObject;
-                PlayerController pl = co.GetComponent<PlayerController>();
+               
                 PlayerController player = pl.GetComponent<PlayerController>();
 
-                if (player != null&& pl.blockCount < pl.maxBlockCount)
+                if (player != null)
                 {
                     Vector3Int enemyGridPos = player.CurrentGridPos;
 

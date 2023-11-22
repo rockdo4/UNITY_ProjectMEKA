@@ -11,7 +11,6 @@ using UnityEngine;
 
 */
 
-
 public class PanelManager : MonoBehaviour
 {
 	public RectTransform mainPanel;
