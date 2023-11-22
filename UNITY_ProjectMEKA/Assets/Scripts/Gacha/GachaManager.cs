@@ -19,8 +19,10 @@ public class GachaManager : MonoBehaviour
 
     public CharacterManager characterManager;
 
+    [Header("testPicker")]
     private GachaSystem<int> testPicker;
-    private TestCharacterTable characterTable;
+	[Header("characterTable")]
+	private TestCharacterTable characterTable;
 
     private void Awake()
     {
