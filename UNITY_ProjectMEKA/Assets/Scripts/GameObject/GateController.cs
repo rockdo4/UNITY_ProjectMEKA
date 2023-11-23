@@ -12,6 +12,7 @@ public struct EnemySpawnInfo
     public Defines.Property attribute;
     public int level;
     public int interval;
+    public MoveType moveType;
 }
 
 [System.Serializable]
@@ -23,6 +24,13 @@ public struct WaveInfo
     public float pathDuration;
 }
 
+public enum MoveType
+{
+    AutoTile,
+    AutoStraight,
+    Waypoint,
+}
+
 public class GateController : MonoBehaviour
 {
     // 시작 전 대기시간
@@ -31,54 +39,74 @@ public class GateController : MonoBehaviour
     // 이동 관련
     [HideInInspector]
     public Defines.GateType gateType;
-    private Transform[] waypoints;
+    protected Transform house;
+    protected Transform[] waypoints;
 
     // 몬스터 스폰 관련
     [SerializeField]
     public List<WaveInfo> waveInfos;
 
-    private int currentWave = 0;
-    private int currentEnemyType = 0;
-    private int currentEnemyCount = 1;
-    private float spawnTimer = 0f;
-    private float waveTimer = 0f;
-    private bool once = false;
+    protected int currentWave = 0;
+    protected int currentEnemyType = 0;
+    protected int currentEnemyCount = 1;
+    protected float spawnTimer = 0f;
+    protected float waveTimer = 0f;
+    protected bool once = false;
 
     // 이동 경로
-    private GameObject enemyPath;
-    private Rigidbody enemyPathRb;
+    protected GameObject enemyPath;
+    protected Rigidbody enemyPathRb;
     public float pathSpeed;
-    private Vector3 targetPos = Vector3.zero;
-    private float threshold = 0.1f;
-    private int waypointIndex = 0;
-    private Vector3 initPos;
-    private float pathDuration;
-    private bool pathDone = false;
+    protected Vector3 targetPos = Vector3.zero;
+    protected float threshold = 0.1f;
+    protected int waypointIndex = 0;
+    protected Vector3 initPos;
+    protected float pathDuration;
+    protected bool pathDone = false;
 
-    private void Awake()
+    protected void Awake()
     {
         // waypoints 할당
-        foreach (var waypointParent in transform.parent.parent.GetComponentsInChildren<Waypoint>())
+        var waypointParentsInMap = transform.parent.parent.GetComponentsInChildren<Waypoint>();
+        if (waypointParentsInMap != null)
         {
-            if(waypointParent.gateType == gateType)
+            foreach (var waypointParent in waypointParentsInMap)
             {
-                var waypointChildCount = waypointParent.transform.childCount;
-                waypoints = new Transform[waypointChildCount + 1];
-                for (int i = 0; i< waypointChildCount; ++i)
+                if(waypointParent.gateType == gateType)
                 {
-                    waypoints[i] = waypointParent.transform.GetChild(i).transform;
+                    var waypointChildCount = waypointParent.transform.childCount;
+                    waypoints = new Transform[waypointChildCount + 1];
+                    for (int i = 0; i< waypointChildCount; ++i)
+                    {
+                        waypoints[i] = waypointParent.transform.GetChild(i).transform;
+                    }
+                    break;
                 }
-                break;
             }
+        }
+        else
+        {
+            Debug.Log("There's no waypoints in the map.");
         }
 
         // 짝이 맞는 게이트를 마지막 웨이포인트로 할당
-        foreach(var houseController in transform.parent.GetComponentsInChildren<HouseController>())
+        //foreach(var houseController in transform.parent.GetComponentsInChildren<HouseController>())
+        //{
+        //    if(houseController.gateType == gateType)
+        //    {
+        //        if(waypoints == null)
+        //        {
+        //            waypoints = new Transform[1];
+        //        }
+        //        waypoints[waypoints.Length - 1] = houseController.transform;
+        //        break;
+        //    }
+        //}
+        foreach (var houseController in transform.parent.GetComponentsInChildren<HouseController>())
         {
-            if(houseController.gateType == gateType)
+            if (houseController.gateType == gateType)
             {
-                waypoints[waypoints.Length - 1] = houseController.transform;
-                break;
+                house = houseController.transform;
             }
         }
 
@@ -181,7 +209,7 @@ public class GateController : MonoBehaviour
         }
     }
 
-    private void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo)
+    virtual public void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo)
     {
         enemyGo.transform.position = transform.position;
         enemyGo.transform.GetChild(0).GetComponent<EnemyController>().wayPoint = waypoints;
