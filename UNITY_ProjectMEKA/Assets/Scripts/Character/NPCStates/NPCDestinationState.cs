@@ -26,8 +26,19 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void FixedUpdate()
     {
-        MoveEnemy();
-        
+        switch(enemyCtrl.moveType)
+        {
+            case Defines.MoveType.AutoTile:
+                break;
+            case Defines.MoveType.Waypoint:
+            case Defines.MoveType.Straight:
+                MoveEnemyWaypoint();
+                break;
+            case Defines.MoveType.WaypointRepeat:
+                MoveEnemyRepeat(enemyCtrl.moveRepeatCount);
+                break;
+        }
+
         CheckEnemy();
     }
     void CheckEnemy()
@@ -70,7 +81,7 @@ public class NPCDestinationStates : NPCBaseState
 
     }
 
-    public void MoveEnemy()
+    public void MoveEnemyWaypoint()
     {
         targetPos.y = enemyCtrl.transform.position.y;
         enemyCtrl.transform.LookAt(targetPos);
@@ -92,5 +103,13 @@ public class NPCDestinationStates : NPCBaseState
             }
             targetPos = wayPoint[enemyCtrl.waypointIndex].position;
         }
+    }
+
+    public void MoveEnemyRepeat(int count)
+    {
+        // count만큼 반복
+        // 첫번째로 왔을 때 하우스로 직선 이동
+
+
     }
 }

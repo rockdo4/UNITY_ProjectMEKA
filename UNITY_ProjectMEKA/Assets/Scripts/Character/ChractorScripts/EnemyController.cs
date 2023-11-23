@@ -17,11 +17,14 @@ public class EnemyController : MonoBehaviour
     public Vector3 initPos;
     [HideInInspector]
     public int waypointIndex = 0;
+    [HideInInspector]
+    public Defines.MoveType moveType;
+    [HideInInspector]
+    public int moveRepeatCount;
 
     public CharacterState state;
     public Transform[] wayPoint;
     public GameObject target;
-
 
     private Vector3 CurrentPos;
     [HideInInspector]

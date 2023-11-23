@@ -4,40 +4,33 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[System.Serializable]
-public struct EnemySpawnInfo
-{
-    public GameObject prefab;
-    public int count;
-    public Defines.Property attribute;
-    public int level;
-    public int interval;
-    public MoveType moveType;
-}
-
-[System.Serializable]
-public struct WaveInfo
-{
-    public List<EnemySpawnInfo> enemySpawnInfos;
-    public float waveInterval;
-    public bool pathGuideOn;
-    public float pathDuration;
-}
-
-public enum MoveType
-{
-    AutoTile,
-    AutoStraight,
-    Waypoint,
-}
-
 public class GateController : MonoBehaviour
 {
+    [System.Serializable]
+    public class EnemySpawnInfo
+    {
+        public GameObject prefab;
+        public int count;
+        public Defines.Property attribute;
+        public int level;
+        public int interval;
+        public Defines.MoveType moveType;
+        public int moveRepeat;
+    }
+
+    [System.Serializable]
+    public class WaveInfo
+    {
+        public List<EnemySpawnInfo> enemySpawnInfos;
+        public float waveInterval;
+        public bool pathGuideOn;
+        public float pathDuration;
+    }
+
     // 시작 전 대기시간
     public float startInterval;
 
     // 이동 관련
-    [HideInInspector]
     public Defines.GateType gateType;
     protected Transform house;
     protected Transform[] waypoints;
@@ -51,7 +44,7 @@ public class GateController : MonoBehaviour
     protected int currentEnemyCount = 0;
     protected float spawnTimer = 0f;
     protected float waveTimer = 0f;
-    protected bool once = false;
+    protected bool firstGetPool = false;
 
     // 이동 경로
     protected Vector3 initPos;
@@ -63,64 +56,6 @@ public class GateController : MonoBehaviour
     protected int waypointIndex = 0;
     protected float pathDuration;
     protected bool pathDone = false;
-
-    virtual protected void Awake()
-    {
-        // waypoints 할당
-        var waypointParentsInMap = transform.parent.parent.GetComponentsInChildren<Waypoint>();
-        if (waypointParentsInMap != null)
-        {
-            foreach (var waypointParent in waypointParentsInMap)
-            {
-                if(waypointParent.gateType == gateType)
-                {
-                    var waypointChildCount = waypointParent.transform.childCount;
-                    waypoints = new Transform[waypointChildCount + 1];
-                    for (int i = 0; i< waypointChildCount; ++i)
-                    {
-                        waypoints[i] = waypointParent.transform.GetChild(i).transform;
-                    }
-                    break;
-                }
-            }
-        }
-        else
-        {
-            Debug.Log("There's no waypoints in the map.");
-        }
-
-        // 짝이 맞는 게이트를 마지막 웨이포인트로 할당
-        //foreach(var houseController in transform.parent.GetComponentsInChildren<HouseController>())
-        //{
-        //    if(houseController.gateType == gateType)
-        //    {
-        //        if(waypoints == null)
-        //        {
-        //            waypoints = new Transform[1];
-        //        }
-        //        waypoints[waypoints.Length - 1] = houseController.transform;
-        //        break;
-        //    }
-        //}
-        foreach (var houseController in transform.parent.GetComponentsInChildren<HouseController>())
-        {
-            if (houseController.gateType == gateType)
-            {
-                house = houseController.transform;
-            }
-        }
-
-        // enemyPath 연결
-        enemyPath = transform.GetChild(1).gameObject;
-        enemyPathRb = enemyPath.GetComponent<Rigidbody>();
-        initPos = enemyPath.transform.localPosition;
-        if (enemyPath == null)
-        {
-            Debug.Log("enemyPath gameObject is null");
-        }
-        targetPos = waypoints[waypointIndex].position;
-        pathDuration = waveInfos[currentWave].pathDuration;
-    }
 
     public void Start()
     {
@@ -147,7 +82,6 @@ public class GateController : MonoBehaviour
 
         if (waveTimer > 0f)
         {
-            Debug.Log($"{Time.time} 왜? {waveTimer}");
             waveTimer -= Time.deltaTime;
             return;
         }
@@ -168,7 +102,6 @@ public class GateController : MonoBehaviour
             enemyPath.GetComponent<ParticleSystem>().Stop();
             enemyPath.SetActive(false);
             pathDone = true;
-            Debug.Log(waveTimer);
         }
         else if (waveInfos[currentWave].pathGuideOn && !pathDone && pathDuration > 0f)
         {
@@ -179,15 +112,14 @@ public class GateController : MonoBehaviour
     // 몬스터 스폰 함수
     private void SpawnEnemies()
     {
-        Debug.Log("스폰 에너미");
         var enemyInfo = waveInfos[currentWave].enemySpawnInfos[currentEnemyType];
         var enemyName = enemyInfo.prefab.transform.GetChild(0).GetComponent<CharacterState>().enemyType.ToString();
-        if(!once)
+        if(!firstGetPool)
         {
             var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
             SetEnemy(enemyGo, enemyInfo);
             currentEnemyCount++;
-            once = true; 
+            firstGetPool = true; 
         }
 
         spawnTimer += Time.deltaTime;
@@ -213,8 +145,7 @@ public class GateController : MonoBehaviour
             currentWave++;
             currentEnemyType = 0;
             pathDone = false;
-            once = false;
-            Debug.Log("다음 웨이브로!");
+            firstGetPool = false;
             if(currentWave < waveInfos.Count)
             {
                 pathDuration = waveInfos[currentWave].pathDuration;
@@ -230,10 +161,14 @@ public class GateController : MonoBehaviour
         enemyGo.transform.GetChild(0).GetComponent<CharacterState>().property = spawnInfo.attribute;
         enemyGo.transform.GetChild(0).GetComponent<CharacterState>().level = spawnInfo.level;
         enemyGo.transform.GetChild(0).GetComponent<EnemyController>().initPos = transform.position;
+        enemyGo.transform.GetChild(0).GetComponent<EnemyController>().moveType = spawnInfo.moveType;
+        enemyGo.transform.GetChild(0).GetComponent<EnemyController>().moveRepeatCount = spawnInfo.moveRepeat;
     }
 
     private void ShowEnemyPath()
     {
+        Debug.Log("쇼패스");
+
         if (!enemyPath.activeSelf)
         {
             enemyPath.SetActive(true);
@@ -250,6 +185,7 @@ public class GateController : MonoBehaviour
         var pos = enemyPathRb.position;
         pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
         enemyPathRb.MovePosition(pos);
+        Debug.Log(pos);
 
         if(Vector3.Distance(pos, targetPos) < threshold)
         {
