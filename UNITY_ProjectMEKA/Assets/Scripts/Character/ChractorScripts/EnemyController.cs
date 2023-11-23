@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour
     [HideInInspector]
     public Vector3 initPos;
     [HideInInspector]
-    public int waypointCount = 0;
+    public int waypointIndex = 0;
 
     public CharacterState state;
     public Transform[] wayPoint;

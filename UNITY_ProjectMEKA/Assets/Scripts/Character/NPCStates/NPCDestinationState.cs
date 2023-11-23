@@ -10,8 +10,6 @@ public class NPCDestinationStates : NPCBaseState
     private Vector3 targetPos;
     private float threshold = 0.1f;
 
-    private float timer;
-    private float timerange;
     GameObject[] players;
     public NPCDestinationStates(EnemyController enemy) : base(enemy)
     {
@@ -19,9 +17,7 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void Enter()
     {
-        targetPos = wayPoint[enemyCtrl.waypointCount].position;
-
-
+        targetPos = wayPoint[enemyCtrl.waypointIndex].position;
     }
 
     public override void Exit()
@@ -48,11 +44,9 @@ public class NPCDestinationStates : NPCBaseState
 
             foreach (GameObject pl in players)
             {
-                enemyCtrl.target = co.gameObject;
-                PlayerController pl = co.GetComponent<PlayerController>();
                 PlayerController player = pl.GetComponent<PlayerController>();
 
-                if (player != null&& pl.blockCount < pl.maxBlockCount)
+                if (player != null)
                 {
                     Vector3Int enemyGridPos = player.CurrentGridPos;
 
@@ -87,16 +81,16 @@ public class NPCDestinationStates : NPCBaseState
 
         if (Vector3.Distance(pos, targetPos) < threshold)
         {
-            enemyCtrl.waypointCount++;
+            enemyCtrl.waypointIndex++;
 
-            if (enemyCtrl.waypointCount >= wayPoint.Length)
+            if (enemyCtrl.waypointIndex >= wayPoint.Length)
             {
-                enemyCtrl.waypointCount = 0;
+                enemyCtrl.waypointIndex = 0;
                 enemyCtrl.transform.position = enemyCtrl.initPos;
                 enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
                 return;
             }
-            targetPos = wayPoint[enemyCtrl.waypointCount].position;
+            targetPos = wayPoint[enemyCtrl.waypointIndex].position;
         }
     }
 }
