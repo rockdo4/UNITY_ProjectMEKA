@@ -5,6 +5,7 @@ using UnityEngine;
 public class HouseController : MonoBehaviour
 {
     public float houseMaxHp;
+    public Defines.GateType gateType;
 
     [HideInInspector]
     public float houseHp;

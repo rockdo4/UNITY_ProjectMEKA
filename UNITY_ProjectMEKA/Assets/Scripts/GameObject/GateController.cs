@@ -60,7 +60,7 @@ public class GateController : MonoBehaviour
             if(waypointParent.gateType == gateType)
             {
                 var waypointChildCount = waypointParent.transform.childCount;
-                waypoints = new Transform[waypointChildCount];
+                waypoints = new Transform[waypointChildCount + 1];
                 for (int i = 0; i< waypointChildCount; ++i)
                 {
                     waypoints[i] = waypointParent.transform.GetChild(i).transform;
@@ -69,8 +69,18 @@ public class GateController : MonoBehaviour
             }
         }
 
+        // 짝이 맞는 게이트를 마지막 웨이포인트로 할당
+        foreach(var houseController in transform.parent.GetComponentsInChildren<HouseController>())
+        {
+            if(houseController.gateType == gateType)
+            {
+                waypoints[waypoints.Length - 1] = houseController.transform;
+                break;
+            }
+        }
+
         // enemyPath 연결
-        enemyPath = transform.GetChild(1).gameObject;
+        enemyPath = transform.GetChild(0).gameObject;
         enemyPathRb = enemyPath.GetComponent<Rigidbody>();
         initPos = enemyPathRb.position;
         if (enemyPath == null)
@@ -98,9 +108,12 @@ public class GateController : MonoBehaviour
         }
 
         // 이동경로 가이드
-        if(waveInfos[currentWave].pathGuideOn && currentWave < waveInfos.Count)
+        if(currentWave < waveInfos.Count)
         {
-            ShowEnemyPath();
+            if(waveInfos[currentWave].pathGuideOn)
+            {
+                ShowEnemyPath();
+            }
         }
 
         // 웨이브 타이머
@@ -169,7 +182,7 @@ public class GateController : MonoBehaviour
             targetPos = waypoints[waypointIndex].position;
         }
 
-        targetPos.y = initPos.y;
+        targetPos.y = enemyPathRb.position.y;
         enemyPath.transform.LookAt(targetPos);
         var pos = enemyPathRb.position;
         pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
