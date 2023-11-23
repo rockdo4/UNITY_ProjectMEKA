@@ -83,7 +83,7 @@ public class GateController : MonoBehaviour
         }
 
         // enemyPath ¿¬°á
-        enemyPath = transform.GetChild(0).gameObject;
+        enemyPath = transform.GetChild(1).gameObject;
         enemyPathRb = enemyPath.GetComponent<Rigidbody>();
         initPos = enemyPathRb.position;
         if (enemyPath == null)
