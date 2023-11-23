@@ -21,9 +21,10 @@ public class EnemyController : MonoBehaviour
     public Defines.MoveType moveType;
     [HideInInspector]
     public int moveRepeatCount;
+    [HideInInspector]
+    public Transform[] wayPoint;
 
     public CharacterState state;
-    public Transform[] wayPoint;
     public GameObject target;
 
     private Vector3 CurrentPos;
