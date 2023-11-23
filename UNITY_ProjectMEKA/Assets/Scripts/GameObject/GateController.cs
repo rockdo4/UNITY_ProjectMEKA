@@ -48,7 +48,7 @@ public class GateController : MonoBehaviour
 
     protected int currentWave = 0;
     protected int currentEnemyType = 0;
-    protected int currentEnemyCount = 1;
+    protected int currentEnemyCount = 0;
     protected float spawnTimer = 0f;
     protected float waveTimer = 0f;
     protected bool once = false;
@@ -64,7 +64,7 @@ public class GateController : MonoBehaviour
     protected float pathDuration;
     protected bool pathDone = false;
 
-    virtual public void Awake()
+    virtual protected void Awake()
     {
         // waypoints 할당
         var waypointParentsInMap = transform.parent.parent.GetComponentsInChildren<Waypoint>();
@@ -126,19 +126,8 @@ public class GateController : MonoBehaviour
     {
     }
 
-    virtual public void FixedUpdate()
+    virtual protected void FixedUpdate()
     {
-        // 웨이브 타이머
-        if (currentWave >= waveInfos.Count)
-        {
-            return;
-        }
-        else if (waveTimer > 0f)
-        {
-            waveTimer -= Time.deltaTime;
-            return;
-        }
-
         // 이동경로 가이드 전 대기 시간
         if (startInterval > 0f)
         {
@@ -150,9 +139,23 @@ public class GateController : MonoBehaviour
             startInterval = 0f;
         }
 
-        if(pathDone)
+        // 웨이브 타이머
+        if (currentWave >= waveInfos.Count)
+        {
+            return;
+        }
+
+        if (waveTimer > 0f)
+        {
+            Debug.Log($"{Time.time} 왜? {waveTimer}");
+            waveTimer -= Time.deltaTime;
+            return;
+        }
+
+        if (pathDone)
         {
             SpawnEnemies();
+            return;
         }
 
         // 이동경로 가이드
@@ -161,10 +164,13 @@ public class GateController : MonoBehaviour
         {
             waypointIndex = 0;
             enemyPath.transform.localPosition = initPos;
+            enemyPath.GetComponent<ParticleSystem>().Clear();
+            enemyPath.GetComponent<ParticleSystem>().Stop();
             enemyPath.SetActive(false);
             pathDone = true;
+            Debug.Log(waveTimer);
         }
-        else if (waveInfos[currentWave].pathGuideOn && !pathDone)
+        else if (waveInfos[currentWave].pathGuideOn && !pathDone && pathDuration > 0f)
         {
             ShowEnemyPath();
         }
@@ -173,13 +179,15 @@ public class GateController : MonoBehaviour
     // 몬스터 스폰 함수
     private void SpawnEnemies()
     {
+        Debug.Log("스폰 에너미");
         var enemyInfo = waveInfos[currentWave].enemySpawnInfos[currentEnemyType];
         var enemyName = enemyInfo.prefab.transform.GetChild(0).GetComponent<CharacterState>().enemyType.ToString();
         if(!once)
         {
             var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
             SetEnemy(enemyGo, enemyInfo);
-            once = true;
+            currentEnemyCount++;
+            once = true; 
         }
 
         spawnTimer += Time.deltaTime;
@@ -200,16 +208,20 @@ public class GateController : MonoBehaviour
 
         if (currentEnemyType >= waveInfos[currentWave].enemySpawnInfos.Count)
         {
-            currentEnemyType = 0;
             waveTimer = waveInfos[currentWave].waveInterval;
+
             currentWave++;
+            currentEnemyType = 0;
             pathDone = false;
+            once = false;
+            Debug.Log("다음 웨이브로!");
             if(currentWave < waveInfos.Count)
             {
                 pathDuration = waveInfos[currentWave].pathDuration;
             }
         }
     }
+
 
     virtual public void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo)
     {
@@ -222,11 +234,12 @@ public class GateController : MonoBehaviour
 
     private void ShowEnemyPath()
     {
-        if (!enemyPath.active)
+        if (!enemyPath.activeSelf)
         {
             enemyPath.SetActive(true);
         }
-        if(!enemyPath.GetComponent<ParticleSystem>().isPlaying)
+
+        if (!enemyPath.GetComponent<ParticleSystem>().isPlaying)
         {
             enemyPath.GetComponent<ParticleSystem>().Play();
         }
@@ -248,6 +261,7 @@ public class GateController : MonoBehaviour
                 targetPos = waypoints[waypointIndex].position;
                 enemyPath.transform.localPosition = initPos;
                 enemyPath.GetComponent<ParticleSystem>().Clear();
+                enemyPath.GetComponent<ParticleSystem>().Stop();
                 return;
             }
             targetPos = waypoints[waypointIndex].position;

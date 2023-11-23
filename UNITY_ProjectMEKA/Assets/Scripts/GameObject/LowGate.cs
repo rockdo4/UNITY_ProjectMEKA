@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LowGate : GateController
 {
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
         if (waypoints == null)
@@ -14,7 +14,7 @@ public class LowGate : GateController
         waypoints[waypoints.Length - 1] = house.transform;
     }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
         base .FixedUpdate();
     }
