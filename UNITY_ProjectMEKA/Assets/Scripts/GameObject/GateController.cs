@@ -20,6 +20,7 @@ public struct WaveInfo
     public List<EnemySpawnInfo> enemySpawnInfos;
     public float waveInterval;
     public bool pathGuideOn;
+    public float pathDuration;
 }
 
 public class GateController : MonoBehaviour
@@ -51,6 +52,8 @@ public class GateController : MonoBehaviour
     private float threshold = 0.1f;
     private int waypointIndex = 0;
     private Vector3 initPos;
+    private float pathDuration;
+    private bool pathDone = false;
 
     private void Awake()
     {
@@ -88,6 +91,7 @@ public class GateController : MonoBehaviour
             Debug.Log("enemyPath gameObject is null");
         }
         targetPos = waypoints[waypointIndex].position;
+        pathDuration = waveInfos[currentWave].pathDuration;
     }
 
     private void Start()
@@ -96,6 +100,17 @@ public class GateController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 웨이브 타이머
+        if (currentWave >= waveInfos.Count)
+        {
+            return;
+        }
+        else if (waveTimer > 0f)
+        {
+            waveTimer -= Time.deltaTime;
+            return;
+        }
+
         // 이동경로 가이드 전 대기 시간
         if (startInterval > 0f)
         {
@@ -107,26 +122,22 @@ public class GateController : MonoBehaviour
             startInterval = 0f;
         }
 
+        if(pathDone)
+        {
+            SpawnEnemies();
+        }
+
         // 이동경로 가이드
-        if(currentWave < waveInfos.Count)
+        pathDuration -= Time.deltaTime;
+        if (pathDuration <= 0f && !pathDone)
         {
-            if(waveInfos[currentWave].pathGuideOn)
-            {
-                ShowEnemyPath();
-            }
+            enemyPath.SetActive(false);
+            pathDone = true;
         }
-
-        // 웨이브 타이머
-        if (currentWave >= waveInfos.Count)
-            return;
-
-        if (waveTimer > 0f)
+        else if (waveInfos[currentWave].pathGuideOn && !pathDone)
         {
-            waveTimer -= Time.deltaTime;
-            return;
+            ShowEnemyPath();
         }
-
-        SpawnEnemies();
     }
 
     // 몬스터 스폰 함수
@@ -162,6 +173,11 @@ public class GateController : MonoBehaviour
             currentEnemyType = 0;
             waveTimer = waveInfos[currentWave].waveInterval;
             currentWave++;
+            pathDone = false;
+            if(currentWave < waveInfos.Count)
+            {
+                pathDuration = waveInfos[currentWave].pathDuration;
+            }
         }
     }
 
@@ -179,9 +195,8 @@ public class GateController : MonoBehaviour
         if (!enemyPath.active)
         {
             enemyPath.SetActive(true);
-            targetPos = waypoints[waypointIndex].position;
         }
-
+        targetPos = waypoints[waypointIndex].position;
         targetPos.y = enemyPathRb.position.y;
         enemyPath.transform.LookAt(targetPos);
         var pos = enemyPathRb.position;
@@ -196,8 +211,6 @@ public class GateController : MonoBehaviour
             {
                 waypointIndex = 0;
                 enemyPath.transform.localPosition = initPos;
-                enemyPath.SetActive(false);
-                //return;
             }
             targetPos = waypoints[waypointIndex].position;
         }
