@@ -17,6 +17,7 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void Enter()
     {
+        enemyCtrl.transform.position = enemyCtrl.initPos;
         targetPos = wayPoint[enemyCtrl.waypointIndex].position;
     }
 

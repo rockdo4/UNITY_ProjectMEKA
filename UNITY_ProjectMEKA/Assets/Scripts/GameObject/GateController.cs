@@ -167,8 +167,6 @@ public class GateController : MonoBehaviour
 
     private void ShowEnemyPath()
     {
-        Debug.Log("ºÓ∆–Ω∫");
-
         if (!enemyPath.activeSelf)
         {
             enemyPath.SetActive(true);
@@ -185,7 +183,6 @@ public class GateController : MonoBehaviour
         var pos = enemyPathRb.position;
         pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
         enemyPathRb.MovePosition(pos);
-        Debug.Log(pos);
 
         if(Vector3.Distance(pos, targetPos) < threshold)
         {
