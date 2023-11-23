@@ -22,6 +22,9 @@ public class PanelManager : MonoBehaviour
 	public RectTransform gachaPanel;
 	private Vector3 gachaPos;
 
+	public RectTransform formationPanel;
+	private Vector3 formationPos;
+
 	private RectTransform previousPanel;
 	private Vector3 previousPos;
 
@@ -30,6 +33,7 @@ public class PanelManager : MonoBehaviour
 		mainPos = mainPanel.position;
 		characterWindowPos = characterWindowPanel.position;
 		gachaPos = gachaPanel.position;
+		formationPos = formationPanel.position;
 
 		previousPanel = mainPanel;
 		previousPos = mainPos;
@@ -54,6 +58,14 @@ public class PanelManager : MonoBehaviour
 		previousPos = gachaPos;
 		previousPanel = gachaPanel;
 		gachaPanel.position = mainPos;
+		mainPanel.position = previousPos;
+	}
+
+	public void ChangePanelFormation()
+	{
+		previousPos = formationPos;
+		previousPanel = formationPanel;
+		formationPanel.position = mainPos;
 		mainPanel.position = previousPos;
 	}
 }
