@@ -54,17 +54,17 @@ public class GateController : MonoBehaviour
     protected bool once = false;
 
     // 이동 경로
+    protected Vector3 initPos;
     protected GameObject enemyPath;
     protected Rigidbody enemyPathRb;
     public float pathSpeed;
     protected Vector3 targetPos = Vector3.zero;
     protected float threshold = 0.1f;
     protected int waypointIndex = 0;
-    protected Vector3 initPos;
     protected float pathDuration;
     protected bool pathDone = false;
 
-    protected void Awake()
+    virtual public void Awake()
     {
         // waypoints 할당
         var waypointParentsInMap = transform.parent.parent.GetComponentsInChildren<Waypoint>();
@@ -113,7 +113,7 @@ public class GateController : MonoBehaviour
         // enemyPath 연결
         enemyPath = transform.GetChild(1).gameObject;
         enemyPathRb = enemyPath.GetComponent<Rigidbody>();
-        initPos = enemyPathRb.position;
+        initPos = enemyPath.transform.localPosition;
         if (enemyPath == null)
         {
             Debug.Log("enemyPath gameObject is null");
@@ -122,11 +122,11 @@ public class GateController : MonoBehaviour
         pathDuration = waveInfos[currentWave].pathDuration;
     }
 
-    private void Start()
+    public void Start()
     {
     }
 
-    private void FixedUpdate()
+    virtual public void FixedUpdate()
     {
         // 웨이브 타이머
         if (currentWave >= waveInfos.Count)
@@ -159,6 +159,8 @@ public class GateController : MonoBehaviour
         pathDuration -= Time.deltaTime;
         if (pathDuration <= 0f && !pathDone)
         {
+            waypointIndex = 0;
+            enemyPath.transform.localPosition = initPos;
             enemyPath.SetActive(false);
             pathDone = true;
         }
@@ -224,6 +226,11 @@ public class GateController : MonoBehaviour
         {
             enemyPath.SetActive(true);
         }
+        if(!enemyPath.GetComponent<ParticleSystem>().isPlaying)
+        {
+            enemyPath.GetComponent<ParticleSystem>().Play();
+        }
+
         targetPos = waypoints[waypointIndex].position;
         targetPos.y = enemyPathRb.position.y;
         enemyPath.transform.LookAt(targetPos);
@@ -238,7 +245,10 @@ public class GateController : MonoBehaviour
             if(waypointIndex >= waypoints.Length)
             {
                 waypointIndex = 0;
+                targetPos = waypoints[waypointIndex].position;
                 enemyPath.transform.localPosition = initPos;
+                enemyPath.GetComponent<ParticleSystem>().Clear();
+                return;
             }
             targetPos = waypoints[waypointIndex].position;
         }
