@@ -12,9 +12,15 @@ public class ProjectileEffect : MonoBehaviour
     public GameObject flash;
     private Rigidbody rb;
     public GameObject[] Detached;
+    private float timer;
+    
+    //var obj = ObjectPoolManager.instance.GetGo("bullet");
 
+    //obj.GetComponent<PoolAble>().ReleaseObject();지우는것
     void Start()
     {
+        //obj = ObjectPoolManager.instance.GetGo("bullet");
+        
         rb = GetComponent<Rigidbody>();
         if (flash != null)
         {
@@ -34,9 +40,17 @@ public class ProjectileEffect : MonoBehaviour
                 Destroy(flashInstance, flashPsParts.main.duration);
             }
         }
-        Destroy(gameObject,5);
-	}
-
+        //Destroy(gameObject,5);
+        
+    }
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        if(timer > 5f )
+        {
+           // GetComponent<PoolAble>().ReleaseObject();
+        }
+    }
     void FixedUpdate ()
     {
 		if (speed != 0)
@@ -93,6 +107,11 @@ public class ProjectileEffect : MonoBehaviour
             }
         }
         //Destroy projectile on collision
-        Destroy(gameObject);
+        //Destroy(gameObject);
+
+        Debug.Log(gameObject.name, gameObject);
+        GetComponent<PoolAble>().ReleaseObject();
+        
+       
     }
 }
