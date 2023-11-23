@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -27,6 +28,7 @@ public class PlayableProjectileAttackState : PlayableBaseState
         if(timer > playerCtrl.state.attackDelay)
         {
             timer = 0;
+            playerCtrl.ani.SetTrigger("Attack");
             playerCtrl.Fire();
             playerCtrl.SetState(PlayerController.CharacterStates.Idle);
         }

@@ -9,7 +9,10 @@ public class PlayerController : MonoBehaviour
 {
     private PlayableStateManager stateManager = new PlayableStateManager();
     private List<PlayableBaseState> states = new List<PlayableBaseState>();
-    public GameObject projectilePrefab;
+    public GameObject FirePosition;
+    [HideInInspector]
+    public Animator ani;
+    
     private Vector3 CurrentPos;
 
     [HideInInspector]
@@ -34,7 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         state = GetComponent<CharacterState>();
         SetBlockCount();
-
+        ani = GetComponent<Animator>();
     }
     private void OnEnable()//인게임에서 배치할때 오브젝트풀링을 고려함
     {
@@ -136,12 +139,15 @@ public class PlayerController : MonoBehaviour
         if(target == null) return;
         //var obj = ObjectPoolManager.instance.GetGo("bullet");
         var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
-        obj.transform.position = transform.position; // 발사 위치 설정
-        obj.transform.rotation = transform.rotation; // 회전 초기화
+        //obj.transform.position = transform.position; // 발사 위치 설정
+        obj.transform.position = FirePosition.transform.position; // 발사 위치 설정
+        //obj.transform.rotation = transform.rotation; // 회전 초기화
+        obj.transform.rotation = FirePosition.transform.rotation; // 회전 초기화
         obj.SetActive(true); // 오브젝트 활성화
 
         obj.transform.LookAt(target.transform);
-        switch(state.BulletType)
+        
+        switch (state.BulletType)
         {
             case CharacterState.Type.Bullet:
                 var projectile = obj.GetComponent<Bullet>();
@@ -164,7 +170,7 @@ public class PlayerController : MonoBehaviour
             case CharacterState.Type.PiercingShot:
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
-                projectileP.StartPos = transform;
+                projectileP.StartPos = FirePosition.transform;
                 projectileP.Init();
                 //obj.transform.localPosition = gameObject.transform.position;
                 //obj.transform.localRotation = Quaternion.identity;
