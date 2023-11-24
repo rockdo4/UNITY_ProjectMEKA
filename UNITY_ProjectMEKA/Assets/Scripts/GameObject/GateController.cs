@@ -110,7 +110,7 @@ public class GateController : MonoBehaviour
     }
 
     // 몬스터 스폰 함수
-    private void SpawnEnemies()
+    virtual public void SpawnEnemies()
     {
         var enemyInfo = waveInfos[currentWave].enemySpawnInfos[currentEnemyType];
         var enemyName = enemyInfo.prefab.transform.GetChild(0).GetComponent<CharacterState>().enemyType.ToString();
@@ -156,13 +156,12 @@ public class GateController : MonoBehaviour
 
     virtual public void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo)
     {
-        enemyGo.transform.position = transform.position;
-        enemyGo.transform.GetChild(0).GetComponent<EnemyController>().wayPoint = waypoints;
-        enemyGo.transform.GetChild(0).GetComponent<CharacterState>().property = spawnInfo.attribute;
-        enemyGo.transform.GetChild(0).GetComponent<CharacterState>().level = spawnInfo.level;
-        enemyGo.transform.GetChild(0).GetComponent<EnemyController>().initPos = transform.position;
-        enemyGo.transform.GetChild(0).GetComponent<EnemyController>().moveType = spawnInfo.moveType;
-        enemyGo.transform.GetChild(0).GetComponent<EnemyController>().moveRepeatCount = spawnInfo.moveRepeat;
+        enemyGo.GetComponentInChildren<EnemyController>().wayPoint = waypoints;
+        enemyGo.GetComponentInChildren<EnemyController>().initPos = transform.position;
+        enemyGo.GetComponentInChildren<EnemyController>().moveType = spawnInfo.moveType;
+        enemyGo.GetComponentInChildren<EnemyController>().moveRepeatCount = spawnInfo.moveRepeat;
+        enemyGo.GetComponentInChildren<CharacterState>().property = spawnInfo.attribute;
+        enemyGo.GetComponentInChildren<CharacterState>().level = spawnInfo.level;
     }
 
     private void ShowEnemyPath()

@@ -61,9 +61,6 @@ public class HighGate : GateController
         // 타겟위치 초기화 & 이동가이드라인 타이머 초기화
         targetPos = waypoints[waypointIndex].position;
         pathDuration = waveInfos[currentWave].pathDuration;
-
-        Debug.Log(waypoints.Length);
-        Debug.Log(house);
     }
 
     protected override void FixedUpdate()
@@ -75,5 +72,57 @@ public class HighGate : GateController
     {
         base.SetEnemy(enemyGo, spawnInfo);
         enemyGo.transform.GetChild(0).GetComponent<Rigidbody>().useGravity = false;
+        //enemyGo.SetActive(false);
+        //enemyGo.SetActive(true);
+    }
+
+    public override void SpawnEnemies()
+    {
+        var enemyInfo = waveInfos[currentWave].enemySpawnInfos[currentEnemyType];
+        var enemyName = enemyInfo.prefab.transform.GetChild(0).GetComponent<CharacterState>().enemyType.ToString();
+        if (!firstGetPool)
+        {
+            var enemyGo = ObjectPoolManager.instance.GetGo(enemyName, transform.position);
+            Debug.Log($"공중 세팅 전 !!! {enemyGo.GetComponentInChildren<EnemyController>().initPos}, 현위치 : {enemyGo.transform.position}, {enemyGo.GetComponentInChildren<CharacterState>().property}, 웨이포인트 : {enemyGo.GetComponentInChildren<EnemyController>().wayPoint[0]}");
+
+            SetEnemy(enemyGo, enemyInfo);
+            Debug.Log($"공중 세팅 후 !!! {enemyGo.GetComponentInChildren<EnemyController>().initPos}, 현위치 : {enemyGo.transform.position},{enemyGo.GetComponentInChildren<CharacterState>().property}, 웨이포인트 : {enemyGo.GetComponentInChildren<EnemyController>().wayPoint[0]}");
+
+            currentEnemyCount++;
+            firstGetPool = true;
+        }
+
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer < waveInfos[currentWave].enemySpawnInfos[currentEnemyType].interval)
+            return;
+
+        var enemy = ObjectPoolManager.instance.GetGo(enemyName, transform.position);
+        Debug.Log($"공중 get 직후 !!! {enemy.GetComponentInChildren<EnemyController>().initPos}, 현위치 {enemy.transform.position}, {enemy.GetComponentInChildren<CharacterState>().property}, 웨이포인트 : {enemy.GetComponentInChildren<EnemyController>().wayPoint[0]}");
+        SetEnemy(enemy, enemyInfo);
+        Debug.Log($"공중 세팅 후 !!! {enemy.GetComponentInChildren<EnemyController>().initPos}, 현위치 {enemy.transform.position}, {enemy.GetComponentInChildren<CharacterState>().property}, 웨이포인트 : {enemy.GetComponentInChildren<EnemyController>().wayPoint[0]}");
+
+        currentEnemyCount++;
+        spawnTimer = 0f;
+
+        if (currentEnemyCount >= enemyInfo.count)
+        {
+            currentEnemyCount = 0;
+            currentEnemyType++;
+        }
+
+        if (currentEnemyType >= waveInfos[currentWave].enemySpawnInfos.Count)
+        {
+            waveTimer = waveInfos[currentWave].waveInterval;
+
+            currentWave++;
+            currentEnemyType = 0;
+            pathDone = false;
+            firstGetPool = false;
+            if (currentWave < waveInfos.Count)
+            {
+                pathDuration = waveInfos[currentWave].pathDuration;
+            }
+        }
+
     }
 }
