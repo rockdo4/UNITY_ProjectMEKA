@@ -102,6 +102,8 @@ public class FormationManager : MonoBehaviour
 	//편성 프리셋 바꾸기
 	public void ChangeFormationSet(int formationListIndex)
 	{
+		if (selectedFormationList == formationListIndex) return;
+
 		selectedFormationList = formationListIndex;
 		for (int i = 0; i < numberOfCharacters; i++)
 		{
@@ -136,10 +138,24 @@ public class FormationManager : MonoBehaviour
 	{
 		//카드정보 바꿈
 		var cardInfo = characterCard[selectedFormationIndex].GetComponent<CardInfo>();
-		cardInfo.ChangeCardId(selectedCharacterID);
+		bool isDuplication = false;
 
-		//리스트 바꿈
-		formationList[selectedFormationList][selectedFormationIndex] = selectedCharacterID;
+		for (int i = 0; i < numberOfCharacters; i++)
+		{
+			if (formationList[selectedFormationList][i] == selectedCharacterID)
+			{
+				isDuplication = true;
+			}
+		}
+
+		if(!isDuplication)
+		{
+			//카드 글자 바꿈
+			cardInfo.ChangeCardId(selectedCharacterID);
+
+			//selectedFormationList프리셋에 selectedFormationIndex인덱스의 아이디 바꿈
+			formationList[selectedFormationList][selectedFormationIndex] = selectedCharacterID;
+		}
 
 		//닫음
 		CloseCharacterList();
@@ -165,5 +181,14 @@ public class FormationManager : MonoBehaviour
 	public void ResetSelectCharacterCard()
 	{
 		selectedCharacterID = 0;
+	}
+
+	public void OnClickDeleteCurrentFormation()
+	{
+		for (int i = 0; i < numberOfCharacters; i++)
+		{
+			formationList[selectedFormationList][i] = 0;
+			characterCard[i].GetComponent<CardInfo>().ChangeCardId(0);
+		}
 	}
 }
