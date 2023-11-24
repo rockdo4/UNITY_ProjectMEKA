@@ -11,4 +11,9 @@ public class PoolAble : MonoBehaviour
     {
         Pool.Release(gameObject);
     }
+
+    public void ReleaseObject(float timer)
+    {
+        Invoke("ReleaseObject", timer);
+    }
 }

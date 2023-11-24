@@ -51,6 +51,11 @@ public class CharacterState : MonoBehaviour
     [SerializeField, Header("발사체 타입")]
     public Type BulletType;
 
+    [SerializeField, Header("발사할때 이팩트")]
+    public string flashName;
+
+    [SerializeField, Header("맞았을때 이팩트")]
+    public string hitName;
 
     [HideInInspector]
     public int level;//레벨

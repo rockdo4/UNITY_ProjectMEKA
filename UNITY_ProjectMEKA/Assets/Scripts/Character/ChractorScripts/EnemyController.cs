@@ -15,13 +15,13 @@ public class EnemyController : MonoBehaviour
     public Rigidbody rb;
     //[HideInInspector]
     public Vector3 initPos;
-    [HideInInspector]
+    //[HideInInspector]
     public int waypointIndex = 0;
-    [HideInInspector]
+    //[HideInInspector]
     public Defines.MoveType moveType;
     [HideInInspector]
     public int moveRepeatCount;
-    [HideInInspector]
+    //[HideInInspector]
     public Transform[] wayPoint;
 
     [HideInInspector]

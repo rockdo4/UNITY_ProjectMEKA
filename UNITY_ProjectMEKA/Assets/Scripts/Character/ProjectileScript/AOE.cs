@@ -19,38 +19,38 @@ public class AOE : MonoBehaviour
     private float timer;
     public bool isReleased = false;
     public float maxSpeed = 15f;
+    public GameObject Player;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
-    void Start()
-    {
-
-        if (flash != null)
-        {
-            //발사체 위치에 대한 플래시 효과 인스턴스화
-            var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
-            flashInstance.transform.forward = gameObject.transform.forward;
-
-            //입자 지속 시간에 따라 플래시 효과 파괴
-            var flashPs = flashInstance.GetComponent<ParticleSystem>();
-            if (flashPs != null)
-            {
-                Destroy(flashInstance, flashPs.main.duration);
-            }
-            else
-            {
-                var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                Destroy(flashInstance, flashPsParts.main.duration);
-            }
-        }
-        //Destroy(gameObject,5);
-
-    }
+    
     private void OnEnable()
     {
         speed = maxSpeed;
         rb.constraints = RigidbodyConstraints.None;
+        if (flash != null)
+        {
+            Debug.Log("P Not Null");
+            var flahObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.flashName);
+            flahObj.transform.position = transform.position;
+            flahObj.transform.forward = gameObject.transform.forward;
+            var flashPs = flahObj.GetComponent<ParticleSystem>();
+            flahObj.SetActive(false);
+            flahObj.SetActive(true);
+            if (flashPs != null)
+            {
+                Debug.Log("Returne Not Null");
+                flashPs.GetComponent<PoolAble>().ReleaseObject(flashPs.main.duration);
+            }
+            else
+            {
+                Debug.Log("Returne Null");
+
+                var flashPsParts = flahObj.transform.GetChild(0).GetComponent<ParticleSystem>();
+                flashPs.GetComponent<PoolAble>().ReleaseObject(flashPsParts.main.duration);
+            }
+        }
     }
     void FixedUpdate()
     {
@@ -131,30 +131,38 @@ public class AOE : MonoBehaviour
             //Spawn hit effect on collision충돌 시 스펀 적중 효과
             if (hit != null)
             {
-                var hitInstance = Instantiate(hit, pos, rot);
+                //var hitInstance = Instantiate(hit, pos, rot);
+
+                var hitObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.hitName);
+                hitObj.transform.position = pos;
+                hitObj.transform.rotation = rot;
                 if (UseFirePointRotation)
                 {
-                    hitInstance.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0);
+                    hitObj.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0);
                 }
                 else if (rotationOffset != Vector3.zero)
                 {
-                    hitInstance.transform.rotation = Quaternion.Euler(rotationOffset);
+                    hitObj.transform.rotation = Quaternion.Euler(rotationOffset);
                 }
                 else
                 {
-                    hitInstance.transform.LookAt(contact.point + contact.normal);
+                    hitObj.transform.LookAt(contact.point + contact.normal);
                 }
+                hitObj.SetActive(false);
+                hitObj.SetActive(true);
 
                 //Destroy hit effects depending on particle Duration time입자 지속 시간에 따른 적중 효과 파괴
-                var hitPs = hitInstance.GetComponent<ParticleSystem>();
+                var hitPs = hitObj.GetComponent<ParticleSystem>();
                 if (hitPs != null)
                 {
-                    Destroy(hitInstance, hitPs.main.duration);
+                    //Destroy(hitObj, hitPs.main.duration);
+                    hitObj.GetComponent<PoolAble>().ReleaseObject(hitPs.main.duration);
                 }
                 else
                 {
-                    var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                    Destroy(hitInstance, hitPsParts.main.duration);
+                    var hitPsParts = hitObj.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    //Destroy(hitObj, hitPsParts.main.duration);
+                    hitObj.GetComponent<PoolAble>().ReleaseObject(hitPsParts.main.duration);
                 }
             }
 
@@ -177,6 +185,7 @@ public class AOE : MonoBehaviour
 
         }
     }
+    
     private void ReleaseObject()
     {
         if (isReleased)

@@ -150,36 +150,35 @@ public class PlayerController : MonoBehaviour
             case CharacterState.Type.Bullet:
                 var projectile = obj.GetComponent<Bullet>();
                 projectile.ResetState();
-                obj.transform.localPosition = gameObject.transform.position;
-                obj.transform.localRotation = Quaternion.identity;
-                projectile.transform.LookAt(target.transform.position);
+                obj.transform.position = FirePosition.transform.position;
+                obj.transform.rotation = FirePosition.transform.rotation;
                 projectile.damage = state.damage;
                 projectile.target = target.transform;
+                projectile.Player = gameObject;
+                obj.SetActive(false);
+                obj.SetActive(true);
                 break;
             case CharacterState.Type.Aoe:
                 var projectileA = obj.GetComponent<AOE>();
                 projectileA.ResetState();
-                obj.transform.localPosition = gameObject.transform.position;
-                obj.transform.localRotation = Quaternion.identity;
-                projectileA.transform.LookAt(target.transform.position);
+                obj.transform.position = FirePosition.transform.position;
+                obj.transform.rotation = FirePosition.transform.rotation;
                 projectileA.damage = state.damage;
                 projectileA.target = target.transform;
+                projectileA.Player = gameObject;
+                obj.SetActive(false);
+                obj.SetActive(true);
                 break;
             case CharacterState.Type.PiercingShot:
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
-                //projectileP.StartPos = FirePosition.transform;
-                //projectileP.Init();
                 obj.transform.position = FirePosition.transform.position;
-                //obj.transform.LookAt(target.transform);
-                //obj.transform.rotation = Quaternion.identity*new Quaternion(90,90,0,0);
                 obj.transform.rotation = FirePosition.transform.rotation;
-                ////projectileP.transform.LookAt(target.transform.position);
                 projectileP.damage = state.damage;
                 projectileP.target = target.transform;
-                //projectileP.StartPos = transform;
+                projectileP.Player = gameObject;
                 obj.SetActive(false);
-                obj.SetActive(true); // 오브젝트 활성화
+                obj.SetActive(true);
                 break;
         }
         
