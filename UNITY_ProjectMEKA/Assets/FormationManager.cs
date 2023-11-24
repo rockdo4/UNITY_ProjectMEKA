@@ -11,6 +11,7 @@ public class FormationManager : MonoBehaviour
 
 	public RectTransform formationPanel;
 	public RectTransform characterPanel;
+	public RectTransform characterCardScrollView;
 	public Button[] characterCard; 
 
 	private List<int[]> formationList;
@@ -35,7 +36,7 @@ public class FormationManager : MonoBehaviour
 		{
 			characterCard[i].onClick.AddListener(() =>
 			{
-				
+				characterPanel.gameObject.SetActive(true);
 			}
 			);
 		}
@@ -61,4 +62,6 @@ public class FormationManager : MonoBehaviour
 	{
 
 	}
+
+
 }
