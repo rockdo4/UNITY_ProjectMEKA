@@ -89,6 +89,10 @@ public class AOE : MonoBehaviour
             transform.position += pos.normalized * speed * Time.deltaTime;
             //Destroy(gameObject, 1f);
         }
+        if(!target.gameObject.activeSelf)
+        {
+            ReleaseObject();
+        }
 
     }
     void OnCollisionEnter(Collision collision)

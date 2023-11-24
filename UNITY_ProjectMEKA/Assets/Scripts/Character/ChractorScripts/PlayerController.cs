@@ -169,9 +169,9 @@ public class PlayerController : MonoBehaviour
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
                 projectileP.StartPos = FirePosition.transform;
-                projectileP.Init();
-                //obj.transform.localPosition = gameObject.transform.position;
-                //obj.transform.localRotation = Quaternion.identity;
+                //projectileP.Init();
+                obj.transform.localPosition = gameObject.transform.position;
+                obj.transform.localRotation = Quaternion.identity;
                 ////projectileP.transform.LookAt(target.transform.position);
                 projectileP.damage = state.damage;
                 projectileP.target = target.transform;
@@ -195,5 +195,4 @@ public class PlayerController : MonoBehaviour
             heal.OnHealing(1f*state.damage);
         }
     }
-    
 }
