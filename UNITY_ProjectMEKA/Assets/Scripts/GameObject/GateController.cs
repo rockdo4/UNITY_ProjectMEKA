@@ -167,25 +167,27 @@ public class GateController : MonoBehaviour
 
         if (currentEnemyCount >= enemyInfo.count)
         {
+            Debug.Log("다음 종류로!");
             currentEnemyCount = 0;
             currentEnemyType++;
-        }
-
-        if (currentEnemyType >= waveInfos[currentWave].enemySpawnInfos.Count)
-        {
-            waveTimer = waveInfos[currentWave].waveInterval;
-
-            currentWave++;
-            currentEnemyType = 0;
-            pathDone = false;
-            firstGetPool = false;
-            if (currentWave < waveInfos.Count)
+            if (currentEnemyType >= waveInfos[currentWave].enemySpawnInfos.Count)
             {
-                pathDuration = waveInfos[currentWave].pathDuration;
-            }
-        }
+                Debug.Log("다음 웨이브로!");
+                waveTimer = waveInfos[currentWave].waveInterval;
 
-        if (currentWave < waveInfos.Count)
+                currentWave++;
+                currentEnemyType = 0;
+                currentEnemyCount = 0;
+                pathDone = false;
+                firstGetPool = false;
+                if (currentWave < waveInfos.Count)
+                {
+                    pathDuration = waveInfos[currentWave].pathDuration;
+                }
+            }
+            return;
+        }
+        else if (currentWave < waveInfos.Count)
         {
             var enemy = ObjectPoolManager.instance.GetGo(enemyName);
             SetEnemy(enemy, enemyInfo);
@@ -195,8 +197,8 @@ public class GateController : MonoBehaviour
             }
 
             currentEnemyCount++;
-            spawnTimer = 0f;
         }
+        spawnTimer = 0f;
     }
 
 

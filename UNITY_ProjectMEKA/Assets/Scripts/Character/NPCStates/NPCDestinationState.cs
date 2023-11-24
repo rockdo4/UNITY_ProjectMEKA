@@ -164,7 +164,6 @@ public class NPCDestinationStates : NPCBaseState
             }
             else if(enemyCtrl.waypointIndex == enemyCtrl.wayPoint.Length - 1)
             {
-                Debug.Log("마지막 웨이포인트");
                 enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
                 return;
             }

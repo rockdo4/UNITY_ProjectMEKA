@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour
     public Vector3 initPos;
     //[HideInInspector]
     public int waypointIndex = 0;
-    [HideInInspector]
+    //[HideInInspector]
     public Defines.MoveType moveType;
     [HideInInspector]
     public int moveRepeatCount;
