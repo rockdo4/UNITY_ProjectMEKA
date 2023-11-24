@@ -9717,8 +9717,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 425983737591449982}
   - {fileID: 2112515345354571418}
@@ -14687,15 +14687,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b4dd4a92bf57424cbc6c2aba0fea544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
   target: {fileID: 0}
   damage: 0
+  pos: {x: 0, y: 0, z: 0}
+  maxSpeed: 15
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
   hit: {fileID: 1493225883543534, guid: 245bf6b0acdf9474ca212c5a4f28b2ce, type: 3}
   flash: {fileID: 1633242581645256, guid: 51e88bfc3811dab48ac0c06617654e1a, type: 3}
   Detached: []
+  isReleased: 0
 --- !u!54 &2728062326036607388
 Rigidbody:
   m_ObjectHideFlags: 0

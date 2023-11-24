@@ -56,15 +56,14 @@ public class PiercingShot : MonoBehaviour
 
 
     }
-    //public void Init()
-    //{
-    //    rb = GetComponent<Rigidbody>();
-    //    speed = maxSpeed;
-    //    rb.constraints = RigidbodyConstraints.None;
-    //    saveTarget = target;
-
-    //    gameObject.transform.position = StartPos.position;
-    //}
+    public void Init()
+    {
+        //rb = GetComponent<Rigidbody>();
+        speed = maxSpeed;
+        rb.constraints = RigidbodyConstraints.None;
+        saveTarget = target;
+        //gameObject.transform.position = StartPos.position;
+    }
     void FixedUpdate()
     {
         

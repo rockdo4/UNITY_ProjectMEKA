@@ -6,7 +6,7 @@ public class CanDie : MonoBehaviour
 {
     
     private CharacterState state;
-
+    
     private void Awake()
     {
         state = GetComponent<CharacterState>();
@@ -16,6 +16,7 @@ public class CanDie : MonoBehaviour
         if(state.Hp <= 0f)
         {
             Destroy(gameObject);
+            //GetComponent<PoolAble>().ReleaseObject();
         }
     }
 }

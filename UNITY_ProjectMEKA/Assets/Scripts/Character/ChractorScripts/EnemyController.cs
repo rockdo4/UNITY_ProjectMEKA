@@ -24,6 +24,9 @@ public class EnemyController : MonoBehaviour
     [HideInInspector]
     public Transform[] wayPoint;
 
+    [HideInInspector]
+    public Animator ani;
+
     public CharacterState state;
     public GameObject target;
 
@@ -53,6 +56,7 @@ public class EnemyController : MonoBehaviour
     {
         state = GetComponent<CharacterState>();
         rb = GetComponent<Rigidbody>();
+        ani = GetComponent<Animator>();
     }
     
     void Start()
