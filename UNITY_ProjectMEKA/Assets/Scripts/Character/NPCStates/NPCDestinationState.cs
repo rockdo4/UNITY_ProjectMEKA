@@ -18,16 +18,10 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void Enter()
     {
-        // 공중유닛일 때 엔터
-        if (enemyCtrl.gameObject.GetComponent<CharacterState>().property == Defines.Property.Prime)
-        {
-            Debug.Log($"지상 엔터");
-        }
         enemyCtrl.transform.position = enemyCtrl.initPos;
         targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
         targetPos.y = enemyCtrl.transform.position.y;
         enemyCtrl.transform.LookAt(targetPos);
-        Debug.Log($"targetPos {targetPos}, waypoints {enemyCtrl.wayPoint.Length}");
         speed = enemyCtrl.gameObject.GetComponent<CharacterState>().speed;
     }
 

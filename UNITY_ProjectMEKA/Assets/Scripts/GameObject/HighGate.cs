@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
+using static EnemyController;
 
 public class HighGate : GateController
 {
@@ -72,8 +73,6 @@ public class HighGate : GateController
     {
         base.SetEnemy(enemyGo, spawnInfo);
         enemyGo.transform.GetChild(0).GetComponent<Rigidbody>().useGravity = false;
-        //enemyGo.SetActive(false);
-        //enemyGo.SetActive(true);
     }
 
     public override void SpawnEnemies()
@@ -82,11 +81,9 @@ public class HighGate : GateController
         var enemyName = enemyInfo.prefab.transform.GetChild(0).GetComponent<CharacterState>().enemyType.ToString();
         if (!firstGetPool)
         {
-            var enemyGo = ObjectPoolManager.instance.GetGo(enemyName, transform.position);
-            Debug.Log($"공중 세팅 전 !!! {enemyGo.GetComponentInChildren<EnemyController>().initPos}, 현위치 : {enemyGo.transform.position}, {enemyGo.GetComponentInChildren<CharacterState>().property}, 웨이포인트 : {enemyGo.GetComponentInChildren<EnemyController>().wayPoint[0]}");
-
+            var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
             SetEnemy(enemyGo, enemyInfo);
-            Debug.Log($"공중 세팅 후 !!! {enemyGo.GetComponentInChildren<EnemyController>().initPos}, 현위치 : {enemyGo.transform.position},{enemyGo.GetComponentInChildren<CharacterState>().property}, 웨이포인트 : {enemyGo.GetComponentInChildren<EnemyController>().wayPoint[0]}");
+            enemyGo.GetComponentInChildren<EnemyController>().SetState(NPCStates.Move);
 
             currentEnemyCount++;
             firstGetPool = true;
@@ -96,10 +93,9 @@ public class HighGate : GateController
         if (spawnTimer < waveInfos[currentWave].enemySpawnInfos[currentEnemyType].interval)
             return;
 
-        var enemy = ObjectPoolManager.instance.GetGo(enemyName, transform.position);
-        Debug.Log($"공중 get 직후 !!! {enemy.GetComponentInChildren<EnemyController>().initPos}, 현위치 {enemy.transform.position}, {enemy.GetComponentInChildren<CharacterState>().property}, 웨이포인트 : {enemy.GetComponentInChildren<EnemyController>().wayPoint[0]}");
+        var enemy = ObjectPoolManager.instance.GetGo(enemyName);
         SetEnemy(enemy, enemyInfo);
-        Debug.Log($"공중 세팅 후 !!! {enemy.GetComponentInChildren<EnemyController>().initPos}, 현위치 {enemy.transform.position}, {enemy.GetComponentInChildren<CharacterState>().property}, 웨이포인트 : {enemy.GetComponentInChildren<EnemyController>().wayPoint[0]}");
+        enemy.GetComponentInChildren<EnemyController>().SetState(NPCStates.Move);
 
         currentEnemyCount++;
         spawnTimer = 0f;

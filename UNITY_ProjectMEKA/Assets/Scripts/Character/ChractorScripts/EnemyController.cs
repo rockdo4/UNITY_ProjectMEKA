@@ -42,11 +42,8 @@ public class EnemyController : MonoBehaviour
     }
     private void OnEnable()
     {
-        Debug.Log($"유닛 OnEnable");
-        // 11.22, 김민지, enemy 재활용 시 move상태 enter 함수 호출용도
         if (states.Count != 0)
         {
-            Debug.Log($"공중 state.count != 0");
             SetState(NPCStates.Move);
         }
     }

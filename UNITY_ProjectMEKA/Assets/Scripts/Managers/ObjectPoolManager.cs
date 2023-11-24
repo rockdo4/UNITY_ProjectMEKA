@@ -119,19 +119,4 @@ public class ObjectPoolManager : MonoBehaviour
 
         return ojbectPoolDic[goName].Get();
     }
-
-    public GameObject GetGo(string goName, Vector3 position)
-    {
-        objectName = goName;
-
-        if (goDic.ContainsKey(goName) == false)
-        {
-            //Debug.LogFormat("{0} 오브젝트풀에 등록되지 않은 오브젝트입니다.", goName);
-            return null;
-        }
-        var go = ojbectPoolDic[goName].Get();
-        go.transform.position = position;
-
-        return go;
-    }
 }
