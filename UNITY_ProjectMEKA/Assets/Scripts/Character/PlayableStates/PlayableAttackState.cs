@@ -27,7 +27,8 @@ public class PlayableAttackState : PlayableBaseState
         if (timer > playerCtrl.state.attackDelay)
         {
             timer = 0;
-            playerCtrl.Hit();//test
+            //playerCtrl.Hit();//test
+            playerCtrl.ani.SetTrigger("Attack");
         }
         if(playerCtrl.target == null)//현재 때리고 있는 적이 죽으면 상태 변경
         {

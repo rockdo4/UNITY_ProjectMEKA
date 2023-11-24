@@ -14612,7 +14612,6 @@ GameObject:
   - component: {fileID: 8252318066921787340}
   - component: {fileID: 5524711462661340862}
   - component: {fileID: 1787146304925205474}
-  - component: {fileID: 4025578425838720670}
   - component: {fileID: 3940834654197720603}
   - component: {fileID: 6662156488667709224}
   m_Layer: 0
@@ -19620,25 +19619,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &4025578425838720670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3038525519088626646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b30eefb799178e4098da99538072ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 15
-  hitOffset: 0.1
-  UseFirePointRotation: 0
-  rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1767841913861676, guid: 7e33fe33aff4f49449f51ed88f138e9c, type: 3}
-  flash: {fileID: 1840367976591474, guid: e9d1f52e709876143b75f93f52a48156, type: 3}
-  Detached: []
 --- !u!114 &3940834654197720603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19654,6 +19634,14 @@ MonoBehaviour:
   speed: 10
   target: {fileID: 0}
   damage: 0
+  hitOffset: 0.1
+  UseFirePointRotation: 0
+  rotationOffset: {x: 0, y: 0, z: 0}
+  hit: {fileID: 1767841913861676, guid: 7e33fe33aff4f49449f51ed88f138e9c, type: 3}
+  flash: {fileID: 1840367976591474, guid: e9d1f52e709876143b75f93f52a48156, type: 3}
+  Detached: []
+  isReleased: 0
+  maxSpeed: 15
 --- !u!114 &6662156488667709224
 MonoBehaviour:
   m_ObjectHideFlags: 0

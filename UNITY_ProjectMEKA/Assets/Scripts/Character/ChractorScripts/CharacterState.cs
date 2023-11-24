@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class CharacterState : MonoBehaviour
 {
+    public enum Type
+    {
+        Bullet,
+        Aoe,
+        PiercingShot,
+    }
+
     [SerializeField, Header("적 타입 설정")]
     public Defines.EnemyType enemyType;
     
@@ -37,6 +44,13 @@ public class CharacterState : MonoBehaviour
 
     [SerializeField, Header("경험치량 설정 몬스터 전용")]
     public int exp;
+
+    [SerializeField, Header("원거리 타입일시 장착할 발사체")]
+    public string BulletName;
+
+    [SerializeField, Header("발사체 타입")]
+    public Type BulletType;
+
 
     [HideInInspector]
     public int level;//레벨

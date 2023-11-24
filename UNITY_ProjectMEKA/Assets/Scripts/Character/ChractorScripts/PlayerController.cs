@@ -9,7 +9,10 @@ public class PlayerController : MonoBehaviour
 {
     private PlayableStateManager stateManager = new PlayableStateManager();
     private List<PlayableBaseState> states = new List<PlayableBaseState>();
-    public GameObject projectilePrefab;
+    public GameObject FirePosition;
+    [HideInInspector]
+    public Animator ani;
+    
     private Vector3 CurrentPos;
 
     [HideInInspector]
@@ -34,7 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         state = GetComponent<CharacterState>();
         SetBlockCount();
-
+        ani = GetComponent<Animator>();
     }
     private void OnEnable()//인게임에서 배치할때 오브젝트풀링을 고려함
     {
@@ -83,7 +86,7 @@ public class PlayerController : MonoBehaviour
         take.OnAttack(state.damage + Rockpaperscissors());
         
     }
-    public float Rockpaperscissors()
+    public float Rockpaperscissors()//상성
     {
         float compatibility = state.damage * 0.1f;
 
@@ -130,59 +133,55 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    //var obj = ObjectPoolManager.instance.GetGo("bullet");
-
-    //obj.GetComponent<PoolAble>().ReleaseObject();지우는것
+    
     public void Fire()
     {
-        //GameObject projectileObject = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        //projectileObject.transform.LookAt(target.transform.position);
-
-        //Bullet projectile = projectilePrefab.GetComponent<Bullet>();
-        //if (projectile == null)
-        //{
-        //    AOE boom = projectilePrefab.GetComponent<AOE>();
-        //    if (boom == null)
-        //    {
-        //        PiercingShot piercingShot = projectilePrefab.GetComponent<PiercingShot>();
-        //        var objp = ObjectPoolManager.instance.GetGo("sp");
-        //        objp.transform.LookAt(target.transform.position);
-        //        piercingShot.damage = state.damage;
-        //        piercingShot.target = target.transform;
-        //        return;
-        //    }
-        //    var obja = ObjectPoolManager.instance.GetGo("aoe");
-        //    obja.transform.LookAt(target.transform.position);
-        //    boom.damage = state.damage;
-        //    boom.target = target.transform;
-        //    return;
-        //}
+        if(target == null) return;
         //var obj = ObjectPoolManager.instance.GetGo("bullet");
-        //obj.transform.LookAt(target.transform.position);
-        //projectile.damage = state.damage;
-        //projectile.target = target.transform;
+        var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
+        //obj.transform.position = transform.position; // 발사 위치 설정
+        obj.transform.position = FirePosition.transform.position; // 발사 위치 설정
+        //obj.transform.rotation = transform.rotation; // 회전 초기화
+        obj.transform.rotation = FirePosition.transform.rotation; // 회전 초기화
+        obj.SetActive(true); // 오브젝트 활성화
 
-
-        GameObject projectileObject = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        projectileObject.transform.LookAt(target.transform.position);
-
-        Bullet projectile = projectileObject.GetComponent<Bullet>();
-        if (projectile == null)
+        obj.transform.LookAt(target.transform);
+        
+        switch (state.BulletType)
         {
-            AOE boom = projectileObject.GetComponent<AOE>();
-            if (boom == null)
-            {
-                PiercingShot piercingShot = projectileObject.GetComponent<PiercingShot>();
-                piercingShot.damage = state.damage;
-                piercingShot.target = target.transform;
-                return;
-            }
-            boom.damage = state.damage;
-            boom.target = target.transform;
-            return;
+            case CharacterState.Type.Bullet:
+                var projectile = obj.GetComponent<Bullet>();
+                projectile.ResetState();
+                obj.transform.localPosition = gameObject.transform.position;
+                obj.transform.localRotation = Quaternion.identity;
+                projectile.transform.LookAt(target.transform.position);
+                projectile.damage = state.damage;
+                projectile.target = target.transform;
+                break;
+            case CharacterState.Type.Aoe:
+                var projectileA = obj.GetComponent<AOE>();
+                projectileA.ResetState();
+                obj.transform.localPosition = gameObject.transform.position;
+                obj.transform.localRotation = Quaternion.identity;
+                projectileA.transform.LookAt(target.transform.position);
+                projectileA.damage = state.damage;
+                projectileA.target = target.transform;
+                break;
+            case CharacterState.Type.PiercingShot:
+                var projectileP = obj.GetComponent<PiercingShot>();
+                projectileP.ResetState();
+                projectileP.StartPos = FirePosition.transform;
+                projectileP.Init();
+                //obj.transform.localPosition = gameObject.transform.position;
+                //obj.transform.localRotation = Quaternion.identity;
+                ////projectileP.transform.LookAt(target.transform.position);
+                projectileP.damage = state.damage;
+                projectileP.target = target.transform;
+                //projectileP.StartPos = transform;
+                break;
         }
-        projectile.damage = state.damage;
-        projectile.target = target.transform;
+        
+
     }
 
     public void Healing()
@@ -198,15 +197,5 @@ public class PlayerController : MonoBehaviour
             heal.OnHealing(1f*state.damage);
         }
     }
-    public void OnDrawGizmos()
-    {
-        if (state != null)
-        {
-            Gizmos.color = Color.red;
-            Vector3 endPos = transform.position + transform.forward * state.range;
-
-            Gizmos.DrawLine(transform.position,  endPos);
-        }
-        
-    }
+    
 }

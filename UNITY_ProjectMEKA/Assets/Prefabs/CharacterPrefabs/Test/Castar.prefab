@@ -33,8 +33,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.760631, y: -0.010670662, z: -0.75787294}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1883147500732198968}
   m_Father: {fileID: 0}
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 4500862388123256150, guid: 3c3cd9b27a391ad4689f1686cd6f8a56, type: 3}
+  CurrentGridPos: {x: 0, y: 0, z: 0}
   state: {fileID: 0}
   target: {fileID: 0}
   blockCount: 0
@@ -170,6 +171,7 @@ MonoBehaviour:
   occupation: 2
   maxHp: 10
   amror: 0
+  speed: 0
   cooldown: 0
   range: 7
   damage: 10

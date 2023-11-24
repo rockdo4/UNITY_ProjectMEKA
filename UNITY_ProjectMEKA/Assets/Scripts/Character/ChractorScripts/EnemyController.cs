@@ -27,7 +27,9 @@ public class EnemyController : MonoBehaviour
     public CharacterState state;
     public GameObject target;
 
-    private Vector3 CurrentPos;
+
+
+    public Vector3 CurrentPos;
     [HideInInspector]
     public Vector3Int CurrentGridPos;//유니티 상 현제 위치의  타일위치
 
