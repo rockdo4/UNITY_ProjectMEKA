@@ -8,11 +8,12 @@ public class CardInfo : MonoBehaviour
 {
 	private Image cardImage;
 	private TextMeshProUGUI cardText;
-	private int cardID = -1;
+	private int cardID = 0;
 
 	private void Awake()
 	{
 		cardImage = GetComponent<Image>();
+		cardText = GetComponentInChildren<TextMeshProUGUI>();
 	}
 
 	public void ChangeCardId(int id)
@@ -22,13 +23,18 @@ public class CardInfo : MonoBehaviour
 
 		if(info != null)
 		{
-			cardImage.sprite = default;
+			//cardImage.sprite = default;
 			cardText.SetText($"{info.Name}");
 		}
 		else
 		{
-			cardImage.sprite = default;
+			//cardImage.sprite = default;
 			cardText.SetText("None");
 		}
+	}
+
+	public int GetCardID()
+	{
+		return cardID;
 	}
 }

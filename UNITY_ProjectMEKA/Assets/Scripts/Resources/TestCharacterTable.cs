@@ -62,12 +62,12 @@ public class TestCharacterTable : DataTable
 
 	public TestCharacterInfo GetCharacterData(int ID)
 	{
-		var data = testCharDict[ID];
-		if (data == null)
+		if(testCharDict.ContainsKey(ID))
 		{
-			return null;
+			var data = testCharDict[ID];
+			return data;
 		}
-		return data;
+		return null;
 	}
 
 	public Dictionary<int, TestCharacterInfo> GetOriginalTable()
