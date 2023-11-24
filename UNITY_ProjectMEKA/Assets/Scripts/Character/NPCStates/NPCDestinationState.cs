@@ -17,7 +17,6 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void Enter()
     {
-        Debug.Log("�̵����� enter");
         enemyCtrl.transform.position = enemyCtrl.initPos;
         targetPos = wayPoint[enemyCtrl.waypointIndex].position;
     }

@@ -68,4 +68,9 @@ public class PanelManager : MonoBehaviour
 		formationPanel.position = mainPos;
 		mainPanel.position = previousPos;
 	}
+
+	public void LoadBattleScene()
+	{
+		UnityEngine.SceneManagement.SceneManager.LoadScene("CharacterTestEnemySecen");
+	}
 }
