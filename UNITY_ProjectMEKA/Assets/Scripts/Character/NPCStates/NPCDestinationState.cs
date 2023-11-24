@@ -37,8 +37,10 @@ public class NPCDestinationStates : NPCBaseState
             case Defines.MoveType.AutoTile:
                 break;
             case Defines.MoveType.Waypoint:
-            case Defines.MoveType.Straight:
                 MoveEnemyWaypoint();
+                break;
+            case Defines.MoveType.Straight:
+                MoveEnemyStraight();
                 break;
             case Defines.MoveType.WaypointRepeat:
                 MoveEnemyRepeat(enemyCtrl.moveRepeatCount);
@@ -104,17 +106,35 @@ public class NPCDestinationStates : NPCBaseState
 
         if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
         {
-            if (enemyCtrl.waypointIndex >= enemyCtrl.wayPoint.Length)
+            if (enemyCtrl.waypointIndex >= enemyCtrl.wayPoint.Length - 1)
             {
-                enemyCtrl.waypointIndex = 0;
-                enemyCtrl.transform.position = enemyCtrl.initPos;
+                //enemyCtrl.waypointIndex = 0;
+                //enemyCtrl.transform.position = enemyCtrl.initPos;
                 enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
-                return;
             }
-            targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
-            enemyCtrl.waypointIndex++;
-            targetPos.y = enemyCtrl.transform.position.y;
-            enemyCtrl.transform.LookAt(targetPos);
+            else
+            {
+                enemyCtrl.waypointIndex++;
+                targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
+                targetPos.y = enemyCtrl.transform.position.y;
+                enemyCtrl.transform.LookAt(targetPos);            
+            }
+        }
+    }
+
+    public void MoveEnemyStraight()
+    {
+        targetPos = enemyCtrl.wayPoint[enemyCtrl.wayPoint.Length-1].position;
+        targetPos.y = enemyCtrl.transform.position.y;
+        enemyCtrl.transform.LookAt(targetPos);
+
+        var pos = enemyCtrl.rb.position;
+        pos += enemyCtrl.transform.forward * speed * Time.deltaTime;
+        enemyCtrl.rb.MovePosition(pos);
+
+        if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
+        {
+            enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
         }
     }
 
@@ -128,8 +148,8 @@ public class NPCDestinationStates : NPCBaseState
         {
             if (enemyCtrl.waypointIndex == enemyCtrl.wayPoint.Length - 2) // 마지막-1 웨이포인트 도착하면
             {
-                enemyCtrl.waypointIndex = 0;
-                enemyCtrl.transform.position = enemyCtrl.initPos;
+                enemyCtrl.waypointIndex = -1;
+                //enemyCtrl.transform.position = enemyCtrl.initPos;
                 //enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
                 //return;
             }
@@ -139,16 +159,17 @@ public class NPCDestinationStates : NPCBaseState
                 if(repeatCount == count)
                 {
                     // 마지막 웨이포인트 할당
-                    enemyCtrl.waypointIndex = enemyCtrl.wayPoint.Length - 1;
+                    enemyCtrl.waypointIndex = enemyCtrl.wayPoint.Length - 2;
                 }
             }
             else if(enemyCtrl.waypointIndex == enemyCtrl.wayPoint.Length - 1)
             {
+                Debug.Log("마지막 웨이포인트");
                 enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
                 return;
             }
-            targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
             enemyCtrl.waypointIndex++;
+            targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
             targetPos.y = enemyCtrl.transform.position.y;
             enemyCtrl.transform.LookAt(targetPos);
         }

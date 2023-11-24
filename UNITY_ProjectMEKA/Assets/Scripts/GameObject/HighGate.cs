@@ -6,44 +6,9 @@ using static EnemyController;
 
 public class HighGate : GateController
 {
-    private void Awake()
+    protected override void Awake()
     {
-        // 웨이포인트 할당
-        var waypointParentsInMap = transform.parent.parent.GetComponentsInChildren<Waypoint>();
-        if (waypointParentsInMap != null)
-        {
-            foreach (var waypointParent in waypointParentsInMap)
-            {
-                if (waypointParent.gateType == gateType)
-                {
-                    var waypointChildCount = waypointParent.transform.childCount;
-                    waypoints = new Transform[waypointChildCount + 1];
-                    for (int i = 0; i < waypointChildCount; ++i)
-                    {
-                        waypoints[i] = waypointParent.transform.GetChild(i).transform;
-                    }
-                    break;
-                }
-            }
-        }
-        else
-        {
-            Debug.Log("There's no waypoints in the map.");
-        }
-
-        // enemyPath 연결
-        enemyPath = transform.GetChild(1).gameObject;
-        enemyPathRb = enemyPath.GetComponent<Rigidbody>();
-        initPos = enemyPath.transform.localPosition;
-        if (enemyPath == null)
-        {
-            Debug.Log("enemyPath gameObject is null");
-        }
-
-        if (waypoints == null)
-        {
-            waypoints = new Transform[1];
-        }
+        base.Awake();
 
         // 마지막 웨이포인트 하우스로 할당
         var houseParent = GameObject.FindGameObjectWithTag("LowDoor");
@@ -56,6 +21,11 @@ public class HighGate : GateController
                 house = houseController.transform;
                 break;
             }
+        }
+
+        if (waypoints == null)
+        {
+            waypoints = new Transform[1];
         }
         waypoints[waypoints.Length - 1] = house.transform;
 

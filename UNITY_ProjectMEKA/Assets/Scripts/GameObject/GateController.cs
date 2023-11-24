@@ -57,7 +57,42 @@ public class GateController : MonoBehaviour
     protected float pathDuration;
     protected bool pathDone = false;
 
-    public void Start()
+    virtual protected void Awake()
+    {
+        // 웨이포인트 할당
+        var waypointParentsInMap = transform.parent.parent.GetComponentsInChildren<Waypoint>();
+        if (waypointParentsInMap != null)
+        {
+            foreach (var waypointParent in waypointParentsInMap)
+            {
+                if (waypointParent.gateType == gateType)
+                {
+                    var waypointChildCount = waypointParent.transform.childCount;
+                    waypoints = new Transform[waypointChildCount + 1];
+                    for (int i = 0; i < waypointChildCount; ++i)
+                    {
+                        waypoints[i] = waypointParent.transform.GetChild(i).transform;
+                    }
+                    break;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("There's no waypoints in the map.");
+        }
+
+        // enemyPath 연결
+        enemyPath = transform.GetChild(1).gameObject;
+        enemyPathRb = enemyPath.GetComponent<Rigidbody>();
+        initPos = enemyPath.transform.localPosition;
+        if (enemyPath == null)
+        {
+            Debug.Log("enemyPath gameObject is null");
+        }
+    }
+
+    private void Start()
     {
     }
 
@@ -114,37 +149,23 @@ public class GateController : MonoBehaviour
     {
         var enemyInfo = waveInfos[currentWave].enemySpawnInfos[currentEnemyType];
         var enemyName = enemyInfo.prefab.transform.GetChild(0).GetComponent<CharacterState>().enemyType.ToString();
-        if(!firstGetPool)
+        if (!firstGetPool)
         {
             var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
             SetEnemy(enemyGo, enemyInfo);
-            if(enemyGo.GetComponentInChildren<EnemyController>().states.Count != 0)
+            if (enemyGo.GetComponentInChildren<EnemyController>().states.Count != 0)
             {
                 enemyGo.GetComponentInChildren<EnemyController>().SetState(NPCStates.Move);
             }
-            //enemyGo.SetActive(false);
-            //enemyGo.SetActive(true);
             currentEnemyCount++;
-            firstGetPool = true; 
+            firstGetPool = true;
         }
 
         spawnTimer += Time.deltaTime;
         if (spawnTimer < waveInfos[currentWave].enemySpawnInfos[currentEnemyType].interval)
             return;
 
-        var enemy = ObjectPoolManager.instance.GetGo(enemyName);
-        SetEnemy(enemy, enemyInfo);
-        if (enemy.GetComponentInChildren<EnemyController>().states.Count != 0)
-        {
-            enemy.GetComponentInChildren<EnemyController>().SetState(NPCStates.Move);
-        }
-        //enemy.SetActive(false);
-        //enemy.SetActive(true);
-
-        currentEnemyCount++;
-        spawnTimer = 0f;
-
-        if(currentEnemyCount >= enemyInfo.count)
+        if (currentEnemyCount >= enemyInfo.count)
         {
             currentEnemyCount = 0;
             currentEnemyType++;
@@ -158,10 +179,23 @@ public class GateController : MonoBehaviour
             currentEnemyType = 0;
             pathDone = false;
             firstGetPool = false;
-            if(currentWave < waveInfos.Count)
+            if (currentWave < waveInfos.Count)
             {
                 pathDuration = waveInfos[currentWave].pathDuration;
             }
+        }
+
+        if (currentWave < waveInfos.Count)
+        {
+            var enemy = ObjectPoolManager.instance.GetGo(enemyName);
+            SetEnemy(enemy, enemyInfo);
+            if (enemy.GetComponentInChildren<EnemyController>().states.Count != 0)
+            {
+                enemy.GetComponentInChildren<EnemyController>().SetState(NPCStates.Move);
+            }
+
+            currentEnemyCount++;
+            spawnTimer = 0f;
         }
     }
 
