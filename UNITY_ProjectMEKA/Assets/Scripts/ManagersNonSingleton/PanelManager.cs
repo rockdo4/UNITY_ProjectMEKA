@@ -73,4 +73,9 @@ public class PanelManager : MonoBehaviour
 	{
 		UnityEngine.SceneManagement.SceneManager.LoadScene("CharacterTestEnemySecen");
 	}
+
+	public void ExitGame() 
+	{
+		Application.Quit();
+	}
 }
