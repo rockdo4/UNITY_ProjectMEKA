@@ -5,10 +5,19 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
+public enum NPCStates
+{
+    Idle,
+    Move,
+    Attack,
+}
+
+
 public class EnemyController : MonoBehaviour
 { 
     private StateManager stateManager = new StateManager();
-    private List<NPCBaseState> states = new List<NPCBaseState>();
+    [HideInInspector]
+    public List<NPCBaseState> states = new List<NPCBaseState>();
 
     // 11.22, 김민지, 이동방식 변경으로 인해 추가
     [HideInInspector]
@@ -21,7 +30,7 @@ public class EnemyController : MonoBehaviour
     public Defines.MoveType moveType;
     [HideInInspector]
     public int moveRepeatCount;
-    //[HideInInspector]
+    [HideInInspector]
     public Transform[] wayPoint;
 
     public CharacterState state;
@@ -33,13 +42,6 @@ public class EnemyController : MonoBehaviour
     [HideInInspector]
     public Vector3Int CurrentGridPos;//유니티 상 현제 위치의  타일위치
 
-    public enum NPCStates
-    {
-        Idle,
-        Move,
-        Attack,
-
-    }
     private void OnEnable()
     {
         if (states.Count != 0)

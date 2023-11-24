@@ -33,7 +33,7 @@ public class NPCAttackState : NPCBaseState
         }
         if(enemyCtrl.target == null)
         {
-            enemyCtrl.SetState(EnemyController.NPCStates.Move);
+            enemyCtrl.SetState(NPCStates.Move);
         }
     }
 }

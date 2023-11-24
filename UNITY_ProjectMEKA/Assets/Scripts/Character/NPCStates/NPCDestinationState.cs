@@ -10,6 +10,7 @@ public class NPCDestinationStates : NPCBaseState
     private Vector3 targetPos;
     private float threshold = 0.1f;
     private float speed;
+    private int repeatCount = -1;
 
     GameObject[] players;
     public NPCDestinationStates(EnemyController enemy) : base(enemy)
@@ -80,7 +81,7 @@ public class NPCDestinationStates : NPCBaseState
                         enemyCtrl.target = pl;
                         if (player.blockCount < player.maxBlockCount)
                         {
-                            enemyCtrl.SetState(EnemyController.NPCStates.Attack);
+                            enemyCtrl.SetState(NPCStates.Attack);
                         }
                         return;
                     }
@@ -119,5 +120,37 @@ public class NPCDestinationStates : NPCBaseState
 
     public void MoveEnemyRepeat(int count)
     {
+        var pos = enemyCtrl.rb.position;
+        pos += enemyCtrl.transform.forward * speed * Time.deltaTime;
+        enemyCtrl.rb.MovePosition(pos);
+
+        if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
+        {
+            if (enemyCtrl.waypointIndex == enemyCtrl.wayPoint.Length - 2) // 마지막-1 웨이포인트 도착하면
+            {
+                enemyCtrl.waypointIndex = 0;
+                enemyCtrl.transform.position = enemyCtrl.initPos;
+                //enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
+                //return;
+            }
+            else if(enemyCtrl.waypointIndex == 0) // 한바퀴 돌면
+            {
+                repeatCount++;
+                if(repeatCount == count)
+                {
+                    // 마지막 웨이포인트 할당
+                    enemyCtrl.waypointIndex = enemyCtrl.wayPoint.Length - 1;
+                }
+            }
+            else if(enemyCtrl.waypointIndex == enemyCtrl.wayPoint.Length - 1)
+            {
+                enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
+                return;
+            }
+            targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
+            enemyCtrl.waypointIndex++;
+            targetPos.y = enemyCtrl.transform.position.y;
+            enemyCtrl.transform.LookAt(targetPos);
+        }
     }
 }

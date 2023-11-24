@@ -110,7 +110,7 @@ public class GateController : MonoBehaviour
     }
 
     // 몬스터 스폰 함수
-    virtual public void SpawnEnemies()
+    public void SpawnEnemies()
     {
         var enemyInfo = waveInfos[currentWave].enemySpawnInfos[currentEnemyType];
         var enemyName = enemyInfo.prefab.transform.GetChild(0).GetComponent<CharacterState>().enemyType.ToString();
@@ -118,6 +118,12 @@ public class GateController : MonoBehaviour
         {
             var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
             SetEnemy(enemyGo, enemyInfo);
+            if(enemyGo.GetComponentInChildren<EnemyController>().states.Count != 0)
+            {
+                enemyGo.GetComponentInChildren<EnemyController>().SetState(NPCStates.Move);
+            }
+            //enemyGo.SetActive(false);
+            //enemyGo.SetActive(true);
             currentEnemyCount++;
             firstGetPool = true; 
         }
@@ -128,6 +134,12 @@ public class GateController : MonoBehaviour
 
         var enemy = ObjectPoolManager.instance.GetGo(enemyName);
         SetEnemy(enemy, enemyInfo);
+        if (enemy.GetComponentInChildren<EnemyController>().states.Count != 0)
+        {
+            enemy.GetComponentInChildren<EnemyController>().SetState(NPCStates.Move);
+        }
+        //enemy.SetActive(false);
+        //enemy.SetActive(true);
 
         currentEnemyCount++;
         spawnTimer = 0f;
