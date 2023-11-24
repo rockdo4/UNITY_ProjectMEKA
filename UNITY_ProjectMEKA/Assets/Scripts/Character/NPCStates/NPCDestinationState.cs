@@ -17,7 +17,7 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void Enter()
     {
-        Debug.Log("ÀÌµ¿»óÅÂ enter");
+        Debug.Log("ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ enter");
         enemyCtrl.transform.position = enemyCtrl.initPos;
         targetPos = wayPoint[enemyCtrl.waypointIndex].position;
     }
@@ -57,8 +57,8 @@ public class NPCDestinationStates : NPCBaseState
 
         Vector3Int playerGridPos = enemyCtrl.CurrentGridPos;
 
-        // »çÁ¤°Å¸® ³»ÀÇ Å¸ÀÏÀ» È®ÀÎ
-        int tileRange = Mathf.FloorToInt(enemyCtrl.state.range); // Å¸ÀÏ »çÁ¤°Å¸®
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+        int tileRange = Mathf.FloorToInt(enemyCtrl.state.range); // Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½
         for (int i = 1; i <= tileRange; i++)
         {
             Vector3Int forwardGridPos = playerGridPos + Vector3Int.RoundToInt(enemyCtrl.transform.forward) * i;
@@ -119,8 +119,8 @@ public class NPCDestinationStates : NPCBaseState
 
     public void MoveEnemyRepeat(int count)
     {
-        // count¸¸Å­ ¹Ýº¹
-        // Ã¹¹øÂ°·Î ¿ÔÀ» ¶§ ÇÏ¿ì½º·Î Á÷¼± ÀÌµ¿
+        // countï¿½ï¿½Å­ ï¿½Ýºï¿½
+        // Ã¹ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ï¿ì½ºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 
 
     }
