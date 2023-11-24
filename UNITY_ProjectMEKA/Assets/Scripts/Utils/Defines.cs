@@ -28,10 +28,21 @@ public class Defines
     }
     public enum GateType
     {
-        Gate1,
-        Gate2,
-        Gate3,
-        Gate4,
+        LowGate1,
+        LowGate2,
+        LowGate3,
+        LowGate4,
+        HighGate1,
+        HighGate2,
+        HighGate3,
+        HighGate4,
+    }
+    public enum MoveType
+    {
+        AutoTile,
+        Waypoint,
+        WaypointRepeat,
+        Straight,
     }
 
     public enum bgmType

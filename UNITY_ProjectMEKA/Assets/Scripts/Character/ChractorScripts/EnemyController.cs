@@ -13,15 +13,19 @@ public class EnemyController : MonoBehaviour
     // 11.22, 김민지, 이동방식 변경으로 인해 추가
     [HideInInspector]
     public Rigidbody rb;
-    [HideInInspector]
+    //[HideInInspector]
     public Vector3 initPos;
     [HideInInspector]
     public int waypointIndex = 0;
+    [HideInInspector]
+    public Defines.MoveType moveType;
+    [HideInInspector]
+    public int moveRepeatCount;
+    [HideInInspector]
+    public Transform[] wayPoint;
 
     public CharacterState state;
-    public Transform[] wayPoint;
     public GameObject target;
-
 
     private Vector3 CurrentPos;
     [HideInInspector]
@@ -40,6 +44,7 @@ public class EnemyController : MonoBehaviour
         if (states.Count != 0)
         {
             SetState(NPCStates.Move);
+            
         }
     }
     private void Awake()
