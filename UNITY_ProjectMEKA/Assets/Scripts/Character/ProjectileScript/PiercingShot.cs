@@ -13,8 +13,8 @@ public class PiercingShot : MonoBehaviour
     public float hitOffset = 0f;
     public bool UseFirePointRotation;
     public Vector3 rotationOffset = new Vector3(0, 0, 0);
-    public GameObject hit;
-    public GameObject flash;
+    //public GameObject hit;
+    //public GameObject flash;
     private Rigidbody rb;
     public GameObject[] Detached;
     private float timer;
@@ -35,25 +35,24 @@ public class PiercingShot : MonoBehaviour
         saveTarget = target;
         speed = maxSpeed;
         rb.constraints = RigidbodyConstraints.None;
-        if (flash != null)
+        
+        var flahObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.flashName);
+        flahObj.transform.position = transform.position;
+        flahObj.transform.forward = gameObject.transform.forward;
+        var flashPs = flahObj.GetComponent<ParticleSystem>();
+        flahObj.SetActive(false);
+        flahObj.SetActive(true);
+        if (flashPs != null)
         {
-            var flahObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.flashName);
-            flahObj.transform.position = transform.position;
-            flahObj.transform.forward = gameObject.transform.forward;
-            var flashPs = flahObj.GetComponent<ParticleSystem>();
-            flahObj.SetActive(false);
-            flahObj.SetActive(true);
-            if (flashPs != null)
-            {
-                flashPs.GetComponent<PoolAble>().ReleaseObject(flashPs.main.duration);
-            }
-            else
-            {
-
-                var flashPsParts = flahObj.transform.GetChild(0).GetComponent<ParticleSystem>();
-                flashPs.GetComponent<PoolAble>().ReleaseObject(flashPsParts.main.duration);
-            }
+            flashPs.GetComponent<PoolAble>().ReleaseObject(flashPs.main.duration);
         }
+        else
+        {
+
+            var flashPsParts = flahObj.transform.GetChild(0).GetComponent<ParticleSystem>();
+            flashPs.GetComponent<PoolAble>().ReleaseObject(flashPsParts.main.duration);
+        }
+        
 
     }
     public void Init()
@@ -66,15 +65,7 @@ public class PiercingShot : MonoBehaviour
     }
     void FixedUpdate()
     {
-        
-        //if (target != null && target.gameObject.activeSelf)
-        //{
-        //    direction = (target.position - transform.position).normalized;
-        //    SavePos = target.position;
-        //}
-
-        
-        //rb.velocity = direction * speed;
+       
         rb.velocity = transform.forward * speed;
 
         timer += Time.deltaTime;
@@ -110,34 +101,33 @@ public class PiercingShot : MonoBehaviour
 
     private void CreateHitEffect(Vector3 position, Vector3 direction)
     {
-        if (hit != null)
+        
+        Quaternion rotation = UseFirePointRotation ?
+                                Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180f, 0) :
+                                Quaternion.identity;
+
+        if (rotationOffset != Vector3.zero)
         {
-            Quaternion rotation = UseFirePointRotation ?
-                                  Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180f, 0) :
-                                  Quaternion.identity;
-
-            if (rotationOffset != Vector3.zero)
-            {
-                rotation *= Quaternion.Euler(rotationOffset);
-            }
-
-            //var hitInstance = Instantiate(hit, position, rotation);
-            var hitInstance = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.hitName);
-            hitInstance.transform.position = position;
-            hitInstance.transform.rotation = rotation;
-            hitInstance.SetActive(false);
-            hitInstance.SetActive(true);
-            var hitPs = hitInstance.GetComponent<ParticleSystem>();
-            if (hitPs != null)
-            {
-                hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPs.main.duration);
-            }
-            else
-            {
-                var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPsParts.main.duration);
-            }
+            rotation *= Quaternion.Euler(rotationOffset);
         }
+
+        //var hitInstance = Instantiate(hit, position, rotation);
+        var hitInstance = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.hitName);
+        hitInstance.transform.position = position;
+        hitInstance.transform.rotation = rotation;
+        hitInstance.SetActive(false);
+        hitInstance.SetActive(true);
+        var hitPs = hitInstance.GetComponent<ParticleSystem>();
+        if (hitPs != null)
+        {
+            hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPs.main.duration);
+        }
+        else
+        {
+            var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+            hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPsParts.main.duration);
+        }
+        
     }
 
     private void RemoveTrails()
