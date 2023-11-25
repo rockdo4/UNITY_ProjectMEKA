@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -303,6 +303,15 @@ MonoBehaviour:
   - objectName: Monster
     perfab: {fileID: 9145158306244971189, guid: b731268c2384c9f41b4d6df7a5084316, type: 3}
     count: 10
+  - objectName: Enemy1
+    perfab: {fileID: 9145158306244971189, guid: d2572347d3a6a724e94c62d9c644a1fa, type: 3}
+    count: 10
+  - objectName: Enemy2
+    perfab: {fileID: 9145158306244971189, guid: 6f0ddaf564fc48c4198861e1cee664cc, type: 3}
+    count: 10
+  - objectName: Enemy3
+    perfab: {fileID: 9145158306244971189, guid: b1b30b0df23052b4a98d664a1c02128f, type: 3}
+    count: 10
 --- !u!4 &1028897422
 Transform:
   m_ObjectHideFlags: 0
@@ -493,7 +502,7 @@ PrefabInstance:
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].prefab
       value: 
-      objectReference: {fileID: 9145158306244971189, guid: b731268c2384c9f41b4d6df7a5084316, type: 3}
+      objectReference: {fileID: 9145158306244971189, guid: d2572347d3a6a724e94c62d9c644a1fa, type: 3}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[2].prefab
       value: 

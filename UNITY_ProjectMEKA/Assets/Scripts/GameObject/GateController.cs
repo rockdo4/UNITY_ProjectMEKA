@@ -149,6 +149,8 @@ public class GateController : MonoBehaviour
     {
         var enemyInfo = waveInfos[currentWave].enemySpawnInfos[currentEnemyType];
         var enemyName = enemyInfo.prefab.transform.GetChild(0).GetComponent<CharacterState>().enemyType.ToString();
+
+        // 웨이브마다 첫번째 몬스터는 시간 안 기다리고 스폰
         if (!firstGetPool)
         {
             var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
@@ -173,7 +175,7 @@ public class GateController : MonoBehaviour
             if (currentEnemyType >= waveInfos[currentWave].enemySpawnInfos.Count)
             {
                 Debug.Log("다음 웨이브로!");
-                waveTimer = waveInfos[currentWave].waveInterval;
+                waveTimer = waveInfos[currentWave].waveInterval; // 넘어가기 전 웨이브의 interval 적용
 
                 currentWave++;
                 currentEnemyType = 0;
@@ -184,6 +186,7 @@ public class GateController : MonoBehaviour
                 {
                     pathDuration = waveInfos[currentWave].pathDuration;
                 }
+                spawnTimer = 0f;
             }
             return;
         }
@@ -204,12 +207,16 @@ public class GateController : MonoBehaviour
 
     virtual public void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo)
     {
-        enemyGo.GetComponentInChildren<EnemyController>().wayPoint = waypoints;
-        enemyGo.GetComponentInChildren<EnemyController>().initPos = transform.position;
-        enemyGo.GetComponentInChildren<EnemyController>().moveType = spawnInfo.moveType;
-        enemyGo.GetComponentInChildren<EnemyController>().moveRepeatCount = spawnInfo.moveRepeat;
-        enemyGo.GetComponentInChildren<CharacterState>().property = spawnInfo.attribute;
-        enemyGo.GetComponentInChildren<CharacterState>().level = spawnInfo.level;
+        var enemyController = enemyGo.GetComponentInChildren<EnemyController>();
+        var enemyCharacterState = enemyGo.GetComponentInChildren<CharacterState>();
+
+        enemyController.wayPoint = waypoints;
+        enemyController.waypointIndex = 0;
+        enemyController.initPos = transform.position;
+        enemyController.moveType = spawnInfo.moveType;
+        enemyController.moveRepeatCount = spawnInfo.moveRepeat;
+        enemyCharacterState.property = spawnInfo.attribute;
+        enemyCharacterState.level = spawnInfo.level;
     }
 
     private void ShowEnemyPath()
