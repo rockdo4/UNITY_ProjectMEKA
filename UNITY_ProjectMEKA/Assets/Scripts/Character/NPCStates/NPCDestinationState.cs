@@ -153,7 +153,6 @@ public class NPCDestinationStates : NPCBaseState
 
         if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
         {
-            Debug.Log($"도착 : {enemyCtrl.waypointIndex}");
             if (enemyCtrl.waypointIndex == enemyCtrl.wayPoint.Length - 2) // 마지막-1 웨이포인트 도착하면
             {
                 enemyCtrl.waypointIndex = -1;
@@ -161,7 +160,6 @@ public class NPCDestinationStates : NPCBaseState
             else if(enemyCtrl.waypointIndex == 0) // 한바퀴 돌면
             {
                 repeatCount++;
-                Debug.Log($"{repeatCount}바퀴");
                 if (repeatCount == count)
                 {
                     // 마지막 웨이포인트 할당
@@ -177,7 +175,6 @@ public class NPCDestinationStates : NPCBaseState
             targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
             targetPos.y = enemyCtrl.transform.position.y;
             enemyCtrl.transform.LookAt(targetPos);
-            Debug.Log($"목표 : {enemyCtrl.waypointIndex}");
         }
     }
 }

@@ -432,6 +432,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 357282718053406695, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: startInterval
       value: 0
@@ -442,10 +446,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[0].moveType
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].moveType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[0].moveRepeat
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
@@ -454,7 +462,7 @@ PrefabInstance:
       objectReference: {fileID: 962601405}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].moveRepeat
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].waypointGo
@@ -462,15 +470,15 @@ PrefabInstance:
       objectReference: {fileID: 962601405}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[0].pathGuideOn
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].pathGuideOn
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[0].pathDuration
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[0].waveInterval
@@ -478,7 +486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].pathDuration
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.size
@@ -514,7 +522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].level
