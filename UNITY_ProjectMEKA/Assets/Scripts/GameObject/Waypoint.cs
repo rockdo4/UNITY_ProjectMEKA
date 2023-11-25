@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
-    public Defines.GateType gateType;
-
     void Start()
     {
         foreach(Transform waypoint in transform)

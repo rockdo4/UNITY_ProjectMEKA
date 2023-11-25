@@ -270,6 +270,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &962601405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6713035090936240986, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+  m_PrefabInstance: {fileID: 2850644329035379916}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1028897420
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,16 +441,44 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
-      propertyPath: waveInfos.Array.data[0].pathGuideOn
+      propertyPath: waveInfos.Array.data[0].moveType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[1].moveType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[0].waypointGo
+      value: 
+      objectReference: {fileID: 962601405}
+    - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[1].moveRepeat
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[1].waypointGo
+      value: 
+      objectReference: {fileID: 962601405}
+    - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[0].pathGuideOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[1].pathGuideOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[0].pathDuration
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[0].waveInterval
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[1].pathDuration
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.size
@@ -553,7 +586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].moveType
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[1].interval
@@ -561,7 +594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[1].moveType
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[2].interval
@@ -601,11 +634,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].moveRepeat
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[1].moveRepeat
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[2].moveRepeat

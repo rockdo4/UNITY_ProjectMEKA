@@ -7,7 +7,7 @@ public class NPCDestinationStates : NPCBaseState
 {
 
     private Vector3 targetPos;
-    private float threshold = 0.1f;
+    private float threshold = 0.2f;
     private float speed;
     private int repeatCount = -1;
 
@@ -25,6 +25,8 @@ public class NPCDestinationStates : NPCBaseState
         targetPos.y = enemyCtrl.transform.position.y;
         enemyCtrl.transform.LookAt(targetPos);
         speed = enemyCtrl.gameObject.GetComponent<CharacterState>().speed;
+        repeatCount = -1;
+        once = false;
     }
 
     public override void Exit()
@@ -151,6 +153,7 @@ public class NPCDestinationStates : NPCBaseState
 
         if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
         {
+            Debug.Log($"도착 : {enemyCtrl.waypointIndex}");
             if (enemyCtrl.waypointIndex == enemyCtrl.wayPoint.Length - 2) // 마지막-1 웨이포인트 도착하면
             {
                 enemyCtrl.waypointIndex = -1;
@@ -158,7 +161,8 @@ public class NPCDestinationStates : NPCBaseState
             else if(enemyCtrl.waypointIndex == 0) // 한바퀴 돌면
             {
                 repeatCount++;
-                if(repeatCount == count)
+                Debug.Log($"{repeatCount}바퀴");
+                if (repeatCount == count)
                 {
                     // 마지막 웨이포인트 할당
                     enemyCtrl.waypointIndex = enemyCtrl.wayPoint.Length - 2;
@@ -173,6 +177,7 @@ public class NPCDestinationStates : NPCBaseState
             targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
             targetPos.y = enemyCtrl.transform.position.y;
             enemyCtrl.transform.LookAt(targetPos);
+            Debug.Log($"목표 : {enemyCtrl.waypointIndex}");
         }
     }
 }

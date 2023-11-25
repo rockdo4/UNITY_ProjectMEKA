@@ -8,7 +8,7 @@ public class LowGate : GateController
     {
         base.Awake();
 
-        // 마지막 웨이포인트 하우스로 할당
+        // 하우스 할당
         foreach (var houseController in transform.parent.GetComponentsInChildren<HouseController>())
         {
             if (houseController.gateType == gateType)
@@ -18,14 +18,17 @@ public class LowGate : GateController
             }
         }
 
-        if (waypoints == null)
+        foreach (var wave in waveInfos)
         {
-            waypoints = new Transform[1];
+            if (wave.waypointGo == null)
+            {
+                wave.waypoints = new Transform[1];
+            }
+            wave.waypoints[wave.waypoints.Length - 1] = house.transform;
         }
-        waypoints[waypoints.Length - 1] = house.transform;
 
         // 타겟위치 초기화 & 이동가이드라인 타이머 초기화
-        targetPos = waypoints[waypointIndex].position;
+        targetPos = waveInfos[0].waypoints[0].position;
         targetPos.y = enemyPathRb.position.y;
         enemyPath.transform.LookAt(targetPos);
         pathDuration = waveInfos[currentWave].pathDuration;

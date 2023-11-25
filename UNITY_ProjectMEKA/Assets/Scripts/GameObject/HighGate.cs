@@ -10,7 +10,7 @@ public class HighGate : GateController
     {
         base.Awake();
 
-        // 마지막 웨이포인트 하우스로 할당
+        // 하우스 할당
         var houseParent = GameObject.FindGameObjectWithTag("LowDoor");
         foreach (var houseController in houseParent.GetComponentsInChildren<HouseController>())
         {
@@ -23,14 +23,17 @@ public class HighGate : GateController
             }
         }
 
-        if (waypoints == null)
+        foreach(var wave in waveInfos)
         {
-            waypoints = new Transform[1];
+            if (wave.waypointGo == null)
+            {
+                wave.waypoints = new Transform[1];
+            }
+            wave.waypoints[wave.waypoints.Length - 1] = house.transform;
         }
-        waypoints[waypoints.Length - 1] = house.transform;
 
         // 타겟위치 초기화 & 이동가이드라인 타이머 초기화
-        targetPos = waypoints[waypointIndex].position;
+        targetPos = waveInfos[0].waypoints[0].position;
         targetPos.y = enemyPathRb.position.y;
         enemyPath.transform.LookAt(targetPos);
         pathDuration = waveInfos[currentWave].pathDuration;
@@ -41,9 +44,9 @@ public class HighGate : GateController
         base.FixedUpdate();
     }
 
-    public override void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo)
+    public override void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo, WaveInfo waveInfo)
     {
-        base.SetEnemy(enemyGo, spawnInfo);
+        base.SetEnemy(enemyGo, spawnInfo, waveInfo);
         enemyGo.transform.GetChild(0).GetComponent<Rigidbody>().useGravity = false;
     }
 }
