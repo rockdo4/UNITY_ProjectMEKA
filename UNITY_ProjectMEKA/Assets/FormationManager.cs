@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// 이 클래스는 내가 점령했다. - 박아무개
 public enum UINumeric
 {
 	Name = 0,
@@ -44,12 +43,15 @@ public class FormationManager : MonoBehaviour
 	private int selectedFormationIndex;
 	private int selectedCharacterID;
 
+	private List<GameObject> activeFalseList;
+
 
 	private void Awake()
 	{
 		characterCard = GetComponentsInChildren<Button>();
 		formationList = new List<int[]>();
-		selectedFormationList = 0;
+        activeFalseList = new List<GameObject>();
+        selectedFormationList = 0;
 
 		for (int i = 0; i < numberOfFormations; i++)
 		{
@@ -84,14 +86,12 @@ public class FormationManager : MonoBehaviour
 				
 				selectedFormationIndex = index;
 				Debug.Log(selectedFormationIndex);
-			}
-			);
-		}
-	}
 
-	private void Start()
-	{
-		
+				//현재 편성된 캐릭터는 띄우지 않음
+				CheckDuplicationCharacter();
+            }
+            );
+		}
 	}
 
 	public void OnClickCharacterCard(int index)
@@ -108,27 +108,32 @@ public class FormationManager : MonoBehaviour
 		for (int i = 0; i < numberOfCharacters; i++)
 		{
 			characterCard[i].GetComponent<CardInfo>().ChangeCardId(formationList[selectedFormationList][i]);
+
+			for(int j = 0; j < activeFalseList.Count; j++)
+			{
+				//activeFalseList[j].SetActive(true);
+				//여기서 복구 시켜야됨
+            }
 		}
 	}
 
 
-	//캐릭터 카드 클릭하면 캐릭터 리스트 띄움
 	//현재 편성된 캐릭터는 띄우지 않음
-	public void OpenCharacterList(int index)
+	public void CheckDuplicationCharacter()
 	{
-		var table = DataTableMgr.GetTable<TestCharacterTable>().GetOriginalTable();
+		var characterCardList = characterCardScrollView.GetComponentsInChildren<CardInfo>();
 
-		foreach (var character in table)
+		foreach(CardInfo cardInfo in characterCardList)
 		{
-			
-		}
-
-		//characterCardScrollView.gameObject
+			var ID = cardInfo.GetCardID();
+        }
 	}
 
 	//캐릭터 리스트 끄기
 	public void CloseCharacterList()
 	{
+		var table = DataTableMgr.GetTable<TestCharacterTable>();
+   
 		characterPanel.gameObject.SetActive(false);
 		ResetSelectCharacterCard();
 	}
@@ -155,7 +160,10 @@ public class FormationManager : MonoBehaviour
 
 			//selectedFormationList프리셋에 selectedFormationIndex인덱스의 아이디 바꿈
 			formationList[selectedFormationList][selectedFormationIndex] = selectedCharacterID;
-		}
+
+            cardInfo.GetComponentInChildren<TextMeshProUGUI>().SetText("-");
+            activeFalseList.Add(cardInfo.gameObject);
+        }
 
 		//닫음
 		CloseCharacterList();
