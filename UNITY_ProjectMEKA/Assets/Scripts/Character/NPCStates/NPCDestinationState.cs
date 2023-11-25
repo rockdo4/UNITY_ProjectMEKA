@@ -7,7 +7,7 @@ public class NPCDestinationStates : NPCBaseState
 {
 
     private Vector3 targetPos;
-    private float threshold = 0.2f;
+    private float threshold = 1f;
     private float speed;
     private int repeatCount = -1;
 

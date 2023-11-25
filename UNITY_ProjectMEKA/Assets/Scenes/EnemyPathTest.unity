@@ -332,6 +332,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1770351174 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5540327111724227747, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+  m_PrefabInstance: {fileID: 2850644329035379916}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2020321413
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,6 +440,38 @@ PrefabInstance:
     - target: {fileID: 357282718053406695, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2803774805188190415, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[0].moveType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2803774805188190415, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[0].waypointGo
+      value: 
+      objectReference: {fileID: 1770351174}
+    - target: {fileID: 2803774805188190415, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[0].pathGuideOn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2803774805188190415, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[0].pathDuration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2803774805188190415, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2803774805188190415, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2803774805188190415, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 9145158306244971189, guid: b731268c2384c9f41b4d6df7a5084316, type: 3}
+    - target: {fileID: 2803774805188190415, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].interval
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3147204166125974227, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: startInterval
@@ -654,7 +691,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4502608787890546808, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7011085417653484859, guid: c0d87415f4fc9f54f8e6afb62d4e5abc, type: 3}
       propertyPath: m_LocalPosition.x
