@@ -7,9 +7,10 @@ public class NPCDestinationStates : NPCBaseState
 {
 
     private Vector3 targetPos;
-    private float threshold = 1f;
+    private float threshold = 0.1f;
     private float speed;
     private int repeatCount = -1;
+    private Vector3 direction;
 
     private bool once = false;
 
@@ -23,6 +24,7 @@ public class NPCDestinationStates : NPCBaseState
         enemyCtrl.transform.position = enemyCtrl.initPos;
         targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
         targetPos.y = enemyCtrl.transform.position.y;
+        direction = (targetPos - enemyCtrl.transform.position).normalized;
         enemyCtrl.transform.LookAt(targetPos);
         speed = enemyCtrl.gameObject.GetComponent<CharacterState>().speed;
         repeatCount = -1;
@@ -104,10 +106,10 @@ public class NPCDestinationStates : NPCBaseState
     public void MoveEnemyWaypoint()
     {
         var pos = enemyCtrl.rb.position;
-        pos += enemyCtrl.transform.forward * speed * Time.deltaTime;
+        pos += direction * speed * Time.deltaTime;
         enemyCtrl.rb.MovePosition(pos);
 
-        if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
+        if (Vector3.Distance(new Vector3(pos.x,pos.z), new Vector3(targetPos.x,targetPos.z)) < threshold) // 다음 웨이포인트 도착하면
         {
             if (enemyCtrl.waypointIndex >= enemyCtrl.wayPoint.Length - 1)
             {
@@ -120,6 +122,7 @@ public class NPCDestinationStates : NPCBaseState
                 enemyCtrl.waypointIndex++;
                 targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
                 targetPos.y = enemyCtrl.transform.position.y;
+                direction = (targetPos - enemyCtrl.transform.position).normalized;
                 enemyCtrl.transform.LookAt(targetPos);            
             }
         }
