@@ -47,15 +47,17 @@ public class GateController : MonoBehaviour
     protected bool firstGetPool = false;
 
     // 이동 경로
+    public float pathSpeed;
     protected Vector3 initPos;
     protected GameObject enemyPath;
     protected Rigidbody enemyPathRb;
-    public float pathSpeed;
     protected Vector3 targetPos = Vector3.zero;
     protected float threshold = 0.1f;
     protected int waypointIndex = 0;
+    protected int repeatCount = -1;
     protected float pathDuration;
     protected bool pathDone = false;
+    protected bool once = false;
 
     virtual protected void Awake()
     {
@@ -140,7 +142,22 @@ public class GateController : MonoBehaviour
         }
         else if (waveInfos[currentWave].pathGuideOn && !pathDone && pathDuration > 0f)
         {
-            ShowEnemyPath();
+            var enemyInfo = waveInfos[currentWave].enemySpawnInfos[currentEnemyType];
+
+            switch (enemyInfo.moveType)
+            {
+                case Defines.MoveType.AutoTile:
+                    break;
+                case Defines.MoveType.Waypoint:
+                    ShowEnemyPathWaypoint();
+                    break;
+                case Defines.MoveType.Straight:
+                    ShowEnemyPathStraight();
+                    break;
+                case Defines.MoveType.WaypointRepeat:
+                    ShowEnemyPathRepeat();
+                    break;
+            }
         }
     }
 
@@ -219,7 +236,7 @@ public class GateController : MonoBehaviour
         enemyCharacterState.level = spawnInfo.level;
     }
 
-    private void ShowEnemyPath()
+    private void ShowEnemyPathWaypoint()
     {
         if (!enemyPath.activeSelf)
         {
@@ -231,9 +248,6 @@ public class GateController : MonoBehaviour
             enemyPath.GetComponent<ParticleSystem>().Play();
         }
 
-        targetPos = waypoints[waypointIndex].position;
-        targetPos.y = enemyPathRb.position.y;
-        enemyPath.transform.LookAt(targetPos);
         var pos = enemyPathRb.position;
         pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
         enemyPathRb.MovePosition(pos);
@@ -241,8 +255,11 @@ public class GateController : MonoBehaviour
         if(Vector3.Distance(pos, targetPos) < threshold)
         {
             waypointIndex++;
+            targetPos = waypoints[waypointIndex].position;
+            targetPos.y = enemyPathRb.position.y;
+            enemyPath.transform.LookAt(targetPos);
 
-            if(waypointIndex >= waypoints.Length)
+            if (waypointIndex >= waypoints.Length)
             {
                 waypointIndex = 0;
                 targetPos = waypoints[waypointIndex].position;
@@ -251,7 +268,79 @@ public class GateController : MonoBehaviour
                 enemyPath.GetComponent<ParticleSystem>().Stop();
                 return;
             }
+        }
+    }
+
+    private void ShowEnemyPathStraight()
+    {
+        if (!enemyPath.activeSelf)
+        {
+            enemyPath.SetActive(true);
+        }
+
+        if (!enemyPath.GetComponent<ParticleSystem>().isPlaying)
+        {
+            enemyPath.GetComponent<ParticleSystem>().Play();
+        }
+
+        if (!once)
+        {
+            targetPos = waypoints[waypoints.Length - 1].position;
+            targetPos.y = enemyPathRb.position.y;
+            enemyPath.transform.LookAt(targetPos);
+            once = true;
+        }
+
+        var pos = enemyPathRb.position;
+        pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
+        enemyPathRb.MovePosition(pos);
+
+        if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
+        {
+            enemyPath.transform.localPosition = initPos;
+            enemyPath.transform.LookAt(targetPos);
+            enemyPath.GetComponent<ParticleSystem>().Clear();
+            enemyPath.GetComponent<ParticleSystem>().Stop();
+            return;
+        }
+    }
+
+    private void ShowEnemyPathRepeat()
+    {
+        var pos = enemyPathRb.position;
+        pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
+        enemyPathRb.MovePosition(pos);
+
+        var enemyInfo = waveInfos[currentWave].enemySpawnInfos[currentEnemyType];
+
+        if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
+        {
+            if (waypointIndex == waypoints.Length - 2) // 마지막-1 웨이포인트 도착하면
+            {
+                waypointIndex = -1;
+            }
+            else if (waypointIndex == 0) // 한바퀴 돌면
+            {
+                repeatCount++;
+                if (repeatCount == enemyInfo.moveRepeat)
+                {
+                    // 마지막 웨이포인트 할당
+                    waypointIndex = waypoints.Length - 2;
+                }
+            }
+            else if (waypointIndex == waypoints.Length - 1)
+            {
+                enemyPath.transform.localPosition = initPos;
+                enemyPath.transform.LookAt(targetPos);
+                enemyPath.GetComponent<ParticleSystem>().Clear();
+                enemyPath.GetComponent<ParticleSystem>().Stop();
+                //enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
+                return;
+            }
+            waypointIndex++;
             targetPos = waypoints[waypointIndex].position;
+            targetPos.y = enemyPathRb.position.y;
+            enemyPath.transform.LookAt(targetPos);
         }
     }
 }

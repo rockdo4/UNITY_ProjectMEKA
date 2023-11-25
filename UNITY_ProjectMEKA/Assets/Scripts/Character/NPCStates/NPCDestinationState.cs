@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class NPCDestinationStates : NPCBaseState
 {
@@ -11,6 +10,8 @@ public class NPCDestinationStates : NPCBaseState
     private float threshold = 0.1f;
     private float speed;
     private int repeatCount = -1;
+
+    private bool once = false;
 
     GameObject[] players;
     public NPCDestinationStates(EnemyController enemy) : base(enemy)
@@ -124,9 +125,13 @@ public class NPCDestinationStates : NPCBaseState
 
     public void MoveEnemyStraight()
     {
-        targetPos = enemyCtrl.wayPoint[enemyCtrl.wayPoint.Length-1].position;
-        targetPos.y = enemyCtrl.transform.position.y;
-        enemyCtrl.transform.LookAt(targetPos);
+        if(!once)
+        {
+            targetPos = enemyCtrl.wayPoint[enemyCtrl.wayPoint.Length-1].position;
+            targetPos.y = enemyCtrl.transform.position.y;
+            enemyCtrl.transform.LookAt(targetPos);
+            once = true;
+        }
 
         var pos = enemyCtrl.rb.position;
         pos += enemyCtrl.transform.forward * speed * Time.deltaTime;
@@ -149,9 +154,6 @@ public class NPCDestinationStates : NPCBaseState
             if (enemyCtrl.waypointIndex == enemyCtrl.wayPoint.Length - 2) // 마지막-1 웨이포인트 도착하면
             {
                 enemyCtrl.waypointIndex = -1;
-                //enemyCtrl.transform.position = enemyCtrl.initPos;
-                //enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
-                //return;
             }
             else if(enemyCtrl.waypointIndex == 0) // 한바퀴 돌면
             {
