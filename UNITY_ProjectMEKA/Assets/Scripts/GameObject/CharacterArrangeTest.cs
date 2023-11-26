@@ -38,7 +38,6 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
         {
             tiles[i] = tileParent.transform.GetChild(i).gameObject;
         }
-        Debug.Log(tiles.Length);
     }
 
     private void Update()
