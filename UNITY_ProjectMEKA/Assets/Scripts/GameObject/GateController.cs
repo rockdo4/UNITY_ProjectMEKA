@@ -54,6 +54,9 @@ public class GateController : MonoBehaviour
     public Defines.GateType gateType;
     protected Transform house;
 
+    [SerializeField, Header("이동라인 스피드")]
+    public float pathSpeed;
+
     // 몬스터 스폰 관련
     [SerializeField, Header("웨이브 정보 세팅")]
     public List<WaveInfo> waveInfos;
@@ -66,7 +69,6 @@ public class GateController : MonoBehaviour
     protected bool firstGetPool = false;
 
     // 이동 경로
-    public float pathSpeed;
     protected Vector3 initPos;
     protected GameObject enemyPath;
     protected Rigidbody enemyPathRb;
@@ -138,7 +140,7 @@ public class GateController : MonoBehaviour
 
         // 이동경로 가이드
         pathDuration -= Time.deltaTime;
-        if (pathDuration <= 0f && !pathDone)
+        if ((pathDuration <= 0f && !pathDone) || (!waveInfos[currentWave].pathGuideOn && !pathDone))
         {
             waypointIndex = 0;
             enemyPath.transform.localPosition = initPos;
@@ -186,10 +188,6 @@ public class GateController : MonoBehaviour
             firstGetPool = true;
         }
 
-        spawnTimer += Time.deltaTime;
-        if (spawnTimer < waveInfos[currentWave].enemySpawnInfos[currentEnemyType].interval)
-            return;
-
         if (currentEnemyCount >= enemyInfo.count)
         {
             Debug.Log("다음 종류로!");
@@ -209,12 +207,16 @@ public class GateController : MonoBehaviour
                 {
                     pathDuration = waveInfos[currentWave].pathDuration;
                 }
-                spawnTimer = 0f;
+                //spawnTimer = 0f;
             }
             return;
         }
         else if (currentWave < waveInfos.Count)
         {
+            spawnTimer += Time.deltaTime;
+            if (spawnTimer < waveInfos[currentWave].enemySpawnInfos[currentEnemyType].interval)
+                return;
+
             var enemy = ObjectPoolManager.instance.GetGo(enemyName);
             SetEnemy(enemy, enemyInfo, waveInfo);
             if (enemy.GetComponentInChildren<EnemyController>().states.Count != 0)
