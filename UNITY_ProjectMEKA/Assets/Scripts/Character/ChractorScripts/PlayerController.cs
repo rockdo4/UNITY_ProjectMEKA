@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : PoolAble
 {
     private PlayableStateManager stateManager = new PlayableStateManager();
     private List<PlayableBaseState> states = new List<PlayableBaseState>();

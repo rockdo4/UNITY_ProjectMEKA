@@ -10,7 +10,6 @@ public abstract class NPCBaseState
     // 11.22, 김민지, 네브메쉬 제거하고 이동 방식 변경
     //protected NavMeshAgent agent;
     protected Transform[] players;
-    protected Transform[] wayPoint;
 
     abstract public void Enter();
 
@@ -23,12 +22,5 @@ public abstract class NPCBaseState
     public NPCBaseState(EnemyController enemy)
     {
         this.enemyCtrl = enemy;
-
-        // 11.22, 김민지, 이동 기능 변경
-
-        //agent = enemyCtrl.GetComponent<NavMeshAgent>();
-
-        wayPoint = enemyCtrl.wayPoint;
-
     }
 }

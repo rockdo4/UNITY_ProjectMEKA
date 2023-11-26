@@ -52,7 +52,7 @@ public class CharacterState : MonoBehaviour
     public Type BulletType;
 
 
-    [HideInInspector]
+    //[HideInInspector]
     public int level;//·¹º§
 
     [HideInInspector]
