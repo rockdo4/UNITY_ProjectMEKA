@@ -173,16 +173,16 @@ public class GateController : MonoBehaviour
     {
         var waveInfo = waveInfos[currentWave];
         var enemyInfo = waveInfo.enemySpawnInfos[currentEnemyType];
-        var enemyName = enemyInfo.prefab.transform.GetChild(0).GetComponent<CharacterState>().enemyType.ToString();
+        var enemyName = enemyInfo.prefab.GetComponent<CharacterState>().enemyType.ToString();
 
         // 웨이브마다 첫번째 몬스터는 시간 안 기다리고 스폰
         if (!firstGetPool)
         {
             var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
             SetEnemy(enemyGo, enemyInfo, waveInfo);
-            if (enemyGo.GetComponentInChildren<EnemyController>().states.Count != 0)
+            if (enemyGo.GetComponent<EnemyController>().states.Count != 0)
             {
-                enemyGo.GetComponentInChildren<EnemyController>().SetState(NPCStates.Move);
+                enemyGo.GetComponent<EnemyController>().SetState(NPCStates.Move);
             }
             currentEnemyCount++;
             firstGetPool = true;
@@ -219,9 +219,9 @@ public class GateController : MonoBehaviour
 
             var enemy = ObjectPoolManager.instance.GetGo(enemyName);
             SetEnemy(enemy, enemyInfo, waveInfo);
-            if (enemy.GetComponentInChildren<EnemyController>().states.Count != 0)
+            if (enemy.GetComponent<EnemyController>().states.Count != 0)
             {
-                enemy.GetComponentInChildren<EnemyController>().SetState(NPCStates.Move);
+                enemy.GetComponent<EnemyController>().SetState(NPCStates.Move);
             }
 
             currentEnemyCount++;
@@ -232,8 +232,8 @@ public class GateController : MonoBehaviour
 
     virtual public void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo, WaveInfo waveInfo)
     {
-        var enemyController = enemyGo.GetComponentInChildren<EnemyController>();
-        var enemyCharacterState = enemyGo.GetComponentInChildren<CharacterState>();
+        var enemyController = enemyGo.GetComponent<EnemyController>();
+        var enemyCharacterState = enemyGo.GetComponent<CharacterState>();
 
         enemyController.wayPoint = waveInfo.waypoints;
         enemyController.waypointIndex = 0;

@@ -13,7 +13,7 @@ public enum NPCStates
 }
 
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : PoolAble
 { 
     private StateManager stateManager = new StateManager();
     [HideInInspector]

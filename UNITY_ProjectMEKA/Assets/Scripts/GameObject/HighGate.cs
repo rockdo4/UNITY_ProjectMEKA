@@ -48,6 +48,6 @@ public class HighGate : GateController
     public override void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo, WaveInfo waveInfo)
     {
         base.SetEnemy(enemyGo, spawnInfo, waveInfo);
-        enemyGo.transform.GetChild(0).GetComponent<Rigidbody>().useGravity = false;
+        enemyGo.GetComponent<Rigidbody>().useGravity = false;
     }
 }
