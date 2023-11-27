@@ -50,6 +50,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
                 characterGo.transform.position = hit.point;
+                //hit.transform.gameObject.GetComponent<Tile>().
             }
         }
         else if(Input.GetMouseButtonUp(0) && !arranged)
