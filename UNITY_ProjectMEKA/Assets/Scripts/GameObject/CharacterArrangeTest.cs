@@ -54,14 +54,14 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
                 if(hit.transform.GetComponentInChildren<Tile>().arrangePossible)
                 {
                     pos = hit.transform.position;
-                    pos.y = hit.point.y;
+                    //pos.y = hit.point.y;
+                    pos.y = hit.transform.GetComponentInChildren<Tile>().height;
                 }
                 characterGo.transform.position = pos;
             }
         }
         else if(Input.GetMouseButtonUp(0) && !arranged)
         {
-            //Debug.Log($"마우스업 : {hit.transform.gameObject.name}");
             // 갖고 있는 타일들에 hit객체 타일이 속해있는지 검사
             if(characterGo != null && hit.transform != null && tiles.Contains(hit.transform.parent.gameObject))
             {
@@ -74,7 +74,6 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
             }
             else
             {
-                //Debug.Log($"배치 불가 : {hit.transform.gameObject.name}");
                 characterGo.GetComponent<PlayerController>().ReleaseObject();
                 created = false;
                 foreach (var tile in tiles)
