@@ -109,8 +109,8 @@ public class FormationManager : MonoBehaviour
 		});
 	}
 
-	//편성 프리셋 바꾸기
-	public void ChangeFormationSet(int formationListIndex)
+    //편성 프리셋 바꾸기
+    public void ChangeFormationSet(int formationListIndex)
 	{
 		if (selectedFormationList == formationListIndex) return;
 
@@ -199,24 +199,26 @@ public class FormationManager : MonoBehaviour
 		}
 	}
 
-	//이거 구현 해야됨
-	//이거 구현 해야됨
 	public void CheckCollectCharacter()
 	{
 		var table = DataTableMgr.GetTable<TestCharacterTable>();
 
 		for (int i = 0; i < cardList.Length; i++)
 		{
-			var info = table.GetCharacterData(formationList[selectedFormationList][i]);
+			var cardInfo = cardList[i].GetComponent<CardInfo>();
+            var cardId = cardInfo.GetCardID();
+            var cardData = table.GetCharacterData(cardId);
 
-			if (info.count <= 0)
+			if(cardData.count <= 0)
 			{
-				
-			}
+				cardList[i].gameObject.SetActive(false);
+            }
+            else
+			{
+                cardList[i].gameObject.SetActive(true);
+            }
 		}
 	}
-	//이거 구현 해야됨
-	//이거 구현 해야됨
 
 	//캐릭터 선택창 카드 활성화 시키기
 	public void UpdateActiveCard()
