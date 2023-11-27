@@ -26,7 +26,7 @@ public class NPCDestinationStates : NPCBaseState
         targetPos.y = enemyCtrl.transform.position.y;
         direction = (targetPos - enemyCtrl.transform.position).normalized;
         enemyCtrl.transform.LookAt(targetPos);
-        speed = enemyCtrl.gameObject.GetComponent<CharacterState>().speed;
+        speed = enemyCtrl.state.speed;
         repeatCount = -1;
         once = false;
     }
