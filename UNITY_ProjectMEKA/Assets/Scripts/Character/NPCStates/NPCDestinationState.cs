@@ -68,7 +68,9 @@ public class NPCDestinationStates : NPCBaseState
 
         Vector3Int playerGridPos = enemyCtrl.CurrentGridPos;
 
-        int tileRange = Mathf.FloorToInt(enemyCtrl.state.range); // Ÿ�� �����Ÿ�
+
+        int tileRange = Mathf.FloorToInt(enemyCtrl.state.range); 
+
         for (int i = 1; i <= tileRange; i++)
         {
             Vector3Int forwardGridPos = playerGridPos + Vector3Int.RoundToInt(enemyCtrl.transform.forward) * i;

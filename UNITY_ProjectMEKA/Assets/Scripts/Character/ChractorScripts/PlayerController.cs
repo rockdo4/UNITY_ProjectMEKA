@@ -138,10 +138,10 @@ public class PlayerController : PoolAble
         //var obj = ObjectPoolManager.instance.GetGo("bullet");
         var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
         //obj.transform.position = transform.position; // 발사 위치 설정
-        obj.transform.position = FirePosition.transform.position; // 발사 위치 설정
-        //obj.transform.rotation = transform.rotation; // 회전 초기화
-        obj.transform.rotation = FirePosition.transform.rotation; // 회전 초기화
-        obj.SetActive(true); // 오브젝트 활성화
+        //obj.transform.position = FirePosition.transform.position; // 발사 위치 설정
+        ////obj.transform.rotation = transform.rotation; // 회전 초기화
+        //obj.transform.rotation = Quaternion.identity; // 회전 초기화
+        
 
         obj.transform.LookAt(target.transform);
         
@@ -150,32 +150,35 @@ public class PlayerController : PoolAble
             case CharacterState.Type.Bullet:
                 var projectile = obj.GetComponent<Bullet>();
                 projectile.ResetState();
-                obj.transform.localPosition = gameObject.transform.position;
-                obj.transform.localRotation = Quaternion.identity;
-                projectile.transform.LookAt(target.transform.position);
+                obj.transform.position = FirePosition.transform.position;
+                obj.transform.rotation = FirePosition.transform.rotation;
                 projectile.damage = state.damage;
                 projectile.target = target.transform;
+                projectile.Player = gameObject;
+                obj.SetActive(false);
+                obj.SetActive(true);
                 break;
             case CharacterState.Type.Aoe:
                 var projectileA = obj.GetComponent<AOE>();
                 projectileA.ResetState();
-                obj.transform.localPosition = gameObject.transform.position;
-                obj.transform.localRotation = Quaternion.identity;
-                projectileA.transform.LookAt(target.transform.position);
+                obj.transform.position = FirePosition.transform.position;
+                obj.transform.rotation = FirePosition.transform.rotation;
                 projectileA.damage = state.damage;
                 projectileA.target = target.transform;
+                projectileA.Player = gameObject;
+                obj.SetActive(false);
+                obj.SetActive(true);
                 break;
             case CharacterState.Type.PiercingShot:
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
-                projectileP.StartPos = FirePosition.transform;
-                projectileP.Init();
-                //obj.transform.localPosition = gameObject.transform.position;
-                //obj.transform.localRotation = Quaternion.identity;
-                ////projectileP.transform.LookAt(target.transform.position);
+                obj.transform.position = FirePosition.transform.position;
+                obj.transform.rotation = FirePosition.transform.rotation;
                 projectileP.damage = state.damage;
                 projectileP.target = target.transform;
-                //projectileP.StartPos = transform;
+                projectileP.Player = gameObject;
+                obj.SetActive(false);
+                obj.SetActive(true);
                 break;
         }
         
@@ -195,5 +198,4 @@ public class PlayerController : PoolAble
             heal.OnHealing(1f*state.damage);
         }
     }
-    
 }

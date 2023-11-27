@@ -20,7 +20,7 @@ public class EnemyController : PoolAble
     public List<NPCBaseState> states = new List<NPCBaseState>();
 
     // 11.22, 김민지, 이동방식 변경으로 인해 추가
-    [HideInInspector]
+    //[HideInInspector]
     public Rigidbody rb;
     //[HideInInspector]
     public Vector3 initPos;
@@ -28,12 +28,16 @@ public class EnemyController : PoolAble
     public int waypointIndex = 0;
     //[HideInInspector]
     public Defines.MoveType moveType;
-    [HideInInspector]
+    //[HideInInspector]
     public int moveRepeatCount;
     //[HideInInspector]
     public Transform[] wayPoint;
 
+    //[HideInInspector]
+    public Animator ani;
+    //[HideInInspector]
     public CharacterState state;
+    //[HideInInspector]
     public GameObject target;
 
 
@@ -53,6 +57,7 @@ public class EnemyController : PoolAble
     {
         state = GetComponent<CharacterState>();
         rb = GetComponent<Rigidbody>();
+        ani = GetComponent<Animator>();
     }
     
     void Start()

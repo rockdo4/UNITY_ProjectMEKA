@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NPCAttackState : NPCBaseState
@@ -29,7 +30,8 @@ public class NPCAttackState : NPCBaseState
         if(timer > enemyCtrl.state.attackDelay)
         {
             timer = 0;
-            enemyCtrl.Hit();//test
+            enemyCtrl.ani.SetTrigger("Attack");
+            //enemyCtrl.Hit();//test
         }
         if(enemyCtrl.target == null)
         {

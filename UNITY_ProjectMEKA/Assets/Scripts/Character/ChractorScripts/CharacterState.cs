@@ -27,7 +27,7 @@ public class CharacterState : MonoBehaviour
     public float amror;
 
     // 11.22, 김민지, 적 이동시 필요
-    [SerializeField, Header("이동속력 설정")]
+    [SerializeField, Header("이동속력 설정,적 이동시 필요")]
     public float speed;
 
     [SerializeField, Header("스킬 쿨타입 설정")]
@@ -51,6 +51,11 @@ public class CharacterState : MonoBehaviour
     [SerializeField, Header("발사체 타입")]
     public Type BulletType;
 
+    [SerializeField, Header("발사할때 이팩트")]
+    public string flashName;
+
+    [SerializeField, Header("맞았을때 이팩트")]
+    public string hitName;
 
     //[HideInInspector]
     public int level;//레벨
