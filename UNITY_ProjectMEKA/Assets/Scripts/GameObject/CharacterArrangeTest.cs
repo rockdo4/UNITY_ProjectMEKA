@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
 {
     public GameObject characterPrefab;
     private GameObject characterGo;
-    private GameObject[] tiles;
+    private List<GameObject> tiles;
     private string characterName;
     private bool created;
     private bool arranged;
@@ -32,10 +33,10 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
     {
         var tileParent = GameObject.FindGameObjectWithTag(tag);
         var tileCount = tileParent.transform.childCount;
-        tiles = new GameObject[tileCount];
+        tiles = new List<GameObject>();
         for (int i = 0; i < tileCount; ++i)
         {
-            tiles[i] = tileParent.transform.GetChild(i).gameObject;
+            tiles.Add(tileParent.transform.GetChild(i).gameObject);
         }
     }
 
@@ -49,29 +50,36 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
-                characterGo.transform.position = hit.point;
+                var pos = hit.point;
+                if(hit.transform.GetComponentInChildren<Tile>().arrangePossible)
+                {
+                    pos = hit.transform.position;
+                    pos.y = hit.point.y;
+                }
+                characterGo.transform.position = pos;
             }
         }
         else if(Input.GetMouseButtonUp(0) && !arranged)
         {
-            if(characterGo != null)
+            //Debug.Log($"마우스업 : {hit.transform.gameObject.name}");
+            // 갖고 있는 타일들에 hit객체 타일이 속해있는지 검사
+            if(characterGo != null && hit.transform != null && tiles.Contains(hit.transform.parent.gameObject))
             {
-                Debug.Log(hit.transform.gameObject);
-                if(!hit.transform.gameObject.GetComponentInChildren<Tile>().arrangePossible)
+                Debug.Log($"배치 : {hit.transform.gameObject.name}");
+                // 캐릭터를 해당 타일의 중앙점에 고정!
+                var pos = hit.transform.position;
+                pos.y = hit.point.y;
+                characterGo.transform.position = pos;
+                hit.transform.GetComponentInChildren<Tile>().arrangePossible = false;
+            }
+            else
+            {
+                //Debug.Log($"배치 불가 : {hit.transform.gameObject.name}");
+                characterGo.GetComponent<PlayerController>().ReleaseObject();
+                created = false;
+                foreach (var tile in tiles)
                 {
-                    characterGo.GetComponent<PlayerController>().ReleaseObject();
-                    created = false;
-                    foreach (var tile in tiles)
-                    {
-                        tile.GetComponentInChildren<Tile>().SetPlacementPossible(created);
-                    }
-                }
-                else
-                {
-                    // 캐릭터를 해당 타일의 중앙점에 고정!
-                    var pos = hit.transform.position;
-                    pos.y = hit.point.y;
-                    characterGo.transform.position = pos;
+                    tile.GetComponentInChildren<Tile>().SetPlacementPossible(created);
                 }
             }
         }
