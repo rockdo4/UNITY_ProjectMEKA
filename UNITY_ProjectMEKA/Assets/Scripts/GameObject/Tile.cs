@@ -8,6 +8,7 @@ public class Tile : MonoBehaviour
     public Material overlayMaterial;
     private Material baseMaterial;
     private MeshRenderer meshRenderer;
+    [HideInInspector]
     public float height;
     private BoxCollider boxCollider;
     //private float offset;
@@ -20,7 +21,6 @@ public class Tile : MonoBehaviour
         baseMaterial = GetComponent<MeshRenderer>().material;
         boxCollider = GetComponent<BoxCollider>();
         height = boxCollider.bounds.size.y;
-        Debug.Log(height);
         //offset = transform.parent.parent.localPosition.y * transform.parent.localScale.y;
         //Debug.Log(offset);
     }
