@@ -11,7 +11,7 @@ public class Tile : MonoBehaviour
     //private BoxCollider boxCollider;
     //private float offset;
 
-    private bool arrangePossible;
+    public bool arrangePossible;
 
     private void Awake()
     {
@@ -61,5 +61,6 @@ public class Tile : MonoBehaviour
             materialList.RemoveAt(1); // 리스트에서 해당 인덱스의 재질을 제거합니다.
             meshRenderer.materials = materialList.ToArray(); // 리스트를 배열로 변환하여 다시 할당합니다.
         }
+        arrangePossible = isPossible;
     }
 }

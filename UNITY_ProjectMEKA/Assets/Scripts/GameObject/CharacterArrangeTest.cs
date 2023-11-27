@@ -9,6 +9,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
     private string characterName;
     private bool created;
     private bool arranged;
+    private RaycastHit hit;
 
     private void Awake()
     {
@@ -43,7 +44,6 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
         if (Input.GetMouseButton(0) && created)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
 
             int layerMask = 1 << LayerMask.NameToLayer("Background");
 
@@ -56,11 +56,22 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
         {
             if(characterGo != null)
             {
-                characterGo.GetComponent<PlayerController>().ReleaseObject();
-                created = false;
-                foreach (var tile in tiles)
+                Debug.Log(hit.transform.gameObject);
+                if(!hit.transform.gameObject.GetComponentInChildren<Tile>().arrangePossible)
                 {
-                    tile.GetComponentInChildren<Tile>().SetPlacementPossible(created);
+                    characterGo.GetComponent<PlayerController>().ReleaseObject();
+                    created = false;
+                    foreach (var tile in tiles)
+                    {
+                        tile.GetComponentInChildren<Tile>().SetPlacementPossible(created);
+                    }
+                }
+                else
+                {
+                    // 캐릭터를 해당 타일의 중앙점에 고정!
+                    var pos = hit.transform.position;
+                    pos.y = hit.point.y;
+                    characterGo.transform.position = pos;
                 }
             }
         }
