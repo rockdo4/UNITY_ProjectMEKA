@@ -15,9 +15,14 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     private List<GameObject> directions = new List<GameObject>();
     private RaycastHit hit;
+    private BoxCollider boxCollider;
+    private float half;
 
     private void Awake()
     {
+        boxCollider = GetComponent<BoxCollider>();
+        half = boxCollider.bounds.size.x / 2f;
+
         var parent = transform.parent;
         for (int i = 0; i < (int)Direction.Count; ++i)
         {
@@ -40,21 +45,46 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
-            var pos = hit.transform.position;
+            //var pos = hit.transform.position;
+            //transform.position = pos;
+
+            var pos = hit.point;
             transform.position = pos;
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (hit.transform != null && directions.Contains(hit.transform.gameObject))
+        Debug.Log(hit);
+        if (hit.transform != null && directions.Contains(hit.transform.parent.gameObject))
         {
-            Debug.Log("배치가능");
+            Debug.Log($"배치가능 : {hit.transform.gameObject.name}");
+            var pos = hit.transform.parent.position;
+            var go = hit.transform.parent.gameObject;
+            // pos에서 핸들러의 half만큼 빼기
+            if (go == directions[(int)Direction.Up])
+            {
+                pos.z += -half;
+            }
+            else if (go == directions[(int)Direction.Right])
+            {
+                pos.x += -half;
+            }
+            else if (go == directions[(int)Direction.Down])
+            {
+                pos.z += half;
+            }
+            else
+            {
+                pos.x += half;
+            }
+
+            transform.position = pos;
             // 캐릭터 방향 옮기기
         }
         else
         {
-            Debug.Log("배치불가");
+            Debug.Log($"배치불가 : {hit}");
         }
     }
 
