@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4664228834784927100}
   - component: {fileID: 1822689296985125170}
   - component: {fileID: 2828390231285979847}
+  - component: {fileID: 1670845999896469883}
   m_Layer: 0
   m_Name: tunnels_floor1 1
   m_TagString: Marker
@@ -83,6 +84,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1670845999896469883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4218883724396511249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 273b4a0be6e63004a81e8ce932ea3a06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overlayMaterial: {fileID: 2100000, guid: 9aa5bd918f5d68c4f9a8f21b6284126d, type: 2}
 --- !u!1 &4471776115795221617
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
 
     public void TileSet(string tag)
     {
-        var tileParent = GameObject.FindGameObjectWithTag("LowTile");
+        var tileParent = GameObject.FindGameObjectWithTag(tag);
         var tileCount = tileParent.transform.childCount;
         tiles = new GameObject[tileCount];
         for (int i = 0; i < tileCount; ++i)
@@ -50,7 +50,6 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
                 characterGo.transform.position = hit.point;
-                //hit.transform.gameObject.GetComponent<Tile>().
             }
         }
         else if(Input.GetMouseButtonUp(0) && !arranged)
@@ -59,6 +58,10 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
             {
                 characterGo.GetComponent<PlayerController>().ReleaseObject();
                 created = false;
+                foreach (var tile in tiles)
+                {
+                    tile.GetComponentInChildren<Tile>().SetPlacementPossible(created);
+                }
             }
         }
     }
@@ -67,6 +70,10 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
     {
         characterGo = ObjectPoolManager.instance.GetGo(characterName);
         created = true;
+        foreach(var tile in tiles)
+        {
+            tile.GetComponentInChildren<Tile>().SetPlacementPossible(created);
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)

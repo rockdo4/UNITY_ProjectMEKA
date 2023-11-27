@@ -437,6 +437,9 @@ MonoBehaviour:
   - objectName: Monster
     perfab: {fileID: 8057071853182218664, guid: 64a65205040c04148a58c147fd9d1869, type: 3}
     count: 10
+  - objectName: Castor
+    perfab: {fileID: 9199292099183232110, guid: 7e2aa56162a5f9543830d10c6d1fd540, type: 3}
+    count: 1
 --- !u!4 &1028897422
 Transform:
   m_ObjectHideFlags: 0
@@ -542,7 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527c04d255a48b84298393929cd8b297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterPrefab: {fileID: 7112576048577883680, guid: 108c2e36c04116a4890859894f29d7b9, type: 3}
+  characterPrefab: {fileID: 9199292099183232110, guid: 7e2aa56162a5f9543830d10c6d1fd540, type: 3}
 --- !u!114 &1508654030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1033,7 +1036,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4321584375425409992, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 8311422245562444316, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 5011063646816250487, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 1963131857683587048, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 7980174534498116957, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 4002960825992937836, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 1345726584123063763, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 5531023292847151465, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 4461686377323724064, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 579398343284587507, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 5093556470472769142, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 70326304222922286, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 8224891273886806774, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 5191572223220167804, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 6205385655950253700, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 4831986933304490616, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
+    - {fileID: 5074466280668760969, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3b207c3b24c60644b413c7e97004d12, type: 3}
