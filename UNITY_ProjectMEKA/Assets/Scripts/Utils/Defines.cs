@@ -6,6 +6,7 @@ public class Defines
 {
     public enum Property
     {
+        None,
         Prime,
         Edila,
         Grieve,

@@ -45,32 +45,13 @@ public class PlayerController : PoolAble
     }
     void Start()
     {
-        state.ConvertTo2DArray();
+        state.ConvertTo2DArray();//공격 범위 설정2차원 배열
         states.Add(new PlayableIdleState(this));
         states.Add(new PlayableDieState(this));
         if(state.occupation == Defines.Occupation.Hunter || state.occupation == Defines.Occupation.Castor)
         {
             states.Add(new PlayableProjectileAttackState(this));
-            //state.ConvertTo2DArray();
-
-            //for(int i = 0; i < state.AttackRange.GetLength(0); ++i)
-            //{
-            //    for(int j = 0; j < state.AttackRange.GetLength(1); ++j)
-            //    {
-            //        Debug.Log(state.AttackRange[i, j] + "\n");
-            //    }
-            //}
-
-           
-            //foreach(float state in states.AttackRange) { }
-            //state.AttackRange
-            //= new int[5,5]{
-            //    { 0,0,1,0,0},
-            //    { 0,1,1,1,0},
-            //    { 0,1,1,1,0},
-            //    { 0,1,1,1,0},
-            //    { 0,1,2,1,0},
-            //};
+            
         }
         else
         {
@@ -87,10 +68,61 @@ public class PlayerController : PoolAble
         stateManager.Update();
         Collider[] colliders = Physics.OverlapSphere(transform.position, state.range);
         Collider[] enemyColliders = Array.FindAll(colliders, co => co.CompareTag("Enemy"));
+        List<GameObject> en = CheckEnemy();
 
-        blockCount = enemyColliders.Length;
+        blockCount = en.Count;
+        Debug.Log(blockCount);
     }
+    List<GameObject> CheckEnemy()
+    {
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        List<GameObject> blockEnemy = new List<GameObject>();
+        Vector3 characterPosition = transform.position;
+        Vector3 forward = -transform.forward;
+        Vector3 right = transform.right;
+        int characterRow = 0;
+        int characterCol = 0;
 
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 2)
+                {
+                    characterRow = i;
+                    characterCol = j;
+                }
+            }
+        }
+
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 1)
+                {
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    Vector3 gizmoPosition = characterPosition + relativePosition;
+                    Vector3Int Pos = new Vector3Int(Mathf.FloorToInt(gizmoPosition.x), Mathf.FloorToInt(gizmoPosition.y), Mathf.FloorToInt(gizmoPosition.z));
+
+                    foreach (GameObject en in enemys)
+                    {
+                        EnemyController enemy = en.GetComponent<EnemyController>();
+                        if (enemy != null && enemy.state.isBlock)
+                        {
+                            Vector3Int enemyGridPos = enemy.CurrentGridPos;
+
+                            if (enemyGridPos == Pos)
+                            {
+                                blockEnemy.Add(en);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return blockEnemy;
+    }
     public void SetState(CharacterStates state)
     {
         stateManager.ChangeState(states[(int)state]);

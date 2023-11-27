@@ -85,6 +85,7 @@ public class CharacterState : MonoBehaviour
     public int yal;
     [SerializeField, Header("공격범위설정")]
     public int[] rangeAttack;
+    
     public void ConvertTo2DArray()
     {
         // 1차원 배열의 길이가 행과 열의 곱과 일치하는지 확인
@@ -126,6 +127,9 @@ public class CharacterState : MonoBehaviour
 
     [HideInInspector]
     public int ID;
+
+    [HideInInspector]
+    public bool isBlock = true;
 
     private void Awake()
     {

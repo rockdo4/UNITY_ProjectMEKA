@@ -99,7 +99,7 @@ public class NPCDestinationStates : NPCBaseState
                     if (enemyGridPos == forwardGridPos/*distanceToTileCenter <= 0.1f*/)
                     {
                         enemyCtrl.target = pl;
-                        if (player.blockCount < player.maxBlockCount)
+                        if (player.blockCount < player.maxBlockCount && enemyCtrl.state.isBlock)
                         {
                             enemyCtrl.SetState(NPCStates.Attack);
                         }

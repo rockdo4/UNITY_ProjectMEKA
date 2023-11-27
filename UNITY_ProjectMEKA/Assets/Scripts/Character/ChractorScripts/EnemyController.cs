@@ -81,15 +81,16 @@ public class EnemyController : PoolAble
             //SpeedUp,//이속 증가 (완)
             //Counterattack,//역습 (완)
             //Spite,//악의 (완)
-            //Outlander,//아웃랜더
-            //Tenacity,//망자의 집념(완)
-            //Revenge,//보복(완)
+            //Outlander,//아웃랜더 (완)
+            //Tenacity,//망자의 집념 (완)
+            //Revenge,//보복 (완)
             //Mechanic,//정비공 (완)
 
 
             switch (P)
             {
                 case CharacterState.Passive.Unstoppable:
+                    state.isBlock = false;
                     break;
                 case CharacterState.Passive.Explosion:
                     gameObject.AddComponent<Explosion>();
@@ -107,6 +108,7 @@ public class EnemyController : PoolAble
                     gameObject.AddComponent<Spite>();
                     break;
                 case CharacterState.Passive.Outlander:
+                    gameObject.AddComponent<Outlander>();
                     break;
                 case CharacterState.Passive.Tenacity:
                     gameObject.AddComponent<Tenacity>();
