@@ -15,13 +15,17 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     private List<GameObject> directions = new List<GameObject>();
     private RaycastHit hit;
+    private GameObject prevHit;
+    private Transform player;
     private BoxCollider boxCollider;
     private float half;
+    public float yOffset = 1f;
 
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider>();
         half = boxCollider.bounds.size.x / 2f;
+        Debug.Log(player.gameObject.name);
 
         var parent = transform.parent;
         for (int i = 0; i < (int)Direction.Count; ++i)
@@ -45,8 +49,10 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
-            //var pos = hit.transform.position;
-            //transform.position = pos;
+            if(hit.transform.gameObject != prevHit)
+            {
+                prevHit = hit.transform.gameObject;
+            }
 
             var pos = hit.point;
             transform.position = pos;
@@ -55,11 +61,42 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log(hit);
-        if (hit.transform != null && directions.Contains(hit.transform.parent.gameObject))
+        if (hit.transform.gameObject != null)
         {
-            Debug.Log($"배치가능 : {hit.transform.gameObject.name}");
-            var pos = hit.transform.parent.position;
+            if(directions.Contains(hit.transform.parent.gameObject))
+            {
+                Debug.Log($"배치가능 : {hit.transform.gameObject.name}");
+                var pos = hit.transform.parent.position;
+                var go = hit.transform.parent.gameObject;
+                // pos에서 핸들러의 half만큼 빼기
+                if (go == directions[(int)Direction.Up])
+                {
+                    pos.z += -half;
+                    player.rotation = Quaternion.Euler(0f, 0f, 0f);
+                }
+                else if (go == directions[(int)Direction.Right])
+                {
+                    pos.x += -half;
+                    player.rotation = Quaternion.Euler(0f, 90f, 0f);
+                }
+                else if (go == directions[(int)Direction.Down])
+                {
+                    pos.z += half;
+                    player.rotation = Quaternion.Euler(0f, 180f, 0f);
+                }
+                else
+                {
+                    pos.x += half;
+                    player.rotation = Quaternion.Euler(0f, -90f, 0f);
+                }
+
+                transform.position = pos;
+            }
+        }
+        else
+        {
+            Debug.Log($"배치불가 : {prevHit}");
+            var pos = prevHit.transform.parent.position;
             var go = hit.transform.parent.gameObject;
             // pos에서 핸들러의 half만큼 빼기
             if (go == directions[(int)Direction.Up])
@@ -80,12 +117,11 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             }
 
             transform.position = pos;
-            // 캐릭터 방향 옮기기
-        }
-        else
-        {
-            Debug.Log($"배치불가 : {hit}");
         }
     }
 
+    public void SetPlayer(Transform player)
+    {
+        this.player = player;
+    }
 }

@@ -6,6 +6,7 @@ using static PlayerController;
 public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
 {
     public GameObject characterPrefab;
+    public ArrangeJoystick arrangeJoystick;
     private GameObject characterGo;
     private List<GameObject> tiles;
     private string characterName;
@@ -68,6 +69,12 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
                 hit.transform.GetComponentInChildren<Tile>().arrangePossible = false;
                 firstArranged = true;
                 characterGo.GetComponent<PlayerController>().SetState(CharacterStates.Arrange);
+                arrangeJoystick.SetPlayer(characterGo.transform);
+                arrangeJoystick.transform.parent.gameObject.SetActive(firstArranged);
+                var joystickPos = characterGo.transform.position;
+                joystickPos.y += arrangeJoystick.yOffset;
+                arrangeJoystick.transform.parent.position = joystickPos;
+                
             }
             else
             {
