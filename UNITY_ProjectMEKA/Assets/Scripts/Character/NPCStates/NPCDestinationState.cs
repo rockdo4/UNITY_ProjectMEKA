@@ -21,6 +21,7 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void Enter()
     {
+        // 다른 상태 -> 이 상태로 들어왔을 때 포지션이 이전 포지션과 동일해야 함
         enemyCtrl.transform.position = enemyCtrl.initPos;
         targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
         targetPos.y = enemyCtrl.transform.position.y;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using static PlayerController;
 
 public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
 {
@@ -9,7 +10,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
     private List<GameObject> tiles;
     private string characterName;
     private bool created;
-    private bool arranged;
+    private bool firstArranged;
     private RaycastHit hit;
 
     private void Awake()
@@ -42,7 +43,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && created)
+        if (Input.GetMouseButton(0) && created && !firstArranged)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -59,29 +60,32 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
                 characterGo.transform.position = pos;
             }
         }
-        else if(Input.GetMouseButtonUp(0) && !arranged)
+        else if(Input.GetMouseButtonUp(0) && !firstArranged && created)
         {
             if (characterGo != null && hit.transform != null && hit.transform.GetComponent<Tile>().arrangePossible)
             {
                 Debug.Log("배치가능");
                 hit.transform.GetComponentInChildren<Tile>().arrangePossible = false;
-                arranged = true;
+                firstArranged = true;
+                characterGo.GetComponent<PlayerController>().SetState(CharacterStates.Arrange);
             }
             else
             {
                 Debug.Log("배치불가능");
                 characterGo.GetComponent<PlayerController>().ReleaseObject();
                 created = false;
-                foreach (var tile in tiles)
-                {
-                    tile.GetComponentInChildren<Tile>().SetPlacementPossible(created);
-                }
+            }
+
+            foreach (var tile in tiles)
+            {
+                tile.GetComponentInChildren<Tile>().SetPlacementPossible(false);
             }
         }
     }
 
     public void CreateCharacter()
     {
+        Debug.Log("created");
         characterGo = ObjectPoolManager.instance.GetGo(characterName);
         created = true;
         foreach(var tile in tiles)
@@ -92,7 +96,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!created)
+        if(!created /*&& eventData.pointerEnter == gameObject*/)
         {
             CreateCharacter();
             characterGo.transform.position = transform.position;
