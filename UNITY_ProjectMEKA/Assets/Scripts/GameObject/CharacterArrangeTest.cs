@@ -1,12 +1,11 @@
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
 {
     public GameObject characterPrefab;
     private GameObject characterGo;
+    private GameObject[] tiles;
     private string characterName;
     private bool created;
     private bool arranged;
@@ -14,6 +13,29 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
     private void Awake()
     {
         characterName = characterPrefab.GetComponent<CharacterState>().occupation.ToString();
+        var occupation = characterPrefab.GetComponent<CharacterState>().occupation;
+
+        switch(occupation)
+        {
+            case Defines.Occupation.Guardian:
+            case Defines.Occupation.Striker:
+                TileSet("LowTile");
+                break;
+            default:
+                TileSet("HighTile");
+                break;
+        }
+    }
+
+    public void TileSet(string tag)
+    {
+        var tileParent = GameObject.FindGameObjectWithTag("LowTile");
+        var tileCount = tileParent.transform.childCount;
+        tiles = new GameObject[tileCount];
+        for (int i = 0; i < tileCount; ++i)
+        {
+            tiles[i] = tileParent.transform.GetChild(i).gameObject;
+        }
     }
 
     private void Update()
@@ -32,7 +54,6 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
         }
         else if(Input.GetMouseButtonUp(0) && !arranged)
         {
-            // up이 됐을 때 배치가능 타일 위가 아니면 그대로 사라진다.
             if(characterGo != null)
             {
                 characterGo.GetComponent<PlayerController>().ReleaseObject();

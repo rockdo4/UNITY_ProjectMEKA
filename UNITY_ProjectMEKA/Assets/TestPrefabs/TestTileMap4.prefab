@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 958536864705418168}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6653771046307570384}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8293152072161425545}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8025989632830117677}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,8 @@ GameObject:
   - component: {fileID: 6724584403061570972}
   - component: {fileID: 619063568742926504}
   - component: {fileID: 7312197997699941752}
-  m_Layer: 7
+  - component: {fileID: 835293064829579756}
+  m_Layer: 8
   m_Name: Box_01_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,11 +230,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: b0cb80df4332b094aafba77a29f67d78, type: 3}
+--- !u!65 &835293064829579756
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89088031519635323}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5600004, y: 1.3455507, z: 1.1192801}
+  m_Center: {x: 0.00000008940698, y: 0.65470487, z: 0.066296116}
 --- !u!1 &261654486881901142
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +265,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8185606693764974518}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +297,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8896558624172925189}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +329,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2363601276028500690}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +363,7 @@ GameObject:
   - component: {fileID: 8422513487784367215}
   - component: {fileID: 1728965645337924161}
   - component: {fileID: 7855312553531927878}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -422,7 +444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4172838201011930287}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +476,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2953310239421381860}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +511,8 @@ GameObject:
   - component: {fileID: 45478944707497219}
   - component: {fileID: 1164440283971232623}
   - component: {fileID: 6663573685628268207}
-  m_Layer: 7
+  - component: {fileID: 2649463346948968738}
+  m_Layer: 8
   m_Name: Stairs_up_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,11 +601,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &2649463346948968738
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458357302999857862}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &473215724818481932
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +636,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1045136688778362699}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -627,7 +671,8 @@ GameObject:
   - component: {fileID: 4742078100175962646}
   - component: {fileID: 3904500126142650056}
   - component: {fileID: 4337811797030096954}
-  m_Layer: 7
+  - component: {fileID: 972061350809400347}
+  m_Layer: 8
   m_Name: Stairs_up_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -716,11 +761,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &972061350809400347
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509628336710311370}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &524967759049148182
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,7 +796,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1570159539035420161}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -762,7 +828,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8152284433858237240}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -797,7 +863,8 @@ GameObject:
   - component: {fileID: 8921765543730703926}
   - component: {fileID: 7720999166864842057}
   - component: {fileID: 6083027464231163738}
-  m_Layer: 7
+  - component: {fileID: 5315157495089549866}
+  m_Layer: 8
   m_Name: Stairs_up_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -886,11 +953,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &5315157495089549866
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545809714610978914}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &584452141471250483
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,7 +988,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5025883980544253015}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1198,7 +1286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5673410945284173203}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1230,7 +1318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3460006926038664269}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1262,7 +1350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7497453370215024707}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1294,7 +1382,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4158182640264032085}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1326,7 +1414,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3356327157359409761}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1358,7 +1446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5383082164905901692}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1392,7 +1480,7 @@ GameObject:
   - component: {fileID: 7474251643797536698}
   - component: {fileID: 7111819315096526911}
   - component: {fileID: 541635168803908277}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -1475,7 +1563,7 @@ GameObject:
   - component: {fileID: 6600021747723839331}
   - component: {fileID: 5213138149072240531}
   - component: {fileID: 5830222354809060502}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2x2_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -1558,7 +1646,7 @@ GameObject:
   - component: {fileID: 7916499672993782493}
   - component: {fileID: 4186110831343749814}
   - component: {fileID: 4721027775980585952}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -1772,7 +1860,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5059165162968587381}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1887,7 +1975,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2438940231568894891}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1921,7 +2009,7 @@ GameObject:
   - component: {fileID: 6874486958663442073}
   - component: {fileID: 6718910636550461473}
   - component: {fileID: 5621755528496871377}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -2002,7 +2090,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2891775030497901454}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2034,7 +2122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7548583737569143405}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2068,7 +2156,7 @@ GameObject:
   - component: {fileID: 2992512245765201135}
   - component: {fileID: 7610876196403519049}
   - component: {fileID: 133297129291617784}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -2149,7 +2237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8316235708064420857}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2181,7 +2269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4777845257614239746}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2213,7 +2301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8229905788016612213}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2247,7 +2335,7 @@ GameObject:
   - component: {fileID: 5457935545444327629}
   - component: {fileID: 5254161643489092590}
   - component: {fileID: 7564859106968496925}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -2328,7 +2416,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1523812612600028667}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2360,7 +2448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2491889361521948354}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2394,7 +2482,7 @@ GameObject:
   - component: {fileID: 2960838239876353670}
   - component: {fileID: 5936364492481871351}
   - component: {fileID: 3318064682726347846}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -2477,7 +2565,7 @@ GameObject:
   - component: {fileID: 1054611971158093605}
   - component: {fileID: 8920631688571697147}
   - component: {fileID: 4805712893859423390}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -2558,7 +2646,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4333044592061448452}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2592,7 +2680,7 @@ GameObject:
   - component: {fileID: 4894292992233608484}
   - component: {fileID: 8370656462681025603}
   - component: {fileID: 2417784047944629608}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor_3
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -2673,7 +2761,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3705977247428749434}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2707,7 +2795,7 @@ GameObject:
   - component: {fileID: 8042402745439152471}
   - component: {fileID: 5391575495237263034}
   - component: {fileID: 5770569750888360345}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -2791,7 +2879,8 @@ GameObject:
   - component: {fileID: 5292769141586508473}
   - component: {fileID: 7763584940762195786}
   - component: {fileID: 405144027644334624}
-  m_Layer: 7
+  - component: {fileID: 5080519553008172303}
+  m_Layer: 8
   m_Name: Stairs_up_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2880,11 +2969,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &5080519553008172303
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815630776775732041}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &1822885036476004213
 GameObject:
   m_ObjectHideFlags: 0
@@ -2894,7 +3004,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9041690413535104807}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2928,7 +3038,7 @@ GameObject:
   - component: {fileID: 86191977739738887}
   - component: {fileID: 4908638843901629643}
   - component: {fileID: 7920511641656784770}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -3009,7 +3119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5703448535918696003}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3041,7 +3151,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5154306882339371539}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3075,7 +3185,7 @@ GameObject:
   - component: {fileID: 3434248244649420319}
   - component: {fileID: 2448645509738056862}
   - component: {fileID: 8412193984766507978}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor_3
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -3156,7 +3266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5786101229398820827}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3190,7 +3300,7 @@ GameObject:
   - component: {fileID: 737690581022963840}
   - component: {fileID: 8265990480861270342}
   - component: {fileID: 8413549047087843880}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -3273,7 +3383,7 @@ GameObject:
   - component: {fileID: 166836592510663472}
   - component: {fileID: 3109084973518117580}
   - component: {fileID: 584795678107868506}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -3354,7 +3464,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7045791500763746339}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3386,7 +3496,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4806469657871883245}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3420,7 +3530,7 @@ GameObject:
   - component: {fileID: 1885144080221135369}
   - component: {fileID: 9074178835156017986}
   - component: {fileID: 12276036649231451}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2x2_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -3504,7 +3614,8 @@ GameObject:
   - component: {fileID: 1025786350596223718}
   - component: {fileID: 5837637190700544132}
   - component: {fileID: 7753603705746695850}
-  m_Layer: 7
+  - component: {fileID: 6508326544193925600}
+  m_Layer: 8
   m_Name: Box_01_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3593,11 +3704,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: b0cb80df4332b094aafba77a29f67d78, type: 3}
+--- !u!65 &6508326544193925600
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352534446157310746}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5600004, y: 1.3455507, z: 1.1192801}
+  m_Center: {x: 0.00000008940698, y: 0.65470487, z: 0.066296116}
 --- !u!1 &2364344472688592541
 GameObject:
   m_ObjectHideFlags: 0
@@ -3609,7 +3741,7 @@ GameObject:
   - component: {fileID: 8356150967427696572}
   - component: {fileID: 7581535528902562352}
   - component: {fileID: 6852575362871160260}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -3690,7 +3822,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7880477552314913208}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3724,7 +3856,7 @@ GameObject:
   - component: {fileID: 2255453433355380425}
   - component: {fileID: 8337508233868200383}
   - component: {fileID: 8608676681465264796}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -3805,7 +3937,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5083749543738283445}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3837,7 +3969,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8969605134360769201}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3869,7 +4001,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3776718783293760240}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3904,7 +4036,8 @@ GameObject:
   - component: {fileID: 460966486047098418}
   - component: {fileID: 8130602970679858913}
   - component: {fileID: 6818995088053563671}
-  m_Layer: 7
+  - component: {fileID: 1290357504753371728}
+  m_Layer: 8
   m_Name: Stairs_up_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3993,11 +4126,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &1290357504753371728
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2569098005895339810}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &2690371346251987864
 GameObject:
   m_ObjectHideFlags: 0
@@ -4007,7 +4161,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6574555175892721786}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4039,7 +4193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2616589645838258421}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4073,9 +4227,9 @@ GameObject:
   - component: {fileID: 6390178451071142113}
   - component: {fileID: 5601388471576121380}
   - component: {fileID: 1877370527668401580}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4210,7 +4364,7 @@ GameObject:
   - component: {fileID: 1866967338251775087}
   - component: {fileID: 8280080386546967431}
   - component: {fileID: 4044166965863965845}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2x2_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -4291,7 +4445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2827384199951373195}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4325,7 +4479,7 @@ GameObject:
   - component: {fileID: 3777794586680490737}
   - component: {fileID: 5939100538930327361}
   - component: {fileID: 7752596856153047605}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor_3
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -4489,7 +4643,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3448248289773418765}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4523,7 +4677,7 @@ GameObject:
   - component: {fileID: 2505870740645034172}
   - component: {fileID: 4095908909717167640}
   - component: {fileID: 6628327079017757511}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -4606,7 +4760,7 @@ GameObject:
   - component: {fileID: 2026027306712415350}
   - component: {fileID: 1165085695969600655}
   - component: {fileID: 8281605822947268793}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -4689,7 +4843,7 @@ GameObject:
   - component: {fileID: 8346308789468506557}
   - component: {fileID: 2289318563190317868}
   - component: {fileID: 5436349794160812999}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2x2_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -4770,7 +4924,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8090321500063013006}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4802,7 +4956,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7458564138546605956}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4834,7 +4988,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3028343995226064049}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4868,7 +5022,7 @@ GameObject:
   - component: {fileID: 8977449923171471405}
   - component: {fileID: 4501483556224326002}
   - component: {fileID: 370131236583391191}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -5084,7 +5238,7 @@ GameObject:
   - component: {fileID: 8428117389385316821}
   - component: {fileID: 7655296048326011349}
   - component: {fileID: 818325568437424747}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -5165,7 +5319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 592857261008947742}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5197,7 +5351,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8573557314138667547}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5229,7 +5383,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2097737567626096388}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5261,7 +5415,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 887802826104014174}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5293,7 +5447,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5776421126942342607}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5325,7 +5479,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5633433172831396522}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5357,7 +5511,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5454652500613368228}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5391,7 +5545,7 @@ GameObject:
   - component: {fileID: 8607882644281528149}
   - component: {fileID: 4269801687977911409}
   - component: {fileID: 1503273083805649678}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor_3
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -5474,7 +5628,7 @@ GameObject:
   - component: {fileID: 7860355609730071269}
   - component: {fileID: 5450790081358965629}
   - component: {fileID: 5869787930809915231}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -5555,7 +5709,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1927173285349725678}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5589,7 +5743,7 @@ GameObject:
   - component: {fileID: 4777129598918921602}
   - component: {fileID: 50664763835753946}
   - component: {fileID: 1110403434290873208}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -5670,7 +5824,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6589970951664851344}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5702,7 +5856,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 223200641530043250}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5734,7 +5888,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 450191657402824831}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5768,7 +5922,7 @@ GameObject:
   - component: {fileID: 8112534487621638584}
   - component: {fileID: 6156365996631248931}
   - component: {fileID: 5489850139283229561}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -5851,7 +6005,7 @@ GameObject:
   - component: {fileID: 5065730853405048407}
   - component: {fileID: 7647116522440423168}
   - component: {fileID: 3084384320185429818}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -5934,7 +6088,7 @@ GameObject:
   - component: {fileID: 2970747969349558585}
   - component: {fileID: 2380567568381103502}
   - component: {fileID: 5608444838985371831}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -6015,7 +6169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6047992450298963939}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6049,7 +6203,7 @@ GameObject:
   - component: {fileID: 3939605984386013994}
   - component: {fileID: 7164690646251488569}
   - component: {fileID: 7731777254945046970}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -6130,7 +6284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 344936801034291135}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6164,7 +6318,7 @@ GameObject:
   - component: {fileID: 1025571632525611394}
   - component: {fileID: 2131122297167163030}
   - component: {fileID: 8432525917065224839}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowDoor
   m_TagString: LowDoor
   m_Icon: {fileID: 0}
@@ -6287,7 +6441,8 @@ GameObject:
   - component: {fileID: 6247897835727876574}
   - component: {fileID: 2590964237026112987}
   - component: {fileID: 902088516535271414}
-  m_Layer: 7
+  - component: {fileID: 6287336721622451748}
+  m_Layer: 8
   m_Name: Stairs_up_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6376,11 +6531,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &6287336721622451748
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4582671395772684904}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &4660486528338547720
 GameObject:
   m_ObjectHideFlags: 0
@@ -6393,7 +6569,8 @@ GameObject:
   - component: {fileID: 6037558482560980374}
   - component: {fileID: 2550388353280129309}
   - component: {fileID: 4819555086225399615}
-  m_Layer: 7
+  - component: {fileID: 6569075396417879955}
+  m_Layer: 8
   m_Name: Stairs_up_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6482,11 +6659,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &6569075396417879955
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4660486528338547720}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &4665235132883899448
 GameObject:
   m_ObjectHideFlags: 0
@@ -6498,7 +6696,7 @@ GameObject:
   - component: {fileID: 771983743295591082}
   - component: {fileID: 7419941891939709797}
   - component: {fileID: 3209611066256266427}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -6579,7 +6777,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4227047471153522887}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6613,7 +6811,7 @@ GameObject:
   - component: {fileID: 764739331629139782}
   - component: {fileID: 8809081139167633672}
   - component: {fileID: 5543242252994498521}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -6696,7 +6894,7 @@ GameObject:
   - component: {fileID: 2000773879433757229}
   - component: {fileID: 8516353160710157955}
   - component: {fileID: 5147642810475576821}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -6779,7 +6977,7 @@ GameObject:
   - component: {fileID: 3123139582269104775}
   - component: {fileID: 4394295853864774901}
   - component: {fileID: 1775521365410409039}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -6863,7 +7061,8 @@ GameObject:
   - component: {fileID: 462071898355510086}
   - component: {fileID: 5152874760562476572}
   - component: {fileID: 6997369593097703532}
-  m_Layer: 7
+  - component: {fileID: 4002130131347161487}
+  m_Layer: 8
   m_Name: Stairs_up_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6952,11 +7151,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &4002130131347161487
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4927060487771162140}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &4929125276965165207
 GameObject:
   m_ObjectHideFlags: 0
@@ -6966,7 +7186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6079929714518744778}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7000,7 +7220,7 @@ GameObject:
   - component: {fileID: 8564275789837232333}
   - component: {fileID: 8959628351186769721}
   - component: {fileID: 5595089796268992127}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -7083,7 +7303,7 @@ GameObject:
   - component: {fileID: 1269505826293394273}
   - component: {fileID: 1625645454485838729}
   - component: {fileID: 7323964947193169446}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -7166,7 +7386,7 @@ GameObject:
   - component: {fileID: 309674696632198172}
   - component: {fileID: 1905770052427540124}
   - component: {fileID: 1393741958898550303}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2x2_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -7250,7 +7470,8 @@ GameObject:
   - component: {fileID: 6036099635919432680}
   - component: {fileID: 9080684081277114572}
   - component: {fileID: 137086275985433602}
-  m_Layer: 7
+  - component: {fileID: 3370666267482714492}
+  m_Layer: 8
   m_Name: Stairs_up_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7339,11 +7560,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &3370666267482714492
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5055124876083511865}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &5110768346788816443
 GameObject:
   m_ObjectHideFlags: 0
@@ -7355,7 +7597,7 @@ GameObject:
   - component: {fileID: 6095976845761056069}
   - component: {fileID: 2026324535606499179}
   - component: {fileID: 9108853099265129743}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2x2_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -7436,7 +7678,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7546216250436811534}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7470,7 +7712,7 @@ GameObject:
   - component: {fileID: 8214172992754762809}
   - component: {fileID: 1052443979138126402}
   - component: {fileID: 1669677505843141768}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -7553,7 +7795,7 @@ GameObject:
   - component: {fileID: 8819104631906764333}
   - component: {fileID: 6656843376968744303}
   - component: {fileID: 5594284430975335675}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -7636,7 +7878,7 @@ GameObject:
   - component: {fileID: 7720082276810980841}
   - component: {fileID: 3969846413222475760}
   - component: {fileID: 7657664556780003779}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -7717,7 +7959,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4243410750873460122}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7751,7 +7993,7 @@ GameObject:
   - component: {fileID: 7156348434311348394}
   - component: {fileID: 3237866135363889119}
   - component: {fileID: 4338883042270154847}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -7832,7 +8074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4083166656232751242}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7866,7 +8108,7 @@ GameObject:
   - component: {fileID: 7904031932317680549}
   - component: {fileID: 3318922915196006657}
   - component: {fileID: 9109472652963644318}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor_3
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -7949,7 +8191,7 @@ GameObject:
   - component: {fileID: 876732682304014511}
   - component: {fileID: 4689247438283216374}
   - component: {fileID: 1442590602627206941}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -8032,9 +8274,9 @@ GameObject:
   - component: {fileID: 5718566067367039043}
   - component: {fileID: 2871298171696792689}
   - component: {fileID: 6641480967536641486}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8192,7 +8434,7 @@ GameObject:
   - component: {fileID: 8088626060306828155}
   - component: {fileID: 5972730790597059109}
   - component: {fileID: 3221049508195542024}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -8410,7 +8652,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8062996863426763178}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8444,7 +8686,7 @@ GameObject:
   - component: {fileID: 2541819980081659224}
   - component: {fileID: 3085929950720012365}
   - component: {fileID: 2589030907730532348}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -8525,7 +8767,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9147281959789364435}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8557,7 +8799,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6035733375380715395}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8592,7 +8834,8 @@ GameObject:
   - component: {fileID: 3421878967972266892}
   - component: {fileID: 6954382677335927288}
   - component: {fileID: 3652006711906185083}
-  m_Layer: 7
+  - component: {fileID: 2872754323291161724}
+  m_Layer: 8
   m_Name: Stairs_up_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8681,11 +8924,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &2872754323291161724
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5792677768615240136}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &5871461353334224270
 GameObject:
   m_ObjectHideFlags: 0
@@ -8697,7 +8961,7 @@ GameObject:
   - component: {fileID: 7874239444817254893}
   - component: {fileID: 3833263033950271622}
   - component: {fileID: 2880459554152377175}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -8780,7 +9044,7 @@ GameObject:
   - component: {fileID: 4897312459240189990}
   - component: {fileID: 834120124609235230}
   - component: {fileID: 696881565193951492}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -8863,7 +9127,7 @@ GameObject:
   - component: {fileID: 7702720212050737627}
   - component: {fileID: 5587036587726607605}
   - component: {fileID: 1212837551447683379}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -8946,7 +9210,7 @@ GameObject:
   - component: {fileID: 5288625685876431541}
   - component: {fileID: 3059926272125296789}
   - component: {fileID: 1597627964117738537}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -9027,7 +9291,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 535589370112731734}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9059,7 +9323,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3117689924455488318}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9091,7 +9355,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7385370770616889827}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9123,7 +9387,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 705959772325314607}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9155,7 +9419,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3155900474405273960}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9190,7 +9454,8 @@ GameObject:
   - component: {fileID: 6056106008862788423}
   - component: {fileID: 1840977138244716823}
   - component: {fileID: 347021166537262087}
-  m_Layer: 7
+  - component: {fileID: 5621872926858173353}
+  m_Layer: 8
   m_Name: Stairs_up_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9279,11 +9544,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &5621872926858173353
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6358892734096246452}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &6412815731408268922
 GameObject:
   m_ObjectHideFlags: 0
@@ -9296,7 +9582,8 @@ GameObject:
   - component: {fileID: 1586118447143811414}
   - component: {fileID: 4701024705752816964}
   - component: {fileID: 2019012139331836872}
-  m_Layer: 7
+  - component: {fileID: 7793575606743949904}
+  m_Layer: 8
   m_Name: Stairs_up_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9385,11 +9672,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &7793575606743949904
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6412815731408268922}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &6432707909404283635
 GameObject:
   m_ObjectHideFlags: 0
@@ -9401,7 +9709,7 @@ GameObject:
   - component: {fileID: 1810568810660590727}
   - component: {fileID: 7344575901528006234}
   - component: {fileID: 2213341019025139187}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -9484,7 +9792,7 @@ GameObject:
   - component: {fileID: 1383072433185101845}
   - component: {fileID: 6184083267961087162}
   - component: {fileID: 3325418455481615638}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -9565,7 +9873,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6769291364487146046}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9599,7 +9907,7 @@ GameObject:
   - component: {fileID: 684786449768911806}
   - component: {fileID: 4056989221060903828}
   - component: {fileID: 3255587534495033957}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -9682,7 +9990,7 @@ GameObject:
   - component: {fileID: 2139042517423871995}
   - component: {fileID: 4346589607383230144}
   - component: {fileID: 1876944749854592507}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -9763,7 +10071,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2325652535938965048}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9797,7 +10105,7 @@ GameObject:
   - component: {fileID: 3291531201858515041}
   - component: {fileID: 5949504689882889555}
   - component: {fileID: 2225469269363206151}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -9887,7 +10195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5082066864065817740
 Transform:
   m_ObjectHideFlags: 0
@@ -10015,7 +10323,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6073531056080373452}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10049,7 +10357,7 @@ GameObject:
   - component: {fileID: 1844082334666553425}
   - component: {fileID: 2924533203482768781}
   - component: {fileID: 405607518327897334}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10209,7 +10517,7 @@ GameObject:
   - component: {fileID: 6993926653050693911}
   - component: {fileID: 6189231730252115471}
   - component: {fileID: 6957002527572803687}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -10292,7 +10600,7 @@ GameObject:
   - component: {fileID: 7862990758943586896}
   - component: {fileID: 7751039730420931444}
   - component: {fileID: 8145577834266379241}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -10373,7 +10681,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 559843600929054516}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10407,7 +10715,7 @@ GameObject:
   - component: {fileID: 879802858164919872}
   - component: {fileID: 8610451634314069191}
   - component: {fileID: 859216011835750986}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -10706,7 +11014,7 @@ GameObject:
   - component: {fileID: 7940288232287245800}
   - component: {fileID: 139760072327825008}
   - component: {fileID: 8836553353627957660}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -10787,7 +11095,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6582543889464785324}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10819,7 +11127,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 608652582556388287}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10853,7 +11161,7 @@ GameObject:
   - component: {fileID: 4623251247458574979}
   - component: {fileID: 6112194174753899119}
   - component: {fileID: 5836254927751993353}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -10934,7 +11242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7929391748886315651}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10967,7 +11275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7011085417653484859}
   - component: {fileID: 6740542044833651524}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TestTileMap4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11023,7 +11331,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8684959015045524053}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11057,7 +11365,7 @@ GameObject:
   - component: {fileID: 7357637723548206024}
   - component: {fileID: 7054504003535553176}
   - component: {fileID: 8596175503003175345}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -11140,7 +11448,7 @@ GameObject:
   - component: {fileID: 2763292613529245265}
   - component: {fileID: 1679702126217865473}
   - component: {fileID: 6802350850627610125}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HighDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11259,7 +11567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7854217753908471307}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11293,7 +11601,7 @@ GameObject:
   - component: {fileID: 4388131477031721383}
   - component: {fileID: 885436694372618939}
   - component: {fileID: 7307281077558244039}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2x2_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -11374,7 +11682,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2200088253288344297}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11408,7 +11716,7 @@ GameObject:
   - component: {fileID: 5778074123516983841}
   - component: {fileID: 486704559295161984}
   - component: {fileID: 7018526978805802278}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -11489,7 +11797,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4877421691658181381}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11523,7 +11831,7 @@ GameObject:
   - component: {fileID: 937274112315357503}
   - component: {fileID: 8122665766209172597}
   - component: {fileID: 825046918648649629}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -11606,7 +11914,7 @@ GameObject:
   - component: {fileID: 8598666352511747099}
   - component: {fileID: 6562581634174889735}
   - component: {fileID: 4157909067133724341}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -11689,7 +11997,7 @@ GameObject:
   - component: {fileID: 5118081798346259967}
   - component: {fileID: 4406899400402633450}
   - component: {fileID: 1601899095192435776}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -11772,7 +12080,7 @@ GameObject:
   - component: {fileID: 8278181720059062706}
   - component: {fileID: 4289726886256491256}
   - component: {fileID: 7228586469042102553}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -11855,7 +12163,7 @@ GameObject:
   - component: {fileID: 1737198809440640893}
   - component: {fileID: 3002878489371999113}
   - component: {fileID: 4060243990885288228}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor_3
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -11936,7 +12244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2153984887812817930}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11968,7 +12276,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3630003526860011493}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12000,7 +12308,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7517144034163608262}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12034,7 +12342,7 @@ GameObject:
   - component: {fileID: 7259017192210632681}
   - component: {fileID: 5684816776013873900}
   - component: {fileID: 1035915271753456913}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -12115,7 +12423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 135250345925858959}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12147,7 +12455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 476696245671175434}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12181,7 +12489,7 @@ GameObject:
   - component: {fileID: 4895874460386380749}
   - component: {fileID: 8804704610603700410}
   - component: {fileID: 7342908742783966538}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -12262,7 +12570,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1071418508311332674}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12296,7 +12604,7 @@ GameObject:
   - component: {fileID: 7117778865371187897}
   - component: {fileID: 5664346725645324378}
   - component: {fileID: 6616658775807700888}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor_3
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -12377,7 +12685,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2546180425702233794}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12409,7 +12717,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6240152658595022957}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12443,7 +12751,7 @@ GameObject:
   - component: {fileID: 6453252555731210986}
   - component: {fileID: 7161002408940065893}
   - component: {fileID: 4165195694048395387}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor2x2_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -12659,7 +12967,7 @@ GameObject:
   - component: {fileID: 7293845571758625075}
   - component: {fileID: 4351366625255587175}
   - component: {fileID: 273601865592384817}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -12742,7 +13050,7 @@ GameObject:
   - component: {fileID: 5809223780563997973}
   - component: {fileID: 3483198246431825419}
   - component: {fileID: 1512925065413488291}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -12823,7 +13131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3749677355464265816}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12855,7 +13163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6116278391682876084}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12887,7 +13195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3940545052012899564}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12921,7 +13229,7 @@ GameObject:
   - component: {fileID: 4080256602283906363}
   - component: {fileID: 6475179020495412786}
   - component: {fileID: 6500514700180036381}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -13005,7 +13313,8 @@ GameObject:
   - component: {fileID: 2774778537210883765}
   - component: {fileID: 8745783176414036444}
   - component: {fileID: 1253278697897442890}
-  m_Layer: 7
+  - component: {fileID: 4605528508668427726}
+  m_Layer: 8
   m_Name: Stairs_up_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13094,11 +13403,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &4605528508668427726
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8696846970286112483}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &8763580814393643250
 GameObject:
   m_ObjectHideFlags: 0
@@ -13111,7 +13441,8 @@ GameObject:
   - component: {fileID: 1653981392825075324}
   - component: {fileID: 7928103562455800484}
   - component: {fileID: 5771160329246685670}
-  m_Layer: 7
+  - component: {fileID: 882753155287243503}
+  m_Layer: 8
   m_Name: Stairs_up_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13200,11 +13531,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &882753155287243503
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8763580814393643250}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1 &8786508683804036721
 GameObject:
   m_ObjectHideFlags: 0
@@ -13214,7 +13566,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2768586907785246059}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HighTile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13246,7 +13598,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9163829917839229578}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowTile_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13280,7 +13632,7 @@ GameObject:
   - component: {fileID: 3852526404380328913}
   - component: {fileID: 4245968875229022327}
   - component: {fileID: 2734288596862190105}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -13363,7 +13715,7 @@ GameObject:
   - component: {fileID: 5478885271917273357}
   - component: {fileID: 9103360011343778399}
   - component: {fileID: 5903904386781381947}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_floor_3
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -13446,7 +13798,7 @@ GameObject:
   - component: {fileID: 8906997887476987419}
   - component: {fileID: 1098920113650146346}
   - component: {fileID: 8771477181937988996}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tunnels_emptyTile_1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -13613,7 +13965,8 @@ GameObject:
   - component: {fileID: 7105099620561726979}
   - component: {fileID: 2831356292840504817}
   - component: {fileID: 2480212516045813340}
-  m_Layer: 7
+  - component: {fileID: 333823732295469001}
+  m_Layer: 8
   m_Name: Stairs_up_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13702,11 +14055,32 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 69d947497b237cd41bf8e8c45e68f8eb, type: 3}
+--- !u!65 &333823732295469001
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102640402049540388}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.000001, y: 3.0000002, z: 3.0000005}
+  m_Center: {x: 0.00000023841858, y: 1.5000001, z: 0.000000059604645}
 --- !u!1001 &187336978523900814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13715,6 +14089,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1025571632525611394}
     m_Modifications:
+    - target: {fileID: 972506811556673216, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4377458555812379016, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.5
@@ -13760,8 +14138,16 @@ PrefabInstance:
       value: LowGate_Test 1
       objectReference: {fileID: 0}
     - target: {fileID: 4388185178127918070, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388185178127918070, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5898651285621072052, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
@@ -13799,12 +14185,12 @@ MonoBehaviour:
   pathSpeed: 5
   waveInfos:
   - enemySpawnInfos:
-    - prefab: {fileID: 9145158306244971189, guid: b731268c2384c9f41b4d6df7a5084316, type: 3}
+    - prefab: {fileID: 6697082485028167750, guid: e9e030a3b40cd684c8a63dd7faf26fa4, type: 3}
       count: 2
       attribute: 0
       level: 0
       interval: 1
-    - prefab: {fileID: 9145158306244971189, guid: b731268c2384c9f41b4d6df7a5084316, type: 3}
+    - prefab: {fileID: 9145158306244971189, guid: d2572347d3a6a724e94c62d9c644a1fa, type: 3}
       count: 2
       attribute: 0
       level: 0
@@ -13827,6 +14213,10 @@ PrefabInstance:
     - target: {fileID: 341851812308163781, guid: 44487c32804c11947a084a064171faed, type: 3}
       propertyPath: m_Name
       value: House_Test 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 341851812308163781, guid: 44487c32804c11947a084a064171faed, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7230159584150699066, guid: 44487c32804c11947a084a064171faed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13867,6 +14257,10 @@ PrefabInstance:
     - target: {fileID: 7230159584150699066, guid: 44487c32804c11947a084a064171faed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7690673031688260794, guid: 44487c32804c11947a084a064171faed, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14072,6 +14466,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2763292613529245265}
     m_Modifications:
+    - target: {fileID: 972506811556673216, guid: 97da7c7b6679422488c5cafab5e2cbcc, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4377458555812379016, guid: 97da7c7b6679422488c5cafab5e2cbcc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.5
@@ -14119,6 +14517,18 @@ PrefabInstance:
     - target: {fileID: 4388185178127918070, guid: 97da7c7b6679422488c5cafab5e2cbcc, type: 3}
       propertyPath: m_Name
       value: HighGate_Test
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388185178127918070, guid: 97da7c7b6679422488c5cafab5e2cbcc, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388185178127918070, guid: 97da7c7b6679422488c5cafab5e2cbcc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5898651285621072052, guid: 97da7c7b6679422488c5cafab5e2cbcc, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9116542563769943424, guid: 97da7c7b6679422488c5cafab5e2cbcc, type: 3}
       propertyPath: gateType
@@ -14207,15 +14617,15 @@ PrefabInstance:
     - target: {fileID: 9116542563769943424, guid: 97da7c7b6679422488c5cafab5e2cbcc, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 9145158306244971189, guid: b731268c2384c9f41b4d6df7a5084316, type: 3}
+      objectReference: {fileID: 6697082485028167750, guid: e9e030a3b40cd684c8a63dd7faf26fa4, type: 3}
     - target: {fileID: 9116542563769943424, guid: 97da7c7b6679422488c5cafab5e2cbcc, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 9145158306244971189, guid: 6f0ddaf564fc48c4198861e1cee664cc, type: 3}
+      objectReference: {fileID: 2109191089015210506, guid: a0670e2af5d010a448f63c2396db6bd1, type: 3}
     - target: {fileID: 9116542563769943424, guid: 97da7c7b6679422488c5cafab5e2cbcc, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[1].prefab
       value: 
-      objectReference: {fileID: 9145158306244971189, guid: b1b30b0df23052b4a98d664a1c02128f, type: 3}
+      objectReference: {fileID: 5413972442844473501, guid: 66abc001c4f0cd042bf6174a4ab61682, type: 3}
     - target: {fileID: 9116542563769943424, guid: 97da7c7b6679422488c5cafab5e2cbcc, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].interval
       value: 5
