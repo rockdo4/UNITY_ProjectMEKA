@@ -33,6 +33,11 @@ public class FormationManager : MonoBehaviour
 	public RectTransform characterCardScrollView;
 	public GameObject characterCardPrefab;
 
+	public RectTransform popupPanel;
+
+	public Button yesButton;
+	public Button noButton;
+
 	public TextMeshProUGUI[] textUiArr;
 	public Image[] imageUiArr;
 
@@ -44,6 +49,7 @@ public class FormationManager : MonoBehaviour
 	private int selectedCharacterID;
 
 	private List<GameObject> activeFalseList;
+	private CardInfo[] cardList;
 
 
 	private void Awake()
@@ -82,21 +88,25 @@ public class FormationManager : MonoBehaviour
 			int index = i;
 			characterCard[i].onClick.AddListener(() =>
 			{
-				characterPanel.gameObject.SetActive(true);
-				
+				OpenCharacterList();
+
 				selectedFormationIndex = index;
 				Debug.Log(selectedFormationIndex);
-
-				//현재 편성된 캐릭터는 띄우지 않음
-				CheckDuplicationCharacter();
             }
             );
 		}
-	}
 
-	public void OnClickCharacterCard(int index)
-	{
+		cardList = characterCardScrollView.GetComponentsInChildren<CardInfo>();
 
+		yesButton.onClick.AddListener(() => 
+		{ 
+			OnClickDeleteCurrentFormation();
+			CloseDeletePopUp();
+		});
+		noButton.onClick.AddListener(() => 
+		{ 
+			CloseDeletePopUp();
+		});
 	}
 
 	//편성 프리셋 바꾸기
@@ -104,38 +114,118 @@ public class FormationManager : MonoBehaviour
 	{
 		if (selectedFormationList == formationListIndex) return;
 
+		UpdateActiveCard();
 		selectedFormationList = formationListIndex;
+
 		for (int i = 0; i < numberOfCharacters; i++)
 		{
 			characterCard[i].GetComponent<CardInfo>().ChangeCardId(formationList[selectedFormationList][i]);
+		}
 
-			for(int j = 0; j < activeFalseList.Count; j++)
+		for (int i = 0; i < cardList.Length; i++)
+		{
+			var id = cardList[i].GetCardID();
+
+			for (int j = 0; j < numberOfCharacters; j++)
 			{
-				//activeFalseList[j].SetActive(true);
-				//여기서 복구 시켜야됨
-            }
+				if (formationList[selectedFormationList][j] == id)
+				{
+					//중복캐릭터 가리기
+					cardList[i].gameObject.SetActive(false);
+					activeFalseList.Add(cardList[i].gameObject);
+				}
+			}
 		}
 	}
 
-
-	//현재 편성된 캐릭터는 띄우지 않음
-	public void CheckDuplicationCharacter()
+	//삭제 팝업창 열기
+	public void OpenDeletePopUp()
 	{
-		var characterCardList = characterCardScrollView.GetComponentsInChildren<CardInfo>();
-
-		foreach(CardInfo cardInfo in characterCardList)
-		{
-			var ID = cardInfo.GetCardID();
-        }
+		popupPanel.gameObject.SetActive(true);
 	}
 
-	//캐릭터 리스트 끄기
+	//삭제 팝업창 닫기
+	public void CloseDeletePopUp()
+	{
+		popupPanel.gameObject.SetActive(false);
+	}
+
+
+	//다음 프리셋으로 바꾸기
+	public void ChangePresetPrevious()
+	{
+		if (selectedFormationList > 0)
+		{
+			ChangeFormationSet(selectedFormationList - 1);
+		}
+	}
+
+	//이전 프리셋으로 바꾸기
+	public void ChangePresetNext()
+	{
+		if(selectedFormationList < numberOfFormations - 1)
+		{
+			ChangeFormationSet(selectedFormationList + 1);
+		}
+	}
+
+	//캐릭터 선택하는 창 끄기
 	public void CloseCharacterList()
 	{
 		var table = DataTableMgr.GetTable<TestCharacterTable>();
    
 		characterPanel.gameObject.SetActive(false);
 		ResetSelectCharacterCard();
+	}
+
+	//캐릭터 선택하는 창 열기
+	public void OpenCharacterList()
+	{
+		characterPanel.gameObject.SetActive(true);
+
+		for (int i = 0; i < cardList.Length; i++)
+		{
+			var id = cardList[i].GetCardID();
+
+			for (int j = 0; j < numberOfCharacters; j++)
+			{
+				if(formationList[selectedFormationList][j] == id)
+				{
+					//중복캐릭터 가리기
+					cardList[i].gameObject.SetActive(false);
+					activeFalseList.Add(cardList[i].gameObject);
+				}
+			}
+		}
+	}
+
+	//이거 구현 해야됨
+	//이거 구현 해야됨
+	public void CheckCollectCharacter()
+	{
+		var table = DataTableMgr.GetTable<TestCharacterTable>();
+
+		for (int i = 0; i < cardList.Length; i++)
+		{
+			var info = table.GetCharacterData(formationList[selectedFormationList][i]);
+
+			if (info.count <= 0)
+			{
+				
+			}
+		}
+	}
+	//이거 구현 해야됨
+	//이거 구현 해야됨
+
+	//캐릭터 선택창 카드 활성화 시키기
+	public void UpdateActiveCard()
+	{
+		foreach(var card in activeFalseList)
+		{
+			card.SetActive(true);
+		}
+		activeFalseList.Clear();
 	}
 
 	//선택 누르면 캐릭터 그 카드 id 바꿈
@@ -160,8 +250,6 @@ public class FormationManager : MonoBehaviour
 
 			//selectedFormationList프리셋에 selectedFormationIndex인덱스의 아이디 바꿈
 			formationList[selectedFormationList][selectedFormationIndex] = selectedCharacterID;
-
-            cardInfo.GetComponentInChildren<TextMeshProUGUI>().SetText("-");
             activeFalseList.Add(cardInfo.gameObject);
         }
 
@@ -191,6 +279,7 @@ public class FormationManager : MonoBehaviour
 		selectedCharacterID = 0;
 	}
 
+	//현재 프리셋 지우기
 	public void OnClickDeleteCurrentFormation()
 	{
 		for (int i = 0; i < numberOfCharacters; i++)
@@ -198,5 +287,7 @@ public class FormationManager : MonoBehaviour
 			formationList[selectedFormationList][i] = 0;
 			characterCard[i].GetComponent<CardInfo>().ChangeCardId(0);
 		}
+
+		UpdateActiveCard();
 	}
 }
