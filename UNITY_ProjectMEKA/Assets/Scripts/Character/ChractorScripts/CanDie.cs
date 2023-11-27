@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CanDie : MonoBehaviour
@@ -15,8 +16,9 @@ public class CanDie : MonoBehaviour
     {
         if(state.Hp <= 0f)
         {
+            Debug.Log(gameObject.name);
+            //GetComponentInParent<PoolAble>().ReleaseObject(0.3f);
             Destroy(gameObject);
-            //GetComponent<PoolAble>().ReleaseObject();
         }
     }
 }

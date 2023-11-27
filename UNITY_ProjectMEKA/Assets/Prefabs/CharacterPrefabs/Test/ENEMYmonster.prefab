@@ -2415,21 +2415,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passive: 0a000000
   enemyType: 1
   property: 0
   occupation: 0
-  maxHp: 50
+  maxHp: 100
   amror: 0
   speed: 1
   cooldown: 0
   range: 1
-  damage: 5
+  damage: 10
   attackDelay: 0.5
   exp: 0
   BulletName: 
   BulletType: 0
   flashName: 
   hitName: 
+  hang: 0
+  yal: 0
+  rangeAttack: 
   level: 0
   grade: 0
   experience: 0
@@ -2457,8 +2461,11 @@ MonoBehaviour:
   ani: {fileID: 0}
   state: {fileID: 0}
   target: {fileID: 0}
+  healingTarget: {fileID: 0}
+  HoIsHitMe: {fileID: 0}
   CurrentPos: {x: 0, y: 0, z: 0}
   CurrentGridPos: {x: 0, y: 0, z: 0}
+  isArrival: 0
 --- !u!114 &4414223071326746534
 MonoBehaviour:
   m_ObjectHideFlags: 0

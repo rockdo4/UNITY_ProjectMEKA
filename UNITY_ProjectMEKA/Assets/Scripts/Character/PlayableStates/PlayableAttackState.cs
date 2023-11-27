@@ -21,8 +21,6 @@ public class PlayableAttackState : PlayableBaseState
 
     public override void Update()
     {
-        
-        
         timer += Time.deltaTime;
         if (timer > playerCtrl.state.attackDelay)
         {
@@ -30,8 +28,9 @@ public class PlayableAttackState : PlayableBaseState
             //playerCtrl.Hit();//test
             playerCtrl.ani.SetTrigger("Attack");
         }
-        if(playerCtrl.target == null)//현재 때리고 있는 적이 죽으면 상태 변경
+        if(/*!playerCtrl.target.activeSelf||*/playerCtrl.target == null)//현재 때리고 있는 적이 죽으면 상태 변경
         {
+            Debug.Log("상태 변경 Idle");
             playerCtrl.SetState(PlayerController.CharacterStates.Idle);
         }
     }

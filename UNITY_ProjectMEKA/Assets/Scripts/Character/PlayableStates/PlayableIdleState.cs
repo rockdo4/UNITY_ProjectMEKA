@@ -46,30 +46,54 @@ public class PlayableIdleState : PlayableBaseState
     {
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
 
-        Vector3Int playerGridPos = playerCtrl.CurrentGridPos;
+        Vector3 characterPosition = playerCtrl.transform.position;
+        Vector3 forward = -playerCtrl.transform.forward;
+        Vector3 right = playerCtrl.transform.right; 
+        int characterRow = 0; 
+        int characterCol = 0; 
 
-        int tileRange = Mathf.FloorToInt(playerCtrl.state.range); // 타일 사정거리
-        for (int i = 1; i <= tileRange; i++)
+        for (int i = 0; i < playerCtrl.state.AttackRange.GetLength(0); i++)
         {
-            Vector3Int forwardGridPos = playerGridPos + Vector3Int.RoundToInt(playerCtrl.transform.forward) * i;
-
-            foreach (GameObject en in enemys)
+            for (int j = 0; j < playerCtrl.state.AttackRange.GetLength(1); j++)
             {
-                EnemyController enemy = en.GetComponent<EnemyController>();
-                if (enemy != null)
+                if (playerCtrl.state.AttackRange[i, j] == 2)
                 {
-                    Vector3Int enemyGridPos = enemy.CurrentGridPos;
+                    characterRow = i;
+                    characterCol = j;
+                }
+            }
+        }
 
-                    if (enemyGridPos == forwardGridPos)
+        for (int i = 0; i < playerCtrl.state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < playerCtrl.state.AttackRange.GetLength(1); j++)
+            {
+                if (playerCtrl.state.AttackRange[i, j] == 1)
+                {
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    Vector3 gizmoPosition = characterPosition + relativePosition;
+                    Vector3Int Pos = new Vector3Int(Mathf.FloorToInt(gizmoPosition.x), Mathf.FloorToInt(gizmoPosition.y), Mathf.FloorToInt(gizmoPosition.z));
+
+                    foreach (GameObject en in enemys)
                     {
-                        playerCtrl.target = en;
-                        playerCtrl.SetState(PlayerController.CharacterStates.Attack);
-                        return; 
+                        EnemyController enemy = en.GetComponent<EnemyController>();
+                        if (enemy != null)
+                        {
+                            Vector3Int enemyGridPos = enemy.CurrentGridPos;
+
+                            if (enemyGridPos == Pos)
+                            {
+                                //Debug.Log("AttackEnemy");
+                                playerCtrl.target = en;
+                                enemy.HoIsHitMe = playerCtrl.gameObject;
+                                playerCtrl.SetState(PlayerController.CharacterStates.Attack);
+                                return;
+                            }
+                        }
                     }
                 }
             }
         }
-        
     }
     void SetPlayers()
     {
