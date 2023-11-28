@@ -45,11 +45,13 @@ public class PlayerController : PoolAble
     }
     void Start()
     {
+        state.ConvertTo2DArray();//공격 범위 설정2차원 배열
         states.Add(new PlayableIdleState(this));
         states.Add(new PlayableDieState(this));
         if(state.occupation == Defines.Occupation.Hunter || state.occupation == Defines.Occupation.Castor)
         {
             states.Add(new PlayableProjectileAttackState(this));
+            
         }
         else
         {
@@ -58,16 +60,69 @@ public class PlayerController : PoolAble
         states.Add(new PlayableHealingState(this));
 
         SetState(CharacterStates.Idle);
+
+        
     }
     private void Update()
     {
         stateManager.Update();
         Collider[] colliders = Physics.OverlapSphere(transform.position, state.range);
         Collider[] enemyColliders = Array.FindAll(colliders, co => co.CompareTag("Enemy"));
+        List<GameObject> en = CheckEnemy();
 
-        blockCount = enemyColliders.Length;
+        blockCount = en.Count;
+        Debug.Log(blockCount);
     }
+    List<GameObject> CheckEnemy()
+    {
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        List<GameObject> blockEnemy = new List<GameObject>();
+        Vector3 characterPosition = transform.position;
+        Vector3 forward = -transform.forward;
+        Vector3 right = transform.right;
+        int characterRow = 0;
+        int characterCol = 0;
 
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 2)
+                {
+                    characterRow = i;
+                    characterCol = j;
+                }
+            }
+        }
+
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 1)
+                {
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    Vector3 gizmoPosition = characterPosition + relativePosition;
+                    Vector3Int Pos = new Vector3Int(Mathf.FloorToInt(gizmoPosition.x), Mathf.FloorToInt(gizmoPosition.y), Mathf.FloorToInt(gizmoPosition.z));
+
+                    foreach (GameObject en in enemys)
+                    {
+                        EnemyController enemy = en.GetComponent<EnemyController>();
+                        if (enemy != null && enemy.state.isBlock)
+                        {
+                            Vector3Int enemyGridPos = enemy.CurrentGridPos;
+
+                            if (enemyGridPos == Pos)
+                            {
+                                blockEnemy.Add(en);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return blockEnemy;
+    }
     public void SetState(CharacterStates state)
     {
         stateManager.ChangeState(states[(int)state]);
@@ -196,6 +251,51 @@ public class PlayerController : PoolAble
         if (heal != null) 
         {
             heal.OnHealing(1f*state.damage);
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        if (state == null || state.AttackRange == null || transform == null)
+        {
+            return; // 하나라도 null이면 Gizmos를 그리지 않음
+        }
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+
+        Vector3 characterPosition = transform.position; // 캐릭터의 현재 위치
+        Vector3 forward = -transform.forward; // 캐릭터가 왼쪽을 바라보므로 Unity의 왼쪽 방향이 포워드
+        Vector3 right = transform.right; // 캐릭터의 오른쪽 방향이 실제로는 Unity의 포워드
+
+        int characterRow = 0; // 캐릭터의 행 위치
+        int characterCol = 0; // 캐릭터의 열 위치
+
+        // 캐릭터 위치 ('2') 찾기
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 2)
+                {
+                    characterRow = i;
+                    characterCol = j;
+                }
+            }
+        }
+
+        // 공격 가능 범위 ('1')에 대한 Gizmos 그리기
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 1)
+                {
+                    // 배열에서 캐릭터를 기준으로 한 상대 위치 계산
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    // 월드 좌표에 상대 위치 더하기
+                    Vector3 gizmoPosition = characterPosition + relativePosition;
+                    // Gizmos 큐브 그리기
+                    Gizmos.DrawCube(gizmoPosition, Vector3.one); // 큐브 사이즈는 1x1x1
+                }
+            }
         }
     }
 }

@@ -6,12 +6,14 @@ public class Defines
 {
     public enum Property
     {
+        None,
         Prime,
         Edila,
         Grieve,
     }
     public enum Occupation
     {
+        None,
         Guardian,
         Striker,
         Castor,
@@ -21,10 +23,11 @@ public class Defines
     public enum EnemyType
     {
         None,
-        Monster,
-        Enemy1,
-        Enemy2,
-        Enemy3,
+        Monster,//기본형으로 쓸생각
+        LongDistance,//원거리형
+        Offensive,//공격형
+        OhYaBung,//오야붕||보스
+        YangSehyung,//양세형
     }
     public enum GateType
     {

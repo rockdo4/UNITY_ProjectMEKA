@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterState : MonoBehaviour
@@ -10,6 +11,28 @@ public class CharacterState : MonoBehaviour
         Aoe,
         PiercingShot,
     }
+    public enum Passive
+    {
+        None,//없음
+        Unstoppable,//저지 불가
+        Explosion,//자폭
+        BusterCall,//지원 전술
+        SpeedUp,//이속 증가
+        Counterattack,//역습
+        Spite,//악의
+        Outlander,//아웃랜더
+        Tenacity,//망자의 집념
+        Revenge,//보복
+        Mechanic,//정비공
+
+    }
+
+    //공격 가능범위
+    public int[,] AttackRange;
+    
+
+    [SerializeField, Header("적 패시브 설정")]
+    public List<Passive> passive;
 
     [SerializeField, Header("적 타입 설정")]
     public Defines.EnemyType enemyType;
@@ -57,6 +80,37 @@ public class CharacterState : MonoBehaviour
     [SerializeField, Header("맞았을때 이팩트")]
     public string hitName;
 
+    [SerializeField, Header("행")]
+    public int hang;
+    [SerializeField, Header("열")]
+    public int yal;
+    [SerializeField, Header("공격범위설정")]
+    public int[] rangeAttack;
+    
+    public void ConvertTo2DArray()
+    {
+        // 1차원 배열의 길이가 행과 열의 곱과 일치하는지 확인
+        if (rangeAttack.Length != hang * yal)
+        {
+            Debug.LogError("1차원 배열의 길이가 행과 열의 곱과 일치하지 않습니다.");
+            return;
+        }
+
+        // 새 2차원 배열 생성
+        AttackRange = new int[hang, yal];
+
+        // 1차원 배열의 데이터를 2차원 배열로 변환
+        for (int i = 0; i < hang; i++)
+        {
+            for (int j = 0; j < yal; j++)
+            {
+                AttackRange[i, j] = rangeAttack[i * yal + j];
+            }
+        }
+
+        //return AttackRange; // 변환된 2차원 배열 반환
+    }
+
     //[HideInInspector]
     public int level;//레벨
 
@@ -74,6 +128,9 @@ public class CharacterState : MonoBehaviour
 
     [HideInInspector]
     public int ID;
+
+    [HideInInspector]
+    public bool isBlock = true;
 
     private void Awake()
     {

@@ -8,12 +8,12 @@ public class NPCDestinationStates : NPCBaseState
 
     private Vector3 targetPos;
     private float threshold = 0.1f;
-    private float speed;
+    //private float speed;
     private int repeatCount = -1;
     private Vector3 direction;
 
     private bool once = false;
-
+    private bool isOne = false;
     GameObject[] players;
     public NPCDestinationStates(EnemyController enemy) : base(enemy)
     {
@@ -21,12 +21,23 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void Enter()
     {
+        //enemyCtrl.transform.position = enemyCtrl.initPos;
+        //targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
+        //targetPos.y = enemyCtrl.transform.position.y;
+        //direction = (targetPos - enemyCtrl.transform.position).normalized;
+        //enemyCtrl.transform.LookAt(targetPos);
+        ////speed = enemyCtrl.state.speed;
+        //repeatCount = -1;
+        //once = false;
+    }
+    public void Init()
+    {
         enemyCtrl.transform.position = enemyCtrl.initPos;
         targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
         targetPos.y = enemyCtrl.transform.position.y;
         direction = (targetPos - enemyCtrl.transform.position).normalized;
         enemyCtrl.transform.LookAt(targetPos);
-        speed = enemyCtrl.state.speed;
+        //speed = enemyCtrl.state.speed;
         repeatCount = -1;
         once = false;
     }
@@ -88,7 +99,7 @@ public class NPCDestinationStates : NPCBaseState
                     if (enemyGridPos == forwardGridPos/*distanceToTileCenter <= 0.1f*/)
                     {
                         enemyCtrl.target = pl;
-                        if (player.blockCount < player.maxBlockCount)
+                        if (player.blockCount < player.maxBlockCount && enemyCtrl.state.isBlock)
                         {
                             enemyCtrl.SetState(NPCStates.Attack);
                         }
@@ -102,13 +113,17 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void Update()
     {
-
+        if(!isOne)
+        {
+            Init();
+            isOne = true;
+        }
     }
 
     public void MoveEnemyWaypoint()
     {
         var pos = enemyCtrl.rb.position;
-        pos += direction * speed * Time.deltaTime;
+        pos += direction * enemyCtrl.state.speed * Time.deltaTime;
         enemyCtrl.rb.MovePosition(pos);
 
         if (Vector3.Distance(new Vector3(pos.x,pos.z), new Vector3(targetPos.x,targetPos.z)) < threshold) // 다음 웨이포인트 도착하면
@@ -117,6 +132,7 @@ public class NPCDestinationStates : NPCBaseState
             {
                 //enemyCtrl.waypointIndex = 0;
                 //enemyCtrl.transform.position = enemyCtrl.initPos;
+                enemyCtrl.isArrival = true;
                 enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
             }
             else
@@ -141,11 +157,12 @@ public class NPCDestinationStates : NPCBaseState
         }
 
         var pos = enemyCtrl.rb.position;
-        pos += enemyCtrl.transform.forward * speed * Time.deltaTime;
+        pos += enemyCtrl.transform.forward * enemyCtrl.state.speed * Time.deltaTime;
         enemyCtrl.rb.MovePosition(pos);
 
         if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
         {
+            enemyCtrl.isArrival = true;
             enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
         }
     }
@@ -153,7 +170,7 @@ public class NPCDestinationStates : NPCBaseState
     public void MoveEnemyRepeat(int count)
     {
         var pos = enemyCtrl.rb.position;
-        pos += enemyCtrl.transform.forward * speed * Time.deltaTime;
+        pos += enemyCtrl.transform.forward * enemyCtrl.state.speed * Time.deltaTime;
         enemyCtrl.rb.MovePosition(pos);
 
         if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
@@ -173,6 +190,7 @@ public class NPCDestinationStates : NPCBaseState
             }
             else if(enemyCtrl.waypointIndex == enemyCtrl.wayPoint.Length - 1)
             {
+                enemyCtrl.isArrival = true;
                 enemyCtrl.GetComponentInParent<PoolAble>().ReleaseObject();
                 return;
             }
