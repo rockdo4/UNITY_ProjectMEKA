@@ -518,7 +518,7 @@ MonoBehaviour:
     m_Bottom: 10
   m_ChildAlignment: 0
   m_StartCorner: 0
-  m_StartAxis: 0
+  m_StartAxis: 1
   m_CellSize: {x: 100, y: 150}
   m_Spacing: {x: 30, y: 20}
   m_Constraint: 1
@@ -1671,7 +1671,6 @@ RectTransform:
   m_Children:
   - {fileID: 1468606020}
   - {fileID: 741213966}
-  - {fileID: 392304164}
   m_Father: {fileID: 1704917222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2143,12 +2142,12 @@ GameObject:
   - component: {fileID: 392304165}
   - component: {fileID: 392304167}
   m_Layer: 5
-  m_Name: CharacterInfo
+  m_Name: CharacterInfoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &392304164
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2163,11 +2162,11 @@ RectTransform:
   m_Children:
   - {fileID: 1566563307}
   - {fileID: 293374785}
-  m_Father: {fileID: 260725773}
+  m_Father: {fileID: 1704917222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.1943, y: -0.89132}
+  m_AnchoredPosition: {x: -941, y: 500.00003}
   m_SizeDelta: {x: 650.39, y: 316.78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &392304165
@@ -2404,6 +2403,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1704917223}
         m_TargetAssemblyTypeName: PanelManager, Assembly-CSharp
         m_MethodName: ChangePanelFormation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 728951529}
+        m_TargetAssemblyTypeName: FormationManager, Assembly-CSharp
+        m_MethodName: CheckCollectCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4482,6 +4493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   formationPanel: {fileID: 54860533}
   characterPanel: {fileID: 1672578531}
+  characterInfoPanel: {fileID: 392304164}
   characterCardScrollView: {fileID: 567874440}
   characterCardPrefab: {fileID: 3706411763328831598, guid: 930b6865c1147a145807241a0471e1de, type: 3}
   popupPanel: {fileID: 204579627}
@@ -7797,18 +7809,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Scrollbar, UnityEngine.UI
-        m_MethodName: set_value
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1468606022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9996,7 +9996,19 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1704917223}
         m_TargetAssemblyTypeName: PanelManager, Assembly-CSharp
-        m_MethodName: LoadBattleScene
+        m_MethodName: ChangePanelFormation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 728951529}
+        m_TargetAssemblyTypeName: FormationManager, Assembly-CSharp
+        m_MethodName: CheckCollectCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10355,6 +10367,7 @@ RectTransform:
   - {fileID: 949934749}
   - {fileID: 1586614792}
   - {fileID: 260725773}
+  - {fileID: 392304164}
   - {fileID: 728951526}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -11,11 +11,11 @@ public static class DataTableMgr
     {
         tables.Clear();
 
-        //var reinforceTable = new ReinforceTable();
-        //tables.Add(typeof(ReinforceTable), reinforceTable);
-
         var testCharTable = new TestCharacterTable();
         tables.Add(typeof(TestCharacterTable) , testCharTable);
+
+        //var itemTable = new ItemTable();
+        //tables.Add(typeof(ItemTable), itemTable);
     }
 
     public static T GetTable<T>() where T : DataTable

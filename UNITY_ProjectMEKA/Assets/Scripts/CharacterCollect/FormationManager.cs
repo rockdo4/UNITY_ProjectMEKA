@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public enum UINumeric
@@ -30,6 +30,9 @@ public class FormationManager : MonoBehaviour
 
 	public RectTransform formationPanel;
 	public RectTransform characterPanel;
+	public RectTransform characterInfoPanel;
+	private Vector3 characterInfoPos;
+
 	public RectTransform characterCardScrollView;
 	public GameObject characterCardPrefab;
 
@@ -58,6 +61,7 @@ public class FormationManager : MonoBehaviour
 		formationList = new List<int[]>();
         activeFalseList = new List<GameObject>();
         selectedFormationList = 0;
+		characterInfoPos = characterInfoPanel.position;
 
 		for (int i = 0; i < numberOfFormations; i++)
 		{
@@ -82,35 +86,65 @@ public class FormationManager : MonoBehaviour
 			});
 		}
 
-		//편성 캐릭터 카드 8개 생성
-		for (int i = 0; i < numberOfCharacters; i++)
+		////편성 캐릭터 카드 델리게이트 추가
+		//for (int i = 0; i < numberOfCharacters; i++)
+		//{
+		//	int index = i;
+
+		//	var button = characterCard[i].AddComponent<ButtonHoldListener>();
+
+		//	button.onClickButton.AddListener(() =>
+		//	{
+		//		OpenCharacterList();
+
+		//		selectedFormationIndex = index;
+		//		Debug.Log(selectedFormationIndex);
+		//	});
+
+		//	button.holdButton.AddListener(() =>
+		//	{
+				
+		//	});
+		//}
+
+		//버튼 델리게이트 할당
+		yesButton.onClick.AddListener(() =>
 		{
-			int index = i;
-			characterCard[i].onClick.AddListener(() =>
-			{
-				OpenCharacterList();
-
-				selectedFormationIndex = index;
-				Debug.Log(selectedFormationIndex);
-            }
-            );
-		}
-
-		cardList = characterCardScrollView.GetComponentsInChildren<CardInfo>();
-
-		yesButton.onClick.AddListener(() => 
-		{ 
 			OnClickDeleteCurrentFormation();
 			CloseDeletePopUp();
 		});
-		noButton.onClick.AddListener(() => 
-		{ 
+		noButton.onClick.AddListener(() =>
+		{
 			CloseDeletePopUp();
 		});
+
+		
+		cardList = characterCardScrollView.GetComponentsInChildren<CardInfo>();
+		CheckCollectCharacter();
 	}
 
-    //편성 프리셋 바꾸기
-    public void ChangeFormationSet(int formationListIndex)
+	private void Start()
+	{
+		//편성 캐릭터 카드 델리게이트 추가
+		for (int i = 0; i < numberOfCharacters; i++)
+		{
+			int index = i;
+
+			UnityAction clickAction = () =>
+			{
+				// 실행할 내용
+				OpenCharacterList();
+				selectedFormationIndex = index;
+				Debug.Log(selectedFormationIndex);
+			};
+
+			var button = characterCard[i].AddComponent<ButtonHoldListener>();
+			button.onClickButton.AddListener(clickAction);
+		}
+	}
+
+	//편성 프리셋 바꾸기
+	public void ChangeFormationSet(int formationListIndex)
 	{
 		if (selectedFormationList == formationListIndex) return;
 
@@ -199,6 +233,7 @@ public class FormationManager : MonoBehaviour
 		}
 	}
 
+	//캐릭터 카드 갖고 있는지 확인
 	public void CheckCollectCharacter()
 	{
 		var table = DataTableMgr.GetTable<TestCharacterTable>();
@@ -291,5 +326,16 @@ public class FormationManager : MonoBehaviour
 		}
 
 		UpdateActiveCard();
+	}
+
+	//캐릭터 인포 열기
+	public void OpenCharacterInfo(TestCharacterInfo info)
+	{
+		characterInfoPanel.gameObject.SetActive(true);
+		characterInfoPanel.GetComponent<CharacterInfoText>().SetText(info);
+
+		var pos = GetComponentInParent<Canvas>().gameObject.transform.position;
+
+		characterInfoPanel.position = pos;
 	}
 }
