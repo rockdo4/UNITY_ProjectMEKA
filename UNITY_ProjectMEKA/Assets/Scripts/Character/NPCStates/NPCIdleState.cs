@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NPCIdleState : NPCBaseState
@@ -27,5 +28,6 @@ public class NPCIdleState : NPCBaseState
     {
         
     }
-   
+
+    
 }
