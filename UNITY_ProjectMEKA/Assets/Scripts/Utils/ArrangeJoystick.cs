@@ -72,23 +72,13 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                 break;
             }
         }
+
+        // 드래그하고 있을 때, currentTile 방향으로 공격범위 보이게 세팅
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (hit.transform != null)
-        {
-            if(directions.Contains(hit.transform.parent.gameObject))
-            {
-                Debug.Log($"배치가능 : {hit}");
-                RotatePlayer(hit.transform.parent, true);
-            }
-        }
-        else
-        {
-            Debug.Log($"배치불가 : {currentTile}");
-            RotatePlayer(currentTile.transform.parent, true);
-        }
+        RotatePlayer(currentTile.transform, true);
     }
 
     public void RotatePlayer(Transform currentTileParent, bool mouseUp)
