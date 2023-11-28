@@ -30,6 +30,7 @@ public class CharacterState : MonoBehaviour
     //공격 가능범위
     public int[,] AttackRange;
     
+
     [SerializeField, Header("적 패시브 설정")]
     public List<Passive> passive;
 
