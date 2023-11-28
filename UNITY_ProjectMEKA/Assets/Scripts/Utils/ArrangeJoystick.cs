@@ -54,6 +54,16 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             Bounds bounds = new Bounds(Vector3.zero, new Vector3(2f, 2f, 0f));
             transform.localPosition = bounds.ClosestPoint(transform.localPosition);
         }
+
+        int layerMask = 1 << LayerMask.NameToLayer("Arrange");
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        {
+            if (hit.transform.gameObject != prevHit)
+            {
+                prevHit = hit.transform.gameObject;
+            }
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
