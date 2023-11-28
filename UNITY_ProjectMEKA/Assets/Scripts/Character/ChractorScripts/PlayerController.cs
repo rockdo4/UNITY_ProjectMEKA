@@ -27,6 +27,7 @@ public class PlayerController : PoolAble
     public enum CharacterStates
     {
         Idle,
+        Arrange, // 11.27, 김민지, 배치상태 추가
         Die,
         Attack,
         Healing,
@@ -47,6 +48,10 @@ public class PlayerController : PoolAble
     {
         state.ConvertTo2DArray();//공격 범위 설정2차원 배열
         states.Add(new PlayableIdleState(this));
+
+        // 11.27, 김민지, 배치 상태 추가
+        states.Add(new PlayableArrangeState(this));
+
         states.Add(new PlayableDieState(this));
         if(state.occupation == Defines.Occupation.Hunter || state.occupation == Defines.Occupation.Castor)
         {
