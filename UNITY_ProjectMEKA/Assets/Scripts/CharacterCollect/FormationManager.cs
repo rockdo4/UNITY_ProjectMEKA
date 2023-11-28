@@ -69,7 +69,8 @@ public class FormationManager : MonoBehaviour
 			formationList.Add(formation);
 		}
 
-		var table = DataTableMgr.GetTable<TestCharacterTable>().GetOriginalTable();
+		var testCharacterTable = DataTableMgr.GetTable<TestCharacterTable>();
+		var table = testCharacterTable.GetOriginalTable();
 
 		//캐릭터 리스트 카드 생성
 		foreach (var character in table)
@@ -87,25 +88,28 @@ public class FormationManager : MonoBehaviour
 		}
 
 		////편성 캐릭터 카드 델리게이트 추가
-		//for (int i = 0; i < numberOfCharacters; i++)
-		//{
-		//	int index = i;
+		for (int i = 0; i < numberOfCharacters; i++)
+		{
+			int index = i;
 
-		//	var button = characterCard[i].AddComponent<ButtonHoldListener>();
+			var button = characterCard[i].AddComponent<ButtonHoldListener>();
 
-		//	button.onClickButton.AddListener(() =>
-		//	{
-		//		OpenCharacterList();
+			button.onClickButton.AddListener(() =>
+			{
+				OpenCharacterList();
+				selectedFormationIndex = index;
+				Debug.Log("click");
+			});
 
-		//		selectedFormationIndex = index;
-		//		Debug.Log(selectedFormationIndex);
-		//	});
-
-		//	button.holdButton.AddListener(() =>
-		//	{
-				
-		//	});
-		//}
+			button.holdButton.AddListener(() =>
+			{
+				if (formationList[selectedFormationList][index] != 0)
+				{
+					var info = testCharacterTable.GetCharacterData(formationList[selectedFormationList][index]);
+					OpenCharacterInfo(info);
+                }
+            });
+		}
 
 		//버튼 델리게이트 할당
 		yesButton.onClick.AddListener(() =>
@@ -121,26 +125,6 @@ public class FormationManager : MonoBehaviour
 		
 		cardList = characterCardScrollView.GetComponentsInChildren<CardInfo>();
 		CheckCollectCharacter();
-	}
-
-	private void Start()
-	{
-		//편성 캐릭터 카드 델리게이트 추가
-		for (int i = 0; i < numberOfCharacters; i++)
-		{
-			int index = i;
-
-			UnityAction clickAction = () =>
-			{
-				// 실행할 내용
-				OpenCharacterList();
-				selectedFormationIndex = index;
-				Debug.Log(selectedFormationIndex);
-			};
-
-			var button = characterCard[i].AddComponent<ButtonHoldListener>();
-			button.onClickButton.AddListener(clickAction);
-		}
 	}
 
 	//편성 프리셋 바꾸기

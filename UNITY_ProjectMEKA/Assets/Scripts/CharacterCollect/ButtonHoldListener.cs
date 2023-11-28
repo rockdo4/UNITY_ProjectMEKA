@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class ButtonHoldListener : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
 
-    public float holdDuration = 0.5f;
-    public UnityEvent onClickButton = new UnityEvent();
+    public float holdDuration = 1f;
+    public UnityEvent onClickButton;
     public UnityEvent holdButton;
 
     private bool isPointerDown = false;
@@ -19,6 +19,9 @@ public class ButtonHoldListener : MonoBehaviour, IPointerDownHandler, IPointerUp
     private WaitForSeconds delay;
 
     private void Awake() {
+        onClickButton = new UnityEvent();
+        holdButton = new UnityEvent();
+
         button = GetComponent<Button>();
         delay = new WaitForSeconds(0.1f);
     }
@@ -35,6 +38,7 @@ public class ButtonHoldListener : MonoBehaviour, IPointerDownHandler, IPointerUp
         {
 			onClickButton.Invoke();
 		}
+        isLongPressed = false;
     }
 
     private IEnumerator Timer() 
@@ -50,11 +54,10 @@ public class ButtonHoldListener : MonoBehaviour, IPointerDownHandler, IPointerUp
                 {
                     holdButton.Invoke();
                 }
-                yield break;
+                break;
             }
             yield return delay;
 		}
-		isLongPressed = false;
 	}
 
     public void onClickAddListener(UnityAction action)
