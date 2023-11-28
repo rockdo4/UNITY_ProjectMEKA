@@ -11,8 +11,6 @@ public class Tile : MonoBehaviour
     [HideInInspector]
     public float height;
     private BoxCollider boxCollider;
-    //private float offset;
-
     public bool arrangePossible;
 
     private void Awake()
@@ -21,35 +19,7 @@ public class Tile : MonoBehaviour
         baseMaterial = GetComponent<MeshRenderer>().material;
         boxCollider = GetComponent<BoxCollider>();
         height = boxCollider.bounds.size.y;
-        //offset = transform.parent.parent.localPosition.y * transform.parent.localScale.y;
-        //Debug.Log(offset);
     }
-
-    //public void CheckTileArrangePossible()
-    //{
-    //    Vector3 boxSize = Vector3.Scale(transform.parent.localScale, boxCollider.size); // 상자의 크기
-    //    float boxcastHeight = transform.position.y + boxSize.y * 1.5f - offset; // 상자를 생성하는 높이
-
-    //    RaycastHit hit;
-    //    if (!Physics.BoxCast(transform.position + Vector3.up * boxcastHeight, boxSize, Vector3.down, out hit, Quaternion.identity, boxSize.y))
-    //    {
-    //        arrangePossible = true;
-    //    }
-    //}
-
-    //void OnDrawGizmos()
-    //{
-    //    boxCollider = GetComponent<BoxCollider>();
-    //    offset = transform.parent.parent.localPosition.y * transform.parent.localScale.y;
-    //    Vector3 boxSize = Vector3.Scale(transform.parent.localScale, boxCollider.size); ; // 상자의 크기
-    //    float boxcastHeight = transform.position.y + boxSize.y * 1.5f + offset; // 상자를 생성하는 높이
-
-    //    // Gizmo 색상 설정
-    //    Gizmos.color = Color.red;
-
-    //    // Gizmo를 BoxCast 상자의 형태로 그림
-    //    Gizmos.DrawWireCube(transform.position + Vector3.up * boxcastHeight - Vector3.up * boxSize.y / 2f, boxSize);
-    //}
 
     public void SetPlacementPossible(bool isPossible)
     {

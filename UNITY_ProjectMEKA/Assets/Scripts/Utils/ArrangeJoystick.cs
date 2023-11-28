@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static PlayerController;
 
 public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -13,20 +14,22 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         Count
     }
 
-
     private List<GameObject> directions = new List<GameObject>();
     private Bounds backgroundBounds;
     private List<Bounds> bounds;
-    private RaycastHit hit;
     private GameObject currentTile;
     private Transform player;
     private BoxCollider boxCollider;
     private float half;
     [HideInInspector]
     public float yOffset = 1f;
+    [HideInInspector]
+    public bool secondArranged;
+    private GameObject firstArranger;
 
-    private void Awake()
+    private void OnEnable()
     {
+        secondArranged = false;
         boxCollider = GetComponent<BoxCollider>();
         half = boxCollider.bounds.size.x / 2f;
         backgroundBounds = new Bounds(Vector3.zero, new Vector3(2f, 2f, 0f));
@@ -48,28 +51,34 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        OnDrag(eventData);
+        if(!secondArranged)
+        {
+            OnDrag(eventData);
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane plane = new Plane(Vector3.up, transform.position);
-        float enter;
-        if (plane.Raycast(ray, out enter))
+        if(!secondArranged)
         {
-            Vector3 hitPoint = ray.GetPoint(enter);
-            transform.position = hitPoint;
-            transform.localPosition = backgroundBounds.ClosestPoint(transform.localPosition);
-        }
-
-        for(int i = 0; i < (int)Direction.Count; ++i)
-        {
-            if (bounds[i].Contains(transform.localPosition))
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Plane plane = new Plane(Vector3.up, transform.position);
+            float enter;
+            if (plane.Raycast(ray, out enter))
             {
-                currentTile = directions[i];
-                RotatePlayer(currentTile.transform, false);
-                break;
+                Vector3 hitPoint = ray.GetPoint(enter);
+                transform.position = hitPoint;
+                transform.localPosition = backgroundBounds.ClosestPoint(transform.localPosition);
+            }
+
+            for(int i = 0; i < (int)Direction.Count; ++i)
+            {
+                if (bounds[i].Contains(transform.localPosition))
+                {
+                    currentTile = directions[i];
+                    RotatePlayer(currentTile.transform, false);
+                    break;
+                }
             }
         }
 
@@ -78,7 +87,14 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        RotatePlayer(currentTile.transform, true);
+        if (!secondArranged)
+        {
+            RotatePlayer(currentTile.transform, true);
+            secondArranged = true;
+            Time.timeScale = 1f;
+            firstArranger.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
+        }
     }
 
     public void RotatePlayer(Transform currentTileParent, bool mouseUp)
@@ -88,14 +104,14 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         // pos에서 핸들러의 half만큼 빼기
         if (go == directions[(int)Direction.Up])
         {
-            Debug.Log("rotate Player");
+            //Debug.Log("rotate Player");
             if (mouseUp)
             {
                 pos.z += -half;
             }
             else
             {
-                Debug.Log("up direction");
+                //Debug.Log("up direction");
                 player.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
@@ -142,5 +158,10 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public void SetPlayer(Transform player)
     {
         this.player = player;
+    }
+
+    public void SetFirstArranger(GameObject arranger)
+    {
+        firstArranger = arranger;
     }
 }
