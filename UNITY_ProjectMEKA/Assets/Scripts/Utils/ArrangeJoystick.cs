@@ -15,8 +15,10 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
 
     private List<GameObject> directions = new List<GameObject>();
+    private Bounds backgroundBounds;
+    private List<Bounds> bounds;
     private RaycastHit hit;
-    private GameObject prevHit;
+    private GameObject currentTile;
     private Transform player;
     private BoxCollider boxCollider;
     private float half;
@@ -27,13 +29,21 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     {
         boxCollider = GetComponent<BoxCollider>();
         half = boxCollider.bounds.size.x / 2f;
-        Debug.Log(player.gameObject.name);
+        backgroundBounds = new Bounds(Vector3.zero, new Vector3(2f, 2f, 0f));
 
         var parent = transform.parent;
         for (int i = 0; i < (int)Direction.Count; ++i)
         {
             directions.Add(parent.GetChild(i).gameObject);
         }
+
+        bounds = new List<Bounds>
+        {
+            new Bounds(new Vector3(0.5f, 0.5f, 0f), new Vector3(1f, 1f, 0f)),
+            new Bounds(new Vector3(0.5f, -0.5f, 0f), new Vector3(1f, 1f, 0f)),
+            new Bounds(new Vector3(-0.5f, -0.5f, 0f), new Vector3(1f, 1f, 0f)),
+            new Bounds(new Vector3(-0.5f, 0.5f, 0f), new Vector3(1f, 1f, 0f))
+        };
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -50,18 +60,16 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         {
             Vector3 hitPoint = ray.GetPoint(enter);
             transform.position = hitPoint;
-
-            Bounds bounds = new Bounds(Vector3.zero, new Vector3(2f, 2f, 0f));
-            transform.localPosition = bounds.ClosestPoint(transform.localPosition);
+            transform.localPosition = backgroundBounds.ClosestPoint(transform.localPosition);
         }
 
-        int layerMask = 1 << LayerMask.NameToLayer("Arrange");
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        for(int i = 0; i < (int)Direction.Count; ++i)
         {
-            if (hit.transform.gameObject != prevHit)
+            if (bounds[i].Contains(transform.localPosition))
             {
-                prevHit = hit.transform.gameObject;
+                currentTile = directions[i];
+                RotatePlayer(currentTile.transform, false);
+                break;
             }
         }
     }
@@ -73,43 +81,72 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             if(directions.Contains(hit.transform.parent.gameObject))
             {
                 Debug.Log($"배치가능 : {hit}");
-                RotatePlayer(hit.transform.parent);
+                RotatePlayer(hit.transform.parent, true);
             }
         }
         else
         {
-            Debug.Log($"배치불가 : {prevHit}");
-            RotatePlayer(prevHit.transform.parent);
+            Debug.Log($"배치불가 : {currentTile}");
+            RotatePlayer(currentTile.transform.parent, true);
         }
     }
 
-    public void RotatePlayer(Transform hitGo)
+    public void RotatePlayer(Transform currentTileParent, bool mouseUp)
     {
-        var pos = hitGo.position;
-        var go = hitGo.gameObject;
+        var pos = currentTileParent.position;
+        var go = currentTileParent.gameObject;
         // pos에서 핸들러의 half만큼 빼기
         if (go == directions[(int)Direction.Up])
         {
-            pos.z += -half;
-            player.rotation = Quaternion.Euler(0f, 0f, 0f);
+            Debug.Log("rotate Player");
+            if (mouseUp)
+            {
+                pos.z += -half;
+            }
+            else
+            {
+                Debug.Log("up direction");
+                player.rotation = Quaternion.Euler(0f, 0f, 0f);
+            }
         }
         else if (go == directions[(int)Direction.Right])
         {
-            pos.x += -half;
-            player.rotation = Quaternion.Euler(0f, 90f, 0f);
+            if (mouseUp)
+            {
+                pos.x += -half;
+            }
+            else
+            {
+                player.rotation = Quaternion.Euler(0f, 90f, 0f);
+            }
         }
         else if (go == directions[(int)Direction.Down])
         {
-            pos.z += half;
-            player.rotation = Quaternion.Euler(0f, 180f, 0f);
+            if (mouseUp)
+            {
+                pos.z += half;
+            }
+            else
+            {
+                player.rotation = Quaternion.Euler(0f, 180f, 0f);
+            }
         }
         else
         {
-            pos.x += half;
-            player.rotation = Quaternion.Euler(0f, -90f, 0f);
+            if (mouseUp)
+            {
+                pos.x += half;
+            }
+            else
+            {
+                player.rotation = Quaternion.Euler(0f, -90f, 0f);
+            }
         }
 
-        transform.position = pos;
+        if(mouseUp)
+        {
+            transform.position = pos;
+        }
     }
 
     public void SetPlayer(Transform player)
