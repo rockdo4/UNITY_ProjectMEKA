@@ -76,7 +76,6 @@ public class PlayerController : PoolAble
         List<GameObject> en = CheckEnemy();
 
         blockCount = en.Count;
-        Debug.Log(blockCount);
     }
     List<GameObject> CheckEnemy()
     {
@@ -113,13 +112,22 @@ public class PlayerController : PoolAble
                     foreach (GameObject en in enemys)
                     {
                         EnemyController enemy = en.GetComponent<EnemyController>();
-                        if (enemy != null && enemy.state.isBlock)
+                        if (enemy != null && !enemy.state.isBlock)
                         {
                             Vector3Int enemyGridPos = enemy.CurrentGridPos;
 
                             if (enemyGridPos == Pos)
                             {
-                                blockEnemy.Add(en);
+                                if(enemy.state.enemyType == Defines.EnemyType.OhYaBung)
+                                {
+                                    blockEnemy.Add(en);
+                                    blockEnemy.Add(en);
+                                }
+                                else
+                                {
+
+                                    blockEnemy.Add(en);
+                                }
                             }
                         }
                     }
@@ -173,10 +181,10 @@ public class PlayerController : PoolAble
         switch (state.occupation)
         {
             case Defines.Occupation.Guardian:
-                maxBlockCount = 4;
+                maxBlockCount = 5;
                 break;
             case Defines.Occupation.Striker:
-                maxBlockCount = 2;
+                maxBlockCount = 3;
                 break;
             case Defines.Occupation.Castor:
                 maxBlockCount = 0;
@@ -197,14 +205,10 @@ public class PlayerController : PoolAble
         if(target == null) return;
         //var obj = ObjectPoolManager.instance.GetGo("bullet");
         var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
-        //obj.transform.position = transform.position; // 발사 위치 설정
-        //obj.transform.position = FirePosition.transform.position; // 발사 위치 설정
-        ////obj.transform.rotation = transform.rotation; // 회전 초기화
-        //obj.transform.rotation = Quaternion.identity; // 회전 초기화
         
+        //obj.transform.LookAt(target.transform.position);
+       
 
-        obj.transform.LookAt(target.transform);
-        
         switch (state.BulletType)
         {
             case CharacterState.Type.Bullet:
@@ -233,7 +237,11 @@ public class PlayerController : PoolAble
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
                 obj.transform.position = FirePosition.transform.position;
-                obj.transform.rotation = FirePosition.transform.rotation;
+                //obj.transform.rotation = FirePosition.transform.rotation;
+                //Vector3 targetPos = new Vector3(target.transform.position.x,
+                //   FirePosition.transform.position.y,
+                //   target.transform.position.z);
+                obj.transform.LookAt(target.transform.position);
                 projectileP.damage = state.damage;
                 projectileP.target = target.transform;
                 projectileP.Player = gameObject;

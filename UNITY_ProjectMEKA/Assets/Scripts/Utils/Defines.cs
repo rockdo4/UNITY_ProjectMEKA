@@ -13,7 +13,6 @@ public class Defines
     }
     public enum Occupation
     {
-        None,
         Guardian,
         Striker,
         Castor,

@@ -69,28 +69,17 @@ public class EnemyController : PoolAble
     
     void Start()
     {
+        state.ConvertTo2DArray();
         states.Add(new NPCIdleState(this));
         states.Add(new NPCDestinationStates(this));
         states.Add(new NPCAttackState(this));
         SetState(NPCStates.Move);
         foreach(var P in state.passive)
         {
-            //Unstoppable,//저지 불가
-            //Explosion,//자폭 (완)
-            //BusterCall,//지원 전술 (완)
-            //SpeedUp,//이속 증가 (완)
-            //Counterattack,//역습 (완)
-            //Spite,//악의 (완)
-            //Outlander,//아웃랜더 (완)
-            //Tenacity,//망자의 집념 (완)
-            //Revenge,//보복 (완)
-            //Mechanic,//정비공 (완)
-
-
             switch (P)
             {
                 case CharacterState.Passive.Unstoppable:
-                    state.isBlock = false;
+                    gameObject.AddComponent<Unstoppable>(); 
                     break;
                 case CharacterState.Passive.Explosion:
                     gameObject.AddComponent<Explosion>();
@@ -192,6 +181,46 @@ public class EnemyController : PoolAble
                 return (enemy.state.property == Defines.Property.Prime) ? compatibility : -compatibility;
             default:
                 return 0;
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        if (state == null || state.AttackRange == null || transform == null)
+        {
+            return; // 하나라도 null이면 Gizmos를 그리지 않음
+        }
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+
+        Vector3 characterPosition = transform.position;
+        Vector3 forward = transform.right; // 캐릭터의 오른쪽이 Unity의 전방(Z 축)
+        Vector3 right = transform.forward; // 캐릭터의 왼쪽이 Unity의 오른쪽(X 축)
+
+        int characterRow = 0;
+        int characterCol = 0;
+
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 2)
+                {
+                    characterRow = i;
+                    characterCol = j;
+                }
+            }
+        }
+
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 1)
+                {
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    Vector3 gizmoPosition = characterPosition + relativePosition;
+                    Gizmos.DrawCube(gizmoPosition, Vector3.one);
+                }
+            }
         }
     }
 }

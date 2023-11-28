@@ -64,54 +64,73 @@ public class NPCDestinationStates : NPCBaseState
                 break;
         }
 
-        CheckEnemy();
-    }
-    void CheckEnemy()
-    {
-        Vector3 centerPos = new Vector3(enemyCtrl.CurrentGridPos.x + 0.5f, enemyCtrl.CurrentGridPos.y, enemyCtrl.CurrentGridPos.z + 0.5f);
-        centerPos.y += enemyCtrl.CurrentPos.y;
-        
-        if(Vector3.Distance(enemyCtrl.transform.position, centerPos) > 0.1f)
-        {
-            return;
-        }
+        Vector3Int gridPosition = Vector3Int.FloorToInt(enemyCtrl.transform.position);
+        Vector3 tileCenter = new Vector3(gridPosition.x + 0.5f, gridPosition.y, gridPosition.z + 0.5f);
 
+        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.3f)
+        {
+            CheckPlayer();
+        }
+    }
+    void CheckPlayer()
+    {
         players = GameObject.FindGameObjectsWithTag("Player");
 
-        Vector3Int playerGridPos = enemyCtrl.CurrentGridPos;
+        Vector3 characterPosition = enemyCtrl.transform.position;
+        //Vector3 forward = -enemyCtrl.transform.forward;
+        Vector3 forward = enemyCtrl.transform.right;
+        //Vector3 right = -enemyCtrl.transform.right;
+        Vector3 right = enemyCtrl.transform.forward;
+        int characterRow = 0;
+        int characterCol = 0;
 
-
-        int tileRange = Mathf.FloorToInt(enemyCtrl.state.range); 
-
-        for (int i = 1; i <= tileRange; i++)
+        for (int i = 0; i < enemyCtrl.state.AttackRange.GetLength(0); i++)
         {
-            Vector3Int forwardGridPos = playerGridPos + Vector3Int.RoundToInt(enemyCtrl.transform.forward) * i;
-            Vector3 tileCenterWorldPos = new Vector3(forwardGridPos.x + 0.5f, forwardGridPos.y + 0.5f, forwardGridPos.z + 0.5f);
-            foreach (GameObject pl in players)
+            for (int j = 0; j < enemyCtrl.state.AttackRange.GetLength(1); j++)
             {
-                PlayerController player = pl.GetComponent<PlayerController>();
-
-                if (player != null)
+                if (enemyCtrl.state.AttackRange[i, j] == 2)
                 {
-                    Vector3Int enemyGridPos = player.CurrentGridPos;
-                    //Vector3 playerPos = player.transform.position;
-                    float distanceToTileCenter = Vector3.Distance(enemyGridPos, tileCenterWorldPos);
+                    characterRow = i;
+                    characterCol = j;
+                }
+            }
+        }
+        Vector3Int playerGridPos = enemyCtrl.CurrentGridPos;
+        for (int i = 0; i < enemyCtrl.state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < enemyCtrl.state.AttackRange.GetLength(1); j++)
+            {
+                if (enemyCtrl.state.AttackRange[i, j] == 1)
+                {
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    Vector3 gizmoPosition = characterPosition + relativePosition;
+                    Vector3Int Pos = new Vector3Int(Mathf.FloorToInt(gizmoPosition.x), Mathf.FloorToInt(gizmoPosition.y), Mathf.FloorToInt(gizmoPosition.z));
 
-                    if (enemyGridPos == forwardGridPos/*distanceToTileCenter <= 0.1f*/)
+                    foreach (GameObject en in players)
                     {
-                        enemyCtrl.target = pl;
-                        if (player.blockCount < player.maxBlockCount && enemyCtrl.state.isBlock)
+                        PlayerController player = en.GetComponent<PlayerController>();
+                        if (player != null)
                         {
-                            enemyCtrl.SetState(NPCStates.Attack);
+                            Vector3Int enemyGridPos = player.CurrentGridPos;
+                            
+                            if (enemyGridPos == Pos)
+                            {
+                                //Debug.Log("AttackEnemy");
+                                enemyCtrl.target = en; 
+                                if (player.blockCount < player.maxBlockCount && !enemyCtrl.state.isBlock)
+                                {
+                                    enemyCtrl.SetState(NPCStates.Attack);
+                                }
+                                //enemyCtrl.SetState(NPCStates.Attack);
+                                return;
+                            }
                         }
-                        return;
                     }
                 }
             }
         }
-
     }
-
+    
     public override void Update()
     {
         if(!isOne)
