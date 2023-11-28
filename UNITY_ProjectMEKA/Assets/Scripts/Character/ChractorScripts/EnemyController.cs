@@ -42,6 +42,7 @@ public class EnemyController : PoolAble
     public GameObject target;
     public GameObject healingTarget;
     public GameObject HoIsHitMe;
+    public GameObject FirePosition;
 
 
 
@@ -72,7 +73,15 @@ public class EnemyController : PoolAble
         state.ConvertTo2DArray();
         states.Add(new NPCIdleState(this));
         states.Add(new NPCDestinationStates(this));
-        states.Add(new NPCAttackState(this));
+        if (state.enemyType == Defines.EnemyType.LongDistance)
+        {
+            states.Add(new NPCProjectileAttackState(this));
+
+        }
+        else
+        {
+            states.Add(new NPCAttackState(this));
+        }
         SetState(NPCStates.Move);
         foreach(var P in state.passive)
         {
@@ -160,6 +169,25 @@ public class EnemyController : PoolAble
         TakeDamage co = healingTarget.GetComponent<TakeDamage>();
         co.OnHealing(state.damage * damage);
     }
+    public void Fire()
+    {
+        if (target == null) return;
+        //var obj = ObjectPoolManager.instance.GetGo("bullet");
+        var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
+
+        //obj.transform.LookAt(target.transform.position);
+        var projectile = obj.GetComponent<Bullet>();
+        projectile.ResetState();
+        obj.transform.position = FirePosition.transform.position;
+        obj.transform.rotation = FirePosition.transform.rotation;
+        projectile.damage = state.damage;
+        projectile.target = target.transform;
+        projectile.Player = gameObject;
+        obj.SetActive(false);
+        obj.SetActive(true);
+
+        
+    }
     public float Rockpaperscissors()
     {
         float compatibility = state.damage * 0.1f;
@@ -192,8 +220,10 @@ public class EnemyController : PoolAble
         Gizmos.color = new Color(1, 0, 0, 0.5f);
 
         Vector3 characterPosition = transform.position;
-        Vector3 forward = transform.right; // 캐릭터의 오른쪽이 Unity의 전방(Z 축)
-        Vector3 right = transform.forward; // 캐릭터의 왼쪽이 Unity의 오른쪽(X 축)
+        //Vector3 forward = -transform.forward;
+        Vector3 forward = transform.right;
+        //Vector3 right = transform.right;
+        Vector3 right = -transform.forward;
 
         int characterRow = 0;
         int characterCol = 0;

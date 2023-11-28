@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class NPCDestinationStates : NPCBaseState
 {
@@ -77,10 +78,15 @@ public class NPCDestinationStates : NPCBaseState
         players = GameObject.FindGameObjectsWithTag("Player");
 
         Vector3 characterPosition = enemyCtrl.transform.position;
-        //Vector3 forward = -enemyCtrl.transform.forward;
         Vector3 forward = enemyCtrl.transform.right;
-        //Vector3 right = -enemyCtrl.transform.right;
-        Vector3 right = enemyCtrl.transform.forward;
+        //Vector3 right = transform.right;
+        Vector3 right = -enemyCtrl.transform.forward;
+
+
+        //Vector3 forward = -enemyCtrl.transform.forward;
+        //Vector3 forward = enemyCtrl.transform.right;
+        //Vector3 right = enemyCtrl.transform.right;
+        //Vector3 right = enemyCtrl.transform.forward;
         int characterRow = 0;
         int characterCol = 0;
 

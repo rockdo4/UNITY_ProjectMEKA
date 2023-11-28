@@ -999,7 +999,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 5664913e4c792da46999dece51246477, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1049,7 +1049,7 @@ MonoBehaviour:
   hitName: 
   hang: 1
   yal: 2
-  rangeAttack: 0200000001000000
+  rangeAttack: 0100000002000000
   level: 0
   grade: 0
   experience: 0
@@ -1080,6 +1080,7 @@ MonoBehaviour:
   target: {fileID: 0}
   healingTarget: {fileID: 0}
   HoIsHitMe: {fileID: 0}
+  FirePosition: {fileID: 0}
   CurrentPos: {x: 0, y: 0, z: 0}
   CurrentGridPos: {x: 0, y: 0, z: 0}
   isArrival: 0
