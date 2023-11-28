@@ -76,7 +76,7 @@ public class PlayerController : PoolAble
         List<GameObject> en = CheckEnemy();
 
         blockCount = en.Count;
-        Debug.Log(blockCount);
+        //Debug.Log(blockCount);
     }
     List<GameObject> CheckEnemy()
     {
