@@ -1,9 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Xml;
 using UnityEngine;
-using System.Linq;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayableIdleState : PlayableBaseState
 {

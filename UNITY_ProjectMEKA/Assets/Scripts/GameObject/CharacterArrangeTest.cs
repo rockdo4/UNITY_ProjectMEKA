@@ -85,7 +85,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
 
             foreach (var tile in tiles)
             {
-                tile.GetComponentInChildren<Tile>().SetPlacementPossible(false);
+                tile.GetComponentInChildren<Tile>().SetTileMaterial(false, Tile.TileMaterial.Arrange);
             }
         }
     }
@@ -100,7 +100,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
         created = true;
         foreach(var tile in tiles)
         {
-            tile.GetComponentInChildren<Tile>().SetPlacementPossible(created);
+            tile.GetComponentInChildren<Tile>().SetTileMaterial(created, Tile.TileMaterial.None);
         }
     }
 

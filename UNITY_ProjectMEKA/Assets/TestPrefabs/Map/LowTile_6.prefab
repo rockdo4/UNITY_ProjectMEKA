@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 5699030797606748264}
   - component: {fileID: 5142103313309853982}
   - component: {fileID: 6621363815115606938}
+  - component: {fileID: 7163702178759885572}
   m_Layer: 0
   m_Name: tunnels_floorBorder_1
   m_TagString: Marker
@@ -115,3 +116,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7163702178759885572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6564685031605011521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 273b4a0be6e63004a81e8ce932ea3a06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrangePossibleMaterial: {fileID: 2100000, guid: 9aa5bd918f5d68c4f9a8f21b6284126d, type: 2}
+  attackPossibleMaterial: {fileID: 2100000, guid: 9e8ddf0e6fa9d7b4190ff03a516d1be1, type: 2}
+  height: 0
+  arrangePossible: 0

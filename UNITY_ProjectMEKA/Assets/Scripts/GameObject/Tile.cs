@@ -5,13 +5,22 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    public Material overlayMaterial;
+    public enum TileMaterial
+    {
+        None,
+        Arrange,
+        Attack
+    }
+
+    public Material arrangePossibleMaterial;
+    public Material attackPossibleMaterial;
     private Material baseMaterial;
     private MeshRenderer meshRenderer;
     [HideInInspector]
     public float height;
     private BoxCollider boxCollider;
     public bool arrangePossible;
+    public bool attackPossible;
 
     private void Awake()
     {
@@ -21,11 +30,16 @@ public class Tile : MonoBehaviour
         height = boxCollider.bounds.size.y;
     }
 
-    public void SetPlacementPossible(bool isPossible)
+    public void SetTileMaterial(bool isPossible, TileMaterial materialType)
     {
-        if (isPossible)
+        if (isPossible && (materialType == TileMaterial.Arrange))
         {
-            Material[] materials = new Material[] { baseMaterial, overlayMaterial }; // 두 개의 material을 배열로 만듭니다.
+            Material[] materials = new Material[] { baseMaterial, arrangePossibleMaterial }; // 두 개의 material을 배열로 만듭니다.
+            meshRenderer.materials = materials; // 두 개의 material을 오브젝트에 적용합니다.
+        }
+        else if(isPossible && (materialType == TileMaterial.Attack))
+        {
+            Material[] materials = new Material[] { baseMaterial, attackPossibleMaterial }; // 두 개의 material을 배열로 만듭니다.
             meshRenderer.materials = materials; // 두 개의 material을 오브젝트에 적용합니다.
         }
         else
