@@ -95,7 +95,7 @@ public class PlayerController : PoolAble
             {
                 if (state.AttackRange[i, j] == 2)
                 {
-                    characterRow = i;
+                    characterRow = i; 
                     characterCol = j;
                 }
             }
