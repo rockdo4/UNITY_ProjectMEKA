@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public enum SortType
 {
@@ -65,12 +66,14 @@ public class ItemCardManager : MonoBehaviour
 		{
 			var itemCard = ObjectPoolManager.instance.GetGo("ItemCard");
 			var text = itemCard.GetComponentInChildren<TextMeshProUGUI>();
+			var str = item.Name;
 
 			text.SetText(item.Name);
-			var str = item.Name;
 			itemCard.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(str); });
-			itemCard.name = count++.ToString();
+			itemCard.name = item.ToString();
 			itemCard.transform.SetParent(itemCardScrollView);
+			itemCard.gameObject.name = count++.ToString();
+			itemCard.transform.SetAsLastSibling();
 		}
 	}
 

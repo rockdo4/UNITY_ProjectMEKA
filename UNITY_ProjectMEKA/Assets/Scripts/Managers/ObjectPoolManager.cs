@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -84,6 +82,7 @@ public class ObjectPoolManager : MonoBehaviour
     // 持失
     private GameObject CreatePooledItem()
     {
+        Debug.Log("持失");
         GameObject poolGo = Instantiate(goDic[objectName], new Vector3(100, 100, 100), Quaternion.identity);
         poolGo.GetComponent<PoolAble>().Pool = ojbectPoolDic[objectName];
         return poolGo;
