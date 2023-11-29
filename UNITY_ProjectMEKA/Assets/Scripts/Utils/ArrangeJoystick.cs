@@ -20,6 +20,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     private List<Bounds> bounds;
     private GameObject currentTile;
     private GameObject prevTile;
+    LinkedList<Tile> tempTiles = new LinkedList<Tile>();
     private PlayerController player;
     private BoxCollider boxCollider;
     private float half;
@@ -99,6 +100,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             RotatePlayer(currentTile.transform, true);
             secondArranged = true;
             Time.timeScale = 1f;
+            ClearTileMesh(tempTiles);
             firstArranger.gameObject.SetActive(false);
             transform.localPosition = Vector3.zero;
             transform.parent.gameObject.SetActive(false);
@@ -181,6 +183,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void ChangeTileMesh()
     {
+        ClearTileMesh(tempTiles);
         var state = player.stateManager.currentBase as PlayableIdleState;
         state.UpdateAttackPositions();
         foreach (var tilePos in player.attakableTilePositions)
@@ -196,8 +199,8 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                 // 레이가 오브젝트에 부딪혔을 때의 처리
                 //Debug.Log("Hit " + hit.collider.gameObject.name);
                 var tileContoller = hit.transform.GetComponent<Tile>();
-                //tileContoller.SetTileMaterial(false, Tile.TileMaterial.None);
                 tileContoller.SetTileMaterial(true, Tile.TileMaterial.Attack);
+                tempTiles.AddLast(tileContoller);
             }
             else
             {
@@ -205,6 +208,15 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                 //Debug.Log("No hit");
             }
         }
+    }
+
+    public void ClearTileMesh(LinkedList<Tile> tempTiles)
+    {
+        foreach(var tile in tempTiles)
+        {
+            tile.SetTileMaterial(false, Tile.TileMaterial.None);
+        }
+        tempTiles.Clear();
     }
 
     private void OnDrawGizmos()
