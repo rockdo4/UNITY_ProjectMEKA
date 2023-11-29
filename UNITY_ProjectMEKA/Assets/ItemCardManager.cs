@@ -60,13 +60,16 @@ public class ItemCardManager : MonoBehaviour
 			item.GetComponent<PoolAble>().ReleaseObject();
 		}
 
+		int count = 0;
 		foreach (var item in itemList)
 		{
 			var itemCard = ObjectPoolManager.instance.GetGo("ItemCard");
 			var text = itemCard.GetComponentInChildren<TextMeshProUGUI>();
 
 			text.SetText(item.Name);
-			itemCard.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(item.Name); });
+			var str = item.Name;
+			itemCard.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(str); });
+			itemCard.name = count++.ToString();
 			itemCard.transform.SetParent(itemCardScrollView);
 		}
 	}
