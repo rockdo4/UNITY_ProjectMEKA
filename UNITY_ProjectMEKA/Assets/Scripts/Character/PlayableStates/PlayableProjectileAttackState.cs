@@ -34,7 +34,6 @@ public class PlayableProjectileAttackState : PlayableBaseState
             timer = playerCtrl.state.attackDelay;
             //timer = 0;
             playerCtrl.ani.SetTrigger("Attack");
-            Debug.Log("ATTACKENEMY");
             //CheckEnemy();
             //playerCtrl.Fire();
             playerCtrl.SetState(PlayerController.CharacterStates.Idle);

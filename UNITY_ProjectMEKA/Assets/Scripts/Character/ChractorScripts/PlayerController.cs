@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : PoolAble
@@ -23,6 +24,9 @@ public class PlayerController : PoolAble
     public int blockCount;
     [HideInInspector]
     public int maxBlockCount;
+    [HideInInspector]
+    public Collider[] enemys;
+
 
     public enum CharacterStates
     {
@@ -42,7 +46,7 @@ public class PlayerController : PoolAble
     {
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
-        
+        CreateColliders();
     }
     void Start()
     {
@@ -61,8 +65,9 @@ public class PlayerController : PoolAble
         states.Add(new PlayableHealingState(this));
 
         SetState(CharacterStates.Idle);
+        CreateColliders();
 
-        
+
     }
     private void Update()
     {
@@ -109,13 +114,22 @@ public class PlayerController : PoolAble
                     foreach (GameObject en in enemys)
                     {
                         EnemyController enemy = en.GetComponent<EnemyController>();
-                        if (enemy != null && enemy.state.isBlock)
+                        if (enemy != null && !enemy.state.isBlock)
                         {
                             Vector3Int enemyGridPos = enemy.CurrentGridPos;
 
                             if (enemyGridPos == Pos)
                             {
-                                blockEnemy.Add(en);
+                                if(enemy.state.enemyType == Defines.EnemyType.OhYaBung)
+                                {
+                                    blockEnemy.Add(en);
+                                    blockEnemy.Add(en);
+                                }
+                                else
+                                {
+
+                                    blockEnemy.Add(en);
+                                }
                             }
                         }
                     }
@@ -169,10 +183,10 @@ public class PlayerController : PoolAble
         switch (state.occupation)
         {
             case Defines.Occupation.Guardian:
-                maxBlockCount = 4;
+                maxBlockCount = 5;
                 break;
             case Defines.Occupation.Striker:
-                maxBlockCount = 2;
+                maxBlockCount = 3;
                 break;
             case Defines.Occupation.Castor:
                 maxBlockCount = 0;
@@ -193,14 +207,10 @@ public class PlayerController : PoolAble
         if(target == null) return;
         //var obj = ObjectPoolManager.instance.GetGo("bullet");
         var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
-        //obj.transform.position = transform.position; // 발사 위치 설정
-        //obj.transform.position = FirePosition.transform.position; // 발사 위치 설정
-        ////obj.transform.rotation = transform.rotation; // 회전 초기화
-        //obj.transform.rotation = Quaternion.identity; // 회전 초기화
         
+        //obj.transform.LookAt(target.transform.position);
+       
 
-        obj.transform.LookAt(target.transform);
-        
         switch (state.BulletType)
         {
             case CharacterState.Type.Bullet:
@@ -229,7 +239,11 @@ public class PlayerController : PoolAble
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
                 obj.transform.position = FirePosition.transform.position;
-                obj.transform.rotation = FirePosition.transform.rotation;
+                //obj.transform.rotation = FirePosition.transform.rotation;
+                //Vector3 targetPos = new Vector3(target.transform.position.x,
+                //   FirePosition.transform.position.y,
+                //   target.transform.position.z);
+                obj.transform.LookAt(target.transform.position);
                 projectileP.damage = state.damage;
                 projectileP.target = target.transform;
                 projectileP.Player = gameObject;
@@ -254,22 +268,21 @@ public class PlayerController : PoolAble
             heal.OnHealing(1f*state.damage);
         }
     }
-    private void OnDrawGizmos()
+
+    void CreateColliders()
     {
         if (state == null || state.AttackRange == null || transform == null)
         {
-            return; // 하나라도 null이면 Gizmos를 그리지 않음
+            return;
         }
-        Gizmos.color = new Color(1, 0, 0, 0.5f);
 
-        Vector3 characterPosition = transform.position; // 캐릭터의 현재 위치
-        Vector3 forward = -transform.forward; // 캐릭터가 왼쪽을 바라보므로 Unity의 왼쪽 방향이 포워드
-        Vector3 right = transform.right; // 캐릭터의 오른쪽 방향이 실제로는 Unity의 포워드
+        Vector3 forward = -transform.forward;
+        Vector3 right = transform.right;
+        Vector3 parentScale = transform.localScale;
 
-        int characterRow = 0; // 캐릭터의 행 위치
-        int characterCol = 0; // 캐릭터의 열 위치
+        int characterRow = 0;
+        int characterCol = 0;
 
-        // 캐릭터 위치 ('2') 찾기
         for (int i = 0; i < state.AttackRange.GetLength(0); i++)
         {
             for (int j = 0; j < state.AttackRange.GetLength(1); j++)
@@ -282,21 +295,24 @@ public class PlayerController : PoolAble
             }
         }
 
-        // 공격 가능 범위 ('1')에 대한 Gizmos 그리기
         for (int i = 0; i < state.AttackRange.GetLength(0); i++)
         {
             for (int j = 0; j < state.AttackRange.GetLength(1); j++)
             {
                 if (state.AttackRange[i, j] == 1)
                 {
-                    // 배열에서 캐릭터를 기준으로 한 상대 위치 계산
                     Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-                    // 월드 좌표에 상대 위치 더하기
-                    Vector3 gizmoPosition = characterPosition + relativePosition;
-                    // Gizmos 큐브 그리기
-                    Gizmos.DrawCube(gizmoPosition, Vector3.one); // 큐브 사이즈는 1x1x1
+                    Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);
+
+                    BoxCollider collider = gameObject.AddComponent<BoxCollider>();
+                    collider.size = new Vector3(1 / parentScale.x, 1 / parentScale.y, 1 / parentScale.z);
+                    collider.center = correctedPosition;
+                    collider.isTrigger = true;
                 }
             }
         }
+
+
     }
+    
 }

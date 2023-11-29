@@ -42,6 +42,7 @@ public class EnemyController : PoolAble
     public GameObject target;
     public GameObject healingTarget;
     public GameObject HoIsHitMe;
+    public GameObject FirePosition;
 
 
 
@@ -59,6 +60,7 @@ public class EnemyController : PoolAble
             SetState(NPCStates.Move);
         }
         isArrival = false;
+        CreateColliders();
     }
     private void Awake()
     {
@@ -69,28 +71,25 @@ public class EnemyController : PoolAble
     
     void Start()
     {
+        state.ConvertTo2DArray();
         states.Add(new NPCIdleState(this));
         states.Add(new NPCDestinationStates(this));
-        states.Add(new NPCAttackState(this));
+        if (state.enemyType == Defines.EnemyType.LongDistance)
+        {
+            states.Add(new NPCProjectileAttackState(this));
+
+        }
+        else
+        {
+            states.Add(new NPCAttackState(this));
+        }
         SetState(NPCStates.Move);
         foreach(var P in state.passive)
         {
-            //Unstoppable,//저지 불가
-            //Explosion,//자폭 (완)
-            //BusterCall,//지원 전술 (완)
-            //SpeedUp,//이속 증가 (완)
-            //Counterattack,//역습 (완)
-            //Spite,//악의 (완)
-            //Outlander,//아웃랜더 (완)
-            //Tenacity,//망자의 집념 (완)
-            //Revenge,//보복 (완)
-            //Mechanic,//정비공 (완)
-
-
             switch (P)
             {
                 case CharacterState.Passive.Unstoppable:
-                    state.isBlock = false;
+                    gameObject.AddComponent<Unstoppable>(); 
                     break;
                 case CharacterState.Passive.Explosion:
                     gameObject.AddComponent<Explosion>();
@@ -122,6 +121,7 @@ public class EnemyController : PoolAble
 
             }
         }
+        CreateColliders();
     }
 
     private void FixedUpdate()
@@ -171,6 +171,25 @@ public class EnemyController : PoolAble
         TakeDamage co = healingTarget.GetComponent<TakeDamage>();
         co.OnHealing(state.damage * damage);
     }
+    public void Fire()
+    {
+        if (target == null) return;
+        //var obj = ObjectPoolManager.instance.GetGo("bullet");
+        var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
+
+        //obj.transform.LookAt(target.transform.position);
+        var projectile = obj.GetComponent<Bullet>();
+        projectile.ResetState();
+        obj.transform.position = FirePosition.transform.position;
+        obj.transform.rotation = FirePosition.transform.rotation;
+        projectile.damage = state.damage;
+        projectile.target = target.transform;
+        projectile.Player = gameObject;
+        obj.SetActive(false);
+        obj.SetActive(true);
+
+        
+    }
     public float Rockpaperscissors()
     {
         float compatibility = state.damage * 0.1f;
@@ -194,5 +213,92 @@ public class EnemyController : PoolAble
                 return 0;
         }
     }
+    void CreateColliders()
+    {
+        if (state == null || state.AttackRange == null || transform == null)
+        {
+            return;
+        }
+        
+        
+        Vector3 forward = transform.right; 
+        Vector3 right = -transform.forward;
+        Vector3 parentScale = transform.localScale;
+
+        int characterRow = 0;
+        int characterCol = 0;
+
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 2)
+                {
+                    characterRow = i;
+                    characterCol = j;
+                }
+            }
+        }
+
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 1)
+                {
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);
+
+                    BoxCollider collider = gameObject.AddComponent<BoxCollider>();
+                    collider.size = new Vector3(1 / parentScale.x, 1 / parentScale.y, 1 / parentScale.z);
+                    collider.center = correctedPosition;
+                    collider.isTrigger = true;
+                }
+            }
+        }
+
+
+    }
+
+    //private void OnDrawGizmos()
+    //{
+    //    if (state == null || state.AttackRange == null || transform == null)
+    //    {
+    //        return; // 하나라도 null이면 Gizmos를 그리지 않음
+    //    }
+    //    Gizmos.color = new Color(1, 0, 0, 0.5f);
+
+    //    Vector3 characterPosition = transform.position;
+    //    Vector3 forward = transform.right;
+    //    Vector3 right = -transform.forward;
+    
+    //    int characterRow = 0;
+    //    int characterCol = 0;
+
+    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+    //    {
+    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+    //        {
+    //            if (state.AttackRange[i, j] == 2)
+    //            {
+    //                characterRow = i;
+    //                characterCol = j;
+    //            }
+    //        }
+    //    }
+
+    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+    //    {
+    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+    //        {
+    //            if (state.AttackRange[i, j] == 1)
+    //            {
+    //                Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+    //                Vector3 gizmoPosition = characterPosition + relativePosition;
+    //                Gizmos.DrawCube(gizmoPosition, Vector3.one);
+    //            }
+    //        }
+    //    }
+    //}
 }
 
