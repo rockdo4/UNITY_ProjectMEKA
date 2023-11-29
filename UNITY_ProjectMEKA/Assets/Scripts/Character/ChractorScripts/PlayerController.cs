@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class PlayerController : PoolAble
@@ -26,7 +28,13 @@ public class PlayerController : PoolAble
     public int maxBlockCount;
     [HideInInspector]
     public Collider[] enemys;
+    [HideInInspector]
+    public List<GameObject> rangeInEnemys = new List<GameObject>();
+    [HideInInspector]
+    public List<int> enemyBlockCount = new List<int>();
 
+    [HideInInspector]
+    public int skillCost;
 
     public enum CharacterStates
     {
@@ -67,77 +75,82 @@ public class PlayerController : PoolAble
         SetState(CharacterStates.Idle);
         CreateColliders();
 
+        switch(state.skill)
+        {
+            case CharacterState.Skills.Test1:
+                var s = gameObject.AddComponent<TestDummySkill>();
+                skillCost = s.cost;
+                break;
+        }
+        state.cost = state.maxCost;
 
     }
     private void Update()
     {
         stateManager.Update();
-        Collider[] colliders = Physics.OverlapSphere(transform.position, state.range);
-        Collider[] enemyColliders = Array.FindAll(colliders, co => co.CompareTag("Enemy"));
-        List<GameObject> en = CheckEnemy();
+        blockCount = enemyBlockCount.Count;
 
-        blockCount = en.Count;
-        //Debug.Log(blockCount);
+        state.cost += Time.deltaTime;
+        Debug.Log(state.cost);
+        if(state.cost >= state.maxCost)
+        {
+            state.cost = state.maxCost;
+
+        }
     }
-    List<GameObject> CheckEnemy()
+
+    private void OnTriggerStay(Collider other)//Enter로하면 공격범위가 넓을경우 값이 제대로 안들어감
     {
-        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
-        List<GameObject> blockEnemy = new List<GameObject>();
-        Vector3 characterPosition = transform.position;
-        Vector3 forward = -transform.forward;
-        Vector3 right = transform.right;
-        int characterRow = 0;
-        int characterCol = 0;
-
-        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        if (other.CompareTag("EnemyCollider"))
         {
-            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            //Debug.Log(other, other);
+            if (!rangeInEnemys.Contains(other.GetComponentInParent<Transform>().gameObject))
             {
-                if (state.AttackRange[i, j] == 2)
+                rangeInEnemys.Add(other.GetComponentInParent<Transform>().gameObject);
+                if(other.GetComponentInParent<EnemyController>().state.enemyType == Defines.EnemyType.OhYaBung)
                 {
-                    characterRow = i; 
-                    characterCol = j;
+                    enemyBlockCount.Add(1);
+                    enemyBlockCount.Add(1);
                 }
+                else 
+                {
+                    enemyBlockCount.Add(1);
+                }
+
+                var obj = other.GetComponentInParent<CanDie>();
+                obj.action.AddListener(() =>
+                {
+                    rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
+                });
             }
         }
-
-        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
-        {
-            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
-            {
-                if (state.AttackRange[i, j] == 1)
-                {
-                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-                    Vector3 gizmoPosition = characterPosition + relativePosition;
-                    Vector3Int Pos = new Vector3Int(Mathf.FloorToInt(gizmoPosition.x), Mathf.FloorToInt(gizmoPosition.y), Mathf.FloorToInt(gizmoPosition.z));
-
-                    foreach (GameObject en in enemys)
-                    {
-                        EnemyController enemy = en.GetComponent<EnemyController>();
-                        if (enemy != null && !enemy.state.isBlock)
-                        {
-                            Vector3Int enemyGridPos = enemy.CurrentGridPos;
-
-                            if (enemyGridPos == Pos)
-                            {
-                                if(enemy.state.enemyType == Defines.EnemyType.OhYaBung)
-                                {
-                                    blockEnemy.Add(en);
-                                    blockEnemy.Add(en);
-                                }
-                                else
-                                {
-
-                                    blockEnemy.Add(en);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return blockEnemy;
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("EnemyCollider"))
+        {
+            if(rangeInEnemys.Contains(other.GetComponentInParent<Transform>().gameObject))
+            {
+                rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
+                if (other.GetComponentInParent<EnemyController>().state.enemyType == Defines.EnemyType.OhYaBung)
+                {
+                    enemyBlockCount.Remove(1);
+                    enemyBlockCount.Remove(1);
+                }
+                else
+                {
+                    enemyBlockCount.Remove(1);
+                }
+                var obj = other.GetComponentInParent<CanDie>();
+                obj.action.RemoveListener(() =>
+                {
+                    rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
+                });
+            }
+        }
+    }
+
     public void SetState(CharacterStates state)
     {
         stateManager.ChangeState(states[(int)state]);
@@ -149,7 +162,7 @@ public class PlayerController : PoolAble
         {
             return;
         }
-        IAttackable take = target.GetComponent<IAttackable>();
+        IAttackable take = target.GetComponentInParent<IAttackable>();
 
         take.OnAttack(state.damage + Rockpaperscissors());
         
@@ -158,7 +171,7 @@ public class PlayerController : PoolAble
     {
         float compatibility = state.damage * 0.1f;
 
-        EnemyController enemy = target.GetComponent<EnemyController>();
+        EnemyController enemy = target.GetComponentInParent<EnemyController>();
 
         if (state.property == enemy.state.property)
         {
@@ -239,11 +252,10 @@ public class PlayerController : PoolAble
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
                 obj.transform.position = FirePosition.transform.position;
-                //obj.transform.rotation = FirePosition.transform.rotation;
-                //Vector3 targetPos = new Vector3(target.transform.position.x,
-                //   FirePosition.transform.position.y,
-                //   target.transform.position.z);
-                obj.transform.LookAt(target.transform.position);
+                Vector3 newTargetPos = new Vector3(target.transform.position.x, target.transform.position.y+0.5f, target.transform.position.z);
+
+
+                obj.transform.LookAt(newTargetPos);
                 projectileP.damage = state.damage;
                 projectileP.target = target.transform;
                 projectileP.Player = gameObject;
@@ -268,6 +280,8 @@ public class PlayerController : PoolAble
             heal.OnHealing(1f*state.damage);
         }
     }
+
+
 
     void CreateColliders()
     {
