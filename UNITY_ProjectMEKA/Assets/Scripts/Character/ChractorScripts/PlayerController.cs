@@ -8,7 +8,8 @@ using UnityEngine;
 
 public class PlayerController : PoolAble
 {
-    private PlayableStateManager stateManager = new PlayableStateManager();
+    [HideInInspector]
+    public PlayableStateManager stateManager = new PlayableStateManager();
     private List<PlayableBaseState> states = new List<PlayableBaseState>();
     public GameObject FirePosition;
     [HideInInspector]
@@ -35,11 +36,14 @@ public class PlayerController : PoolAble
 
     [HideInInspector]
     public int skillCost;
+    [HideInInspector]
+    public List<Vector3> attakableTilePositions = new List<Vector3>();
+
 
     public enum CharacterStates
     {
         Idle,
-        Arrange, // 11.27, 김민지, 배치상태 추가
+        Arrange,
         Die,
         Attack,
         Healing,
@@ -50,7 +54,7 @@ public class PlayerController : PoolAble
         SetBlockCount();
         ani = GetComponent<Animator>();
     }
-    private void OnEnable()//인게임에서 배치할때 오브젝트풀링을 고려함
+    private void OnEnable()
     {
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
@@ -58,7 +62,7 @@ public class PlayerController : PoolAble
     }
     void Start()
     {
-        state.ConvertTo2DArray();//공격 범위 설정2차원 배열
+        state.ConvertTo2DArray();
         states.Add(new PlayableIdleState(this));
         states.Add(new PlayableDieState(this));
         if(state.occupation == Defines.Occupation.Hunter || state.occupation == Defines.Occupation.Castor)
@@ -99,7 +103,7 @@ public class PlayerController : PoolAble
         }
     }
 
-    private void OnTriggerStay(Collider other)//Enter로하면 공격범위가 넓을경우 값이 제대로 안들어감
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("EnemyCollider"))
         {
@@ -167,7 +171,7 @@ public class PlayerController : PoolAble
         take.OnAttack(state.damage + Rockpaperscissors());
         
     }
-    public float Rockpaperscissors()//상성
+    public float Rockpaperscissors()
     {
         float compatibility = state.damage * 0.1f;
 

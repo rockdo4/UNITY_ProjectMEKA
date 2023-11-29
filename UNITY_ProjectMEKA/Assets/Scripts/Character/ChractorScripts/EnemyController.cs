@@ -5,6 +5,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public enum NPCStates
 {
@@ -15,12 +16,12 @@ public enum NPCStates
 
 
 public class EnemyController : PoolAble
-{ 
-    private StateManager stateManager = new StateManager();
+{
+    [HideInInspector]
+    public StateManager stateManager = new StateManager();
     [HideInInspector]
     public List<NPCBaseState> states = new List<NPCBaseState>();
 
-    // 11.22, ±è¹ÎÁö, ÀÌµ¿¹æ½Ä º¯°æÀ¸·Î ÀÎÇØ Ãß°¡
     //[HideInInspector]
     public Rigidbody rb;
     //[HideInInspector]
@@ -45,10 +46,9 @@ public class EnemyController : PoolAble
     public GameObject FirePosition;
     public List<GameObject> rangeInPlayers = new List<GameObject>();
 
-
     public Vector3 CurrentPos;
     [HideInInspector]
-    public Vector3Int CurrentGridPos;//À¯´ÏÆ¼ »ó ÇöÁ¦ À§Ä¡ÀÇ  Å¸ÀÏÀ§Ä¡
+    public Vector3Int CurrentGridPos;
 
     [HideInInspector]
     public bool isArrival = false;
@@ -137,7 +137,7 @@ public class EnemyController : PoolAble
         //Debug.Log(state.damage);
        
     }
-    private void OnTriggerStay(Collider other)//Enter·ÎÇÏ¸é °ø°Ý¹üÀ§°¡ ³ÐÀ»°æ¿ì °ªÀÌ Á¦´ë·Î ¾Èµé¾î°¨
+    private void OnTriggerStay(Collider other)//Enterï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½î°¨
     {
         if (other.CompareTag("PlayerCollider"))
         {
@@ -343,7 +343,7 @@ public class EnemyController : PoolAble
     //{
     //    if (state == null || state.AttackRange == null || transform == null)
     //    {
-    //        return; // ÇÏ³ª¶óµµ nullÀÌ¸é Gizmos¸¦ ±×¸®Áö ¾ÊÀ½
+    //        return; // ï¿½Ï³ï¿½ï¿½ï¿½ nullï¿½Ì¸ï¿½ Gizmosï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     //    }
     //    Gizmos.color = new Color(1, 0, 0, 0.5f);
 

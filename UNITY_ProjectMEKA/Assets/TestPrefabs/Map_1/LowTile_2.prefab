@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 2828390231285979847}
   - component: {fileID: 1670845999896469883}
   - component: {fileID: 1326723611795299254}
-  m_Layer: 0
+  - component: {fileID: 1131390444600819205}
+  m_Layer: 9
   m_Name: tunnels_floor1 1
   m_TagString: Marker
   m_Icon: {fileID: 0}
@@ -101,6 +102,7 @@ MonoBehaviour:
   attackPossibleMaterial: {fileID: 2100000, guid: 9e8ddf0e6fa9d7b4190ff03a516d1be1, type: 2}
   height: 0
   arrangePossible: 0
+  attackPossible: 0
 --- !u!65 &1326723611795299254
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -122,6 +124,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0000005, y: 0.21455619, z: 1.0000004}
   m_Center: {x: 0.000000029802322, y: -0.09892933, z: 0}
+--- !u!114 &1131390444600819205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4218883724396511249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 273b4a0be6e63004a81e8ce932ea3a06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrangePossibleMaterial: {fileID: 2100000, guid: 9aa5bd918f5d68c4f9a8f21b6284126d, type: 2}
+  attackPossibleMaterial: {fileID: 2100000, guid: 9e8ddf0e6fa9d7b4190ff03a516d1be1, type: 2}
+  height: 0
+  arrangePossible: 0
+  attackPossible: 0
 --- !u!1 &4471776115795221617
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,7 +150,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3580240325623312683}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LowTile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -54,10 +54,52 @@ public class PlayableIdleState : PlayableBaseState
                 return;
 
             }
-            
-
         }
     }
+
+    public void UpdateAttackPositions()
+    {
+        Vector3 characterPosition = playerCtrl.transform.position;
+        Vector3 forward = -playerCtrl.transform.forward;
+        Vector3 right = playerCtrl.transform.right;
+        int characterRow = 0;
+        int characterCol = 0;
+
+        for (int i = 0; i < playerCtrl.state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < playerCtrl.state.AttackRange.GetLength(1); j++)
+            {
+                if (playerCtrl.state.AttackRange[i, j] == 2)
+                {
+                    characterRow = i;
+                    characterCol = j;
+                }
+            }
+        }
+
+        if(playerCtrl.attakableTilePositions.Count > 0)
+        {
+            playerCtrl.attakableTilePositions.Clear();
+        }
+
+        for (int i = 0; i < playerCtrl.state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < playerCtrl.state.AttackRange.GetLength(1); j++)
+            {
+                if (playerCtrl.state.AttackRange[i, j] == 1)
+                {
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    Vector3 tilePosition = characterPosition + relativePosition;
+                    var tilePosInt = new Vector3(tilePosition.x,tilePosition.y,tilePosition.z);
+
+                    playerCtrl.attakableTilePositions.Add(tilePosInt);
+                }
+            }
+        }
+        var playerPosInt = new Vector3(characterPosition.x, characterPosition.y, characterPosition.z);
+        playerCtrl.attakableTilePositions.Add(playerPosInt);
+    }
+
     void SetPlayers()
     {
         playerses = GameObject.FindGameObjectsWithTag("Player");
@@ -71,7 +113,7 @@ public class PlayableIdleState : PlayableBaseState
         }
 
     }
-    void CheckHealing()//추후 변경
+    void CheckHealing()
     {
         Vector3Int playerGridPos = playerCtrl.CurrentGridPos;
         float minHealthRatio = float.MaxValue;
