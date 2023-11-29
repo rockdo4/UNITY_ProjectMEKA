@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 /*
 	public
@@ -38,8 +39,7 @@ public class CharacterManager : MonoBehaviour
 			if (button != null)
 				button.onClick.AddListener( () => 
 				{
-					characterInfoPanel.gameObject.SetActive(true);
-					characterInfoPanel.GetComponent<CharacterInfoText>().SetText(item.Value);
+					OpenCharacterInfo(item.Value);
 				});
 			else
 				Debug.LogError("버튼 못불러옴");
@@ -59,5 +59,17 @@ public class CharacterManager : MonoBehaviour
 	public void ExitCharacterInfo()
 	{
 		characterInfoPanel.gameObject.SetActive(false);
+
+		characterInfoPanel.position = characterInfoPos;
+	}
+
+	public void OpenCharacterInfo(TestCharacterInfo info)
+	{
+		characterInfoPanel.gameObject.SetActive(true);
+		characterInfoPanel.GetComponent<CharacterInfoText>().SetText(info);
+
+		var pos = GetComponentInParent<Canvas>().gameObject.transform.position;
+
+		characterInfoPanel.position = pos;
 	}
 }
