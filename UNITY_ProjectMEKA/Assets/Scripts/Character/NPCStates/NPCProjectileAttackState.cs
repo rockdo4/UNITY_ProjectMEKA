@@ -28,7 +28,15 @@ public class NPCProjectileAttackState : NPCBaseState
         {
             timer = enemyCtrl.state.attackDelay;
             enemyCtrl.ani.SetTrigger("Attack");
-            enemyCtrl.SetState(NPCStates.Move);
+
+            
+
+            if (!CheckDistance())
+            {
+                enemyCtrl.SetState(NPCStates.Move);
+            }
+            
+            
         }
         if (enemyCtrl.target == null)
         {
@@ -36,5 +44,28 @@ public class NPCProjectileAttackState : NPCBaseState
         }
 
 
+    }
+
+    bool CheckDistance()
+    {
+        Vector3Int currentGridPosition = new Vector3Int(
+                Mathf.FloorToInt(enemyCtrl.transform.position.x),
+                Mathf.FloorToInt(enemyCtrl.transform.position.y),
+                Mathf.FloorToInt(enemyCtrl.transform.position.z)
+        );
+
+        Vector3Int targetGridPosition = new Vector3Int(
+            Mathf.FloorToInt(enemyCtrl.target.transform.position.x),
+            Mathf.FloorToInt(enemyCtrl.target.transform.position.y),
+            Mathf.FloorToInt(enemyCtrl.target.transform.position.z)
+        );
+
+        Vector3Int forwardGridPosition = new Vector3Int(
+            Mathf.FloorToInt(enemyCtrl.transform.position.x + enemyCtrl.transform.forward.x),
+            Mathf.FloorToInt(enemyCtrl.transform.position.y + enemyCtrl.transform.forward.y),
+            Mathf.FloorToInt(enemyCtrl.transform.position.z + enemyCtrl.transform.forward.z)
+        );
+
+        return (targetGridPosition - currentGridPosition) == (forwardGridPosition - currentGridPosition);
     }
 }

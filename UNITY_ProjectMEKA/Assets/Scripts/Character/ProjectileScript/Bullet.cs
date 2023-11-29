@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour
     private float timer;
     public bool isReleased = false;
     public GameObject Player;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -52,7 +53,7 @@ public class Bullet : MonoBehaviour
     {
         if (speed != 0&& target.gameObject.activeSelf)
         {
-            transform.LookAt(target.position);
+            transform.LookAt(new Vector3(target.position.x,target.position.y + 0.5f,target.position.z));
             rb.velocity = transform.forward * speed;
             pos = target.position;
            
@@ -69,10 +70,13 @@ public class Bullet : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        PlayerController pl = Player.GetComponent<PlayerController>();
+        EnemyController en = Player.GetComponent<EnemyController>();
+
+        if (other.CompareTag("Enemy") && pl != null)
         {
             // 대상에 대미지 처리
-            IAttackable attackable = target.GetComponent<IAttackable>();
+            IAttackable attackable = target.GetComponentInParent<IAttackable>();
             
             attackable.OnAttack(damage);
             
@@ -81,6 +85,19 @@ public class Bullet : MonoBehaviour
             CreateHitEffect(transform.position, transform.forward);
 
             // 트레일 제거
+            RemoveTrails();
+            ReleaseObject();
+        }
+        else if(other.CompareTag("PlayerCollider")&& en != null)
+        {
+            IAttackable attackable = target.GetComponentInParent<IAttackable>();
+
+            attackable.OnAttack(damage);
+
+            
+            CreateHitEffect(transform.position, transform.forward);
+
+            
             RemoveTrails();
             ReleaseObject();
         }
@@ -100,21 +117,53 @@ public class Bullet : MonoBehaviour
         }
 
         //var hitInstance = Instantiate(hit, position, rotation);
-        var hitInstance = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.hitName);
-        hitInstance.transform.position = position;
-        hitInstance.transform.rotation = rotation;
-        hitInstance.SetActive(false);
-        hitInstance.SetActive(true);
-        var hitPs = hitInstance.GetComponent<ParticleSystem>();
-        if (hitPs != null)
+        if(Player.tag == "Player")
         {
-            hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPs.main.duration);
+            var hitInstance = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.hitName);
+            if (hitInstance != null)
+            {
+                hitInstance.transform.position = position;
+                hitInstance.transform.rotation = rotation;
+                hitInstance.SetActive(false);
+                hitInstance.SetActive(true);
+
+                var hitPs = hitInstance.GetComponent<ParticleSystem>();
+                if (hitPs != null)
+                {
+                    hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPs.main.duration);
+                }
+                else
+                {
+                    var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPsParts.main.duration);
+                }
+            }
         }
-        else
+        else if(Player.tag == "Enemy")
         {
-            var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-            hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPsParts.main.duration);
+            var hitInstanceEn = ObjectPoolManager.instance.GetGo(Player.GetComponent<EnemyController>().state.hitName);
+            if (hitInstanceEn != null)
+            {
+                hitInstanceEn.transform.position = position;
+                hitInstanceEn.transform.rotation = rotation;
+                hitInstanceEn.SetActive(false);
+                hitInstanceEn.SetActive(true);
+            }
+            var hitPs = hitInstanceEn.GetComponent<ParticleSystem>();
+            if (hitPs != null)
+            {
+                hitInstanceEn.GetComponent<PoolAble>().ReleaseObject(hitPs.main.duration);
+            }
+            else
+            {
+                var hitPsParts = hitInstanceEn.transform.GetChild(0).GetComponent<ParticleSystem>();
+                hitInstanceEn.GetComponent<PoolAble>().ReleaseObject(hitPsParts.main.duration);
+            }
+
+
         }
+        
+        
 
     }
 
@@ -129,75 +178,7 @@ public class Bullet : MonoBehaviour
             }
         }
     }
-    //void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Enemy"))
-    //    {
-    //        IAttackable dd = target.GetComponent<IAttackable>();
-            
-    //        dd.OnAttack(damage);
-    //        //Lock all axes movement and rotation모든 축 이동 및 회전 잠금
-    //        rb.constraints = RigidbodyConstraints.FreezeAll;
-    //        speed = 0;
-
-    //        ContactPoint contact = collision.contacts[0];
-    //        Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-    //        Vector3 pos = contact.point + contact.normal * hitOffset;
-
-    //        //Spawn hit effect on collision충돌 시 스펀 적중 효과
-            
-    //        //var hitObj = Instantiate(hit, pos, rot);
-    //        var hitObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.hitName);
-    //        hitObj.transform.position = pos;
-    //        hitObj.transform.rotation = rot;
-
-    //        if (UseFirePointRotation)
-    //        {
-    //            hitObj.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0); 
-    //        }
-    //        else if (rotationOffset != Vector3.zero) 
-    //        { 
-    //            hitObj.transform.rotation = Quaternion.Euler(rotationOffset); 
-    //        }
-    //        else
-    //        {
-    //            hitObj.transform.LookAt(contact.point + contact.normal); 
-    //        }
-    //        hitObj.SetActive(false);
-    //        hitObj.SetActive(true);
-
-    //        //Destroy hit effects depending on particle Duration time입자 지속 시간에 따른 적중 효과 파괴
-    //        var hitPs = hitObj.GetComponent<ParticleSystem>();
-    //        if (hitPs != null)
-    //        {
-    //            hitObj.GetComponent<PoolAble>().ReleaseObject(hitPs.main.duration);
-    //        }
-    //        else
-    //        {
-    //            var hitPsParts = hitObj.transform.GetChild(0).GetComponent<ParticleSystem>();
-    //            hitObj.GetComponent<PoolAble>().ReleaseObject(hitPsParts.main.duration);
-    //        }
-            
-
-    //        //Removing trail from the projectile on cillision enter or smooth removing. Detached elements must have "AutoDestroying script"
-    //        //섬에 있는 발사체에서 트레일을 제거하거나 부드럽게 제거합니다. 분리된 요소에는 "AutoDestroying 스크립트"가 있어야 합니다
-    //        foreach (var detachedPrefab in Detached)
-    //        {
-    //            if (detachedPrefab != null)
-    //            {
-    //                detachedPrefab.transform.parent = null;
-    //                Destroy(detachedPrefab, 1);
-    //            }
-    //        }
-    //        //Destroy projectile on collision
-    //        //Destroy(gameObject);
-
-    //        //Debug.Log(gameObject.name, gameObject);
-
-    //        ReleaseObject();
-
-    //    }
-    //}
+    
     private void ReleaseObject()
     {
         if(isReleased)

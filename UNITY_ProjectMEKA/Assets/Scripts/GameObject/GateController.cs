@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using static GateController;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class GateController : MonoBehaviour
 {
@@ -183,7 +184,10 @@ public class GateController : MonoBehaviour
             SetEnemy(enemyGo, enemyInfo, waveInfo);
             if (enemyGo.GetComponent<EnemyController>().states.Count != 0)
             {
-                enemyGo.GetComponent<EnemyController>().SetState(NPCStates.Move);
+                var enemyContoller = enemyGo.GetComponent<EnemyController>();
+                enemyContoller.SetState(NPCStates.Move);
+                var npcState = enemyContoller.stateManager.currentNPCBase as NPCDestinationStates;
+                npcState.Init();
             }
             currentEnemyCount++;
             firstGetPool = true;
@@ -222,7 +226,10 @@ public class GateController : MonoBehaviour
             SetEnemy(enemy, enemyInfo, waveInfo);
             if (enemy.GetComponent<EnemyController>().states.Count != 0)
             {
-                enemy.GetComponent<EnemyController>().SetState(NPCStates.Move);
+                var enemyContoller = enemy.GetComponent<EnemyController>();
+                enemyContoller.SetState(NPCStates.Move);
+                var npcState = enemyContoller.stateManager.currentNPCBase as NPCDestinationStates;
+                npcState.Init();
             }
 
             currentEnemyCount++;

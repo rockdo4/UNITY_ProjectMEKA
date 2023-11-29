@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StateManager 
 {
-    private NPCBaseState currentNPCBase;
+    public NPCBaseState currentNPCBase;
     public void ChangeState(NPCBaseState newState)
     {
         if (currentNPCBase != null)

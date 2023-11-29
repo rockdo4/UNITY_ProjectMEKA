@@ -984,6 +984,7 @@ Transform:
   - {fileID: 4601115132287687844}
   - {fileID: 7684639427397880481}
   - {fileID: 7718206318708368186}
+  - {fileID: 8377231036645917921}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6535916073971753441
@@ -996,7 +997,7 @@ Animator:
   m_GameObject: {fileID: 513341579006026017}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 417e358c130ae6c488f2ffe5d6c9830e, type: 3}
-  m_Controller: {fileID: 9100000, guid: aa101dc7bf6b5324390a6e68140d5814, type: 2}
+  m_Controller: {fileID: 9100000, guid: ba319cab46dce074d99da37f53ada623, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1019,6 +1020,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fee8558a6fb1898438df23bef7bf7101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  action:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &603434389532485334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1033,14 +1037,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passive: 04000000
   enemyType: 2
-  property: 1
+  property: 3
   occupation: 0
   maxHp: 100
   amror: 0
   speed: 1
   cooldown: 0
   range: 1
-  damage: 5
+  damage: 10
   attackDelay: 1
   exp: 0
   BulletName: bullet
@@ -1080,7 +1084,8 @@ MonoBehaviour:
   target: {fileID: 0}
   healingTarget: {fileID: 0}
   HoIsHitMe: {fileID: 0}
-  FirePosition: {fileID: 0}
+  FirePosition: {fileID: 6009684750736412895}
+  rangeInPlayers: []
   CurrentPos: {x: 0, y: 0, z: 0}
   CurrentGridPos: {x: 0, y: 0, z: 0}
   isArrival: 0
@@ -1873,6 +1878,61 @@ SkinnedMeshRenderer:
     m_Center: {x: -1.6192435, y: -0.1003865, z: 0.022180438}
     m_Extent: {x: 0.5526656, y: 0.660192, z: 0.5964886}
   m_DirtyAABB: 0
+--- !u!1 &1049676948647389960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8377231036645917921}
+  - component: {fileID: 1844605290064946278}
+  m_Layer: 7
+  m_Name: GameObject
+  m_TagString: EnemyCollider
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8377231036645917921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049676948647389960}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 888354675364461467}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1844605290064946278
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049676948647389960}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.9838048
+  m_Height: 5.804781
+  m_Direction: 1
+  m_Center: {x: 0.010892823, y: 2.7479773, z: 0}
 --- !u!1 &1056098860224980675
 GameObject:
   m_ObjectHideFlags: 0

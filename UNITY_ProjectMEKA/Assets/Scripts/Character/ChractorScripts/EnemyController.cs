@@ -5,6 +5,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public enum NPCStates
 {
@@ -15,12 +16,12 @@ public enum NPCStates
 
 
 public class EnemyController : PoolAble
-{ 
-    private StateManager stateManager = new StateManager();
+{
+    [HideInInspector]
+    public StateManager stateManager = new StateManager();
     [HideInInspector]
     public List<NPCBaseState> states = new List<NPCBaseState>();
 
-    // 11.22, ±è¹ÎÁö, ÀÌµ¿¹æ½Ä º¯°æÀ¸·Î ÀÎÇØ Ãß°¡
     //[HideInInspector]
     public Rigidbody rb;
     //[HideInInspector]
@@ -43,12 +44,11 @@ public class EnemyController : PoolAble
     public GameObject healingTarget;
     public GameObject HoIsHitMe;
     public GameObject FirePosition;
-
-
+    public List<GameObject> rangeInPlayers = new List<GameObject>();
 
     public Vector3 CurrentPos;
     [HideInInspector]
-    public Vector3Int CurrentGridPos;//À¯´ÏÆ¼ »ó ÇöÁ¦ À§Ä¡ÀÇ  Å¸ÀÏÀ§Ä¡
+    public Vector3Int CurrentGridPos;
 
     [HideInInspector]
     public bool isArrival = false;
@@ -135,8 +135,41 @@ public class EnemyController : PoolAble
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
         //Debug.Log(state.damage);
+       
+    }
+    private void OnTriggerStay(Collider other)//Enterï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½î°¨
+    {
+        if (other.CompareTag("PlayerCollider"))
+        {
+            //Debug.Log(other, other);
+            if (!rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
+            {
+                
+                rangeInPlayers.Add(other.GetComponentInParent<Transform>().gameObject);
+                var obj = other.GetComponentInParent<CanDie>();
+                obj.action.AddListener(() =>
+                {
+                    rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+                });
+            }
+        }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("PlayerCollider"))
+        {
+            if (rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
+            {
+                rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+                var obj = other.GetComponentInParent<CanDie>();
+                obj.action.RemoveListener(() =>
+                {
+                    rangeInPlayers.Remove(other.GetComponentInParent<GameObject>().gameObject);
+                });
+            }
+        }
+    }
     public void SetState(NPCStates state)
     {
         stateManager.ChangeState(states[(int)state]);
@@ -148,7 +181,7 @@ public class EnemyController : PoolAble
         {
             return;
         }
-        TakeDamage co = target.GetComponent<TakeDamage>();
+        TakeDamage co = target.GetComponentInParent<TakeDamage>();
         co.OnAttack(state.damage + Rockpaperscissors());
     }
     public void Hit(float damage)
@@ -158,7 +191,7 @@ public class EnemyController : PoolAble
             return;
         }
         
-        TakeDamage co = target.GetComponent<TakeDamage>();
+        TakeDamage co = target.GetComponentInParent<TakeDamage>();
         co.OnAttack(state.damage * damage);
     }
     public void Healing(float damage)
@@ -171,6 +204,23 @@ public class EnemyController : PoolAble
         TakeDamage co = healingTarget.GetComponent<TakeDamage>();
         co.OnHealing(state.damage * damage);
     }
+    //public void Fire()
+    //{
+    //    if (target == null) return;
+    //    //var obj = ObjectPoolManager.instance.GetGo("bullet");
+    //    var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
+
+    //    //obj.transform.LookAt(target.transform.position);
+    //    var projectile = obj.GetComponent<Bullet>();
+    //    projectile.ResetState();
+    //    obj.transform.position = FirePosition.transform.position;
+    //    obj.transform.rotation = FirePosition.transform.rotation;
+    //    projectile.damage = state.damage;
+    //    projectile.target = target.transform;
+    //    projectile.Player = gameObject;
+    //    obj.SetActive(false);
+    //    obj.SetActive(true);
+    //}
     public void Fire()
     {
         if (target == null) return;
@@ -178,23 +228,52 @@ public class EnemyController : PoolAble
         var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
 
         //obj.transform.LookAt(target.transform.position);
-        var projectile = obj.GetComponent<Bullet>();
-        projectile.ResetState();
-        obj.transform.position = FirePosition.transform.position;
-        obj.transform.rotation = FirePosition.transform.rotation;
-        projectile.damage = state.damage;
-        projectile.target = target.transform;
-        projectile.Player = gameObject;
-        obj.SetActive(false);
-        obj.SetActive(true);
 
-        
+
+        switch (state.BulletType)
+        {
+            case CharacterState.Type.Bullet:
+                var projectile = obj.GetComponent<Bullet>();
+                projectile.ResetState();
+                obj.transform.position = FirePosition.transform.position;
+                obj.transform.rotation = FirePosition.transform.rotation;
+                projectile.damage = state.damage;
+                projectile.target = target.transform;
+                projectile.Player = gameObject;
+                obj.SetActive(false);
+                obj.SetActive(true);
+                break;
+            case CharacterState.Type.Aoe:
+                var projectileA = obj.GetComponent<AOE>();
+                projectileA.ResetState();
+                obj.transform.position = FirePosition.transform.position;
+                obj.transform.rotation = FirePosition.transform.rotation;
+                projectileA.damage = state.damage;
+                projectileA.target = target.transform;
+                projectileA.Player = gameObject;
+                obj.SetActive(false);
+                obj.SetActive(true);
+                break;
+            case CharacterState.Type.PiercingShot:
+                var projectileP = obj.GetComponent<PiercingShot>();
+                projectileP.ResetState();
+                obj.transform.position = FirePosition.transform.position;
+                obj.transform.LookAt(target.transform.position);
+                projectileP.damage = state.damage;
+                projectileP.target = target.transform;
+                projectileP.Player = gameObject;
+                obj.SetActive(false);
+                obj.SetActive(true);
+                break;
+        }
+
+
     }
     public float Rockpaperscissors()
     {
         float compatibility = state.damage * 0.1f;
 
-        PlayerController enemy = target.GetComponent<PlayerController>();
+        PlayerController enemy = target.GetComponentInParent<PlayerController>();
 
         if (state.property == enemy.state.property)
         {
@@ -219,9 +298,9 @@ public class EnemyController : PoolAble
         {
             return;
         }
-        
-        
-        Vector3 forward = transform.right; 
+
+
+        Vector3 forward = transform.right;
         Vector3 right = -transform.forward;
         Vector3 parentScale = transform.localScale;
 
@@ -264,14 +343,14 @@ public class EnemyController : PoolAble
     //{
     //    if (state == null || state.AttackRange == null || transform == null)
     //    {
-    //        return; // ÇÏ³ª¶óµµ nullÀÌ¸é Gizmos¸¦ ±×¸®Áö ¾ÊÀ½
+    //        return; // ï¿½Ï³ï¿½ï¿½ï¿½ nullï¿½Ì¸ï¿½ Gizmosï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     //    }
     //    Gizmos.color = new Color(1, 0, 0, 0.5f);
 
     //    Vector3 characterPosition = transform.position;
     //    Vector3 forward = transform.right;
     //    Vector3 right = -transform.forward;
-    
+
     //    int characterRow = 0;
     //    int characterCol = 0;
 
