@@ -15,12 +15,12 @@ public enum NPCStates
 
 
 public class EnemyController : PoolAble
-{ 
-    private StateManager stateManager = new StateManager();
+{
+    [HideInInspector]
+    public StateManager stateManager = new StateManager();
     [HideInInspector]
     public List<NPCBaseState> states = new List<NPCBaseState>();
 
-    // 11.22, 김민지, 이동방식 변경으로 인해 추가
     //[HideInInspector]
     public Rigidbody rb;
     //[HideInInspector]
