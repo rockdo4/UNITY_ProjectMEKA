@@ -5,6 +5,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public enum NPCStates
 {
@@ -43,8 +44,6 @@ public class EnemyController : PoolAble
     public GameObject healingTarget;
     public GameObject HoIsHitMe;
     public GameObject FirePosition;
-
-
 
     public Vector3 CurrentPos;
     [HideInInspector]

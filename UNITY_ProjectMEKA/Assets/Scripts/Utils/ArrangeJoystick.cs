@@ -25,7 +25,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public float yOffset = 1f;
     [HideInInspector]
     public bool secondArranged;
-    private GameObject firstArranger;
+    private CharacterArrangeTest firstArranger;
 
     private void OnEnable()
     {
@@ -92,7 +92,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             RotatePlayer(currentTile.transform, true);
             secondArranged = true;
             Time.timeScale = 1f;
-            firstArranger.SetActive(false);
+            firstArranger.gameObject.SetActive(false);
             transform.localPosition = Vector3.zero;
             transform.parent.gameObject.SetActive(false);
         }
@@ -161,7 +161,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         this.player = player;
     }
 
-    public void SetFirstArranger(GameObject arranger)
+    public void SetFirstArranger(CharacterArrangeTest arranger)
     {
         firstArranger = arranger;
     }

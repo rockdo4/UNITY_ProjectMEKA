@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class PlayerController : PoolAble
 {
-    private PlayableStateManager stateManager = new PlayableStateManager();
+    [HideInInspector]
+    public PlayableStateManager stateManager = new PlayableStateManager();
     private List<PlayableBaseState> states = new List<PlayableBaseState>();
     public GameObject FirePosition;
     [HideInInspector]
@@ -26,6 +27,10 @@ public class PlayerController : PoolAble
     public int maxBlockCount;
     [HideInInspector]
     public Collider[] enemys;
+
+    //11.29, 김민지, 공격범위 타일 메쉬 바꿔줘야 해서 추가
+    [HideInInspector]
+    public List<Vector3> attakableTilePositions = new List<Vector3>();
 
 
     public enum CharacterStates

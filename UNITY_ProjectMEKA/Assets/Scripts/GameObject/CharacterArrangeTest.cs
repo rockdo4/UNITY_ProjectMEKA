@@ -79,7 +79,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
             else
             {
                 Debug.Log($"배치불가능: {hit}");
-                characterGo.GetComponent<PlayerController>().ReleaseObject();
+                playerController.ReleaseObject();
                 created = false;
             }
 
@@ -110,7 +110,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
         {
             CreateCharacter();
             arrangeJoystick.gameObject.SetActive(true);
-            arrangeJoystick.SetFirstArranger(gameObject);
+            arrangeJoystick.SetFirstArranger(this);
             characterGo.transform.position = transform.position;
             Debug.Log("클릭다운 이벤트 완료");
         }
