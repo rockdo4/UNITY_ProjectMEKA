@@ -9,18 +9,18 @@ using UnityEngine;
 /*
 	public
 
-    - Item GetItemData(int) : Dictionary<int, Item> 에서 int 키 값 찾아서 리턴
-    - Dictionary<int, Item> GetOriginalTable() : Dictionary<int, Item> 복사 생성해서 리턴
+    - ItemInfo GetItemData(int) : Dictionary<int, ItemInfo> 에서 int 키 값 찾아서 리턴
+    - Dictionary<int, ItemInfo> GetOriginalTable() : Dictionary<int, ItemInfo> 복사 생성해서 리턴
 */
 
 public class ItemTable : DataTable
 {
 	//protected List<DropData> m_DropTableList = new List<DropData>();
-	protected Dictionary<int, Item> itemDict = new Dictionary<int, Item>();
+	protected Dictionary<int, ItemInfo> itemDict = new Dictionary<int, ItemInfo>();
 
 	public ItemTable()
 	{
-		path = "Table/ItemTable";
+		path = "Table/I temTable";
 		Load();
 	}
 
@@ -37,12 +37,11 @@ public class ItemTable : DataTable
 
 		try
 		{
-			var records = csv.GetRecords<Item>();
+			var records = csv.GetRecords<ItemInfo>();
 
 			foreach (var record in records)
 			{
-				Item temp = new Item();
-				temp = record;
+				ItemInfo temp = record;
 				itemDict.Add(temp.ID, temp);
 			}
 		}
@@ -53,7 +52,7 @@ public class ItemTable : DataTable
 		}
 	}
 
-	public Item GetItemData(int ID)
+	public ItemInfo GetItemData(int ID)
 	{
 		if (itemDict.ContainsKey(ID))
 		{
@@ -63,8 +62,8 @@ public class ItemTable : DataTable
 		return null;
 	}
 
-	public Dictionary<int, Item> GetOriginalTable()
+	public Dictionary<int, ItemInfo> GetOriginalTable()
 	{
-		return new Dictionary<int, Item>(itemDict);
+		return new Dictionary<int, ItemInfo>(itemDict);
 	}
 }
