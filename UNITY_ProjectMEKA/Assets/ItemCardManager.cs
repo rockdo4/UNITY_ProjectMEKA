@@ -108,7 +108,8 @@ public class ItemCardManager : MonoBehaviour
 	public void SearchCard(string str)
 	{
 		var itemList = ItemInventory.Instance.m_ItemStorage;
-		itemList = itemList.Where(x => x.Name.Contains(str)).ToList();
+		var search = itemList.Where(x => x.Name.Contains(str));
+		itemList = search.OrderBy(x => x.Name).ToList();
 
 		UpdateItemCard(itemList);
 	}
