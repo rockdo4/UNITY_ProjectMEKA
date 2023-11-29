@@ -91,67 +91,6 @@ public class NPCDestinationStates : NPCBaseState
             
         }
 
-
-        //players = GameObject.FindGameObjectsWithTag("Player");
-
-        //Vector3 characterPosition = enemyCtrl.transform.position;
-        //Vector3 forward = enemyCtrl.transform.right;
-        ////Vector3 right = transform.right;
-        //Vector3 right = -enemyCtrl.transform.forward;
-
-
-        ////Vector3 forward = -enemyCtrl.transform.forward;
-        ////Vector3 forward = enemyCtrl.transform.right;
-        ////Vector3 right = enemyCtrl.transform.right;
-        ////Vector3 right = enemyCtrl.transform.forward;
-        //int characterRow = 0;
-        //int characterCol = 0;
-
-        //for (int i = 0; i < enemyCtrl.state.AttackRange.GetLength(0); i++)
-        //{
-        //    for (int j = 0; j < enemyCtrl.state.AttackRange.GetLength(1); j++)
-        //    {
-        //        if (enemyCtrl.state.AttackRange[i, j] == 2)
-        //        {
-        //            characterRow = i;
-        //            characterCol = j;
-        //        }
-        //    }
-        //}
-        //Vector3Int playerGridPos = enemyCtrl.CurrentGridPos;
-        //for (int i = 0; i < enemyCtrl.state.AttackRange.GetLength(0); i++)
-        //{
-        //    for (int j = 0; j < enemyCtrl.state.AttackRange.GetLength(1); j++)
-        //    {
-        //        if (enemyCtrl.state.AttackRange[i, j] == 1)
-        //        {
-        //            Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-        //            Vector3 gizmoPosition = characterPosition + relativePosition;
-        //            Vector3Int Pos = new Vector3Int(Mathf.FloorToInt(gizmoPosition.x), Mathf.FloorToInt(gizmoPosition.y), Mathf.FloorToInt(gizmoPosition.z));
-
-        //            foreach (GameObject en in players)
-        //            {
-        //                PlayerController player = en.GetComponent<PlayerController>();
-        //                if (player != null)
-        //                {
-        //                    Vector3Int enemyGridPos = player.CurrentGridPos;
-
-        //                    if (enemyGridPos == Pos)
-        //                    {
-        //                        //Debug.Log("AttackEnemy");
-        //                        enemyCtrl.target = en; 
-        //                        if (player.blockCount < player.maxBlockCount && !enemyCtrl.state.isBlock)
-        //                        {
-        //                            enemyCtrl.SetState(NPCStates.Attack);
-        //                        }
-        //                        //enemyCtrl.SetState(NPCStates.Attack);
-        //                        return;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
     }
     
     public override void Update()

@@ -21,7 +21,8 @@ public class CanDie : MonoBehaviour
         {
             Debug.Log(gameObject.name);
             action.Invoke();
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            GetComponent<PoolAble>().ReleaseObject();
         }
     }
 }

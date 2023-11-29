@@ -6057,7 +6057,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2366841817329066696
 Transform:
   m_ObjectHideFlags: 0
@@ -6069,7 +6069,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1393536554164094455}
   - {fileID: 5055841511067128818}
@@ -6109,6 +6109,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fee8558a6fb1898438df23bef7bf7101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  action:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2156675517298506386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6122,6 +6125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   passive: 
+  skill: 0
   enemyType: 0
   property: 2
   occupation: 3
@@ -6140,6 +6144,8 @@ MonoBehaviour:
   hang: 5
   yal: 5
   rangeAttack: 00000000000000000100000000000000000000000000000001000000010000000100000000000000000000000100000001000000010000000000000000000000010000000100000001000000000000000000000001000000020000000100000000000000
+  cost: 0
+  maxCost: 0
   level: 0
   grade: 0
   experience: 0
@@ -6166,6 +6172,11 @@ MonoBehaviour:
   target: {fileID: 0}
   blockCount: 0
   maxBlockCount: 0
+  enemys: []
+  rangeInEnemys: []
+  enemyBlockCount: 
+  skillCost: 0
+  attakableTilePositions: []
 --- !u!114 &5779597442223778163
 MonoBehaviour:
   m_ObjectHideFlags: 0

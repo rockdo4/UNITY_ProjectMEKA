@@ -93,9 +93,9 @@ public class PlayerController : PoolAble
     {
         stateManager.Update();
         blockCount = enemyBlockCount.Count;
-
+        Debug.Log(blockCount);
         state.cost += Time.deltaTime;
-        Debug.Log(state.cost);
+        //Debug.Log(state.cost);
         if(state.cost >= state.maxCost)
         {
             state.cost = state.maxCost;
@@ -125,6 +125,15 @@ public class PlayerController : PoolAble
                 obj.action.AddListener(() =>
                 {
                     rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
+                    if (other.GetComponentInParent<EnemyController>().state.enemyType == Defines.EnemyType.OhYaBung)
+                    {
+                        enemyBlockCount.Remove(1);
+                        enemyBlockCount.Remove(1);
+                    }
+                    else
+                    {
+                        enemyBlockCount.Remove(1);
+                    }
                 });
             }
         }
@@ -150,6 +159,15 @@ public class PlayerController : PoolAble
                 obj.action.RemoveListener(() =>
                 {
                     rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
+                    if (other.GetComponentInParent<EnemyController>().state.enemyType == Defines.EnemyType.OhYaBung)
+                    {
+                        enemyBlockCount.Remove(1);
+                        enemyBlockCount.Remove(1);
+                    }
+                    else
+                    {
+                        enemyBlockCount.Remove(1);
+                    }
                 });
             }
         }
