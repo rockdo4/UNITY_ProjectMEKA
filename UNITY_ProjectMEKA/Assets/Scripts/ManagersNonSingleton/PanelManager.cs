@@ -25,6 +25,9 @@ public class PanelManager : MonoBehaviour
 	public RectTransform formationPanel;
 	private Vector3 formationPos;
 
+	public RectTransform inventoryPanel;
+	private Vector3 inventoryPos;
+
 	private RectTransform previousPanel;
 	private Vector3 previousPos;
 
@@ -34,6 +37,7 @@ public class PanelManager : MonoBehaviour
 		characterWindowPos = characterWindowPanel.position;
 		gachaPos = gachaPanel.position;
 		formationPos = formationPanel.position;
+		inventoryPos = inventoryPanel.position;
 
 		previousPanel = mainPanel;
 		previousPos = mainPos;
@@ -68,6 +72,14 @@ public class PanelManager : MonoBehaviour
 		formationPanel.position = mainPos;
 		mainPanel.position = previousPos;
 	}
+
+	public void ChangePanelInventory()
+	{
+        previousPos = inventoryPos;
+        previousPanel = inventoryPanel;
+        inventoryPanel.position = mainPos;
+        mainPanel.position = previousPos;
+    }
 
 	public void LoadBattleScene()
 	{
