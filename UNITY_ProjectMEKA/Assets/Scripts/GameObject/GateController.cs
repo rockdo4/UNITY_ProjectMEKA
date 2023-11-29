@@ -233,15 +233,14 @@ public class GateController : MonoBehaviour
     virtual public void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo, WaveInfo waveInfo)
     {
         var enemyController = enemyGo.GetComponent<EnemyController>();
-        var enemyCharacterState = enemyGo.GetComponent<CharacterState>();
 
         enemyController.wayPoint = waveInfo.waypoints;
         enemyController.waypointIndex = 0;
         enemyController.initPos = transform.position;
         enemyController.moveType = waveInfo.moveType;
         enemyController.moveRepeatCount = waveInfo.moveRepeat;
-        enemyCharacterState.property = spawnInfo.attribute;
-        enemyCharacterState.level = spawnInfo.level;
+        enemyController.state.property = spawnInfo.attribute;
+        enemyController.state.level = spawnInfo.level;
     }
 
     private void ShowEnemyPathWaypoint(WaveInfo waveInfo)

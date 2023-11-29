@@ -8,6 +8,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
     public GameObject characterPrefab;
     public ArrangeJoystick arrangeJoystick;
     private GameObject characterGo;
+    private PlayerController playerController;
     private List<GameObject> tiles;
     private string characterName;
     private bool created;
@@ -68,7 +69,6 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
                 Debug.Log("배치가능");
                 hit.transform.GetComponentInChildren<Tile>().arrangePossible = false;
                 firstArranged = true;
-                characterGo.GetComponent<PlayerController>().SetState(CharacterStates.Arrange);
                 arrangeJoystick.SetPlayer(characterGo.transform);
                 arrangeJoystick.transform.parent.gameObject.SetActive(firstArranged);
                 var joystickPos = characterGo.transform.position;
@@ -78,14 +78,14 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
             }
             else
             {
-                Debug.Log("배치불가능");
+                Debug.Log($"배치불가능: {hit}");
                 characterGo.GetComponent<PlayerController>().ReleaseObject();
                 created = false;
             }
 
             foreach (var tile in tiles)
             {
-                tile.GetComponentInChildren<Tile>().SetPlacementPossible(false);
+                tile.GetComponentInChildren<Tile>().SetTileMaterial(false, Tile.TileMaterial.Arrange);
             }
         }
     }
@@ -94,19 +94,25 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
     {
         Debug.Log("created");
         characterGo = ObjectPoolManager.instance.GetGo(characterName);
+        playerController = characterGo.GetComponent<PlayerController>();
+        //playerController.SetState(CharacterStates.Arrange);
+        Time.timeScale = 0.2f;
         created = true;
         foreach(var tile in tiles)
         {
-            tile.GetComponentInChildren<Tile>().SetPlacementPossible(created);
+            tile.GetComponentInChildren<Tile>().SetTileMaterial(created, Tile.TileMaterial.Arrange);
         }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!created /*&& eventData.pointerEnter == gameObject*/)
+        if(!created && !arrangeJoystick.gameObject.active)
         {
             CreateCharacter();
+            arrangeJoystick.gameObject.SetActive(true);
+            arrangeJoystick.SetFirstArranger(gameObject);
             characterGo.transform.position = transform.position;
+            Debug.Log("클릭다운 이벤트 완료");
         }
     }
 }

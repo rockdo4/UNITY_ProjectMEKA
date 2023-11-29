@@ -2764,14 +2764,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passive: 
   enemyType: 0
   property: 0
-  occupation: 2
+  occupation: 3
   maxHp: 1000
   amror: 0
   speed: 0
   cooldown: 0
-  range: 1
+  range: 0
   damage: 5
   attackDelay: 0.5
   exp: 0
@@ -2779,12 +2780,16 @@ MonoBehaviour:
   BulletType: 0
   flashName: 
   hitName: 
+  hang: 0
+  yal: 0
+  rangeAttack: 
   level: 0
   grade: 0
   experience: 0
   currentExperience: 0
   Hp: 0
   ID: 0
+  isBlock: 1
 --- !u!114 &8454265620920160351
 MonoBehaviour:
   m_ObjectHideFlags: 0
