@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Playables;
 using static PlayerController;
 
 public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
@@ -18,7 +19,8 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     private Bounds backgroundBounds;
     private List<Bounds> bounds;
     private GameObject currentTile;
-    private Transform player;
+    private GameObject prevTile;
+    private PlayerController player;
     private BoxCollider boxCollider;
     private float half;
     [HideInInspector]
@@ -71,12 +73,17 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                 transform.localPosition = backgroundBounds.ClosestPoint(transform.localPosition);
             }
 
+            prevTile = currentTile;
             for(int i = 0; i < (int)Direction.Count; ++i)
             {
                 if (bounds[i].Contains(transform.localPosition))
                 {
                     currentTile = directions[i];
-                    RotatePlayer(currentTile.transform, false);
+                    if(prevTile != currentTile)
+                    {
+                        Debug.Log($"{prevTile}에서 {currentTile}로 바뀜");
+                        RotatePlayer(currentTile.transform, false);
+                    }
                     break;
                 }
             }
@@ -112,8 +119,12 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             }
             else
             {
-                //Debug.Log("up direction");
-                player.rotation = Quaternion.Euler(0f, 0f, 0f);
+
+                player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                if(player.stateManager.currentBase as PlayableIdleState != null)
+                {
+                    ChangeTileMesh();
+                }
             }
         }
         else if (go == directions[(int)Direction.Right])
@@ -124,7 +135,11 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             }
             else
             {
-                player.rotation = Quaternion.Euler(0f, 90f, 0f);
+                player.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                if (player.stateManager.currentBase as PlayableIdleState != null)
+                {
+                    ChangeTileMesh();
+                }
             }
         }
         else if (go == directions[(int)Direction.Down])
@@ -135,7 +150,11 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             }
             else
             {
-                player.rotation = Quaternion.Euler(0f, 180f, 0f);
+                player.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                if (player.stateManager.currentBase as PlayableIdleState != null)
+                {
+                    ChangeTileMesh();
+                }
             }
         }
         else
@@ -146,7 +165,11 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             }
             else
             {
-                player.rotation = Quaternion.Euler(0f, -90f, 0f);
+                player.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+                if (player.stateManager.currentBase as PlayableIdleState != null)
+                {
+                    ChangeTileMesh();
+                }
             }
         }
 
@@ -156,9 +179,66 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         }
     }
 
+    public void ChangeTileMesh()
+    {
+        var state = player.stateManager.currentBase as PlayableIdleState;
+        state.UpdateAttackPositions();
+        foreach (var tilePos in player.attakableTilePositions)
+        {
+            RaycastHit hit;
+            int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(firstArranger.tiles[0].layer));
+            //Debug.Log(LayerMask.LayerToName(firstArranger.tiles[0].layer));
+            // 레이캐스트 실행
+            var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
+
+            if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
+            {
+                // 레이가 오브젝트에 부딪혔을 때의 처리
+                //Debug.Log("Hit " + hit.collider.gameObject.name);
+                var tileContoller = hit.transform.GetComponent<Tile>();
+                //tileContoller.SetTileMaterial(false, Tile.TileMaterial.None);
+                tileContoller.SetTileMaterial(true, Tile.TileMaterial.Attack);
+            }
+            else
+            {
+                // 레이가 아무것도 부딪히지 않았을 때의 처리
+                //Debug.Log("No hit");
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        foreach (var tilePos in player.attakableTilePositions)
+        {
+            RaycastHit hit;
+            int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(firstArranger.tiles[0].layer));
+            //Debug.Log(LayerMask.LayerToName(firstArranger.tiles[0].layer));
+            // 레이캐스트 실행
+            var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
+
+            if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
+            {
+                // 레이가 오브젝트에 부딪혔을 때의 처리
+                //Debug.Log("Hit " + hit.collider.gameObject.name);
+                //hit.transform.GetComponent<Tile>().SetTileMaterial(true, Tile.TileMaterial.Attack);
+            }
+            else
+            {
+                // 레이가 아무것도 부딪히지 않았을 때의 처리
+                //Debug.Log("No hit");
+            }
+            Gizmos.DrawLine(tilePos, tilePos + Vector3.down * 1000); // 10은 레이의 길이
+        }
+
+    }
+
     public void SetPlayer(Transform player)
     {
-        this.player = player;
+        this.player = player.GetComponent<PlayerController>();
+        this.player.SetState(CharacterStates.Idle);
+        //Debug.Log(this.player.stateManager.currentBase);
     }
 
     public void SetFirstArranger(CharacterArrangeTest arranger)

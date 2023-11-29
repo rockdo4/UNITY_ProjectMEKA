@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayableStateManager 
 {
-    private PlayableBaseState currentBase;
+    public PlayableBaseState currentBase;
     public void ChangeState(PlayableBaseState newState)
     {
         if (currentBase != null)

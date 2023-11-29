@@ -160,13 +160,17 @@ public class PlayableIdleState : PlayableBaseState
                     Vector3 tilePosition = characterPosition + relativePosition;
 
                     //기즈모 여기서 그림
-                    var pos = new Vector3Int(Mathf.FloorToInt(tilePosition.x), Mathf.FloorToInt(tilePosition.y), Mathf.FloorToInt(tilePosition.z));
-                    playerCtrl.attakableTilePositions.Add(pos);
+                    //var tilePosInt = new Vector3Int(Mathf.FloorToInt(tilePosition.x), Mathf.FloorToInt(tilePosition.y), Mathf.FloorToInt(tilePosition.z));
+                    var tilePosInt = new Vector3(tilePosition.x,tilePosition.y,tilePosition.z);
+
+                    playerCtrl.attakableTilePositions.Add(tilePosInt);
 
                 }
             }
         }
-        Debug.Log($"공격타일 개수 : {playerCtrl.attakableTilePositions.Count}");
+        var playerPosInt = new Vector3(characterPosition.x, characterPosition.y, characterPosition.z);
+        playerCtrl.attakableTilePositions.Add(playerPosInt);
+        //Debug.Log($"공격타일 개수 : {playerCtrl.attakableTilePositions.Count}");
     }
 
     void SetPlayers()

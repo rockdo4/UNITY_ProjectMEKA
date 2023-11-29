@@ -9,7 +9,8 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
     public ArrangeJoystick arrangeJoystick;
     private GameObject characterGo;
     private PlayerController playerController;
-    private List<GameObject> tiles;
+    [HideInInspector]
+    public List<GameObject> tiles;
     private string characterName;
     private bool created;
     private bool firstArranged;
@@ -49,7 +50,9 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            int layerMask = 1 << LayerMask.NameToLayer("Background");
+            int backgroundMask = 1 << LayerMask.NameToLayer("Background");
+            int tileMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(tiles[0].layer));
+            int layerMask = backgroundMask | tileMask;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
@@ -69,8 +72,8 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
                 Debug.Log("배치가능");
                 hit.transform.GetComponentInChildren<Tile>().arrangePossible = false;
                 firstArranged = true;
-                arrangeJoystick.SetPlayer(characterGo.transform);
                 arrangeJoystick.transform.parent.gameObject.SetActive(firstArranged);
+                arrangeJoystick.SetPlayer(characterGo.transform);
                 var joystickPos = characterGo.transform.position;
                 joystickPos.y += arrangeJoystick.yOffset;
                 arrangeJoystick.transform.parent.position = joystickPos;
@@ -112,7 +115,6 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
             arrangeJoystick.gameObject.SetActive(true);
             arrangeJoystick.SetFirstArranger(this);
             characterGo.transform.position = transform.position;
-            Debug.Log("클릭다운 이벤트 완료");
         }
     }
 }
