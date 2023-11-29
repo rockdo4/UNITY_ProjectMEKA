@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Playables;
 using static PlayerController;
 
 public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
@@ -21,14 +20,14 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     private GameObject currentTile;
     private GameObject prevTile;
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
-    private PlayerController player;
     private BoxCollider boxCollider;
     private float half;
     [HideInInspector]
     public float yOffset = 1f;
-    [HideInInspector]
+
     public bool secondArranged;
-    private CharacterArrangeTest firstArranger;
+    private PlayerController player;
+    private CharacterArrangeTest playerIcon;
 
     private void OnEnable()
     {
@@ -97,11 +96,12 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     {
         if (!secondArranged)
         {
+            Debug.Log("핸들 업");
             RotatePlayer(currentTile.transform, true);
             secondArranged = true;
-            Time.timeScale = 1f;
+            player.SetState(CharacterStates.Idle);
             ClearTileMesh(tempTiles);
-            firstArranger.gameObject.SetActive(false);
+            playerIcon.gameObject.SetActive(false);
             transform.localPosition = Vector3.zero;
             transform.parent.gameObject.SetActive(false);
         }
@@ -111,19 +111,16 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     {
         var pos = currentTileParent.position;
         var go = currentTileParent.gameObject;
-        // pos에서 핸들러의 half만큼 빼기
         if (go == directions[(int)Direction.Up])
         {
-            //Debug.Log("rotate Player");
             if (mouseUp)
             {
                 pos.z += -half;
             }
             else
             {
-
                 player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                if(player.stateManager.currentBase as PlayableIdleState != null)
+                if(player != null)
                 {
                     ChangeTileMesh();
                 }
@@ -138,10 +135,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             else
             {
                 player.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-                if (player.stateManager.currentBase as PlayableIdleState != null)
-                {
-                    ChangeTileMesh();
-                }
+                ChangeTileMesh();
             }
         }
         else if (go == directions[(int)Direction.Down])
@@ -153,10 +147,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             else
             {
                 player.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                if (player.stateManager.currentBase as PlayableIdleState != null)
-                {
-                    ChangeTileMesh();
-                }
+                ChangeTileMesh();
             }
         }
         else
@@ -168,10 +159,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             else
             {
                 player.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
-                if (player.stateManager.currentBase as PlayableIdleState != null)
-                {
-                    ChangeTileMesh();
-                }
+                ChangeTileMesh();
             }
         }
 
@@ -184,13 +172,12 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public void ChangeTileMesh()
     {
         ClearTileMesh(tempTiles);
-        var state = player.stateManager.currentBase as PlayableIdleState;
+        var state = player.stateManager.currentBase as PlayableArrangeState;
         state.UpdateAttackPositions();
         foreach (var tilePos in player.attakableTilePositions)
         {
             RaycastHit hit;
-            int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(firstArranger.tiles[0].layer));
-            //Debug.Log(LayerMask.LayerToName(firstArranger.tiles[0].layer));
+            int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(player.stateManager.tiles[0].layer));
             // 레이캐스트 실행
             var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
 
@@ -225,7 +212,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         foreach (var tilePos in player.attakableTilePositions)
         {
             RaycastHit hit;
-            int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(firstArranger.tiles[0].layer));
+            int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(player.stateManager.tiles[0].layer));
             //Debug.Log(LayerMask.LayerToName(firstArranger.tiles[0].layer));
             // 레이캐스트 실행
             var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
@@ -249,12 +236,10 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public void SetPlayer(Transform player)
     {
         this.player = player.GetComponent<PlayerController>();
-        this.player.SetState(CharacterStates.Idle);
-        //Debug.Log(this.player.stateManager.currentBase);
     }
 
-    public void SetFirstArranger(CharacterArrangeTest arranger)
+    public void SetFirstArranger(CharacterArrangeTest icon)
     {
-        firstArranger = arranger;
+        playerIcon = icon;
     }
 }

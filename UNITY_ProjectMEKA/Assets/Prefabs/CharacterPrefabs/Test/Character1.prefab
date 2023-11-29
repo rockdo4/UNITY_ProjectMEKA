@@ -1099,6 +1099,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fee8558a6fb1898438df23bef7bf7101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  action:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &158054645019207272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1111,7 +1114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: Character1
   passive: 
+  skill: 0
   enemyType: 0
   property: 1
   occupation: 1
@@ -1130,6 +1135,8 @@ MonoBehaviour:
   hang: 2
   yal: 1
   rangeAttack: 0100000002000000
+  cost: 0
+  maxCost: 0
   level: 0
   grade: 0
   experience: 0
@@ -1157,6 +1164,10 @@ MonoBehaviour:
   blockCount: 0
   maxBlockCount: 0
   enemys: []
+  rangeInEnemys: []
+  enemyBlockCount: 
+  skillCost: 0
+  attakableTilePositions: []
 --- !u!114 &3230462859749420325
 MonoBehaviour:
   m_ObjectHideFlags: 0

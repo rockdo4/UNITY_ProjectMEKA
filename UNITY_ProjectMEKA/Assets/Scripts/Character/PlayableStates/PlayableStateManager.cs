@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayableStateManager 
 {
     public PlayableBaseState currentBase;
+
+    public List<GameObject> tiles;
+    public bool firstArranged;
+
     public void ChangeState(PlayableBaseState newState)
     {
         if (currentBase != null)
