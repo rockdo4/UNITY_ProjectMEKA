@@ -29,14 +29,14 @@ public class CharacterState : MonoBehaviour
 
     //공격 가능범위
     public int[,] AttackRange;
-    
+
 
     [SerializeField, Header("적 패시브 설정")]
     public List<Passive> passive;
 
     [SerializeField, Header("적 타입 설정")]
     public Defines.EnemyType enemyType;
-    
+
     [SerializeField, Header("속성 설정")]
     public Defines.Property property;
 
@@ -86,6 +86,9 @@ public class CharacterState : MonoBehaviour
     public int yal;
     [SerializeField, Header("공격범위설정")]
     public int[] rangeAttack;
+
+   
+
     
     public void ConvertTo2DArray()
     {
