@@ -100,7 +100,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
         created = true;
         foreach(var tile in tiles)
         {
-            tile.GetComponentInChildren<Tile>().SetTileMaterial(created, Tile.TileMaterial.None);
+            tile.GetComponentInChildren<Tile>().SetTileMaterial(created, Tile.TileMaterial.Arrange);
         }
     }
 
@@ -112,6 +112,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
             arrangeJoystick.gameObject.SetActive(true);
             arrangeJoystick.SetFirstArranger(gameObject);
             characterGo.transform.position = transform.position;
+            Debug.Log("클릭다운 이벤트 완료");
         }
     }
 }

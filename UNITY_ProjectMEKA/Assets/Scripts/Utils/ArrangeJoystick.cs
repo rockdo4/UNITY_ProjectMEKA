@@ -93,6 +93,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             secondArranged = true;
             Time.timeScale = 1f;
             firstArranger.SetActive(false);
+            transform.localPosition = Vector3.zero;
             transform.parent.gameObject.SetActive(false);
         }
     }
