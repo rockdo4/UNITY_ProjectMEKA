@@ -552,6 +552,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2156675517298506386, guid: 73e3d109be5675e4cb7c383e92a40d5a, type: 3}
+      propertyPath: hitName
+      value: Hit3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156675517298506386, guid: 73e3d109be5675e4cb7c383e92a40d5a, type: 3}
+      propertyPath: flashName
+      value: Flash3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156675517298506386, guid: 73e3d109be5675e4cb7c383e92a40d5a, type: 3}
+      propertyPath: BulletName
+      value: ps
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156675517298506386, guid: 73e3d109be5675e4cb7c383e92a40d5a, type: 3}
+      propertyPath: BulletType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2366841817329066696, guid: 73e3d109be5675e4cb7c383e92a40d5a, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2
@@ -1239,6 +1255,9 @@ MonoBehaviour:
   - objectName: LongDistance
     perfab: {fileID: 513341579006026017, guid: 451acaa8c9052b6488fc1f69200a6fb3, type: 3}
     count: 10
+  - objectName: OhYaBung
+    perfab: {fileID: 513341579006026017, guid: 912cb55dd57bdc1479373632a4829ab6, type: 3}
+    count: 10
 --- !u!4 &1028897422
 Transform:
   m_ObjectHideFlags: 0
@@ -1312,10 +1331,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 158054645019207272, guid: fc474fc50232dd8488556f6801bb578c, type: 3}
       propertyPath: maxHp
-      value: 99999
+      value: 999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 158054645019207272, guid: fc474fc50232dd8488556f6801bb578c, type: 3}
+      propertyPath: skill
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 158054645019207272, guid: fc474fc50232dd8488556f6801bb578c, type: 3}
       propertyPath: damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 158054645019207272, guid: fc474fc50232dd8488556f6801bb578c, type: 3}
+      propertyPath: maxCost
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 158054645019207272, guid: fc474fc50232dd8488556f6801bb578c, type: 3}
@@ -1342,7 +1369,8 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3220345717295521899, guid: fc474fc50232dd8488556f6801bb578c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2386,6 +2414,7 @@ GameObject:
   - component: {fileID: 2020321416}
   - component: {fileID: 2020321415}
   - component: {fileID: 2020321414}
+  - component: {fileID: 2020321417}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2467,6 +2496,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 53.76, y: 0, z: 0}
+--- !u!114 &2020321417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020321413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4aee9dfcaefa994c81e7d400d5ade04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -26,6 +26,13 @@ public class CharacterState : MonoBehaviour
         Mechanic,//정비공
 
     }
+    public enum Skills
+    {
+        None,
+        Test1,
+        Test2,
+        Test3,
+    }
 
     //공격 가능범위
     public int[,] AttackRange;
@@ -33,6 +40,9 @@ public class CharacterState : MonoBehaviour
 
     [SerializeField, Header("적 패시브 설정")]
     public List<Passive> passive;
+
+    [SerializeField,Header("캐릭터 스킬 설정")]
+    public Skills skill;
 
     [SerializeField, Header("적 타입 설정")]
     public Defines.EnemyType enemyType;
@@ -86,6 +96,12 @@ public class CharacterState : MonoBehaviour
     public int yal;
     [SerializeField, Header("공격범위설정")]
     public int[] rangeAttack;
+
+    [HideInInspector]
+    public float cost;
+
+    [SerializeField, Header("캐릭터 최대 시그마")]
+    public float maxCost;
 
    
 

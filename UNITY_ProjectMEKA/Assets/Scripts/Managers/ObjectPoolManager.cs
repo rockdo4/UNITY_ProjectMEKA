@@ -84,7 +84,7 @@ public class ObjectPoolManager : MonoBehaviour
     // »ý¼º
     private GameObject CreatePooledItem()
     {
-        GameObject poolGo = Instantiate(goDic[objectName]);
+        GameObject poolGo = Instantiate(goDic[objectName], new Vector3(100, 100, 100), Quaternion.identity);
         poolGo.GetComponent<PoolAble>().Pool = ojbectPoolDic[objectName];
         return poolGo;
     }

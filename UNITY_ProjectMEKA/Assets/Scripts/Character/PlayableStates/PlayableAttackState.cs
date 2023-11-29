@@ -28,16 +28,17 @@ public class PlayableAttackState : PlayableBaseState
             timer = 0;
             //playerCtrl.Hit();//test
             playerCtrl.ani.SetTrigger("Attack");
-        }
-        if(/*!playerCtrl.target.activeSelf||*/playerCtrl.target == null)//현재 때리고 있는 적이 죽으면 상태 변경
-        {
-            Debug.Log("상태 변경 Idle");
             playerCtrl.SetState(PlayerController.CharacterStates.Idle);
         }
-        if(IsInAttackRange(playerCtrl.target.GetComponent<EnemyController>().CurrentGridPos))
-        {
-            playerCtrl.SetState(PlayerController.CharacterStates.Idle);
-        }
+        //if(/*!playerCtrl.target.activeSelf||*/playerCtrl.target == null)//현재 때리고 있는 적이 죽으면 상태 변경
+        //{
+        //    Debug.Log("상태 변경 Idle");
+        //    playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+        //}
+        //if(IsInAttackRange(playerCtrl.target.GetComponent<EnemyController>().CurrentGridPos))
+        //{
+        //    playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+        //}
 
     }
     bool IsInAttackRange(Vector3Int targetPosition)

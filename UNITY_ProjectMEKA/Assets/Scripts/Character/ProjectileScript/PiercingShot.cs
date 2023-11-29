@@ -78,14 +78,16 @@ public class PiercingShot : MonoBehaviour
    
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        PlayerController pl = Player.GetComponent<PlayerController>();
+        EnemyController en = Player.GetComponent<EnemyController>();
+
+        if (other.CompareTag("Enemy") && pl != null)
         {
             // 대상에 대미지 처리
-            IAttackable attackable = other.GetComponent<IAttackable>();
-            if (attackable != null)
-            {
-                attackable.OnAttack(damage);
-            }
+            IAttackable attackable = target.GetComponentInParent<IAttackable>();
+
+            attackable.OnAttack(damage);
+
 
             // 충돌 효과 생성
             CreateHitEffect(transform.position, transform.forward);
@@ -93,6 +95,20 @@ public class PiercingShot : MonoBehaviour
             // 트레일 제거
             RemoveTrails();
         }
+        else if (other.CompareTag("PlayerCollider") && en != null)
+        {
+            IAttackable attackable = target.GetComponentInParent<IAttackable>();
+
+            attackable.OnAttack(damage);
+
+
+            CreateHitEffect(transform.position, transform.forward);
+
+
+            RemoveTrails();
+        }
+
+        
         else if (other.CompareTag("Wall"))
         {
             ReleaseObject();
@@ -112,22 +128,52 @@ public class PiercingShot : MonoBehaviour
         }
 
         //var hitInstance = Instantiate(hit, position, rotation);
-        var hitInstance = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.hitName);
-        hitInstance.transform.position = position;
-        hitInstance.transform.rotation = rotation;
-        hitInstance.SetActive(false);
-        hitInstance.SetActive(true);
-        var hitPs = hitInstance.GetComponent<ParticleSystem>();
-        if (hitPs != null)
+        if (Player.tag == "Player")
         {
-            hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPs.main.duration);
+            var hitInstance = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.hitName);
+            if (hitInstance != null)
+            {
+                hitInstance.transform.position = position;
+                hitInstance.transform.rotation = rotation;
+                hitInstance.SetActive(false);
+                hitInstance.SetActive(true);
+
+                var hitPs = hitInstance.GetComponent<ParticleSystem>();
+                if (hitPs != null)
+                {
+                    hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPs.main.duration);
+                }
+                else
+                {
+                    var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPsParts.main.duration);
+                }
+            }
         }
-        else
+        else if (Player.tag == "Enemy")
         {
-            var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-            hitInstance.GetComponent<PoolAble>().ReleaseObject(hitPsParts.main.duration);
+            var hitInstanceEn = ObjectPoolManager.instance.GetGo(Player.GetComponent<EnemyController>().state.hitName);
+            if (hitInstanceEn != null)
+            {
+                hitInstanceEn.transform.position = position;
+                hitInstanceEn.transform.rotation = rotation;
+                hitInstanceEn.SetActive(false);
+                hitInstanceEn.SetActive(true);
+            }
+            var hitPs = hitInstanceEn.GetComponent<ParticleSystem>();
+            if (hitPs != null)
+            {
+                hitInstanceEn.GetComponent<PoolAble>().ReleaseObject(hitPs.main.duration);
+            }
+            else
+            {
+                var hitPsParts = hitInstanceEn.transform.GetChild(0).GetComponent<ParticleSystem>();
+                hitInstanceEn.GetComponent<PoolAble>().ReleaseObject(hitPsParts.main.duration);
+            }
+
+
         }
-        
+
     }
 
     private void RemoveTrails()
