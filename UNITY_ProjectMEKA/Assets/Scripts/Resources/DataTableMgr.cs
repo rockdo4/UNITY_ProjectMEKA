@@ -12,10 +12,10 @@ public static class DataTableMgr
         tables.Clear();
 
         var testCharTable = new TestCharacterTable();
-        tables.Add(typeof(TestCharacterTable) , testCharTable);
+        tables.Add(typeof(TestCharacterTable), testCharTable);
 
-        //var itemTable = new ItemTable();
-        //tables.Add(typeof(ItemTable), itemTable);
+        var itemTable = new ItemInfoTable();
+        tables.Add(typeof(ItemInfoTable), itemTable);
     }
 
     public static T GetTable<T>() where T : DataTable

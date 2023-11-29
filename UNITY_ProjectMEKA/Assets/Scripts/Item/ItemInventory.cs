@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ItemInventory
 {
-	public static ItemInventory instance;
+	private static ItemInventory instance;
+	public List<Item> m_ItemStorage;
 	private ItemInventory() 
-	{ 
+	{
 		m_ItemStorage = new List<Item>();
 	}
 	public static ItemInventory Instance
@@ -20,8 +21,14 @@ public class ItemInventory
 			return instance;
 		}
 	}
+	public int Count
+	{ 
+		get
+		{
+			return m_ItemStorage.Count;
+		}
+	}
 
-	public List<Item> m_ItemStorage;
 	public void AddItemByInstance(Item item, int count = 1)
 	{
 		if(item == null)
@@ -29,7 +36,13 @@ public class ItemInventory
 			throw new System.Exception("Item is null");
 		}
 
-		item.Count += count;
+		var exist = m_ItemStorage.Find(x => x.InstanceID == item.InstanceID);
+		
+		if(exist != null)
+		{
+			exist.Count += count;
+			return;
+		}
 		m_ItemStorage.Add(item);
 	}
 
@@ -46,12 +59,18 @@ public class ItemInventory
 			throw new System.Exception("Item is null");
 		}
 
-		if(item.Count >= count)
-			item.Count -= count;
-
-		if (item.Count <= 0)
+		var exist = m_ItemStorage.Find(x => x.InstanceID == item.InstanceID);
+		if(exist != null)
 		{
-			m_ItemStorage.Remove(item);
+			exist.Count -= count;
+			if(exist.Count <= 0)
+			{
+				m_ItemStorage.Remove(exist);
+			}
+		}
+		else
+		{
+			throw new System.Exception("Item is not exist");
 		}
 	}
 

@@ -63,6 +63,8 @@ public class ButtonHoldListener : MonoBehaviour, IPointerDownHandler, IPointerUp
     public void onClickAddListener(UnityAction action)
     {
         Debug.Log("123");
-        onClickButton.AddListener(action);
+		
+		onClickButton.AddListener(action);
+
     }
 }

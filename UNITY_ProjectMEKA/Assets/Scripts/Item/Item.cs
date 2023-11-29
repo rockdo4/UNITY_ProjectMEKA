@@ -12,7 +12,7 @@ public class Item
 	{ 
 		get
 		{
-			return DataTableMgr.GetTable<ItemTable>().GetItemData(ID).Name;
+			return DataTableMgr.GetTable<ItemInfoTable>().GetItemData(ID).Name;
 		}
 	}
 }
@@ -23,28 +23,3 @@ public class ItemInfo
 	public int ID { get; set; }
 	public string Name { get; set; }
 }
-
-//public class ExchangeItem : Item
-//{
-	
-//}
-
-//public class GrowthItem : Item
-//{
-
-//}
-
-//public class MissionItem : Item
-//{
-
-//}
-
-//public class RapportItem : Item
-//{
-
-//}
-
-//public class CollectibleItem : Item
-//{
-
-//}

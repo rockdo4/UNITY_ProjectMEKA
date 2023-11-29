@@ -109,8 +109,9 @@ public class GateController : MonoBehaviour
 
     virtual protected void FixedUpdate()
     {
-        // 이동경로 가이드 전 대기 시간
-        if (startInterval > 0f)
+		Debug.LogError("Assets\\Scripts\\Character\\NPCStates\\NPCDestinationState.cs(18,18): warning CS0108: 'NPCDestinationStates.players' hides inherited member 'NPCBaseState.players'. Use the new keyword if hiding was intended.");
+		// 이동경로 가이드 전 대기 시간
+		if (startInterval > 0f)
         {
             startInterval -= Time.deltaTime;
             return;
