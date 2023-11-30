@@ -112,6 +112,7 @@ public class PlayableArrangeState : PlayableBaseState
                 else
                 {
                     Debug.Log($"배치불가능: {hit}");
+                    playerCtrl.SetState(PlayerController.CharacterStates.Idle);
                     playerCtrl.ReturnPool.Invoke();
                 }
 
