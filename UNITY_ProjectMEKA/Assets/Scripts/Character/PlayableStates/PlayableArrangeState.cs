@@ -7,6 +7,7 @@ public class PlayableArrangeState : PlayableBaseState
 {
     private RaycastHit hit;
     public Button collecteButton;
+    public bool settingMode;
 
     public PlayableArrangeState(PlayerController player) : base(player)
     {
@@ -29,6 +30,7 @@ public class PlayableArrangeState : PlayableBaseState
         }
         else
         {
+            settingMode = true;
             playerCtrl.joystick.SetActive(true);
             var joystickController = playerCtrl.joystick.GetComponentInChildren<ArrangeJoystick>();
             joystickController.SetPlayer(playerCtrl.transform);
@@ -55,16 +57,16 @@ public class PlayableArrangeState : PlayableBaseState
     {
         Debug.Log("arrange exit");
         Time.timeScale = 1f;
+        settingMode = false;
     }
 
     public override void Update()
     {
-        if(!playerCtrl.stateManager.firstArranged)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(!settingMode && !playerCtrl.stateManager.firstArranged)
         {
             if(Input.GetMouseButton(0))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
                 int backgroundMask = 1 << LayerMask.NameToLayer("Background");
                 int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
                 int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
@@ -100,6 +102,14 @@ public class PlayableArrangeState : PlayableBaseState
                 {
                     tile.GetComponentInChildren<Tile>().SetTileMaterial(false, Tile.TileMaterial.None);
                 }
+            }
+        }
+        else if(settingMode)
+        {
+            var tileMask = LayerMask.NameToLayer("ArrangeTile");
+            if (Input.GetMouseButtonDown(0) && !Physics.Raycast(ray, out hit, Mathf.Infinity, tileMask))
+            {
+                //playerCtrl.joystick.GetComponentInChildren<ArrangeJoystick>().ArrangeDone.Invoke();
             }
         }
     }

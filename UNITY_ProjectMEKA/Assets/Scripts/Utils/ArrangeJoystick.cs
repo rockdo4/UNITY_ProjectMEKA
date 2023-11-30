@@ -17,11 +17,6 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         Count
     }
 
-    private enum PlayerInvokeType
-    {
-        
-    }
-
     private List<GameObject> directions = new List<GameObject>();
     private Bounds backgroundBounds;
     private List<Bounds> bounds;
@@ -41,7 +36,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public Button cancelButton;
     public Button collectButton;
 
-    private UnityEvent ArrangeDone;
+    public UnityEvent ArrangeDone;
 
     private void OnEnable()
     {
@@ -92,7 +87,6 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             transform.localPosition = Vector3.zero;
             transform.parent.gameObject.SetActive(false);
             player.ReturnPool.Invoke();
-            //PlayerInvoke();
         });
 
         collectButton.onClick.AddListener(() =>
@@ -108,14 +102,8 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             transform.gameObject.SetActive(true);
             transform.parent.gameObject.SetActive(false);
             player.ReturnPool.Invoke();
-            //PlayerInvoke();
             playerIcon.gameObject.SetActive(true);
         });
-    }
-
-    public void PlayerInvoke()
-    {
-        player.ReturnPool.Invoke();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -148,7 +136,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                     currentTile = directions[i];
                     if(prevTile != currentTile)
                     {
-                        Debug.Log($"{prevTile}¿¡¼­ {currentTile}·Î ¹Ù²ñ");
+                        //Debug.Log($"{prevTile}¿¡¼­ {currentTile}·Î ¹Ù²ñ");
                         RotatePlayer(currentTile.transform, false);
                     }
                     break;
@@ -185,11 +173,6 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                 RotatePlayer(currentTile.transform, true);
                 secondArranged = true;
                 ArrangeDone.Invoke();
-                //player.SetState(CharacterStates.Idle);
-                //ClearTileMesh(tempTiles);
-                //playerIcon.gameObject.SetActive(false);
-                //transform.localPosition = Vector3.zero;
-                //transform.parent.gameObject.SetActive(false);
             }
         }
     }
