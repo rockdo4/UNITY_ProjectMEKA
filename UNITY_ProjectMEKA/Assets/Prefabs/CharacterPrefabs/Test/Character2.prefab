@@ -3541,6 +3541,61 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.32157665, y: 0.2691908, z: -0.04069221}
     m_Extent: {x: 0.55233127, y: 0.81465995, z: 0.5786576}
   m_DirtyAABB: 0
+--- !u!1 &1703145765545916723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 655714015341543730}
+  - component: {fileID: 4602360244038382120}
+  m_Layer: 6
+  m_Name: Collider
+  m_TagString: PlayerCollider
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &655714015341543730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703145765545916723}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2366841817329066696}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4602360244038382120
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703145765545916723}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.2
+  m_Height: 5.76
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.77, z: 0}
 --- !u!1 &1719386958824464240
 GameObject:
   m_ObjectHideFlags: 0
@@ -6057,7 +6112,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2366841817329066696
 Transform:
   m_ObjectHideFlags: 0
@@ -6074,6 +6129,7 @@ Transform:
   - {fileID: 1393536554164094455}
   - {fileID: 5055841511067128818}
   - {fileID: 7779838280355576981}
+  - {fileID: 655714015341543730}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8518728858622343346
@@ -6126,7 +6182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Character2
   passive: 
-  skill: 0
+  skill: 1
   enemyType: 0
   property: 2
   occupation: 3
@@ -6135,7 +6191,7 @@ MonoBehaviour:
   speed: 0
   cooldown: 0
   range: 0
-  damage: 25
+  damage: 10
   attackDelay: 0.1
   exp: 0
   BulletName: ps
@@ -6146,7 +6202,7 @@ MonoBehaviour:
   yal: 5
   rangeAttack: 00000000000000000100000000000000000000000000000001000000010000000100000000000000000000000100000001000000010000000000000000000000010000000100000001000000000000000000000001000000020000000100000000000000
   cost: 0
-  maxCost: 0
+  maxCost: 100
   level: 0
   grade: 0
   experience: 0
@@ -6178,6 +6234,7 @@ MonoBehaviour:
   enemyBlockCount: 
   skillCost: 0
   attakableTilePositions: []
+  currentState: 0
 --- !u!114 &5779597442223778163
 MonoBehaviour:
   m_ObjectHideFlags: 0

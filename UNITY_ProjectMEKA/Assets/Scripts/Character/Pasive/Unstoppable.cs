@@ -12,7 +12,7 @@ public class Unstoppable : MonoBehaviour
 
     void Start()
     {
-        enemy.state.isBlock = true;
+        enemy.state.isBlock = false;
     }
 
     

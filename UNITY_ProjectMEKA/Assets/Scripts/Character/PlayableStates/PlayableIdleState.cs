@@ -9,6 +9,7 @@ public class PlayableIdleState : PlayableBaseState
     List<KeyValuePair<float, GameObject>> players;
     GameObject[] enemys;
     GameObject[] playerses;
+    PlayerController character;
 
     public PlayableIdleState(PlayerController player) : base(player)
     {
@@ -16,7 +17,7 @@ public class PlayableIdleState : PlayableBaseState
 
     public override void Enter()
     {
-        Debug.Log("idle enter");
+        
     }
 
     public override void Exit()
@@ -26,18 +27,27 @@ public class PlayableIdleState : PlayableBaseState
 
     public override void Update()
     {
-        players = new List<KeyValuePair<float, GameObject>>();
-        SetPlayers();
-        switch (playerCtrl.state.occupation)
+        if (playerCtrl.state.Hp <= 0)
         {
-            case Defines.Occupation.Supporters:
-                CheckHealing();
-                break;
-            default:
-                CheckEnemy();
-                break;
+            playerCtrl.SetState(PlayerController.CharacterStates.Die);
 
         }
+        else 
+        {
+            players = new List<KeyValuePair<float, GameObject>>();
+            SetPlayers();
+            switch (playerCtrl.state.occupation)
+            {
+                case Defines.Occupation.Supporters:
+                    CheckHealing();
+                    break;
+                default:
+                    CheckEnemy();
+                    break;
+
+            }
+        }
+
     }
     void CheckEnemy()
     {
@@ -69,9 +79,32 @@ public class PlayableIdleState : PlayableBaseState
             
         }
 
+
+
     }
     void CheckHealing()
     {
+        //foreach(var pl in playerCtrl.rangeInPlayers)
+        //{
+        //    PlayerController player =  pl.GetComponentInParent<PlayerController>();
+        //    float currentHp =  player.state.Hp / player.state.maxHp;
+        //    if (character == null || (character.state.Hp / character.state.maxHp) > currentHp)
+        //    {
+        //        character = player;
+        //    }
+        //}
+
+        //if (character != null && (character.state.Hp / character.state.maxHp) < 1f)
+        //{
+        //    playerCtrl.target = character.gameObject;
+        //    Debug.Log("Healing");
+        //    playerCtrl.SetState(PlayerController.CharacterStates.Healing);
+        //}
+
+
+
+
+
         Vector3Int playerGridPos = playerCtrl.CurrentGridPos;
         float minHealthRatio = float.MaxValue;
         GameObject targetPlayer = null;

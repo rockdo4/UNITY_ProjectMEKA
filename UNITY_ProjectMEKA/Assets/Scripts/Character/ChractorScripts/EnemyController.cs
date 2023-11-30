@@ -67,6 +67,7 @@ public class EnemyController : PoolAble
         state = GetComponent<CharacterState>();
         rb = GetComponent<Rigidbody>();
         ani = GetComponent<Animator>();
+        state.isBlock = true;
     }
     
     void Start()
@@ -137,7 +138,7 @@ public class EnemyController : PoolAble
         //Debug.Log(state.damage);
        
     }
-    private void OnTriggerStay(Collider other)//Enter���ϸ� ���ݹ����� ������� ���� ����� �ȵ�
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("PlayerCollider"))
         {
@@ -204,23 +205,7 @@ public class EnemyController : PoolAble
         TakeDamage co = healingTarget.GetComponent<TakeDamage>();
         co.OnHealing(state.damage * damage);
     }
-    //public void Fire()
-    //{
-    //    if (target == null) return;
-    //    //var obj = ObjectPoolManager.instance.GetGo("bullet");
-    //    var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
-
-    //    //obj.transform.LookAt(target.transform.position);
-    //    var projectile = obj.GetComponent<Bullet>();
-    //    projectile.ResetState();
-    //    obj.transform.position = FirePosition.transform.position;
-    //    obj.transform.rotation = FirePosition.transform.rotation;
-    //    projectile.damage = state.damage;
-    //    projectile.target = target.transform;
-    //    projectile.Player = gameObject;
-    //    obj.SetActive(false);
-    //    obj.SetActive(true);
-    //}
+    
     public void Fire()
     {
         if (target == null) return;
@@ -339,45 +324,6 @@ public class EnemyController : PoolAble
 
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    if (state == null || state.AttackRange == null || transform == null)
-    //    {
-    //        return; // �ϳ��� null�̸� Gizmos�� �׸��� ����
-    //    }
-    //    Gizmos.color = new Color(1, 0, 0, 0.5f);
-
-    //    Vector3 characterPosition = transform.position;
-    //    Vector3 forward = transform.right;
-    //    Vector3 right = -transform.forward;
-
-    //    int characterRow = 0;
-    //    int characterCol = 0;
-
-    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
-    //        {
-    //            if (state.AttackRange[i, j] == 2)
-    //            {
-    //                characterRow = i;
-    //                characterCol = j;
-    //            }
-    //        }
-    //    }
-
-    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
-    //        {
-    //            if (state.AttackRange[i, j] == 1)
-    //            {
-    //                Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-    //                Vector3 gizmoPosition = characterPosition + relativePosition;
-    //                Gizmos.DrawCube(gizmoPosition, Vector3.one);
-    //            }
-    //        }
-    //    }
-    //}
+    
 }
 

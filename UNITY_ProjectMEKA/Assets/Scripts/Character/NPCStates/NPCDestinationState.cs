@@ -68,7 +68,7 @@ public class NPCDestinationStates : NPCBaseState
         Vector3Int gridPosition = Vector3Int.FloorToInt(enemyCtrl.transform.position);
         Vector3 tileCenter = new Vector3(gridPosition.x + 0.5f, gridPosition.y, gridPosition.z + 0.5f);
 
-        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.3f)
+        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.1f)
         {
             CheckPlayer();
         }
@@ -78,14 +78,13 @@ public class NPCDestinationStates : NPCBaseState
        
         foreach (var pl in enemyCtrl.rangeInPlayers)
         {
-            //Debug.Log("AttackEnemy");
             
             PlayerController player = pl.GetComponentInParent<PlayerController>();
-            if (player.blockCount < player.maxBlockCount && !enemyCtrl.state.isBlock && player != null)
+            //float distance = Vector3.Distance(enemyCtrl.transform.position,player.transform.position);
+            if (player.blockCount < player.maxBlockCount && enemyCtrl.state.isBlock && player != null /*&& distance >0.4f*/)
             {
                 enemyCtrl.target = pl;
                 enemyCtrl.SetState(NPCStates.Attack);
-                //Debug.Log("AttackStateChangeNPC");
                 return;
             }
             

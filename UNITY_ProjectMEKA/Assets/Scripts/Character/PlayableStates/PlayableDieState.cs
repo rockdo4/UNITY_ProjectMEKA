@@ -10,6 +10,7 @@ public class PlayableDieState : PlayableBaseState
 
     public override void Enter()
     {
+        
     }
 
     public override void Exit()

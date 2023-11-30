@@ -33,9 +33,15 @@ public class NPCAttackState : NPCBaseState
             enemyCtrl.ani.SetTrigger("Attack");
             //enemyCtrl.Hit();//test
         }
-        if(!enemyCtrl.target.GetComponentInParent<PlayerController>().gameObject.activeSelf)
+        foreach(var a in enemyCtrl.rangeInPlayers)
         {
-            enemyCtrl.SetState(NPCStates.Move);
+            if(a == enemyCtrl.target)
+            {
+                return;
+            }
+
         }
+        enemyCtrl.SetState(NPCStates.Move);
+
     }
 }

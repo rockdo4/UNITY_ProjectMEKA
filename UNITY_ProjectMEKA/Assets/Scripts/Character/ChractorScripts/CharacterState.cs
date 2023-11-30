@@ -29,7 +29,7 @@ public class CharacterState : MonoBehaviour
     public enum Skills
     {
         None,
-        Test1,
+        Snapshot,
         Test2,
         Test3,
     }
@@ -44,7 +44,7 @@ public class CharacterState : MonoBehaviour
     public List<Passive> passive;
 
     [SerializeField,Header("캐릭터 스킬 설정")]
-    public Skills skill;
+    public Skills skill; 
 
     [SerializeField, Header("적 타입 설정")]
     public Defines.EnemyType enemyType;
@@ -67,9 +67,6 @@ public class CharacterState : MonoBehaviour
 
     [SerializeField, Header("스킬 쿨타입 설정")]
     public float cooldown;
-
-    [SerializeField, Header("공격 사정거리 설정")]
-    public float range;
 
     [SerializeField, Header("공격력 설정")]
     public float damage;
@@ -132,7 +129,7 @@ public class CharacterState : MonoBehaviour
         //return AttackRange; // 변환된 2차원 배열 반환
     }
 
-    //[HideInInspector]
+    [HideInInspector]
     public int level;//레벨
 
     [HideInInspector]

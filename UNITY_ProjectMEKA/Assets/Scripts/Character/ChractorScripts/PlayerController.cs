@@ -34,10 +34,16 @@ public class PlayerController : PoolAble
     [HideInInspector]
     public List<GameObject> rangeInEnemys = new List<GameObject>();
     [HideInInspector]
+    public List<GameObject> rangeInPlayers = new List<GameObject>();
+    [HideInInspector]
     public List<int> enemyBlockCount = new List<int>();
 
     [HideInInspector]
     public int skillCost;
+
+    [HideInInspector]
+    public float skillCoolTime;
+
     [HideInInspector]
     public List<Vector3> attakableTilePositions = new List<Vector3>();
 
@@ -49,6 +55,11 @@ public class PlayerController : PoolAble
         Attack,
         Healing,
     }
+    [HideInInspector]
+    public CharacterStates currentState;
+
+
+
     private void Awake()
     {
         state = GetComponent<CharacterState>();
@@ -83,9 +94,15 @@ public class PlayerController : PoolAble
 
         switch(state.skill)
         {
-            case CharacterState.Skills.Test1:
-                var s = gameObject.AddComponent<TestDummySkill>();
-                skillCost = s.cost;
+            case CharacterState.Skills.Snapshot:
+                var s = gameObject.AddComponent<Snapshot>();
+                //스킬 코스트(마나) or (시그마)
+                skillCost = s.skillCost;
+
+                //쿨타임
+                skillCoolTime = s.coolTime;
+
+                //??? = 지속시간
                 break;
         }
         state.cost = state.maxCost;
@@ -95,7 +112,6 @@ public class PlayerController : PoolAble
     {
         stateManager.Update();
         blockCount = enemyBlockCount.Count;
-        Debug.Log(blockCount);
         state.cost += Time.deltaTime;
         //Debug.Log(state.cost);
         if(state.cost >= state.maxCost)
@@ -103,11 +119,16 @@ public class PlayerController : PoolAble
             state.cost = state.maxCost;
 
         }
+
+        if(gameObject.name == "MERIA")
+        {
+            Debug.Log(rangeInPlayers);
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("EnemyCollider"))
+        if (other.CompareTag("EnemyCollider") && state.occupation != Defines.Occupation.Supporters)
         {
             //Debug.Log(other, other);
             if (!rangeInEnemys.Contains(other.GetComponentInParent<Transform>().gameObject))
@@ -139,11 +160,28 @@ public class PlayerController : PoolAble
                 });
             }
         }
+        else if(other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
+        {
+            if (!rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
+            {
+                rangeInPlayers.Add(other.GetComponentInParent<Transform>().gameObject);
+                
+
+                var obj = other.GetComponentInParent<CanDie>();
+                obj.action.AddListener(() =>
+                {
+                    rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+                    
+                });
+            }
+
+        }
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.CompareTag("EnemyCollider"))
+        if(other.CompareTag("EnemyCollider") && state.occupation != Defines.Occupation.Supporters)
         {
             if(rangeInEnemys.Contains(other.GetComponentInParent<Transform>().gameObject))
             {
@@ -173,11 +211,26 @@ public class PlayerController : PoolAble
                 });
             }
         }
+        else if (other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
+        {
+            if (rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
+            {
+                rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+               
+                var obj = other.GetComponentInParent<CanDie>();
+                obj.action.RemoveListener(() =>
+                {
+                    rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+                    
+                });
+            }
+        }
     }
 
     public void SetState(CharacterStates state)
     {
         stateManager.ChangeState(states[(int)state]);
+        currentState = state;
     }
 
     public void Hit()
@@ -297,7 +350,7 @@ public class PlayerController : PoolAble
         {
             return;
         }
-        IAttackable heal = target.GetComponent<IAttackable>();
+        IAttackable heal = target.GetComponentInParent<IAttackable>();
 
         if (heal != null) 
         {

@@ -27,23 +27,25 @@ public class PlayableProjectileAttackState : PlayableBaseState
 
     public override void Update()
     {
-        //CheckEnemy();
-        timer -= Time.deltaTime;
-        if(timer <= 0)
+        if (playerCtrl.state.Hp <= 0)
         {
-            timer = playerCtrl.state.attackDelay;
-            //timer = 0;
-            playerCtrl.ani.SetTrigger("Attack");
-            //CheckEnemy();
-            //playerCtrl.Fire();
-            playerCtrl.SetState(PlayerController.CharacterStates.Idle);
-        }
-        if (playerCtrl.target == null)
-        {
-            playerCtrl.SetState(PlayerController.CharacterStates.Idle);
-        }
+            playerCtrl.SetState(PlayerController.CharacterStates.Die);
 
-        
+        }
+        else
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                timer = playerCtrl.state.attackDelay;
+                playerCtrl.ani.SetTrigger("Attack");
+                playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+            }
+            if (playerCtrl.target == null)
+            {
+                playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+            }
+        }
         
     }
     
