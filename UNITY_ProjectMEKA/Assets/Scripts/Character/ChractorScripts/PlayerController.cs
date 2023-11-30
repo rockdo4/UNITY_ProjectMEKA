@@ -119,11 +119,9 @@ public class PlayerController : PoolAble
             state.cost = state.maxCost;
 
         }
-
-        if(gameObject.name == "MERIA")
-        {
-            Debug.Log(rangeInPlayers);
-        }
+        
+        
+        
     }
 
     private void OnTriggerStay(Collider other)
@@ -160,7 +158,7 @@ public class PlayerController : PoolAble
                 });
             }
         }
-        else if(other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
+        if(other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
         {
             if (!rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
             {
@@ -211,7 +209,7 @@ public class PlayerController : PoolAble
                 });
             }
         }
-        else if (other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
+        if (other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
         {
             if (rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
             {
