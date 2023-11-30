@@ -5,12 +5,14 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : PoolAble
 {
     [HideInInspector]
     public PlayableStateManager stateManager = new PlayableStateManager();
-    private List<PlayableBaseState> states = new List<PlayableBaseState>();
+    [HideInInspector]
+    public List<PlayableBaseState> states = new List<PlayableBaseState>();
     public GameObject FirePosition;
     [HideInInspector]
     public Animator ani;
@@ -39,11 +41,10 @@ public class PlayerController : PoolAble
     [HideInInspector]
     public List<Vector3> attakableTilePositions = new List<Vector3>();
 
-
     public enum CharacterStates
     {
-        Idle,
         Arrange,
+        Idle,
         Die,
         Attack,
         Healing,
@@ -62,13 +63,14 @@ public class PlayerController : PoolAble
     }
     void Start()
     {
+        Debug.Log("player Controller start");
         state.ConvertTo2DArray();
+        states.Add(new PlayableArrangeState(this));
         states.Add(new PlayableIdleState(this));
         states.Add(new PlayableDieState(this));
-        if(state.occupation == Defines.Occupation.Hunter || state.occupation == Defines.Occupation.Castor)
+        if (state.occupation == Defines.Occupation.Hunter || state.occupation == Defines.Occupation.Castor)
         {
             states.Add(new PlayableProjectileAttackState(this));
-            
         }
         else
         {
@@ -76,7 +78,7 @@ public class PlayerController : PoolAble
         }
         states.Add(new PlayableHealingState(this));
 
-        SetState(CharacterStates.Idle);
+        SetState(CharacterStates.Arrange);
         CreateColliders();
 
         switch(state.skill)
@@ -95,7 +97,7 @@ public class PlayerController : PoolAble
         blockCount = enemyBlockCount.Count;
 
         state.cost += Time.deltaTime;
-        Debug.Log(state.cost);
+        //Debug.Log(state.cost);
         if(state.cost >= state.maxCost)
         {
             state.cost = state.maxCost;
@@ -332,5 +334,4 @@ public class PlayerController : PoolAble
 
 
     }
-    
 }
