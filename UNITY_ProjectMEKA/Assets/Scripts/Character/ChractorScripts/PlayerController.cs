@@ -45,7 +45,7 @@ public class PlayerController : PoolAble, IPointerDownHandler
     public UnityEvent ReturnPool;
     public GameObject joystick;
     [HideInInspector]
-    public CharacterArrangement icon;
+    public CharacterIcon icon;
 
     public enum CharacterStates
     {

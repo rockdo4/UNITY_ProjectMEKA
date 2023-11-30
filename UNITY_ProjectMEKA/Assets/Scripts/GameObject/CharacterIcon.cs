@@ -5,7 +5,7 @@ using static PlayerController;
 using UnityEngine.UIElements;
 using UnityEngine.Events;
 
-public class CharacterArrangement : MonoBehaviour, IPointerDownHandler
+public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
     public GameObject characterPrefab;
     public ArrangeJoystick arrangeJoystick;

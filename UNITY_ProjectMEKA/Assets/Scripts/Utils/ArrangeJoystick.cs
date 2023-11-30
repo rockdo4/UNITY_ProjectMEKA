@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
@@ -16,6 +17,11 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         Count
     }
 
+    private enum PlayerInvokeType
+    {
+        
+    }
+
     private List<GameObject> directions = new List<GameObject>();
     private Bounds backgroundBounds;
     private List<Bounds> bounds;
@@ -29,14 +35,18 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public bool secondArranged;
     private PlayerController player;
-    private CharacterArrangement playerIcon;
+    private CharacterIcon playerIcon;
     public float radius;
 
     public Button cancelButton;
     public Button collectButton;
 
+    private UnityEvent ArrangeDone;
+
     private void OnEnable()
     {
+        ArrangeDone = new UnityEvent();
+
         secondArranged = false;
         boxCollider = GetComponent<BoxCollider>();
         half = boxCollider.bounds.size.x / 2f;
@@ -70,8 +80,8 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             ClearTileMesh(tempTiles);
             transform.localPosition = Vector3.zero;
             transform.parent.gameObject.SetActive(false);
-            //player.ReturnPool.Invoke();
-            PlayerInvoke();
+            player.ReturnPool.Invoke();
+            //PlayerInvoke();
         });
 
         collectButton.onClick.AddListener(() =>
@@ -86,10 +96,26 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             transform.localPosition = Vector3.zero;
             transform.gameObject.SetActive(true);
             transform.parent.gameObject.SetActive(false);
-            //player.ReturnPool.Invoke();
-            PlayerInvoke();
+            player.ReturnPool.Invoke();
+            //PlayerInvoke();
             playerIcon.gameObject.SetActive(true);
         });
+
+        ArrangeDone.AddListener(() =>
+        {
+            Debug.Log("arrange done");
+            secondArranged = true;
+            player.SetState(CharacterStates.Idle);
+            ClearTileMesh(tempTiles);
+            playerIcon.gameObject.SetActive(false);
+            transform.localPosition = Vector3.zero;
+            transform.parent.gameObject.SetActive(false);
+        });
+    }
+
+    public void PlayerInvoke()
+    {
+        player.ReturnPool.Invoke();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -98,11 +124,6 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         {
             OnDrag(eventData);
         }
-    }
-
-    public void PlayerInvoke()
-    {
-        player.ReturnPool.Invoke();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -168,6 +189,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                 playerIcon.gameObject.SetActive(false);
                 transform.localPosition = Vector3.zero;
                 transform.parent.gameObject.SetActive(false);
+                //ArrangeDone.Invoke();
             }
         }
     }
@@ -324,7 +346,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         this.player = player.GetComponent<PlayerController>();
     }
 
-    public void SetFirstArranger(CharacterArrangement icon)
+    public void SetFirstArranger(CharacterIcon icon)
     {
         playerIcon = icon;
     }
