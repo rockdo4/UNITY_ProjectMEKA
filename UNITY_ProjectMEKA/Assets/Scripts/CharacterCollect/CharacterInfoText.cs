@@ -1,15 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
 
 public class CharacterInfoText : MonoBehaviour
 {
 	public TextMeshProUGUI textInfo;
+	public Button enhanceButton;
+	public EnhancePanel panel;
+	private Character character;
 
-	public void SetText (TestCharacterInfo info)
+	private void SetListener()
 	{
-		textInfo.SetText($"ID : {info.ID}\nName : {info.Name}\nRare : {info.Rare}" +
-			$"\nLevel : {info.Level}\nWeight : {info.Weight}\nCount : {info.count}");
+		var data = character;
+		
+		enhanceButton.onClick.RemoveAllListeners();
+		enhanceButton.onClick.AddListener(() =>
+		{
+			panel.gameObject.SetActive(true);
+			panel.SetCharacter(data);
+		});
+	}
+
+	public void SetText (Character data)
+	{
+		character = data;
+		SetListener();
+
+		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(data.CharacterID);
+
+		textInfo.SetText(
+			$"캐릭터 아이디 : {info.CharacterID}\n" +
+			$"캐릭터 이름 : {info.CharacterName}\n" +
+			$"캐릭터 속성 : {(Defines.Property)info.CharacterProperty}\n" +
+			$"캐릭터 직업 : {(Defines.Occupation)info.CharacterOccupation}\n" +
+			$"캐릭터 레벨 : {data.CharacterLevel}\n" +
+			$"캐릭터 등급 : {data.CharacterGrade}\n" +
+			$"캐릭터 해금 : {data.IsUnlock}");
 	}
 }

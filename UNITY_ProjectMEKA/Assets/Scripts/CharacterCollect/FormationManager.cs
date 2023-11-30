@@ -69,8 +69,8 @@ public class FormationManager : MonoBehaviour
 			formationList.Add(formation);
 		}
 
-		var testCharacterTable = DataTableMgr.GetTable<TestCharacterTable>();
-		var table = testCharacterTable.GetOriginalTable();
+		var characterTable = DataTableMgr.GetTable<CharacterTable>();
+		var table = characterTable.GetOriginalTable();
 
 		//캐릭터 리스트 카드 생성
 		foreach (var character in table)
@@ -105,7 +105,8 @@ public class FormationManager : MonoBehaviour
 			{
 				if (formationList[selectedFormationList][index] != 0)
 				{
-					var info = testCharacterTable.GetCharacterData(formationList[selectedFormationList][index]);
+					//var info = characterTable.GetCharacterData(formationList[selectedFormationList][index]);
+					var info = CharacterManager.Instance.m_CharacterStorage[formationList[selectedFormationList][index]];
 					OpenCharacterInfo(info);
                 }
             });
@@ -220,15 +221,15 @@ public class FormationManager : MonoBehaviour
 	//캐릭터 카드 갖고 있는지 확인
 	public void CheckCollectCharacter()
 	{
-		var table = DataTableMgr.GetTable<TestCharacterTable>();
+		var table = DataTableMgr.GetTable<CharacterTable>();
 
 		for (int i = 0; i < cardList.Length; i++)
 		{
 			var cardInfo = cardList[i].GetComponent<CardInfo>();
             var cardId = cardInfo.GetCardID();
             var cardData = table.GetCharacterData(cardId);
-
-			if(cardData.count <= 0)
+			
+			if(!CharacterManager.Instance.m_CharacterStorage[cardId].IsUnlock)
 			{
 				cardList[i].gameObject.SetActive(false);
             }
@@ -285,14 +286,14 @@ public class FormationManager : MonoBehaviour
 
 		selectedCharacterID = ID;
 
-		var info = DataTableMgr.GetTable<TestCharacterTable>().GetCharacterData(ID);
+		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(ID);
 
-		textUiArr[(int)UINumeric.Name].SetText("Name:"+info.Name);
-		textUiArr[(int)UINumeric.Company].SetText("Rare:"+info.Rare.ToString());
-		textUiArr[(int)UINumeric.Level].SetText("Lv:"+info.Level.ToString());
+		textUiArr[(int)UINumeric.Name].SetText(info.CharacterName);
+		textUiArr[(int)UINumeric.Company].SetText(((Defines.Property)info.CharacterProperty).ToString());
+		textUiArr[(int)UINumeric.Level].SetText(((Defines.Occupation)info.CharacterOccupation).ToString());
 
-		textUiArr[(int)UINumeric.HP].SetText("Wt:"+info.Weight.ToString());
-		textUiArr[(int)UINumeric.Damage].SetText("Dmg:"+info.Weight.ToString());
+		textUiArr[(int)UINumeric.HP].SetText("Wt:"+info.ArrangementCost);
+		textUiArr[(int)UINumeric.Damage].SetText("Dmg:"+info.ReArrangementCoolDown);
 	}
 
 	public void ResetSelectCharacterCard()
@@ -313,7 +314,7 @@ public class FormationManager : MonoBehaviour
 	}
 
 	//캐릭터 인포 열기
-	public void OpenCharacterInfo(TestCharacterInfo info)
+	public void OpenCharacterInfo(Character info)
 	{
 		characterInfoPanel.gameObject.SetActive(true);
 		characterInfoPanel.GetComponent<CharacterInfoText>().SetText(info);

@@ -17,17 +17,17 @@ public class GachaManager : MonoBehaviour
     public GameObject resultPanel;
     public Image imagePrefab;
 
-    public CharacterManager characterManager;
+    public CharacterPanelManager characterManager;
 
     [Header("testPicker")]
     private GachaSystem<int> testPicker;
 	[Header("characterTable")]
-	private TestCharacterTable characterTable;
+	private CharacterTable characterTable;
 
     private void Awake()
     {
         testPicker = new GachaSystem<int>();
-		characterTable = DataTableMgr.GetTable<TestCharacterTable>();
+		characterTable = DataTableMgr.GetTable<CharacterTable>();
 	}
 
     private void Start()
@@ -36,7 +36,7 @@ public class GachaManager : MonoBehaviour
         
         foreach(var item in items)
         {
-            testPicker.Add(item.Key, item.Value.Weight);
+            testPicker.Add(item.Key, item.Value.ArrangementCost);
         }
     }
 
@@ -45,13 +45,14 @@ public class GachaManager : MonoBehaviour
         ClearPanel();
 
 		var itemID = testPicker.GetItem();
+        CharacterManager.Instance.m_CharacterStorage[itemID].IsUnlock = true;
 
         var item = characterTable.GetCharacterData(itemID);
         characterManager.PickUpCharacter(itemID);
 
         var itemImage = ObjectPoolManager.instance.GetGo("GachaCard");
-		itemImage.transform.SetParent(resultPanel.transform);
-        itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.Name);
+		itemImage.transform.SetParent(resultPanel.transform, false);
+        itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.CharacterName);
     }
 
     public void Gacha10()
@@ -63,11 +64,13 @@ public class GachaManager : MonoBehaviour
         foreach (var itemID in itemIDs)
         {
 			var item = characterTable.GetCharacterData(itemID);
+			CharacterManager.Instance.m_CharacterStorage[itemID].IsUnlock = true;
+
 			characterManager.PickUpCharacter(itemID);
 
 			var itemImage = ObjectPoolManager.instance.GetGo("GachaCard");
-			itemImage.transform.SetParent(resultPanel.transform);
-            itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.Name);
+			itemImage.transform.SetParent(resultPanel.transform, false);
+            itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.CharacterName);
         }
     }
 

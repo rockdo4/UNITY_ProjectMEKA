@@ -77,7 +77,7 @@ public class ItemCardManager : MonoBehaviour
 
 		if(itemList == null)
 		{
-			itemList = ItemInventory.Instance.m_ItemStorage;
+			itemList = ItemInventoryManager.Instance.m_ItemStorage;
 		}
 
 		foreach (var item in items)
@@ -96,7 +96,7 @@ public class ItemCardManager : MonoBehaviour
 			text.SetText(item.Name);
 			itemCard.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(str); });
 			itemCard.name = item.ToString();
-			itemCard.transform.SetParent(itemCardScrollView);
+			itemCard.transform.SetParent(itemCardScrollView, false);
 			itemCard.gameObject.name = count++.ToString();
 			itemCard.transform.SetAsLastSibling();
 		}
@@ -109,7 +109,7 @@ public class ItemCardManager : MonoBehaviour
 			sortValue = dropdown.value;
 
 		if(itemList == null)
-            itemList = ItemInventory.Instance.m_ItemStorage;
+            itemList = ItemInventoryManager.Instance.m_ItemStorage;
 
 		switch (sortValue)
 		{
@@ -135,7 +135,7 @@ public class ItemCardManager : MonoBehaviour
 	{
 		if(itemList == null)
 		{
-            itemList = ItemInventory.Instance.m_ItemStorage;
+            itemList = ItemInventoryManager.Instance.m_ItemStorage;
         }
 		itemList = itemList.Where(x => x.Name.Contains(str)).ToList();
 		return itemList;

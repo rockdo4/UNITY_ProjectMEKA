@@ -11,12 +11,23 @@ public static class DataTableMgr
     {
         tables.Clear();
 
-        var testCharTable = new TestCharacterTable();
-        tables.Add(typeof(TestCharacterTable), testCharTable);
+        //var testCharTable = new TestCharacterTable();
+        //tables.Add(typeof(TestCharacterTable), testCharTable);
+
+        var charTable = new CharacterTable();
+        tables.Add(typeof(CharacterTable), charTable);
+
+        var expTable = new ExpTable();
+        tables.Add(typeof(ExpTable), expTable);
+
+        var levelTable = new LevelTable();
+        tables.Add(typeof(LevelTable), levelTable);
 
         var itemTable = new ItemInfoTable();
         tables.Add(typeof(ItemInfoTable), itemTable);
-    }
+
+		CharacterManager.Instance.InitCharacterStorage(charTable, levelTable);
+	}
 
     public static T GetTable<T>() where T : DataTable
     {

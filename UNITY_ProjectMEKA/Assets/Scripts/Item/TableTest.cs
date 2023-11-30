@@ -22,7 +22,7 @@ public class TableTest : MonoBehaviour
 		//인벤토리에 템 넣음
 		for (int i = 0; i < 10; i++)
 		{
-			ItemInventory.Instance.AddItemByInstance(items[i]);
+			ItemInventoryManager.Instance.AddItemByInstance(items[i]);
 		}
 	}
 	public void OnClickAddItem()
@@ -32,9 +32,9 @@ public class TableTest : MonoBehaviour
 		var item = new Item();
 
 		item.ID = Random.Range(1, range);
-		item.InstanceID = ItemInventory.Instance.Count;
+		item.InstanceID = ItemInventoryManager.Instance.Count;
 
-		ItemInventory.Instance.AddItemByInstance(item);
+		ItemInventoryManager.Instance.AddItemByInstance(item);
 		itemCardManager.UpdateItemCard();
 	}
 }

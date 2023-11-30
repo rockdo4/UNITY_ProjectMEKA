@@ -19,12 +19,12 @@ public class CardInfo : MonoBehaviour
 	public void ChangeCardId(int id)
 	{
 		cardID = id;
-		var info = DataTableMgr.GetTable<TestCharacterTable>().GetCharacterData(id);
+		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(id);
 
 		if(info != null)
 		{
 			//cardImage.sprite = default;
-			cardText.SetText($"{info.Name}");
+			cardText.SetText($"{info.CharacterName}");
 		}
 		else
 		{

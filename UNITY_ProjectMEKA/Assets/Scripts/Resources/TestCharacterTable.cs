@@ -21,7 +21,7 @@ public class TestCharacterTable : DataTable
 
 	public TestCharacterTable()
 	{
-		path = "Table/CharacterTable";
+		path = "Table/TestCharacterTable";
 		Load();
 	}
 
@@ -37,7 +37,7 @@ public class TestCharacterTable : DataTable
 		var csv = new CsvReader(reader, csvConfiguration);
 
 		try
-		{
+		{	
 			var records = csv.GetRecords<TestCharacter>();
 
 			foreach (var record in records)
