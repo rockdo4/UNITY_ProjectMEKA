@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using static PlayerController;
 
@@ -326,5 +327,12 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public void SetFirstArranger(CharacterArrangement icon)
     {
         playerIcon = icon;
+    }
+
+    public void SetPositionToCurrentPlayer(Transform playerTr)
+    {
+        var tempPos = playerTr.position;
+        tempPos.y += yOffset;
+        transform.parent.position = tempPos;
     }
 }

@@ -44,9 +44,7 @@ public class CharacterArrangement : MonoBehaviour, IPointerDownHandler
             arrangeJoystick.transform.parent.gameObject.SetActive(true);
             arrangeJoystick.SetPlayer(characterGo.transform);
             arrangeJoystick.SetFirstArranger(this);
-            var joystickPos = characterGo.transform.position;
-            joystickPos.y += arrangeJoystick.yOffset;
-            arrangeJoystick.transform.parent.position = joystickPos;
+            arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
             once = true;
         });
     }

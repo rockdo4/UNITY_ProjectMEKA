@@ -33,9 +33,7 @@ public class PlayableArrangeState : PlayableBaseState
             var joystickController = playerCtrl.joystick.GetComponentInChildren<ArrangeJoystick>();
             joystickController.SetPlayer(playerCtrl.transform);
             joystickController.SetFirstArranger(playerCtrl.icon);
-            var joystickPos = playerCtrl.transform.position;
-            joystickPos.y += joystickController.yOffset;
-            joystickController.transform.parent.position = joystickPos;
+            joystickController.SetPositionToCurrentPlayer(playerCtrl.transform);
 
             for (int i = 0; i < playerCtrl.joystick.transform.childCount; ++i)
             {
