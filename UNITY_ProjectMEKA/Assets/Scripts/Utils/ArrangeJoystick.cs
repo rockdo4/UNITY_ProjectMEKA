@@ -46,6 +46,17 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     private void OnEnable()
     {
         ArrangeDone = new UnityEvent();
+        ArrangeDone.AddListener(() =>
+        {
+            Debug.Log("arrange done");
+            secondArranged = true;
+            player.SetState(CharacterStates.Idle);
+            ClearTileMesh(tempTiles);
+            playerIcon.gameObject.SetActive(false);
+            transform.localPosition = Vector3.zero;
+            transform.parent.gameObject.SetActive(false);
+        });
+
 
         secondArranged = false;
         boxCollider = GetComponent<BoxCollider>();
@@ -99,17 +110,6 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             player.ReturnPool.Invoke();
             //PlayerInvoke();
             playerIcon.gameObject.SetActive(true);
-        });
-
-        ArrangeDone.AddListener(() =>
-        {
-            Debug.Log("arrange done");
-            secondArranged = true;
-            player.SetState(CharacterStates.Idle);
-            ClearTileMesh(tempTiles);
-            playerIcon.gameObject.SetActive(false);
-            transform.localPosition = Vector3.zero;
-            transform.parent.gameObject.SetActive(false);
         });
     }
 
@@ -184,12 +184,12 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             {
                 RotatePlayer(currentTile.transform, true);
                 secondArranged = true;
-                player.SetState(CharacterStates.Idle);
-                ClearTileMesh(tempTiles);
-                playerIcon.gameObject.SetActive(false);
-                transform.localPosition = Vector3.zero;
-                transform.parent.gameObject.SetActive(false);
-                //ArrangeDone.Invoke();
+                ArrangeDone.Invoke();
+                //player.SetState(CharacterStates.Idle);
+                //ClearTileMesh(tempTiles);
+                //playerIcon.gameObject.SetActive(false);
+                //transform.localPosition = Vector3.zero;
+                //transform.parent.gameObject.SetActive(false);
             }
         }
     }
