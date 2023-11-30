@@ -19,9 +19,10 @@ public class CanDie : MonoBehaviour
     {
         if(state.Hp <= 0f)
         {
-            Debug.Log(gameObject.name);
+            //Debug.Log(gameObject.name);
             action.Invoke();
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            GetComponent<PoolAble>().ReleaseObject();
         }
     }
 }
