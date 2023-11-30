@@ -41,6 +41,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     private void OnEnable()
     {
+        currentTile = null;
         ArrangeDone = new UnityEvent();
         ArrangeDone.AddListener(() =>
         {
@@ -245,6 +246,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void ChangeTileMesh()
     {
+        Debug.Log("ChangeTileMesh");
         ClearTileMesh(tempTiles);
         var state = player.stateManager.currentBase as PlayableArrangeState;
         state.UpdateAttackPositions();
@@ -279,11 +281,6 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                 var tileContoller = hit.transform.GetComponent<Tile>();
                 tileContoller.SetTileMaterial(Tile.TileMaterial.Attack);
                 tempTiles.AddLast(tileContoller);
-            }
-            else
-            {
-                // 레이가 아무것도 부딪히지 않았을 때의 처리
-                //Debug.Log("No hit");
             }
         }
     }

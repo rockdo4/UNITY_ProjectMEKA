@@ -22,6 +22,7 @@ public class PlayableArrangeState : PlayableBaseState
         // Set arrange tile mesh
         if (!playerCtrl.stateManager.firstArranged)
         {
+            playerCtrl.transform.forward = Vector3.forward;
             var occupation = playerCtrl.state.occupation;
             switch(occupation)
             {
@@ -44,7 +45,6 @@ public class PlayableArrangeState : PlayableBaseState
         }
         else
         {
-
             settingMode = true;
             Debug.Log(playerCtrl.joystick == null);
             playerCtrl.joystick.SetActive(true);
