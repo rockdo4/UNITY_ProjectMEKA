@@ -9,6 +9,7 @@ public class CharacterArrangement : MonoBehaviour, IPointerDownHandler
 {
     public GameObject characterPrefab;
     public ArrangeJoystick arrangeJoystick;
+
     private GameObject characterGo;
     private PlayerController playerController;
     private UnityEvent SetJoystick;
@@ -18,7 +19,10 @@ public class CharacterArrangement : MonoBehaviour, IPointerDownHandler
 
     private void Awake()
     {
-        var occupation = characterPrefab.GetComponent<CharacterState>().occupation;
+        var characterStat = characterPrefab.GetComponent<CharacterState>();
+        var occupation = characterStat.occupation;
+        var cost = characterStat.arrangeCost;
+
         SetJoystick = new UnityEvent();
 
         switch (occupation)
@@ -67,12 +71,11 @@ public class CharacterArrangement : MonoBehaviour, IPointerDownHandler
             {
                 created = false;
             }
-            Debug.Log($"created: {created} / once: {once} / firstArranged: {playerController.stateManager.firstArranged}");
+            //Debug.Log($"created: {created} / once: {once} / firstArranged: {playerController.stateManager.firstArranged}");
         }
 
         if (created && !once && playerController.stateManager.firstArranged)
         {
-            Debug.Log("왜 되는건데");
             SetJoystick.Invoke();
         }
     }
@@ -96,6 +99,8 @@ public class CharacterArrangement : MonoBehaviour, IPointerDownHandler
         }
         created = true;
         playerController.stateManager.created = true;
+        playerController.joystick = arrangeJoystick.transform.parent.gameObject;
+        playerController.icon = this;
     }
 
     public void OnPointerDown(PointerEventData eventData)

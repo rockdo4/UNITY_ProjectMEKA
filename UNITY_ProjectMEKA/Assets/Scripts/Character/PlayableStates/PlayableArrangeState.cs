@@ -1,10 +1,12 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using static PlayerController;
+using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
+
 
 public class PlayableArrangeState : PlayableBaseState
 {
     private RaycastHit hit;
+    public Button collecteButton;
 
     public PlayableArrangeState(PlayerController player) : base(player)
     {
@@ -15,11 +17,36 @@ public class PlayableArrangeState : PlayableBaseState
         Time.timeScale = 0.2f;
 
         // Set arrange tile mesh
-        if(playerCtrl.stateManager.tiles != null)
+        if (!playerCtrl.stateManager.firstArranged)
         {
-            foreach (var tile in playerCtrl.stateManager.tiles)
+            if(playerCtrl.stateManager.tiles != null)
             {
-                tile.GetComponentInChildren<Tile>().SetTileMaterial(true, Tile.TileMaterial.Arrange);
+                foreach (var tile in playerCtrl.stateManager.tiles)
+                {
+                    tile.GetComponentInChildren<Tile>().SetTileMaterial(true, Tile.TileMaterial.Arrange);
+                }
+            }
+        }
+        else
+        {
+            playerCtrl.joystick.SetActive(true);
+            var joystickController = playerCtrl.joystick.GetComponentInChildren<ArrangeJoystick>();
+            joystickController.SetPlayer(playerCtrl.transform);
+            joystickController.SetFirstArranger(playerCtrl.icon);
+            var joystickPos = playerCtrl.transform.position;
+            joystickPos.y += joystickController.yOffset;
+            joystickController.transform.parent.position = joystickPos;
+
+            for (int i = 0; i < playerCtrl.joystick.transform.childCount; ++i)
+            {
+                if (string.Equals(playerCtrl.joystick.transform.GetChild(i).gameObject.tag,"Handler"))
+                {
+                    playerCtrl.joystick.transform.GetChild(i).gameObject.SetActive(false);
+                }
+                else if(i == playerCtrl.joystick.transform.childCount - 1)
+                {
+                    playerCtrl.joystick.transform.GetChild(i).gameObject.SetActive(true);
+                }
             }
         }
 

@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class PlayerController : PoolAble
+public class PlayerController : PoolAble, IPointerDownHandler
 {
     [HideInInspector]
     public PlayableStateManager stateManager = new PlayableStateManager();
@@ -43,6 +43,9 @@ public class PlayerController : PoolAble
     public List<Vector3> attakableTilePositions = new List<Vector3>();
     [HideInInspector]
     public UnityEvent ReturnPool;
+    public GameObject joystick;
+    [HideInInspector]
+    public CharacterArrangement icon;
 
     public enum CharacterStates
     {
@@ -119,7 +122,6 @@ public class PlayerController : PoolAble
         if(state.cost >= state.maxCost)
         {
             state.cost = state.maxCost;
-
         }
     }
 
@@ -366,6 +368,14 @@ public class PlayerController : PoolAble
                     collider.isTrigger = true;
                 }
             }
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if(!(stateManager.currentBase is PlayableArrangeState))
+        {
+            SetState(CharacterStates.Arrange);
         }
     }
 }

@@ -32,6 +32,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public float radius;
 
     public Button cancelButton;
+    public Button collectButton;
 
     private void OnEnable()
     {
@@ -64,11 +65,29 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             {
                 cancelButton.gameObject.SetActive(false);
             }
-            secondArranged = true;
+            secondArranged = false;
             ClearTileMesh(tempTiles);
             transform.localPosition = Vector3.zero;
             transform.parent.gameObject.SetActive(false);
-            player.ReturnPool.Invoke();
+            //player.ReturnPool.Invoke();
+            PlayerInvoke();
+        });
+
+        collectButton.onClick.AddListener(() =>
+        {
+            Debug.Log("collect init");
+            if (collectButton.gameObject.activeSelf)
+            {
+                collectButton.gameObject.SetActive(false);
+            }
+            secondArranged = false;
+            ClearTileMesh(tempTiles);
+            transform.localPosition = Vector3.zero;
+            transform.gameObject.SetActive(true);
+            transform.parent.gameObject.SetActive(false);
+            //player.ReturnPool.Invoke();
+            PlayerInvoke();
+            playerIcon.gameObject.SetActive(true);
         });
     }
 
@@ -78,6 +97,11 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         {
             OnDrag(eventData);
         }
+    }
+
+    public void PlayerInvoke()
+    {
+        player.ReturnPool.Invoke();
     }
 
     public void OnDrag(PointerEventData eventData)

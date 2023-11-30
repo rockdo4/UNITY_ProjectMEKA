@@ -40,6 +40,9 @@ public class CharacterState : MonoBehaviour
     [SerializeField, Header("캐릭터 이름 설정")]
     public string name;
 
+    [SerializeField, Header("캐릭터 배치 코스트")]
+    public int arrangeCost;
+
     [SerializeField, Header("적 패시브 설정")]
     public List<Passive> passive;
 
