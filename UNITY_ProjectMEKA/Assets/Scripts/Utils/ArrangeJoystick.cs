@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -45,6 +46,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         {
             Debug.Log("arrange done");
             secondArranged = true;
+            player.currentTile.arrangePossible = false;
             player.SetState(CharacterStates.Idle);
             ClearTileMesh(tempTiles);
             playerIcon.gameObject.SetActive(false);
@@ -86,6 +88,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             ClearTileMesh(tempTiles);
             transform.localPosition = Vector3.zero;
             transform.parent.gameObject.SetActive(false);
+            player.currentTile.arrangePossible = true;
             player.ReturnPool.Invoke();
         });
 
@@ -101,6 +104,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             transform.localPosition = Vector3.zero;
             transform.gameObject.SetActive(true);
             transform.parent.gameObject.SetActive(false);
+            player.currentTile.arrangePossible = true;
             player.ReturnPool.Invoke();
             playerIcon.gameObject.SetActive(true);
         });
@@ -273,7 +277,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                 // 레이가 오브젝트에 부딪혔을 때의 처리
                 //Debug.Log("Hit " + hit.collider.gameObject.name);
                 var tileContoller = hit.transform.GetComponent<Tile>();
-                tileContoller.SetTileMaterial(true, Tile.TileMaterial.Attack);
+                tileContoller.SetTileMaterial(Tile.TileMaterial.Attack);
                 tempTiles.AddLast(tileContoller);
             }
             else
@@ -288,7 +292,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     {
         foreach(var tile in tempTiles)
         {
-            tile.SetTileMaterial(false, Tile.TileMaterial.None);
+            tile.ClearTileMesh();
         }
         tempTiles.Clear();
     }

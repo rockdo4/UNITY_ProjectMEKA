@@ -56,7 +56,10 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         var tiles = new List<GameObject>();
         for (int i = 0; i < tileCount; ++i)
         {
-            tiles.Add(tileParent.transform.GetChild(i).gameObject);
+            if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
+            {
+                tiles.Add(tileParent.transform.GetChild(i).gameObject);
+            }
         }
         return tiles;
     }

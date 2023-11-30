@@ -46,6 +46,8 @@ public class PlayerController : PoolAble, IPointerDownHandler
     public GameObject joystick;
     [HideInInspector]
     public CharacterIcon icon;
+    [HideInInspector]
+    public Tile currentTile;
 
     public enum CharacterStates
     {
