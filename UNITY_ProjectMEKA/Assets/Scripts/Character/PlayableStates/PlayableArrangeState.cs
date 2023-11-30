@@ -68,9 +68,7 @@ public class PlayableArrangeState : PlayableBaseState
                 else
                 {
                     Debug.Log($"배치불가능: {hit}");
-                    Debug.Log(playerCtrl.stateManager.currentBase); playerCtrl.ReleaseObject();
-                    playerCtrl.stateManager.firstArranged = false;
-                    playerCtrl.stateManager.created = false;
+                    playerCtrl.ReturnPool.Invoke();
                 }
 
                 foreach (var tile in playerCtrl.stateManager.tiles)

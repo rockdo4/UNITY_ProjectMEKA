@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class PlayerController : PoolAble
@@ -40,6 +41,8 @@ public class PlayerController : PoolAble
     public int skillCost;
     [HideInInspector]
     public List<Vector3> attakableTilePositions = new List<Vector3>();
+    [HideInInspector]
+    public UnityEvent ReturnPool;
 
     public enum CharacterStates
     {
@@ -54,6 +57,7 @@ public class PlayerController : PoolAble
         state = GetComponent<CharacterState>();
         SetBlockCount();
         ani = GetComponent<Animator>();
+        ReturnPool = new UnityEvent();
     }
     private void OnEnable()
     {
@@ -69,6 +73,13 @@ public class PlayerController : PoolAble
     void Start()
     {
         Debug.Log("player Controller start");
+        ReturnPool.AddListener(() =>
+        {
+            stateManager.firstArranged = false;
+            stateManager.created = false;
+            ReleaseObject();
+        });
+
         state.ConvertTo2DArray();
         states.Add(new PlayableArrangeState(this));
         states.Add(new PlayableIdleState(this));
@@ -356,7 +367,5 @@ public class PlayerController : PoolAble
                 }
             }
         }
-
-
     }
 }

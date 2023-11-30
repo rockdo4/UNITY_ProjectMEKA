@@ -9,6 +9,7 @@ public class PoolAble : MonoBehaviour
 
     public void ReleaseObject()
     {
+        Debug.Log("release");
         Pool.Release(gameObject);
     }
 

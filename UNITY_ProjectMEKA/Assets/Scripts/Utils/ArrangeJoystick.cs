@@ -28,7 +28,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public bool secondArranged;
     private PlayerController player;
-    private CharacterArrangeTest playerIcon;
+    private CharacterArrangement playerIcon;
     public float radius;
 
     public Button cancelButton;
@@ -53,6 +53,23 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             new Bounds(new Vector3(-0.5f, -0.5f, 0f), new Vector3(1f, 1f, 0f)),
             new Bounds(new Vector3(-0.5f, 0.5f, 0f), new Vector3(1f, 1f, 0f))
         };
+    }
+
+    private void Start()
+    {
+        cancelButton.onClick.AddListener(() =>
+        {
+            Debug.Log("cancel init");
+            if (cancelButton.gameObject.activeSelf)
+            {
+                cancelButton.gameObject.SetActive(false);
+            }
+            secondArranged = true;
+            ClearTileMesh(tempTiles);
+            transform.localPosition = Vector3.zero;
+            transform.parent.gameObject.SetActive(false);
+            player.ReturnPool.Invoke();
+        });
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -90,6 +107,11 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                     }
                     break;
                 }
+            }
+
+            if (cancelButton.gameObject.activeSelf)
+            {
+                cancelButton.gameObject.SetActive(false);
             }
         }
     }
@@ -260,7 +282,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         this.player = player.GetComponent<PlayerController>();
     }
 
-    public void SetFirstArranger(CharacterArrangeTest icon)
+    public void SetFirstArranger(CharacterArrangement icon)
     {
         playerIcon = icon;
     }

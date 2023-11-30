@@ -5,7 +5,7 @@ using static PlayerController;
 using UnityEngine.UIElements;
 using UnityEngine.Events;
 
-public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
+public class CharacterArrangement : MonoBehaviour, IPointerDownHandler
 {
     public GameObject characterPrefab;
     public ArrangeJoystick arrangeJoystick;
@@ -67,10 +67,12 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
             {
                 created = false;
             }
+            Debug.Log($"created: {created} / once: {once} / firstArranged: {playerController.stateManager.firstArranged}");
         }
 
         if (created && !once && playerController.stateManager.firstArranged)
         {
+            Debug.Log("왜 되는건데");
             SetJoystick.Invoke();
         }
     }
@@ -102,6 +104,7 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
         {
             CreateCharacter();
             characterGo.transform.position = transform.position;
+            once = false;
         }
     }
 }
