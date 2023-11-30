@@ -217,7 +217,24 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         foreach (var tilePos in player.attakableTilePositions)
         {
             RaycastHit hit;
-            int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(player.stateManager.tiles[0].layer));
+
+            //공중형이면 레이어 마스크 : 공중 + 지상
+            //지상형이면 레이어 마스크 : 지상
+            int layerMask = 0;
+            int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
+            int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
+
+            switch((int)player.transform.GetComponent<CharacterState>().occupation)
+            {
+                case (int)Defines.Occupation.Hunter:
+                case (int)Defines.Occupation.Castor:
+                    layerMask = lowTileMask | highTileMask;
+                    break;
+                default:
+                    layerMask = lowTileMask;
+                    break;
+            }
+            
             // 레이캐스트 실행
             var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
 
