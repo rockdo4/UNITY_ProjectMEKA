@@ -61,16 +61,14 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
 
     private void Update()
     {
-        //        if(created && !once && playerController.stateManager.firstArranged)
-        //        {
-        //arrangeJoystick.transform.parent.gameObject.SetActive(true);
-        //            arrangeJoystick.SetPlayer(characterGo.transform);
-        //            arrangeJoystick.SetFirstArranger(this);
-        //            var joystickPos = characterGo.transform.position;
-        //            joystickPos.y += arrangeJoystick.yOffset;
-        //            arrangeJoystick.transform.parent.position = joystickPos;
-        //            once = true;
-        //        }
+        if(playerController != null)
+        {
+            if(!playerController.stateManager.created)
+            {
+                created = false;
+            }
+        }
+
         if (created && !once && playerController.stateManager.firstArranged)
         {
             SetJoystick.Invoke();
@@ -95,12 +93,12 @@ public class CharacterArrangeTest : MonoBehaviour, IPointerDownHandler
                 break;
         }
         created = true;
-        Debug.Log($"created : {created}");
+        playerController.stateManager.created = true;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!created && !arrangeJoystick.gameObject.active)
+        if(!created && !arrangeJoystick.transform.gameObject.active)
         {
             CreateCharacter();
             characterGo.transform.position = transform.position;

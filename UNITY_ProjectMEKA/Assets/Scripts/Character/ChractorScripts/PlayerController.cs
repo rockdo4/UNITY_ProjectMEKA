@@ -60,6 +60,11 @@ public class PlayerController : PoolAble
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
         CreateColliders();
+
+        if (states.Count != 0)
+        {
+            SetState(CharacterStates.Arrange);
+        }
     }
     void Start()
     {
@@ -93,9 +98,11 @@ public class PlayerController : PoolAble
     }
     private void Update()
     {
+        //Debug.Log(stateManager.currentBase is PlayableArrangeState);
+
         stateManager.Update();
         blockCount = enemyBlockCount.Count;
-        Debug.Log(blockCount);
+        //Debug.Log(blockCount);
         state.cost += Time.deltaTime;
         //Debug.Log(state.cost);
         if(state.cost >= state.maxCost)

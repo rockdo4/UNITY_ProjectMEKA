@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static PlayerController;
 
 public class PlayableArrangeState : PlayableBaseState
 {
@@ -67,8 +68,9 @@ public class PlayableArrangeState : PlayableBaseState
                 else
                 {
                     Debug.Log($"배치불가능: {hit}");
-                    playerCtrl.ReleaseObject();
+                    Debug.Log(playerCtrl.stateManager.currentBase); playerCtrl.ReleaseObject();
                     playerCtrl.stateManager.firstArranged = false;
+                    playerCtrl.stateManager.created = false;
                 }
 
                 foreach (var tile in playerCtrl.stateManager.tiles)

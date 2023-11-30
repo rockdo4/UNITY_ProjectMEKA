@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using static PlayerController;
 
 public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
@@ -28,6 +29,9 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public bool secondArranged;
     private PlayerController player;
     private CharacterArrangeTest playerIcon;
+    public float radius;
+
+    public Button cancelButton;
 
     private void OnEnable()
     {
@@ -88,22 +92,36 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                 }
             }
         }
-
-        // 드래그하고 있을 때, currentTile 방향으로 공격범위 보이게 세팅
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         if (!secondArranged)
         {
-            Debug.Log("핸들 업");
-            RotatePlayer(currentTile.transform, true);
-            secondArranged = true;
-            player.SetState(CharacterStates.Idle);
-            ClearTileMesh(tempTiles);
-            playerIcon.gameObject.SetActive(false);
-            transform.localPosition = Vector3.zero;
-            transform.parent.gameObject.SetActive(false);
+            // 핸들러가 플레이어 좌표 기준 일정 반경 내에 있을 때
+            // 배치 취소 버튼 활성화
+            var playerCenterPos = player.transform.position;
+            playerCenterPos.y = transform.position.y;
+
+            if(Vector3.Distance(transform.position, playerCenterPos) < radius)
+            {
+                Debug.Log("플레이어 반경 내");
+                // 배치 취소 버튼 활성화
+                cancelButton.gameObject.SetActive(true);
+
+                // 핸들러 로컬 포지션 0,0 고정
+                transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                RotatePlayer(currentTile.transform, true);
+                secondArranged = true;
+                player.SetState(CharacterStates.Idle);
+                ClearTileMesh(tempTiles);
+                playerIcon.gameObject.SetActive(false);
+                transform.localPosition = Vector3.zero;
+                transform.parent.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -231,6 +249,10 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             Gizmos.DrawLine(tilePos, tilePos + Vector3.down * 1000); // 10은 레이의 길이
         }
 
+        var playerCenterPos = player.transform.position;
+        playerCenterPos.y = transform.position.y;
+
+        //Gizmos.DrawSphere(playerCenterPos, radius);
     }
 
     public void SetPlayer(Transform player)
