@@ -90,8 +90,9 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             transform.localPosition = Vector3.zero;
             transform.parent.gameObject.SetActive(false);
             player.currentTile.arrangePossible = true;
+            player.SetState(CharacterStates.Idle);
             player.ReturnPool.Invoke();
-			Time.timeScale = 1f;
+			//Time.timeScale = 1f;
 		});
 
         collectButton.onClick.AddListener(() =>
@@ -107,9 +108,10 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             transform.gameObject.SetActive(true);
             transform.parent.gameObject.SetActive(false);
             player.currentTile.arrangePossible = true;
+            player.SetState(CharacterStates.Idle);
             player.ReturnPool.Invoke();
             playerIcon.gameObject.SetActive(true);
-            Time.timeScale = 1f;
+            //Time.timeScale = 1f;
         });
     }
 
