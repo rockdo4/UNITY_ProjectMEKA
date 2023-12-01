@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -85,7 +80,10 @@ public class PlayerController : PoolAble, IPointerDownHandler
         {
             SetState(CharacterStates.Arrange);
         }
-    }
+
+        rangeInEnemys.Clear();
+        rangeInPlayers.Clear();
+	}
     private void OnDisable()
     {
         var delete = GetComponents<BoxCollider>();
@@ -268,6 +266,11 @@ public class PlayerController : PoolAble, IPointerDownHandler
             return;
         }
         IAttackable take = target.GetComponentInParent<IAttackable>();
+        
+        if(take == null)
+        {
+            return;
+        }
 
         take.OnAttack(state.damage + Rockpaperscissors());
         
@@ -277,6 +280,10 @@ public class PlayerController : PoolAble, IPointerDownHandler
         float compatibility = state.damage * 0.1f;
 
         EnemyController enemy = target.GetComponentInParent<EnemyController>();
+        if(enemy == null)
+        {
+            return 0;
+        }
 
         if (state.property == enemy.state.property)
         {
@@ -325,6 +332,7 @@ public class PlayerController : PoolAble, IPointerDownHandler
         if(target == null) return;
         //var obj = ObjectPoolManager.instance.GetGo("bullet");
         var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
+        Debug.Log(state.BulletName);
         
         //obj.transform.LookAt(target.transform.position);
        

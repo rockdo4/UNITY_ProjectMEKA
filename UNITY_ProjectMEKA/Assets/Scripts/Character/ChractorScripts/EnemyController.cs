@@ -1,11 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public enum NPCStates
 {
@@ -61,16 +55,31 @@ public class EnemyController : PoolAble
         }
         isArrival = false;
         CreateColliders();
-    }
-    private void Awake()
+
+        state.Hp = state.maxHp;
+        rangeInPlayers.Clear();
+
+	}
+
+    
+	private void OnDisable()
+	{
+		var delete = GetComponents<BoxCollider>();
+		foreach (var c in delete)
+		{
+			Destroy(c);
+		}
+	}
+
+	private void Awake()
     {
         state = GetComponent<CharacterState>();
         rb = GetComponent<Rigidbody>();
         ani = GetComponent<Animator>();
         state.isBlock = true;
     }
-    
-    void Start()
+
+	void Start()
     {
         state.ConvertTo2DArray();
         states.Add(new NPCIdleState(this));

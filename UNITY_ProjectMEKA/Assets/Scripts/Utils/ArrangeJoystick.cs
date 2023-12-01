@@ -108,6 +108,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             player.currentTile.arrangePossible = true;
             player.ReturnPool.Invoke();
             playerIcon.gameObject.SetActive(true);
+            Time.timeScale = 1f;
         });
     }
 
