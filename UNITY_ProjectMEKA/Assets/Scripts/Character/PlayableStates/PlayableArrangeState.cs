@@ -17,6 +17,7 @@ public class PlayableArrangeState : PlayableBaseState
 
     public override void Enter()
     {
+        
         Time.timeScale = 0.2f;
 
         // Set arrange tile mesh

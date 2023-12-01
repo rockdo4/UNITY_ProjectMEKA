@@ -31,17 +31,17 @@ public class NPCAttackState : NPCBaseState
         {
             timer = 0;
             enemyCtrl.ani.SetTrigger("Attack");
-            //enemyCtrl.Hit();//test
         }
         foreach(var a in enemyCtrl.rangeInPlayers)
         {
-            if(a == enemyCtrl.target)
+            
+            if(a.GetComponentInParent<PlayerController>() == null)
             {
-                return;
+                enemyCtrl.rangeInPlayers.Remove(a);
+                enemyCtrl.SetState(NPCStates.Move);
             }
 
         }
-        enemyCtrl.SetState(NPCStates.Move);
 
     }
 }

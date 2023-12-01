@@ -1,16 +1,21 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static PlayerController;
 
 public enum NPCStates
 {
     Idle,
     Move,
     Attack,
+    Die,
 }
 
 
 public class EnemyController : PoolAble
 {
+    [HideInInspector]
+    public NPCStates currentState;
     [HideInInspector]
     public StateManager stateManager = new StateManager();
     [HideInInspector]
@@ -54,7 +59,7 @@ public class EnemyController : PoolAble
             SetState(NPCStates.Move);
         }
         isArrival = false;
-        CreateColliders();
+        //CreateColliders();
 
         state.Hp = state.maxHp;
         rangeInPlayers.Clear();
@@ -62,14 +67,14 @@ public class EnemyController : PoolAble
 	}
 
     
-	private void OnDisable()
-	{
-		var delete = GetComponents<BoxCollider>();
-		foreach (var c in delete)
-		{
-			Destroy(c);
-		}
-	}
+	//private void OnDisable()
+	//{
+	//	var delete = GetComponents<BoxCollider>();
+	//	foreach (var c in delete)
+	//	{
+	//		Destroy(c);
+	//	}
+	//}
 
 	private void Awake()
     {
@@ -93,6 +98,7 @@ public class EnemyController : PoolAble
         {
             states.Add(new NPCAttackState(this));
         }
+        states.Add(new NPCDieState(this));
         SetState(NPCStates.Move);
         foreach(var P in state.passive)
         {
@@ -145,7 +151,11 @@ public class EnemyController : PoolAble
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
         //Debug.Log(state.damage);
-       
+        if (state.Hp <= 0)
+        {
+            SetState(NPCStates.Die);
+        }
+
     }
     private void OnTriggerStay(Collider other)
     {
@@ -154,13 +164,16 @@ public class EnemyController : PoolAble
             //Debug.Log(other, other);
             if (!rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
             {
-                
-                rangeInPlayers.Add(other.GetComponentInParent<Transform>().gameObject);
-                var obj = other.GetComponentInParent<CanDie>();
-                obj.action.AddListener(() =>
+                //other랑 enemy랑 같은칸에 있으면 리스트에 넣지않아야함
+                if (CurrentGridPos != other.GetComponentInParent<PlayerController>().CurrentGridPos)
                 {
-                    rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
-                });
+                    rangeInPlayers.Add(other.GetComponentInParent<Transform>().gameObject);
+                    var obj = other.GetComponentInParent<CanDie>();
+                    obj.action.AddListener(() =>
+                    {
+                        rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+                    });
+                }
             }
         }
     }
@@ -183,6 +196,7 @@ public class EnemyController : PoolAble
     public void SetState(NPCStates state)
     {
         stateManager.ChangeState(states[(int)state]);
+        currentState = state;
     }
     
     public void Hit()
@@ -268,6 +282,8 @@ public class EnemyController : PoolAble
         float compatibility = state.damage * 0.1f;
 
         PlayerController enemy = target.GetComponentInParent<PlayerController>();
+
+
 
         if (state.property == enemy.state.property)
         {

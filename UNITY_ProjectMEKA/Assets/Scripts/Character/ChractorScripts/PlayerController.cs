@@ -72,10 +72,6 @@ public class PlayerController : PoolAble, IPointerDownHandler
     }
     private void OnEnable()
     {
-        CurrentPos = transform.position;
-        CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
-        CreateColliders();
-
         if (states.Count != 0)
         {
             SetState(CharacterStates.Arrange);
@@ -83,15 +79,17 @@ public class PlayerController : PoolAble, IPointerDownHandler
 
         rangeInEnemys.Clear();
         rangeInPlayers.Clear();
-	}
-    private void OnDisable()
-    {
-        var delete = GetComponents<BoxCollider>();
-        foreach (var c in delete)
-        {
-            Destroy(c);
-        }
+        enemyBlockCount.Clear();
+        state.Hp = state.maxHp;
     }
+    //private void OnDisable()
+    //{
+    //    var delete = GetComponents<BoxCollider>();
+    //    foreach (var c in delete)
+    //    {
+    //        Destroy(c);
+    //    }
+    //}
     void Start()
     {
         Debug.Log("player Controller start");
@@ -141,13 +139,18 @@ public class PlayerController : PoolAble, IPointerDownHandler
 
         stateManager.Update();
         blockCount = enemyBlockCount.Count;
+        Debug.Log(blockCount);
         state.cost += Time.deltaTime;
         //Debug.Log(state.cost);
         if(state.cost >= state.maxCost)
         {
             state.cost = state.maxCost;
         }
-        
+        //Debug.Log(CurrentGridPos);
+        if(state.Hp <= 0)
+        {
+            SetState(CharacterStates.Die);
+        }
         
         
     }

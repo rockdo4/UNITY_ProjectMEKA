@@ -16,7 +16,7 @@ public class PlayableIdleState : PlayableBaseState
 
     public override void Enter()
     {
-        
+        playerCtrl.CurrentGridPos = new Vector3Int(Mathf.FloorToInt(playerCtrl.transform.position.x), Mathf.FloorToInt(playerCtrl.transform.position.y), Mathf.FloorToInt(playerCtrl.transform.position.z));
     }
 
     public override void Exit()
@@ -86,6 +86,10 @@ public class PlayableIdleState : PlayableBaseState
         foreach (var pl in playerCtrl.rangeInPlayers)
         {
             PlayerController player = pl.GetComponentInParent<PlayerController>();
+            if(player == null)
+            {
+                return;
+            }
             float currentHp = player.state.Hp / player.state.maxHp;
             if (character == null || (character.state.Hp / character.state.maxHp) > currentHp)
             {
