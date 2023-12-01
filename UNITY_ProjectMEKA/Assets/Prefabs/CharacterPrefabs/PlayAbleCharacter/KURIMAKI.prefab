@@ -6209,8 +6209,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: KURIMAKI
+  arrangeCost: 0
   passive: 
-  skill: 1
+  skill: 0
   enemyType: 0
   property: 2
   occupation: 3
@@ -6263,6 +6264,12 @@ MonoBehaviour:
   skillCost: 0
   skillCoolTime: 0
   attakableTilePositions: []
+  ReturnPool:
+    m_PersistentCalls:
+      m_Calls: []
+  joystick: {fileID: 0}
+  icon: {fileID: 0}
+  currentTile: {fileID: 0}
   currentState: 0
 --- !u!114 &5779597442223778163
 MonoBehaviour:

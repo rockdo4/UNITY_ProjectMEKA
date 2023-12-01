@@ -83,7 +83,7 @@ public class PanelManager : MonoBehaviour
 
 	public void LoadBattleScene()
 	{
-		UnityEngine.SceneManagement.SceneManager.LoadScene("CharacterTestEnemySecen");
+		UnityEngine.SceneManagement.SceneManager.LoadScene("Tilemap");
 	}
 
 	public void ExitGame() 

@@ -11,55 +11,55 @@ public class GateController : MonoBehaviour
     [System.Serializable]
     public class EnemySpawnInfo
     {
-        [SerializeField, Header("���� ������")]
+        [SerializeField, Header("몬스터 프리팹")]
         public GameObject prefab;
-        [SerializeField, Header("���� ��")]
+        [SerializeField, Header("몬스터 수")]
         public int count;
-        [SerializeField, Header("���� ����")]
+        [SerializeField, Header("몬스터 종류")]
         public Defines.Property attribute;
-        [SerializeField, Header("���� ����")]
+        [SerializeField, Header("몬스터 레벨")]
         public int level;
-        [SerializeField, Header("���� �ֱ�")]
+        [SerializeField, Header("스폰 주기")]
         public int interval;
     }
 
     [System.Serializable]
     public class WaveInfo
     {
-        [SerializeField, Header("���� ����")]
+        [SerializeField, Header("몬스터 세팅")]
         public List<EnemySpawnInfo> enemySpawnInfos;
 
         // 11.25 wave ������ �̵�
-        [SerializeField, Header("��������Ʈ")]
+        [SerializeField, Header("웨이포인트")]
         public GameObject waypointGo;
         [HideInInspector]
         public Transform[] waypoints;
-        [SerializeField, Header("�̵� Ÿ��")]
+        [SerializeField, Header("이동 타입")]
         public Defines.MoveType moveType;
-        [SerializeField, Header("�ݺ� �̵� Ƚ��")]
+        [SerializeField, Header("반복 이동 횟수")]
         public int moveRepeat;
-        [SerializeField, Header("���̺� �ֱ�")]
+        [SerializeField, Header("웨이브 주기")]
         public float waveInterval;
-        [SerializeField, Header("�̵����� ON/OFF")]
+        [SerializeField, Header("이동라인 ON/OFF")]
         public bool pathGuideOn;
-        [SerializeField, Header("�̵����� �ð�")]
+        [SerializeField, Header("이동라인 시간")]
         public float pathDuration;
     }
 
     // ���� �� ���ð�
-    [SerializeField, Header("ó�� ��� �ð�")]
+    [SerializeField, Header("처음 대기 시간")]
     public float startInterval;
 
     // �̵� ����
-    [SerializeField, Header("����Ʈ ����")]
+    [SerializeField, Header("게이트 종류")]
     public Defines.GateType gateType;
     protected Transform house;
 
-    [SerializeField, Header("�̵����� ���ǵ�")]
+    [SerializeField, Header("이동라인  스피드")]
     public float pathSpeed;
 
     // ���� ���� ����
-    [SerializeField, Header("���̺� ���� ����")]
+    [SerializeField, Header("웨이브 정보 세팅")]
     public List<WaveInfo> waveInfos;
 
     protected int currentWave = 0;
