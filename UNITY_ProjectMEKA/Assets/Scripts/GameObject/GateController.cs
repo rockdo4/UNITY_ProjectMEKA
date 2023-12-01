@@ -11,55 +11,55 @@ public class GateController : MonoBehaviour
     [System.Serializable]
     public class EnemySpawnInfo
     {
-        [SerializeField, Header("¸ó½ºÅÍ ÇÁ¸®ÆÕ")]
+        [SerializeField, Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
         public GameObject prefab;
-        [SerializeField, Header("¸ó½ºÅÍ ¼ö")]
+        [SerializeField, Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½")]
         public int count;
-        [SerializeField, Header("¸ó½ºÅÍ Á¾·ù")]
+        [SerializeField, Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
         public Defines.Property attribute;
-        [SerializeField, Header("¸ó½ºÅÍ ·¹º§")]
+        [SerializeField, Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
         public int level;
-        [SerializeField, Header("½ºÆù ÁÖ±â")]
+        [SerializeField, Header("ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½")]
         public int interval;
     }
 
     [System.Serializable]
     public class WaveInfo
     {
-        [SerializeField, Header("¸ó½ºÅÍ ¼¼ÆÃ")]
+        [SerializeField, Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
         public List<EnemySpawnInfo> enemySpawnInfos;
 
-        // 11.25 wave ´ÜÀ¸·Î ÀÌµ¿
-        [SerializeField, Header("¿þÀÌÆ÷ÀÎÆ®")]
+        // 11.25 wave ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
+        [SerializeField, Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®")]
         public GameObject waypointGo;
         [HideInInspector]
         public Transform[] waypoints;
-        [SerializeField, Header("ÀÌµ¿ Å¸ÀÔ")]
+        [SerializeField, Header("ï¿½Ìµï¿½ Å¸ï¿½ï¿½")]
         public Defines.MoveType moveType;
-        [SerializeField, Header("¹Ýº¹ ÀÌµ¿ È½¼ö")]
+        [SerializeField, Header("ï¿½Ýºï¿½ ï¿½Ìµï¿½ È½ï¿½ï¿½")]
         public int moveRepeat;
-        [SerializeField, Header("¿þÀÌºê ÁÖ±â")]
+        [SerializeField, Header("ï¿½ï¿½ï¿½Ìºï¿½ ï¿½Ö±ï¿½")]
         public float waveInterval;
-        [SerializeField, Header("ÀÌµ¿¶óÀÎ ON/OFF")]
+        [SerializeField, Header("ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ON/OFF")]
         public bool pathGuideOn;
-        [SerializeField, Header("ÀÌµ¿¶óÀÎ ½Ã°£")]
+        [SerializeField, Header("ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½")]
         public float pathDuration;
     }
 
-    // ½ÃÀÛ Àü ´ë±â½Ã°£
-    [SerializeField, Header("Ã³À½ ´ë±â ½Ã°£")]
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½
+    [SerializeField, Header("Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½")]
     public float startInterval;
 
-    // ÀÌµ¿ °ü·Ã
-    [SerializeField, Header("°ÔÀÌÆ® Á¾·ù")]
+    // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField, Header("ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½")]
     public Defines.GateType gateType;
     protected Transform house;
 
-    [SerializeField, Header("ÀÌµ¿¶óÀÎ ½ºÇÇµå")]
+    [SerializeField, Header("ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Çµï¿½")]
     public float pathSpeed;
 
-    // ¸ó½ºÅÍ ½ºÆù °ü·Ã
-    [SerializeField, Header("¿þÀÌºê Á¤º¸ ¼¼ÆÃ")]
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField, Header("ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public List<WaveInfo> waveInfos;
 
     protected int currentWave = 0;
@@ -69,7 +69,7 @@ public class GateController : MonoBehaviour
     protected float waveTimer = 0f;
     protected bool firstGetPool = false;
 
-    // ÀÌµ¿ °æ·Î
+    // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½
     protected Vector3 initPos;
     protected GameObject enemyPath;
     protected Rigidbody enemyPathRb;
@@ -83,7 +83,7 @@ public class GateController : MonoBehaviour
 
     virtual protected void Awake()
     {
-        // waypoints ÇÒ´ç
+        // waypoints ï¿½Ò´ï¿½
         foreach(var wave in  waveInfos)
         {
             var waypointCount = wave.waypointGo.transform.childCount;
@@ -94,7 +94,7 @@ public class GateController : MonoBehaviour
             }
         }
 
-        // enemyPath ¿¬°á
+        // enemyPath ï¿½ï¿½ï¿½ï¿½
         enemyPath = transform.GetChild(1).gameObject;
         enemyPathRb = enemyPath.GetComponent<Rigidbody>();
         initPos = enemyPath.transform.localPosition;
@@ -110,7 +110,7 @@ public class GateController : MonoBehaviour
 
     virtual protected void FixedUpdate()
     {
-        // ÀÌµ¿°æ·Î °¡ÀÌµå Àü ´ë±â ½Ã°£
+        // ï¿½Ìµï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 		if (startInterval > 0f)
         {
             startInterval -= Time.deltaTime;
@@ -121,7 +121,7 @@ public class GateController : MonoBehaviour
             startInterval = 0f;
         }
 
-        // ¿þÀÌºê Å¸ÀÌ¸Ó
+        // ï¿½ï¿½ï¿½Ìºï¿½ Å¸ï¿½Ì¸ï¿½
         if (currentWave >= waveInfos.Count)
         {
             return;
@@ -139,7 +139,7 @@ public class GateController : MonoBehaviour
             return;
         }
 
-        // ÀÌµ¿°æ·Î °¡ÀÌµå
+        // ï¿½Ìµï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½
         pathDuration -= Time.deltaTime;
         if ((pathDuration <= 0f && !pathDone) || (!waveInfos[currentWave].pathGuideOn && !pathDone))
         {
@@ -169,14 +169,14 @@ public class GateController : MonoBehaviour
         }
     }
 
-    // ¸ó½ºÅÍ ½ºÆù ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     public void SpawnEnemies()
     {
         var waveInfo = waveInfos[currentWave];
         var enemyInfo = waveInfo.enemySpawnInfos[currentEnemyType];
         var enemyName = enemyInfo.prefab.GetComponent<CharacterState>().enemyType.ToString();
 
-        // ¿þÀÌºê¸¶´Ù Ã¹¹øÂ° ¸ó½ºÅÍ´Â ½Ã°£ ¾È ±â´Ù¸®°í ½ºÆù
+        // ï¿½ï¿½ï¿½Ìºê¸¶ï¿½ï¿½ Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½Í´ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (!firstGetPool)
         {
             var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
@@ -194,13 +194,13 @@ public class GateController : MonoBehaviour
 
         if (currentEnemyCount >= enemyInfo.count)
         {
-            Debug.Log("´ÙÀ½ Á¾·ù·Î!");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
             currentEnemyCount = 0;
             currentEnemyType++;
             if (currentEnemyType >= waveInfos[currentWave].enemySpawnInfos.Count)
             {
-                Debug.Log("´ÙÀ½ ¿þÀÌºê·Î!");
-                waveTimer = waveInfos[currentWave].waveInterval; // ³Ñ¾î°¡±â Àü ¿þÀÌºêÀÇ interval Àû¿ë
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½!");
+                waveTimer = waveInfos[currentWave].waveInterval; // ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ interval ï¿½ï¿½ï¿½ï¿½
 
                 currentWave++;
                 currentEnemyType = 0;
@@ -317,7 +317,7 @@ public class GateController : MonoBehaviour
         pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
         enemyPathRb.MovePosition(pos);
 
-        if (Vector3.Distance(pos, targetPos) < threshold) // ´ÙÀ½ ¿þÀÌÆ÷ÀÎÆ® µµÂøÇÏ¸é
+        if (Vector3.Distance(pos, targetPos) < threshold) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
         {
             enemyPath.GetComponent<ParticleSystem>().Clear();
             enemyPath.GetComponent<ParticleSystem>().Stop();
@@ -347,18 +347,18 @@ public class GateController : MonoBehaviour
         pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
         enemyPathRb.MovePosition(pos);
 
-        if (Vector3.Distance(pos, targetPos) < threshold) // ´ÙÀ½ ¿þÀÌÆ÷ÀÎÆ® µµÂøÇÏ¸é
+        if (Vector3.Distance(pos, targetPos) < threshold) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
         {
-            if (waypointIndex == waveInfo.waypoints.Length - 2) // ¸¶Áö¸·-1 ¿þÀÌÆ÷ÀÎÆ® µµÂøÇÏ¸é
+            if (waypointIndex == waveInfo.waypoints.Length - 2) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
             {
                 waypointIndex = -1;
             }
-            else if (waypointIndex == 0) // ÇÑ¹ÙÄû µ¹¸é
+            else if (waypointIndex == 0) // ï¿½Ñ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
                 repeatCount++;
                 if (repeatCount == waveInfo.moveRepeat)
                 {
-                    // ¸¶Áö¸· ¿þÀÌÆ÷ÀÎÆ® ÇÒ´ç
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ò´ï¿½
                     waypointIndex = waveInfo.waypoints.Length - 2;
                 }
             }
