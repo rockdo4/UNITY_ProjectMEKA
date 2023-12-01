@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PlayableArrangeState : PlayableBaseState
 {
     private RaycastHit hit;
-    public Button collecteButton;
+    public Button collecteButton; 
     public bool settingMode;
 
     public PlayableArrangeState(PlayerController player) : base(player)
