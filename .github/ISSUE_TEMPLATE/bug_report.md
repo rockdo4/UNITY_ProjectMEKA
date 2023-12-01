@@ -1,11 +1,4 @@
 ---
-name: 버그 리포트
-about: ''
-title: '발생한 이슈'
-labels: ''
-assignees: ''
-
----
 
 ## 제목
 
