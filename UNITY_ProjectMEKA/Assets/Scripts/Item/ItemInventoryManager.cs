@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemInventory
+public class ItemInventoryManager
 {
-	private static ItemInventory instance;
+	private static ItemInventoryManager instance;
 	public List<Item> m_ItemStorage;
-	private ItemInventory() 
+	private ItemInventoryManager() 
 	{
 		m_ItemStorage = new List<Item>();
 	}
-	public static ItemInventory Instance
+	public static ItemInventoryManager Instance
 	{
 		get
 		{
 			if (instance == null)
 			{
-				instance = new ItemInventory();
+				instance = new ItemInventoryManager();
 			}
 			return instance;
 		}

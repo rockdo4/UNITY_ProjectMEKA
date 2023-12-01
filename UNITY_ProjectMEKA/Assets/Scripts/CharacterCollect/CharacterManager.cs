@@ -1,75 +1,50 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEditor.Progress;
 
-/*
-	public
+//모든 캐릭터 관리하는 싱글턴 클래스
+//Singleton class that manages all characters
 
-
-*/
-
-public class CharacterManager : MonoBehaviour
+public class CharacterManager
 {
-    public TestCharacterTable dict;
-	public Dictionary<int, TestCharacterInfo> charDict;
-	public GameObject characterCardPrefab;
-
-	public RectTransform characterInfoPanel;
-	private Vector3 characterInfoPos;
-
-	private void Awake()
+	private static CharacterManager instance;
+	public Dictionary<int, Character> m_CharacterStorage;
+	private CharacterManager()
 	{
-		dict = DataTableMgr.GetTable<TestCharacterTable>();
-		charDict = dict.GetOriginalTable();
-		characterInfoPos = characterInfoPanel.position;
-
-		foreach (var item in charDict)
+		m_CharacterStorage = new Dictionary<int, Character>();
+	}
+	public static CharacterManager Instance
+	{
+		get
 		{
-			var card = Instantiate(characterCardPrefab);
-			card.transform.SetParent(transform);
-
-			card.name = item.Key.ToString();
-			card.GetComponentInChildren<TextMeshProUGUI>().SetText($"{item.Value.Name}\n{item.Value.count}");
-
-			var button = card.GetComponent<Button>();
-
-			if (button != null)
-				button.onClick.AddListener( () => 
-				{
-					OpenCharacterInfo(item.Value);
-				});
-			else
-				Debug.LogError("버튼 못불러옴");
+			if (instance == null)
+			{
+				instance = new CharacterManager();
+			}
+			return instance;
 		}
 	}
 
-	public void PickUpCharacter(int ID)
+	public void InitCharacterStorage(CharacterTable charTable, LevelTable levelTable)
 	{
-		var chara = dict.GetCharacterData(ID);
-		chara.count++;
-		Debug.Log("이름 :" + chara.Name + " 뽑은 횟수 : " + chara.count);
+		var table = charTable.GetOriginalTable();
 
-		var item = transform.Find($"{chara.ID}");
-		item.GetComponentInChildren<TextMeshProUGUI>().SetText($"{chara.Name}\n{chara.count}");
-	}
+		//세이브파일 있는지 확인
+		//Check if there is a save file
 
-	public void ExitCharacterInfo()
-	{
-		characterInfoPanel.gameObject.SetActive(false);
+		foreach(var character in table)
+		{
+			var chara = new Character();
+			chara.CharacterID = character.Value.CharacterID;
+			chara.CharacterLevel = 1;
+			chara.CurrentExp = 0;
+			chara.CharacterGrade = 3;
+			chara.IsUnlock = false;
 
-		characterInfoPanel.position = characterInfoPos;
-	}
+			//테이블
 
-	public void OpenCharacterInfo(TestCharacterInfo info)
-	{
-		characterInfoPanel.gameObject.SetActive(true);
-		characterInfoPanel.GetComponent<CharacterInfoText>().SetText(info);
-
-		var pos = GetComponentInParent<Canvas>().gameObject.transform.position;
-
-		characterInfoPanel.position = pos;
+			m_CharacterStorage.Add(chara.CharacterID, chara);
+		}
 	}
 }
