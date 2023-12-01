@@ -3401,6 +3401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: PALA
+  arrangeCost: 0
   passive: 
   skill: 0
   enemyType: 0
@@ -3410,7 +3411,7 @@ MonoBehaviour:
   amror: 0
   speed: 0
   cooldown: 0
-  damage: 25
+  damage: 50
   attackDelay: 0.5
   exp: 0
   BulletName: 
@@ -3455,6 +3456,12 @@ MonoBehaviour:
   skillCost: 0
   skillCoolTime: 0
   attakableTilePositions: []
+  ReturnPool:
+    m_PersistentCalls:
+      m_Calls: []
+  joystick: {fileID: 0}
+  icon: {fileID: 0}
+  currentTile: {fileID: 0}
   currentState: 0
 --- !u!114 &1397730595431032526
 MonoBehaviour:
