@@ -91,7 +91,8 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             transform.parent.gameObject.SetActive(false);
             player.currentTile.arrangePossible = true;
             player.ReturnPool.Invoke();
-        });
+			Time.timeScale = 1f;
+		});
 
         collectButton.onClick.AddListener(() =>
         {
