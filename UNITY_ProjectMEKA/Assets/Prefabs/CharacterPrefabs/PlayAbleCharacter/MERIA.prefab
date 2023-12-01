@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: MERIA
+  arrangeCost: 0
   passive: 
   skill: 0
   enemyType: 0
@@ -130,7 +131,7 @@ MonoBehaviour:
   amror: 0
   speed: 0
   cooldown: 0
-  damage: 50
+  damage: 25
   attackDelay: 1
   exp: 0
   BulletName: 
@@ -175,6 +176,12 @@ MonoBehaviour:
   skillCost: 0
   skillCoolTime: 0
   attakableTilePositions: []
+  ReturnPool:
+    m_PersistentCalls:
+      m_Calls: []
+  joystick: {fileID: 0}
+  icon: {fileID: 0}
+  currentTile: {fileID: 0}
   currentState: 0
 --- !u!114 &7955790683017641676
 MonoBehaviour:

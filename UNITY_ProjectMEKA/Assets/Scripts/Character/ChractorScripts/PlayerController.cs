@@ -86,6 +86,14 @@ public class PlayerController : PoolAble, IPointerDownHandler
             SetState(CharacterStates.Arrange);
         }
     }
+    private void OnDisable()
+    {
+        var delete = GetComponents<BoxCollider>();
+        foreach (var c in delete)
+        {
+            Destroy(c);
+        }
+    }
     void Start()
     {
         Debug.Log("player Controller start");
