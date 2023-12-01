@@ -1,6 +1,10 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
 using static PlayerController;
 
 public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
@@ -27,10 +31,31 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public bool secondArranged;
     private PlayerController player;
-    private CharacterArrangeTest playerIcon;
+    private CharacterIcon playerIcon;
+    public float radius;
+
+    public Button cancelButton;
+    public Button collectButton;
+
+    public UnityEvent ArrangeDone;
 
     private void OnEnable()
     {
+        currentTile = null;
+        ArrangeDone = new UnityEvent();
+        ArrangeDone.AddListener(() =>
+        {
+            Debug.Log("arrange done");
+            secondArranged = true;
+            player.currentTile.arrangePossible = false;
+            player.SetState(CharacterStates.Idle);
+            ClearTileMesh(tempTiles);
+            playerIcon.gameObject.SetActive(false);
+            transform.localPosition = Vector3.zero;
+            transform.parent.gameObject.SetActive(false);
+        });
+
+
         secondArranged = false;
         boxCollider = GetComponent<BoxCollider>();
         half = boxCollider.bounds.size.x / 2f;
@@ -49,6 +74,41 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             new Bounds(new Vector3(-0.5f, -0.5f, 0f), new Vector3(1f, 1f, 0f)),
             new Bounds(new Vector3(-0.5f, 0.5f, 0f), new Vector3(1f, 1f, 0f))
         };
+    }
+
+    private void Start()
+    {
+        cancelButton.onClick.AddListener(() =>
+        {
+            Debug.Log("cancel init");
+            if (cancelButton.gameObject.activeSelf)
+            {
+                cancelButton.gameObject.SetActive(false);
+            }
+            secondArranged = false;
+            ClearTileMesh(tempTiles);
+            transform.localPosition = Vector3.zero;
+            transform.parent.gameObject.SetActive(false);
+            player.currentTile.arrangePossible = true;
+            player.ReturnPool.Invoke();
+        });
+
+        collectButton.onClick.AddListener(() =>
+        {
+            Debug.Log("collect init");
+            if (collectButton.gameObject.activeSelf)
+            {
+                collectButton.gameObject.SetActive(false);
+            }
+            secondArranged = false;
+            ClearTileMesh(tempTiles);
+            transform.localPosition = Vector3.zero;
+            transform.gameObject.SetActive(true);
+            transform.parent.gameObject.SetActive(false);
+            player.currentTile.arrangePossible = true;
+            player.ReturnPool.Invoke();
+            playerIcon.gameObject.SetActive(true);
+        });
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -81,29 +141,44 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                     currentTile = directions[i];
                     if(prevTile != currentTile)
                     {
-                        Debug.Log($"{prevTile}에서 {currentTile}로 바뀜");
+                        //Debug.Log($"{prevTile}에서 {currentTile}로 바뀜");
                         RotatePlayer(currentTile.transform, false);
                     }
                     break;
                 }
             }
-        }
 
-        // 드래그하고 있을 때, currentTile 방향으로 공격범위 보이게 세팅
+            if (cancelButton.gameObject.activeSelf)
+            {
+                cancelButton.gameObject.SetActive(false);
+            }
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         if (!secondArranged)
         {
-            Debug.Log("핸들 업");
-            RotatePlayer(currentTile.transform, true);
-            secondArranged = true;
-            player.SetState(CharacterStates.Idle);
-            ClearTileMesh(tempTiles);
-            playerIcon.gameObject.SetActive(false);
-            transform.localPosition = Vector3.zero;
-            transform.parent.gameObject.SetActive(false);
+            // 핸들러가 플레이어 좌표 기준 일정 반경 내에 있을 때
+            // 배치 취소 버튼 활성화
+            var playerCenterPos = player.transform.position;
+            playerCenterPos.y = transform.position.y;
+
+            if(Vector3.Distance(transform.position, playerCenterPos) < radius)
+            {
+                Debug.Log("플레이어 반경 내");
+                // 배치 취소 버튼 활성화
+                cancelButton.gameObject.SetActive(true);
+
+                // 핸들러 로컬 포지션 0,0 고정
+                transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                RotatePlayer(currentTile.transform, true);
+                secondArranged = true;
+                ArrangeDone.Invoke();
+            }
         }
     }
 
@@ -171,13 +246,31 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void ChangeTileMesh()
     {
+        Debug.Log("ChangeTileMesh");
         ClearTileMesh(tempTiles);
         var state = player.stateManager.currentBase as PlayableArrangeState;
         state.UpdateAttackPositions();
         foreach (var tilePos in player.attakableTilePositions)
         {
             RaycastHit hit;
-            int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(player.stateManager.tiles[0].layer));
+
+            //공중형이면 레이어 마스크 : 공중 + 지상
+            //지상형이면 레이어 마스크 : 지상
+            int layerMask = 0;
+            int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
+            int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
+
+            switch((int)player.transform.GetComponent<CharacterState>().occupation)
+            {
+                case (int)Defines.Occupation.Hunter:
+                case (int)Defines.Occupation.Castor:
+                    layerMask = lowTileMask | highTileMask;
+                    break;
+                default:
+                    layerMask = lowTileMask;
+                    break;
+            }
+            
             // 레이캐스트 실행
             var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
 
@@ -186,13 +279,8 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
                 // 레이가 오브젝트에 부딪혔을 때의 처리
                 //Debug.Log("Hit " + hit.collider.gameObject.name);
                 var tileContoller = hit.transform.GetComponent<Tile>();
-                tileContoller.SetTileMaterial(true, Tile.TileMaterial.Attack);
+                tileContoller.SetTileMaterial(Tile.TileMaterial.Attack);
                 tempTiles.AddLast(tileContoller);
-            }
-            else
-            {
-                // 레이가 아무것도 부딪히지 않았을 때의 처리
-                //Debug.Log("No hit");
             }
         }
     }
@@ -201,7 +289,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     {
         foreach(var tile in tempTiles)
         {
-            tile.SetTileMaterial(false, Tile.TileMaterial.None);
+            tile.ClearTileMesh();
         }
         tempTiles.Clear();
     }
@@ -231,6 +319,10 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             Gizmos.DrawLine(tilePos, tilePos + Vector3.down * 1000); // 10은 레이의 길이
         }
 
+        var playerCenterPos = player.transform.position;
+        playerCenterPos.y = transform.position.y;
+
+        //Gizmos.DrawSphere(playerCenterPos, radius);
     }
 
     public void SetPlayer(Transform player)
@@ -238,8 +330,15 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         this.player = player.GetComponent<PlayerController>();
     }
 
-    public void SetFirstArranger(CharacterArrangeTest icon)
+    public void SetFirstArranger(CharacterIcon icon)
     {
         playerIcon = icon;
+    }
+
+    public void SetPositionToCurrentPlayer(Transform playerTr)
+    {
+        var tempPos = playerTr.position;
+        tempPos.y += yOffset;
+        transform.parent.position = tempPos;
     }
 }

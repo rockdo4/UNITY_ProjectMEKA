@@ -1,9 +1,15 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
+
 
 public class PlayableArrangeState : PlayableBaseState
 {
     private RaycastHit hit;
+    public Button collecteButton;
+    public bool settingMode;
 
     public PlayableArrangeState(PlayerController player) : base(player)
     {
@@ -14,11 +20,49 @@ public class PlayableArrangeState : PlayableBaseState
         Time.timeScale = 0.2f;
 
         // Set arrange tile mesh
-        if(playerCtrl.stateManager.tiles != null)
+        if (!playerCtrl.stateManager.firstArranged)
         {
-            foreach (var tile in playerCtrl.stateManager.tiles)
+            playerCtrl.transform.forward = Vector3.forward;
+            var occupation = playerCtrl.state.occupation;
+            switch(occupation)
             {
-                tile.GetComponentInChildren<Tile>().SetTileMaterial(true, Tile.TileMaterial.Arrange);
+                case Defines.Occupation.Guardian:
+                case Defines.Occupation.Striker:
+                    playerCtrl.stateManager.tiles = TileSet("LowTile");
+                    break;
+                default:
+                    playerCtrl.stateManager.tiles = TileSet("HighTile");
+                    break;
+            }
+            Debug.Log(playerCtrl.stateManager.tiles.Count);
+            if (playerCtrl.stateManager.tiles != null)
+            {
+                foreach (var tile in playerCtrl.stateManager.tiles)
+                {
+                    tile.GetComponentInChildren<Tile>().SetTileMaterial(Tile.TileMaterial.Arrange);
+                }
+            }
+        }
+        else
+        {
+            settingMode = true;
+            Debug.Log(playerCtrl.joystick == null);
+            playerCtrl.joystick.SetActive(true);
+            var joystickController = playerCtrl.joystick.GetComponentInChildren<ArrangeJoystick>();
+            joystickController.SetPlayer(playerCtrl.transform);
+            joystickController.SetFirstArranger(playerCtrl.icon);
+            joystickController.SetPositionToCurrentPlayer(playerCtrl.transform);
+
+            for (int i = 0; i < playerCtrl.joystick.transform.childCount; ++i)
+            {
+                if (string.Equals(playerCtrl.joystick.transform.GetChild(i).gameObject.tag,"Handler"))
+                {
+                    playerCtrl.joystick.transform.GetChild(i).gameObject.SetActive(false);
+                }
+                else if(i == playerCtrl.joystick.transform.childCount - 1)
+                {
+                    playerCtrl.joystick.transform.GetChild(i).gameObject.SetActive(true);
+                }
             }
         }
 
@@ -29,16 +73,16 @@ public class PlayableArrangeState : PlayableBaseState
     {
         Debug.Log("arrange exit");
         Time.timeScale = 1f;
+        settingMode = false;
     }
 
     public override void Update()
     {
-        if(!playerCtrl.stateManager.firstArranged)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(!settingMode && !playerCtrl.stateManager.firstArranged)
         {
             if(Input.GetMouseButton(0))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
                 int backgroundMask = 1 << LayerMask.NameToLayer("Background");
                 int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
                 int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
@@ -47,7 +91,7 @@ public class PlayableArrangeState : PlayableBaseState
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
                     var pos = hit.point;
-                    if (hit.transform.GetComponentInChildren<Tile>().arrangePossible)
+                    if (hit.transform.GetComponentInChildren<Tile>().arrangePossible && playerCtrl.stateManager.tiles.Contains(hit.transform.parent.gameObject))
                     {
                         pos = hit.transform.position;
                         pos.y = hit.transform.GetComponentInChildren<Tile>().height;
@@ -58,25 +102,41 @@ public class PlayableArrangeState : PlayableBaseState
 
             else if (Input.GetMouseButtonUp(0))
             {
-                if (hit.transform != null && hit.transform.GetComponent<Tile>().arrangePossible)
+                if (hit.transform != null && hit.transform.GetComponent<Tile>().arrangePossible && playerCtrl.stateManager.tiles.Contains(hit.transform.parent.gameObject))
                 {
                     Debug.Log("배치가능");
-                    hit.transform.GetComponentInChildren<Tile>().arrangePossible = false;
+                    //hit.transform.GetComponentInChildren<Tile>().arrangePossible = false;
+                    playerCtrl.currentTile = hit.transform.GetComponent<Tile>();
                     playerCtrl.stateManager.firstArranged = true;
                 }
                 else
                 {
                     Debug.Log($"배치불가능: {hit}");
-                    playerCtrl.ReleaseObject();
-                    playerCtrl.stateManager.firstArranged = false;
+                    playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+                    playerCtrl.ReturnPool.Invoke();
                 }
 
                 foreach (var tile in playerCtrl.stateManager.tiles)
                 {
-                    tile.GetComponentInChildren<Tile>().SetTileMaterial(false, Tile.TileMaterial.None);
+                    tile.GetComponentInChildren<Tile>().ClearTileMesh();
                 }
             }
         }
+    }
+
+    public List<GameObject> TileSet(string tag)
+    {
+        var tileParent = GameObject.FindGameObjectWithTag(tag);
+        var tileCount = tileParent.transform.childCount;
+        var tiles = new List<GameObject>();
+        for (int i = 0; i < tileCount; ++i)
+        {
+            if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
+            {
+                tiles.Add(tileParent.transform.GetChild(i).gameObject);
+            }
+        }
+        return tiles;
     }
 
     public void UpdateAttackPositions()

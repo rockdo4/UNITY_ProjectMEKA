@@ -5,9 +5,10 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class PlayerController : PoolAble
+public class PlayerController : PoolAble, IPointerDownHandler
 {
     [HideInInspector]
     public PlayableStateManager stateManager = new PlayableStateManager();
@@ -46,6 +47,13 @@ public class PlayerController : PoolAble
 
     [HideInInspector]
     public List<Vector3> attakableTilePositions = new List<Vector3>();
+    [HideInInspector]
+    public UnityEvent ReturnPool;
+    public GameObject joystick;
+    [HideInInspector]
+    public CharacterIcon icon;
+    [HideInInspector]
+    public Tile currentTile;
 
     public enum CharacterStates
     {
@@ -65,16 +73,29 @@ public class PlayerController : PoolAble
         state = GetComponent<CharacterState>();
         SetBlockCount();
         ani = GetComponent<Animator>();
+        ReturnPool = new UnityEvent();
     }
     private void OnEnable()
     {
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
         CreateColliders();
+
+        if (states.Count != 0)
+        {
+            SetState(CharacterStates.Arrange);
+        }
     }
     void Start()
     {
         Debug.Log("player Controller start");
+        ReturnPool.AddListener(() =>
+        {
+            stateManager.firstArranged = false;
+            stateManager.created = false;
+            ReleaseObject();
+        });
+
         state.ConvertTo2DArray();
         states.Add(new PlayableArrangeState(this));
         states.Add(new PlayableIdleState(this));
@@ -96,13 +117,13 @@ public class PlayerController : PoolAble
         {
             case CharacterState.Skills.Snapshot:
                 var s = gameObject.AddComponent<Snapshot>();
-                //½ºÅ³ ÄÚ½ºÆ®(¸¶³ª) or (½Ã±×¸¶)
+                //ï¿½ï¿½Å³ ï¿½Ú½ï¿½Æ®(ï¿½ï¿½ï¿½ï¿½) or (ï¿½Ã±×¸ï¿½)
                 skillCost = s.skillCost;
 
-                //ÄðÅ¸ÀÓ
+                //ï¿½ï¿½Å¸ï¿½ï¿½
                 skillCoolTime = s.coolTime;
 
-                //??? = Áö¼Ó½Ã°£
+                //??? = ï¿½ï¿½ï¿½Ó½Ã°ï¿½
                 break;
         }
         state.cost = state.maxCost;
@@ -110,6 +131,8 @@ public class PlayerController : PoolAble
     }
     private void Update()
     {
+        //Debug.Log(stateManager.currentBase is PlayableArrangeState);
+
         stateManager.Update();
         blockCount = enemyBlockCount.Count;
         state.cost += Time.deltaTime;
@@ -117,7 +140,6 @@ public class PlayerController : PoolAble
         if(state.cost >= state.maxCost)
         {
             state.cost = state.maxCost;
-
         }
         
         
@@ -400,7 +422,13 @@ public class PlayerController : PoolAble
                 }
             }
         }
+    }
 
-
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if(!(stateManager.currentBase is PlayableArrangeState))
+        {
+            SetState(CharacterStates.Arrange);
+        }
     }
 }

@@ -8,6 +8,7 @@ public class PlayableStateManager
 
     public List<GameObject> tiles;
     public bool firstArranged;
+    public bool created;
 
     public void ChangeState(PlayableBaseState newState)
     {
