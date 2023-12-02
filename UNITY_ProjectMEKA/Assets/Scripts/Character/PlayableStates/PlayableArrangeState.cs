@@ -46,10 +46,8 @@ public class PlayableArrangeState : PlayableBaseState
         else
         {
             settingMode = true;
-            Debug.Log(playerCtrl.joystick == null);
             playerCtrl.joystick.SetActive(true);
             var joystickController = playerCtrl.joystick.GetComponentInChildren<ArrangeJoystick>();
-            joystickController.SetPlayer(playerCtrl.transform);
             joystickController.SetFirstArranger(playerCtrl.icon);
             joystickController.SetPositionToCurrentPlayer(playerCtrl.transform);
 

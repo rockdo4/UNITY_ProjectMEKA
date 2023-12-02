@@ -32,7 +32,6 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         SetJoystick.AddListener(() => 
         {
             arrangeJoystick.transform.parent.gameObject.SetActive(true);
-            arrangeJoystick.SetPlayer(characterGo.transform);
             arrangeJoystick.SetFirstArranger(this);
             arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
             once = true;
@@ -64,6 +63,13 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         playerController.stateManager.created = true;
         playerController.joystick = arrangeJoystick.transform.parent.gameObject;
         playerController.icon = this;
+
+        var dieEvent = characterGo.GetComponent<CanDie>();
+        dieEvent.action.AddListener(() =>
+        {
+            playerController.currentTile.arrangePossible = true;
+        });
+
         stageManager.currentPlayer = playerController;
     }
 

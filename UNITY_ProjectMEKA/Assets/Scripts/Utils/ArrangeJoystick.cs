@@ -29,10 +29,10 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     [HideInInspector]
     public float yOffset = 1f;
 
-    public bool secondArranged;
-    private PlayerController player;
+    public PlayerController player;
     private CharacterIcon playerIcon;
     public float radius;
+    public StageManager stageManager;
 
     public Button cancelButton;
     public Button collectButton;
@@ -41,12 +41,18 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     private void OnEnable()
     {
+        if (stageManager != null)
+        {
+            Debug.Log($"커런트 플레이어 : {stageManager.currentPlayer}");
+            player = stageManager.currentPlayer;
+        }
         currentTile = null;
         ArrangeDone = new UnityEvent();
         ArrangeDone.AddListener(() =>
         {
+            player = stageManager.currentPlayer;
             Debug.Log("arrange done");
-            secondArranged = true;
+            player.stateManager.secondArranged = true;
             player.currentTile.arrangePossible = false;
             player.SetState(CharacterStates.Idle);
             ClearTileMesh(tempTiles);
@@ -56,7 +62,6 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         });
 
 
-        secondArranged = false;
         boxCollider = GetComponent<BoxCollider>();
         half = boxCollider.bounds.size.x / 2f;
         backgroundBounds = new Bounds(Vector3.zero, new Vector3(2f, 2f, 0f));
@@ -80,29 +85,28 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     {
         cancelButton.onClick.AddListener(() =>
         {
-            Debug.Log("cancel init");
+            player = stageManager.currentPlayer;
             if (cancelButton.gameObject.activeSelf)
             {
                 cancelButton.gameObject.SetActive(false);
             }
-            secondArranged = false;
+            player.stateManager.secondArranged = false;
             ClearTileMesh(tempTiles);
             transform.localPosition = Vector3.zero;
             transform.parent.gameObject.SetActive(false);
             player.currentTile.arrangePossible = true;
             player.SetState(CharacterStates.Idle);
             player.ReturnPool.Invoke();
-			//Time.timeScale = 1f;
 		});
 
         collectButton.onClick.AddListener(() =>
         {
-            Debug.Log("collect init");
+            player = stageManager.currentPlayer;
             if (collectButton.gameObject.activeSelf)
             {
                 collectButton.gameObject.SetActive(false);
             }
-            secondArranged = false;
+            player.stateManager.secondArranged = false;
             ClearTileMesh(tempTiles);
             transform.localPosition = Vector3.zero;
             transform.gameObject.SetActive(true);
@@ -111,13 +115,12 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             player.SetState(CharacterStates.Idle);
             player.ReturnPool.Invoke();
             playerIcon.gameObject.SetActive(true);
-            //Time.timeScale = 1f;
         });
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!secondArranged)
+        if(!player.stateManager.secondArranged)
         {
             OnDrag(eventData);
         }
@@ -125,7 +128,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(!secondArranged)
+        if(!player.stateManager.secondArranged)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane plane = new Plane(Vector3.up, transform.position);
@@ -161,7 +164,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!secondArranged)
+        if (!player.stateManager.secondArranged)
         {
             // 핸들러가 플레이어 좌표 기준 일정 반경 내에 있을 때
             // 배치 취소 버튼 활성화
@@ -180,9 +183,24 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             else
             {
                 RotatePlayer(currentTile.transform, true);
-                secondArranged = true;
+                player.stateManager.secondArranged = true;
                 ArrangeDone.Invoke();
             }
+        }
+
+        else if(collectButton.IsActive())
+        {
+            Debug.Log("collect button on");
+            // 바깥에 눌렀을 때 취소되도록
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Plane plane = new Plane(Vector3.up, transform.position);
+            float enter;
+            if (plane.Raycast(ray, out enter))
+            {
+                player.SetState(CharacterStates.Idle);
+                transform.parent.gameObject.SetActive(false);
+            }
+
         }
     }
 
@@ -298,50 +316,42 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         tempTiles.Clear();
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        foreach (var tilePos in player.attakableTilePositions)
-        {
-            RaycastHit hit;
-            int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(player.stateManager.tiles[0].layer));
-            //Debug.Log(LayerMask.LayerToName(firstArranger.tiles[0].layer));
-            // 레이캐스트 실행
-            var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    foreach (var tilePos in player.attakableTilePositions)
+    //    {
+    //        RaycastHit hit;
+    //        int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(player.stateManager.tiles[0].layer));
+    //        //Debug.Log(LayerMask.LayerToName(firstArranger.tiles[0].layer));
+    //        // 레이캐스트 실행
+    //        var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
 
-            if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
-            {
-                // 레이가 오브젝트에 부딪혔을 때의 처리
-                //Debug.Log("Hit " + hit.collider.gameObject.name);
-                //hit.transform.GetComponent<Tile>().SetTileMaterial(true, Tile.TileMaterial.Attack);
-            }
-            else
-            {
-                // 레이가 아무것도 부딪히지 않았을 때의 처리
-                //Debug.Log("No hit");
-            }
-            Gizmos.DrawLine(tilePos, tilePos + Vector3.down * 1000); // 10은 레이의 길이
-        }
+    //        if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
+    //        {
+    //            // 레이가 오브젝트에 부딪혔을 때의 처리
+    //            //Debug.Log("Hit " + hit.collider.gameObject.name);
+    //            //hit.transform.GetComponent<Tile>().SetTileMaterial(true, Tile.TileMaterial.Attack);
+    //        }
+    //        else
+    //        {
+    //            // 레이가 아무것도 부딪히지 않았을 때의 처리
+    //            //Debug.Log("No hit");
+    //        }
+    //        Gizmos.DrawLine(tilePos, tilePos + Vector3.down * 1000); // 10은 레이의 길이
+    //    }
 
-        var playerCenterPos = player.transform.position;
-        playerCenterPos.y = transform.position.y;
+    //    var playerCenterPos = player.transform.position;
+    //    playerCenterPos.y = transform.position.y;
 
-        //Gizmos.DrawSphere(playerCenterPos, radius);
-    }
-
-    public void SetPlayer(Transform player)
-    {
-        this.player = player.GetComponent<PlayerController>();
-        var dieEvent = player.GetComponent<CanDie>();
-        dieEvent.action.AddListener(() =>
-        {
-            this.player.currentTile.arrangePossible = true;
-        });
-    }
+    //    //Gizmos.DrawSphere(playerCenterPos, radius);
+    //}
 
     public void SetFirstArranger(CharacterIcon icon)
     {
         playerIcon = icon;
+        stageManager = playerIcon.stageManager;
+        player = stageManager.currentPlayer;
     }
 
     public void SetPositionToCurrentPlayer(Transform playerTr)

@@ -79,10 +79,8 @@ public class PlayerController : PoolAble, IPointerDownHandler
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
         CreateColliders();
 
-        Debug.Log("character on enable");
         if (states.Count != 0)
         {
-            Debug.Log("character set to arrange");
             SetState(CharacterStates.Arrange);
         }
 
