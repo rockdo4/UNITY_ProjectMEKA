@@ -332,6 +332,11 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public void SetPlayer(Transform player)
     {
         this.player = player.GetComponent<PlayerController>();
+        var dieEvent = player.GetComponent<CanDie>();
+        dieEvent.action.AddListener(() =>
+        {
+            this.player.currentTile.arrangePossible = true;
+        });
     }
 
     public void SetFirstArranger(CharacterIcon icon)
