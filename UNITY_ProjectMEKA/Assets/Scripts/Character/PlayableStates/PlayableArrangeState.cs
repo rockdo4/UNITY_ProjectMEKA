@@ -34,7 +34,7 @@ public class PlayableArrangeState : PlayableBaseState
                     playerCtrl.stateManager.tiles = TileSet("HighTile");
                     break;
             }
-            //Debug.Log(playerCtrl.stateManager.tiles.Count);
+
             if (playerCtrl.stateManager.tiles != null)
             {
                 foreach (var tile in playerCtrl.stateManager.tiles)
@@ -74,6 +74,7 @@ public class PlayableArrangeState : PlayableBaseState
         Debug.Log("arrange exit");
         Time.timeScale = 1f;
         settingMode = false;
+        playerCtrl.stageManager.currentPlayer = null;
     }
 
     public override void Update()

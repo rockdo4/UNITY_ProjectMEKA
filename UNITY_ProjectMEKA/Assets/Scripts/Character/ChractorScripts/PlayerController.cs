@@ -61,6 +61,8 @@ public class PlayerController : PoolAble, IPointerDownHandler
     [HideInInspector]
     public CharacterStates currentState;
 
+    // 12.02, 김민지, 스테이지매니저 추가
+    public StageManager stageManager;
 
 
     private void Awake()
@@ -69,6 +71,7 @@ public class PlayerController : PoolAble, IPointerDownHandler
         SetBlockCount();
         ani = GetComponent<Animator>();
         ReturnPool = new UnityEvent();
+        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
     }
     private void OnEnable()
     {
@@ -76,8 +79,10 @@ public class PlayerController : PoolAble, IPointerDownHandler
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
         CreateColliders();
 
+        Debug.Log("character on enable");
         if (states.Count != 0)
         {
+            Debug.Log("character set to arrange");
             SetState(CharacterStates.Arrange);
         }
 
@@ -442,9 +447,10 @@ public class PlayerController : PoolAble, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!(stateManager.currentBase is PlayableArrangeState))
+        if(!(stateManager.currentBase is PlayableArrangeState) && (stageManager.currentPlayer == this || stageManager.currentPlayer == null))
         {
             SetState(CharacterStates.Arrange);
+            stageManager.currentPlayer = this;
         }
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
+    public StageManager stageManager;
     public GameObject characterPrefab;
     public ArrangeJoystick arrangeJoystick;
 
@@ -19,6 +20,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
     private void Awake()
     {
+        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
         var characterStat = characterPrefab.GetComponent<CharacterState>();
         var cost = characterStat.arrangeCost;
 
@@ -37,21 +39,6 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         });
     }
 
-    //public List<GameObject> TileSet(string tag)
-    //{
-    //    var tileParent = GameObject.FindGameObjectWithTag(tag);
-    //    var tileCount = tileParent.transform.childCount;
-    //    var tiles = new List<GameObject>();
-    //    for (int i = 0; i < tileCount; ++i)
-    //    {
-    //        if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
-    //        {
-    //            tiles.Add(tileParent.transform.GetChild(i).gameObject);
-    //        }
-    //    }
-    //    return tiles;
-    //}
-
     private void Update()
     {
         if(playerController != null)
@@ -60,7 +47,6 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
             {
                 created = false;
             }
-            //Debug.Log($"created: {created} / once: {once} / firstArranged: {playerController.stateManager.firstArranged}");
         }
 
         if (created && !once && playerController.stateManager.firstArranged)
@@ -74,11 +60,11 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         var characterName = characterPrefab.GetComponent<CharacterState>().name;
         characterGo = ObjectPoolManager.instance.GetGo(characterName);
         playerController = characterGo.GetComponent<PlayerController>();
-
         created = true;
         playerController.stateManager.created = true;
         playerController.joystick = arrangeJoystick.transform.parent.gameObject;
         playerController.icon = this;
+        stageManager.currentPlayer = playerController;
     }
 
     public void OnPointerDown(PointerEventData eventData)
