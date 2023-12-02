@@ -29,6 +29,34 @@ public class Tile : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
         height = boxCollider.bounds.size.y;
         arrangePossible = true;
+
+        // 이때 레이 쏴서 위에 뭐 있으면 POSSIBLE FALSE
+        RaycastHit hit;
+        var tempPos = new Vector3(transform.parent.position.x, 100f, transform.parent.position.z);
+        if (Physics.Raycast(tempPos, Vector3.down, out hit))
+        {
+            //Debug.Log($"{hit.transform.gameObject.name}에 맞음");
+            if (hit.transform.gameObject.layer != gameObject.layer)
+            {
+                arrangePossible = false;
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        RaycastHit hit;
+        var tempPos = new Vector3(transform.parent.position.x, 100f, transform.parent.position.z);
+        if (Physics.Raycast(tempPos, Vector3.down, out hit))
+        {
+            //if (hit.transform.gameObject.layer != gameObject.layer)
+            //{
+            //    Debug.Log($"위에 {hit} 있음");
+            //    arrangePossible = false;
+            //}
+        }
+        Gizmos.DrawLine(tempPos, tempPos + Vector3.down);
     }
 
     public void SetTileMaterial(TileMaterial materialType)

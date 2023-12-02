@@ -34,7 +34,7 @@ public class PlayableArrangeState : PlayableBaseState
                     playerCtrl.stateManager.tiles = TileSet("HighTile");
                     break;
             }
-            Debug.Log(playerCtrl.stateManager.tiles.Count);
+            //Debug.Log(playerCtrl.stateManager.tiles.Count);
             if (playerCtrl.stateManager.tiles != null)
             {
                 foreach (var tile in playerCtrl.stateManager.tiles)
@@ -93,7 +93,7 @@ public class PlayableArrangeState : PlayableBaseState
                     var pos = hit.point;
                     if (hit.transform.GetComponentInChildren<Tile>().arrangePossible && playerCtrl.stateManager.tiles.Contains(hit.transform.parent.gameObject))
                     {
-                        pos = hit.transform.position;
+                        pos = hit.transform.parent.position;
                         pos.y = hit.transform.GetComponentInChildren<Tile>().height;
                     }
                     playerCtrl.transform.position = pos;

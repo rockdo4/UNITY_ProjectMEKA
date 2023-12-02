@@ -250,7 +250,7 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void ChangeTileMesh()
     {
-        Debug.Log("ChangeTileMesh");
+        //Debug.Log("ChangeTileMesh");
         ClearTileMesh(tempTiles);
         var state = player.stateManager.currentBase as PlayableArrangeState;
         state.UpdateAttackPositions();

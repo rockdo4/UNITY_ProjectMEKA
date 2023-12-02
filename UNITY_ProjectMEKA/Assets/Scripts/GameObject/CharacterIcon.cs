@@ -20,21 +20,9 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     private void Awake()
     {
         var characterStat = characterPrefab.GetComponent<CharacterState>();
-        var occupation = characterStat.occupation;
         var cost = characterStat.arrangeCost;
 
         SetJoystick = new UnityEvent();
-
-        switch (occupation)
-        {
-            case Defines.Occupation.Guardian:
-            case Defines.Occupation.Striker:
-                TileSet("LowTile");
-                break;
-            default:
-                TileSet("HighTile");
-                break;
-        }
     }
 
     private void Start()
@@ -49,20 +37,20 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         });
     }
 
-    public List<GameObject> TileSet(string tag)
-    {
-        var tileParent = GameObject.FindGameObjectWithTag(tag);
-        var tileCount = tileParent.transform.childCount;
-        var tiles = new List<GameObject>();
-        for (int i = 0; i < tileCount; ++i)
-        {
-            if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
-            {
-                tiles.Add(tileParent.transform.GetChild(i).gameObject);
-            }
-        }
-        return tiles;
-    }
+    //public List<GameObject> TileSet(string tag)
+    //{
+    //    var tileParent = GameObject.FindGameObjectWithTag(tag);
+    //    var tileCount = tileParent.transform.childCount;
+    //    var tiles = new List<GameObject>();
+    //    for (int i = 0; i < tileCount; ++i)
+    //    {
+    //        if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
+    //        {
+    //            tiles.Add(tileParent.transform.GetChild(i).gameObject);
+    //        }
+    //    }
+    //    return tiles;
+    //}
 
     private void Update()
     {
@@ -87,17 +75,6 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         characterGo = ObjectPoolManager.instance.GetGo(characterName);
         playerController = characterGo.GetComponent<PlayerController>();
 
-        var occupation = characterGo.GetComponent<CharacterState>().occupation;
-        switch (occupation)
-        {
-            case Defines.Occupation.Guardian:
-            case Defines.Occupation.Striker:
-                playerController.stateManager.tiles = TileSet("LowTile");
-                break;
-            default:
-                playerController.stateManager.tiles = TileSet("HighTile");
-                break;
-        }
         created = true;
         playerController.stateManager.created = true;
         playerController.joystick = arrangeJoystick.transform.parent.gameObject;

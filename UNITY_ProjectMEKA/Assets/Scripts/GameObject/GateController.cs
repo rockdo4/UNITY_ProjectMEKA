@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using static GateController;
@@ -29,7 +30,6 @@ public class GateController : MonoBehaviour
         [SerializeField, Header("몬스터 세팅")]
         public List<EnemySpawnInfo> enemySpawnInfos;
 
-        // 11.25 wave ������ �̵�
         [SerializeField, Header("웨이포인트")]
         public GameObject waypointGo;
         [HideInInspector]
@@ -46,11 +46,9 @@ public class GateController : MonoBehaviour
         public float pathDuration;
     }
 
-    // ���� �� ���ð�
     [SerializeField, Header("처음 대기 시간")]
     public float startInterval;
 
-    // �̵� ����
     [SerializeField, Header("게이트 종류")]
     public Defines.GateType gateType;
     protected Transform house;
@@ -58,7 +56,6 @@ public class GateController : MonoBehaviour
     [SerializeField, Header("이동라인  스피드")]
     public float pathSpeed;
 
-    // ���� ���� ����
     [SerializeField, Header("웨이브 정보 세팅")]
     public List<WaveInfo> waveInfos;
 
@@ -69,12 +66,11 @@ public class GateController : MonoBehaviour
     protected float waveTimer = 0f;
     protected bool firstGetPool = false;
 
-    // �̵� ���
     protected Vector3 initPos;
     protected GameObject enemyPath;
     protected Rigidbody enemyPathRb;
     protected Vector3 targetPos = Vector3.zero;
-    protected float threshold = 0.2f;
+    protected float threshold = 0.1f;
     protected int waypointIndex = 0;
     protected int repeatCount = -1;
     protected float pathDuration;
@@ -83,7 +79,6 @@ public class GateController : MonoBehaviour
 
     virtual protected void Awake()
     {
-        // waypoints �Ҵ�
         foreach(var wave in  waveInfos)
         {
             var waypointCount = wave.waypointGo.transform.childCount;
@@ -94,7 +89,6 @@ public class GateController : MonoBehaviour
             }
         }
 
-        // enemyPath ����
         enemyPath = transform.GetChild(1).gameObject;
         enemyPathRb = enemyPath.GetComponent<Rigidbody>();
         initPos = enemyPath.transform.localPosition;
@@ -110,7 +104,6 @@ public class GateController : MonoBehaviour
 
     virtual protected void FixedUpdate()
     {
-        // �̵���� ���̵� �� ��� �ð�
 		if (startInterval > 0f)
         {
             startInterval -= Time.deltaTime;
@@ -121,7 +114,6 @@ public class GateController : MonoBehaviour
             startInterval = 0f;
         }
 
-        // ���̺� Ÿ�̸�
         if (currentWave >= waveInfos.Count)
         {
             return;
@@ -139,7 +131,6 @@ public class GateController : MonoBehaviour
             return;
         }
 
-        // �̵���� ���̵�
         pathDuration -= Time.deltaTime;
         if ((pathDuration <= 0f && !pathDone) || (!waveInfos[currentWave].pathGuideOn && !pathDone))
         {
@@ -169,14 +160,12 @@ public class GateController : MonoBehaviour
         }
     }
 
-    // ���� ���� �Լ�
     public void SpawnEnemies()
     {
         var waveInfo = waveInfos[currentWave];
         var enemyInfo = waveInfo.enemySpawnInfos[currentEnemyType];
         var enemyName = enemyInfo.prefab.GetComponent<CharacterState>().enemyType.ToString();
 
-        // ���̺긶�� ù��° ���ʹ� �ð� �� ��ٸ��� ����
         if (!firstGetPool)
         {
             var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
@@ -194,13 +183,11 @@ public class GateController : MonoBehaviour
 
         if (currentEnemyCount >= enemyInfo.count)
         {
-            Debug.Log("���� ������!");
             currentEnemyCount = 0;
             currentEnemyType++;
             if (currentEnemyType >= waveInfos[currentWave].enemySpawnInfos.Count)
             {
-                Debug.Log("���� ���̺��!");
-                waveTimer = waveInfos[currentWave].waveInterval; // �Ѿ�� �� ���̺��� interval ����
+                waveTimer = waveInfos[currentWave].waveInterval;
 
                 currentWave++;
                 currentEnemyType = 0;
@@ -211,7 +198,6 @@ public class GateController : MonoBehaviour
                 {
                     pathDuration = waveInfos[currentWave].pathDuration;
                 }
-                //spawnTimer = 0f;
             }
             return;
         }
@@ -286,6 +272,7 @@ public class GateController : MonoBehaviour
             targetPos.y = enemyPath.transform.position.y;
             enemyPath.transform.LookAt(targetPos);
         }
+        enemyPath.transform.LookAt(targetPos);
     }
 
     private void ShowEnemyPathStraight(WaveInfo waveInfo)
@@ -317,7 +304,7 @@ public class GateController : MonoBehaviour
         pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
         enemyPathRb.MovePosition(pos);
 
-        if (Vector3.Distance(pos, targetPos) < threshold) // ���� ��������Ʈ �����ϸ�
+        if (Vector3.Distance(pos, targetPos) < threshold)
         {
             enemyPath.GetComponent<ParticleSystem>().Clear();
             enemyPath.GetComponent<ParticleSystem>().Stop();
@@ -347,18 +334,17 @@ public class GateController : MonoBehaviour
         pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
         enemyPathRb.MovePosition(pos);
 
-        if (Vector3.Distance(pos, targetPos) < threshold) // ���� ��������Ʈ �����ϸ�
+        if (Vector3.Distance(pos, targetPos) < threshold)
         {
-            if (waypointIndex == waveInfo.waypoints.Length - 2) // ������-1 ��������Ʈ �����ϸ�
+            if (waypointIndex == waveInfo.waypoints.Length - 2)
             {
                 waypointIndex = -1;
             }
-            else if (waypointIndex == 0) // �ѹ��� ����
+            else if (waypointIndex == 0)
             {
                 repeatCount++;
                 if (repeatCount == waveInfo.moveRepeat)
                 {
-                    // ������ ��������Ʈ �Ҵ�
                     waypointIndex = waveInfo.waypoints.Length - 2;
                 }
             }
