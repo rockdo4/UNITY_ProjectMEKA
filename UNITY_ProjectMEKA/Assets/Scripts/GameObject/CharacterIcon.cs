@@ -9,10 +9,10 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
     public StageManager stageManager;
     public GameObject characterPrefab;
-    public ArrangeJoystickHandler arrangeJoystick;
-
     private GameObject characterGo;
     private PlayerController playerController;
+    
+    public ArrangeJoystick arrangeJoystick;
     private UnityEvent SetJoystick;
 
     private bool created;
@@ -25,17 +25,17 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         var cost = characterStat.arrangeCost;
 
         SetJoystick = new UnityEvent();
+        SetJoystick.AddListener(() =>
+        {
+            arrangeJoystick.settingMode = false;
+arrangeJoystick.transform.gameObject.SetActive(true);
+           arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
+            once = true;
+        });
     }
 
     private void Start()
     {
-        SetJoystick.AddListener(() => 
-        {
-            arrangeJoystick.transform.parent.gameObject.SetActive(true);
-            arrangeJoystick.SetFirstArranger(this);
-            arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
-            once = true;
-        });
     }
 
     private void Update()
@@ -61,21 +61,23 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         playerController = characterGo.GetComponent<PlayerController>();
         created = true;
         playerController.stateManager.created = true;
-        playerController.joystick = arrangeJoystick.transform.parent.gameObject;
+        playerController.joystick = arrangeJoystick.transform.gameObject;
         playerController.icon = this;
 
         var dieEvent = characterGo.GetComponent<CanDie>();
         dieEvent.action.AddListener(() =>
         {
             playerController.currentTile.arrangePossible = true;
+            playerController.icon.gameObject.SetActive(true);
         });
 
         stageManager.currentPlayer = playerController;
+        stageManager.currentPlayerIcon = playerController.icon;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!created && !arrangeJoystick.transform.gameObject.active)
+        if(stageManager.currentPlayer == null)
         {
             CreateCharacter();
             characterGo.transform.position = transform.position;

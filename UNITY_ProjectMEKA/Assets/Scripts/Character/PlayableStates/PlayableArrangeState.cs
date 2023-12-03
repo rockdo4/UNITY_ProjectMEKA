@@ -1,17 +1,13 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using static Defines;
 
 
 public class PlayableArrangeState : PlayableBaseState
 {
     private RaycastHit hit;
-    public Button collecteButton;
-    public bool settingMode;
+    //public Button collecteButton;
+    //public bool settingMode;
 
     public PlayableArrangeState(PlayerController player) : base(player)
     {
@@ -26,18 +22,8 @@ public class PlayableArrangeState : PlayableBaseState
         {
             playerCtrl.transform.forward = Vector3.forward;
             var occupation = playerCtrl.state.occupation;
-            switch(occupation)
-            {
-                case Defines.Occupation.Guardian:
-                case Defines.Occupation.Striker:
-                    ArrangableTileSet("LowTile");
-                    AttackableTileSet("LowTile");
-                    break;
-                default:
-                    ArrangableTileSet("HighTile");
-                    AttackableTileSet("HighTile");
-                    break;
-            }
+            ArrangableTileSet(occupation);
+            AttackableTileSet(occupation);
             //if (playerCtrl.stateManager.tiles != null)
             //{
             //    foreach (var tile in playerCtrl.stateManager.tiles)
@@ -74,14 +60,14 @@ public class PlayableArrangeState : PlayableBaseState
     {
         Debug.Log("arrange exit");
         Time.timeScale = 1f;
-        settingMode = false;
+        //settingMode = false;
         playerCtrl.stageManager.currentPlayer = null;
     }
 
     public override void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(!settingMode && !playerCtrl.stateManager.firstArranged)
+        if(!playerCtrl.stateManager.firstArranged)
         {
             if(Input.GetMouseButton(0))
             {
@@ -127,8 +113,20 @@ public class PlayableArrangeState : PlayableBaseState
         }
     }
 
-    public void ArrangableTileSet(string tag)
+    public void ArrangableTileSet(Defines.Occupation occupation)
     {
+        string tag;
+        switch (occupation)
+        {
+            case Defines.Occupation.Guardian:
+            case Defines.Occupation.Striker:
+                tag = "LowTile";
+                break;
+            default:
+                tag = "HighTile";
+                break;
+        }
+
         var tileParent = GameObject.FindGameObjectWithTag(tag);
         var tileCount = tileParent.transform.childCount;
         var tiles = new List<Tile>();
@@ -142,25 +140,28 @@ public class PlayableArrangeState : PlayableBaseState
         playerCtrl.arrangableTiles = tiles;
     }
 
-    public void AttackableTileSet(string tag)
+    public void AttackableTileSet(Defines.Occupation occupation)
     {
+        int layerMask = 0;
+        int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
+        int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
+
+        switch (occupation)
+        {
+            case Defines.Occupation.Guardian:
+            case Defines.Occupation.Striker:
+                layerMask = lowTileMask;
+                break;
+            default:
+                layerMask = lowTileMask | highTileMask;
+                break;
+        }
+
         Vector3 characterPosition = playerCtrl.transform.position;
         Vector3 forward = -playerCtrl.transform.forward;
         Vector3 right = playerCtrl.transform.right;
         int characterRow = 0;
         int characterCol = 0;
-        int layerMask = 0;
-        int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
-        int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
-        switch (tag)
-        {
-            case "LowTile":
-                layerMask = lowTileMask;
-                break;
-            case "HighTile":
-                layerMask = lowTileMask | highTileMask;
-                break;
-        }
 
         for (int i = 0; i < playerCtrl.state.AttackRange.GetLength(0); i++)
         {
@@ -198,6 +199,25 @@ public class PlayableArrangeState : PlayableBaseState
                     }
                 }
             }
+        }
+    }
+
+    public void RotatePlayer(Defines.RotationDirection direction)
+    {
+        switch ((int)direction)
+        {
+            case (int)Defines.RotationDirection.Up:
+                playerCtrl.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                break;
+            case (int)Defines.RotationDirection.Right:
+                playerCtrl.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                break;
+            case (int)Defines.RotationDirection.Down:
+                playerCtrl.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                break;
+            case (int)Defines.RotationDirection.Left:
+                playerCtrl.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+                break;
         }
     }
 }
