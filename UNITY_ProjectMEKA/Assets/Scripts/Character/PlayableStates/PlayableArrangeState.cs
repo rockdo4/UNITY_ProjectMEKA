@@ -6,6 +6,7 @@ using static Defines;
 public class PlayableArrangeState : PlayableBaseState
 {
     private RaycastHit hit;
+    private Tile hitTile;
     //public Button collecteButton;
     //public bool settingMode;
 
@@ -24,6 +25,8 @@ public class PlayableArrangeState : PlayableBaseState
             var occupation = playerCtrl.state.occupation;
             ArrangableTileSet(occupation);
             AttackableTileSet(occupation);
+            playerCtrl.characterInfoUIManager.arrangeModeSet = false;
+            playerCtrl.characterInfoUIManager.windowMode = Defines.CharacterInfoMode.Arrange;
             //if (playerCtrl.stateManager.tiles != null)
             //{
             //    foreach (var tile in playerCtrl.stateManager.tiles)
@@ -67,6 +70,8 @@ public class PlayableArrangeState : PlayableBaseState
     public override void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+
         if(!playerCtrl.stateManager.firstArranged)
         {
             if(Input.GetMouseButton(0))
@@ -79,8 +84,8 @@ public class PlayableArrangeState : PlayableBaseState
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
                     var pos = hit.point;
-                    var tile = hit.transform.GetComponentInChildren<Tile>();
-                    if (tile.arrangePossible && playerCtrl.arrangableTiles.Contains(tile))
+                    hitTile = hit.transform.GetComponentInChildren<Tile>();
+                    if (hitTile.arrangePossible && playerCtrl.arrangableTiles.Contains(hitTile))
                     {
                         pos = hit.transform.parent.position;
                         pos.y = hit.transform.GetComponentInChildren<Tile>().height;
@@ -91,17 +96,15 @@ public class PlayableArrangeState : PlayableBaseState
 
             else if (Input.GetMouseButtonUp(0))
             {
-                var tile = hit.transform.GetComponentInChildren<Tile>();
-                if (hit.transform != null && tile.arrangePossible && playerCtrl.arrangableTiles.Contains(tile))
+                if (hit.transform != null && hitTile.arrangePossible && playerCtrl.arrangableTiles.Contains(hitTile))
                 {
                     Debug.Log("배치가능");
-                    playerCtrl.currentTile = tile;
+                    playerCtrl.currentTile = hitTile;
                     playerCtrl.stateManager.firstArranged = true;
                 }
                 else
                 {
                     Debug.Log($"배치불가능: {hit}");
-                    //playerCtrl.SetState(PlayerController.CharacterStates.Idle);
                     playerCtrl.ReturnPool.Invoke();
                 }
 

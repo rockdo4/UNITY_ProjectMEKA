@@ -14,12 +14,14 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     
     public ArrangeJoystick arrangeJoystick;
     private UnityEvent SetJoystick;
+    private CharacterInfoUIManager characterInfoUIManager;
 
     private bool created;
     private bool once;
 
     private void Awake()
     {
+        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
         stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
         var characterStat = characterPrefab.GetComponent<CharacterState>();
         var cost = characterStat.arrangeCost;

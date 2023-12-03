@@ -61,8 +61,8 @@ public class PlayerController : PoolAble, IPointerDownHandler
     [HideInInspector]
     public CharacterStates currentState;
 
-    // 12.02, 김민지, 스테이지매니저 추가
     public StageManager stageManager;
+    public CharacterInfoUIManager characterInfoUIManager;
 
 
     private void Awake()
@@ -83,6 +83,7 @@ public class PlayerController : PoolAble, IPointerDownHandler
             ReleaseObject();
         });
         stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
+        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
     }
     private void OnEnable()
     {

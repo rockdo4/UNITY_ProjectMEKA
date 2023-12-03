@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using static PlayerController;
 
@@ -64,8 +62,9 @@ public class ArrangeJoystick : MonoBehaviour
             if (plane.Raycast(ray, out enter))
             {
                 ArrangeDone.Invoke();
+                Vector3 hitPoint = ray.GetPoint(enter);
+                Debug.Log($"{hitPoint}, {collectButton.transform.position}");
             }
-
         }
     }
 
@@ -151,6 +150,7 @@ public class ArrangeJoystick : MonoBehaviour
 
     public void CollectEvent()
     {
+        Debug.Log("collect event");
         if (collectButton.gameObject.activeSelf)
         {
             collectButton.gameObject.SetActive(false);

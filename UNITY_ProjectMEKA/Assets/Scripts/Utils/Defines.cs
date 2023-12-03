@@ -54,7 +54,12 @@ public class Defines
         Left,
         Count
     }
-
+    public enum CharacterInfoMode
+    {
+        None,
+        Arrange,
+        Setting
+    }
 
     public enum bgmType
     {

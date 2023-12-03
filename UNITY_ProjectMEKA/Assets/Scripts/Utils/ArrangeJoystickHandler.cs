@@ -1,11 +1,6 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
-using UnityEngine.UI;
-using static PlayerController;
 
 public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -27,7 +22,6 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
 
     private void Awake()
     {
-        joystick = transform.parent.GetComponent<ArrangeJoystick>();
         InitOnce();
     }
 
@@ -49,6 +43,8 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
 
     public void InitOnce()
     {
+        joystick = transform.parent.GetComponent<ArrangeJoystick>();
+
         stageManager = stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
 
         var boxCollider = GetComponent<BoxCollider>();
@@ -107,11 +103,6 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             }
 
             RotateHandler(currentTile.transform, false);
-
-            //if (cancelButton.gameObject.activeSelf)
-            //{
-            //    cancelButton.gameObject.SetActive(false);
-            //}
         }
     }
 
