@@ -40,8 +40,8 @@ public class PlayerController : PoolAble, IPointerDownHandler
     [HideInInspector]
     public float skillCoolTime;
 
-    [HideInInspector]
-    public List<Vector3> attakableTilePositions = new List<Vector3>();
+    public List<Tile> attakableTiles = new List<Tile>();
+    public List<Tile> arrangableTiles = new List<Tile>();
     [HideInInspector]
     public UnityEvent ReturnPool;
     public GameObject joystick;

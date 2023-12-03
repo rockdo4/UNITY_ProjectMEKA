@@ -65,8 +65,9 @@ public class GateController : MonoBehaviour
     protected float spawnTimer = 0f;
     protected float waveTimer = 0f;
     protected bool firstGetPool = false;
+    protected Vector3 spawnInitPos;
 
-    protected Vector3 initPos;
+    protected Vector3 enemyPathInitPos;
     protected GameObject enemyPath;
     protected Rigidbody enemyPathRb;
     protected Vector3 targetPos = Vector3.zero;
@@ -79,7 +80,9 @@ public class GateController : MonoBehaviour
 
     virtual protected void Awake()
     {
-        foreach(var wave in  waveInfos)
+        spawnInitPos = new Vector3 (transform.position.x, 0.25f, transform.position.z);
+
+        foreach (var wave in  waveInfos)
         {
             var waypointCount = wave.waypointGo.transform.childCount;
             wave.waypoints = new Transform[waypointCount+1];
@@ -91,7 +94,7 @@ public class GateController : MonoBehaviour
 
         enemyPath = transform.GetChild(1).gameObject;
         enemyPathRb = enemyPath.GetComponent<Rigidbody>();
-        initPos = enemyPath.transform.localPosition;
+        enemyPathInitPos = enemyPath.transform.localPosition;
         if (enemyPath == null)
         {
             Debug.Log("enemyPath gameObject is null");
@@ -135,7 +138,7 @@ public class GateController : MonoBehaviour
         if ((pathDuration <= 0f && !pathDone) || (!waveInfos[currentWave].pathGuideOn && !pathDone))
         {
             waypointIndex = 0;
-            enemyPath.transform.localPosition = initPos;
+            enemyPath.transform.localPosition = enemyPathInitPos;
             enemyPath.GetComponent<ParticleSystem>().Clear();
             enemyPath.GetComponent<ParticleSystem>().Stop();
             enemyPath.SetActive(false);
@@ -229,7 +232,7 @@ public class GateController : MonoBehaviour
 
         enemyController.wayPoint = waveInfo.waypoints;
         enemyController.waypointIndex = 0;
-        enemyController.initPos = transform.position;
+        enemyController.initPos = spawnInitPos;
         enemyController.moveType = waveInfo.moveType;
         enemyController.moveRepeatCount = waveInfo.moveRepeat;
         enemyController.state.property = spawnInfo.attribute;
@@ -241,7 +244,7 @@ public class GateController : MonoBehaviour
         if (!enemyPath.activeSelf)
         {
             enemyPath.SetActive(true);
-            enemyPath.transform.localPosition = initPos;
+            enemyPath.transform.localPosition = enemyPathInitPos;
             waypointIndex = 0;
             targetPos = waveInfo.waypoints[waypointIndex].position;
             targetPos.y = enemyPath.transform.position.y;
@@ -280,7 +283,7 @@ public class GateController : MonoBehaviour
         if (!enemyPath.activeSelf)
         {
             enemyPath.SetActive(true);
-            enemyPath.transform.localPosition = initPos;
+            enemyPath.transform.localPosition = enemyPathInitPos;
             waypointIndex = 0;
             targetPos = waveInfo.waypoints[waypointIndex].position;
             targetPos.y = enemyPath.transform.position.y;
@@ -318,7 +321,7 @@ public class GateController : MonoBehaviour
         if (!enemyPath.activeSelf)
         {
             enemyPath.SetActive(true);
-            enemyPath.transform.localPosition = initPos;
+            enemyPath.transform.localPosition = enemyPathInitPos;
             waypointIndex = 0;
             targetPos = waveInfo.waypoints[waypointIndex].position;
             targetPos.y = enemyPath.transform.position.y;

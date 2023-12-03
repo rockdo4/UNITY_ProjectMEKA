@@ -7,8 +7,17 @@ using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using static PlayerController;
 
-public class ArrangeJoystick : MonoBehaviour
+public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
+    private enum Direction
+    {
+        Up,
+        Right,
+        Down,
+        Left,
+        Count
+    }
+
     private List<GameObject> directions = new List<GameObject>();
     private Bounds backgroundBounds;
     private List<Bounds> bounds;
@@ -168,6 +177,7 @@ public class ArrangeJoystick : MonoBehaviour
                 // 배치 취소 버튼 활성화
                 cancelButton.gameObject.SetActive(true);
 
+
                 // 핸들러 로컬 포지션 0,0 고정
                 transform.localPosition = Vector3.zero;
             }
@@ -289,8 +299,6 @@ public class ArrangeJoystick : MonoBehaviour
 
             if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
             {
-                // 레이가 오브젝트에 부딪혔을 때의 처리
-                //Debug.Log("Hit " + hit.collider.gameObject.name);
                 var tileContoller = hit.transform.GetComponent<Tile>();
                 tileContoller.SetTileMaterial(Tile.TileMaterial.Attack);
                 tempTiles.AddLast(tileContoller);
@@ -306,37 +314,6 @@ public class ArrangeJoystick : MonoBehaviour
         }
         tempTiles.Clear();
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    foreach (var tilePos in player.attakableTilePositions)
-    //    {
-    //        RaycastHit hit;
-    //        int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(player.stateManager.tiles[0].layer));
-    //        //Debug.Log(LayerMask.LayerToName(firstArranger.tiles[0].layer));
-    //        // 레이캐스트 실행
-    //        var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
-
-    //        if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
-    //        {
-    //            // 레이가 오브젝트에 부딪혔을 때의 처리
-    //            //Debug.Log("Hit " + hit.collider.gameObject.name);
-    //            //hit.transform.GetComponent<Tile>().SetTileMaterial(true, Tile.TileMaterial.Attack);
-    //        }
-    //        else
-    //        {
-    //            // 레이가 아무것도 부딪히지 않았을 때의 처리
-    //            //Debug.Log("No hit");
-    //        }
-    //        Gizmos.DrawLine(tilePos, tilePos + Vector3.down * 1000); // 10은 레이의 길이
-    //    }
-
-    //    var playerCenterPos = player.transform.position;
-    //    playerCenterPos.y = transform.position.y;
-
-    //    //Gizmos.DrawSphere(playerCenterPos, radius);
-    //}
 
     public void SetFirstArranger(CharacterIcon icon)
     {

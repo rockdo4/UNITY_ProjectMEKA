@@ -9,7 +9,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
     public StageManager stageManager;
     public GameObject characterPrefab;
-    public ArrangeJoystick arrangeJoystick;
+    public ArrangeJoystickHandler arrangeJoystick;
 
     private GameObject characterGo;
     private PlayerController playerController;

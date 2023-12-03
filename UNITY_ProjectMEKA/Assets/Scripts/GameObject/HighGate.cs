@@ -34,7 +34,7 @@ public class HighGate : GateController
 
         // 타겟위치 초기화 & 이동가이드라인 타이머 초기화
         targetPos = waveInfos[currentWave].waypoints[waypointIndex].position;
-        targetPos.y = initPos.y;
+        targetPos.y = enemyPathInitPos.y;
         enemyPathRb.transform.LookAt(targetPos);
         pathDuration = waveInfos[currentWave].pathDuration;
         pathDone = false;
