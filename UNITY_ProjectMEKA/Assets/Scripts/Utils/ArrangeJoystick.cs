@@ -55,45 +55,47 @@ public class ArrangeJoystick : MonoBehaviour
 
         if (settingMode && Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //var tempPos = transform.position;
-            //tempPos.y -= 0.01f;
-            Plane plane = new Plane(Vector3.up, transform.position);
-            float enter;
-
-            if (!EventSystem.current.IsPointerOverGameObject() && plane.Raycast(ray, out enter))
+            Debug.Log("setting mode");
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
                 ArrangeDone.Invoke();
-                Vector3 hitPoint = ray.GetPoint(enter);
-                Debug.Log($"{hitPoint}, {collectButton.transform.position}");
             }
+
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            ////var tempPos = transform.position;
+            ////tempPos.y -= 0.01f;
+            //Plane plane = new Plane(Vector3.up, transform.position);
+            //float enter;
+
+            //if (!EventSystem.current.IsPointerOverGameObject() && plane.Raycast(ray, out enter))
+            //{
+            //    ArrangeDone.Invoke();
+            //    //Vector3 hitPoint = ray.GetPoint(enter);
+            //    //Debug.Log($"{hitPoint}, {collectButton.transform.position}");
+            //}
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        // Gizmo ���� ���� (��: ���)
-        Gizmos.color = Color.green;
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.green;
 
-        // Plane�� �߽� ��ġ
-        Vector3 center = transform.position;
+    //    Vector3 center = transform.position;
 
-        // Plane�� �ݳ��� ���
-        float halfWidth = 10f / 2f;
-        float halfLength = 10f / 2f;
+    //    float halfWidth = 10f / 2f;
+    //    float halfLength = 10f / 2f;
 
-        // Plane�� �� ������ ���
-        Vector3 topLeft = center + new Vector3(-halfWidth, 0f, halfLength);
-        Vector3 topRight = center + new Vector3(halfWidth, 0f, halfLength);
-        Vector3 bottomLeft = center + new Vector3(-halfWidth, 0f, -halfLength);
-        Vector3 bottomRight = center + new Vector3(halfWidth, 0f, -halfLength);
+    //    Vector3 topLeft = center + new Vector3(-halfWidth, 0f, halfLength);
+    //    Vector3 topRight = center + new Vector3(halfWidth, 0f, halfLength);
+    //    Vector3 bottomLeft = center + new Vector3(-halfWidth, 0f, -halfLength);
+    //    Vector3 bottomRight = center + new Vector3(halfWidth, 0f, -halfLength);
 
-        // Gizmo�� ����Ͽ� Plane�� ���� �׸���
-        Gizmos.DrawLine(topLeft, topRight);
-        Gizmos.DrawLine(topRight, bottomRight);
-        Gizmos.DrawLine(bottomRight, bottomLeft);
-        Gizmos.DrawLine(bottomLeft, topLeft);
-    }
+    //    // Gizmo�� ����Ͽ� Plane�� ���� �׸���
+    //    Gizmos.DrawLine(topLeft, topRight);
+    //    Gizmos.DrawLine(topRight, bottomRight);
+    //    Gizmos.DrawLine(bottomRight, bottomLeft);
+    //    Gizmos.DrawLine(bottomLeft, topLeft);
+    //}
 
     public void SecondArrangeInit()
     {
@@ -152,8 +154,6 @@ public class ArrangeJoystick : MonoBehaviour
         }
 
         stageManager.currentPlayer.SetState(CharacterStates.Idle);
-        //ClearTileMesh(tempTiles);
-
         stageManager.currentPlayer = null;
         stageManager.currentPlayerIcon = null;
 
@@ -172,6 +172,9 @@ public class ArrangeJoystick : MonoBehaviour
         stageManager.currentPlayer.currentTile.arrangePossible = true;
         //stageManager.currentPlayer.SetState(CharacterStates.Idle);
         stageManager.currentPlayer.ReturnPool.Invoke();
+        stageManager.currentPlayer = null;
+        stageManager.currentPlayerIcon = null;
+
         transform.gameObject.SetActive(false);
     }
 
@@ -185,17 +188,20 @@ public class ArrangeJoystick : MonoBehaviour
         stageManager.currentPlayer.stateManager.secondArranged = false;
         stageManager.currentPlayer.currentTile.arrangePossible = true;
         stageManager.currentPlayer.ReturnPool.Invoke();
+        stageManager.currentPlayer = null;
+        stageManager.currentPlayerIcon = null;
+
         transform.gameObject.SetActive(false);
     }
 
-    public void ClearTileMesh(LinkedList<Tile> tempTiles)
-    {
-        foreach (var tile in tempTiles)
-        {
-            tile.ClearTileMesh();
-        }
-        tempTiles.Clear();
-    }
+    //public void ClearTileMesh(LinkedList<Tile> tempTiles)
+    //{
+    //    foreach (var tile in tempTiles)
+    //    {
+    //        tile.ClearTileMesh();
+    //    }
+    //    tempTiles.Clear();
+    //}
 
     public void SetPositionToCurrentPlayer(Transform playerTr)
     {

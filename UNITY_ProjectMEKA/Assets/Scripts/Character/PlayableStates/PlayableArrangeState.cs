@@ -99,13 +99,11 @@ public class PlayableArrangeState : PlayableBaseState
             {
                 if (hit.transform != null && hitTile.arrangePossible && playerCtrl.arrangableTiles.Contains(hitTile))
                 {
-                    Debug.Log("��ġ����");
                     playerCtrl.currentTile = hitTile;
                     playerCtrl.stateManager.firstArranged = true;
                 }
                 else
                 {
-                    Debug.Log($"��ġ�Ұ���: {hit}");
                     playerCtrl.ReturnPool.Invoke();
                 }
 

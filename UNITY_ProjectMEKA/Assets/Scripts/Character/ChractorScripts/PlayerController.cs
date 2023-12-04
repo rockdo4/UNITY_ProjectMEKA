@@ -77,8 +77,8 @@ public class PlayerController : PoolAble, IPointerDownHandler
             stateManager.firstArranged = false;
             stateManager.secondArranged = false;
             stateManager.created = false;
-            stageManager.currentPlayer = null;
-            stageManager.currentPlayerIcon = null;
+            //stageManager.currentPlayer = null;
+            //stageManager.currentPlayerIcon = null;
             Time.timeScale = 1.0f;
             ReleaseObject();
         });
@@ -87,6 +87,7 @@ public class PlayerController : PoolAble, IPointerDownHandler
     }
     private void OnEnable()
     {
+        Debug.Log("player onEnable");
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
         CreateColliders();
@@ -103,13 +104,13 @@ public class PlayerController : PoolAble, IPointerDownHandler
     }
     private void OnDisable()
     {
-        
-        SetState(CharacterStates.Die);
-        
+        if(states.Count != 0)
+        {
+            SetState(CharacterStates.Die);
+        }
     }
     void Start()
     {
-        Debug.Log("player Controller start");
 
         state.ConvertTo2DArray();
         states.Add(new PlayableArrangeState(this));
@@ -142,6 +143,7 @@ public class PlayerController : PoolAble, IPointerDownHandler
                 break;
         }
         state.cost = state.maxCost;
+        Debug.Log($"player Controller start : {states.Count}");
 
     }
     private void Update()
