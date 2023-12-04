@@ -6,8 +6,8 @@ public class PlayableStateManager
 {
     public PlayableBaseState currentBase;
 
-    public List<GameObject> tiles;
     public bool firstArranged;
+    public bool secondArranged;
     public bool created;
 
     public void ChangeState(PlayableBaseState newState)

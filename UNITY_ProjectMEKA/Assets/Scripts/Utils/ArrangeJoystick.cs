@@ -1,290 +1,191 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using static PlayerController;
 
-public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class ArrangeJoystick : MonoBehaviour
 {
-    private enum Direction
-    {
-        Up,
-        Right,
-        Down,
-        Left,
-        Count
-    }
-
-    private List<GameObject> directions = new List<GameObject>();
-    private Bounds backgroundBounds;
-    private List<Bounds> bounds;
-    private GameObject currentTile;
-    private GameObject prevTile;
-    LinkedList<Tile> tempTiles = new LinkedList<Tile>();
-    private BoxCollider boxCollider;
-    private float half;
-    [HideInInspector]
-    public float yOffset = 1f;
-
-    public bool secondArranged;
-    private PlayerController player;
-    private CharacterIcon playerIcon;
-    public float radius;
-
     public Button cancelButton;
     public Button collectButton;
+    public ArrangeJoystickHandler handler;
 
-    public UnityEvent ArrangeDone;
+    private StageManager stageManager;
+    private float yOffset = 1f;
+
+    public UnityEvent ArrangeDone = new UnityEvent();
+
+    public bool settingMode;
+
+    private void Awake()
+    {
+        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
+        ArrangeDone = new UnityEvent();
+        ArrangeDone.AddListener(ArrangeDoneEvent);
+        cancelButton.onClick.AddListener(CancelEvent);
+        collectButton.onClick.AddListener(CollectEvent);
+    }
 
     private void OnEnable()
     {
-        currentTile = null;
-        ArrangeDone = new UnityEvent();
-        ArrangeDone.AddListener(() =>
+        if(settingMode)
         {
-            Debug.Log("arrange done");
-            secondArranged = true;
-            player.currentTile.arrangePossible = false;
-            player.SetState(CharacterStates.Idle);
-            ClearTileMesh(tempTiles);
-            playerIcon.gameObject.SetActive(false);
-            transform.localPosition = Vector3.zero;
-            transform.parent.gameObject.SetActive(false);
-        });
-
-
-        secondArranged = false;
-        boxCollider = GetComponent<BoxCollider>();
-        half = boxCollider.bounds.size.x / 2f;
-        backgroundBounds = new Bounds(Vector3.zero, new Vector3(2f, 2f, 0f));
-
-        var parent = transform.parent;
-        for (int i = 0; i < (int)Direction.Count; ++i)
-        {
-            directions.Add(parent.GetChild(i).gameObject);
+            SettingModeInit();
         }
-
-        bounds = new List<Bounds>
+        else
         {
-            new Bounds(new Vector3(0.5f, 0.5f, 0f), new Vector3(1f, 1f, 0f)),
-            new Bounds(new Vector3(0.5f, -0.5f, 0f), new Vector3(1f, 1f, 0f)),
-            new Bounds(new Vector3(-0.5f, -0.5f, 0f), new Vector3(1f, 1f, 0f)),
-            new Bounds(new Vector3(-0.5f, 0.5f, 0f), new Vector3(1f, 1f, 0f))
-        };
+            SecondArrangeInit();
+        }
     }
 
     private void Start()
     {
-        cancelButton.onClick.AddListener(() =>
-        {
-            Debug.Log("cancel init");
-            if (cancelButton.gameObject.activeSelf)
-            {
-                cancelButton.gameObject.SetActive(false);
-            }
-            secondArranged = false;
-            ClearTileMesh(tempTiles);
-            transform.localPosition = Vector3.zero;
-            transform.parent.gameObject.SetActive(false);
-            player.currentTile.arrangePossible = true;
-            player.ReturnPool.Invoke();
-			Time.timeScale = 1f;
-		});
-
-        collectButton.onClick.AddListener(() =>
-        {
-            Debug.Log("collect init");
-            if (collectButton.gameObject.activeSelf)
-            {
-                collectButton.gameObject.SetActive(false);
-            }
-            secondArranged = false;
-            ClearTileMesh(tempTiles);
-            transform.localPosition = Vector3.zero;
-            transform.gameObject.SetActive(true);
-            transform.parent.gameObject.SetActive(false);
-            player.currentTile.arrangePossible = true;
-            player.ReturnPool.Invoke();
-            playerIcon.gameObject.SetActive(true);
-            Time.timeScale = 1f;
-        });
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    private void Update()
     {
-        if(!secondArranged)
+        if(handler.cancelButtonOn)
         {
-            OnDrag(eventData);
+            if(!cancelButton.gameObject.activeSelf)
+            {
+                cancelButton.gameObject.SetActive(true);
+            }
         }
-    }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        if(!secondArranged)
+        if(settingMode && Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //var tempPos = transform.position;
+            //tempPos.y -= 0.01f;
             Plane plane = new Plane(Vector3.up, transform.position);
             float enter;
-            if (plane.Raycast(ray, out enter))
+
+            if (!EventSystem.current.IsPointerOverGameObject() && plane.Raycast(ray, out enter))
             {
+                ArrangeDone.Invoke();
                 Vector3 hitPoint = ray.GetPoint(enter);
-                transform.position = hitPoint;
-                transform.localPosition = backgroundBounds.ClosestPoint(transform.localPosition);
-            }
-
-            prevTile = currentTile;
-            for(int i = 0; i < (int)Direction.Count; ++i)
-            {
-                if (bounds[i].Contains(transform.localPosition))
-                {
-                    currentTile = directions[i];
-                    if(prevTile != currentTile)
-                    {
-                        //Debug.Log($"{prevTile}에서 {currentTile}로 바뀜");
-                        RotatePlayer(currentTile.transform, false);
-                    }
-                    break;
-                }
-            }
-
-            if (cancelButton.gameObject.activeSelf)
-            {
-                cancelButton.gameObject.SetActive(false);
+                Debug.Log($"{hitPoint}, {collectButton.transform.position}");
             }
         }
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    private void OnDrawGizmos()
     {
+        // Gizmo 색상 설정 (예: 녹색)
+        Gizmos.color = Color.green;
+
+        // Plane의 중심 위치
+        Vector3 center = transform.position;
+
+        // Plane의 반넓이 계산
+        float halfWidth = 10f / 2f;
+        float halfLength = 10f / 2f;
+
+        // Plane의 네 꼭지점 계산
+        Vector3 topLeft = center + new Vector3(-halfWidth, 0f, halfLength);
+        Vector3 topRight = center + new Vector3(halfWidth, 0f, halfLength);
+        Vector3 bottomLeft = center + new Vector3(-halfWidth, 0f, -halfLength);
+        Vector3 bottomRight = center + new Vector3(halfWidth, 0f, -halfLength);
+
+        // Gizmo를 사용하여 Plane의 선을 그리기
+        Gizmos.DrawLine(topLeft, topRight);
+        Gizmos.DrawLine(topRight, bottomRight);
+        Gizmos.DrawLine(bottomRight, bottomLeft);
+        Gizmos.DrawLine(bottomLeft, topLeft);
+    }
+
+    public void SecondArrangeInit()
+    {
+        if(!handler.gameObject.activeSelf)
+        {
+            handler.gameObject.SetActive(true);
+        }
+        if (cancelButton.gameObject.activeSelf)
+        {
+            cancelButton.gameObject.SetActive(false);
+        }
+        if (collectButton.gameObject.activeSelf)
+        {
+            collectButton.gameObject.SetActive(false);
+        }
+    }
+
+    public void SettingModeInit()
+    {
+        if (handler.gameObject.activeSelf)
+        {
+            handler.gameObject.SetActive(false);
+        }
+        if (cancelButton.gameObject.activeSelf)
+        {
+            cancelButton.gameObject.SetActive(false);
+        }
+        if (!collectButton.gameObject.activeSelf)
+        {
+            collectButton.gameObject.SetActive(true);
+        }
+    }
+
+    public void ArrangeDoneEvent()
+    {
+        Debug.Log("arrange done");
+
+        var secondArranged = stageManager.currentPlayer.stateManager.secondArranged;
+        var arrangePossible = stageManager.currentPlayer.currentTile.arrangePossible;
+        var iconActive = stageManager.currentPlayerIcon.gameObject.activeSelf;
+
         if (!secondArranged)
         {
-            // 핸들러가 플레이어 좌표 기준 일정 반경 내에 있을 때
-            // 배치 취소 버튼 활성화
-            var playerCenterPos = player.transform.position;
-            playerCenterPos.y = transform.position.y;
-
-            if(Vector3.Distance(transform.position, playerCenterPos) < radius)
-            {
-                Debug.Log("플레이어 반경 내");
-                // 배치 취소 버튼 활성화
-                cancelButton.gameObject.SetActive(true);
-
-                // 핸들러 로컬 포지션 0,0 고정
-                transform.localPosition = Vector3.zero;
-            }
-            else
-            {
-                RotatePlayer(currentTile.transform, true);
-                secondArranged = true;
-                ArrangeDone.Invoke();
-            }
+            stageManager.currentPlayer.stateManager.secondArranged = true;
         }
+        
+        if(arrangePossible)
+        {
+            stageManager.currentPlayer.currentTile.arrangePossible = false;
+        }
+
+        if(iconActive)
+        {
+            stageManager.currentPlayerIcon.gameObject.SetActive(false);
+
+        }
+
+        stageManager.currentPlayer.SetState(CharacterStates.Idle);
+        //ClearTileMesh(tempTiles);
+
+        stageManager.currentPlayer = null;
+        stageManager.currentPlayerIcon = null;
+
+        transform.gameObject.SetActive(false);
     }
 
-    public void RotatePlayer(Transform currentTileParent, bool mouseUp)
+    public void CancelEvent()
     {
-        var pos = currentTileParent.position;
-        var go = currentTileParent.gameObject;
-        if (go == directions[(int)Direction.Up])
+        if (cancelButton.gameObject.activeSelf)
         {
-            if (mouseUp)
-            {
-                pos.z += -half;
-            }
-            else
-            {
-                player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                if(player != null)
-                {
-                    ChangeTileMesh();
-                }
-            }
+            cancelButton.gameObject.SetActive(false);
         }
-        else if (go == directions[(int)Direction.Right])
-        {
-            if (mouseUp)
-            {
-                pos.x += -half;
-            }
-            else
-            {
-                player.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-                ChangeTileMesh();
-            }
-        }
-        else if (go == directions[(int)Direction.Down])
-        {
-            if (mouseUp)
-            {
-                pos.z += half;
-            }
-            else
-            {
-                player.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                ChangeTileMesh();
-            }
-        }
-        else
-        {
-            if (mouseUp)
-            {
-                pos.x += half;
-            }
-            else
-            {
-                player.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
-                ChangeTileMesh();
-            }
-        }
-
-        if(mouseUp)
-        {
-            transform.position = pos;
-        }
+        stageManager.currentPlayer.stateManager.firstArranged = false;
+        stageManager.currentPlayer.stateManager.secondArranged = false;
+        //ClearTileMesh(tempTiles);
+        stageManager.currentPlayer.currentTile.arrangePossible = true;
+        //stageManager.currentPlayer.SetState(CharacterStates.Idle);
+        stageManager.currentPlayer.ReturnPool.Invoke();
+        transform.gameObject.SetActive(false);
     }
 
-    public void ChangeTileMesh()
+    public void CollectEvent()
     {
-        Debug.Log("ChangeTileMesh");
-        ClearTileMesh(tempTiles);
-        var state = player.stateManager.currentBase as PlayableArrangeState;
-        state.UpdateAttackPositions();
-        foreach (var tilePos in player.attakableTilePositions)
+        Debug.Log("collect event");
+        if (collectButton.gameObject.activeSelf)
         {
-            RaycastHit hit;
-
-            //공중형이면 레이어 마스크 : 공중 + 지상
-            //지상형이면 레이어 마스크 : 지상
-            int layerMask = 0;
-            int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
-            int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
-
-            switch((int)player.transform.GetComponent<CharacterState>().occupation)
-            {
-                case (int)Defines.Occupation.Hunter:
-                case (int)Defines.Occupation.Castor:
-                    layerMask = lowTileMask | highTileMask;
-                    break;
-                default:
-                    layerMask = lowTileMask;
-                    break;
-            }
-            
-            // 레이캐스트 실행
-            var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
-
-            if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
-            {
-                // 레이가 오브젝트에 부딪혔을 때의 처리
-                //Debug.Log("Hit " + hit.collider.gameObject.name);
-                var tileContoller = hit.transform.GetComponent<Tile>();
-                tileContoller.SetTileMaterial(Tile.TileMaterial.Attack);
-                tempTiles.AddLast(tileContoller);
-            }
+            collectButton.gameObject.SetActive(false);
         }
+        stageManager.currentPlayer.stateManager.secondArranged = false;
+        stageManager.currentPlayer.currentTile.arrangePossible = true;
+        stageManager.currentPlayer.ReturnPool.Invoke();
+        transform.gameObject.SetActive(false);
     }
 
     public void ClearTileMesh(LinkedList<Tile> tempTiles)
@@ -296,51 +197,10 @@ public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         tempTiles.Clear();
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        foreach (var tilePos in player.attakableTilePositions)
-        {
-            RaycastHit hit;
-            int layerMask = 1 << LayerMask.NameToLayer(LayerMask.LayerToName(player.stateManager.tiles[0].layer));
-            //Debug.Log(LayerMask.LayerToName(firstArranger.tiles[0].layer));
-            // 레이캐스트 실행
-            var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
-
-            if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
-            {
-                // 레이가 오브젝트에 부딪혔을 때의 처리
-                //Debug.Log("Hit " + hit.collider.gameObject.name);
-                //hit.transform.GetComponent<Tile>().SetTileMaterial(true, Tile.TileMaterial.Attack);
-            }
-            else
-            {
-                // 레이가 아무것도 부딪히지 않았을 때의 처리
-                //Debug.Log("No hit");
-            }
-            Gizmos.DrawLine(tilePos, tilePos + Vector3.down * 1000); // 10은 레이의 길이
-        }
-
-        var playerCenterPos = player.transform.position;
-        playerCenterPos.y = transform.position.y;
-
-        //Gizmos.DrawSphere(playerCenterPos, radius);
-    }
-
-    public void SetPlayer(Transform player)
-    {
-        this.player = player.GetComponent<PlayerController>();
-    }
-
-    public void SetFirstArranger(CharacterIcon icon)
-    {
-        playerIcon = icon;
-    }
-
     public void SetPositionToCurrentPlayer(Transform playerTr)
     {
         var tempPos = playerTr.position;
         tempPos.y += yOffset;
-        transform.parent.position = tempPos;
+        transform.position = tempPos;
     }
 }

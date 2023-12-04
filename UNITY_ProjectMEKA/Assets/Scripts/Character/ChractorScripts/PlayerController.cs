@@ -40,8 +40,8 @@ public class PlayerController : PoolAble, IPointerDownHandler
     [HideInInspector]
     public float skillCoolTime;
 
-    [HideInInspector]
-    public List<Vector3> attakableTilePositions = new List<Vector3>();
+    public List<Tile> attakableTiles = new List<Tile>();
+    public List<Tile> arrangableTiles = new List<Tile>();
     [HideInInspector]
     public UnityEvent ReturnPool;
     public GameObject joystick;
@@ -61,6 +61,8 @@ public class PlayerController : PoolAble, IPointerDownHandler
     [HideInInspector]
     public CharacterStates currentState;
 
+    public StageManager stageManager;
+    public CharacterInfoUIManager characterInfoUIManager;
 
 
     private void Awake()
@@ -69,6 +71,19 @@ public class PlayerController : PoolAble, IPointerDownHandler
         SetBlockCount();
         ani = GetComponent<Animator>();
         ReturnPool = new UnityEvent();
+        ReturnPool.AddListener(() =>
+        {
+            icon.gameObject.SetActive(true);
+            stateManager.firstArranged = false;
+            stateManager.secondArranged = false;
+            stateManager.created = false;
+            stageManager.currentPlayer = null;
+            stageManager.currentPlayerIcon = null;
+            Time.timeScale = 1.0f;
+            ReleaseObject();
+        });
+        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
+        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
     }
     private void OnEnable()
     {
@@ -95,12 +110,6 @@ public class PlayerController : PoolAble, IPointerDownHandler
     void Start()
     {
         Debug.Log("player Controller start");
-        ReturnPool.AddListener(() =>
-        {
-            stateManager.firstArranged = false;
-            stateManager.created = false;
-            ReleaseObject();
-        });
 
         state.ConvertTo2DArray();
         states.Add(new PlayableArrangeState(this));
@@ -442,9 +451,13 @@ public class PlayerController : PoolAble, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!(stateManager.currentBase is PlayableArrangeState))
+        if(stageManager.currentPlayer == null)
         {
             SetState(CharacterStates.Arrange);
+            stageManager.currentPlayer = this;
+            stageManager.currentPlayerIcon = this.icon;
+            joystick.GetComponent<ArrangeJoystick>().settingMode = true;
+            joystick.SetActive(true);
         }
     }
 }

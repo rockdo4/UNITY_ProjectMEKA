@@ -7,61 +7,37 @@ using UnityEngine.Events;
 
 public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
+    public StageManager stageManager;
     public GameObject characterPrefab;
-    public ArrangeJoystick arrangeJoystick;
-
     private GameObject characterGo;
     private PlayerController playerController;
+    
+    public ArrangeJoystick arrangeJoystick;
     private UnityEvent SetJoystick;
+    private CharacterInfoUIManager characterInfoUIManager;
 
     private bool created;
     private bool once;
 
     private void Awake()
     {
+        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
+        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
         var characterStat = characterPrefab.GetComponent<CharacterState>();
-        var occupation = characterStat.occupation;
         var cost = characterStat.arrangeCost;
 
         SetJoystick = new UnityEvent();
-
-        switch (occupation)
+        SetJoystick.AddListener(() =>
         {
-            case Defines.Occupation.Guardian:
-            case Defines.Occupation.Striker:
-                TileSet("LowTile");
-                break;
-            default:
-                TileSet("HighTile");
-                break;
-        }
-    }
-
-    private void Start()
-    {
-        SetJoystick.AddListener(() => 
-        {
-            arrangeJoystick.transform.parent.gameObject.SetActive(true);
-            arrangeJoystick.SetPlayer(characterGo.transform);
-            arrangeJoystick.SetFirstArranger(this);
-            arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
+            arrangeJoystick.settingMode = false;
+arrangeJoystick.transform.gameObject.SetActive(true);
+           arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
             once = true;
         });
     }
 
-    public List<GameObject> TileSet(string tag)
+    private void Start()
     {
-        var tileParent = GameObject.FindGameObjectWithTag(tag);
-        var tileCount = tileParent.transform.childCount;
-        var tiles = new List<GameObject>();
-        for (int i = 0; i < tileCount; ++i)
-        {
-            if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
-            {
-                tiles.Add(tileParent.transform.GetChild(i).gameObject);
-            }
-        }
-        return tiles;
     }
 
     private void Update()
@@ -72,7 +48,6 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
             {
                 created = false;
             }
-            //Debug.Log($"created: {created} / once: {once} / firstArranged: {playerController.stateManager.firstArranged}");
         }
 
         if (created && !once && playerController.stateManager.firstArranged)
@@ -86,27 +61,25 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         var characterName = characterPrefab.GetComponent<CharacterState>().name;
         characterGo = ObjectPoolManager.instance.GetGo(characterName);
         playerController = characterGo.GetComponent<PlayerController>();
-
-        var occupation = characterGo.GetComponent<CharacterState>().occupation;
-        switch (occupation)
-        {
-            case Defines.Occupation.Guardian:
-            case Defines.Occupation.Striker:
-                playerController.stateManager.tiles = TileSet("LowTile");
-                break;
-            default:
-                playerController.stateManager.tiles = TileSet("HighTile");
-                break;
-        }
         created = true;
         playerController.stateManager.created = true;
-        playerController.joystick = arrangeJoystick.transform.parent.gameObject;
+        playerController.joystick = arrangeJoystick.transform.gameObject;
         playerController.icon = this;
+
+        var dieEvent = characterGo.GetComponent<CanDie>();
+        dieEvent.action.AddListener(() =>
+        {
+            playerController.currentTile.arrangePossible = true;
+            playerController.icon.gameObject.SetActive(true);
+        });
+
+        stageManager.currentPlayer = playerController;
+        stageManager.currentPlayerIcon = playerController.icon;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!created && !arrangeJoystick.transform.gameObject.active)
+        if(stageManager.currentPlayer == null)
         {
             CreateCharacter();
             characterGo.transform.position = transform.position;

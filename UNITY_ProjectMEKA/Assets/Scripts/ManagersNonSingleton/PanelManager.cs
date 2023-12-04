@@ -83,7 +83,7 @@ public class PanelManager : MonoBehaviour
 
 	public void LoadBattleScene()
 	{
-		UnityEngine.SceneManagement.SceneManager.LoadScene("Tilemap");
+		UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
 	}
 
 	public void ExitGame() 

@@ -29,6 +29,16 @@ public class Tile : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
         height = boxCollider.bounds.size.y;
         arrangePossible = true;
+
+        RaycastHit hit;
+        var tempPos = new Vector3(transform.parent.position.x, 100f, transform.parent.position.z);
+        if (Physics.Raycast(tempPos, Vector3.down, out hit))
+        {
+            if (hit.transform.gameObject.layer != gameObject.layer)
+            {
+                arrangePossible = false;
+            }
+        }
     }
 
     public void SetTileMaterial(TileMaterial materialType)

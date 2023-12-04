@@ -46,6 +46,20 @@ public class Defines
         WaypointRepeat,
         Straight,
     }
+    public enum RotationDirection
+    {
+        Up,
+        Right,
+        Down,
+        Left,
+        Count
+    }
+    public enum CharacterInfoMode
+    {
+        None,
+        Arrange,
+        Setting
+    }
 
     public enum bgmType
     {

@@ -269,6 +269,11 @@ public class EnemyController : PoolAble
 
         PlayerController enemy = target.GetComponentInParent<PlayerController>();
 
+        if(enemy == null)
+        {
+            return 0;
+        }
+
         if (state.property == enemy.state.property)
         {
             return 0;
