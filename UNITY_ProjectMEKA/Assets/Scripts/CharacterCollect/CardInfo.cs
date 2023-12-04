@@ -21,6 +21,8 @@ public class CardInfo : MonoBehaviour
 		cardID = id;
 		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(id);
 
+		Debug.Log(id);
+
 		if(info != null)
 		{
 			//cardImage.sprite = default;

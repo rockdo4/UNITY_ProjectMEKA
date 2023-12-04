@@ -6,23 +6,23 @@ using UnityEngine;
 //모든 캐릭터 관리하는 싱글턴 클래스
 //Singleton class that manages all characters
 
-public class CharacterManager
+public class CharacterManager : MonoBehaviour
 {
-	private static CharacterManager instance;
+	public static CharacterManager Instance { get; private set; }
 	public Dictionary<int, Character> m_CharacterStorage;
 	private CharacterManager()
 	{
 		m_CharacterStorage = new Dictionary<int, Character>();
 	}
-	public static CharacterManager Instance
+	private void Awake()
 	{
-		get
+		if (Instance == null)
 		{
-			if (instance == null)
-			{
-				instance = new CharacterManager();
-			}
-			return instance;
+			Instance = this;
+		}
+		else if (Instance != this)
+		{
+			Destroy(gameObject);
 		}
 	}
 
@@ -45,6 +45,24 @@ public class CharacterManager
 			//테이블
 
 			m_CharacterStorage.Add(chara.CharacterID, chara);
+		}
+		UpdatePlayData();
+	}
+
+	public void UpdatePlayData()
+	{
+		PlayDataManager.data.characterStorage = m_CharacterStorage;
+		foreach(var character in m_CharacterStorage)
+		{
+			//Debug.Log((character.Key, character.Value.IsUnlock));
+		}
+
+	}
+	public void CheckPlayData()
+	{
+		if (PlayDataManager.data != null)
+		{
+			m_CharacterStorage = PlayDataManager.data.characterStorage;
 		}
 	}
 }

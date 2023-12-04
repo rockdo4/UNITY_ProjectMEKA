@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class DataReceiver : MonoBehaviour
 {
+	public List<int[]> data = new List<int[]>();
+
 	public void OnEnable()
 	{
 		int[] receiveArr = DataSender.arr;
