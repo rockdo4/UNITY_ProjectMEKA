@@ -24,7 +24,8 @@ public class PlayableHealingState : PlayableBaseState
         if(timer > playerCtrl.state.attackDelay)
         {
             timer = 0;
-            //playerCtrl.Healing();
+            
+
             playerCtrl.ani.SetTrigger("Attack");
             playerCtrl.SetState(PlayerController.CharacterStates.Idle);
         }

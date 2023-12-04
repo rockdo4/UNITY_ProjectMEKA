@@ -16,6 +16,7 @@ public class PlayableArrangeState : PlayableBaseState
 
     public override void Enter()
     {
+        
         Time.timeScale = 0.2f;
 
         // Set arrange tile mesh
@@ -98,13 +99,13 @@ public class PlayableArrangeState : PlayableBaseState
             {
                 if (hit.transform != null && hitTile.arrangePossible && playerCtrl.arrangableTiles.Contains(hitTile))
                 {
-                    Debug.Log("¹èÄ¡°¡´É");
+                    Debug.Log("ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½");
                     playerCtrl.currentTile = hitTile;
                     playerCtrl.stateManager.firstArranged = true;
                 }
                 else
                 {
-                    Debug.Log($"¹èÄ¡ºÒ°¡´É: {hit}");
+                    Debug.Log($"ï¿½ï¿½Ä¡ï¿½Ò°ï¿½ï¿½ï¿½: {hit}");
                     playerCtrl.ReturnPool.Invoke();
                 }
 

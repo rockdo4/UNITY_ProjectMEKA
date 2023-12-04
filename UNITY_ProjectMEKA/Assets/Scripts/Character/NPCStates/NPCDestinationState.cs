@@ -30,6 +30,8 @@ public class NPCDestinationStates : NPCBaseState
         ////speed = enemyCtrl.state.speed;
         //repeatCount = -1;
         //once = false;
+        
+
     }
     public void Init()
     {
@@ -78,14 +80,31 @@ public class NPCDestinationStates : NPCBaseState
        
         foreach (var pl in enemyCtrl.rangeInPlayers)
         {
-            
             PlayerController player = pl.GetComponentInParent<PlayerController>();
-            //float distance = Vector3.Distance(enemyCtrl.transform.position,player.transform.position);
-            if (player.blockCount < player.maxBlockCount && enemyCtrl.state.isBlock && player != null /*&& distance >0.4f*/)
+            //float distance = Vector3.Distance(enemyCtrl.transform.position,player.transform.position);/*&& distance > 0.4f*/
+            if (player.blockCount < player.maxBlockCount && 
+                enemyCtrl.state.isBlock && player != null &&
+                player.currentState != PlayerController.CharacterStates.Arrange)
             {
-                enemyCtrl.target = pl;
-                enemyCtrl.SetState(NPCStates.Attack);
-                return;
+                if(enemyCtrl.state.isFly)
+                {
+                    if(pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Castor||
+                        pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
+                        pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
+                    {
+                        enemyCtrl.target = pl;
+                        enemyCtrl.SetState(NPCStates.Idle);
+                        return;
+                    }
+                }
+                else
+                {
+                    enemyCtrl.target = pl;
+                    //enemyCtrl.SetState(NPCStates.Attack);
+                    enemyCtrl.SetState(NPCStates.Idle);
+                    return;
+                }
+               
             }
             
         }
