@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+<<<<<<< HEAD
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using static PlayerController;
@@ -10,6 +11,27 @@ using static PlayerController;
 public class ArrangeJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     private enum Direction
+=======
+using UnityEngine.UI;
+using static PlayerController;
+
+// ÀÌ°Å´Ù
+
+public class ArrangeJoystick : MonoBehaviour
+{
+    public Button cancelButton;
+    public Button collectButton;
+    public ArrangeJoystickHandler handler;
+
+    private StageManager stageManager;
+    private float yOffset = 1f;
+
+    public UnityEvent ArrangeDone = new UnityEvent();
+
+    public bool settingMode;
+
+    private void Awake()
+>>>>>>> origin/RevertCharacterInfo
     {
         Up,
         Right,
