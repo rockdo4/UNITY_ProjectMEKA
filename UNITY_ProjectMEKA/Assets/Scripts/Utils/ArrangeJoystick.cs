@@ -56,16 +56,43 @@ public class ArrangeJoystick : MonoBehaviour
         if(settingMode && Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //var tempPos = transform.position;
+            //tempPos.y -= 0.01f;
             Plane plane = new Plane(Vector3.up, transform.position);
             float enter;
 
-            if (plane.Raycast(ray, out enter))
+            if (!EventSystem.current.IsPointerOverGameObject() && plane.Raycast(ray, out enter))
             {
                 ArrangeDone.Invoke();
                 Vector3 hitPoint = ray.GetPoint(enter);
                 Debug.Log($"{hitPoint}, {collectButton.transform.position}");
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        // Gizmo 색상 설정 (예: 녹색)
+        Gizmos.color = Color.green;
+
+        // Plane의 중심 위치
+        Vector3 center = transform.position;
+
+        // Plane의 반넓이 계산
+        float halfWidth = 10f / 2f;
+        float halfLength = 10f / 2f;
+
+        // Plane의 네 꼭지점 계산
+        Vector3 topLeft = center + new Vector3(-halfWidth, 0f, halfLength);
+        Vector3 topRight = center + new Vector3(halfWidth, 0f, halfLength);
+        Vector3 bottomLeft = center + new Vector3(-halfWidth, 0f, -halfLength);
+        Vector3 bottomRight = center + new Vector3(halfWidth, 0f, -halfLength);
+
+        // Gizmo를 사용하여 Plane의 선을 그리기
+        Gizmos.DrawLine(topLeft, topRight);
+        Gizmos.DrawLine(topRight, bottomRight);
+        Gizmos.DrawLine(bottomRight, bottomLeft);
+        Gizmos.DrawLine(bottomLeft, topLeft);
     }
 
     public void SecondArrangeInit()
@@ -157,51 +184,9 @@ public class ArrangeJoystick : MonoBehaviour
         }
         stageManager.currentPlayer.stateManager.secondArranged = false;
         stageManager.currentPlayer.currentTile.arrangePossible = true;
-        //ClearTileMesh(tempTiles);
         stageManager.currentPlayer.ReturnPool.Invoke();
         transform.gameObject.SetActive(false);
     }
-
-    //public void ChangeTileMesh()
-    //{
-    //    //Debug.Log("ChangeTileMesh");
-    //    ClearTileMesh(tempTiles);
-    //    var state = player.stateManager.currentBase as PlayableArrangeState;
-    //    state.AttackableTileSet();
-    //    foreach (var tilePos in player.attakableTiles)
-    //    {
-    //        RaycastHit hit;
-
-    //        //공중형이면 레이어 마스크 : 공중 + 지상
-    //        //지상형이면 레이어 마스크 : 지상
-    //        int layerMask = 0;
-    //        int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
-    //        int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
-
-    //        switch((int)player.transform.GetComponent<CharacterState>().occupation)
-    //        {
-    //            case (int)Defines.Occupation.Hunter:
-    //            case (int)Defines.Occupation.Castor:
-    //                layerMask = lowTileMask | highTileMask;
-    //                break;
-    //            default:
-    //                layerMask = lowTileMask;
-    //                break;
-    //        }
-
-    //        // 레이캐스트 실행
-    //        var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
-
-    //        if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
-    //        {
-    //            // 레이가 오브젝트에 부딪혔을 때의 처리
-    //            //Debug.Log("Hit " + hit.collider.gameObject.name);
-    //            var tileContoller = hit.transform.GetComponent<Tile>();
-    //            tileContoller.SetTileMaterial(Tile.TileMaterial.Attack);
-    //            tempTiles.AddLast(tileContoller);
-    //        }
-    //    }
-    //}
 
     public void ClearTileMesh(LinkedList<Tile> tempTiles)
     {

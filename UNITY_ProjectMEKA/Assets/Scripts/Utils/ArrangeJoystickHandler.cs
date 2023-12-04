@@ -17,8 +17,8 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     public bool cancelButtonOn;
     
     private StageManager stageManager;
-
     private ArrangeJoystick joystick;
+    private CharacterInfoUIManager characterInfoUIManager;
 
     private void Awake()
     {
@@ -44,8 +44,8 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     public void InitOnce()
     {
         joystick = transform.parent.GetComponent<ArrangeJoystick>();
-
-        stageManager = stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
+        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
+        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
 
         var boxCollider = GetComponent<BoxCollider>();
         half = boxCollider.bounds.size.x / 2f;
@@ -108,6 +108,8 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        characterInfoUIManager.ClearTileMesh();
+
         if (!stageManager.currentPlayer.stateManager.secondArranged)
         {
             // 핸들러가 플레이어 좌표 기준 일정 반경 내에 있을 때
@@ -163,6 +165,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Up);
                 playerState.AttackableTileSet(stageManager.currentPlayer.state.occupation);
+                characterInfoUIManager.ChangeAttackableTileMesh();
                 //if (player != null)
                 //{
                 //    ChangeTileMesh();
@@ -179,6 +182,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Right);
                 playerState.AttackableTileSet(stageManager.currentPlayer.state.occupation);
+                characterInfoUIManager.ChangeAttackableTileMesh();
                 //ChangeTileMesh();
             }
         }
@@ -192,6 +196,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Down);
                 playerState.AttackableTileSet(stageManager.currentPlayer.state.occupation);
+                characterInfoUIManager.ChangeAttackableTileMesh();
                 //ChangeTileMesh();
             }
         }
@@ -205,6 +210,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Left);
                 playerState.AttackableTileSet(stageManager.currentPlayer.state.occupation);
+                characterInfoUIManager.ChangeAttackableTileMesh();
                 //ChangeTileMesh();
             }
         }
