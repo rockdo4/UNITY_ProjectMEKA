@@ -144,7 +144,7 @@ public class NPCDestinationStates : NPCBaseState
                 enemyCtrl.transform.LookAt(targetPos);            
             }
         }
-        enemyCtrl.transform.LookAt(targetPos);
+        //enemyCtrl.transform.LookAt(targetPos);
     }
 
     public void MoveEnemyStraight()
