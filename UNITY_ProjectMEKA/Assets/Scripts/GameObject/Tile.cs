@@ -57,7 +57,6 @@ public class Tile : MonoBehaviour
 
     public void ClearTileMesh()
     {
-        Debug.Log("clear");
         Material[] materials = meshRenderer.materials; // 기존 재질 배열을 가져옵니다.
         List<Material> materialList = new List<Material>(materials); // 배열을 리스트로 변환합니다.
         if (materialList.Count > 1)

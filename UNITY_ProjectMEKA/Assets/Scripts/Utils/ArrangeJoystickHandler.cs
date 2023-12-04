@@ -96,7 +96,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
                     currentTile = directions[i];
                     if (prevTile != currentTile)
                     {
-                        Debug.Log($"{prevTile}���� {currentTile}�� �ٲ�");
+                        cancelButtonOn = false;
                     }
                     break;
                 }
@@ -112,42 +112,20 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
 
         if (!stageManager.currentPlayer.stateManager.secondArranged)
         {
-            // �ڵ鷯�� �÷��̾� ��ǥ ���� ���� �ݰ� ���� ���� ��
-            // ��ġ ��� ��ư Ȱ��ȭ
             var playerCenterPos = stageManager.currentPlayer.transform.position;
             playerCenterPos.y = transform.position.y;
 
             if (Vector3.Distance(transform.position, playerCenterPos) < radius)
             {
-                Debug.Log("�÷��̾� �ݰ� ��");
                 cancelButtonOn = true;
-
-                // �ڵ鷯 ���� ������ 0,0 ����
                 transform.localPosition = Vector3.zero;
             }
             else
             {
                 RotateHandler(currentTile.transform, true);
                 joystick.ArrangeDone.Invoke();
-                //player.stateManager.secondArranged = true;
-                //ArrangeDone.Invoke();
             }
         }
-
-        //else if(collectButton.IsActive())
-        //{
-        //    Debug.Log("collect button on");
-        //    // �ٱ��� ������ �� ��ҵǵ���
-        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //    Plane plane = new Plane(Vector3.up, transform.position);
-        //    float enter;
-        //    if (plane.Raycast(ray, out enter))
-        //    {
-        //        player.SetState(CharacterStates.Idle);
-        //        transform.parent.gameObject.SetActive(false);
-        //    }
-
-        //}
     }
 
     public void RotateHandler(Transform currentTileParent, bool snap)

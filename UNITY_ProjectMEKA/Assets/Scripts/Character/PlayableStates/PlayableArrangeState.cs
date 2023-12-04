@@ -65,8 +65,6 @@ public class PlayableArrangeState : PlayableBaseState
         Debug.Log("arrange exit");
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
-        //settingMode = false;
-        //playerCtrl.stageManager.currentPlayer = null;
     }
 
     public override void Update()

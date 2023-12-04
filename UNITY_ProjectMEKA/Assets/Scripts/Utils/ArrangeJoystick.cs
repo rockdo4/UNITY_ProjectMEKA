@@ -10,14 +10,14 @@ public class ArrangeJoystick : MonoBehaviour
     public ArrangeJoystickHandler handler;
 
     private StageManager stageManager;
+    private CharacterInfoUIManager characterInfoUIManager;
     private float yOffset = 1f;
 
     public UnityEvent ArrangeDone = new UnityEvent();
 
-    public bool settingMode;
-
     private void Awake()
     {
+        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
         stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
         ArrangeDone = new UnityEvent();
         ArrangeDone.AddListener(ArrangeDoneEvent);
@@ -43,15 +43,9 @@ public class ArrangeJoystick : MonoBehaviour
 
     private void Update()
     {
-        if (handler.cancelButtonOn)
-        {
-            if (!cancelButton.gameObject.activeSelf)
-            {
-                cancelButton.gameObject.SetActive(true);
-            }
-        }
+        cancelButton.gameObject.SetActive(handler.cancelButtonOn);
 
-        if (settingMode && Input.GetMouseButtonDown(0))
+        if (characterInfoUIManager.windowMode == Defines.CharacterInfoMode.Setting && Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane plane = new Plane(Vector3.up, transform.position);
@@ -65,58 +59,37 @@ public class ArrangeJoystick : MonoBehaviour
         }
     }
 
-    //private void OnDrawGizmos()
+    //public void SecondArrangeInit()
     //{
-    //    Gizmos.color = Color.green;
-
-    //    Vector3 center = transform.position;
-
-    //    float halfWidth = 10f / 2f;
-    //    float halfLength = 10f / 2f;
-
-    //    Vector3 topLeft = center + new Vector3(-halfWidth, 0f, halfLength);
-    //    Vector3 topRight = center + new Vector3(halfWidth, 0f, halfLength);
-    //    Vector3 bottomLeft = center + new Vector3(-halfWidth, 0f, -halfLength);
-    //    Vector3 bottomRight = center + new Vector3(halfWidth, 0f, -halfLength);
-
-    //    // Gizmo�� ����Ͽ� Plane�� ���� �׸���
-    //    Gizmos.DrawLine(topLeft, topRight);
-    //    Gizmos.DrawLine(topRight, bottomRight);
-    //    Gizmos.DrawLine(bottomRight, bottomLeft);
-    //    Gizmos.DrawLine(bottomLeft, topLeft);
+    //    if (!handler.gameObject.activeSelf)
+    //    {
+    //        handler.gameObject.SetActive(true);
+    //    }
+    //    if (cancelButton.gameObject.activeSelf)
+    //    {
+    //        cancelButton.gameObject.SetActive(false);
+    //    }
+    //    if (collectButton.gameObject.activeSelf)
+    //    {
+    //        collectButton.gameObject.SetActive(false);
+    //    }
     //}
 
-    public void SecondArrangeInit()
-    {
-        if (!handler.gameObject.activeSelf)
-        {
-            handler.gameObject.SetActive(true);
-        }
-        if (cancelButton.gameObject.activeSelf)
-        {
-            cancelButton.gameObject.SetActive(false);
-        }
-        if (collectButton.gameObject.activeSelf)
-        {
-            collectButton.gameObject.SetActive(false);
-        }
-    }
-
-    public void SettingModeInit()
-    {
-        if (handler.gameObject.activeSelf)
-        {
-            handler.gameObject.SetActive(false);
-        }
-        if (cancelButton.gameObject.activeSelf)
-        {
-            cancelButton.gameObject.SetActive(false);
-        }
-        if (!collectButton.gameObject.activeSelf)
-        {
-            collectButton.gameObject.SetActive(true);
-        }
-    }
+    //public void SettingModeInit()
+    //{
+    //    if (handler.gameObject.activeSelf)
+    //    {
+    //        handler.gameObject.SetActive(false);
+    //    }
+    //    if (cancelButton.gameObject.activeSelf)
+    //    {
+    //        cancelButton.gameObject.SetActive(false);
+    //    }
+    //    if (!collectButton.gameObject.activeSelf)
+    //    {
+    //        collectButton.gameObject.SetActive(true);
+    //    }
+    //}
 
     public void ArrangeDoneEvent()
     {
@@ -188,5 +161,6 @@ public class ArrangeJoystick : MonoBehaviour
         var tempPos = playerTr.position;
         tempPos.y += yOffset;
         transform.position = tempPos;
+        handler.transform.localPosition = Vector3.zero;
     }
 }

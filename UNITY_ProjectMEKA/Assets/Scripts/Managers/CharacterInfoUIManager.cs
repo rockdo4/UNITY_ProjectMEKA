@@ -89,12 +89,13 @@ public class CharacterInfoUIManager : MonoBehaviour
                 joystickHandler.gameObject.SetActive(true);
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(false);
-                stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
-                ChangeAttackableTileMesh();
+                //stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
+                //ChangeAttackableTileMesh();
                 break;
             case Defines.CharacterInfoMode.Setting:
                 // 캐릭터 인포 on
                 joystick.gameObject.SetActive(true);
+                joystick.SetPositionToCurrentPlayer(stageManager.currentPlayer.transform);
                 joystickHandler.gameObject.SetActive(false);
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(true);

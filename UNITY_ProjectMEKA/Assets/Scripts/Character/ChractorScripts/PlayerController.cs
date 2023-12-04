@@ -87,7 +87,7 @@ public class PlayerController : PoolAble, IPointerDownHandler
     }
     private void OnEnable()
     {
-        Debug.Log("player onEnable");
+        Debug.Log($"player onEnable : {stateManager.firstArranged}");
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
         CreateColliders();
@@ -466,7 +466,6 @@ public class PlayerController : PoolAble, IPointerDownHandler
             SetState(CharacterStates.Arrange);
             stageManager.currentPlayer = this;
             stageManager.currentPlayerIcon = this.icon;
-            joystick.GetComponent<ArrangeJoystick>().settingMode = true;
             joystick.SetActive(true);
         }
     }
