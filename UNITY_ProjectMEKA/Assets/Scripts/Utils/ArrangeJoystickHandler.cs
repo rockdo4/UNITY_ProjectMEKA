@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,7 +15,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     public float radius;
 
     public bool cancelButtonOn;
-    
+
     private StageManager stageManager;
     private ArrangeJoystick joystick;
     private CharacterInfoUIManager characterInfoUIManager;
@@ -68,7 +68,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!stageManager.currentPlayer.stateManager.secondArranged)
+        if (!stageManager.currentPlayer.stateManager.secondArranged)
         {
             OnDrag(eventData);
         }
@@ -76,7 +76,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(!stageManager.currentPlayer.stateManager.secondArranged)
+        if (!stageManager.currentPlayer.stateManager.secondArranged)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane plane = new Plane(Vector3.up, transform.position);
@@ -89,14 +89,14 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             }
 
             prevTile = currentTile;
-            for(int i = 0; i < (int)Defines.RotationDirection.Count; ++i)
+            for (int i = 0; i < (int)Defines.RotationDirection.Count; ++i)
             {
                 if (bounds[i].Contains(transform.localPosition))
                 {
                     currentTile = directions[i];
-                    if(prevTile != currentTile)
+                    if (prevTile != currentTile)
                     {
-                        Debug.Log($"{prevTile}¿¡¼­ {currentTile}·Î ¹Ù²ñ");
+                        Debug.Log($"{prevTile}ï¿½ï¿½ï¿½ï¿½ {currentTile}ï¿½ï¿½ ï¿½Ù²ï¿½");
                     }
                     break;
                 }
@@ -112,17 +112,17 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
 
         if (!stageManager.currentPlayer.stateManager.secondArranged)
         {
-            // ÇÚµé·¯°¡ ÇÃ·¹ÀÌ¾î ÁÂÇ¥ ±âÁØ ÀÏÁ¤ ¹Ý°æ ³»¿¡ ÀÖÀ» ¶§
-            // ¹èÄ¡ Ãë¼Ò ¹öÆ° È°¼ºÈ­
+            // ï¿½Úµé·¯ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+            // ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° È°ï¿½ï¿½È­
             var playerCenterPos = stageManager.currentPlayer.transform.position;
             playerCenterPos.y = transform.position.y;
 
-            if(Vector3.Distance(transform.position, playerCenterPos) < radius)
+            if (Vector3.Distance(transform.position, playerCenterPos) < radius)
             {
-                Debug.Log("ÇÃ·¹ÀÌ¾î ¹Ý°æ ³»");
+                Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ý°ï¿½ ï¿½ï¿½");
                 cancelButtonOn = true;
 
-                // ÇÚµé·¯ ·ÎÄÃ Æ÷Áö¼Ç 0,0 °íÁ¤
+                // ï¿½Úµé·¯ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0,0 ï¿½ï¿½ï¿½ï¿½
                 transform.localPosition = Vector3.zero;
             }
             else
@@ -137,7 +137,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
         //else if(collectButton.IsActive())
         //{
         //    Debug.Log("collect button on");
-        //    // ¹Ù±ù¿¡ ´­·¶À» ¶§ Ãë¼ÒµÇµµ·Ï
+        //    // ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ÒµÇµï¿½ï¿½ï¿½
         //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         //    Plane plane = new Plane(Vector3.up, transform.position);
         //    float enter;
@@ -231,8 +231,8 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     //    {
     //        RaycastHit hit;
 
-    //        //°øÁßÇüÀÌ¸é ·¹ÀÌ¾î ¸¶½ºÅ© : °øÁß + Áö»ó
-    //        //Áö»óÇüÀÌ¸é ·¹ÀÌ¾î ¸¶½ºÅ© : Áö»ó
+    //        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½Å© : ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½ï¿½
+    //        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½Å© : ï¿½ï¿½ï¿½ï¿½
     //        int layerMask = 0;
     //        int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
     //        int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
@@ -248,7 +248,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     //                break;
     //        }
 
-    //        // ·¹ÀÌÄ³½ºÆ® ½ÇÇà
+    //        // ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
     //        var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
 
     //        if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))

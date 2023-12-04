@@ -11,7 +11,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     public GameObject characterPrefab;
     private GameObject characterGo;
     private PlayerController playerController;
-    
+
     public ArrangeJoystick arrangeJoystick;
     private UnityEvent SetJoystick;
     private CharacterInfoUIManager characterInfoUIManager;
@@ -30,8 +30,8 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         SetJoystick.AddListener(() =>
         {
             arrangeJoystick.settingMode = false;
-arrangeJoystick.transform.gameObject.SetActive(true);
-           arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
+            arrangeJoystick.transform.gameObject.SetActive(true);
+            arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
             once = true;
         });
     }
@@ -42,9 +42,9 @@ arrangeJoystick.transform.gameObject.SetActive(true);
 
     private void Update()
     {
-        if(playerController != null)
+        if (playerController != null)
         {
-            if(!playerController.stateManager.created)
+            if (!playerController.stateManager.created)
             {
                 created = false;
             }
@@ -79,7 +79,7 @@ arrangeJoystick.transform.gameObject.SetActive(true);
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(stageManager.currentPlayer == null)
+        if (stageManager.currentPlayer == null)
         {
             CreateCharacter();
             characterGo.transform.position = transform.position;
