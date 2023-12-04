@@ -470,4 +470,93 @@ public class PlayerController : PoolAble, IPointerDownHandler
             joystick.SetActive(true);
         }
     }
+
+    public void ArrangableTileSet(Defines.Occupation occupation)
+    {
+        string tag;
+        switch (occupation)
+        {
+            case Defines.Occupation.Guardian:
+            case Defines.Occupation.Striker:
+                tag = "LowTile";
+                break;
+            default:
+                tag = "HighTile";
+                break;
+        }
+
+        var tileParent = GameObject.FindGameObjectWithTag(tag);
+        var tileCount = tileParent.transform.childCount;
+        var tiles = new List<Tile>();
+        for (int i = 0; i < tileCount; ++i)
+        {
+            if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
+            {
+                tiles.Add(tileParent.transform.GetChild(i).GetComponentInChildren<Tile>());
+            }
+        }
+        arrangableTiles = tiles;
+    }
+
+    public void AttackableTileSet(Defines.Occupation occupation)
+    {
+        int layerMask = 0;
+        int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
+        int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
+
+        switch (occupation)
+        {
+            case Defines.Occupation.Guardian:
+            case Defines.Occupation.Striker:
+                layerMask = lowTileMask;
+                break;
+            default:
+                layerMask = lowTileMask | highTileMask;
+                break;
+        }
+
+        Vector3 characterPosition = transform.position;
+        Vector3 forward = -transform.forward;
+        Vector3 right = transform.right;
+        int characterRow = 0;
+        int characterCol = 0;
+
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 2)
+                {
+                    characterRow = i;
+                    characterCol = j;
+                }
+            }
+        }
+
+        if (attakableTiles.Count > 0)
+        {
+            attakableTiles.Clear();
+        }
+
+        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            {
+                if (state.AttackRange[i, j] == 1)
+                {
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    Vector3 tilePosition = characterPosition + relativePosition;
+                    var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
+
+                    RaycastHit hit;
+                    var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
+                    if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
+                    {
+                        var tileContoller = hit.transform.GetComponent<Tile>();
+                        attakableTiles.Add(tileContoller);
+                    }
+                }
+            }
+        }
+    }
 }

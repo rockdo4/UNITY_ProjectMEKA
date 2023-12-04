@@ -57,7 +57,8 @@ public class Defines
     public enum CharacterInfoMode
     {
         None,
-        Arrange,
+        FirstArrange,
+        SecondArrange,
         Setting
     }
 

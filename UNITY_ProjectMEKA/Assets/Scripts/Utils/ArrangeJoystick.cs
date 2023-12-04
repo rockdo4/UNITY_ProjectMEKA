@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static PlayerController;
 
@@ -29,14 +27,14 @@ public class ArrangeJoystick : MonoBehaviour
 
     private void OnEnable()
     {
-        if (settingMode)
-        {
-            SettingModeInit();
-        }
-        else
-        {
-            SecondArrangeInit();
-        }
+        //if (settingMode)
+        //{
+        //    SettingModeInit();
+        //}
+        //else
+        //{
+        //    SecondArrangeInit();
+        //}
     }
 
     private void Start()
@@ -53,36 +51,16 @@ public class ArrangeJoystick : MonoBehaviour
             }
         }
 
-        Debug.Log($"플레인 레이캐스트 : {EventSystem.current.IsPointerOverGameObject()}");
-
         if (settingMode && Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //var tempPos = transform.position;
-            //tempPos.y -= 0.01f;
             Plane plane = new Plane(Vector3.up, transform.position);
             float enter;
-
-            //if(EventSystem.current.IsPointerOverGameObject())
-            //{
-            //    PointerEventData pointerData = new PointerEventData(EventSystem.current);
-            //    pointerData.position = Input.mousePosition;
-
-            //    List<RaycastResult> results = new List<RaycastResult>();
-            //    EventSystem.current.RaycastAll(pointerData, results);
-
-            //    foreach (RaycastResult result in results)
-            //    {
-            //        Debug.Log("Hit " + result.gameObject.name, result.gameObject);
-            //    }
-            //}
 
             if (!Utils.IsUILayer() && plane.Raycast(ray, out enter))
             {
                 Debug.Log("arrangeDone");
                 ArrangeDone.Invoke();
-                //Vector3 hitPoint = ray.GetPoint(enter);
-                //Debug.Log($"{hitPoint}, {collectButton.transform.position}");
             }
         }
     }
@@ -196,7 +174,7 @@ public class ArrangeJoystick : MonoBehaviour
         {
             collectButton.gameObject.SetActive(false);
         }
-        stageManager.currentPlayer.stateManager.secondArranged = false;
+        stageManager.currentPlayer.stateManager.firstArranged = false; stageManager.currentPlayer.stateManager.secondArranged = false;
         stageManager.currentPlayer.currentTile.arrangePossible = true;
         stageManager.currentPlayer.ReturnPool.Invoke();
         stageManager.currentPlayer = null;
@@ -204,15 +182,6 @@ public class ArrangeJoystick : MonoBehaviour
 
         transform.gameObject.SetActive(false);
     }
-
-    //public void ClearTileMesh(LinkedList<Tile> tempTiles)
-    //{
-    //    foreach (var tile in tempTiles)
-    //    {
-    //        tile.ClearTileMesh();
-    //    }
-    //    tempTiles.Clear();
-    //}
 
     public void SetPositionToCurrentPlayer(Transform playerTr)
     {

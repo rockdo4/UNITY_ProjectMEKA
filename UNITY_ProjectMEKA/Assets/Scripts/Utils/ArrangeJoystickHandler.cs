@@ -164,7 +164,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             else
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Up);
-                playerState.AttackableTileSet(stageManager.currentPlayer.state.occupation);
+                stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
                 characterInfoUIManager.ChangeAttackableTileMesh();
                 //if (player != null)
                 //{
@@ -181,7 +181,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             else
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Right);
-                playerState.AttackableTileSet(stageManager.currentPlayer.state.occupation);
+                stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
                 characterInfoUIManager.ChangeAttackableTileMesh();
                 //ChangeTileMesh();
             }
@@ -195,7 +195,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             else
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Down);
-                playerState.AttackableTileSet(stageManager.currentPlayer.state.occupation);
+                stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
                 characterInfoUIManager.ChangeAttackableTileMesh();
                 //ChangeTileMesh();
             }
@@ -209,7 +209,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             else
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Left);
-                playerState.AttackableTileSet(stageManager.currentPlayer.state.occupation);
+                stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
                 characterInfoUIManager.ChangeAttackableTileMesh();
                 //ChangeTileMesh();
             }
