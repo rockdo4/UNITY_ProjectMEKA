@@ -53,26 +53,37 @@ public class ArrangeJoystick : MonoBehaviour
             }
         }
 
+        Debug.Log($"플레인 레이캐스트 : {EventSystem.current.IsPointerOverGameObject()}");
+
         if (settingMode && Input.GetMouseButtonDown(0))
         {
-            Debug.Log("setting mode");
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                ArrangeDone.Invoke();
-            }
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //var tempPos = transform.position;
+            //tempPos.y -= 0.01f;
+            Plane plane = new Plane(Vector3.up, transform.position);
+            float enter;
 
-            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            ////var tempPos = transform.position;
-            ////tempPos.y -= 0.01f;
-            //Plane plane = new Plane(Vector3.up, transform.position);
-            //float enter;
-
-            //if (!EventSystem.current.IsPointerOverGameObject() && plane.Raycast(ray, out enter))
+            //if(EventSystem.current.IsPointerOverGameObject())
             //{
-            //    ArrangeDone.Invoke();
-            //    //Vector3 hitPoint = ray.GetPoint(enter);
-            //    //Debug.Log($"{hitPoint}, {collectButton.transform.position}");
+            //    PointerEventData pointerData = new PointerEventData(EventSystem.current);
+            //    pointerData.position = Input.mousePosition;
+
+            //    List<RaycastResult> results = new List<RaycastResult>();
+            //    EventSystem.current.RaycastAll(pointerData, results);
+
+            //    foreach (RaycastResult result in results)
+            //    {
+            //        Debug.Log("Hit " + result.gameObject.name, result.gameObject);
+            //    }
             //}
+
+            if (!Utils.IsUILayer() && plane.Raycast(ray, out enter))
+            {
+                Debug.Log("arrangeDone");
+                ArrangeDone.Invoke();
+                //Vector3 hitPoint = ray.GetPoint(enter);
+                //Debug.Log($"{hitPoint}, {collectButton.transform.position}");
+            }
         }
     }
 
