@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public enum NPCStates
@@ -54,7 +54,7 @@ public class EnemyController : PoolAble
             SetState(NPCStates.Move);
         }
         isArrival = false;
-        CreateColliders();
+        //CreateColliders();
 
         state.Hp = state.maxHp;
         rangeInPlayers.Clear();
@@ -62,14 +62,14 @@ public class EnemyController : PoolAble
 	}
 
     
-	private void OnDisable()
-	{
-		var delete = GetComponents<BoxCollider>();
-		foreach (var c in delete)
-		{
-			Destroy(c);
-		}
-	}
+	//private void OnDisable()
+	//{
+	//	var delete = GetComponents<BoxCollider>();
+	//	foreach (var c in delete)
+	//	{
+	//		Destroy(c);
+	//	}
+	//}
 
 	private void Awake()
     {
@@ -154,13 +154,16 @@ public class EnemyController : PoolAble
             //Debug.Log(other, other);
             if (!rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
             {
-                
-                rangeInPlayers.Add(other.GetComponentInParent<Transform>().gameObject);
-                var obj = other.GetComponentInParent<CanDie>();
-                obj.action.AddListener(() =>
+                //other�� enemy�� ����ĭ�� ������ ����Ʈ�� �����ʾƾ���
+                if (CurrentGridPos != other.GetComponentInParent<PlayerController>().CurrentGridPos)
                 {
-                    rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
-                });
+                    rangeInPlayers.Add(other.GetComponentInParent<Transform>().gameObject);
+                    var obj = other.GetComponentInParent<CanDie>();
+                    obj.action.AddListener(() =>
+                    {
+                        rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+                    });
+                }
             }
         }
     }

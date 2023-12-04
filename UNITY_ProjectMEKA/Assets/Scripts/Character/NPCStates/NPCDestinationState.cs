@@ -70,7 +70,7 @@ public class NPCDestinationStates : NPCBaseState
         Vector3Int gridPosition = Vector3Int.FloorToInt(enemyCtrl.transform.position);
         Vector3 tileCenter = new Vector3(gridPosition.x + 0.5f, gridPosition.y, gridPosition.z + 0.5f);
 
-        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.1f)
+        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.3f)
         {
             CheckPlayer();
         }
