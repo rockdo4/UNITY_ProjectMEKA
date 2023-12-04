@@ -97,11 +97,15 @@ public class PlayableIdleState : PlayableBaseState
             }
         }
 
-        if (character != null && (character.state.Hp / character.state.maxHp) < 1f)
+        if (character != null && (character.state.Hp / character.state.maxHp) < 1f && character.gameObject.activeSelf)
         {
             playerCtrl.target = character.gameObject;
             Debug.Log("Healing");
             playerCtrl.SetState(PlayerController.CharacterStates.Healing);
+        }
+        else
+        {
+            character = null;
         }
 
     }

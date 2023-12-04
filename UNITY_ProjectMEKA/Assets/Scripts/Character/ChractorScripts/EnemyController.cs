@@ -48,7 +48,7 @@ public class EnemyController : PoolAble
     public Vector3 CurrentPos;
     [HideInInspector]
     public Vector3Int CurrentGridPos;
-
+    
     [HideInInspector]
     public bool isArrival = false;
 
@@ -66,15 +66,6 @@ public class EnemyController : PoolAble
 
 	}
 
-    
-	//private void OnDisable()
-	//{
-	//	var delete = GetComponents<BoxCollider>();
-	//	foreach (var c in delete)
-	//	{
-	//		Destroy(c);
-	//	}
-	//}
 
 	private void Awake()
     {
@@ -144,6 +135,12 @@ public class EnemyController : PoolAble
     {
         stateManager.FixedUpdate();
     }
+    private void OnDisable()
+    {
+        
+        SetState(NPCStates.Die);
+        
+    }
 
     private void Update()
     {
@@ -151,10 +148,14 @@ public class EnemyController : PoolAble
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
         //Debug.Log(state.damage);
-        if (state.Hp <= 0)
-        {
-            SetState(NPCStates.Die);
-        }
+        
+        //foreach (var a in rangeInPlayers)
+        //{
+        //    if(!a.activeSelf)
+        //    {
+        //        rangeInPlayers.Remove(a);
+        //    }
+        //}
 
     }
     private void OnTriggerStay(Collider other)
@@ -207,6 +208,7 @@ public class EnemyController : PoolAble
         }
         TakeDamage co = target.GetComponentInParent<TakeDamage>();
         co.OnAttack(state.damage + Rockpaperscissors());
+        //ani.SetTrigger("Idle");
     }
     public void Hit(float damage)
     {
@@ -339,7 +341,7 @@ public class EnemyController : PoolAble
                     Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);
 
                     BoxCollider collider = gameObject.AddComponent<BoxCollider>();
-                    collider.size = new Vector3(1 / parentScale.x, 1 / parentScale.y, 1 / parentScale.z);
+                    collider.size = new Vector3(1 / parentScale.x, 3 / parentScale.y, 1 / parentScale.z);
                     collider.center = correctedPosition;
                     collider.isTrigger = true;
                 }

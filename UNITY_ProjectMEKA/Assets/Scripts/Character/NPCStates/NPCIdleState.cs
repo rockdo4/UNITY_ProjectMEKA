@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class NPCIdleState : NPCBaseState
 {
-    
 
     public NPCIdleState(EnemyController enemy) : base(enemy)
     {
@@ -13,7 +12,7 @@ public class NPCIdleState : NPCBaseState
 
     public override void Enter()
     {
-
+        enemyCtrl.ani.SetTrigger("Idle");
     }
 
     public override void Exit()
@@ -26,8 +25,13 @@ public class NPCIdleState : NPCBaseState
 
     public override void Update()
     {
-        
+        //timer += Time.deltaTime;
+        //if (timer > enemyCtrl.state.attackDelay)
+        //{
+        //    timer = 0;
+        //}
+        enemyCtrl.SetState(NPCStates.Attack);
     }
 
-    
+
 }

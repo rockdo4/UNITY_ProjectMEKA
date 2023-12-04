@@ -11101,10 +11101,10 @@ GameObject:
   - component: {fileID: 1572199507145115653}
   - component: {fileID: 3534072561631229071}
   - component: {fileID: 3230792208223543529}
-  - component: {fileID: 7682500687926448719}
-  - component: {fileID: 5358420069113500017}
+  - component: {fileID: 8324792157297868645}
+  - component: {fileID: 2920336605011053093}
   m_Layer: 7
-  m_Name: EnemyNormal
+  m_Name: EnemyLongFly
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11139,7 +11139,7 @@ Animator:
   m_GameObject: {fileID: 5014772430113155349}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 417e358c130ae6c488f2ffe5d6c9830e, type: 3}
-  m_Controller: {fileID: 9100000, guid: 5664913e4c792da46999dece51246477, type: 2}
+  m_Controller: {fileID: 9100000, guid: ba319cab46dce074d99da37f53ada623, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -11179,28 +11179,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: 
   arrangeCost: 0
-  passive: 04000000
+  passive: 
   skill: 0
-  enemyType: 1
-  property: 1
+  enemyType: 2
+  property: 3
   occupation: 0
   maxHp: 100
   amror: 0
   speed: 1
   cooldown: 0
-  damage: 20
-  attackDelay: 1
+  damage: 10
+  attackDelay: 0.3
   exp: 0
-  BulletName: 
-  BulletType: 0
-  flashName: 
-  hitName: 
+  BulletName: ps
+  BulletType: 2
+  flashName: Flash3
+  hitName: Hit3
   hang: 1
-  yal: 2
-  rangeAttack: 0100000002000000
+  yal: 4
+  rangeAttack: 01000000010000000100000002000000
   cost: 0
   maxCost: 0
-  isFly: 0
+  isFly: 1
   level: 0
   grade: 0
   experience: 0
@@ -11232,7 +11232,7 @@ MonoBehaviour:
   target: {fileID: 0}
   healingTarget: {fileID: 0}
   HoIsHitMe: {fileID: 0}
-  FirePosition: {fileID: 0}
+  FirePosition: {fileID: 1288449465077684459}
   rangeInPlayers: []
   CurrentPos: {x: 0, y: 0, z: 0}
   CurrentGridPos: {x: 0, y: 0, z: 0}
@@ -11249,7 +11249,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &7682500687926448719
+--- !u!136 &8324792157297868645
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014772430113155349}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.54915035
+  m_Height: 5.283951
+  m_Direction: 1
+  m_Center: {x: -0.0070215017, y: 2.7036934, z: 0}
+--- !u!54 &2920336605011053093
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11276,29 +11299,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &5358420069113500017
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5014772430113155349}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.6023726
-  m_Height: 5.197424
-  m_Direction: 1
-  m_Center: {x: 0, y: 2.7129679, z: 0}
 --- !u!1 &5030111400024248876
 GameObject:
   m_ObjectHideFlags: 0
@@ -14410,7 +14410,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

@@ -102,10 +102,11 @@ public class CharacterState : MonoBehaviour
     [HideInInspector]
     public float cost;
 
-    [SerializeField, Header("캐릭터 최대 시그마")]
+    [SerializeField, Header("캐릭터 최대 시그마(마나)")]
     public float maxCost;
 
-   
+    [SerializeField, Header("적 공중형, 지상형 선택(언체크 지상형)")]
+    public bool isFly;
 
     
     public void ConvertTo2DArray()

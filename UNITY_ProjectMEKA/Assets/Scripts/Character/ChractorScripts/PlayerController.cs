@@ -82,14 +82,12 @@ public class PlayerController : PoolAble, IPointerDownHandler
         enemyBlockCount.Clear();
         state.Hp = state.maxHp;
     }
-    //private void OnDisable()
-    //{
-    //    var delete = GetComponents<BoxCollider>();
-    //    foreach (var c in delete)
-    //    {
-    //        Destroy(c);
-    //    }
-    //}
+    private void OnDisable()
+    {
+        
+        SetState(CharacterStates.Die);
+        
+    }
     void Start()
     {
         Debug.Log("player Controller start");
@@ -147,14 +145,18 @@ public class PlayerController : PoolAble, IPointerDownHandler
             state.cost = state.maxCost;
         }
         //Debug.Log(CurrentGridPos);
-        if(state.Hp <= 0)
+        
+        foreach (var a in rangeInEnemys)
         {
-            SetState(CharacterStates.Die);
+            if (!a.activeSelf)
+            {
+                rangeInEnemys.Remove(a);
+            }
         }
-        
-        
-    }
 
+
+    }
+    
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("EnemyCollider") && state.occupation != Defines.Occupation.Supporters)
@@ -435,7 +437,7 @@ public class PlayerController : PoolAble, IPointerDownHandler
                     Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);
 
                     BoxCollider collider = gameObject.AddComponent<BoxCollider>();
-                    collider.size = new Vector3(1 / parentScale.x, 1 / parentScale.y, 1 / parentScale.z);
+                    collider.size = new Vector3(1 / parentScale.x, 5 / parentScale.y, 1 / parentScale.z);
                     collider.center = correctedPosition;
                     collider.isTrigger = true;
                 }
