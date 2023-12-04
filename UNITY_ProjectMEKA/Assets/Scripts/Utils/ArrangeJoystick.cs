@@ -72,23 +72,23 @@ public class ArrangeJoystick : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // Gizmo »ö»ó ¼³Á¤ (¿¹: ³ì»ö)
+        // Gizmo ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½: ï¿½ï¿½ï¿½)
         Gizmos.color = Color.green;
 
-        // PlaneÀÇ Áß½É À§Ä¡
+        // Planeï¿½ï¿½ ï¿½ß½ï¿½ ï¿½ï¿½Ä¡
         Vector3 center = transform.position;
 
-        // PlaneÀÇ ¹Ý³ÐÀÌ °è»ê
+        // Planeï¿½ï¿½ ï¿½Ý³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         float halfWidth = 10f / 2f;
         float halfLength = 10f / 2f;
 
-        // PlaneÀÇ ³× ²ÀÁöÁ¡ °è»ê
+        // Planeï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 topLeft = center + new Vector3(-halfWidth, 0f, halfLength);
         Vector3 topRight = center + new Vector3(halfWidth, 0f, halfLength);
         Vector3 bottomLeft = center + new Vector3(-halfWidth, 0f, -halfLength);
         Vector3 bottomRight = center + new Vector3(halfWidth, 0f, -halfLength);
 
-        // Gizmo¸¦ »ç¿ëÇÏ¿© PlaneÀÇ ¼±À» ±×¸®±â
+        // Gizmoï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ Planeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
         Gizmos.DrawLine(topLeft, topRight);
         Gizmos.DrawLine(topRight, bottomRight);
         Gizmos.DrawLine(bottomRight, bottomLeft);
