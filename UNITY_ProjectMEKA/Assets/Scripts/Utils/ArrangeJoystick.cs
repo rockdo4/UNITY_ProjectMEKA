@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static PlayerController;
 
+// ¿Ã∞≈¥Ÿ
+
 public class ArrangeJoystick : MonoBehaviour
 {
     public Button cancelButton;
