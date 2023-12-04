@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using TMPro;
+using System.Text;
 
 public class CharacterInfoUIManager : MonoBehaviour
 {
@@ -8,12 +10,19 @@ public class CharacterInfoUIManager : MonoBehaviour
     private Defines.CharacterInfoMode prevWindowMode;
     private StageManager stageManager;
 
+    // character info
+    public Canvas characterInfoCanvas;
+    public TextMeshProUGUI characterName;
+    public TextMeshProUGUI characterLevel;
+
+    // joystick
     public ArrangeJoystick joystick;
     private ArrangeJoystickHandler joystickHandler;
     private Button cancelButton;
     private Button collectButton;
 
     public bool currentPlayerChanged;
+
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
@@ -68,16 +77,21 @@ public class CharacterInfoUIManager : MonoBehaviour
             case Defines.CharacterInfoMode.None:
                 // 캐릭터 인포 off
                 ClearTileMesh();
+                characterInfoCanvas.gameObject.SetActive(false);
                 joystick.gameObject.SetActive(false);
                 break;
             case Defines.CharacterInfoMode.FirstArrange:
                 // 캐릭터 인포 on
+                characterInfoCanvas.gameObject.SetActive(true);
+                ChangeCharacterInfo();
                 joystick.gameObject.SetActive(false);
                 stageManager.currentPlayer.ArrangableTileSet(stageManager.currentPlayer.state.occupation);
                 ChangeArrangableTileMesh();
                 break;
             case Defines.CharacterInfoMode.SecondArrange:
                 // 캐릭터 인포 on
+                characterInfoCanvas.gameObject.SetActive(true);
+                ChangeCharacterInfo();
                 ClearTileMesh();
                 joystick.gameObject.SetActive(true);
                 joystick.SetPositionToCurrentPlayer(stageManager.currentPlayer.transform);
@@ -87,6 +101,8 @@ public class CharacterInfoUIManager : MonoBehaviour
                 break;
             case Defines.CharacterInfoMode.Setting:
                 // 캐릭터 인포 on
+                characterInfoCanvas.gameObject.SetActive(true);
+                ChangeCharacterInfo();
                 joystick.gameObject.SetActive(true);
                 joystick.SetPositionToCurrentPlayer(stageManager.currentPlayer.transform);
                 joystickHandler.gameObject.SetActive(false);
@@ -117,6 +133,20 @@ public class CharacterInfoUIManager : MonoBehaviour
                 stageManager.currentPlayerIcon = null;
             }
         }
+    }
+
+    public void ChangeCharacterInfo()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.Append("name : ");
+        stringBuilder.Append(stageManager.currentPlayer.state.name);
+        characterName.text = stringBuilder.ToString();
+
+        stringBuilder.Clear();
+        stringBuilder.Append("level : ");
+        stringBuilder.Append(stageManager.currentPlayer.state.level);
+
+        characterLevel.text = stringBuilder.ToString();
     }
 
     public void ChangeArrangableTileMesh()

@@ -142,8 +142,6 @@ public class PlayerController : PoolAble, IPointerDownHandler
                 break;
         }
         state.cost = state.maxCost;
-        Debug.Log($"player Controller start : {states.Count}");
-
     }
     private void Update()
     {
@@ -552,7 +550,10 @@ public class PlayerController : PoolAble, IPointerDownHandler
                     if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
                     {
                         var tileContoller = hit.transform.GetComponent<Tile>();
-                        attakableTiles.Add(tileContoller);
+                        if(tileContoller.arrangePossible)
+                        {
+                            attakableTiles.Add(tileContoller);
+                        }
                     }
                 }
             }

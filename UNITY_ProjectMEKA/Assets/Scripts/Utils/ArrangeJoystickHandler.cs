@@ -70,7 +70,6 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
         Debug.Log("on pointer down");
         if (!stageManager.currentPlayer.stateManager.secondArranged)
         {
-            Debug.Log("on pointer down!!!!!");
             OnDrag(eventData);
         }
     }
@@ -79,7 +78,6 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     {
         if (!stageManager.currentPlayer.stateManager.secondArranged)
         {
-            Debug.Log("on drag");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane plane = new Plane(Vector3.up, transform.position);
             float enter;
