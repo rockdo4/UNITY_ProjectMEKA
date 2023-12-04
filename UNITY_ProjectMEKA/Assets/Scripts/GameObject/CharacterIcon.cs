@@ -79,11 +79,16 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (stageManager.currentPlayer == null || stageManager.currentPlayer == playerController)
+        //var isCurrentPlayerNull = stageManager.currentPlayer == null;
+        var isCurrentPlayerThis = stageManager.currentPlayer == playerController;
+        var isPossibleMode = (characterInfoUIManager.windowMode == Defines.CharacterInfoMode.None) || (characterInfoUIManager.windowMode == Defines.CharacterInfoMode.FirstArrange);
+
+        if (isPossibleMode || (isCurrentPlayerThis && isPossibleMode))
         {
             CreateCharacter();
             characterGo.transform.position = transform.position;
             once = false;
+            characterInfoUIManager.currentPlayerChanged = true;
         }
     }
 }

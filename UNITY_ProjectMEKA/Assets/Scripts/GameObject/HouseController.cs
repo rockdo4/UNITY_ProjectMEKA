@@ -28,7 +28,7 @@ public class HouseController : MonoBehaviour
         if(houseHp <= 0f)
         {
             // 스테이지 오버 함수 호출
-            Debug.Log("STAGE FAIL");
+            //Debug.Log("STAGE FAIL");
         }
     }
 }

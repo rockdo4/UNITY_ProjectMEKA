@@ -31,4 +31,20 @@ public static class Utils
         }
         return false;
     }
+
+    public static bool IsCurrentPlayer(GameObject player)
+    {
+        //레이를 쏴서 맞은 게 커런트 플레이어면, true 반환
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if(Physics.Raycast(ray, out hit))
+        {
+            if(hit.transform.gameObject == player)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

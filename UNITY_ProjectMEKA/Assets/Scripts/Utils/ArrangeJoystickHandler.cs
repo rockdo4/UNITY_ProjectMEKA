@@ -11,7 +11,6 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     private GameObject currentTile;
     private GameObject prevTile;
     private float half;
-    //LinkedList<Tile> tempTiles = new LinkedList<Tile>();
     public float radius;
 
     public bool cancelButtonOn;
@@ -68,8 +67,10 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("on pointer down");
         if (!stageManager.currentPlayer.stateManager.secondArranged)
         {
+            Debug.Log("on pointer down!!!!!");
             OnDrag(eventData);
         }
     }
@@ -78,6 +79,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     {
         if (!stageManager.currentPlayer.stateManager.secondArranged)
         {
+            Debug.Log("on drag");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane plane = new Plane(Vector3.up, transform.position);
             float enter;
@@ -144,10 +146,6 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
                 playerState.RotatePlayer(Defines.RotationDirection.Up);
                 stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
                 characterInfoUIManager.ChangeAttackableTileMesh();
-                //if (player != null)
-                //{
-                //    ChangeTileMesh();
-                //}
             }
         }
         else if (go == directions[(int)Defines.RotationDirection.Right])
@@ -161,7 +159,6 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
                 playerState.RotatePlayer(Defines.RotationDirection.Right);
                 stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
                 characterInfoUIManager.ChangeAttackableTileMesh();
-                //ChangeTileMesh();
             }
         }
         else if (go == directions[(int)Defines.RotationDirection.Down])
@@ -175,7 +172,6 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
                 playerState.RotatePlayer(Defines.RotationDirection.Down);
                 stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
                 characterInfoUIManager.ChangeAttackableTileMesh();
-                //ChangeTileMesh();
             }
         }
         else
@@ -189,7 +185,6 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
                 playerState.RotatePlayer(Defines.RotationDirection.Left);
                 stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
                 characterInfoUIManager.ChangeAttackableTileMesh();
-                //ChangeTileMesh();
             }
         }
 
@@ -198,66 +193,4 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             transform.position = pos;
         }
     }
-
-    //public void ChangeTileMesh()
-    //{
-    //    //Debug.Log("ChangeTileMesh");
-    //    ClearTileMesh(tempTiles);
-    //    var state = player.stateManager.currentBase as PlayableArrangeState;
-    //    state.AttackableTileSet();
-    //    foreach (var tilePos in player.attakableTiles)
-    //    {
-    //        RaycastHit hit;
-
-    //        //�������̸� ���̾� ����ũ : ���� + ����
-    //        //�������̸� ���̾� ����ũ : ����
-    //        int layerMask = 0;
-    //        int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
-    //        int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
-
-    //        switch((int)player.transform.GetComponent<CharacterState>().occupation)
-    //        {
-    //            case (int)Defines.Occupation.Hunter:
-    //            case (int)Defines.Occupation.Castor:
-    //                layerMask = lowTileMask | highTileMask;
-    //                break;
-    //            default:
-    //                layerMask = lowTileMask;
-    //                break;
-    //        }
-
-    //        // ����ĳ��Ʈ ����
-    //        var tempPos = new Vector3(tilePos.x, tilePos.y - 10f, tilePos.z);
-
-    //        if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
-    //        {
-    //            var tileContoller = hit.transform.GetComponent<Tile>();
-    //            tileContoller.SetTileMaterial(Tile.TileMaterial.Attack);
-    //            tempTiles.AddLast(tileContoller);
-    //        }
-    //    }
-    //}
-
-    //public void ClearTileMesh(LinkedList<Tile> tempTiles)
-    //{
-    //    foreach(var tile in tempTiles)
-    //    {
-    //        tile.ClearTileMesh();
-    //    }
-    //    tempTiles.Clear();
-    //}
-
-    //public void SetFirstArranger(CharacterIcon icon)
-    //{
-    //    playerIcon = icon;
-    //    stageManager = playerIcon.stageManager;
-    //    player = stageManager.currentPlayer;
-    //}
-
-    //public void SetPositionToCurrentPlayer(Transform playerTr)
-    //{
-    //    var tempPos = playerTr.position;
-    //    tempPos.y += yOffset;
-    //    transform.parent.position = tempPos;
-    //}
 }

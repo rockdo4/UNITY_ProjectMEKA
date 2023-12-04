@@ -27,14 +27,6 @@ public class ArrangeJoystick : MonoBehaviour
 
     private void OnEnable()
     {
-        //if (settingMode)
-        //{
-        //    SettingModeInit();
-        //}
-        //else
-        //{
-        //    SecondArrangeInit();
-        //}
     }
 
     private void Start()
@@ -44,52 +36,7 @@ public class ArrangeJoystick : MonoBehaviour
     private void Update()
     {
         cancelButton.gameObject.SetActive(handler.cancelButtonOn);
-
-        if (characterInfoUIManager.windowMode == Defines.CharacterInfoMode.Setting && Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane plane = new Plane(Vector3.up, transform.position);
-            float enter;
-
-            if (!Utils.IsUILayer() && plane.Raycast(ray, out enter))
-            {
-                Debug.Log("arrangeDone");
-                ArrangeDone.Invoke();
-            }
-        }
     }
-
-    //public void SecondArrangeInit()
-    //{
-    //    if (!handler.gameObject.activeSelf)
-    //    {
-    //        handler.gameObject.SetActive(true);
-    //    }
-    //    if (cancelButton.gameObject.activeSelf)
-    //    {
-    //        cancelButton.gameObject.SetActive(false);
-    //    }
-    //    if (collectButton.gameObject.activeSelf)
-    //    {
-    //        collectButton.gameObject.SetActive(false);
-    //    }
-    //}
-
-    //public void SettingModeInit()
-    //{
-    //    if (handler.gameObject.activeSelf)
-    //    {
-    //        handler.gameObject.SetActive(false);
-    //    }
-    //    if (cancelButton.gameObject.activeSelf)
-    //    {
-    //        cancelButton.gameObject.SetActive(false);
-    //    }
-    //    if (!collectButton.gameObject.activeSelf)
-    //    {
-    //        collectButton.gameObject.SetActive(true);
-    //    }
-    //}
 
     public void ArrangeDoneEvent()
     {

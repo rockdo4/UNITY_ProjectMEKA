@@ -13,6 +13,8 @@ public class CharacterInfoUIManager : MonoBehaviour
     private Button cancelButton;
     private Button collectButton;
 
+    public bool currentPlayerChanged;
+
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
     private void Awake()
@@ -29,21 +31,14 @@ public class CharacterInfoUIManager : MonoBehaviour
         prevWindowMode = windowMode;
         WindowModeUpdate();
 
-        if(prevWindowMode != windowMode)
+        if(prevWindowMode != windowMode || currentPlayerChanged)
         {
             WindowSet();
+            currentPlayerChanged = false;
+            return;
         }
 
-        //if(windowMode == Defines.CharacterInfoMode.Arrange && !arrangeModeSet)
-        //{
-        //    // current player의 배치 가능 타일 표시
-        //    Debug.Log("캐릭터인포 타일 메쉬 변경");
-        //    foreach (var tile in stageManager.currentPlayer.arrangableTiles)
-        //    {
-        //        tile.SetTileMaterial(Tile.TileMaterial.Arrange);
-        //    }
-        //    arrangeModeSet = true;
-        //}
+        CloseWindow();
     }
 
     public void WindowModeUpdate()
@@ -68,12 +63,12 @@ public class CharacterInfoUIManager : MonoBehaviour
 
     public void WindowSet()
     {
-        Debug.Log("window set");
         switch(windowMode)
         {
             case Defines.CharacterInfoMode.None:
                 // 캐릭터 인포 off
                 ClearTileMesh();
+                joystick.gameObject.SetActive(false);
                 break;
             case Defines.CharacterInfoMode.FirstArrange:
                 // 캐릭터 인포 on
@@ -89,8 +84,6 @@ public class CharacterInfoUIManager : MonoBehaviour
                 joystickHandler.gameObject.SetActive(true);
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(false);
-                //stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
-                //ChangeAttackableTileMesh();
                 break;
             case Defines.CharacterInfoMode.Setting:
                 // 캐릭터 인포 on
@@ -104,12 +97,31 @@ public class CharacterInfoUIManager : MonoBehaviour
         }
     }
 
+    public void CloseWindow()
+    {
+        var isCurrentPlayerNull = stageManager.currentPlayer == null;
+        bool isCurrentPlayerArranged = false;
+        if (!isCurrentPlayerNull)
+        {
+            isCurrentPlayerArranged = stageManager.currentPlayer.stateManager.firstArranged;
+        }
+        var isSettingMode = windowMode == Defines.CharacterInfoMode.Setting;
+
+        if (!isCurrentPlayerNull && (!isCurrentPlayerArranged || isSettingMode))
+        {
+            if (!Utils.IsUILayer() && !Utils.IsCurrentPlayer(stageManager.currentPlayer.gameObject) && Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("캐릭터 인포 닫힘");
+                stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
+                stageManager.currentPlayer = null;
+                stageManager.currentPlayerIcon = null;
+            }
+        }
+    }
+
     public void ChangeArrangableTileMesh()
     {
-        Debug.Log("ChangeArrangableTileMesh");
         ClearTileMesh();
-        //var state = stageManager.currentPlayer.stateManager.currentBase as PlayableArrangeState;
-        //state.ArrangableTileSet(stageManager.currentPlayer.state.occupation);
 
         foreach(var tile in stageManager.currentPlayer.arrangableTiles)
         {
@@ -120,10 +132,7 @@ public class CharacterInfoUIManager : MonoBehaviour
 
     public void ChangeAttackableTileMesh()
     {
-        Debug.Log("ChangeAttackableTileMesh");
         ClearTileMesh();
-        //var state = stageManager.currentPlayer.stateManager.currentBase as PlayableArrangeState;
-        //state.AttackableTileSet(stageManager.currentPlayer.state.occupation);
 
         foreach (var tile in stageManager.currentPlayer.attakableTiles)
         {
