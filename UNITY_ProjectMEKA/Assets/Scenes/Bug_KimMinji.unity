@@ -1118,7 +1118,7 @@ PrefabInstance:
     - target: {fileID: 8490286169548073027, guid: 64a28943570888c4489b9d705703b93c, type: 3}
       propertyPath: arrangeJoystick
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1340805035}
     - target: {fileID: 8490286169548073027, guid: 64a28943570888c4489b9d705703b93c, type: 3}
       propertyPath: characterPrefab
       value: 
@@ -3425,7 +3425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5448,7 +5448,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5144649698615758414, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1340805035}
   m_SourcePrefab: {fileID: 100100000, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
 --- !u!4 &580713532 stripped
 Transform:
@@ -5688,6 +5691,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2953810796129750620, guid: 0a223e0198be283479bf5f9cd68b69b5, type: 3}
   m_PrefabInstance: {fileID: 2122085556}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &626857841 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7476116721446796875, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+  m_PrefabInstance: {fileID: 579417436}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &633792012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5993,6 +6007,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2953810796129750620, guid: 0a223e0198be283479bf5f9cd68b69b5, type: 3}
   m_PrefabInstance: {fileID: 495589022}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &662190565 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 366830114254044856, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+  m_PrefabInstance: {fileID: 579417436}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &662947330 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4951823885998528, guid: 257688c6fef35384595b8d97be3592b1, type: 3}
@@ -7168,7 +7193,7 @@ PrefabInstance:
     - target: {fileID: 8490286169548073027, guid: 64a28943570888c4489b9d705703b93c, type: 3}
       propertyPath: arrangeJoystick
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1340805035}
     - target: {fileID: 8490286169548073027, guid: 64a28943570888c4489b9d705703b93c, type: 3}
       propertyPath: characterPrefab
       value: 
@@ -8486,7 +8511,7 @@ PrefabInstance:
     - target: {fileID: 8490286169548073027, guid: 64a28943570888c4489b9d705703b93c, type: 3}
       propertyPath: arrangeJoystick
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1340805035}
     - target: {fileID: 8490286169548073027, guid: 64a28943570888c4489b9d705703b93c, type: 3}
       propertyPath: characterPrefab
       value: 
@@ -10840,7 +10865,7 @@ PrefabInstance:
     - target: {fileID: 8490286169548073027, guid: 64a28943570888c4489b9d705703b93c, type: 3}
       propertyPath: arrangeJoystick
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1340805035}
     - target: {fileID: 8490286169548073027, guid: 64a28943570888c4489b9d705703b93c, type: 3}
       propertyPath: characterPrefab
       value: 
@@ -11326,6 +11351,29 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf9b566e336073640b5e01dd26bdfa0a, type: 3}
+--- !u!1 &1340805031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5144649698615758414, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+  m_PrefabInstance: {fileID: 579417436}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1340805035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340805031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85070f1ac7eb4cd42845e5426eb0ad8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cancelButton: {fileID: 626857841}
+  collectButton: {fileID: 662190565}
+  handler: {fileID: 1959001533}
+  ArrangeDone:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1345120805 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2953810796129750620, guid: 0a223e0198be283479bf5f9cd68b69b5, type: 3}
@@ -13382,7 +13430,7 @@ MonoBehaviour:
   characterInfoCanvas: {fileID: 1600927323}
   characterName: {fileID: 2117310963}
   characterLevel: {fileID: 263203017}
-  joystick: {fileID: 0}
+  joystick: {fileID: 1340805035}
   currentPlayerChanged: 0
 --- !u!4 &1601283118
 Transform:
@@ -15981,6 +16029,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf9b566e336073640b5e01dd26bdfa0a, type: 3}
+--- !u!114 &1959001533 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7817819403311559635, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+  m_PrefabInstance: {fileID: 579417436}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffd6e7616b2dad644b64f5cb4737061e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1959820717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16725,7 +16784,7 @@ PrefabInstance:
     - target: {fileID: 8490286169548073027, guid: 64a28943570888c4489b9d705703b93c, type: 3}
       propertyPath: arrangeJoystick
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1340805035}
     - target: {fileID: 8490286169548073027, guid: 64a28943570888c4489b9d705703b93c, type: 3}
       propertyPath: characterPrefab
       value: 
@@ -25260,6 +25319,6 @@ SceneRoots:
   - {fileID: 1655357162}
   - {fileID: 2049991982}
   - {fileID: 579417436}
-  - {fileID: 696819280}
   - {fileID: 1333355354}
   - {fileID: 1601283118}
+  - {fileID: 696819280}

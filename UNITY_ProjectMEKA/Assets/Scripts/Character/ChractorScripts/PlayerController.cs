@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class PlayerController : PoolAble, IPointerDownHandler
+public class PlayerController : PoolAble /*IPointerDownHandler*/
 {
     [HideInInspector]
     public PlayableStateManager stateManager = new PlayableStateManager();
@@ -165,7 +165,7 @@ public class PlayerController : PoolAble, IPointerDownHandler
             }
         }
 
-
+        OnClickDown();
     }
     
     //private void OnTriggerStay(Collider other)
@@ -456,26 +456,33 @@ public class PlayerController : PoolAble, IPointerDownHandler
     //    }
     //}
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if(stageManager.currentPlayer == null)
-        {
-            Debug.Log("player pointer down");
-            SetState(CharacterStates.Arrange);
-            stageManager.currentPlayer = this;
-            stageManager.currentPlayerIcon = this.icon;
-            joystick.SetActive(true);
-        }
-    }
+    //public void OnPointerDown(PointerEventData eventData)
+    //{
+    //    if(stageManager.currentPlayer == null)
+    //    {
+    //        Debug.Log("player pointer down");
+    //        SetState(CharacterStates.Arrange);
+    //        stageManager.currentPlayer = this;
+    //        stageManager.currentPlayerIcon = this.icon;
+    //        joystick.SetActive(true);
+    //    }
+    //}
 
     public void OnClickDown()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //LayerMask player 
+        int playerMask = 1 << LayerMask.NameToLayer("PlayerCollider");
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && Physics.Raycast(ray, Mathf.Infinity, playerMask))
         {
-
+            if (stageManager.currentPlayer == null)
+            {
+                Debug.Log("player pointer down");
+                SetState(CharacterStates.Arrange);
+                stageManager.currentPlayer = this;
+                stageManager.currentPlayerIcon = this.icon;
+                joystick.SetActive(true);
+            }
         }
     }
 
