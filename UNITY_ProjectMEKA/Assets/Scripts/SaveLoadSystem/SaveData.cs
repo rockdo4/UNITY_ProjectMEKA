@@ -35,13 +35,14 @@ public class SaveDataV1 : SaveData
 			IsBGMVolumMute = IsBGMVolumMute,
 			IsSEVolumMute = IsSEVolumMute
 		};
-        //data.formationList = new List<int[]>
-        //{
-        //    new int[8],
-        //    new int[8],
-        //    new int[8],
-        //    new int[8],
-        //};
+        data.formationList = new List<int[]>
+        {
+            new int[8],
+            new int[8],
+            new int[8],
+            new int[8],
+        };
+        data.characterStorage = new Dictionary<int, Character>();
 
         return null;
     }
@@ -52,6 +53,8 @@ public class SaveDataV2 : SaveDataV1
 	public SaveDataV2()
     {
 		Version = 2;
+        formationList = new List<int[]>();
+		characterStorage = new Dictionary<int, Character>();
 	}
 
     public List<int[]> formationList { get; set; } = new List<int[]> 

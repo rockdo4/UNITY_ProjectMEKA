@@ -23,7 +23,6 @@ public class CharacterPanelManager : MonoBehaviour
 		charDict = dict.GetOriginalTable();
 		characterInfoPos = characterInfoPanel.position;
 
-
 		var charStorage = CharacterManager.Instance.m_CharacterStorage;
 
 		foreach(var character in charStorage)
@@ -66,6 +65,7 @@ public class CharacterPanelManager : MonoBehaviour
 
 	public void PickUpCharacter(int ID)
 	{
+		//Debug.Log(ID);
 		var chara = dict.GetCharacterData(ID);
 		Debug.Log("¿Ã∏ß :" + chara.CharacterName);
 

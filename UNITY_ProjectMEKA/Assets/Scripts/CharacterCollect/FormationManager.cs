@@ -59,15 +59,14 @@ public class FormationManager : MonoBehaviour
 	private void Awake()
 	{
 		characterCard = GetComponentsInChildren<Button>();
-		formationList = new List<int[]>();
+		formationList = PlayDataManager.data.formationList;
         activeFalseList = new List<GameObject>();
         selectedFormationList = 0;
 		characterInfoPos = characterInfoPanel.position;
 
-		for (int i = 0; i < numberOfFormations; i++)
+		while(formationList.Count < numberOfFormations)
 		{
-			int[] formation = new int[numberOfCharacters];
-			formationList.Add(formation);
+			formationList.Add(new int[numberOfCharacters]);
 		}
 
 		var characterTable = DataTableMgr.GetTable<CharacterTable>();
@@ -129,7 +128,7 @@ public class FormationManager : MonoBehaviour
 
 	private void OnEnable()
 	{
-		UpdatePlayData();
+		CheckPlayData();
 		CheckCollectCharacter();
 		ChangeFormationSet(selectedFormationList);
 	}
@@ -335,7 +334,7 @@ public class FormationManager : MonoBehaviour
 	}
 	public void CheckPlayData()
 	{
-		if(PlayDataManager.data != null)
+		if(PlayDataManager.data.formationList != null)
 		{
 			//formationList = PlayDataManager.data.formationList;
 		}
