@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// ½Ì±ÛÅæ
+// ï¿½Ì±ï¿½ï¿½ï¿½
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }

@@ -52,17 +52,15 @@ public class SaveDataV2 : SaveDataV1
 	public SaveDataV2()
     {
 		Version = 2;
-        //formationList = new List<int[]>
-        //{
-        //    new int[8],
-        //    new int[8],
-        //    new int[8],
-        //    new int[8],
-        //};
 	}
 
-    //public List<int[]> formationList;
-    public Dictionary<int, Character> characterStorage;
+    public List<int[]> formationList { get; set; } = new List<int[]> 
+    { 
+        new int[8],
+		new int[8],
+		new int[8],
+		new int[8],
+    };
 
 	public override SaveData VersionUp()
     {
