@@ -57,6 +57,7 @@ public class ItemCardManager : MonoBehaviour
 
 			UpdateItemCard();
 		});
+
 	}
 	private void OnEnable()
 	{

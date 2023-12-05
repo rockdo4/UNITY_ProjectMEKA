@@ -7,10 +7,10 @@ public class TableTest : MonoBehaviour
 {
 	public ItemCardManager itemCardManager;
 
-	private void Awake()
+	private void Start()
 	{
-
 	}
+
 	public void OnClickAddItem()
 	{
 		var range = DataTableMgr.GetTable<ItemInfoTable>().Count;
@@ -24,5 +24,10 @@ public class TableTest : MonoBehaviour
 		itemCardManager.UpdateItemCard();
 
 		Debug.Log(item.Name + "Ãß°¡");
+	}
+
+	public void OnClickUpdateItemCard()
+	{
+		itemCardManager.UpdateItemCard();
 	}
 }
