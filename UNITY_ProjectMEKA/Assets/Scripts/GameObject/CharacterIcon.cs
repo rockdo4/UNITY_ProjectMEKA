@@ -9,9 +9,9 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     public GameObject characterPrefab;
     private GameObject characterGo;
     private PlayerController playerController;
+    public int cost;
 
     public ArrangeJoystick arrangeJoystick;
-    private UnityEvent SetJoystick;
     private CharacterInfoUIManager characterInfoUIManager;
 
     private bool created;
@@ -23,15 +23,6 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         var characterStat = characterPrefab.GetComponent<CharacterState>();
         var cost = characterStat.arrangeCost;
-
-        //SetJoystick = new UnityEvent();
-        //SetJoystick.AddListener(() =>
-        //{
-        //    arrangeJoystick.settingMode = false;
-        //    arrangeJoystick.transform.gameObject.SetActive(true);
-        //    arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
-        //    once = true;
-        //});
     }
 
     private void Start()

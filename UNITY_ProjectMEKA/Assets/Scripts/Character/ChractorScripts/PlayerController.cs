@@ -554,9 +554,9 @@ public class PlayerController : PoolAble,IPointerDownHandler
                     if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
                     {
                         var tileContoller = hit.transform.GetComponent<Tile>();
-                        if(tileContoller.arrangePossible)
+                        if (!tileContoller.isSomthingOnTile)
                         {
-                            attakableTiles.Add(tileContoller);
+                            attakableTiles.Add(tileContoller);                            
                         }
                     }
                 }
