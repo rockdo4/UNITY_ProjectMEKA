@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 using static PlayerController;
+using static Defines;
 
 public class ArrangeJoystick : MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class ArrangeJoystick : MonoBehaviour
 
     private void Awake()
     {
-        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
-        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
+        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<CharacterInfoUIManager>();
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         ArrangeDone = new UnityEvent();
         ArrangeDone.AddListener(ArrangeDoneEvent);
         cancelButton.onClick.AddListener(CancelEvent);

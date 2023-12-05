@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
+using static Defines;
 
 public class PlayerController : PoolAble /*IPointerDownHandler*/
 {
@@ -82,8 +82,8 @@ public class PlayerController : PoolAble /*IPointerDownHandler*/
             Time.timeScale = 1.0f;
             ReleaseObject();
         });
-        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
-        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
+        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<CharacterInfoUIManager>();
     }
     private void OnEnable()
     {
@@ -472,7 +472,7 @@ public class PlayerController : PoolAble /*IPointerDownHandler*/
 
         if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if (hit.transform.tag == "PlayerCollider" && stageManager.currentPlayer == null)
+            if (hit.transform.tag == Tags.playerCollider && stageManager.currentPlayer == null)
             {
                 Debug.Log("player pointer down");
                 SetState(CharacterStates.Arrange);
@@ -490,10 +490,10 @@ public class PlayerController : PoolAble /*IPointerDownHandler*/
         {
             case Defines.Occupation.Guardian:
             case Defines.Occupation.Striker:
-                tag = "LowTile";
+                tag = Tags.lowTile;
                 break;
             default:
-                tag = "HighTile";
+                tag = Tags.highTile;
                 break;
         }
 
@@ -513,8 +513,8 @@ public class PlayerController : PoolAble /*IPointerDownHandler*/
     public void AttackableTileSet(Defines.Occupation occupation)
     {
         int layerMask = 0;
-        int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
-        int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
+        int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
+        int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
 
         switch (occupation)
         {

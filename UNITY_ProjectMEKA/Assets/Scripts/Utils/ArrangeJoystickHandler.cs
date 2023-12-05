@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static Defines;
 
 public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -43,8 +44,8 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     public void InitOnce()
     {
         joystick = transform.parent.GetComponent<ArrangeJoystick>();
-        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
-        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
+        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<CharacterInfoUIManager>();
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
 
         var boxCollider = GetComponent<BoxCollider>();
         half = boxCollider.bounds.size.x / 2f;

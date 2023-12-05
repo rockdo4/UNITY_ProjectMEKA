@@ -76,9 +76,9 @@ public class PlayableArrangeState : PlayableBaseState
         {
             if(Input.GetMouseButton(0))
             {
-                int backgroundMask = 1 << LayerMask.NameToLayer("Background");
-                int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
-                int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
+                int backgroundMask = 1 << LayerMask.NameToLayer(Layers.background);
+                int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
+                int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
                 int layerMask = backgroundMask | lowTileMask | highTileMask;
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
