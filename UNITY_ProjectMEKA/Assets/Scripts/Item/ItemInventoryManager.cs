@@ -43,6 +43,8 @@ public class ItemInventoryManager
 			exist.Count += count;
 			return;
 		}
+
+		item.Count = count;
 		m_ItemStorage.Add(item);
 	}
 

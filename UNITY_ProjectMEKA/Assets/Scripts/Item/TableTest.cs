@@ -9,21 +9,7 @@ public class TableTest : MonoBehaviour
 
 	private void Awake()
 	{
-		Item[] items = new Item[10];
 
-		for (int i = 0; i < 10; i++)
-		{
-			items[i] = new Item();
-			items[i].ID = i + 1;
-			items[i].InstanceID = i;
-			items[i].Count = 1;
-		}
-
-		//인벤토리에 템 넣음
-		for (int i = 0; i < 10; i++)
-		{
-			ItemInventoryManager.Instance.AddItemByInstance(items[i]);
-		}
 	}
 	public void OnClickAddItem()
 	{
@@ -32,9 +18,11 @@ public class TableTest : MonoBehaviour
 		var item = new Item();
 
 		item.ID = Random.Range(1, range);
-		item.InstanceID = ItemInventoryManager.Instance.Count;
+		item.InstanceID = item.ID;
 
 		ItemInventoryManager.Instance.AddItemByInstance(item);
 		itemCardManager.UpdateItemCard();
+
+		Debug.Log(item.Name + "추가");
 	}
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// �̱���
+// 한글 주석 테스트
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
@@ -27,6 +27,11 @@ public class GameManager : MonoBehaviour
             PlayDataManager.Save();
 		}
 	}
+
+    public void SaveExecution()
+    {
+        PlayDataManager.Save();
+    }
 
 	public void RestartGame()
     {

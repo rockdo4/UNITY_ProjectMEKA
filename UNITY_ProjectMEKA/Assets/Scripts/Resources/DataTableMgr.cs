@@ -17,6 +17,11 @@ public static class DataTableMgr
         var charTable = new CharacterTable();
         tables.Add(typeof(CharacterTable), charTable);
 
+        if(charTable == null)
+        {
+			Debug.Log("null");
+		}
+
         var expTable = new ExpTable();
         tables.Add(typeof(ExpTable), expTable);
 

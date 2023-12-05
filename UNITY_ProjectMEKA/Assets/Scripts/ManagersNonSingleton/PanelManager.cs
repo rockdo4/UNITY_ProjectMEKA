@@ -39,11 +39,6 @@ public class PanelManager : MonoBehaviour
 		formationPos = formationPanel.position;
 		inventoryPos = inventoryPanel.position;
 
-		characterWindowPanel.gameObject.SetActive(false);
-		gachaPanel.gameObject.SetActive(false);
-		formationPanel.gameObject.SetActive(false);
-		inventoryPanel.gameObject.SetActive(false);
-
 		previousPanel = mainPanel;
 		previousPos = mainPos;
 	}
@@ -52,14 +47,10 @@ public class PanelManager : MonoBehaviour
 	{
 		previousPanel.position = previousPos;
 		mainPanel.position = mainPos;
-
-		previousPanel.gameObject.SetActive(false);
 	}
 
 	public void ChangePanelCharacterWindow()
 	{
-		characterWindowPanel.gameObject.SetActive(true);
-
 		previousPos = characterWindowPos;
 		previousPanel = characterWindowPanel;
 		characterWindowPanel.position = mainPos;
@@ -68,8 +59,6 @@ public class PanelManager : MonoBehaviour
 
 	public void ChangePanelGacha()
 	{
-		gachaPanel.gameObject.SetActive(true);
-
 		previousPos = gachaPos;
 		previousPanel = gachaPanel;
 		gachaPanel.position = mainPos;
@@ -78,8 +67,6 @@ public class PanelManager : MonoBehaviour
 
 	public void ChangePanelFormation()
 	{
-		formationPanel.gameObject.SetActive(true);
-
 		previousPos = formationPos;
 		previousPanel = formationPanel;
 		formationPanel.position = mainPos;
@@ -88,8 +75,6 @@ public class PanelManager : MonoBehaviour
 
 	public void ChangePanelInventory()
 	{
-		inventoryPanel.gameObject.SetActive(true);
-
         previousPos = inventoryPos;
         previousPanel = inventoryPanel;
         inventoryPanel.position = mainPos;

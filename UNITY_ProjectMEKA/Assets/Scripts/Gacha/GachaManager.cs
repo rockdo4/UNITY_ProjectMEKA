@@ -33,9 +33,10 @@ public class GachaManager : MonoBehaviour
     private void Start()
     {
         var items = characterTable.GetOriginalTable();
-        
+
         foreach(var item in items)
         {
+            Debug.Log((item.Key, item.Value.ArrangementCost));
             testPicker.Add(item.Key, item.Value.ArrangementCost);
         }
     }
@@ -53,6 +54,8 @@ public class GachaManager : MonoBehaviour
         var itemImage = ObjectPoolManager.instance.GetGo("GachaCard");
 		itemImage.transform.SetParent(resultPanel.transform, false);
         itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.CharacterName);
+
+        CharacterManager.Instance.UpdatePlayData();
     }
 
     public void Gacha10()

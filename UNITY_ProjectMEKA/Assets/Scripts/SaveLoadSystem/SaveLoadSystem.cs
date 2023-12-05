@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SaveDataVC = SaveDataV2; // ±≥√º
+using SaveDataVC = SaveDataV2; // ÍµêÏ≤¥
 
 public static class SaveLoadSystem
 {
@@ -15,7 +15,7 @@ public static class SaveLoadSystem
         EncryptedBinary
     }
     public static Modes FileMode { get; } = Modes.Json;
-    public static int SaveDataVersion { get; } = 1; // ±≥√º
+    public static int SaveDataVersion { get; } = 1; // Î≤ÑÏ†Ñ
     private static string[] SaveSlotFileNames =
     {
         "Save0.json",
@@ -59,7 +59,7 @@ public static class SaveLoadSystem
         }
         var path = Path.Combine(SaveDirectory, fileName);
 
-        Debug.Log((path, "¿˙¿ÂΩ√µµ"));
+        Debug.Log((path, "savefile.json"));
 
         using (var writer = new JsonTextWriter(new StreamWriter(path)))
         {
@@ -93,10 +93,9 @@ public static class SaveLoadSystem
             var serialize = new JsonSerializer();
             serialize.Converters.Add(new Vector3Converter());
             serialize.Converters.Add(new QuaternionConverter());
-			serialize.Converters.Add(new CharacterDictConverter());
-			//serialize.Converters.Add(new 
+            //serialize.Converters.Add(new 
 
-			switch (version) // √ﬂ∞°«ÿ¡‡æﬂ «‘
+            switch (version) // ÔøΩﬂ∞ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ
             {
                 case 1:
                     data = serialize.Deserialize<SaveDataV1>(reader);

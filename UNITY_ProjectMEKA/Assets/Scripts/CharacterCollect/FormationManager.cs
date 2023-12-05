@@ -59,15 +59,14 @@ public class FormationManager : MonoBehaviour
 	private void Awake()
 	{
 		characterCard = GetComponentsInChildren<Button>();
-		formationList = new List<int[]>();
+		formationList = PlayDataManager.data.formationList;
         activeFalseList = new List<GameObject>();
         selectedFormationList = 0;
 		characterInfoPos = characterInfoPanel.position;
 
-		for (int i = 0; i < numberOfFormations; i++)
+		while(formationList.Count < numberOfFormations)
 		{
-			int[] formation = new int[numberOfCharacters];
-			formationList.Add(formation);
+			formationList.Add(new int[numberOfCharacters]);
 		}
 
 		var characterTable = DataTableMgr.GetTable<CharacterTable>();
@@ -129,7 +128,7 @@ public class FormationManager : MonoBehaviour
 
 	private void OnEnable()
 	{
-		UpdatePlayData();
+		CheckPlayData();
 		CheckCollectCharacter();
 		ChangeFormationSet(selectedFormationList);
 	}
@@ -281,6 +280,7 @@ public class FormationManager : MonoBehaviour
 		//닫음
 		CloseCharacterList();
 		UpdatePlayData();
+		GameManager.instance.SaveExecution();
 	}
 
 	//현재 선택한 카드 변경
@@ -316,6 +316,7 @@ public class FormationManager : MonoBehaviour
 
 		UpdateActiveCard();
 		UpdatePlayData();
+		GameManager.instance.SaveExecution();
 	}
 
 	//캐릭터 인포 열기
@@ -331,13 +332,18 @@ public class FormationManager : MonoBehaviour
 
 	public void UpdatePlayData()
 	{
-		//PlayDataManager.data.formationList = formationList;
+		PlayDataManager.data.formationList = formationList;
 	}
 	public void CheckPlayData()
 	{
-		if(PlayDataManager.data != null)
+		if(PlayDataManager.data.formationList != null)
 		{
-			//formationList = PlayDataManager.data.formationList;
+			formationList = PlayDataManager.data.formationList;
 		}
+	}
+
+	public void SetHolderFormation()
+	{
+		DataHolder.formation = formationList[selectedFormationList];
 	}
 }
