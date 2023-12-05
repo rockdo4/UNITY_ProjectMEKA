@@ -468,6 +468,17 @@ public class PlayerController : PoolAble, IPointerDownHandler
         }
     }
 
+    public void OnClickDown()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //LayerMask player 
+
+        if (Input.GetMouseButtonUp(0))
+        {
+
+        }
+    }
+
     public void ArrangableTileSet(Defines.Occupation occupation)
     {
         string tag;
