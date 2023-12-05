@@ -26,14 +26,14 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         var characterStat = characterPrefab.GetComponent<CharacterState>();
         var cost = characterStat.arrangeCost;
 
-        SetJoystick = new UnityEvent();
-        SetJoystick.AddListener(() =>
-        {
-            arrangeJoystick.settingMode = false;
-            arrangeJoystick.transform.gameObject.SetActive(true);
-            arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
-            once = true;
-        });
+        //SetJoystick = new UnityEvent();
+        //SetJoystick.AddListener(() =>
+        //{
+        //    arrangeJoystick.settingMode = false;
+        //    arrangeJoystick.transform.gameObject.SetActive(true);
+        //    arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
+        //    once = true;
+        //});
     }
 
     private void Start()
@@ -52,7 +52,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
         if (created && !once && playerController.stateManager.firstArranged)
         {
-            SetJoystick.Invoke();
+            //SetJoystick.Invoke();
         }
     }
 
@@ -79,11 +79,16 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (stageManager.currentPlayer == null)
+        //var isCurrentPlayerNull = stageManager.currentPlayer == null;
+        var isCurrentPlayerThis = stageManager.currentPlayer == playerController;
+        var isPossibleMode = (characterInfoUIManager.windowMode == Defines.CharacterInfoMode.None) || (characterInfoUIManager.windowMode == Defines.CharacterInfoMode.FirstArrange);
+
+        if (isPossibleMode || (isCurrentPlayerThis && isPossibleMode))
         {
             CreateCharacter();
             characterGo.transform.position = transform.position;
             once = false;
+            characterInfoUIManager.currentPlayerChanged = true;
         }
     }
 }
