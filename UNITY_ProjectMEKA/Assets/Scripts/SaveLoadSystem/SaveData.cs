@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 public abstract class SaveData
 {
     public int Version { get; set; }
@@ -62,6 +62,39 @@ public class SaveDataV2 : SaveDataV1
 
 	public override SaveData VersionUp()
     {
-        return null;
+		var data = new SaveDataV3()
+        {
+			IsFirstGame = IsFirstGame,
+			BGMVolume = BGMVolume,
+			SEVolume = SEVolume,
+			MasterVolume = MasterVolume,
+			IsMasterVolumMute = IsMasterVolumMute,
+			IsBGMVolumMute = IsBGMVolumMute,
+			IsSEVolumMute = IsSEVolumMute
+		};
+		data.formationList = formationList;
+		data.characterStorage = characterStorage;
+
+		//Ãß°¡
+
+		data.itemStorage = new List<Item>();
+
+		return data;
+	}
+}
+
+public class SaveDataV3 : SaveDataV2
+{
+	public SaveDataV3()
+    {
+		Version = 3;
+		itemStorage = new List<Item>();
+	}
+
+	public List<Item> itemStorage;
+
+	public override SaveData VersionUp()
+    {
+		return null;
 	}
 }
