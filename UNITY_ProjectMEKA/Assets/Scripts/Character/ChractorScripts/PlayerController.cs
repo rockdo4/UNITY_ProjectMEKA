@@ -132,13 +132,10 @@ public class PlayerController : PoolAble /*IPointerDownHandler*/
         {
             case CharacterState.Skills.Snapshot:
                 var s = gameObject.AddComponent<Snapshot>();
-                //��ų �ڽ�Ʈ(����) or (�ñ׸�)
                 skillCost = s.skillCost;
 
-                //��Ÿ��
                 skillCoolTime = s.coolTime;
 
-                //??? = ���ӽð�
                 break;
         }
         state.cost = state.maxCost;
@@ -471,11 +468,11 @@ public class PlayerController : PoolAble /*IPointerDownHandler*/
     public void OnClickDown()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        int playerMask = 1 << LayerMask.NameToLayer("PlayerCollider");
+        RaycastHit hit;
 
-        if (Input.GetMouseButtonUp(0) && Physics.Raycast(ray, Mathf.Infinity, playerMask))
+        if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if (stageManager.currentPlayer == null)
+            if (hit.transform.tag == "PlayerCollider" && stageManager.currentPlayer == null)
             {
                 Debug.Log("player pointer down");
                 SetState(CharacterStates.Arrange);
