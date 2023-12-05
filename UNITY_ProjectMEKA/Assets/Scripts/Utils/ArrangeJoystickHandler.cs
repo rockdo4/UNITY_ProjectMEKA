@@ -35,6 +35,21 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
         cancelButtonOn = false;
     }
 
+    private void Update()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            if(Physics.Raycast(ray, out hit))
+            {
+                //if(hit.transform.gameObject != null)
+                Debug.Log(hit.transform.gameObject.name);
+            }
+        }
+    }
+
     public void Init()
     {
         transform.localPosition = Vector3.zero;
@@ -69,10 +84,18 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("on pointer down");
-        if (!stageManager.currentPlayer.stateManager.secondArranged)
-        {
-            OnDrag(eventData);
-        }
+        OnDrag(eventData);
+
+
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //int layerMask = 1 << LayerMask.NameToLayer(Layers.handler);
+        //if (Physics.Raycast(ray, Mathf.Infinity, layerMask))
+        //{
+        //    if (!stageManager.currentPlayer.stateManager.secondArranged)
+        //    {
+        //        OnDrag(eventData);
+        //    }
+        //}
     }
 
     public void OnDrag(PointerEventData eventData)
