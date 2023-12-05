@@ -83,6 +83,13 @@ public class PanelManager : MonoBehaviour
 
 	public void LoadBattleScene()
 	{
+		var formation = formationPanel.GetComponent<FormationManager>();
+		if(formation == null)
+		{
+			Debug.LogError("FormationManager ¸øºÒ·¯¿È");
+			return;
+		}
+		formation.SetHolderFormation();
 		UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
 	}
 

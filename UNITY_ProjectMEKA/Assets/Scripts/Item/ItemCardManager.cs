@@ -10,7 +10,7 @@ public enum SortType
 	Ascending,
 	Descending,
 }
-
+ 
 public class ItemCardManager : MonoBehaviour
 {
 	[Header("아이템 카드 프리팹")]
