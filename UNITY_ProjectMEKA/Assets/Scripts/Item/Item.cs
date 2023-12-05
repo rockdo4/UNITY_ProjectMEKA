@@ -15,6 +15,14 @@ public class Item
 			return DataTableMgr.GetTable<ItemInfoTable>().GetItemData(ID).Name;
 		}
 	}
+
+	public int Value
+	{
+		get
+		{
+			return DataTableMgr.GetTable<ItemInfoTable>().GetItemData(ID).Value;
+		}
+	}
 }
 
 //아이템 정보
@@ -22,4 +30,6 @@ public class ItemInfo
 {
 	public int ID { get; set; }
 	public string Name { get; set; }
+	public int Type { get; set; }
+	public int Value { get; set; }
 }

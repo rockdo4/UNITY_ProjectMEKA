@@ -92,8 +92,13 @@ public class ItemCardManager : MonoBehaviour
 			var text = itemCard.GetComponentInChildren<TextMeshProUGUI>();
 			var str = item.Name;
 
+			
+
 			text.SetText(item.Name);
-			itemCard.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(str); });
+			itemCard.GetComponent<Button>().onClick.AddListener(() => 
+			{
+				Debug.Log(("이름: " + str, "아이디: " + item.ID, "인스턴스아이디: " + item.InstanceID, "밸류: " + item.Value, "수량: " +item.Count));
+			});
 			itemCard.name = item.ToString();
 			itemCard.transform.SetParent(itemCardScrollView, false);
 			itemCard.gameObject.name = count++.ToString();

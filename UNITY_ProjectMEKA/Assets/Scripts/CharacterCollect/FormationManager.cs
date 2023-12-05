@@ -341,4 +341,9 @@ public class FormationManager : MonoBehaviour
 			formationList = PlayDataManager.data.formationList;
 		}
 	}
+
+	public void SetHolderFormation()
+	{
+		DataHolder.formation = formationList[selectedFormationList];
+	}
 }
