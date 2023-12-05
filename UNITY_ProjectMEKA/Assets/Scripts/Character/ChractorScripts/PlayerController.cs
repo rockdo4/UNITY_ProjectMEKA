@@ -613,7 +613,6 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
                 joystick.SetActive(true);
                 joystick.GetComponent<ArrangeJoystick>().SetPositionToCurrentPlayer(transform);
             }
-
         }
     }
 }
