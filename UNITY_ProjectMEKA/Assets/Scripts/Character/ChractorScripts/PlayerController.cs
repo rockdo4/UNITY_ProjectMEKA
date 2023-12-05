@@ -132,7 +132,7 @@ public class PlayerController : PoolAble, IPointerDownHandler
         {
             case CharacterState.Skills.Snapshot:
                 var s = gameObject.AddComponent<Snapshot>();
-                //��ų �ڽ�Ʈ(����) or (�ñ׸�)
+                //��ų �ڽ�Ʈ(����) or (�ñ׸�) 
                 skillCost = s.skillCost;
 
                 //��Ÿ��
