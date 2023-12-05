@@ -195,6 +195,7 @@ public class EnemyController : PoolAble
             return;
         }
         TakeDamage co = target.GetComponentInParent<TakeDamage>();
+        if (co == null) return;
         co.OnAttack(state.damage + Rockpaperscissors());
     }
     public void Hit(float damage)
