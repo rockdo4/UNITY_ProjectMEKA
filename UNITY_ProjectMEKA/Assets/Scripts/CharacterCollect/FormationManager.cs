@@ -331,13 +331,13 @@ public class FormationManager : MonoBehaviour
 
 	public void UpdatePlayData()
 	{
-		PlayDataManager.data.formationList = formationList;
+		//PlayDataManager.data.formationList = formationList;
 	}
 	public void CheckPlayData()
 	{
 		if(PlayDataManager.data != null)
 		{
-			formationList = PlayDataManager.data.formationList;
+			//formationList = PlayDataManager.data.formationList;
 		}
 	}
 }
