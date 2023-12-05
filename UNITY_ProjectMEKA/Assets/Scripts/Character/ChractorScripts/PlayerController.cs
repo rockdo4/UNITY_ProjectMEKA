@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using static Defines;
 
-public class PlayerController : PoolAble, IPointerDownHandler
+public class PlayerController : PoolAble,IPointerDownHandler
 {
     [HideInInspector]
     public PlayableStateManager stateManager = new PlayableStateManager();
@@ -82,8 +83,8 @@ public class PlayerController : PoolAble, IPointerDownHandler
             Time.timeScale = 1.0f;
             ReleaseObject();
         });
-        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
-        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
+        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<CharacterInfoUIManager>();
     }
     private void OnEnable()
     {
@@ -132,13 +133,10 @@ public class PlayerController : PoolAble, IPointerDownHandler
         {
             case CharacterState.Skills.Snapshot:
                 var s = gameObject.AddComponent<Snapshot>();
-                //��ų �ڽ�Ʈ(����) or (�ñ׸�)
                 skillCost = s.skillCost;
 
-                //��Ÿ��
                 skillCoolTime = s.coolTime;
 
-                //??? = ���ӽð�
                 break;
         }
         state.cost = state.maxCost;
@@ -165,7 +163,7 @@ public class PlayerController : PoolAble, IPointerDownHandler
             }
         }
 
-
+        //OnClickDown();
     }
     
     //private void OnTriggerStay(Collider other)
@@ -456,28 +454,23 @@ public class PlayerController : PoolAble, IPointerDownHandler
     //    }
     //}
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if(stageManager.currentPlayer == null)
-        {
-            Debug.Log("player pointer down");
-            SetState(CharacterStates.Arrange);
-            stageManager.currentPlayer = this;
-            stageManager.currentPlayerIcon = this.icon;
-            joystick.SetActive(true);
-        }
-    }
+    //public void OnClickDown()
+    //{
+    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //    int layerMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
 
-    public void OnClickDown()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //LayerMask player 
-
-        if (Input.GetMouseButtonUp(0))
-        {
-
-        }
-    }
+    //    if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, Mathf.Infinity, layerMask))
+    //    {
+    //        if (stageManager.currentPlayer == null)
+    //        {
+    //            Debug.Log("player pointer down");
+    //            SetState(CharacterStates.Arrange);
+    //            stageManager.currentPlayer = this;
+    //            stageManager.currentPlayerIcon = this.icon;
+    //            joystick.SetActive(true);
+    //        }
+    //    }
+    //}
 
     public void ArrangableTileSet(Defines.Occupation occupation)
     {
@@ -486,10 +479,10 @@ public class PlayerController : PoolAble, IPointerDownHandler
         {
             case Defines.Occupation.Guardian:
             case Defines.Occupation.Striker:
-                tag = "LowTile";
+                tag = Tags.lowTile;
                 break;
             default:
-                tag = "HighTile";
+                tag = Tags.highTile;
                 break;
         }
 
@@ -509,8 +502,8 @@ public class PlayerController : PoolAble, IPointerDownHandler
     public void AttackableTileSet(Defines.Occupation occupation)
     {
         int layerMask = 0;
-        int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
-        int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
+        int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
+        int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
 
         switch (occupation)
         {
@@ -561,13 +554,31 @@ public class PlayerController : PoolAble, IPointerDownHandler
                     if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
                     {
                         var tileContoller = hit.transform.GetComponent<Tile>();
-                        if(tileContoller.arrangePossible)
+                        if (!tileContoller.isSomthingOnTile)
                         {
-                            attakableTiles.Add(tileContoller);
+                            attakableTiles.Add(tileContoller);                            
                         }
                     }
                 }
             }
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        int layerMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
+        if (Physics.Raycast(ray, Mathf.Infinity, layerMask))
+        {
+            if (stageManager.currentPlayer == null)
+            {
+                Debug.Log("player pointer down");
+                SetState(CharacterStates.Arrange);
+                stageManager.currentPlayer = this;
+                stageManager.currentPlayerIcon = this.icon;
+                joystick.SetActive(true);
+            }
+
         }
     }
 }

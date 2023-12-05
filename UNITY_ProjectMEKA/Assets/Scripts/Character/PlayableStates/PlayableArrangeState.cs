@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using static Defines;
 
@@ -7,8 +6,6 @@ public class PlayableArrangeState : PlayableBaseState
 {
     private RaycastHit hit;
     private Tile hitTile;
-    //public Button collecteButton;
-    //public bool settingMode;
 
     public PlayableArrangeState(PlayerController player) : base(player)
     {
@@ -24,38 +21,7 @@ public class PlayableArrangeState : PlayableBaseState
         if (!playerCtrl.stateManager.firstArranged)
         {
             playerCtrl.transform.forward = Vector3.forward;
-            //var occupation = playerCtrl.state.occupation;
-            //playerCtrl.ArrangableTileSet(occupation);
-            //playerCtrl.AttackableTileSet(occupation);
-            //playerCtrl.characterInfoUIManager.windowMode = Defines.CharacterInfoMode.FirstArrange;
-            //if (playerCtrl.stateManager.tiles != null)
-            //{
-            //    foreach (var tile in playerCtrl.stateManager.tiles)
-            //    {
-            //        tile.GetComponentInChildren<Tile>().SetTileMaterial(Tile.TileMaterial.Arrange);
-            //    }
-            //}
         }
-        //else
-        //{
-        //    settingMode = true;
-        //    playerCtrl.joystick.SetActive(true);
-        //    var joystickController = playerCtrl.joystick.GetComponentInChildren<ArrangeJoystickHandler>();
-        //    joystickController.SetFirstArranger(playerCtrl.icon);
-        //    joystickController.SetPositionToCurrentPlayer(playerCtrl.transform);
-
-        //    for (int i = 0; i < playerCtrl.joystick.transform.childCount; ++i)
-        //    {
-        //        if (string.Equals(playerCtrl.joystick.transform.GetChild(i).gameObject.tag,"Handler"))
-        //        {
-        //            playerCtrl.joystick.transform.GetChild(i).gameObject.SetActive(false);
-        //        }
-        //        else if(i == playerCtrl.joystick.transform.childCount - 1)
-        //        {
-        //            playerCtrl.joystick.transform.GetChild(i).gameObject.SetActive(true);
-        //        }
-        //    }
-        //}
 
         Debug.Log($"arrange enter, arragable tiles {playerCtrl.arrangableTiles.Count}, attackable tiles {playerCtrl.attakableTiles.Count}");
     }
@@ -76,9 +42,9 @@ public class PlayableArrangeState : PlayableBaseState
         {
             if(Input.GetMouseButton(0))
             {
-                int backgroundMask = 1 << LayerMask.NameToLayer("Background");
-                int lowTileMask = 1 << LayerMask.NameToLayer("LowTile");
-                int highTileMask = 1 << LayerMask.NameToLayer("HighTile");
+                int backgroundMask = 1 << LayerMask.NameToLayer(Layers.background);
+                int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
+                int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
                 int layerMask = backgroundMask | lowTileMask | highTileMask;
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
@@ -105,11 +71,6 @@ public class PlayableArrangeState : PlayableBaseState
                 {
                     playerCtrl.ReturnPool.Invoke();
                 }
-
-                //foreach (var arrnageTile in playerCtrl.arrangableTiles)
-                //{
-                //    arrnageTile.ClearTileMesh();
-                //}
             }
         }
     }

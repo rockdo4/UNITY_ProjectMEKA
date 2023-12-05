@@ -31,7 +31,7 @@ public class CharacterInfoUIManager : MonoBehaviour
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
-        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
+        stageManager = GameObject.FindGameObjectWithTag(Defines.Tags.stageManager).GetComponent<StageManager>();
     }
 
     private void Update()

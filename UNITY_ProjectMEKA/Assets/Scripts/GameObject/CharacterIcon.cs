@@ -1,9 +1,7 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using System.Collections.Generic;
-using static PlayerController;
-using UnityEngine.UIElements;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using static Defines;
 
 public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
@@ -11,9 +9,9 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     public GameObject characterPrefab;
     private GameObject characterGo;
     private PlayerController playerController;
+    public int cost;
 
     public ArrangeJoystick arrangeJoystick;
-    private UnityEvent SetJoystick;
     private CharacterInfoUIManager characterInfoUIManager;
 
     private bool created;
@@ -21,19 +19,10 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
     private void Awake()
     {
-        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
-        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
+        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<CharacterInfoUIManager>();
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         var characterStat = characterPrefab.GetComponent<CharacterState>();
         var cost = characterStat.arrangeCost;
-
-        //SetJoystick = new UnityEvent();
-        //SetJoystick.AddListener(() =>
-        //{
-        //    arrangeJoystick.settingMode = false;
-        //    arrangeJoystick.transform.gameObject.SetActive(true);
-        //    arrangeJoystick.SetPositionToCurrentPlayer(playerController.transform);
-        //    once = true;
-        //});
     }
 
     private void Start()
@@ -81,7 +70,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     {
         //var isCurrentPlayerNull = stageManager.currentPlayer == null;
         var isCurrentPlayerThis = stageManager.currentPlayer == playerController;
-        var isPossibleMode = (characterInfoUIManager.windowMode == Defines.CharacterInfoMode.None) || (characterInfoUIManager.windowMode == Defines.CharacterInfoMode.FirstArrange);
+        var isPossibleMode = (characterInfoUIManager.windowMode == CharacterInfoMode.None) || (characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange);
 
         if (isPossibleMode || (isCurrentPlayerThis && isPossibleMode))
         {

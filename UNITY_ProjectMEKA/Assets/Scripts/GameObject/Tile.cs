@@ -21,6 +21,7 @@ public class Tile : MonoBehaviour
     private BoxCollider boxCollider;
     public bool arrangePossible = true;
     public bool attackPossible;
+    public bool isSomthingOnTile;
 
     private void Awake()
     {
@@ -37,6 +38,7 @@ public class Tile : MonoBehaviour
             if (hit.transform.gameObject.layer != gameObject.layer)
             {
                 arrangePossible = false;
+                isSomthingOnTile = true;
             }
         }
     }

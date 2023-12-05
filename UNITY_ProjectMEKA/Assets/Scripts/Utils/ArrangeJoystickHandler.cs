@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static Defines;
 
 public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -32,19 +33,36 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     private void OnDisable()
     {
         cancelButtonOn = false;
+        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = ~0;
+    }
+
+    private void Update()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            if(Physics.Raycast(ray, out hit))
+            {
+                //if(hit.transform.gameObject != null)
+                Debug.Log(hit.transform.gameObject.name, hit.transform.gameObject);
+            }
+        }
     }
 
     public void Init()
     {
         transform.localPosition = Vector3.zero;
         currentTile = null;
+        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = 1 << LayerMask.NameToLayer(Layers.handler);
     }
 
     public void InitOnce()
     {
         joystick = transform.parent.GetComponent<ArrangeJoystick>();
-        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
-        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
+        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<CharacterInfoUIManager>();
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
 
         var boxCollider = GetComponent<BoxCollider>();
         half = boxCollider.bounds.size.x / 2f;
@@ -68,10 +86,18 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("on pointer down");
-        if (!stageManager.currentPlayer.stateManager.secondArranged)
-        {
-            OnDrag(eventData);
-        }
+        OnDrag(eventData);
+
+
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //int layerMask = 1 << LayerMask.NameToLayer(Layers.handler);
+        //if (Physics.Raycast(ray, Mathf.Infinity, layerMask))
+        //{
+        //    if (!stageManager.currentPlayer.stateManager.secondArranged)
+        //    {
+        //        OnDrag(eventData);
+        //    }
+        //}
     }
 
     public void OnDrag(PointerEventData eventData)

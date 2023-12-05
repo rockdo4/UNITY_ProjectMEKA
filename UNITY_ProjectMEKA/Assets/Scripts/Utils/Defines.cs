@@ -2,8 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Defines
+public static class Defines
 {
+    public static class Tags
+    {
+        public const string enemy = "Enemy";
+        public const string lowDoor = "LowDoor";
+        public const string highTile = "HighTile";
+        public const string lowTile = "LowTile";
+        public const string playerCollider = "PlayerCollider";
+        public const string enemyCollider = "EnemyCollider";
+        public const string joystick = "Joystick";
+        public const string handler = "Handler";
+        public const string stageManager = "StageManager";
+        public const string characterInfoUIManager = "CharacterInfoUIManager";
+        public const string cancel = "Cancel";
+        public const string collect = "Collect";
+        public const string player = "Player";
+    }
+
+    public static class Layers
+    {
+        public const string player = "Player";
+        public const string enemy = "Enemy";
+        public const string background = "Background";
+        public const string lowTile = "LowTile";
+        public const string highTile = "HighTile";
+        public const string arrangeTile = "ArrangeTile";
+        public const string enemyCollider = "EnemyCollider";
+        public const string playerCollider = "PlayerCollider";
+        public const string handler = "Handler";
+    }
+
     public enum Property
     {
         None,
