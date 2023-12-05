@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
-using SaveDataVC = SaveDataV1;
+using SaveDataVC = SaveDataV2;
 
 public class PlayDataManager
 {
@@ -32,7 +32,6 @@ public class PlayDataManager
     private static void FirstGameSet()
     {
         data.IsFirstGame = true;
-        data.Money = 0;
         data.BGMVolume = 0.5f;
         data.SEVolume = 0.5f;
         data.MasterVolume = 0.5f;

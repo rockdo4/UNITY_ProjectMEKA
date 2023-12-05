@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SaveDataVC = SaveDataV1; // 교체
+using SaveDataVC = SaveDataV2; // 교체
 
 public static class SaveLoadSystem
 {
@@ -58,11 +58,15 @@ public static class SaveLoadSystem
             Directory.CreateDirectory(SaveDirectory);
         }
         var path = Path.Combine(SaveDirectory, fileName);
+
+        Debug.Log((path, "저장시도"));
+
         using (var writer = new JsonTextWriter(new StreamWriter(path)))
         {
             var Serialize = new JsonSerializer();
             Serialize.Converters.Add(new Vector3Converter());
             Serialize.Converters.Add(new QuaternionConverter());
+            Serialize.Converters.Add(new CharacterDictConverter());
             Serialize.Serialize(writer, data);
         }
     }
@@ -89,13 +93,16 @@ public static class SaveLoadSystem
             var serialize = new JsonSerializer();
             serialize.Converters.Add(new Vector3Converter());
             serialize.Converters.Add(new QuaternionConverter());
-            switch (version) // 추가해줘야 함
+			serialize.Converters.Add(new CharacterDictConverter());
+			//serialize.Converters.Add(new 
+
+			switch (version) // 추가해줘야 함
             {
                 case 1:
                     data = serialize.Deserialize<SaveDataV1>(reader);
                     break;
                 case 2:
-                    //data = serialize.Deserialize<SaveDataV2>(reader);
+                    data = serialize.Deserialize<SaveDataV2>(reader);
                     break;
                 case 3:
                     //data = serialize.Deserialize<SaveDataV3>(reader);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -83,7 +84,7 @@ public class FormationManager : MonoBehaviour
 
 			card.GetComponent<Button>().onClick.AddListener(() => 
 			{
-				ChangeSelectCharacterCard(info);
+				ChangeSelectCharacterCard(info); 
 			});
 		}
 
@@ -123,16 +124,19 @@ public class FormationManager : MonoBehaviour
 			CloseDeletePopUp();
 		});
 
-		
 		cardList = characterCardScrollView.GetComponentsInChildren<CardInfo>();
+	}
+
+	private void OnEnable()
+	{
+		UpdatePlayData();
 		CheckCollectCharacter();
+		ChangeFormationSet(selectedFormationList);
 	}
 
 	//편성 프리셋 바꾸기
 	public void ChangeFormationSet(int formationListIndex)
 	{
-		if (selectedFormationList == formationListIndex) return;
-
 		UpdateActiveCard();
 		selectedFormationList = formationListIndex;
 
@@ -168,7 +172,6 @@ public class FormationManager : MonoBehaviour
 	{
 		popupPanel.gameObject.SetActive(false);
 	}
-
 
 	//다음 프리셋으로 바꾸기
 	public void ChangePresetPrevious()
@@ -277,6 +280,7 @@ public class FormationManager : MonoBehaviour
 
 		//닫음
 		CloseCharacterList();
+		UpdatePlayData();
 	}
 
 	//현재 선택한 카드 변경
@@ -311,6 +315,7 @@ public class FormationManager : MonoBehaviour
 		}
 
 		UpdateActiveCard();
+		UpdatePlayData();
 	}
 
 	//캐릭터 인포 열기
@@ -322,5 +327,17 @@ public class FormationManager : MonoBehaviour
 		var pos = GetComponentInParent<Canvas>().gameObject.transform.position;
 
 		characterInfoPanel.position = pos;
+	}
+
+	public void UpdatePlayData()
+	{
+		//PlayDataManager.data.formationList = formationList;
+	}
+	public void CheckPlayData()
+	{
+		if(PlayDataManager.data != null)
+		{
+			//formationList = PlayDataManager.data.formationList;
+		}
 	}
 }

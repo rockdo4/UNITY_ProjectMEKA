@@ -2367,6 +2367,67 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 258470347092188923, guid: 930b6865c1147a145807241a0471e1de, type: 3}
   m_PrefabInstance: {fileID: 744828991}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &330013732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 330013734}
+  - component: {fileID: 330013733}
+  - component: {fileID: 330013735}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &330013733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330013732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c0b086d8cd4a974a96881601ab543a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &330013734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330013732}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1530.4368, y: 686.2676, z: -6.9572754}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &330013735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330013732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48c85619d20d6b43bc66c0f1af39ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fFont_Size: 0
+  Red: 0
+  Green: 0
+  Blue: 0
 --- !u!1 &346621919
 GameObject:
   m_ObjectHideFlags: 0
@@ -7324,6 +7385,7 @@ MonoBehaviour:
   - {fileID: 1525589698}
   - {fileID: 1029123419}
   inputExp: {fileID: 1199263520}
+  UpdateInfoPanel: {fileID: 0}
 --- !u!1 &863761208
 GameObject:
   m_ObjectHideFlags: 0
@@ -18688,3 +18750,4 @@ SceneRoots:
   - {fileID: 2009567648}
   - {fileID: 1704917222}
   - {fileID: 944387886}
+  - {fileID: 330013734}
