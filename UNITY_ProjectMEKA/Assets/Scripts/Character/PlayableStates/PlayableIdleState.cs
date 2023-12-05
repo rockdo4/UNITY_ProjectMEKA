@@ -57,10 +57,26 @@ public class PlayableIdleState : PlayableBaseState
             EnemyController enemy = en.GetComponentInParent<EnemyController>();
             if (enemy != null)
             {
-                playerCtrl.target = en;
-                enemy.HoIsHitMe = playerCtrl.gameObject;
-                playerCtrl.SetState(PlayerController.CharacterStates.Attack);
-                return;
+                if(playerCtrl.state.occupation == Defines.Occupation.Castor ||
+                    playerCtrl.state.occupation == Defines.Occupation.Hunter)
+                {
+                    playerCtrl.target = en;
+                    enemy.HoIsHitMe = playerCtrl.gameObject;
+                    playerCtrl.SetState(PlayerController.CharacterStates.Attack);
+                    return;
+                }
+                else
+                {
+                    if(!enemy.state.isFly)
+                    {
+                        playerCtrl.target = en;
+                        enemy.HoIsHitMe = playerCtrl.gameObject;
+                        playerCtrl.SetState(PlayerController.CharacterStates.Attack);
+                        return;
+                    }
+                    
+                }
+                
 
             }
         }
