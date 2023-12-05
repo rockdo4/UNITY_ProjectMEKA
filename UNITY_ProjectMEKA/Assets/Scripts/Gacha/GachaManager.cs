@@ -54,6 +54,8 @@ public class GachaManager : MonoBehaviour
         var itemImage = ObjectPoolManager.instance.GetGo("GachaCard");
 		itemImage.transform.SetParent(resultPanel.transform, false);
         itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.CharacterName);
+
+        CharacterManager.Instance.UpdatePlayData();
     }
 
     public void Gacha10()

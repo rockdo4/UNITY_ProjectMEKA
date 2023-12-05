@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SaveDataVC = SaveDataV2; // ��ü
+using SaveDataVC = SaveDataV2; // 교체
 
 public static class SaveLoadSystem
 {
@@ -15,7 +15,7 @@ public static class SaveLoadSystem
         EncryptedBinary
     }
     public static Modes FileMode { get; } = Modes.Json;
-    public static int SaveDataVersion { get; } = 1; // ��ü
+    public static int SaveDataVersion { get; } = 1; // 버전
     private static string[] SaveSlotFileNames =
     {
         "Save0.json",
@@ -59,7 +59,7 @@ public static class SaveLoadSystem
         }
         var path = Path.Combine(SaveDirectory, fileName);
 
-        Debug.Log((path, "����õ�"));
+        Debug.Log((path, "savefile.json"));
 
         using (var writer = new JsonTextWriter(new StreamWriter(path)))
         {
