@@ -5361,6 +5361,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 593460499943048963, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2222472811943550866, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -5441,10 +5445,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6567709496673796913, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+      propertyPath: m_TagString
+      value: Collect
+      objectReference: {fileID: 0}
     - target: {fileID: 6832654696686713882, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 2100000, guid: 75fef7faedbf8ab4cab39b2f47ab8daa, type: 2}
+    - target: {fileID: 8607076117595652442, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+      propertyPath: m_TagString
+      value: Cancel
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

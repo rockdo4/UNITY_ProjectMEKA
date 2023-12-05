@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using static Defines;
 
-public class PlayerController : PoolAble /*IPointerDownHandler*/
+public class PlayerController : PoolAble,IPointerDownHandler
 {
     [HideInInspector]
     public PlayableStateManager stateManager = new PlayableStateManager();
@@ -162,7 +163,7 @@ public class PlayerController : PoolAble /*IPointerDownHandler*/
             }
         }
 
-        OnClickDown();
+        //OnClickDown();
     }
     
     //private void OnTriggerStay(Collider other)
@@ -453,35 +454,23 @@ public class PlayerController : PoolAble /*IPointerDownHandler*/
     //    }
     //}
 
-    //public void OnPointerDown(PointerEventData eventData)
+    //public void OnClickDown()
     //{
-    //    if(stageManager.currentPlayer == null)
+    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //    int layerMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
+
+    //    if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, Mathf.Infinity, layerMask))
     //    {
-    //        Debug.Log("player pointer down");
-    //        SetState(CharacterStates.Arrange);
-    //        stageManager.currentPlayer = this;
-    //        stageManager.currentPlayerIcon = this.icon;
-    //        joystick.SetActive(true);
+    //        if (stageManager.currentPlayer == null)
+    //        {
+    //            Debug.Log("player pointer down");
+    //            SetState(CharacterStates.Arrange);
+    //            stageManager.currentPlayer = this;
+    //            stageManager.currentPlayerIcon = this.icon;
+    //            joystick.SetActive(true);
+    //        }
     //    }
     //}
-
-    public void OnClickDown()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {
-            if (hit.transform.tag == Tags.playerCollider && stageManager.currentPlayer == null)
-            {
-                Debug.Log("player pointer down");
-                SetState(CharacterStates.Arrange);
-                stageManager.currentPlayer = this;
-                stageManager.currentPlayerIcon = this.icon;
-                joystick.SetActive(true);
-            }
-        }
-    }
 
     public void ArrangableTileSet(Defines.Occupation occupation)
     {
@@ -572,6 +561,24 @@ public class PlayerController : PoolAble /*IPointerDownHandler*/
                     }
                 }
             }
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        int layerMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
+        if (Physics.Raycast(ray, Mathf.Infinity, layerMask))
+        {
+            if (stageManager.currentPlayer == null)
+            {
+                Debug.Log("player pointer down");
+                SetState(CharacterStates.Arrange);
+                stageManager.currentPlayer = this;
+                stageManager.currentPlayerIcon = this.icon;
+                joystick.SetActive(true);
+            }
+
         }
     }
 }

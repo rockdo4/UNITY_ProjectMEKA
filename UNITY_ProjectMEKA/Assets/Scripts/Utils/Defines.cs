@@ -30,6 +30,7 @@ public static class Defines
         public const string highTile = "HighTile";
         public const string arrangeTile = "ArrangeTile";
         public const string enemyCollider = "EnemyCollider";
+        public const string playerCollider = "PlayerCollider";
     }
 
     public enum Property
