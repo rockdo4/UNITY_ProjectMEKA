@@ -6,33 +6,28 @@ using UnityEngine;
 
 public class EnhancePanel : MonoBehaviour
 {
-	public TextMeshProUGUI[] currInfo;
-	public TextMeshProUGUI[] targetInfo;
+	public int[] itemID;
 
-	public TMP_InputField inputExp;
+	public TextMeshProUGUI levelText;
+	public TextMeshProUGUI damageText;
+	public TextMeshProUGUI armorText;
+	public TextMeshProUGUI hpText;
+	public TextMeshProUGUI expText;
+
+	public ItemQuantityCard[] reportItemCard;
+
 	public CharacterInfoText UpdateInfoPanel;
 
 	private Character currCharacter;
 
-	public void Awake()
+	public void OnEnable()
 	{
-		inputExp.onEndEdit.AddListener((x) => 
-		{
-			if(int.TryParse(x, out int result))
-			{
-				ApplyUpgradeLevel(result);
-				
-			}
-			inputExp.text = "";
-		});
+		currCharacter = UpdateInfoPanel.character;
 
-		inputExp.onValueChanged.AddListener((x) =>
+		for(int i=0; i<reportItemCard.Length; i++)
 		{
-			if (int.TryParse(x, out int result))
-			{
-				UpdateTargetLevel(result);
-			}
-		});
+			reportItemCard[i].SetItem(itemID[i]);
+		}
 	}
 
 	public void SetCharacter(Character character)
@@ -40,9 +35,6 @@ public class EnhancePanel : MonoBehaviour
 		currCharacter = character;
 
 		int characterID = currCharacter.CharacterID;
-		//임시로 고정 추후 바꿔야함
-		characterID = 13401;
-
 		int level = currCharacter.CharacterLevel;
 
 		int result = CombineID(characterID, level);
@@ -50,25 +42,21 @@ public class EnhancePanel : MonoBehaviour
 		Debug.Log(("ID",result));
 		var levelData = DataTableMgr.GetTable<LevelTable>().GetLevelData(result);
 
-		currInfo[0].SetText("현재 레벨 : " + levelData.CharacterLevel.ToString());
-		currInfo[1].SetText("현재 공격력 : " + levelData.CharacterDamage.ToString());
-		currInfo[2].SetText("현재 방어력 : " + levelData.CharacterArmor.ToString());
-		currInfo[3].SetText("현재 체력 : " + levelData.CharacterHP.ToString());
-		currInfo[4].SetText("현재 경험치 : " + currCharacter.CurrentExp.ToString());
+		UpdateTargetLevel();
 	}
 
-	public void UpdateTargetLevel(int exp)
+	public LevelData CalculateData(int totalExp, out int remain)
 	{
 		var table = DataTableMgr.GetTable<ExpTable>().GetOriginalTable();
 
 		int currentLevel = currCharacter.CharacterLevel;
 		int targetLevel = currentLevel;
 
-		while(exp > 0)
+		while (totalExp > 0)
 		{
-			if(exp >= table[targetLevel - 1].RequireExp)
+			if (totalExp >= table[targetLevel - 1].RequireExp)
 			{
-				exp -= table[targetLevel - 1].RequireExp;
+				totalExp -= table[targetLevel - 1].RequireExp;
 				targetLevel++;
 			}
 			else
@@ -76,24 +64,40 @@ public class EnhancePanel : MonoBehaviour
 				break;
 			}
 
-			if(targetLevel > table.Count)
+			if (targetLevel > table.Count)
 			{
 				targetLevel--;
 				break;
 			}
 		}
 		int characterID = currCharacter.CharacterID;
-		//임시로 고정 추후 바꿔야함
-		characterID = 13401;
-
 		int result = CombineID(characterID, targetLevel);
+
+		remain = totalExp;
+		return DataTableMgr.GetTable<LevelTable>().GetLevelData(result);
+	}
+
+	public void UpdateTargetLevel()
+	{
+		int totalExp = 0;
+		int remainExp = 0;
+
+		foreach(var card in reportItemCard)
+		{
+			var value = card.item.Value;
+			totalExp += (card.selectedQuantity * value);
+		}
+
+		var data = CalculateData(totalExp, out remainExp);
+
+		int result = CombineID(currCharacter.CharacterID, currCharacter.CharacterLevel);
 		var levelData = DataTableMgr.GetTable<LevelTable>().GetLevelData(result);
 
-		targetInfo[0].SetText("예상 레벨 : " + targetLevel);
-		targetInfo[1].SetText("예상 공격력 : " + levelData.CharacterDamage.ToString());
-		targetInfo[2].SetText("예상 방어력 : " + levelData.CharacterArmor.ToString());
-		targetInfo[3].SetText("예상 체력 : " + levelData.CharacterHP.ToString());
-		targetInfo[4].SetText("예상 경험치 : " + exp.ToString()); ;
+		levelText.SetText($"레벨 : {levelData.CharacterLevel}	>>	{data.CharacterLevel}");
+		damageText.SetText($"공격력 : {levelData.CharacterDamage}	>>	{data.CharacterDamage}");
+		armorText.SetText($"방어력 : {levelData.CharacterArmor}	>>	{data.CharacterArmor}");
+		hpText.SetText($"체력 : {levelData.CharacterHP}	>>	{data.CharacterHP}");
+		expText.SetText($"경험치 : {currCharacter.CurrentExp} >> {remainExp}");
 	}
 
 	public void ApplyUpgradeLevel(int exp)
@@ -122,20 +126,17 @@ public class EnhancePanel : MonoBehaviour
 			}
 		}
 		int characterID = currCharacter.CharacterID;
-		//임시로 고정 추후 바꿔야함
-		characterID = 13401;
-
 		int result = CombineID(characterID, targetLevel);
 		var levelData = DataTableMgr.GetTable<LevelTable>().GetLevelData(result);
 
 		currCharacter.CharacterLevel = levelData.CharacterLevel;
 		currCharacter.CurrentExp = exp;
 
-		currInfo[0].SetText("현재 레벨 : " + targetLevel);
-		currInfo[1].SetText("현재 공격력 : " + levelData.CharacterDamage.ToString());
-		currInfo[2].SetText("현재 방어력 : " + levelData.CharacterArmor.ToString());
-		currInfo[3].SetText("현재 체력 : " + levelData.CharacterHP.ToString());
-		currInfo[4].SetText("현재 경험치 : " + exp.ToString()); ;
+		levelText.SetText("현재 레벨 : " + targetLevel);
+		damageText.SetText("현재 공격력 : " + levelData.CharacterDamage.ToString());
+		armorText.SetText("현재 방어력 : " + levelData.CharacterArmor.ToString());
+		hpText.SetText("현재 체력 : " + levelData.CharacterHP.ToString());
+		expText.SetText("현재 경험치 : " + exp.ToString());
 	}
 
 	public int CombineID(int characterID, int level)

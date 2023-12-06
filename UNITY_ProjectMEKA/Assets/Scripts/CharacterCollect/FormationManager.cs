@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public enum UINumeric
@@ -345,5 +344,6 @@ public class FormationManager : MonoBehaviour
 	public void SetHolderFormation()
 	{
 		DataHolder.formation = formationList[selectedFormationList];
+		DataHolder.formation = DataHolder.formation.Where(x => x != 0).ToArray();
 	}
 }

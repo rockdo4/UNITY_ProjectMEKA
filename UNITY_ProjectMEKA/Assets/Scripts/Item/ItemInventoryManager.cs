@@ -97,4 +97,15 @@ public class ItemInventoryManager
 	{
 		return new List<Item>(m_ItemStorage);
 	}
+
+	public Item GetItemByID(int ID)
+	{
+		var it = m_ItemStorage.Find(x => x.ID == ID);
+
+		if (it != null)
+		{
+			return it;
+		}
+		return null;
+	}
 }
