@@ -263,7 +263,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 70, y: 0}
+  m_SizeDelta: {x: 100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1102423904086840388
 CanvasRenderer:
@@ -315,7 +315,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527c04d255a48b84298393929cd8b297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageManager: {fileID: 0}
   characterPrefab: {fileID: 679070779171108606, guid: fcd48dd8e03441d41bafb92281d85531, type: 3}
+  cost: 0
   arrangeJoystick: {fileID: 0}
 --- !u!114 &2867704230063001964
 MonoBehaviour:

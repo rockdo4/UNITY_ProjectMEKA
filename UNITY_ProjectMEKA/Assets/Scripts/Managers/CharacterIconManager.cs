@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static Defines;
 
@@ -9,6 +10,8 @@ public class CharacterIconManager : MonoBehaviour
     public List<GameObject> characterPrefabs = new List<GameObject>();
     public List<GameObject> characterIconPrefabs = new List<GameObject>();
     public int characterCount;
+
+    private CharacterTable characterTable;
     private string characterPrefabPath;
     private string characterIconPath;
 
@@ -17,25 +20,25 @@ public class CharacterIconManager : MonoBehaviour
         characterPrefabPath = "Character";
         characterIconPath = "CharacterIcon/CharacterIconPrefab";
         characterCount = DataHolder.formation.Length;
+        characterTable = DataTableMgr.GetTable<CharacterTable>();
         SetCharacters();
+        CreateIconGameObjects();
     }
 
     public void SetCharacters()
     {
-        var characterTable = DataTableMgr.GetTable<CharacterTable>();
         for(int i = 0; i < characterCount; i++)
         {
             // ID에 맞는 캐릭터데이터 가져오기
-            var characterData = characterTable.GetCharacterData(DataHolder.formation[i]);
-
+            var id = DataHolder.formation[i];
+            var characterData = characterTable.GetCharacterData(id);
             GameObject[] prefabs = Resources.LoadAll<GameObject>(characterPrefabPath);
 
             // ID에 맞는 프리팹 가져와서 캐릭터데이터 적용
             foreach (var prefab in prefabs)
             {
                 var characterState = prefab.GetComponent<CharacterState>();
-                var id = characterState.id;
-                if(id == characterData.CharacterID)
+                if(characterState.id == id)
                 {
                     characterState.name = characterData.CharacterName;
                     characterState.property = (Property)characterData.CharacterProperty;
@@ -44,31 +47,45 @@ public class CharacterIconManager : MonoBehaviour
                     characterState.maxCost = characterData.WithdrawCost;
                     characterState.arrangeCoolTime = characterData.ReArrangementCoolDown;
                     characterPrefabs.Add(prefab);
-
-                    SetCharacterIcon(prefab, characterData.ImagePath);
                     break;
                 }
             }
         }
     }
 
-    public void SetCharacterIcon(GameObject characterPrefab, string imagePath)
+    public void SetCharacterIcon()
     {
-        var iconPrefab = Resources.Load<GameObject>(characterIconPath);
-        var iconImage = Resources.Load<Sprite>(imagePath);
+        //var iconPrefab = Resources.Load<GameObject>(characterIconPath);
+        //var iconImage = Resources.Load<Sprite>(imagePath);
+        //characterIconPrefabs.Add(iconPrefab);
+        //int index = characterIconPrefabs.Count - 1;
 
-        // 컴포넌트 세팅
-        var characterIcon = iconPrefab.GetComponent<CharacterIcon>();
-        var characterIconImage = iconPrefab.GetComponent<Image>();
+        //// 컴포넌트 세팅
+        ////var index = characterIconPrefabs.Count - 1;
+        //var characterIcon = characterIconPrefabs[index].GetComponent<CharacterIcon>();
+        //var characterIconImage = characterIconPrefabs[index].GetComponent<UnityEngine.UI.Image>();
         
-        characterIcon.characterPrefab = characterPrefab;
-        characterIconImage.sprite = iconImage;
-
-        characterIconPrefabs.Add(iconPrefab);
+        //characterIcon.characterPrefab = characterPrefab;
+        //characterIconImage.sprite = iconImage;
     }
 
-    public void CreateIcons()
+    public void CreateIconGameObjects()
     {
+        for(int i = 0; i < characterCount; i++)
+        {
+            var id = DataHolder.formation[i];
+            var iconImage = Resources.Load<Sprite>(characterTable.GetCharacterData(id).ImagePath);
 
+            var iconPrefab = Resources.Load<GameObject>(characterIconPath);
+            var iconGo = Instantiate(iconPrefab, panel.transform);
+
+            var characterIcon = iconGo.GetComponent<CharacterIcon>();
+            var characterIconImage = iconGo.GetComponent<UnityEngine.UI.Image>();
+
+            characterIcon.characterPrefab = characterPrefabs[i];
+            characterIconImage.sprite = iconImage;
+
+            characterIconPrefabs.Add(iconGo);
+        }
     }
 }
