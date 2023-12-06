@@ -8,6 +8,7 @@ public class ItemQuantityCard : MonoBehaviour
 {
     public Image itemImage;
     public TextMeshProUGUI quantityText;
+    public EnhancePanel panel;
     private Button button;
 
     [HideInInspector]
@@ -16,12 +17,15 @@ public class ItemQuantityCard : MonoBehaviour
 
 	private void Awake()
 	{
+        panel = GetComponentInParent<EnhancePanel>();
 		button = GetComponent<Button>();
 	}
 
 	private void OnEnable()
 	{
         button.onClick.AddListener(OnClickAddItemButton);
+        button.onClick.AddListener(() => panel.UpdateTargetLevel());
+
         SetText();
 	}
 
@@ -60,7 +64,7 @@ public class ItemQuantityCard : MonoBehaviour
 		}
         else
         {
-			quantityText.SetText($"<color=red>{selectedQuantity}</color> / {item.Count}");
+			
 		}
     }
 

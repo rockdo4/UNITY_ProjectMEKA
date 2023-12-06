@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnhancePanel : MonoBehaviour
 {
@@ -15,19 +16,37 @@ public class EnhancePanel : MonoBehaviour
 	public TextMeshProUGUI expText;
 
 	public ItemQuantityCard[] reportItemCard;
+	public Button applyButton;
 
 	public CharacterInfoText UpdateInfoPanel;
 
 	private Character currCharacter;
 
+	private void Awake()
+	{
+		applyButton.onClick.AddListener(() => 
+		{
+			ApplyUpgradeLevel();
+
+			foreach(var card in reportItemCard)
+			{
+				card.ConsumeItem();
+			}
+
+			UpdateTargetLevel();
+		});
+
+	}
+
 	public void OnEnable()
 	{
-		currCharacter = UpdateInfoPanel.character;
 
-		for(int i=0; i<reportItemCard.Length; i++)
+		for (int i = 0; i < reportItemCard.Length; i++)
 		{
 			reportItemCard[i].SetItem(itemID[i]);
 		}
+
+		currCharacter = UpdateInfoPanel.character;
 	}
 
 	public void SetCharacter(Character character)
@@ -100,43 +119,30 @@ public class EnhancePanel : MonoBehaviour
 		expText.SetText($"경험치 : {currCharacter.CurrentExp} >> {remainExp}");
 	}
 
-	public void ApplyUpgradeLevel(int exp)
+	public void ApplyUpgradeLevel()
 	{
-		var table = DataTableMgr.GetTable<ExpTable>().GetOriginalTable();
+		int totalExp = 0;
+		int remainExp = 0;
 
-		int currentLevel = currCharacter.CharacterLevel;
-		int targetLevel = currentLevel;
-
-		while (exp > 0)
+		foreach (var card in reportItemCard)
 		{
-			if (exp >= table[targetLevel - 1].RequireExp)
-			{
-				exp -= table[targetLevel - 1].RequireExp;
-				targetLevel++;
-			}
-			else
-			{
-				break;
-			}
-
-			if (targetLevel > table.Count)
-			{
-				targetLevel--;
-				break;
-			}
+			var value = card.item.Value;
+			totalExp += (card.selectedQuantity * value);
 		}
-		int characterID = currCharacter.CharacterID;
-		int result = CombineID(characterID, targetLevel);
+
+		var data = CalculateData(totalExp, out remainExp);
+
+		currCharacter.CharacterLevel = data.CharacterLevel;
+		currCharacter.CurrentExp = remainExp;
+
+		int result = CombineID(currCharacter.CharacterID, currCharacter.CharacterLevel);
 		var levelData = DataTableMgr.GetTable<LevelTable>().GetLevelData(result);
 
-		currCharacter.CharacterLevel = levelData.CharacterLevel;
-		currCharacter.CurrentExp = exp;
-
-		levelText.SetText("현재 레벨 : " + targetLevel);
-		damageText.SetText("현재 공격력 : " + levelData.CharacterDamage.ToString());
-		armorText.SetText("현재 방어력 : " + levelData.CharacterArmor.ToString());
-		hpText.SetText("현재 체력 : " + levelData.CharacterHP.ToString());
-		expText.SetText("현재 경험치 : " + exp.ToString());
+		levelText.SetText($"레벨 : {levelData.CharacterLevel}	>>	{data.CharacterLevel}");
+		damageText.SetText($"공격력 : {levelData.CharacterDamage}	>>	{data.CharacterDamage}");
+		armorText.SetText($"방어력 : {levelData.CharacterArmor}	>>	{data.CharacterArmor}");
+		hpText.SetText($"체력 : {levelData.CharacterHP}	>>	{data.CharacterHP}");
+		expText.SetText($"경험치 : {currCharacter.CurrentExp} >> {remainExp}");
 	}
 
 	public int CombineID(int characterID, int level)
