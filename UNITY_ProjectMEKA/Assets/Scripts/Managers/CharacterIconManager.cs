@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static Defines;
 
 public class CharacterIconManager : MonoBehaviour
 {
-    public GameObject[] iconPrefabs;
-    private int characterCount;
+    public List<GameObject> iconPrefabs = new List<GameObject>();
+    public int characterCount;
 
 
     private void Awake()
@@ -25,9 +26,13 @@ public class CharacterIconManager : MonoBehaviour
         var characterTable = DataTableMgr.GetTable<CharacterTable>();
         for(int i = 0; i < characterCount; i++)
         {
+            // ID에 맞는 캐릭터데이터 가져오기
             var characterData = characterTable.GetCharacterData(DataHolder.formation[i]);
-            
-            foreach(var prefab in iconPrefabs)
+
+            GameObject[] prefabs = Resources.LoadAll<GameObject>("Character");
+
+            // ID에 맞는 프리팹 가져와서 캐릭터데이터 적용
+            foreach (var prefab in prefabs)
             {
                 var characterState = prefab.GetComponent<CharacterState>();
                 var id = characterState.id;
@@ -39,6 +44,7 @@ public class CharacterIconManager : MonoBehaviour
                     characterState.arrangeCost = characterData.ArrangementCost;
                     characterState.maxCost = characterData.WithdrawCost;
                     characterState.arrangeCoolTime = characterData.ReArrangementCoolDown;
+                    iconPrefabs.Add(prefab);
                     break;
                 }
             }
