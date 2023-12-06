@@ -9,6 +9,8 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     public GameObject characterPrefab;
     private GameObject characterGo;
     private PlayerController playerController;
+
+    public int maxCost = 20;
     public int cost;
 
     private bool created;
@@ -34,11 +36,6 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
                 created = false;
             }
         }
-
-        if (created && !once && playerController.stateManager.firstArranged)
-        {
-            //SetJoystick.Invoke();
-        }
     }
 
     public void CreateCharacter()
@@ -54,6 +51,9 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         var dieEvent = characterGo.GetComponent<CanDie>();
         dieEvent.action.AddListener(() =>
         {
+            playerController.stateManager.firstArranged = false;
+            playerController.stateManager.secondArranged = false;
+            playerController.stateManager.created = false;
             playerController.currentTile.arrangePossible = true;
             playerController.icon.gameObject.SetActive(true);
         });
@@ -64,7 +64,6 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //var isCurrentPlayerNull = stageManager.currentPlayer == null;
         var isCurrentPlayerThis = stageManager.currentPlayer == playerController;
         var isPossibleMode = (stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.None) || (stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange);
 

@@ -53,22 +53,6 @@ public class CharacterIconManager : MonoBehaviour
         }
     }
 
-    public void SetCharacterIcon()
-    {
-        //var iconPrefab = Resources.Load<GameObject>(characterIconPath);
-        //var iconImage = Resources.Load<Sprite>(imagePath);
-        //characterIconPrefabs.Add(iconPrefab);
-        //int index = characterIconPrefabs.Count - 1;
-
-        //// 컴포넌트 세팅
-        ////var index = characterIconPrefabs.Count - 1;
-        //var characterIcon = characterIconPrefabs[index].GetComponent<CharacterIcon>();
-        //var characterIconImage = characterIconPrefabs[index].GetComponent<UnityEngine.UI.Image>();
-        
-        //characterIcon.characterPrefab = characterPrefab;
-        //characterIconImage.sprite = iconImage;
-    }
-
     public void CreateIconGameObjects()
     {
         for(int i = 0; i < characterCount; i++)

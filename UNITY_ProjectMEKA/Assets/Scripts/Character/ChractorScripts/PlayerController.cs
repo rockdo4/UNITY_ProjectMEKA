@@ -455,23 +455,6 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
     //    }
     //}
 
-    //public void OnClickDown()
-    //{
-    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //    int layerMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
-
-    //    if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, Mathf.Infinity, layerMask))
-    //    {
-    //        if (stageManager.currentPlayer == null)
-    //        {
-    //            Debug.Log("player pointer down");
-    //            SetState(CharacterStates.Arrange);
-    //            stageManager.currentPlayer = this;
-    //            stageManager.currentPlayerIcon = this.icon;
-    //            joystick.SetActive(true);
-    //        }
-    //    }
-    //}
 
     public void ArrangableTileSet(Defines.Occupation occupation)
     {
@@ -564,31 +547,6 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
             }
         }
     }
-
-//    public void OnPointerDown(PointerEventData eventData)
-//    {
-//        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
-
-//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-//        RaycastHit hit;
-
-//        int layerMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
-//        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
-//        {
-//            Debug.Log(hit.transform.parent.GetComponent<CharacterState>().name);
-//            if (stageManager.currentPlayer == null)
-//            {
-//                Debug.Log($"{state.name} player pointer down");
-//                SetState(CharacterStates.Arrange);
-//                stageManager.currentPlayer = this;
-//                stageManager.currentPlayerIcon = this.icon;
-//                joystick.SetActive(true);
-//            }
-
-//        }
-
-//        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = ~0;
-//    }
 
     public void OnClickDown()
     {
