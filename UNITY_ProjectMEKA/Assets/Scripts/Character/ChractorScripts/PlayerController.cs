@@ -28,9 +28,9 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
     public int maxBlockCount;
     [HideInInspector]
     public Collider[] enemys;
-    [HideInInspector]
+    //[HideInInspector]
     public List<GameObject> rangeInEnemys = new List<GameObject>();
-    [HideInInspector]
+    //[HideInInspector]
     public List<GameObject> rangeInPlayers = new List<GameObject>();
     [HideInInspector]
     public List<int> enemyBlockCount = new List<int>();

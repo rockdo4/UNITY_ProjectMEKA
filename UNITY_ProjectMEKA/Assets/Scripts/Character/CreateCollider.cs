@@ -71,6 +71,55 @@ public class CreateCollider : MonoBehaviour
         }
 
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("EnemyCollider") && state.occupation != Defines.Occupation.Supporters)
+        {
+            if (player.rangeInEnemys.Contains(other.GetComponentInParent<Transform>().gameObject))
+            {
+                player.rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
+                if (other.GetComponentInParent<EnemyController>().state.enemyType == Defines.EnemyType.OhYaBung)
+                {
+                    player.enemyBlockCount.Remove(1);
+                    player.enemyBlockCount.Remove(1);
+                }
+                else
+                {
+                    player.enemyBlockCount.Remove(1);
+                }
+                var obj = other.GetComponentInParent<CanDie>();
+                obj.action.RemoveListener(() =>
+                {
+                    player.rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
+                    if (other.GetComponentInParent<EnemyController>().state.enemyType == Defines.EnemyType.OhYaBung)
+                    {
+                        player.enemyBlockCount.Remove(1);
+                        player.enemyBlockCount.Remove(1);
+                    }
+                    else
+                    {
+                        player.enemyBlockCount.Remove(1);
+                    }
+                });
+            }
+        }
+        if (other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
+        {
+            if (player.rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
+            {
+                player.rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+
+                var obj = other.GetComponentInParent<CanDie>();
+                obj.action.RemoveListener(() =>
+                {
+                    player.rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+
+                });
+            }
+        }
+    }
+
     void CreateColliders()
     {
         if (state == null || state.AttackRange == null || transform == null)
