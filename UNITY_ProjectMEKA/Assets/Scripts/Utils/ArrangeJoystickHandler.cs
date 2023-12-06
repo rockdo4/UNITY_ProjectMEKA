@@ -33,7 +33,8 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     private void OnDisable()
     {
         cancelButtonOn = false;
-        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = ~0;
+        var sliderMask = 1 << LayerMask.NameToLayer(Layers.slider);
+        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = ~0 ^ sliderMask;
     }
 
     private void Update()
@@ -55,7 +56,8 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     {
         transform.localPosition = Vector3.zero;
         currentTile = null;
-        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = 1 << LayerMask.NameToLayer(Layers.handler);
+        var handlerMask = 1 << LayerMask.NameToLayer(Layers.handler);
+        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = handlerMask;
     }
 
     public void InitOnce()

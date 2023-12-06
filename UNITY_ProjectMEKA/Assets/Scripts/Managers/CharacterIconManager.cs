@@ -14,9 +14,12 @@ public class CharacterIconManager : MonoBehaviour
     private CharacterTable characterTable;
     private string characterPrefabPath;
     private string characterIconPath;
+    public int maxCost = 20;
+    public int currentCost;
 
     private void Awake()
     {
+        currentCost = maxCost;
         characterPrefabPath = "Character";
         characterIconPath = "CharacterIcon/CharacterIconPrefab";
         characterCount = DataHolder.formation.Length;

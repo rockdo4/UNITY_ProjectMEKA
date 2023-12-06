@@ -97,6 +97,8 @@ public class ArrangeJoystick : MonoBehaviour
         }
         stageManager.currentPlayer.stateManager.firstArranged = false; stageManager.currentPlayer.stateManager.secondArranged = false;
         stageManager.currentPlayer.currentTile.arrangePossible = true;
+        stageManager.currentPlayerIcon.isCollected = true;
+        stageManager.currentPlayerIcon.arrangePossible = false;
         stageManager.currentPlayer.ReturnPool.Invoke();
         stageManager.currentPlayer = null;
         stageManager.currentPlayerIcon = null;

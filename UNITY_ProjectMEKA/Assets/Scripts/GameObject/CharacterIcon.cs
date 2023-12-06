@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using static Defines;
+using TMPro;
 
 public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
@@ -10,10 +12,15 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     private GameObject characterGo;
     private PlayerController playerController;
 
+    public TextMeshProUGUI costText;
+    public GameObject redFilter;
+    public Slider coolTimeSlider;
+    public TextMeshProUGUI coolTimeText;
+
     public bool isDie = false;
+    public bool isCollected = false;
     public bool arrangePossible = true;
 
-    public int maxCost = 20;
     private float arrangeCoolTime;
     private int cost;
     private float timer = 0f;
@@ -30,7 +37,9 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     {
         var characterStat = characterPrefab.GetComponent<CharacterState>();
         cost = characterStat.arrangeCost;
+        costText.text = cost.ToString();
         arrangeCoolTime = characterStat.arrangeCoolTime;
+        timer = arrangeCoolTime;
     }
 
     private void Update()
@@ -43,14 +52,12 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
             }
         }
 
-        if(isDie)
+        if(isDie || isCollected)
         {
-            timer += Time.deltaTime;
-            if(timer >= arrangeCoolTime)
+            CoolTimeUpdate();
+            if (isCollected)
             {
-                timer = 0f;
-                isDie = false;
-                arrangePossible = true;
+                // 코스트 회복
             }
         }
     }
@@ -75,14 +82,38 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         });
     }
 
+    public void CoolTimeUpdate()
+    {
+        if (!redFilter.activeSelf)
+        {
+            redFilter.SetActive(true);
+            coolTimeSlider.gameObject.SetActive(true);
+        }
+
+        timer -= Time.deltaTime;
+        coolTimeText.text = timer.ToString("0.0");
+        coolTimeSlider.value = 1 - (timer / arrangeCoolTime);
+
+        if (timer <= 0f)
+        {
+            timer = arrangeCoolTime;
+            isDie = false;
+            isCollected = false;
+            arrangePossible = true;
+            redFilter.SetActive(false);
+            coolTimeSlider.gameObject.SetActive(false);
+        }
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         var isCurrentPlayerThis = stageManager.currentPlayer == playerController;
         var isPossibleMode = (stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.None) || (stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange);
+        var isCostEnough = stageManager.characterIconManager.currentCost > cost;
 
         if (isPossibleMode || (isCurrentPlayerThis && isPossibleMode))
         {
-            if (arrangePossible)
+            if (arrangePossible && isCostEnough)
             {
                 CreateCharacter();
             }
