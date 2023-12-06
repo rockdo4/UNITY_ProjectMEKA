@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SaveDataVC = SaveDataV2; // 교체
+using SaveDataVC = SaveDataV3; // 교체
 
 public static class SaveLoadSystem
 {
@@ -93,9 +93,9 @@ public static class SaveLoadSystem
             var serialize = new JsonSerializer();
             serialize.Converters.Add(new Vector3Converter());
             serialize.Converters.Add(new QuaternionConverter());
-            //serialize.Converters.Add(new 
+            serialize.Converters.Add(new CharacterDictConverter());
 
-            switch (version) // �߰������ ��
+            switch (version)
             {
                 case 1:
                     data = serialize.Deserialize<SaveDataV1>(reader);
@@ -104,7 +104,7 @@ public static class SaveLoadSystem
                     data = serialize.Deserialize<SaveDataV2>(reader);
                     break;
                 case 3:
-                    //data = serialize.Deserialize<SaveDataV3>(reader);
+                    data = serialize.Deserialize<SaveDataV3>(reader);
                     break;
             }
 

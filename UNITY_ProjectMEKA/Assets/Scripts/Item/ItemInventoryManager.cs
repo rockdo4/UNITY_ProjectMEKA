@@ -8,7 +8,7 @@ public class ItemInventoryManager
 	public List<Item> m_ItemStorage;
 	private ItemInventoryManager() 
 	{
-		m_ItemStorage = new List<Item>();
+		m_ItemStorage = PlayDataManager.data.itemStorage;
 	}
 	public static ItemInventoryManager Instance
 	{
