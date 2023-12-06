@@ -47,16 +47,19 @@ public class NPCAttackState : NPCBaseState
             enemyCtrl.ani.SetTrigger("Run");
         }
 
-
-        foreach(var a in enemyCtrl.rangeInPlayers)
+        foreach (var a in enemyCtrl.rangeInPlayers)
         {
-            if(a.GetComponentInParent<PlayerController>() == null)
+            if (a.GetComponentInParent<PlayerController>() == null)
             {
-                enemyCtrl.rangeInPlayers.Remove(a);
+                if(enemyCtrl.rangeInPlayers.Contains(a))
+                {
+                    enemyCtrl.rangeInPlayers.Remove(a);
+
+                }
                 enemyCtrl.SetState(NPCStates.Move);
                 enemyCtrl.ani.SetTrigger("Run");
             }
-            else if(!a.activeSelf)
+            else if (!a.activeSelf)
             {
                 enemyCtrl.rangeInPlayers.Remove(a);
                 enemyCtrl.SetState(NPCStates.Move);
@@ -64,7 +67,7 @@ public class NPCAttackState : NPCBaseState
             }
 
         }
-        
+
 
     }
 }

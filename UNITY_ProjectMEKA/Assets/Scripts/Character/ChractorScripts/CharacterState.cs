@@ -10,6 +10,7 @@ public class CharacterState : MonoBehaviour
         Bullet,
         Aoe,
         PiercingShot,
+        ChainAttack,
     }
     public enum Passive
     {

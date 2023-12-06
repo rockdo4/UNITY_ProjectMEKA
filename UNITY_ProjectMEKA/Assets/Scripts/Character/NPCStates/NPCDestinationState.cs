@@ -15,7 +15,9 @@ public class NPCDestinationStates : NPCBaseState
 
     private bool once = false;
     private bool isOne = false;
+    private float timer;
     GameObject[] players;
+    private float distance;
     public NPCDestinationStates(EnemyController enemy) : base(enemy)
     {
     }
@@ -30,8 +32,8 @@ public class NPCDestinationStates : NPCBaseState
         ////speed = enemyCtrl.state.speed;
         //repeatCount = -1;
         //once = false;
-        
 
+        distance = Random.Range(0.3f,0.5f);
     }
     public void Init()
     {
@@ -70,7 +72,47 @@ public class NPCDestinationStates : NPCBaseState
         Vector3Int gridPosition = Vector3Int.FloorToInt(enemyCtrl.transform.position);
         Vector3 tileCenter = new Vector3(gridPosition.x + 0.5f, gridPosition.y, gridPosition.z + 0.5f);
 
-        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.3f)
+        if(enemyCtrl.state.isFly)
+        {
+            timer += Time.deltaTime;
+            if(timer > enemyCtrl.state.attackDelay)
+            {
+                timer = 0;
+                foreach (var pl in enemyCtrl.rangeInPlayers)
+                {
+                    PlayerController player = pl.GetComponentInParent<PlayerController>();
+                    //float distance = Vector3.Distance(enemyCtrl.transform.position,player.transform.position);/*&& distance > 0.4f*/
+                    if (enemyCtrl.state.isBlock && player != null &&
+                        player.currentState != PlayerController.CharacterStates.Arrange)
+                    {
+                        if (enemyCtrl.state.isFly)
+                        {
+                            if (pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Castor ||
+                                pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
+                                pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
+                            {
+                                enemyCtrl.target = pl;
+                                enemyCtrl.SetState(NPCStates.Idle);
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            enemyCtrl.target = pl;
+                            //enemyCtrl.SetState(NPCStates.Attack);
+                            enemyCtrl.SetState(NPCStates.Idle);
+                            return;
+                        }
+
+                    }
+
+                }
+            }
+            
+
+        }
+        //원래는 0.3
+        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < distance && !enemyCtrl.state.isFly)
         {
             CheckPlayer();
         }

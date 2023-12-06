@@ -33,6 +33,8 @@ public class HighGate : GateController
         }
 
         // 타겟위치 초기화 & 이동가이드라인 타이머 초기화
+        spawnInitPos = new Vector3(transform.position.x, 1.25f, transform.position.z);
+
         targetPos = waveInfos[currentWave].waypoints[waypointIndex].position;
         targetPos.y = enemyPathInitPos.y;
         enemyPathRb.transform.LookAt(targetPos);
