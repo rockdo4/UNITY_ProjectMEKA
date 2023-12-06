@@ -99,6 +99,12 @@ public class ArrangeJoystick : MonoBehaviour
         stageManager.currentPlayer.currentTile.arrangePossible = true;
         stageManager.currentPlayerIcon.isCollected = true;
         stageManager.currentPlayerIcon.arrangePossible = false;
+
+        var id = stageManager.currentPlayer.state.id;
+        var characterData = stageManager.characterIconManager.characterTable.GetCharacterData(id);
+        var withdrawCost = characterData.WithdrawCost;
+        stageManager.characterIconManager.currentCost += withdrawCost;
+
         stageManager.currentPlayer.ReturnPool.Invoke();
         stageManager.currentPlayer = null;
         stageManager.currentPlayerIcon = null;

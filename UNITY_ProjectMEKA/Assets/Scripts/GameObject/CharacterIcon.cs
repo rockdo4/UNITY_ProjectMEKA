@@ -39,6 +39,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         cost = characterStat.arrangeCost;
         costText.text = cost.ToString();
         arrangeCoolTime = characterStat.arrangeCoolTime;
+        playerController = characterPrefab.GetComponent<PlayerController>();
         timer = arrangeCoolTime;
     }
 
@@ -55,10 +56,6 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         if(isDie || isCollected)
         {
             CoolTimeUpdate();
-            if (isCollected)
-            {
-                // 코스트 회복
-            }
         }
     }
 
@@ -71,6 +68,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         playerController.stateManager.created = true;
         playerController.joystick = stageManager.arrangeJoystick.transform.gameObject;
         playerController.icon = this;
+        stageManager.characterIconManager.currentCost -= cost;
 
         var dieEvent = characterGo.GetComponent<CanDie>();
         dieEvent.action.AddListener(() =>

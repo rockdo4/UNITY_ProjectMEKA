@@ -6,12 +6,13 @@ using static Defines;
 
 public class CharacterIconManager : MonoBehaviour
 {
+    public StageManager stageManager;
     public GameObject panel;
     public List<GameObject> characterPrefabs = new List<GameObject>();
     public List<GameObject> characterIconPrefabs = new List<GameObject>();
     public int characterCount;
 
-    private CharacterTable characterTable;
+    public CharacterTable characterTable;
     private string characterPrefabPath;
     private string characterIconPath;
     public int maxCost = 20;
@@ -19,6 +20,7 @@ public class CharacterIconManager : MonoBehaviour
 
     private void Awake()
     {
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         currentCost = maxCost;
         characterPrefabPath = "Character";
         characterIconPath = "CharacterIcon/CharacterIconPrefab";

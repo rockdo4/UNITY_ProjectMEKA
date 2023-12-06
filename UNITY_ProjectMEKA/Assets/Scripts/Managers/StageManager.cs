@@ -9,8 +9,4 @@ public class StageManager : MonoBehaviour
 
     public PlayerController currentPlayer;
     public CharacterIcon currentPlayerIcon;
-
-    private void Awake()
-    {
-    }
 }
