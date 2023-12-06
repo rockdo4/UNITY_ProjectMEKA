@@ -104,7 +104,7 @@ public class CharacterInfoUIManager : MonoBehaviour
                 characterInfoCanvas.gameObject.SetActive(true);
                 ChangeCharacterInfo();
                 joystick.gameObject.SetActive(true);
-                joystick.SetPositionToCurrentPlayer(stageManager.currentPlayer.transform);
+                //joystick.SetPositionToCurrentPlayer(stageManager.currentPlayer.transform);
                 joystickHandler.gameObject.SetActive(false);
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(true);

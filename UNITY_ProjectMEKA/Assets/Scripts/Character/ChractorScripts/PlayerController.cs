@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using static Defines;
 
-public class PlayerController : PoolAble,IPointerDownHandler
+public class PlayerController : PoolAble/*IPointerDownHandler*/
 {
     [HideInInspector]
     public PlayableStateManager stateManager = new PlayableStateManager();
@@ -164,6 +164,7 @@ public class PlayerController : PoolAble,IPointerDownHandler
         }
 
         //OnClickDown();
+        OnClickDown();
     }
     
     //private void OnTriggerStay(Collider other)
@@ -564,21 +565,54 @@ public class PlayerController : PoolAble,IPointerDownHandler
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+//    public void OnPointerDown(PointerEventData eventData)
+//    {
+//        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
+
+//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+//        RaycastHit hit;
+
+//        int layerMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
+//        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+//        {
+//            Debug.Log(hit.transform.parent.GetComponent<CharacterState>().name);
+//            if (stageManager.currentPlayer == null)
+//            {
+//                Debug.Log($"{state.name} player pointer down");
+//                SetState(CharacterStates.Arrange);
+//                stageManager.currentPlayer = this;
+//                stageManager.currentPlayerIcon = this.icon;
+//                joystick.SetActive(true);
+//            }
+
+//        }
+
+//        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = ~0;
+//    }
+
+    public void OnClickDown()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        int layerMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
-        if (Physics.Raycast(ray, Mathf.Infinity, layerMask))
+        if(characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange)
         {
-            if (stageManager.currentPlayer == null)
+            return;
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        int layerMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask) && Input.GetMouseButtonDown(0))
+        {
+            var same = hit.transform.parent.GetComponent<CharacterState>().name == state.name;
+            if (same && stageManager.currentPlayer == null)
             {
-                Debug.Log("player pointer down");
+                Debug.Log($"{state.name} player pointer down");
                 SetState(CharacterStates.Arrange);
                 stageManager.currentPlayer = this;
                 stageManager.currentPlayerIcon = this.icon;
                 joystick.SetActive(true);
+                joystick.GetComponent<ArrangeJoystick>().SetPositionToCurrentPlayer(transform);
             }
-
         }
     }
 }

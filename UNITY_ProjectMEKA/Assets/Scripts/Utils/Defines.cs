@@ -43,6 +43,7 @@ public static class Defines
     }
     public enum Occupation
     {
+        None, // ±ËπŒ¡ˆ∞° ¿Ã«ÿ æ» µ≈º≠ √ﬂ∞°«‘
         Guardian,
         Striker,
         Castor,

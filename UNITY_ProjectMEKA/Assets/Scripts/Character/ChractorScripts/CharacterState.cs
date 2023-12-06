@@ -37,11 +37,17 @@ public class CharacterState : MonoBehaviour
     //공격 가능범위
     public int[,] AttackRange;
 
+    [SerializeField, Header("캐릭터 ID 설정")]
+    public int id;
+
     [SerializeField, Header("캐릭터 이름 설정")]
     public string name;
 
     [SerializeField, Header("캐릭터 배치 코스트")]
     public int arrangeCost;
+
+    [SerializeField, Header("캐릭터 배치 쿨타임")]
+    public float arrangeCoolTime;
 
     [SerializeField, Header("적 패시브 설정")]
     public List<Passive> passive;
