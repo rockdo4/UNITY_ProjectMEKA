@@ -1,27 +1,31 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //모든 캐릭터 관리하는 싱글턴 클래스
 //Singleton class that manages all characters
 
-public class CharacterManager : MonoBehaviour
+public class CharacterManager
 {
-	public static CharacterManager Instance { get; private set; }
-	public Dictionary<int, Character> m_CharacterStorage = new Dictionary<int, Character>();
-	private void Awake()
+	private static CharacterManager instance;
+	public static CharacterManager Instance 
 	{
-		if (Instance == null)
+		get
 		{
-			Instance = this;
-		}
-		else if (Instance != this)
-		{
-			Destroy(gameObject);
-		}
-	}
+			if(instance == null)
+			{
+				instance = new CharacterManager();
+			}
+			else
+			{
 
+			}
+			return instance;
+		} 
+	}
+	public Dictionary<int, Character> m_CharacterStorage = new Dictionary<int, Character>();
 	public void InitCharacterStorage(CharacterTable charTable, LevelTable levelTable)
 	{
 		CheckPlayData();
