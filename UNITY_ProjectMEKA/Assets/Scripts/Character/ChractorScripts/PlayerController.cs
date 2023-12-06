@@ -63,7 +63,7 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
     public CharacterStates currentState;
 
     public StageManager stageManager;
-    public CharacterInfoUIManager characterInfoUIManager;
+    public bool isDie;
 
 
     private void Awake()
@@ -74,17 +74,16 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
         ReturnPool = new UnityEvent();
         ReturnPool.AddListener(() =>
         {
+            // except currentTile.arrangePossible = true;
             icon.gameObject.SetActive(true);
             stateManager.firstArranged = false;
             stateManager.secondArranged = false;
             stateManager.created = false;
-            //stageManager.currentPlayer = null;
-            //stageManager.currentPlayerIcon = null;
             Time.timeScale = 1.0f;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
             ReleaseObject();
         });
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
-        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<CharacterInfoUIManager>();
     }
     private void OnEnable()
     {
@@ -550,7 +549,7 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
 
     public void OnClickDown()
     {
-        if(characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange)
+        if(stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange)
         {
             return;
         }

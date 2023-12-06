@@ -10,8 +10,13 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     private GameObject characterGo;
     private PlayerController playerController;
 
+    public bool isDie = false;
+    public bool arrangePossible = true;
+
     public int maxCost = 20;
-    public int cost;
+    private float arrangeCoolTime;
+    private int cost;
+    private float timer = 0f;
 
     private bool created;
     private bool once;
@@ -19,12 +24,13 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     private void Awake()
     {
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
-        var characterStat = characterPrefab.GetComponent<CharacterState>();
-        var cost = characterStat.arrangeCost;
     }
 
     private void Start()
     {
+        var characterStat = characterPrefab.GetComponent<CharacterState>();
+        cost = characterStat.arrangeCost;
+        arrangeCoolTime = characterStat.arrangeCoolTime;
     }
 
     private void Update()
@@ -34,6 +40,17 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
             if (!playerController.stateManager.created)
             {
                 created = false;
+            }
+        }
+
+        if(isDie)
+        {
+            timer += Time.deltaTime;
+            if(timer >= arrangeCoolTime)
+            {
+                timer = 0f;
+                isDie = false;
+                arrangePossible = true;
             }
         }
     }
@@ -51,15 +68,11 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         var dieEvent = characterGo.GetComponent<CanDie>();
         dieEvent.action.AddListener(() =>
         {
-            playerController.stateManager.firstArranged = false;
-            playerController.stateManager.secondArranged = false;
-            playerController.stateManager.created = false;
             playerController.currentTile.arrangePossible = true;
-            playerController.icon.gameObject.SetActive(true);
+            playerController.icon.isDie = true;
+            playerController.icon.arrangePossible = false;
+            playerController.ReturnPool.Invoke();
         });
-
-        stageManager.currentPlayer = playerController;
-        stageManager.currentPlayerIcon = playerController.icon;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -69,7 +82,12 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
         if (isPossibleMode || (isCurrentPlayerThis && isPossibleMode))
         {
-            CreateCharacter();
+            if (arrangePossible)
+            {
+                CreateCharacter();
+            }
+            stageManager.currentPlayer = playerController;
+            stageManager.currentPlayerIcon = playerController.icon;
             characterGo.transform.position = transform.position;
             once = false;
             stageManager.characterInfoUIManager.currentPlayerChanged = true;
