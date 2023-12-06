@@ -30,6 +30,7 @@ public class CharacterState : MonoBehaviour
     {
         None,
         Snapshot,
+        StunningBlow,
         Test2,
         Test3,
     }
@@ -53,7 +54,22 @@ public class CharacterState : MonoBehaviour
     public List<Passive> passive;
 
     [SerializeField,Header("캐릭터 스킬 설정")]
-    public Skills skill; 
+    public Skills skill;
+
+    [HideInInspector]
+    public float cost;
+
+    [SerializeField, Header("캐릭터 최대 시그마")]
+    public float maxCost;
+
+    [SerializeField, Header("캐릭터 스킬 코스트")]
+    public float skillCost;
+
+    [SerializeField, Header("스킬 쿨타임")]
+    public float skillCoolTime;
+
+    [SerializeField, Header("스킬 지속시간")]
+    public float skillDuration;
 
     [SerializeField, Header("적 타입 설정")]
     public Defines.EnemyType enemyType;
@@ -105,11 +121,7 @@ public class CharacterState : MonoBehaviour
     [SerializeField, Header("공격범위설정")]
     public int[] rangeAttack;
 
-    [HideInInspector]
-    public float cost;
-
-    [SerializeField, Header("캐릭터 최대 시그마(마나)")]
-    public float maxCost;
+    
 
     [SerializeField, Header("적 공중형, 지상형 선택(언체크 지상형)")]
     public bool isFly;

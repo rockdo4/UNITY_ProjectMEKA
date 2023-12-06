@@ -6,6 +6,7 @@ public enum NPCStates
     Idle,
     Move,
     Attack,
+    Stun,
 }
 
 
@@ -93,6 +94,7 @@ public class EnemyController : PoolAble
         {
             states.Add(new NPCAttackState(this));
         }
+        states.Add(new NPCStunState(this));
         SetState(NPCStates.Move);
         foreach(var P in state.passive)
         {

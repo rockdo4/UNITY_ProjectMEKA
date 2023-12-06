@@ -138,6 +138,10 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
                 skillCoolTime = s.coolTime;
 
                 break;
+            case CharacterState.Skills.StunningBlow:
+                var b = gameObject.AddComponent<StunningBlow>();
+
+                break;
         }
         state.cost = state.maxCost;
     }
@@ -165,109 +169,25 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
 
         //OnClickDown();
         OnClickDown();
+
+        //////Test Code------------------------------------------------------
+        if(Input.GetKey(KeyCode.S))
+        {
+            if(Input.GetKeyDown(KeyCode.K))
+            {
+                SkillBase skill = gameObject.GetComponent<SkillBase>();
+                if (skill != null) 
+                {
+                    Debug.Log("UseSkill");
+                    skill.UseSkill();
+                }
+            }
+        }
+        //------------------------------------------------------------------------//
+
+
     }
     
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.CompareTag("EnemyCollider") && state.occupation != Defines.Occupation.Supporters)
-    //    {
-    //        //Debug.Log(other, other);
-    //        if (!rangeInEnemys.Contains(other.GetComponentInParent<Transform>().gameObject))
-    //        {
-    //            rangeInEnemys.Add(other.GetComponentInParent<Transform>().gameObject);
-    //            if(other.GetComponentInParent<EnemyController>().state.enemyType == Defines.EnemyType.OhYaBung)
-    //            {
-    //                enemyBlockCount.Add(1);
-    //                enemyBlockCount.Add(1);
-    //            }
-    //            else 
-    //            {
-    //                enemyBlockCount.Add(1);
-    //            }
-
-    //            var obj = other.GetComponentInParent<CanDie>();
-    //            obj.action.AddListener(() =>
-    //            {
-    //                rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
-    //                if (other.GetComponentInParent<EnemyController>().state.enemyType == Defines.EnemyType.OhYaBung)
-    //                {
-    //                    enemyBlockCount.Remove(1);
-    //                    enemyBlockCount.Remove(1);
-    //                }
-    //                else
-    //                {
-    //                    enemyBlockCount.Remove(1);
-    //                }
-    //            });
-    //        }
-    //    }
-    //    if(other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
-    //    {
-    //        if (!rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
-    //        {
-    //            rangeInPlayers.Add(other.GetComponentInParent<Transform>().gameObject);
-                
-
-    //            var obj = other.GetComponentInParent<CanDie>();
-    //            obj.action.AddListener(() =>
-    //            {
-    //                rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
-                    
-    //            });
-    //        }
-
-    //    }
-        
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if(other.CompareTag("EnemyCollider") && state.occupation != Defines.Occupation.Supporters)
-    //    {
-    //        if(rangeInEnemys.Contains(other.GetComponentInParent<Transform>().gameObject))
-    //        {
-    //            rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
-    //            if (other.GetComponentInParent<EnemyController>().state.enemyType == Defines.EnemyType.OhYaBung)
-    //            {
-    //                enemyBlockCount.Remove(1);
-    //                enemyBlockCount.Remove(1);
-    //            }
-    //            else
-    //            {
-    //                enemyBlockCount.Remove(1);
-    //            }
-    //            var obj = other.GetComponentInParent<CanDie>();
-    //            obj.action.RemoveListener(() =>
-    //            {
-    //                rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
-    //                if (other.GetComponentInParent<EnemyController>().state.enemyType == Defines.EnemyType.OhYaBung)
-    //                {
-    //                    enemyBlockCount.Remove(1);
-    //                    enemyBlockCount.Remove(1);
-    //                }
-    //                else
-    //                {
-    //                    enemyBlockCount.Remove(1);
-    //                }
-    //            });
-    //        }
-    //    }
-    //    if (other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
-    //    {
-    //        if (rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
-    //        {
-    //            rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
-               
-    //            var obj = other.GetComponentInParent<CanDie>();
-    //            obj.action.RemoveListener(() =>
-    //            {
-    //                rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
-                    
-    //            });
-    //        }
-    //    }
-    //}
-
     public void SetState(CharacterStates state)
     {
         stateManager.ChangeState(states[(int)state]);
@@ -408,70 +328,6 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
             heal.OnHealing(1f*state.damage);
         }
     }
-
-
-
-    //void CreateColliders()
-    //{
-    //    if (state == null || state.AttackRange == null || transform == null)
-    //    {
-    //        return;
-    //    }
-
-    //    Vector3 forward = -transform.forward;
-    //    Vector3 right = transform.right;
-    //    Vector3 parentScale = transform.localScale;
-
-    //    int characterRow = 0;
-    //    int characterCol = 0;
-
-    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
-    //        {
-    //            if (state.AttackRange[i, j] == 2)
-    //            {
-    //                characterRow = i;
-    //                characterCol = j;
-    //            }
-    //        }
-    //    }
-
-    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
-    //        {
-    //            if (state.AttackRange[i, j] == 1)
-    //            {
-    //                Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-    //                Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);
-
-    //                BoxCollider collider = gameObject.AddComponent<BoxCollider>();
-    //                collider.size = new Vector3(1 / parentScale.x, 5 / parentScale.y, 1 / parentScale.z);
-    //                collider.center = correctedPosition;
-    //                collider.isTrigger = true;
-    //            }
-    //        }
-    //    }
-    //}
-
-    //public void OnClickDown()
-    //{
-    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //    int layerMask = 1 << LayerMask.NameToLayer(Layers.playerCollider);
-
-    //    if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, Mathf.Infinity, layerMask))
-    //    {
-    //        if (stageManager.currentPlayer == null)
-    //        {
-    //            Debug.Log("player pointer down");
-    //            SetState(CharacterStates.Arrange);
-    //            stageManager.currentPlayer = this;
-    //            stageManager.currentPlayerIcon = this.icon;
-    //            joystick.SetActive(true);
-    //        }
-    //    }
-    //}
 
     public void ArrangableTileSet(Defines.Occupation occupation)
     {
