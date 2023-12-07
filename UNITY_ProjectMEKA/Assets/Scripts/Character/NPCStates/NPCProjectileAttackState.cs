@@ -34,7 +34,6 @@ public class NPCProjectileAttackState : NPCBaseState
                 enemyCtrl.SetState(NPCStates.Move);
             }
             
-            
         }
         if (enemyCtrl.target.GetComponentInParent<PlayerController>() == null)
         {

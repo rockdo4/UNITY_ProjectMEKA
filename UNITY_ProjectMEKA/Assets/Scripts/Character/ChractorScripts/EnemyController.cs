@@ -336,7 +336,7 @@ public class EnemyController : PoolAble
                     Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);
 
                     BoxCollider collider = gameObject.AddComponent<BoxCollider>();
-                    collider.size = new Vector3(1 / parentScale.x, 1 / parentScale.y, 1 / parentScale.z);
+                    collider.size = new Vector3(1 / parentScale.x, 3 / parentScale.y, 1 / parentScale.z);
                     collider.center = correctedPosition;
                     collider.isTrigger = true;
                 }

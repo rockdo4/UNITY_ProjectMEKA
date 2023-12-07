@@ -4392,7 +4392,7 @@ PrefabInstance:
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 5014772430113155349, guid: c4f2faf15c6bbff4eac09a764d44bfce, type: 3}
+      objectReference: {fileID: 7168955965942092403, guid: a4308387c5480ef4fafed336a85de3bf, type: 3}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].prefab
       value: 
@@ -4415,7 +4415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].attribute
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].attribute
@@ -4468,6 +4468,10 @@ PrefabInstance:
     - target: {fileID: 4388185178127918070, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: m_Name
       value: LowGate_Test 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388185178127918070, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5898651285621072052, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: m_IsActive
@@ -15944,7 +15948,7 @@ MonoBehaviour:
     perfab: {fileID: 1192148152262008, guid: 29fec53fa5329e345981c83555fa131e, type: 3}
     count: 10
   - objectName: LongDistance
-    perfab: {fileID: 8236610387131559020, guid: e3a4826c11742574e8abd652d1d23753, type: 3}
+    perfab: {fileID: 7168955965942092403, guid: a4308387c5480ef4fafed336a85de3bf, type: 3}
     count: 10
   - objectName: MagicChain
     perfab: {fileID: 8447788278026024314, guid: 12dff322ee6cd2449876d0d660652f96, type: 3}
@@ -19265,12 +19269,12 @@ MonoBehaviour:
     pathGuideOn: 0
     pathDuration: 5
   - enemySpawnInfos:
-    - prefab: {fileID: 2109191089015210506, guid: a0670e2af5d010a448f63c2396db6bd1, type: 3}
+    - prefab: {fileID: 4107162092666695933, guid: 47b300bfc7e30ac4c9bb9bfbf49dfe49, type: 3}
       count: 2
       attribute: 1
       level: 3
       interval: 5
-    - prefab: {fileID: 5413972442844473501, guid: 66abc001c4f0cd042bf6174a4ab61682, type: 3}
+    - prefab: {fileID: 4107162092666695933, guid: 47b300bfc7e30ac4c9bb9bfbf49dfe49, type: 3}
       count: 1
       attribute: 1
       level: 4
