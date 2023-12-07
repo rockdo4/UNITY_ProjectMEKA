@@ -4936,7 +4936,7 @@ PrefabInstance:
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 5014772430113155349, guid: c4f2faf15c6bbff4eac09a764d44bfce, type: 3}
+      objectReference: {fileID: 8236610387131559020, guid: e3a4826c11742574e8abd652d1d23753, type: 3}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].prefab
       value: 
@@ -4959,7 +4959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].attribute
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].attribute
@@ -17177,7 +17177,7 @@ MonoBehaviour:
     perfab: {fileID: 1192148152262008, guid: 29fec53fa5329e345981c83555fa131e, type: 3}
     count: 10
   - objectName: LongDistance
-    perfab: {fileID: 5328707574842095634, guid: 385ba879fa486d5448b327dcfabd9ccc, type: 3}
+    perfab: {fileID: 8236610387131559020, guid: e3a4826c11742574e8abd652d1d23753, type: 3}
     count: 10
   - objectName: MagicChain
     perfab: {fileID: 8447788278026024314, guid: 12dff322ee6cd2449876d0d660652f96, type: 3}
@@ -17191,6 +17191,15 @@ MonoBehaviour:
   - objectName: AMBER
     perfab: {fileID: 2452888991731294278, guid: 83a88537d36637a40924e6ab06f44adc, type: 3}
     count: 3
+  - objectName: bullet
+    perfab: {fileID: 4747644174532001206, guid: b6275585e2956a247932c30204249487, type: 3}
+    count: 30
+  - objectName: Flash8
+    perfab: {fileID: 1633242581645256, guid: 51e88bfc3811dab48ac0c06617654e1a, type: 3}
+    count: 30
+  - objectName: Hit8
+    perfab: {fileID: 1493225883543534, guid: 245bf6b0acdf9474ca212c5a4f28b2ce, type: 3}
+    count: 30
 --- !u!4 &2051272108
 Transform:
   m_ObjectHideFlags: 0
@@ -19115,7 +19124,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1551849607049740800
 GameObject:
   m_ObjectHideFlags: 0
