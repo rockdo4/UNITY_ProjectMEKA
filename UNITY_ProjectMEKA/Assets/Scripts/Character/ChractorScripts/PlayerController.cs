@@ -301,12 +301,19 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
                 projectileP.ResetState();
                 obj.transform.position = FirePosition.transform.position;
                 Vector3 newTargetPos = new Vector3(target.transform.position.x, target.transform.position.y+0.5f, target.transform.position.z);
-
-
                 obj.transform.LookAt(newTargetPos);
                 projectileP.damage = state.damage;
                 projectileP.target = target.transform;
                 projectileP.Player = gameObject;
+                obj.SetActive(false);
+                obj.SetActive(true);
+                break;
+            case CharacterState.Type.ChainAttack:
+                var magic = obj.GetComponent<ChainAttack>();
+                magic.ResetState(); 
+                Vector3 newTargetPosition = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
+                obj.transform.position = newTargetPosition;
+                magic.damage = state.damage;
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;

@@ -51,14 +51,14 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (speed != 0&& target.gameObject.activeSelf)
+        if (target.gameObject.activeInHierarchy)
         {
             transform.LookAt(new Vector3(target.position.x,target.position.y + 0.5f,target.position.z));
             rb.velocity = transform.forward * speed;
             pos = target.position;
            
         }
-        else if(!target.gameObject.activeSelf)
+        else
         {
             rb.velocity = transform.forward * speed;
             timer += Time.deltaTime;
@@ -67,6 +67,7 @@ public class Bullet : MonoBehaviour
                 ReleaseObject();
             }
         }
+        
     }
     void OnTriggerEnter(Collider other)
     {

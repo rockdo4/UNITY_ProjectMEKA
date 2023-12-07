@@ -3452,10 +3452,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   name: 
   arrangeCost: 0
+  arrangeCoolTime: 0
   passive: 
   skill: 0
+  cost: 0
+  maxCost: 0
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
   enemyType: 4
   property: 1
   occupation: 0
@@ -3470,11 +3477,10 @@ MonoBehaviour:
   BulletType: 0
   flashName: 
   hitName: 
-  hang: 1
-  yal: 2
+  hang: 2
+  yal: 1
   rangeAttack: 0100000002000000
-  cost: 0
-  maxCost: 0
+  isFly: 0
   level: 0
   grade: 0
   experience: 0

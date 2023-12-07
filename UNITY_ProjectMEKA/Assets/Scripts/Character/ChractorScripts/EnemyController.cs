@@ -305,10 +305,12 @@ public class EnemyController : PoolAble
         }
 
 
-        Vector3 forward = transform.right;
-        Vector3 right = -transform.forward;
+        //Vector3 forward = transform.right;
+        //Vector3 right = -transform.forward;
+        //Vector3 parentScale = transform.localScale;
+        Vector3 forward = -transform.forward;
+        Vector3 right = transform.right;
         Vector3 parentScale = transform.localScale;
-
         int characterRow = 0;
         int characterCol = 0;
 
@@ -343,7 +345,51 @@ public class EnemyController : PoolAble
 
 
     }
+    //private void OnDrawGizmos()
+    //{
+    //    if (state == null || state.AttackRange == null) return;
 
-    
+    //    Gizmos.color = Color.red; // 기즈모 색상 설정
+
+    //    //Vector3 forward = transform.right;
+    //    //Vector3 right = -transform.forward;
+    //    //Vector3 parentScale = transform.localScale;
+
+
+    //    Vector3 forward = -transform.forward;
+    //    Vector3 right = transform.right;
+    //    Vector3 parentScale = transform.localScale;
+
+    //    int characterRow = 0;
+    //    int characterCol = 0;
+
+    //    // 캐릭터 위치 찾기
+    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+    //    {
+    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+    //        {
+    //            if (state.AttackRange[i, j] == 2)
+    //            {
+    //                characterRow = i;
+    //                characterCol = j;
+    //            }
+    //        }
+    //    }
+
+    //    // 콜라이더 기즈모 그리기
+    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+    //    {
+    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+    //        {
+    //            if (state.AttackRange[i, j] == 1)
+    //            {
+    //                Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+    //                Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);
+    //                Gizmos.DrawCube(transform.position + correctedPosition, new Vector3(1 / parentScale.x, 1 / parentScale.y, 1 / parentScale.z));
+    //            }
+    //        }
+    //    }
+    //}
+
 }
 

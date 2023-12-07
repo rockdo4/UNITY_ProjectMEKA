@@ -29,8 +29,6 @@ public class NPCProjectileAttackState : NPCBaseState
             timer = enemyCtrl.state.attackDelay;
             enemyCtrl.ani.SetTrigger("Attack");
 
-            
-
             if (!CheckDistance())
             {
                 enemyCtrl.SetState(NPCStates.Move);
@@ -38,9 +36,38 @@ public class NPCProjectileAttackState : NPCBaseState
             
             
         }
-        if (enemyCtrl.target == null)
+        if (enemyCtrl.target.GetComponentInParent<PlayerController>() == null)
         {
+            Debug.Log("target null");
             enemyCtrl.SetState(NPCStates.Move);
+            enemyCtrl.ani.SetTrigger("Run");
+        }
+        if (!enemyCtrl.target.activeSelf)
+        {
+            Debug.Log("Target not avtive");
+            enemyCtrl.SetState(NPCStates.Move);
+            enemyCtrl.ani.SetTrigger("Run");
+        }
+
+        foreach (var a in enemyCtrl.rangeInPlayers)
+        {
+            if (a.GetComponentInParent<PlayerController>() == null)
+            {
+                if (enemyCtrl.rangeInPlayers.Contains(a))
+                {
+                    enemyCtrl.rangeInPlayers.Remove(a);
+
+                }
+                enemyCtrl.SetState(NPCStates.Move);
+                enemyCtrl.ani.SetTrigger("Run");
+            }
+            else if (!a.activeSelf)
+            {
+                enemyCtrl.rangeInPlayers.Remove(a);
+                enemyCtrl.SetState(NPCStates.Move);
+                enemyCtrl.ani.SetTrigger("Run");
+            }
+
         }
 
 
