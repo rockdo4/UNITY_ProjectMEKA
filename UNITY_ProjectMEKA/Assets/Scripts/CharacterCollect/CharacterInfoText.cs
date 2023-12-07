@@ -6,7 +6,9 @@ public class CharacterInfoText : MonoBehaviour
 {
 	public TextMeshProUGUI textInfo;
 	public Button enhanceButton;
-	public EnhancePanel panel;
+	public Button synchroButton;
+	public EnhancePanel enhancePanel;
+	public SynchroPanel synchroPanel;
 
 	[HideInInspector]
 	public Character character;
@@ -16,8 +18,15 @@ public class CharacterInfoText : MonoBehaviour
 		enhanceButton.onClick.RemoveAllListeners();
 		enhanceButton.onClick.AddListener(() =>
 		{
-			panel.gameObject.SetActive(true);
-			panel.SetCharacter(character);
+			enhancePanel.gameObject.SetActive(true);
+			enhancePanel.SetCharacter(character);
+		});
+
+		synchroButton.onClick.RemoveAllListeners();
+		synchroButton.onClick.AddListener(() =>
+		{
+			synchroPanel.gameObject.SetActive(true);
+			synchroPanel.SetCharacter(character);
 		});
 	}
 

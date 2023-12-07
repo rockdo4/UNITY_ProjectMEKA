@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public struct SynchroInfo
+{
+	public int itemID;
+	public int quantity;
+}
+
 public class SynchroPanel : MonoBehaviour
 {
-	[Header("소모 아이템 ID")]
-	public int[] itemID;
+	//나중에 테이블로 갖고 와야될듯?
+	[Header("소모 아이템 ID, 수량 // 테이블로 수정해야 할듯")]
+	public SynchroInfo[] itemInfo;
 	
-	public ItemQuantityCard[] synchroItemCard;
+	public ItemAutoQuantityCard[] synchroItemCard;
 	public Button applyButton;
 
 	public CharacterInfoText UpdateInfoPanel;
@@ -16,7 +24,10 @@ public class SynchroPanel : MonoBehaviour
 
 	private void Awake()
 	{
-		
+		applyButton.onClick.AddListener(() =>
+		{
+
+		});
 	}
 
 	private void OnEnable()
