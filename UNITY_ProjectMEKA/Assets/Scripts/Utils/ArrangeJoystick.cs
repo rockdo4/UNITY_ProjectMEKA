@@ -8,6 +8,7 @@ public class ArrangeJoystick : MonoBehaviour
 {
     public Button cancelButton;
     public Button collectButton;
+    public Button skillButton;
     public ArrangeJoystickHandler handler;
 
     private StageManager stageManager;
@@ -24,6 +25,7 @@ public class ArrangeJoystick : MonoBehaviour
         ArrangeDone.AddListener(ArrangeDoneEvent);
         cancelButton.onClick.AddListener(CancelEvent);
         collectButton.onClick.AddListener(CollectEvent);
+        skillButton.onClick.AddListener(SkillEvent);
     }
 
     private void OnEnable()
@@ -62,7 +64,8 @@ public class ArrangeJoystick : MonoBehaviour
             stageManager.currentPlayerIcon.gameObject.SetActive(false);
 
         }
-
+        stageManager.characterIconManager.currentCharacterCount--;
+        stageManager.characterIconManager.currentCost -= stageManager.currentPlayer.state.arrangeCost;
         stageManager.currentPlayer.SetState(CharacterStates.Idle);
         stageManager.currentPlayer = null;
         stageManager.currentPlayerIcon = null;
@@ -107,6 +110,20 @@ public class ArrangeJoystick : MonoBehaviour
         stageManager.characterIconManager.currentCost += withdrawCost;
 
         stageManager.currentPlayer.PlayerInit.Invoke();
+        stageManager.currentPlayer = null;
+        stageManager.currentPlayerIcon = null;
+
+        gameObject.SetActive(false);
+    }
+
+    public void SkillEvent()
+    {
+        if (skillButton.gameObject.activeSelf)
+        {
+            skillButton.gameObject.SetActive(false);
+        }
+        stageManager.currentPlayer.gameObject.GetComponent<SkillBase>().UseSkill();
+
         stageManager.currentPlayer = null;
         stageManager.currentPlayerIcon = null;
 

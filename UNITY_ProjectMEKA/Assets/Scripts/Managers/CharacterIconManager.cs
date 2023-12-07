@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -6,17 +8,24 @@ using static Defines;
 
 public class CharacterIconManager : MonoBehaviour
 {
-    public StageManager stageManager;
     public GameObject panel;
-    public List<GameObject> characterPrefabs = new List<GameObject>();
-    public List<GameObject> characterIconPrefabs = new List<GameObject>();
-    public int characterCount;
+    public TextMeshProUGUI costText;
+    public TextMeshProUGUI personnel;
+    private StageManager stageManager;
+    private List<GameObject> characterPrefabs = new List<GameObject>();
+    private List<GameObject> characterIconPrefabs = new List<GameObject>();
+
+    public int currentCharacterCount;
+    private int prevCharacterCount;
+    public float currentCost;
+    public int prevCost;
 
     public CharacterTable characterTable;
     private string characterPrefabPath;
     private string characterIconPath;
     public int maxCost = 20;
-    public int currentCost;
+
+    private float timer;
 
     private void Awake()
     {
@@ -24,22 +33,47 @@ public class CharacterIconManager : MonoBehaviour
         currentCost = maxCost;
         characterPrefabPath = "Character";
         characterIconPath = "CharacterIcon/CharacterIconPrefab";
-        characterCount = DataHolder.formation.Length;
+        currentCharacterCount = DataHolder.formation.Length;
         characterTable = DataTableMgr.GetTable<CharacterTable>();
         SetCharacters();
         CreateIconGameObjects();
     }
 
+    private void Update()
+    {
+        if(prevCharacterCount != currentCharacterCount)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½ : ");
+            stringBuilder.Append(currentCharacterCount);
+            personnel.SetText(stringBuilder.ToString());
+            prevCharacterCount = currentCharacterCount;
+        }
+
+        CostUpdate();
+    }
+
+    public void CostUpdate()
+    {
+        currentCost += Time.deltaTime * 0.5f;
+
+        if((prevCost != (int)currentCost) && currentCost <= maxCost+1)
+        {
+            costText.SetText(currentCost.ToString("0"));
+            prevCost = (int)currentCost;
+        }
+
+        var value = currentCost % 1f;
+    }
+
     public void SetCharacters()
     {
-        for(int i = 0; i < characterCount; i++)
+        for(int i = 0; i < currentCharacterCount; i++)
         {
-            // ID¿¡ ¸Â´Â Ä³¸¯ÅÍµ¥ÀÌÅÍ °¡Á®¿À±â
             var id = DataHolder.formation[i];
             var characterData = characterTable.GetCharacterData(id);
             GameObject[] prefabs = Resources.LoadAll<GameObject>(characterPrefabPath);
 
-            // ID¿¡ ¸Â´Â ÇÁ¸®ÆÕ °¡Á®¿Í¼­ Ä³¸¯ÅÍµ¥ÀÌÅÍ Àû¿ë
             foreach (var prefab in prefabs)
             {
                 Debug.Log(prefab.name);
@@ -48,7 +82,7 @@ public class CharacterIconManager : MonoBehaviour
 
                 if(characterState == null)
                 {
-                    Debug.Log("³Î");
+                    Debug.Log("ï¿½ï¿½");
                 }
                 else
                 {
@@ -72,7 +106,7 @@ public class CharacterIconManager : MonoBehaviour
 
     public void CreateIconGameObjects()
     {
-        for(int i = 0; i < characterCount; i++)
+        for(int i = 0; i < currentCharacterCount; i++)
         {
             var id = DataHolder.formation[i];
             var iconImage = Resources.Load<Sprite>(characterTable.GetCharacterData(id).ImagePath);

@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using static Defines;
 
 public class CanDie : MonoBehaviour
 {
-    
+    private StageManager stageManager;
     private CharacterState state;
     public UnityEvent action;
 
     private void Awake()
     {
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         state = GetComponent<CharacterState>();
         action = new UnityEvent();
     }
@@ -19,10 +21,15 @@ public class CanDie : MonoBehaviour
     {
         if(state.Hp <= 0f)
         {
-            //Debug.Log(gameObject.name);
             action.Invoke();
-            //Destroy(gameObject);
-            GetComponent<PoolAble>().ReleaseObject();
+
+            // if this is a monster
+            if(GetComponent<PoolAble>() != null)
+            {
+                // temp value => need to apply monster state.monsterDieCost(after monster prefabs done)
+                stageManager.characterIconManager.currentCost += 1f;
+                GetComponent<PoolAble>().ReleaseObject();
+            }
         }
     }
 }
