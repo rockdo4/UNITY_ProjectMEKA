@@ -31,6 +31,7 @@ public class EnhancePanel : MonoBehaviour
 			foreach(var card in reportItemCard)
 			{
 				card.ConsumeItem();
+				card.SetText();
 			}
 
 			UpdateTargetLevel();
@@ -44,6 +45,7 @@ public class EnhancePanel : MonoBehaviour
 		for (int i = 0; i < reportItemCard.Length; i++)
 		{
 			reportItemCard[i].SetItem(itemID[i]);
+			reportItemCard[i].SetText();
 		}
 
 		currCharacter = UpdateInfoPanel.character;
@@ -100,8 +102,9 @@ public class EnhancePanel : MonoBehaviour
 	{
 		int totalExp = 0;
 		int remainExp = 0;
+		totalExp += currCharacter.CurrentExp;
 
-		foreach(var card in reportItemCard)
+		foreach (var card in reportItemCard)
 		{
 			var value = card.item.Value;
 			totalExp += (card.selectedQuantity * value);
@@ -123,6 +126,7 @@ public class EnhancePanel : MonoBehaviour
 	{
 		int totalExp = 0;
 		int remainExp = 0;
+		totalExp += currCharacter.CurrentExp;
 
 		foreach (var card in reportItemCard)
 		{

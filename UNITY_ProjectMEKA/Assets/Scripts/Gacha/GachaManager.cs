@@ -36,7 +36,7 @@ public class GachaManager : MonoBehaviour
 
         foreach(var item in items)
         {
-            Debug.Log((item.Key, item.Value.ArrangementCost));
+            //Debug.Log((item.Key, item.Value.ArrangementCost));
             testPicker.Add(item.Key, item.Value.ArrangementCost);
         }
     }

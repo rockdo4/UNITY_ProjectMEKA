@@ -25,8 +25,6 @@ public class ItemQuantityCard : MonoBehaviour
 	{
         button.onClick.AddListener(OnClickAddItemButton);
         button.onClick.AddListener(() => panel.UpdateTargetLevel());
-
-        SetText();
 	}
 
 	private void OnDisable()
@@ -64,7 +62,7 @@ public class ItemQuantityCard : MonoBehaviour
 		}
         else
         {
-			
+            Debug.Log("¸ø ºÒ·¯¿È");
 		}
     }
 
