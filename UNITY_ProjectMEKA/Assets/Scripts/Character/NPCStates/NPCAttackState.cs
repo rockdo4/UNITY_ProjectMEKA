@@ -40,7 +40,7 @@ public class NPCAttackState : NPCBaseState
             enemyCtrl.SetState(NPCStates.Move);
             enemyCtrl.ani.SetTrigger("Run");
         }
-        if(!enemyCtrl.target.activeSelf)
+        if(!enemyCtrl.target.activeInHierarchy)
         {
             Debug.Log("Target not avtive");
             enemyCtrl.SetState(NPCStates.Move);

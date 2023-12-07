@@ -6210,19 +6210,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 13401
-  name: KURIMAKI
-  arrangeCost: 0
-  arrangeCoolTime: 0
+  name: "\uCFE0\uB85C\uCE74\uBBF8"
+  arrangeCost: 10
+  arrangeCoolTime: 45
   passive: 
   skill: 0
+  cost: 0
+  maxCost: 5
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
   enemyType: 0
-  property: 2
+  property: 3
   occupation: 4
   maxHp: 100
   amror: 0
   speed: 0
   cooldown: 0
-  damage: 40
+  damage: 0
   attackDelay: 0.1
   exp: 0
   BulletName: ps
@@ -6232,8 +6237,6 @@ MonoBehaviour:
   hang: 5
   yal: 5
   rangeAttack: 00000000000000000100000000000000000000000000000001000000010000000100000000000000000000000100000001000000010000000000000000000000010000000100000001000000000000000000000001000000020000000100000000000000
-  cost: 0
-  maxCost: 100
   isFly: 0
   level: 0
   grade: 0
@@ -6269,7 +6272,7 @@ MonoBehaviour:
   skillCoolTime: 0
   attakableTiles: []
   arrangableTiles: []
-  ReturnPool:
+  PlayerInit:
     m_PersistentCalls:
       m_Calls: []
   joystick: {fileID: 0}
@@ -6277,7 +6280,7 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
-  characterInfoUIManager: {fileID: 0}
+  isDie: 0
 --- !u!114 &5779597442223778163
 MonoBehaviour:
   m_ObjectHideFlags: 0

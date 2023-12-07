@@ -5570,7 +5570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 12302
+  id: 12301
   name: AMBER
   arrangeCost: 0
   arrangeCoolTime: 0
@@ -5633,7 +5633,7 @@ MonoBehaviour:
   skillCoolTime: 0
   attakableTiles: []
   arrangableTiles: []
-  ReturnPool:
+  PlayerInit:
     m_PersistentCalls:
       m_Calls: []
   joystick: {fileID: 0}
@@ -5641,7 +5641,7 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
-  characterInfoUIManager: {fileID: 0}
+  isDie: 0
 --- !u!114 &8410696357173322987
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -32,25 +32,26 @@ public class PiercingShot : MonoBehaviour
         saveTarget = target;
         speed = maxSpeed;
         rb.constraints = RigidbodyConstraints.None;
-        
-        var flahObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.flashName);
-        flahObj.transform.position = transform.position;
-        flahObj.transform.forward = gameObject.transform.forward;
-        var flashPs = flahObj.GetComponent<ParticleSystem>();
-        flahObj.SetActive(false);
-        flahObj.SetActive(true);
-        if (flashPs != null)
+        if (Player != null)
         {
-            flashPs.GetComponent<PoolAble>().ReleaseObject(flashPs.main.duration);
-        }
-        else
-        {
+            var flahObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.flashName);
+            flahObj.transform.position = transform.position;
+            flahObj.transform.forward = gameObject.transform.forward;
+            var flashPs = flahObj.GetComponent<ParticleSystem>();
+            flahObj.SetActive(false);
+            flahObj.SetActive(true);
+            if (flashPs != null)
+            {
+                flashPs.GetComponent<PoolAble>().ReleaseObject(flashPs.main.duration);
+            }
+            else
+            {
 
-            var flashPsParts = flahObj.transform.GetChild(0).GetComponent<ParticleSystem>();
-            flashPs.GetComponent<PoolAble>().ReleaseObject(flashPsParts.main.duration);
-        }
-        
+                var flashPsParts = flahObj.transform.GetChild(0).GetComponent<ParticleSystem>();
+                flashPs.GetComponent<PoolAble>().ReleaseObject(flashPsParts.main.duration);
+            }
 
+        }
     }
     public void Init()
     {
@@ -106,10 +107,10 @@ public class PiercingShot : MonoBehaviour
         }
 
         
-        else if (other.CompareTag("Wall"))
-        {
-            ReleaseObject();
-        }
+        //else if (other.CompareTag("Wall"))
+        //{
+        //    ReleaseObject();
+        //}
     }
 
     private void CreateHitEffect(Vector3 position, Vector3 direction)

@@ -80,39 +80,47 @@ public class NPCDestinationStates : NPCBaseState
                 timer = 0;
                 foreach (var pl in enemyCtrl.rangeInPlayers)
                 {
-                    PlayerController player = pl.GetComponentInParent<PlayerController>();
-                    //float distance = Vector3.Distance(enemyCtrl.transform.position,player.transform.position);/*&& distance > 0.4f*/
-                    if (enemyCtrl.state.isBlock && player != null &&
-                        player.currentState != PlayerController.CharacterStates.Arrange)
+                    if (pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Castor ||
+                        pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
+                        pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
                     {
-                        if (enemyCtrl.state.isFly)
-                        {
-                            if (pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Castor ||
-                                pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
-                                pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
-                            {
-                                enemyCtrl.target = pl;
-                                enemyCtrl.SetState(NPCStates.Idle);
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            enemyCtrl.target = pl;
-                            //enemyCtrl.SetState(NPCStates.Attack);
-                            enemyCtrl.SetState(NPCStates.Idle);
-                            return;
-                        }
-
+                        enemyCtrl.target = pl;
+                        enemyCtrl.SetState(NPCStates.Idle);
+                        return;
                     }
+
+                    //PlayerController player = pl.GetComponentInParent<PlayerController>();
+
+                    //if (enemyCtrl.state.isBlock && player != null &&
+                    //    player.currentState != PlayerController.CharacterStates.Arrange)
+                    //{
+                    //    if (enemyCtrl.state.isFly)
+                    //    {
+                    //        if (pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Castor ||
+                    //            pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
+                    //            pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
+                    //        {
+                    //            enemyCtrl.target = pl;
+                    //            enemyCtrl.SetState(NPCStates.Idle);
+                    //            return;
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        enemyCtrl.target = pl;
+                    //        //enemyCtrl.SetState(NPCStates.Attack);
+                    //        enemyCtrl.SetState(NPCStates.Idle);
+                    //        return;
+                    //    }
+
+                    //}
 
                 }
             }
             
-
         }
         //원래는 0.3
-        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < distance && !enemyCtrl.state.isFly)
+        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.3f && !enemyCtrl.state.isFly)
         {
             CheckPlayer();
         }

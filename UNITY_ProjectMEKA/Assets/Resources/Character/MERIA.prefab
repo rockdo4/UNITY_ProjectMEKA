@@ -127,6 +127,11 @@ MonoBehaviour:
   arrangeCoolTime: 0
   passive: 
   skill: 0
+  cost: 0
+  maxCost: 0
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
   enemyType: 0
   property: 2
   occupation: 5
@@ -144,8 +149,6 @@ MonoBehaviour:
   hang: 4
   yal: 3
   rangeAttack: 000000000100000000000000010000000100000001000000010000000200000001000000010000000100000001000000
-  cost: 0
-  maxCost: 0
   isFly: 0
   level: 0
   grade: 0
@@ -181,7 +184,7 @@ MonoBehaviour:
   skillCoolTime: 0
   attakableTiles: []
   arrangableTiles: []
-  ReturnPool:
+  PlayerInit:
     m_PersistentCalls:
       m_Calls: []
   joystick: {fileID: 0}
@@ -189,7 +192,7 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
-  characterInfoUIManager: {fileID: 0}
+  isDie: 0
 --- !u!114 &7955790683017641676
 MonoBehaviour:
   m_ObjectHideFlags: 0
