@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public enum UINumeric
@@ -280,7 +279,7 @@ public class FormationManager : MonoBehaviour
 		//닫음
 		CloseCharacterList();
 		UpdatePlayData();
-		GameManager.instance.SaveExecution();
+		GameManager.Instance.SaveExecution();
 	}
 
 	//현재 선택한 카드 변경
@@ -316,7 +315,7 @@ public class FormationManager : MonoBehaviour
 
 		UpdateActiveCard();
 		UpdatePlayData();
-		GameManager.instance.SaveExecution();
+		GameManager.Instance.SaveExecution();
 	}
 
 	//캐릭터 인포 열기
@@ -345,5 +344,6 @@ public class FormationManager : MonoBehaviour
 	public void SetHolderFormation()
 	{
 		DataHolder.formation = formationList[selectedFormationList];
+		DataHolder.formation = DataHolder.formation.Where(x => x != 0).ToArray();
 	}
 }

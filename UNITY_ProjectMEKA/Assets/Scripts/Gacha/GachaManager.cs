@@ -36,7 +36,7 @@ public class GachaManager : MonoBehaviour
 
         foreach(var item in items)
         {
-            Debug.Log((item.Key, item.Value.ArrangementCost));
+            //Debug.Log((item.Key, item.Value.ArrangementCost));
             testPicker.Add(item.Key, item.Value.ArrangementCost);
         }
     }
@@ -56,6 +56,7 @@ public class GachaManager : MonoBehaviour
         itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.CharacterName);
 
         CharacterManager.Instance.UpdatePlayData();
+        GameManager.Instance.SaveExecution();
     }
 
     public void Gacha10()
@@ -75,7 +76,8 @@ public class GachaManager : MonoBehaviour
 			itemImage.transform.SetParent(resultPanel.transform, false);
             itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.CharacterName);
         }
-    }
+		GameManager.Instance.SaveExecution();
+	}
 
     public void ClearPanel()
     {

@@ -7,17 +7,17 @@ public class CharacterInfoText : MonoBehaviour
 	public TextMeshProUGUI textInfo;
 	public Button enhanceButton;
 	public EnhancePanel panel;
-	private Character character;
+
+	[HideInInspector]
+	public Character character;
 
 	private void SetListener()
 	{
-		var data = character;
-		
 		enhanceButton.onClick.RemoveAllListeners();
 		enhanceButton.onClick.AddListener(() =>
 		{
 			panel.gameObject.SetActive(true);
-			panel.SetCharacter(data);
+			panel.SetCharacter(character);
 		});
 	}
 

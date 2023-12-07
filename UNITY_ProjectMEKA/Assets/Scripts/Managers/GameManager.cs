@@ -4,17 +4,17 @@ using UnityEngine.SceneManagement;
 // 한글 주석 테스트
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance { get; private set; }
+    public static GameManager Instance { get; private set; }
     private void Awake()
     {
         PlayDataManager.Init();
 
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
 
-        else if (instance != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }
