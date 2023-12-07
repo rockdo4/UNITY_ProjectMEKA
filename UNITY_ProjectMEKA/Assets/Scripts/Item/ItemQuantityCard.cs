@@ -62,7 +62,8 @@ public class ItemQuantityCard : MonoBehaviour
 		}
         else
         {
-            Debug.Log("못 불러옴");
+            Debug.Log("아이템이 없습니다.");
+			quantityText.SetText($"{selectedQuantity} / {0}");
 		}
     }
 

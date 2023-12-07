@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class EnhancePanel : MonoBehaviour
 {
+	[Header("소모 아이템 ID")]
 	public int[] itemID;
 
 	public TextMeshProUGUI levelText;
