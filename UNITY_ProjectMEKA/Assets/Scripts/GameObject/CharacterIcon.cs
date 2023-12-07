@@ -9,7 +9,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
     public StageManager stageManager;
     public GameObject characterPrefab;
-    private GameObject characterGo;
+    public GameObject characterGo;
     private PlayerController playerController;
 
     public TextMeshProUGUI costText;
@@ -23,9 +23,9 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
     private float arrangeCoolTime;
     private int cost;
-    private float timer = 0f;
+    private float timer;
 
-    private bool created;
+    public bool created;
     private bool once;
 
     private void Awake()
@@ -35,24 +35,17 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
     private void Start()
     {
-        var characterStat = characterPrefab.GetComponent<CharacterState>();
-        cost = characterStat.arrangeCost;
+        characterGo = Instantiate(characterPrefab);
+        playerController = characterGo.GetComponent<PlayerController>();
+        cost = playerController.state.arrangeCost;
         costText.text = cost.ToString();
-        arrangeCoolTime = characterStat.arrangeCoolTime;
-        playerController = characterPrefab.GetComponent<PlayerController>();
+        arrangeCoolTime = playerController.state.arrangeCoolTime;
         timer = arrangeCoolTime;
+        characterGo.SetActive(false);
     }
 
     private void Update()
     {
-        if (playerController != null)
-        {
-            if (!playerController.stateManager.created)
-            {
-                created = false;
-            }
-        }
-
         if(isDie || isCollected)
         {
             CoolTimeUpdate();
@@ -61,14 +54,12 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
     public void CreateCharacter()
     {
-        var characterName = characterPrefab.GetComponent<CharacterState>().name;
-        characterGo = ObjectPoolManager.instance.GetGo(characterName);
-        playerController = characterGo.GetComponent<PlayerController>();
+        characterGo.SetActive(true);
         created = true;
-        playerController.stateManager.created = true;
         playerController.joystick = stageManager.arrangeJoystick.transform.gameObject;
         playerController.icon = this;
-        stageManager.characterIconManager.currentCost -= cost;
+        playerController.SetState(PlayerController.CharacterStates.Arrange);
+        //stageManager.characterIconManager.currentCost -= cost;
 
         var dieEvent = characterGo.GetComponent<CanDie>();
         dieEvent.action.AddListener(() =>
@@ -76,7 +67,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
             playerController.currentTile.arrangePossible = true;
             playerController.icon.isDie = true;
             playerController.icon.arrangePossible = false;
-            playerController.ReturnPool.Invoke();
+            playerController.PlayerInit.Invoke();
         });
     }
 
@@ -113,6 +104,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         {
             if (arrangePossible && isCostEnough)
             {
+                Debug.Log("플레이어 생성");
                 CreateCharacter();
             }
             stageManager.currentPlayer = playerController;

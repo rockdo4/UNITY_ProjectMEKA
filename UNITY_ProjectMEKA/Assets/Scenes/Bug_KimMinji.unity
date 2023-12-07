@@ -3521,7 +3521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EventMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32759
   m_MaxRayIntersections: 0
 --- !u!1001 &420947544
 PrefabInstance:
@@ -13615,10 +13615,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3dc00b4815008840945675df1d3b76f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageManager: {fileID: 0}
   panel: {fileID: 412919318}
   characterPrefabs: []
   characterIconPrefabs: []
   characterCount: 0
+  maxCost: 20
+  currentCost: 0
 --- !u!4 &1660756781 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 442018458177542007, guid: cf9b566e336073640b5e01dd26bdfa0a, type: 3}
@@ -15931,24 +15934,6 @@ MonoBehaviour:
   - objectName: OhYaBung
     perfab: {fileID: 1348910776175659781, guid: ba70a37e0b51a64478cc7c3ac27b0961, type: 3}
     count: 50
-  - objectName: "\uC544\uC774\uB77C"
-    perfab: {fileID: 6279598338925273691, guid: 0985214626dc4574bbba92b153594c4e, type: 3}
-    count: 3
-  - objectName: "\uC838\uC2A4\uD2B8"
-    perfab: {fileID: 513341579006026017, guid: f16c6dee5d470a645a391412d92377e9, type: 3}
-    count: 3
-  - objectName: "\uBE44\uC2A4\uD06C"
-    perfab: {fileID: 8327682516889327335, guid: 317d342c8761e124b9cfd1f4bd15dbde, type: 3}
-    count: 3
-  - objectName: "\uBA54\uB9AC\uC544"
-    perfab: {fileID: 116663185235443394, guid: ba4dc8dec8607b448a140757624ad596, type: 3}
-    count: 3
-  - objectName: "\uD30C\uB77C"
-    perfab: {fileID: 1348910776175659781, guid: 6ec68be5e66e25848a35aa396d266d60, type: 3}
-    count: 3
-  - objectName: "\uCFE0\uB85C\uCE74\uBBF8"
-    perfab: {fileID: 3139966320091609202, guid: 450f93db01304bc43ae322ba58dae46f, type: 3}
-    count: 3
 --- !u!4 &2051272108
 Transform:
   m_ObjectHideFlags: 0

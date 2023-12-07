@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using static Defines;
 
-public class PlayerController : PoolAble/*IPointerDownHandler*/
+public class PlayerController : MonoBehaviour
 {
     [HideInInspector]
     public PlayableStateManager stateManager = new PlayableStateManager();
@@ -44,7 +44,7 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
     public List<Tile> attakableTiles = new List<Tile>();
     public List<Tile> arrangableTiles = new List<Tile>();
     [HideInInspector]
-    public UnityEvent ReturnPool;
+    public UnityEvent PlayerInit;
     public GameObject joystick;
     [HideInInspector]
     public CharacterIcon icon;
@@ -71,8 +71,8 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
         state = GetComponent<CharacterState>();
         SetBlockCount();
         ani = GetComponent<Animator>();
-        ReturnPool = new UnityEvent();
-        ReturnPool.AddListener(() =>
+        PlayerInit = new UnityEvent();
+        PlayerInit.AddListener(() =>
         {
             // except currentTile.arrangePossible = true;
             icon.gameObject.SetActive(true);
@@ -81,20 +81,20 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
             stateManager.created = false;
             Time.timeScale = 1.0f;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
-            ReleaseObject();
+            gameObject.SetActive(false);
         });
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
+
+        states.Add(new PlayableArrangeState(this));
+        states.Add(new PlayableIdleState(this));
+        states.Add(new PlayableDieState(this));
+
     }
     private void OnEnable()
     {
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
         //CreateColliders();
-
-        if (states.Count != 0)
-        {
-            SetState(CharacterStates.Arrange);
-        }
 
         rangeInEnemys.Clear();
         rangeInPlayers.Clear();
@@ -103,18 +103,15 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
     }
     private void OnDisable()
     {
-        if(states.Count != 0)
+        if (states.Count != 0)
         {
             SetState(CharacterStates.Die);
         }
     }
-    void Start()
+    private void Start()
     {
-
         state.ConvertTo2DArray();
-        states.Add(new PlayableArrangeState(this));
-        states.Add(new PlayableIdleState(this));
-        states.Add(new PlayableDieState(this));
+
         if (state.occupation == Defines.Occupation.Hunter || state.occupation == Defines.Occupation.Castor)
         {
             states.Add(new PlayableProjectileAttackState(this));
@@ -125,10 +122,9 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
         }
         states.Add(new PlayableHealingState(this));
 
-        SetState(CharacterStates.Arrange);
         //CreateColliders();
 
-        switch(state.skill)
+        switch (state.skill)
         {
             case CharacterState.Skills.Snapshot:
                 var s = gameObject.AddComponent<Snapshot>();
@@ -549,7 +545,10 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
 
     public void OnClickDown()
     {
-        if(stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange)
+        var otherCharacterArrange = stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange || stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.SecondArrange;
+        var otherCharacterSetting = stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.Setting;
+
+        if(otherCharacterArrange || otherCharacterSetting)
         {
             return;
         }
@@ -567,8 +566,6 @@ public class PlayerController : PoolAble/*IPointerDownHandler*/
                 SetState(CharacterStates.Arrange);
                 stageManager.currentPlayer = this;
                 stageManager.currentPlayerIcon = this.icon;
-                joystick.SetActive(true);
-                joystick.GetComponent<ArrangeJoystick>().SetPositionToCurrentPlayer(transform);
             }
         }
     }
