@@ -4726,7 +4726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].count
@@ -4738,7 +4738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].count
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].level
@@ -4755,11 +4755,11 @@ PrefabInstance:
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 5014772430113155349, guid: c4f2faf15c6bbff4eac09a764d44bfce, type: 3}
+      objectReference: {fileID: 8236610387131559020, guid: b9acaabe92eab7c43bbbd1c3246c462d, type: 3}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].prefab
       value: 
-      objectReference: {fileID: 5014772430113155349, guid: c4f2faf15c6bbff4eac09a764d44bfce, type: 3}
+      objectReference: {fileID: 1348910776175659781, guid: ba70a37e0b51a64478cc7c3ac27b0961, type: 3}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[2].prefab
       value: 
@@ -4770,7 +4770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].interval
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[2].interval
@@ -4778,7 +4778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].attribute
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3307011318676277650, guid: 4d1901bb7eb589a41ba6a4524c260a28, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].attribute
@@ -16933,12 +16933,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectInfos:
-  - objectName: Monster
-    perfab: {fileID: 5014772430113155349, guid: c4f2faf15c6bbff4eac09a764d44bfce, type: 3}
-    count: 100
-  - objectName: OhYaBung
-    perfab: {fileID: 1348910776175659781, guid: ba70a37e0b51a64478cc7c3ac27b0961, type: 3}
-    count: 50
+  - objectName: LongDistance
+    perfab: {fileID: 8236610387131559020, guid: b9acaabe92eab7c43bbbd1c3246c462d, type: 3}
+    count: 10
+  - objectName: bullet
+    perfab: {fileID: 4747644174532001206, guid: b6275585e2956a247932c30204249487, type: 3}
+    count: 30
+  - objectName: Flash8
+    perfab: {fileID: 1633242581645256, guid: 51e88bfc3811dab48ac0c06617654e1a, type: 3}
+    count: 30
+  - objectName: Hit8
+    perfab: {fileID: 1493225883543534, guid: 245bf6b0acdf9474ca212c5a4f28b2ce, type: 3}
+    count: 30
+  - objectName: ps
+    perfab: {fileID: 1013954110162344478, guid: bedc9b8ee8471584cb37c97eeef14666, type: 3}
+    count: 30
+  - objectName: Hit3
+    perfab: {fileID: 1780996139795400, guid: df365974c854a33438e5aea62ca4b975, type: 3}
+    count: 30
+  - objectName: Flash3
+    perfab: {fileID: 1192148152262008, guid: 29fec53fa5329e345981c83555fa131e, type: 3}
+    count: 30
 --- !u!4 &2051272108
 Transform:
   m_ObjectHideFlags: 0

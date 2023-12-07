@@ -44,7 +44,7 @@ public class CharacterIconManager : MonoBehaviour
         if(prevCharacterCount != currentCharacterCount)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("��ġ ���� �ο� : ");
+            stringBuilder.Append("배치 가능 인원 : ");
             stringBuilder.Append(currentCharacterCount);
             personnel.SetText(stringBuilder.ToString());
             prevCharacterCount = currentCharacterCount;
