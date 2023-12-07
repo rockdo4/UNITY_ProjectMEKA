@@ -27,35 +27,39 @@ public class AOE : MonoBehaviour
     {
         speed = maxSpeed;
         rb.constraints = RigidbodyConstraints.None;
-        
-        var flahObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.flashName);
-        flahObj.transform.position = transform.position;
-        flahObj.transform.forward = gameObject.transform.forward;
-        var flashPs = flahObj.GetComponent<ParticleSystem>();
-        flahObj.SetActive(false);
-        flahObj.SetActive(true);
-        if (flashPs != null)
+        if(Player != null )
         {
-            flashPs.GetComponent<PoolAble>().ReleaseObject(flashPs.main.duration);
-        }
-        else
-        {
+            var flahObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.flashName);
+            flahObj.transform.position = transform.position;
+            flahObj.transform.forward = gameObject.transform.forward;
+            var flashPs = flahObj.GetComponent<ParticleSystem>();
+            flahObj.SetActive(false);
+            flahObj.SetActive(true);
+            if (flashPs != null)
+            {
+                flashPs.GetComponent<PoolAble>().ReleaseObject(flashPs.main.duration);
+            }
+            else
+            {
 
-            var flashPsParts = flahObj.transform.GetChild(0).GetComponent<ParticleSystem>();
-            flashPs.GetComponent<PoolAble>().ReleaseObject(flashPsParts.main.duration);
+                var flashPsParts = flahObj.transform.GetChild(0).GetComponent<ParticleSystem>();
+                flashPs.GetComponent<PoolAble>().ReleaseObject(flashPsParts.main.duration);
+            }
+
         }
-        
+
+
     }
     void FixedUpdate()
     {
-        if (speed != 0 && target.gameObject.activeSelf)
+        if (target.gameObject.activeInHierarchy)
         {
             transform.LookAt(target.position);
             rb.velocity = transform.forward * speed;
             pos = target.position;
 
         }
-        else if (!target.gameObject.activeSelf)
+        else
         {
             rb.velocity = transform.forward * speed;
             timer += Time.deltaTime;
@@ -91,13 +95,13 @@ public class AOE : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("EnemyCollider"))
         {
             // 대상에 대미지 처리
             //IAttackable attackable = other.GetComponent<IAttackable>();
 
             //attackable.OnAttack(damage);
-            IAttackable dd = target.GetComponent<IAttackable>();
+            IAttackable dd = target.GetComponentInParent<IAttackable>();
             dd.OnAttack(damage);
             //HitTarget();
             Vector3 os = transform.position;

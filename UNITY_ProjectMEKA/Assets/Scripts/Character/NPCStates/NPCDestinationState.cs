@@ -112,7 +112,7 @@ public class NPCDestinationStates : NPCBaseState
 
         }
         //원래는 0.3
-        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < distance && !enemyCtrl.state.isFly)
+        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.3f && !enemyCtrl.state.isFly)
         {
             CheckPlayer();
         }

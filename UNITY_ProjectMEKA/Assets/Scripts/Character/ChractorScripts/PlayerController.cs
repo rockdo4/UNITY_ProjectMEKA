@@ -287,7 +287,7 @@ public class PlayerController : MonoBehaviour
                 obj.transform.rotation = FirePosition.transform.rotation;
                 projectileA.damage = state.damage;
                 projectileA.target = target.transform;
-                projectileA.Player = gameObject;
+                projectileA.Player = transform.gameObject;
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;

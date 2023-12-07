@@ -90,7 +90,8 @@ public class PanelManager : MonoBehaviour
 			return;
 		}
 		formation.SetHolderFormation();
-		UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
+		//UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
+		UnityEngine.SceneManagement.SceneManager.LoadScene("BUGLHJ");
 	}
 
 	public void ExitGame() 
