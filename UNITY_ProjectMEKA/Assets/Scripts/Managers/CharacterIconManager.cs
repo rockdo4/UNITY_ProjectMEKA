@@ -42,7 +42,19 @@ public class CharacterIconManager : MonoBehaviour
             // ID에 맞는 프리팹 가져와서 캐릭터데이터 적용
             foreach (var prefab in prefabs)
             {
+                Debug.Log(prefab.name);
+
                 var characterState = prefab.GetComponent<CharacterState>();
+
+                if(characterState == null)
+                {
+                    Debug.Log("널");
+                }
+                else
+                {
+                    Debug.Log(characterState.id);
+                }
+
                 if(characterState.id == id)
                 {
                     characterState.name = characterData.CharacterName;
