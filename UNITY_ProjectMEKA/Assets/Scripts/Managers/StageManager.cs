@@ -3,12 +3,10 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
     //[HideInInspector]
-    private CharacterInfoUIManager characterInfoUIManager;
+    public CharacterInfoUIManager characterInfoUIManager;
+    public CharacterIconManager characterIconManager;
+    public ArrangeJoystick arrangeJoystick;
+
     public PlayerController currentPlayer;
     public CharacterIcon currentPlayerIcon;
-
-    private void Awake()
-    {
-        characterInfoUIManager = GameObject.FindGameObjectWithTag("CharacterInfoUIManager").GetComponent<CharacterInfoUIManager>();
-    }
 }

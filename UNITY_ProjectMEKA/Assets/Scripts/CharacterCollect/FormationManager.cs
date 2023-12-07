@@ -71,7 +71,7 @@ public class FormationManager : MonoBehaviour
 		var characterTable = DataTableMgr.GetTable<CharacterTable>();
 		var table = characterTable.GetOriginalTable();
 
-		//Ä³¸¯ÅÍ ¸®½ºÆ® Ä«µå »ý¼º
+		//Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		foreach (var character in table)
 		{
 			var card = Instantiate(characterCardPrefab);
@@ -86,7 +86,7 @@ public class FormationManager : MonoBehaviour
 			});
 		}
 
-		////Æí¼º Ä³¸¯ÅÍ Ä«µå µ¨¸®°ÔÀÌÆ® Ãß°¡
+		////ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½
 		for (int i = 0; i < numberOfCharacters; i++)
 		{
 			int index = i;
@@ -111,7 +111,7 @@ public class FormationManager : MonoBehaviour
             });
 		}
 
-		//¹öÆ° µ¨¸®°ÔÀÌÆ® ÇÒ´ç
+		//ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ò´ï¿½
 		yesButton.onClick.AddListener(() =>
 		{
 			OnClickDeleteCurrentFormation();
@@ -132,7 +132,7 @@ public class FormationManager : MonoBehaviour
 		ChangeFormationSet(selectedFormationList);
 	}
 
-	//Æí¼º ÇÁ¸®¼Â ¹Ù²Ù±â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½
 	public void ChangeFormationSet(int formationListIndex)
 	{
 		UpdateActiveCard();
@@ -151,7 +151,7 @@ public class FormationManager : MonoBehaviour
 			{
 				if (formationList[selectedFormationList][j] == id)
 				{
-					//Áßº¹Ä³¸¯ÅÍ °¡¸®±â
+					//ï¿½ßºï¿½Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					cardList[i].gameObject.SetActive(false);
 					activeFalseList.Add(cardList[i].gameObject);
 				}
@@ -159,19 +159,19 @@ public class FormationManager : MonoBehaviour
 		}
 	}
 
-	//»èÁ¦ ÆË¾÷Ã¢ ¿­±â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¾ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½
 	public void OpenDeletePopUp()
 	{
 		popupPanel.gameObject.SetActive(true);
 	}
 
-	//»èÁ¦ ÆË¾÷Ã¢ ´Ý±â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¾ï¿½Ã¢ ï¿½Ý±ï¿½
 	public void CloseDeletePopUp()
 	{
 		popupPanel.gameObject.SetActive(false);
 	}
 
-	//´ÙÀ½ ÇÁ¸®¼ÂÀ¸·Î ¹Ù²Ù±â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½
 	public void ChangePresetPrevious()
 	{
 		if (selectedFormationList > 0)
@@ -180,7 +180,7 @@ public class FormationManager : MonoBehaviour
 		}
 	}
 
-	//ÀÌÀü ÇÁ¸®¼ÂÀ¸·Î ¹Ù²Ù±â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½
 	public void ChangePresetNext()
 	{
 		if(selectedFormationList < numberOfFormations - 1)
@@ -189,7 +189,7 @@ public class FormationManager : MonoBehaviour
 		}
 	}
 
-	//Ä³¸¯ÅÍ ¼±ÅÃÇÏ´Â Ã¢ ²ô±â
+	//Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Ã¢ ï¿½ï¿½ï¿½ï¿½
 	public void CloseCharacterList()
 	{
 		var table = DataTableMgr.GetTable<TestCharacterTable>();
@@ -198,7 +198,7 @@ public class FormationManager : MonoBehaviour
 		ResetSelectCharacterCard();
 	}
 
-	//Ä³¸¯ÅÍ ¼±ÅÃÇÏ´Â Ã¢ ¿­±â
+	//Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Ã¢ ï¿½ï¿½ï¿½ï¿½
 	public void OpenCharacterList()
 	{
 		characterPanel.gameObject.SetActive(true);
@@ -211,7 +211,7 @@ public class FormationManager : MonoBehaviour
 			{
 				if(formationList[selectedFormationList][j] == id)
 				{
-					//Áßº¹Ä³¸¯ÅÍ °¡¸®±â
+					//ï¿½ßºï¿½Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					cardList[i].gameObject.SetActive(false);
 					activeFalseList.Add(cardList[i].gameObject);
 				}
@@ -219,7 +219,7 @@ public class FormationManager : MonoBehaviour
 		}
 	}
 
-	//Ä³¸¯ÅÍ Ä«µå °®°í ÀÖ´ÂÁö È®ÀÎ
+	//Ä³ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 	public void CheckCollectCharacter()
 	{
 		var table = DataTableMgr.GetTable<CharacterTable>();
@@ -241,7 +241,7 @@ public class FormationManager : MonoBehaviour
 		}
 	}
 
-	//Ä³¸¯ÅÍ ¼±ÅÃÃ¢ Ä«µå È°¼ºÈ­ ½ÃÅ°±â
+	//Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ Ä«ï¿½ï¿½ È°ï¿½ï¿½È­ ï¿½ï¿½Å°ï¿½ï¿½
 	public void UpdateActiveCard()
 	{
 		foreach(var card in activeFalseList)
@@ -251,10 +251,10 @@ public class FormationManager : MonoBehaviour
 		activeFalseList.Clear();
 	}
 
-	//¼±ÅÃ ´©¸£¸é Ä³¸¯ÅÍ ±× Ä«µå id ¹Ù²Þ
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ä«ï¿½ï¿½ id ï¿½Ù²ï¿½
 	public void ChangeCharacterCard()
 	{
-		//Ä«µåÁ¤º¸ ¹Ù²Þ
+		//Ä«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½
 		var cardInfo = characterCard[selectedFormationIndex].GetComponent<CardInfo>();
 		bool isDuplication = false;
 
@@ -268,21 +268,21 @@ public class FormationManager : MonoBehaviour
 
 		if(!isDuplication)
 		{
-			//Ä«µå ±ÛÀÚ ¹Ù²Þ
+			//Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½
 			cardInfo.ChangeCardId(selectedCharacterID);
 
-			//selectedFormationListÇÁ¸®¼Â¿¡ selectedFormationIndexÀÎµ¦½ºÀÇ ¾ÆÀÌµð ¹Ù²Þ
+			//selectedFormationListï¿½ï¿½ï¿½ï¿½ï¿½Â¿ï¿½ selectedFormationIndexï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ù²ï¿½
 			formationList[selectedFormationList][selectedFormationIndex] = selectedCharacterID;
             activeFalseList.Add(cardInfo.gameObject);
         }
 
-		//´ÝÀ½
+		//ï¿½ï¿½ï¿½ï¿½
 		CloseCharacterList();
 		UpdatePlayData();
 		GameManager.Instance.SaveExecution();
 	}
 
-	//ÇöÀç ¼±ÅÃÇÑ Ä«µå º¯°æ
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void ChangeSelectCharacterCard(CardInfo card)
 	{
 		var ID = card.GetCardID();
@@ -304,7 +304,7 @@ public class FormationManager : MonoBehaviour
 		selectedCharacterID = 0;
 	}
 
-	//ÇöÀç ÇÁ¸®¼Â Áö¿ì±â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void OnClickDeleteCurrentFormation()
 	{
 		for (int i = 0; i < numberOfCharacters; i++)
@@ -318,7 +318,7 @@ public class FormationManager : MonoBehaviour
 		GameManager.Instance.SaveExecution();
 	}
 
-	//Ä³¸¯ÅÍ ÀÎÆ÷ ¿­±â
+	//Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void OpenCharacterInfo(Character info)
 	{
 		characterInfoPanel.gameObject.SetActive(true);

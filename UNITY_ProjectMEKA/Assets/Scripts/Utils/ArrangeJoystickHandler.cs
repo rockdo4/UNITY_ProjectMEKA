@@ -33,29 +33,16 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     private void OnDisable()
     {
         cancelButtonOn = false;
-        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = ~0;
-    }
-
-    private void Update()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if(Input.GetMouseButtonDown(0))
-        {
-            if(Physics.Raycast(ray, out hit))
-            {
-                //if(hit.transform.gameObject != null)
-                Debug.Log(hit.transform.gameObject.name, hit.transform.gameObject);
-            }
-        }
+        var sliderMask = 1 << LayerMask.NameToLayer(Layers.slider);
+        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = ~0 ^ sliderMask;
     }
 
     public void Init()
     {
         transform.localPosition = Vector3.zero;
         currentTile = null;
-        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = 1 << LayerMask.NameToLayer(Layers.handler);
+        var handlerMask = 1 << LayerMask.NameToLayer(Layers.handler);
+        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = handlerMask;
     }
 
     public void InitOnce()
@@ -85,19 +72,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("on pointer down");
         OnDrag(eventData);
-
-
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //int layerMask = 1 << LayerMask.NameToLayer(Layers.handler);
-        //if (Physics.Raycast(ray, Mathf.Infinity, layerMask))
-        //{
-        //    if (!stageManager.currentPlayer.stateManager.secondArranged)
-        //    {
-        //        OnDrag(eventData);
-        //    }
-        //}
     }
 
     public void OnDrag(PointerEventData eventData)

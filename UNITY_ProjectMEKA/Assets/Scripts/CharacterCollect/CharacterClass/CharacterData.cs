@@ -52,6 +52,7 @@ public class CharacterData
 	public int ArrangementCost { get; set; }
 	public int WithdrawCost { get; set; }
 	public int ReArrangementCoolDown { get; set; }
+	public string ImagePath { get; set; }
 }
 
 //캐릭터ID + 레벨을 ID로 사용해서 레벨에 따른 스탯 불러옴

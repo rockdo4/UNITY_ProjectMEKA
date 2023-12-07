@@ -69,7 +69,7 @@ public class PlayableArrangeState : PlayableBaseState
                 }
                 else
                 {
-                    playerCtrl.ReturnPool.Invoke();
+                    playerCtrl.PlayerInit.Invoke();
                 }
             }
         }

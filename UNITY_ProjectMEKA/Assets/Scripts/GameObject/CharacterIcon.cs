@@ -1,83 +1,117 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using static Defines;
+using TMPro;
 
 public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
     public StageManager stageManager;
     public GameObject characterPrefab;
-    private GameObject characterGo;
+    public GameObject characterGo;
     private PlayerController playerController;
-    public int cost;
 
-    public ArrangeJoystick arrangeJoystick;
-    private CharacterInfoUIManager characterInfoUIManager;
+    public TextMeshProUGUI costText;
+    public GameObject redFilter;
+    public Slider coolTimeSlider;
+    public TextMeshProUGUI coolTimeText;
 
-    private bool created;
+    public bool isDie = false;
+    public bool isCollected = false;
+    public bool arrangePossible = true;
+
+    private float arrangeCoolTime;
+    private int cost;
+    private float timer;
+
+    public bool created;
     private bool once;
 
     private void Awake()
     {
-        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<CharacterInfoUIManager>();
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
-        var characterStat = characterPrefab.GetComponent<CharacterState>();
-        var cost = characterStat.arrangeCost;
     }
 
     private void Start()
     {
+        characterGo = Instantiate(characterPrefab);
+        playerController = characterGo.GetComponent<PlayerController>();
+        cost = playerController.state.arrangeCost;
+        costText.text = cost.ToString();
+        arrangeCoolTime = playerController.state.arrangeCoolTime;
+        timer = arrangeCoolTime;
+        characterGo.SetActive(false);
     }
 
     private void Update()
     {
-        if (playerController != null)
+        if(isDie || isCollected)
         {
-            if (!playerController.stateManager.created)
-            {
-                created = false;
-            }
-        }
-
-        if (created && !once && playerController.stateManager.firstArranged)
-        {
-            //SetJoystick.Invoke();
+            CoolTimeUpdate();
         }
     }
 
     public void CreateCharacter()
     {
-        var characterName = characterPrefab.GetComponent<CharacterState>().name;
-        characterGo = ObjectPoolManager.instance.GetGo(characterName);
-        playerController = characterGo.GetComponent<PlayerController>();
+        characterGo.SetActive(true);
         created = true;
-        playerController.stateManager.created = true;
-        playerController.joystick = arrangeJoystick.transform.gameObject;
+        playerController.joystick = stageManager.arrangeJoystick.transform.gameObject;
         playerController.icon = this;
+        playerController.SetState(PlayerController.CharacterStates.Arrange);
+        //stageManager.characterIconManager.currentCost -= cost;
 
         var dieEvent = characterGo.GetComponent<CanDie>();
         dieEvent.action.AddListener(() =>
         {
             playerController.currentTile.arrangePossible = true;
-            playerController.icon.gameObject.SetActive(true);
+            playerController.icon.isDie = true;
+            playerController.icon.arrangePossible = false;
+            playerController.PlayerInit.Invoke();
         });
+    }
 
-        stageManager.currentPlayer = playerController;
-        stageManager.currentPlayerIcon = playerController.icon;
+    public void CoolTimeUpdate()
+    {
+        if (!redFilter.activeSelf)
+        {
+            redFilter.SetActive(true);
+            coolTimeSlider.gameObject.SetActive(true);
+        }
+
+        timer -= Time.deltaTime;
+        coolTimeText.text = timer.ToString("0.0");
+        coolTimeSlider.value = 1 - (timer / arrangeCoolTime);
+
+        if (timer <= 0f)
+        {
+            timer = arrangeCoolTime;
+            isDie = false;
+            isCollected = false;
+            arrangePossible = true;
+            redFilter.SetActive(false);
+            coolTimeSlider.gameObject.SetActive(false);
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //var isCurrentPlayerNull = stageManager.currentPlayer == null;
         var isCurrentPlayerThis = stageManager.currentPlayer == playerController;
-        var isPossibleMode = (characterInfoUIManager.windowMode == CharacterInfoMode.None) || (characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange);
+        var isPossibleMode = (stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.None) || (stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange);
+        var isCostEnough = stageManager.characterIconManager.currentCost > cost;
 
         if (isPossibleMode || (isCurrentPlayerThis && isPossibleMode))
         {
-            CreateCharacter();
+            if (arrangePossible && isCostEnough)
+            {
+                Debug.Log("플레이어 생성");
+                CreateCharacter();
+            }
+            stageManager.currentPlayer = playerController;
+            stageManager.currentPlayerIcon = playerController.icon;
             characterGo.transform.position = transform.position;
             once = false;
-            characterInfoUIManager.currentPlayerChanged = true;
+            stageManager.characterInfoUIManager.currentPlayerChanged = true;
         }
     }
 }

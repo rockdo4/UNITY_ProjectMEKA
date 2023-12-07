@@ -76,12 +76,13 @@ public class ArrangeJoystick : MonoBehaviour
         {
             cancelButton.gameObject.SetActive(false);
         }
-        stageManager.currentPlayer.stateManager.firstArranged = false;
-        stageManager.currentPlayer.stateManager.secondArranged = false;
+        //stageManager.currentPlayer.stateManager.firstArranged = false;
+        //stageManager.currentPlayer.stateManager.secondArranged = false;
         //ClearTileMesh(tempTiles);
         stageManager.currentPlayer.currentTile.arrangePossible = true;
         //stageManager.currentPlayer.SetState(CharacterStates.Idle);
-        stageManager.currentPlayer.ReturnPool.Invoke();
+        stageManager.currentPlayerIcon.created = false;
+        stageManager.currentPlayer.PlayerInit.Invoke();
         stageManager.currentPlayer = null;
         stageManager.currentPlayerIcon = null;
 
@@ -95,13 +96,21 @@ public class ArrangeJoystick : MonoBehaviour
         {
             collectButton.gameObject.SetActive(false);
         }
-        stageManager.currentPlayer.stateManager.firstArranged = false; stageManager.currentPlayer.stateManager.secondArranged = false;
         stageManager.currentPlayer.currentTile.arrangePossible = true;
-        stageManager.currentPlayer.ReturnPool.Invoke();
+        stageManager.currentPlayerIcon.created = false;
+        stageManager.currentPlayerIcon.isCollected = true;
+        stageManager.currentPlayerIcon.arrangePossible = false;
+
+        var id = stageManager.currentPlayer.state.id;
+        var characterData = stageManager.characterIconManager.characterTable.GetCharacterData(id);
+        var withdrawCost = characterData.WithdrawCost;
+        stageManager.characterIconManager.currentCost += withdrawCost;
+
+        stageManager.currentPlayer.PlayerInit.Invoke();
         stageManager.currentPlayer = null;
         stageManager.currentPlayerIcon = null;
 
-        transform.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void SetPositionToCurrentPlayer(Transform playerTr)

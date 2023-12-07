@@ -32,6 +32,7 @@ public static class Defines
         public const string enemyCollider = "EnemyCollider";
         public const string playerCollider = "PlayerCollider";
         public const string handler = "Handler";
+        public const string slider = "Slider";
     }
 
     public enum Property
