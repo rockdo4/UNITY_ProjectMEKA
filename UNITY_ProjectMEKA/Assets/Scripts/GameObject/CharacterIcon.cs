@@ -59,7 +59,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         playerController.joystick = stageManager.arrangeJoystick.transform.gameObject;
         playerController.icon = this;
         playerController.SetState(PlayerController.CharacterStates.Arrange);
-        //stageManager.characterIconManager.currentCost -= cost;
+        stageManager.characterIconManager.currentCost -= cost;
 
         var dieEvent = characterGo.GetComponent<CanDie>();
         dieEvent.action.AddListener(() =>
