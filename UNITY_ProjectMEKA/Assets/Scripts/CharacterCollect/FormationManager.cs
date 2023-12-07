@@ -279,7 +279,7 @@ public class FormationManager : MonoBehaviour
 		//닫음
 		CloseCharacterList();
 		UpdatePlayData();
-		GameManager.instance.SaveExecution();
+		GameManager.Instance.SaveExecution();
 	}
 
 	//현재 선택한 카드 변경
@@ -315,7 +315,7 @@ public class FormationManager : MonoBehaviour
 
 		UpdateActiveCard();
 		UpdatePlayData();
-		GameManager.instance.SaveExecution();
+		GameManager.Instance.SaveExecution();
 	}
 
 	//캐릭터 인포 열기

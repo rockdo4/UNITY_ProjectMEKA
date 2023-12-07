@@ -147,6 +147,8 @@ public class EnhancePanel : MonoBehaviour
 		armorText.SetText($"방어력 : {levelData.CharacterArmor}	>>	{data.CharacterArmor}");
 		hpText.SetText($"체력 : {levelData.CharacterHP}	>>	{data.CharacterHP}");
 		expText.SetText($"경험치 : {currCharacter.CurrentExp} >> {remainExp}");
+
+		GameManager.Instance.SaveExecution();
 	}
 
 	public int CombineID(int characterID, int level)
