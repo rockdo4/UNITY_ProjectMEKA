@@ -91,7 +91,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
             arrangePossible = true;
             redFilter.SetActive(false);
             coolTimeSlider.gameObject.SetActive(false);
-            stageManager.characterIconManager.currentCharacterCount++;
+            //stageManager.characterIconManager.currentCharacterCount++;
         }
     }
 
@@ -99,7 +99,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     {
         var isCurrentPlayerThis = stageManager.currentPlayer == playerController;
         var isPossibleMode = (stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.None) || (stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange);
-        var isCostEnough = stageManager.characterIconManager.currentCost > cost;
+        var isCostEnough = stageManager.currentCost > cost;
 
         if (isPossibleMode || (isCurrentPlayerThis && isPossibleMode))
         {

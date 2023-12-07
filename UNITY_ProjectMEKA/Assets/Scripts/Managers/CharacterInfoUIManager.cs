@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using System.Text;
+using static UnityEditor.PlayerSettings;
+using Newtonsoft.Json.Linq;
 
 public class CharacterInfoUIManager : MonoBehaviour
 {
@@ -11,9 +13,13 @@ public class CharacterInfoUIManager : MonoBehaviour
     private StageManager stageManager;
 
     // character info
-    public Canvas characterInfoCanvas;
+    public GameObject characterInfoPanel;
+    public TextMeshProUGUI characterOccupation;
     public TextMeshProUGUI characterName;
-    public TextMeshProUGUI characterLevel;
+    public TextMeshProUGUI characterDescription;
+    public TextMeshProUGUI costText;
+    public TextMeshProUGUI leftWaveText;
+    public Image costSlider;
 
     // joystick
     public ArrangeJoystick joystick;
@@ -24,11 +30,15 @@ public class CharacterInfoUIManager : MonoBehaviour
 
     public bool currentPlayerChanged;
 
+    public int prevCost;
+    private float timer;
+
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
     private void Awake()
     {
+        //currentCost = maxCost;
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
@@ -41,8 +51,9 @@ public class CharacterInfoUIManager : MonoBehaviour
         // windowMode Update
         prevWindowMode = windowMode;
         WindowModeUpdate();
+        CostUpdate();
 
-        if(prevWindowMode != windowMode || currentPlayerChanged)
+        if (prevWindowMode != windowMode || currentPlayerChanged)
         {
             WindowSet();
             currentPlayerChanged = false;
@@ -79,12 +90,12 @@ public class CharacterInfoUIManager : MonoBehaviour
             case Defines.CharacterInfoMode.None:
                 // 캐릭터 인포 off
                 ClearTileMesh();
-                characterInfoCanvas.gameObject.SetActive(false);
+                characterInfoPanel.SetActive(false);
                 joystick.gameObject.SetActive(false);
                 break;
             case Defines.CharacterInfoMode.FirstArrange:
                 // 캐릭터 인포 on
-                characterInfoCanvas.gameObject.SetActive(true);
+                characterInfoPanel.SetActive(true);
                 ChangeCharacterInfo();
                 joystick.gameObject.SetActive(false);
                 stageManager.currentPlayer.ArrangableTileSet(stageManager.currentPlayer.state.occupation);
@@ -92,7 +103,7 @@ public class CharacterInfoUIManager : MonoBehaviour
                 break;
             case Defines.CharacterInfoMode.SecondArrange:
                 // 캐릭터 인포 on
-                characterInfoCanvas.gameObject.SetActive(true);
+                characterInfoPanel.SetActive(true);
                 ChangeCharacterInfo();
                 ClearTileMesh();
                 joystick.gameObject.SetActive(true);
@@ -104,7 +115,7 @@ public class CharacterInfoUIManager : MonoBehaviour
                 break;
             case Defines.CharacterInfoMode.Setting:
                 // 캐릭터 인포 on
-                characterInfoCanvas.gameObject.SetActive(true);
+                characterInfoPanel.SetActive(true);
                 ChangeCharacterInfo();
                 joystick.gameObject.SetActive(true);
                 joystick.SetPositionToCurrentPlayer(stageManager.currentPlayer.transform);
@@ -141,16 +152,32 @@ public class CharacterInfoUIManager : MonoBehaviour
 
     public void ChangeCharacterInfo()
     {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.Append("name : ");
-        stringBuilder.Append(stageManager.currentPlayer.state.name);
-        characterName.text = stringBuilder.ToString();
+        characterOccupation.SetText(stageManager.currentPlayer.state.occupation.ToString());
+        characterName.SetText(stageManager.currentPlayer.state.name);
+        characterDescription.SetText($"임의 설명글\n박순국바보\n박광훈바보 김주현바보 에베베");
+    }
 
-        stringBuilder.Clear();
-        stringBuilder.Append("level : ");
-        stringBuilder.Append(stageManager.currentPlayer.state.level);
+    public void CostUpdate()
+    {
+        stageManager.currentCost += Time.deltaTime * 0.5f;
 
-        characterLevel.text = stringBuilder.ToString();
+        if ((prevCost != (int)stageManager.currentCost) && stageManager.currentCost <= stageManager.maxCost + 1)
+        {
+            costText.SetText(stageManager.currentCost.ToString("0"));
+            prevCost = (int)stageManager.currentCost;
+        }
+
+        float value;
+        if(stageManager.currentCost <= stageManager.maxCost)
+        {
+            value = stageManager.currentCost % 1;
+        }
+        else
+        {
+            stageManager.currentCost = stageManager.maxCost;
+            value = 0f;
+        }
+        costSlider.fillAmount = value;
     }
 
     public void ChangeArrangableTileMesh()

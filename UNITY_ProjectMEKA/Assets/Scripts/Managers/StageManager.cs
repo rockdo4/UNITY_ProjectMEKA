@@ -9,4 +9,12 @@ public class StageManager : MonoBehaviour
 
     public PlayerController currentPlayer;
     public CharacterIcon currentPlayerIcon;
+
+    public float currentCost;
+    public int maxCost = 20;
+
+    private void Awake()
+    {
+        currentCost = maxCost;
+    }
 }

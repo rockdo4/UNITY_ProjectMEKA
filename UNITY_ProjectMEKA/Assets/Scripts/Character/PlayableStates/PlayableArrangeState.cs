@@ -63,7 +63,7 @@ public class PlayableArrangeState : PlayableBaseState
             else if (Input.GetMouseButtonUp(0))
             {
                 var firstCondition = hit.transform != null && hitTile.arrangePossible && playerCtrl.arrangableTiles.Contains(hitTile);
-                var secondCondition = playerCtrl.stageManager.characterIconManager.currentCost >= playerCtrl.state.arrangeCost;
+                var secondCondition = playerCtrl.stageManager.currentCost >= playerCtrl.state.arrangeCost;
 
                 if (firstCondition && secondCondition)
                 {

@@ -27,7 +27,7 @@ public class CanDie : MonoBehaviour
             if(GetComponent<PoolAble>() != null)
             {
                 // temp value => need to apply monster state.monsterDieCost(after monster prefabs done)
-                stageManager.characterIconManager.currentCost += 1f;
+                stageManager.currentCost += 1f;
                 GetComponent<PoolAble>().ReleaseObject();
             }
         }

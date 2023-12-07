@@ -1,69 +1,29 @@
 using System.Collections.Generic;
-using System.Text;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 using static Defines;
 
 public class CharacterIconManager : MonoBehaviour
 {
-    public GameObject panel;
-    public TextMeshProUGUI costText;
-    public TextMeshProUGUI personnel;
+    public GameObject Iconpanel;
     private StageManager stageManager;
     private List<GameObject> characterPrefabs = new List<GameObject>();
     private List<GameObject> characterIconPrefabs = new List<GameObject>();
 
     public int currentCharacterCount;
-    private int prevCharacterCount;
-    public float currentCost;
-    public int prevCost;
 
     public CharacterTable characterTable;
     private string characterPrefabPath;
     private string characterIconPath;
-    public int maxCost = 20;
-
-    private float timer;
 
     private void Awake()
     {
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
-        currentCost = maxCost;
         characterPrefabPath = "Character";
         characterIconPath = "CharacterIcon/CharacterIconPrefab";
         currentCharacterCount = DataHolder.formation.Length;
         characterTable = DataTableMgr.GetTable<CharacterTable>();
         SetCharacters();
         CreateIconGameObjects();
-    }
-
-    private void Update()
-    {
-        if(prevCharacterCount != currentCharacterCount)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("배치 가능 인원 : ");
-            stringBuilder.Append(currentCharacterCount);
-            personnel.SetText(stringBuilder.ToString());
-            prevCharacterCount = currentCharacterCount;
-        }
-
-        CostUpdate();
-    }
-
-    public void CostUpdate()
-    {
-        currentCost += Time.deltaTime * 0.5f;
-
-        if((prevCost != (int)currentCost) && currentCost <= maxCost+1)
-        {
-            costText.SetText(currentCost.ToString("0"));
-            prevCost = (int)currentCost;
-        }
-
-        var value = currentCost % 1f;
     }
 
     public void SetCharacters()
@@ -112,7 +72,7 @@ public class CharacterIconManager : MonoBehaviour
             var iconImage = Resources.Load<Sprite>(characterTable.GetCharacterData(id).ImagePath);
 
             var iconPrefab = Resources.Load<GameObject>(characterIconPath);
-            var iconGo = Instantiate(iconPrefab, panel.transform);
+            var iconGo = Instantiate(iconPrefab, Iconpanel.transform);
 
             var characterIcon = iconGo.GetComponent<CharacterIcon>();
             var characterIconImage = iconGo.GetComponent<UnityEngine.UI.Image>();
