@@ -59,7 +59,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         playerController.joystick = stageManager.arrangeJoystick.transform.gameObject;
         playerController.icon = this;
         playerController.SetState(PlayerController.CharacterStates.Arrange);
-        stageManager.characterIconManager.currentCost -= cost;
+        //stageManager.characterIconManager.currentCost -= cost;
 
         var dieEvent = characterGo.GetComponent<CanDie>();
         dieEvent.action.AddListener(() =>
@@ -91,6 +91,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
             arrangePossible = true;
             redFilter.SetActive(false);
             coolTimeSlider.gameObject.SetActive(false);
+            stageManager.characterIconManager.currentCharacterCount++;
         }
     }
 
@@ -104,7 +105,6 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         {
             if (arrangePossible && isCostEnough)
             {
-                Debug.Log("플레이어 생성");
                 CreateCharacter();
             }
             stageManager.currentPlayer = playerController;

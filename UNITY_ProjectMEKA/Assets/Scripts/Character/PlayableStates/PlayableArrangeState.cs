@@ -69,8 +69,6 @@ public class PlayableArrangeState : PlayableBaseState
                 {
                     playerCtrl.currentTile = hitTile;
                     playerCtrl.stateManager.firstArranged = true;
-                    playerCtrl.stageManager.characterIconManager.currentCost -= playerCtrl.state.arrangeCost;
-
                 }
                 else
                 {

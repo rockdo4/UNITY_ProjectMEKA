@@ -61,7 +61,7 @@ public class EnhancePanel : MonoBehaviour
 		int result = CombineID(characterID, level);
 
 		Debug.Log(("ID",result));
-		var levelData = DataTableMgr.GetTable<LevelTable>().GetLevelData(result);
+		var levelData = DataTableMgr.GetTable<CharacterLevelTable>().GetLevelData(result);
 
 		UpdateTargetLevel();
 	}
@@ -95,7 +95,7 @@ public class EnhancePanel : MonoBehaviour
 		int result = CombineID(characterID, targetLevel);
 
 		remain = totalExp;
-		return DataTableMgr.GetTable<LevelTable>().GetLevelData(result);
+		return DataTableMgr.GetTable<CharacterLevelTable>().GetLevelData(result);
 	}
 
 	public void UpdateTargetLevel()
@@ -113,7 +113,7 @@ public class EnhancePanel : MonoBehaviour
 		var data = CalculateData(totalExp, out remainExp);
 
 		int result = CombineID(currCharacter.CharacterID, currCharacter.CharacterLevel);
-		var levelData = DataTableMgr.GetTable<LevelTable>().GetLevelData(result);
+		var levelData = DataTableMgr.GetTable<CharacterLevelTable>().GetLevelData(result);
 
 		levelText.SetText($"레벨 : {levelData.CharacterLevel}	>>	{data.CharacterLevel}");
 		damageText.SetText($"공격력 : {levelData.CharacterDamage}	>>	{data.CharacterDamage}");
@@ -140,7 +140,7 @@ public class EnhancePanel : MonoBehaviour
 		currCharacter.CurrentExp = remainExp;
 
 		int result = CombineID(currCharacter.CharacterID, currCharacter.CharacterLevel);
-		var levelData = DataTableMgr.GetTable<LevelTable>().GetLevelData(result);
+		var levelData = DataTableMgr.GetTable<CharacterLevelTable>().GetLevelData(result);
 
 		levelText.SetText($"레벨 : {levelData.CharacterLevel}	>>	{data.CharacterLevel}");
 		damageText.SetText($"공격력 : {levelData.CharacterDamage}	>>	{data.CharacterDamage}");

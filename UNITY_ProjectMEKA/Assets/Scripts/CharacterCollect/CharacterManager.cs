@@ -26,7 +26,7 @@ public class CharacterManager
 		} 
 	}
 	public Dictionary<int, Character> m_CharacterStorage = new Dictionary<int, Character>();
-	public void InitCharacterStorage(CharacterTable charTable, LevelTable levelTable)
+	public void InitCharacterStorage(CharacterTable charTable, CharacterLevelTable levelTable)
 	{
 		CheckPlayData();
 
