@@ -20,6 +20,7 @@ public class CharacterInfoUIManager : MonoBehaviour
     private ArrangeJoystickHandler joystickHandler;
     private Button cancelButton;
     private Button collectButton;
+    private Button skillButton;
 
     public bool currentPlayerChanged;
 
@@ -31,6 +32,7 @@ public class CharacterInfoUIManager : MonoBehaviour
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
+        skillButton = joystick.skillButton;
         stageManager = GameObject.FindGameObjectWithTag(Defines.Tags.stageManager).GetComponent<StageManager>();
     }
 
@@ -98,6 +100,7 @@ public class CharacterInfoUIManager : MonoBehaviour
                 joystickHandler.gameObject.SetActive(true);
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(false);
+                skillButton.gameObject.SetActive(false);
                 break;
             case Defines.CharacterInfoMode.Setting:
                 // 캐릭터 인포 on
@@ -108,6 +111,7 @@ public class CharacterInfoUIManager : MonoBehaviour
                 joystickHandler.gameObject.SetActive(false);
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(true);
+                skillButton.gameObject.SetActive(true);
                 ChangeAttackableTileMesh();
                 break;
         }

@@ -17792,13 +17792,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 11101
-  name: BISK
-  arrangeCost: 0
-  arrangeCoolTime: 0
+  name: "\uBE44\uC2A4\uD06C"
+  arrangeCost: 18
+  arrangeCoolTime: 50
   passive: 
   skill: 2
   cost: 0
-  maxCost: 30
+  maxCost: 20
   skillCost: 10
   skillCoolTime: 3
   skillDuration: 0
@@ -17854,7 +17854,7 @@ MonoBehaviour:
   skillCoolTime: 0
   attakableTiles: []
   arrangableTiles: []
-  ReturnPool:
+  PlayerInit:
     m_PersistentCalls:
       m_Calls: []
   joystick: {fileID: 0}
@@ -17862,7 +17862,7 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
-  characterInfoUIManager: {fileID: 0}
+  isDie: 0
 --- !u!114 &5773596269398004328
 MonoBehaviour:
   m_ObjectHideFlags: 0
