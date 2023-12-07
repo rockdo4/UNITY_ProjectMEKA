@@ -1,33 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public struct SynchroInfo
-{
-	public int itemID;
-	public int quantity;
-}
-
 public class SynchroPanel : MonoBehaviour
 {
-	//나중에 테이블로 갖고 와야될듯?
-	[Header("소모 아이템 ID, 수량 // 테이블로 수정해야 할듯")]
-	public SynchroInfo[] itemInfo;
+	private SynchroData synchroInfoData;
 	
+	public TextMeshProUGUI levelText;
 	public ItemAutoQuantityCard[] synchroItemCard;
+
 	public Button applyButton;
 
 	public CharacterInfoText UpdateInfoPanel;
 	private Character currCharacter;
 
+	private CharacterTable charTable;
+	private SynchroTable synchroTable;
+
 	private void Awake()
 	{
-		applyButton.onClick.AddListener(() =>
-		{
+		charTable = DataTableMgr.GetTable<CharacterTable>();
+		synchroTable = DataTableMgr.GetTable<SynchroTable>();
 
-		});
+		//applyButton.onClick.AddListener(() =>
+		//{
+		//	//ApplySynchro();
+
+		//	foreach (var card in synchroItemCard)
+		//	{
+		//		card.ConsumeItem();
+		//		card.SetText();
+		//	}
+
+		//	//UpdateTargetLevel();
+		//});
 	}
 
 	private void OnEnable()
@@ -38,5 +46,52 @@ public class SynchroPanel : MonoBehaviour
 	public void SetCharacter(Character character)
 	{
 		currCharacter = character;
+
+		var grade = currCharacter.CharacterGrade;
+		var occupation = charTable.GetCharacterData(currCharacter.CharacterID).CharacterOccupation;
+
+		synchroInfoData = synchroTable.GetSynchroData(grade, occupation);
+
+		synchroItemCard[0].SetItem(synchroInfoData.Tier1ID, synchroInfoData.RequireTier1);
+		synchroItemCard[1].SetItem(synchroInfoData.Tier2ID, synchroInfoData.RequireTier2);
+		synchroItemCard[2].SetItem(synchroInfoData.Tier3ID, synchroInfoData.RequireTier3);
+
+		if (currCharacter.CharacterLevel < synchroInfoData.Grade * 10)
+		{
+			levelText.SetText($"<color=red>{currCharacter.CharacterLevel}</color>");
+		}
+		else
+		{
+			levelText.SetText($"{currCharacter.CharacterLevel}");
+		}
+
+		UpdateRequired();
+	}
+
+	public void UpdateRequired()
+	{
+		foreach (var card in synchroItemCard)
+		{
+			card.SetText();
+		}
+	}
+
+	public void ApplySynchro()
+	{
+		bool isRequired = true;
+
+		foreach (var card in synchroItemCard)
+		{
+			isRequired = card.IsEnough();
+		}
+
+		if(isRequired)
+		{
+
+		}
+		else
+		{
+
+		}
 	}
 }

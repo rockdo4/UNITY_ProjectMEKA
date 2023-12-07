@@ -20,7 +20,6 @@ public class EnhancePanel : MonoBehaviour
 	public Button applyButton;
 
 	public CharacterInfoText UpdateInfoPanel;
-
 	private Character currCharacter;
 
 	private void Awake()
@@ -37,12 +36,10 @@ public class EnhancePanel : MonoBehaviour
 
 			UpdateTargetLevel();
 		});
-
 	}
 
 	public void OnEnable()
 	{
-
 		for (int i = 0; i < reportItemCard.Length; i++)
 		{
 			reportItemCard[i].SetItem(itemID[i]);

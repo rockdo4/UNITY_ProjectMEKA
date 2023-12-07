@@ -31,6 +31,9 @@ public static class DataTableMgr
         var itemTable = new ItemInfoTable();
         tables.Add(typeof(ItemInfoTable), itemTable);
 
+        var synchroTable = new SynchroTable();
+        tables.Add(typeof(SynchroTable), synchroTable);
+
 		CharacterManager.Instance.InitCharacterStorage(charTable, characterLevelTable);
 	}
 
