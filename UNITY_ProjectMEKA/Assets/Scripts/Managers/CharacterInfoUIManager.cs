@@ -30,6 +30,7 @@ public class CharacterInfoUIManager : MonoBehaviour
 
     public bool currentPlayerChanged;
     public bool currentPlayerOnTile;
+    public bool isInfoWindowOn = true;
     public int prevCost;
     private float timer;
 
@@ -44,6 +45,8 @@ public class CharacterInfoUIManager : MonoBehaviour
         collectButton = joystick.collectButton;
         skillButton = joystick.skillButton;
         stageManager = GameObject.FindGameObjectWithTag(Defines.Tags.stageManager).GetComponent<StageManager>();
+
+        isInfoWindowOn = true;
     }
 
     private void Update()
@@ -53,14 +56,16 @@ public class CharacterInfoUIManager : MonoBehaviour
         WindowModeUpdate();
         CostUpdate();
 
-        if (prevWindowMode != windowMode || currentPlayerChanged || currentPlayerOnTile)
+        var infoCondition = currentPlayerOnTile && isInfoWindowOn;
+
+        if (prevWindowMode != windowMode || currentPlayerChanged || infoCondition)
         {
             WindowSet();
-            //if(currentPlayerChanged)
-            //{
-            //    currentPlayerChanged = false;
-            //    currentPlayerOnTile = false;
-            //}
+            if(currentPlayerChanged)
+            {
+                currentPlayerChanged = false;
+                currentPlayerOnTile = false;
+            }
             return;
         }
 
@@ -96,24 +101,29 @@ public class CharacterInfoUIManager : MonoBehaviour
                 ClearTileMesh();
                 characterInfoPanel.SetActive(false);
                 joystick.gameObject.SetActive(false);
+                currentPlayerOnTile = false;
+                isInfoWindowOn = true;
                 break;
             case Defines.CharacterInfoMode.FirstArrange:
                 // Ä³¸¯ÅÍ Å¸ÀÏÀ§ ¾Æ´Ï¸é ÀÎÆ÷ on
                 if(!currentPlayerOnTile)
                 {
+                    Debug.Log("ÄÑÁÜ");
                     characterInfoPanel.SetActive(true);
                     ChangeCharacterInfo();
                 }
-                else
+                else if(currentPlayerOnTile && isInfoWindowOn)
                 {
+                    Debug.Log("²¨ÁÜ");
                     characterInfoPanel.SetActive(false);
+                    isInfoWindowOn = false;
                 }
                 joystick.gameObject.SetActive(false);
                 stageManager.currentPlayer.ArrangableTileSet(stageManager.currentPlayer.state.occupation);
                 ChangeArrangableTileMesh();
                 break;
             case Defines.CharacterInfoMode.SecondArrange:
-                characterInfoPanel.SetActive(false);
+                //characterInfoPanel.SetActive(false);
                 //ChangeCharacterInfo();
                 ClearTileMesh();
                 joystick.gameObject.SetActive(true);

@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static Defines;
 
@@ -6,6 +7,7 @@ public class PlayableArrangeState : PlayableBaseState
 {
     private RaycastHit hit;
     private Tile hitTile;
+    private bool isOnPossibleTile;
 
     public PlayableArrangeState(PlayerController player) : base(player)
     {
@@ -13,7 +15,7 @@ public class PlayableArrangeState : PlayableBaseState
 
     public override void Enter()
     {
-        
+        isOnPossibleTile = false;
         Time.timeScale = 0.2f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
@@ -52,6 +54,7 @@ public class PlayableArrangeState : PlayableBaseState
                     if (!playerCtrl.stageManager.characterInfoUIManager.currentPlayerOnTile)
                     {
                         playerCtrl.stageManager.characterInfoUIManager.currentPlayerOnTile = true;
+                        isOnPossibleTile = false;
                     }
 
                     var pos = hit.point;
@@ -60,6 +63,11 @@ public class PlayableArrangeState : PlayableBaseState
                     {
                         pos = hit.transform.parent.position;
                         pos.y = hit.transform.GetComponentInChildren<Tile>().height;
+                        isOnPossibleTile = true;
+                    }
+                    else
+                    {
+                        isOnPossibleTile = false;
                     }
                     playerCtrl.transform.position = pos;
                 }
@@ -75,10 +83,19 @@ public class PlayableArrangeState : PlayableBaseState
                     playerCtrl.currentTile = hitTile;
                     playerCtrl.stateManager.firstArranged = true;
                 }
+                else if(!isOnPossibleTile && playerCtrl.stageManager.characterInfoUIManager.currentPlayerOnTile)
+                {
+                    Debug.Log("배치 불가 타일");
+                    playerCtrl.stageManager.currentPlayer = null;
+                    playerCtrl.PlayerInit.Invoke();
+                }
                 else
                 {
                     playerCtrl.PlayerInit.Invoke();
                 }
+
+                // 배치불가능 타일 위에서 뗐을 때 조건 하나 더 만들기
+                
             }
         }
     }
