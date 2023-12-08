@@ -5,21 +5,15 @@ using static Defines;
 
 public class CameraManager : MonoBehaviour
 {
-    //초기 위치값 / temp 위치값(currentPlayer 중심 위치)
-    public float minDistance = 10f;
-    public float rotationSpeed = 5f;
-    public float zoomSpeed = 5f;
+    public float minDistance;
+    public float rotationSpeed;
+    public float zoomSpeed;
     
     private StageManager stageManager;
 
-    public Quaternion initRotation;
-    public Vector3 initPos;
-    public Transform target;
-
-    private bool once;
-
-    //현재 윈도우 모드가 setting일 때, currentPlayer를 보도록 함
-    //currentPlayer를 중심으로 따라감
+    private Quaternion initRotation;
+    private Vector3 initPos;
+    private Transform target;
 
     private void Awake()
     {
@@ -30,7 +24,7 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        if(stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.Setting /*&& !once*/)
+        if(stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.Setting)
         {
             if(stageManager.currentPlayer == null)
             {
@@ -50,19 +44,14 @@ public class CameraManager : MonoBehaviour
             {
                 transform.position = Vector3.Lerp(transform.position, targetPosition, zoomSpeed * Time.deltaTime * 2f);
             }            
-            // 줌 다 됐을 때
-            //once = true;
         }
-        else if(!(stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.Setting)/* && once*/)
+        else if(!(stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.Setting))
         {
             // 각도 러프
             transform.rotation = Quaternion.Lerp(transform.rotation, initRotation, rotationSpeed * Time.deltaTime);
 
             // 무빙 러프
-            transform.position = initPos;
-
-            // 처음 위치,로테이션으로 다 돌아갔을 때
-            //once = false;
+            transform.position = Vector3.Lerp(transform.position, initPos, zoomSpeed * Time.deltaTime * 2f);
         }
     }
 }
