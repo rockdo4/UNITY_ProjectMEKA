@@ -90,8 +90,18 @@ public class PanelManager : MonoBehaviour
 			return;
 		}
 		formation.SetHolderFormation();
-		UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
-		//UnityEngine.SceneManagement.SceneManager.LoadScene("BUGLHJ");
+
+		if(DataHolder.isVaild)
+		{
+			//UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
+			//UnityEngine.SceneManagement.SceneManager.LoadScene("BUGLHJ");
+			UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
+		}
+		else
+		{
+			Debug.Log("플레이어가 선택한 캐릭터가 없습니다.");
+		}
+		
 	}
 
 	public void ExitGame() 

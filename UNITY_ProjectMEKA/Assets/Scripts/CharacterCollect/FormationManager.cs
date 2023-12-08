@@ -346,6 +346,11 @@ public class FormationManager : MonoBehaviour
 	{
 		DataHolder.formation = formationList[selectedFormationList];
 		DataHolder.formation = DataHolder.formation.Where(x => x != 0).ToArray();
+
+		if(DataHolder.formation.Length == 0)
+			DataHolder.isVaild = false;
+		else
+			DataHolder.isVaild = true;
 	}
 
 	public void OnClickBattleButton()
