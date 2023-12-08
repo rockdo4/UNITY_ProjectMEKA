@@ -262,10 +262,13 @@ public class PlayerController : MonoBehaviour
         if(target == null) return;
         //var obj = ObjectPoolManager.instance.GetGo("bullet");
         var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
-        Debug.Log(state.BulletName);
-        
+        if(obj != null)
+        {
+            Debug.Log(state.BulletName);
+        }
+
         //obj.transform.LookAt(target.transform.position);
-       
+
 
         switch (state.BulletType)
         {
@@ -304,7 +307,7 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(true);
                 break;
             case CharacterState.Type.ChainAttack:
-                var magic = obj.GetComponent<ChainAttack>();
+                ChainAttack magic = obj.GetComponent<ChainAttack>();
                 magic.ResetState(); 
                 Vector3 newTargetPosition = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
                 obj.transform.position = newTargetPosition;
