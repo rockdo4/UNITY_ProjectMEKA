@@ -16,6 +16,9 @@ public class CharacterInfoUIManager : MonoBehaviour
     public TextMeshProUGUI characterDescription;
     public TextMeshProUGUI costText;
     public TextMeshProUGUI leftWaveText;
+    public TextMeshProUGUI spawnMonsterCountText;
+    public TextMeshProUGUI allMonsterCountText;
+    public TextMeshProUGUI houseLifeText;
     public Image costSlider;
 
     // joystick
@@ -26,7 +29,7 @@ public class CharacterInfoUIManager : MonoBehaviour
     private Button skillButton;
 
     public bool currentPlayerChanged;
-
+    public bool currentPlayerOnTile;
     public int prevCost;
     private float timer;
 
@@ -50,10 +53,14 @@ public class CharacterInfoUIManager : MonoBehaviour
         WindowModeUpdate();
         CostUpdate();
 
-        if (prevWindowMode != windowMode || currentPlayerChanged)
+        if (prevWindowMode != windowMode || currentPlayerChanged || currentPlayerOnTile)
         {
             WindowSet();
-            currentPlayerChanged = false;
+            if(currentPlayerChanged)
+            {
+                currentPlayerChanged = false;
+                currentPlayerOnTile = false;
+            }
             return;
         }
 
@@ -91,17 +98,23 @@ public class CharacterInfoUIManager : MonoBehaviour
                 joystick.gameObject.SetActive(false);
                 break;
             case Defines.CharacterInfoMode.FirstArrange:
-                // 캐릭터 인포 on
-                characterInfoPanel.SetActive(true);
-                ChangeCharacterInfo();
+                // 캐릭터 타일위 아니면 인포 on
+                if(!currentPlayerOnTile)
+                {
+                    characterInfoPanel.SetActive(true);
+                    ChangeCharacterInfo();
+                }
+                else
+                {
+                    characterInfoPanel.SetActive(false);
+                }
                 joystick.gameObject.SetActive(false);
                 stageManager.currentPlayer.ArrangableTileSet(stageManager.currentPlayer.state.occupation);
                 ChangeArrangableTileMesh();
                 break;
             case Defines.CharacterInfoMode.SecondArrange:
-                // 캐릭터 인포 on
-                characterInfoPanel.SetActive(true);
-                ChangeCharacterInfo();
+                characterInfoPanel.SetActive(false);
+                //ChangeCharacterInfo();
                 ClearTileMesh();
                 joystick.gameObject.SetActive(true);
                 joystick.SetPositionToCurrentPlayer(stageManager.currentPlayer.transform);
@@ -190,6 +203,7 @@ public class CharacterInfoUIManager : MonoBehaviour
 
     public void ChangeAttackableTileMesh()
     {
+        Debug.Log("어택 타일 메쉬 업데이트");
         ClearTileMesh();
 
         foreach (var tile in stageManager.currentPlayer.attakableTiles)

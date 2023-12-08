@@ -49,6 +49,11 @@ public class PlayableArrangeState : PlayableBaseState
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
+                    if (!playerCtrl.stageManager.characterInfoUIManager.currentPlayerOnTile)
+                    {
+                        playerCtrl.stageManager.characterInfoUIManager.currentPlayerOnTile = true;
+                    }
+
                     var pos = hit.point;
                     hitTile = hit.transform.GetComponentInChildren<Tile>();
                     if (hitTile.arrangePossible && playerCtrl.arrangableTiles.Contains(hitTile))

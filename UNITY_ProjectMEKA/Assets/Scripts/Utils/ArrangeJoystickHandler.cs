@@ -84,6 +84,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             float enter;
             if (plane.Raycast(ray, out enter))
             {
+                Debug.Log("핸들러 움직임");
                 Vector3 hitPoint = ray.GetPoint(enter);
                 transform.position = hitPoint;
                 transform.localPosition = backgroundBounds.ClosestPoint(transform.localPosition);

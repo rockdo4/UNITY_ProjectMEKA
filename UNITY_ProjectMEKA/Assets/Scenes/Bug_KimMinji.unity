@@ -14009,9 +14009,13 @@ MonoBehaviour:
   characterDescription: {fileID: 0}
   costText: {fileID: 0}
   leftWaveText: {fileID: 0}
+  spawnMonsterCountText: {fileID: 0}
+  allMonsterCountText: {fileID: 0}
+  houseLifeText: {fileID: 0}
   costSlider: {fileID: 0}
   joystick: {fileID: 1340805035}
   currentPlayerChanged: 0
+  currentPlayerOnTile: 0
   prevCost: 0
 --- !u!4 &1601283118
 Transform:
@@ -20116,7 +20120,27 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 696819281}
-    - target: {fileID: 2924592624032922265, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+    - target: {fileID: 1662034450373270128, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662034450373270128, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662034450373270128, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662034450373270128, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384930659227559996, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+      propertyPath: m_Color.a
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608801680533407177, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -20204,18 +20228,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TilemapUI_Fixed
       objectReference: {fileID: 0}
-    - target: {fileID: 7099174969288925483, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
-      propertyPath: m_TagString
-      value: CharacterInfoUIManager
-      objectReference: {fileID: 0}
     - target: {fileID: 8331481367341315261, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
       propertyPath: joystick
       value: 
       objectReference: {fileID: 1340805035}
-    - target: {fileID: 8331481367341315261, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
-      propertyPath: costSlider
-      value: 
-      objectReference: {fileID: 7706188286050856496}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20632,17 +20648,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &7706188286050856496 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8898736269732440285, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
-  m_PrefabInstance: {fileID: 6413333477721739111}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!483693784 &7795182605840822220
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -20729,7 +20734,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8114950427838076062
 Transform:
   m_ObjectHideFlags: 0
