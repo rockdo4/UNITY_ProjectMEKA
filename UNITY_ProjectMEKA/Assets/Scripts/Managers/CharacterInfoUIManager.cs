@@ -56,11 +56,11 @@ public class CharacterInfoUIManager : MonoBehaviour
         if (prevWindowMode != windowMode || currentPlayerChanged || currentPlayerOnTile)
         {
             WindowSet();
-            if(currentPlayerChanged)
-            {
-                currentPlayerChanged = false;
-                currentPlayerOnTile = false;
-            }
+            //if(currentPlayerChanged)
+            //{
+            //    currentPlayerChanged = false;
+            //    currentPlayerOnTile = false;
+            //}
             return;
         }
 
