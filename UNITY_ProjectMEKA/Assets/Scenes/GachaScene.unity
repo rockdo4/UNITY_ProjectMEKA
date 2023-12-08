@@ -3122,6 +3122,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 728951529}
+        m_TargetAssemblyTypeName: FormationManager, Assembly-CSharp
+        m_MethodName: OnClickFormationButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &432351034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6822,6 +6834,7 @@ MonoBehaviour:
   popupPanel: {fileID: 204579627}
   yesButton: {fileID: 387890791}
   noButton: {fileID: 1185575018}
+  startButton: {fileID: 989650979}
   textUiArr:
   - {fileID: 2135943192}
   - {fileID: 1088407309}
@@ -8017,7 +8030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &830071057
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9310,7 +9323,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 989650980}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1704917223}
+        m_TargetAssemblyTypeName: PanelManager, Assembly-CSharp
+        m_MethodName: LoadBattleScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &989650980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15288,9 +15313,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 728951529}
+        m_TargetAssemblyTypeName: FormationManager, Assembly-CSharp
+        m_MethodName: OnClickBattleButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1704917223}
         m_TargetAssemblyTypeName: PanelManager, Assembly-CSharp
-        m_MethodName: LoadBattleScene
+        m_MethodName: ChangePanelFormation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
