@@ -40,6 +40,7 @@ public class FormationManager : MonoBehaviour
 
 	public Button yesButton;
 	public Button noButton;
+	public Button startButton;
 
 	public TextMeshProUGUI[] textUiArr;
 	public Image[] imageUiArr;
@@ -345,5 +346,15 @@ public class FormationManager : MonoBehaviour
 	{
 		DataHolder.formation = formationList[selectedFormationList];
 		DataHolder.formation = DataHolder.formation.Where(x => x != 0).ToArray();
+	}
+
+	public void OnClickBattleButton()
+	{
+		startButton.gameObject.SetActive(true);
+	}
+
+	public void OnClickFormationButton()
+	{
+		startButton.gameObject.SetActive(false);
 	}
 }

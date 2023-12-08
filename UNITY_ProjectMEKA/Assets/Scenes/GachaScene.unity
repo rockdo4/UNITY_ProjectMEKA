@@ -2006,7 +2006,7 @@ GameObject:
   - component: {fileID: 280780933}
   - component: {fileID: 280780932}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: LevelText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3113,6 +3113,18 @@ MonoBehaviour:
       - m_Target: {fileID: 728951529}
         m_TargetAssemblyTypeName: FormationManager, Assembly-CSharp
         m_MethodName: CheckCollectCharacter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 728951529}
+        m_TargetAssemblyTypeName: FormationManager, Assembly-CSharp
+        m_MethodName: OnClickFormationButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6822,6 +6834,7 @@ MonoBehaviour:
   popupPanel: {fileID: 204579627}
   yesButton: {fileID: 387890791}
   noButton: {fileID: 1185575018}
+  startButton: {fileID: 989650979}
   textUiArr:
   - {fileID: 2135943192}
   - {fileID: 1088407309}
@@ -9310,7 +9323,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 989650980}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1704917223}
+        m_TargetAssemblyTypeName: PanelManager, Assembly-CSharp
+        m_MethodName: LoadBattleScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &989650980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10990,20 +11015,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33db0d2a0b1254849b93d42af902214d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInfo:
-  - itemID: 4
-    quantity: 1
-  - itemID: 5
-    quantity: 1
-  - itemID: 6
-    quantity: 1
+  levelText: {fileID: 280780932}
   synchroItemCard:
   - {fileID: 1835589234508276294}
   - {fileID: 1461493763}
   - {fileID: 9125822146001992371}
-  - {fileID: 1938530171}
-  applyButton: {fileID: 0}
-  UpdateInfoPanel: {fileID: 0}
+  applyButton: {fileID: 1043125775}
+  UpdateInfoPanel: {fileID: 392304167}
 --- !u!1 &1299171755
 GameObject:
   m_ObjectHideFlags: 0
@@ -15295,9 +15313,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 728951529}
+        m_TargetAssemblyTypeName: FormationManager, Assembly-CSharp
+        m_MethodName: OnClickBattleButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1704917223}
         m_TargetAssemblyTypeName: PanelManager, Assembly-CSharp
-        m_MethodName: LoadBattleScene
+        m_MethodName: ChangePanelFormation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17543,17 +17573,6 @@ MonoBehaviour:
   itemImage: {fileID: 0}
   quantityText: {fileID: 0}
   panel: {fileID: 0}
---- !u!114 &1938530171 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 435065509986668225, guid: fd866b6b664f26941af4f3dc6aab5001, type: 3}
-  m_PrefabInstance: {fileID: 1938530167}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1938530169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 683867a0f6ac7784fbda79ce99a37a51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1951696191
 GameObject:
   m_ObjectHideFlags: 0

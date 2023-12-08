@@ -24,25 +24,28 @@ public class ItemAutoQuantityCard : MonoBehaviour
 
 	private void OnEnable()
 	{
-	
+		
 	}
 
 	private void OnDisable()
 	{
-		button.onClick.RemoveAllListeners();
+		//button.onClick.RemoveAllListeners();
 		selectedQuantity = 0;
 		SetText();
 	}
 
-	public void SetItem(int id)
+	public void SetItem(int id, int quantity)
 	{
 		var item = ItemInventoryManager.Instance.GetItemByID(id);
-		SetItem(item);
+		SetItem(item, quantity);
 	}
 
-	public void SetItem(Item item)
+	public void SetItem(Item item, int quantity)
 	{
 		this.item = item;
+		requiredQuantity = quantity;
+
+		Debug.Log(item.Name);
 	}
 
 	public void SetText()
@@ -60,7 +63,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 		}
 		else
 		{
-			quantityText.SetText($"<color=red>{0}</color> / {requiredQuantity}");
+			//
 		}
 	}
 
