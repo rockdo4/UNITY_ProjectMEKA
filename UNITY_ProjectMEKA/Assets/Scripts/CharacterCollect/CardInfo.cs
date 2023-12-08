@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CardInfo : MonoBehaviour
 {
 	private Image cardImage;
-	private TextMeshProUGUI cardText;
+	public TextMeshProUGUI cardText;
 	private int cardID = 0;
 
 	private void Awake()
