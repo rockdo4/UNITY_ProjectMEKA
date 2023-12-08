@@ -51,6 +51,7 @@ public class FormationManager : MonoBehaviour
 	private int selectedFormationList;
 	private int selectedFormationIndex;
 	private int selectedCharacterID;
+	public TextMeshProUGUI currentPresetText;
 
 	private List<GameObject> activeFalseList;
 	private CardInfo[] cardList;
@@ -158,6 +159,8 @@ public class FormationManager : MonoBehaviour
 				}
 			}
 		}
+
+		currentPresetText.SetText($"현재 프리셋 : {selectedFormationList + 1}");
 	}
 
 	//���� �˾�â ����
@@ -179,6 +182,10 @@ public class FormationManager : MonoBehaviour
 		{
 			ChangeFormationSet(selectedFormationList - 1);
 		}
+		else
+		{
+			ChangeFormationSet(numberOfFormations - 1);
+		}
 	}
 
 	//���� ���������� �ٲٱ�
@@ -187,6 +194,10 @@ public class FormationManager : MonoBehaviour
 		if(selectedFormationList < numberOfFormations - 1)
 		{
 			ChangeFormationSet(selectedFormationList + 1);
+		}
+		else
+		{
+			ChangeFormationSet(0);
 		}
 	}
 
