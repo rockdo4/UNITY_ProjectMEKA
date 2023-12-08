@@ -19,11 +19,16 @@ public class ChainAttack : MonoBehaviour
     }
     public void Update()
     {
+        
         timer += Time.deltaTime;
         if(timer > ddt.DamageTime && !isOne)
         {
             isOne = true;
             Explosion();
+        }
+        else
+        {
+            transform.position = target.position;
         }
         sTimer += Time.deltaTime;
         if(sTimer > ddt.deleteTime)

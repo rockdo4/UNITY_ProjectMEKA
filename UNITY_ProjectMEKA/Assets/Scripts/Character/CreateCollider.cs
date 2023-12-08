@@ -104,6 +104,7 @@ public class CreateCollider : MonoBehaviour
                 });
             }
         }
+        /*Debug.Log(other.tag);*/
         if (other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
         {
             if (player.rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))

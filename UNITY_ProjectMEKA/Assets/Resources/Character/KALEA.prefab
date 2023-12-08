@@ -2323,8 +2323,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6170323614281786575}
   - {fileID: 5470171475195002646}
@@ -2343,10 +2343,10 @@ Animator:
   m_GameObject: {fileID: 1120828772261120772}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 417e358c130ae6c488f2ffe5d6c9830e, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 672899a19b1d1a045a242ba3e35abb00, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -2382,32 +2382,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 11202
-  name: KALEA
-  arrangeCost: 0
-  arrangeCoolTime: 0
+  name: "\uCE7C\uB808\uC544"
+  arrangeCost: 20
+  arrangeCoolTime: 50
   passive: 
   skill: 0
   cost: 0
-  maxCost: 0
+  maxCost: 10
   skillCost: 0
   skillCoolTime: 0
   skillDuration: 0
   enemyType: 0
-  property: 0
-  occupation: 0
-  maxHp: 0
+  property: 1
+  occupation: 2
+  maxHp: 250
   amror: 0
   speed: 0
   cooldown: 0
-  damage: 0
-  attackDelay: 0
+  damage: 30
+  attackDelay: 0.5
   BulletName: 
   BulletType: 0
   flashName: 
   hitName: 
-  hang: 0
-  yal: 0
-  rangeAttack: 
+  hang: 2
+  yal: 1
+  rangeAttack: 0100000002000000
   isFly: 0
   level: 0
   grade: 0
@@ -4302,6 +4302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7073374970842450281}
   - component: {fileID: 8739363927817862597}
+  - component: {fileID: 7158632114170041822}
   m_Layer: 13
   m_Name: GameObject
   m_TagString: PlayerCollider
@@ -4347,6 +4348,33 @@ CapsuleCollider:
   m_Height: 5.408262
   m_Direction: 1
   m_Center: {x: -0.0041576624, y: 2.7881548, z: -0}
+--- !u!54 &7158632114170041822
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2171177908458032970}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2208636986217840867
 GameObject:
   m_ObjectHideFlags: 0
@@ -20401,11 +20429,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1946536423071549819, guid: 77f0bd7eb2bb96c41902e71abcfce094, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8086114403405695194, guid: 77f0bd7eb2bb96c41902e71abcfce094, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

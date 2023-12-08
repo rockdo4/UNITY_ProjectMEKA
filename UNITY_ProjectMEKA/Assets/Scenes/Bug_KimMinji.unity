@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1193,11 +1193,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: objectInfos.Array.size
-      value: 18
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[2].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[3].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[4].count
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: objectInfos.Array.data[5].count
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[6].count
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[7].count
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: objectInfos.Array.data[16].count
@@ -1212,9 +1232,21 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[19].count
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[20].count
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: objectInfos.Array.data[5].perfab
       value: 
       objectReference: {fileID: 8236610387131559020, guid: b9acaabe92eab7c43bbbd1c3246c462d, type: 3}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[14].perfab
+      value: 
+      objectReference: {fileID: 1217358381915387075, guid: 8d828050ce4d80246bf9f32131aa8431, type: 3}
     - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: objectInfos.Array.data[15].perfab
       value: 
@@ -1230,10 +1262,22 @@ PrefabInstance:
     - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: objectInfos.Array.data[18].perfab
       value: 
-      objectReference: {fileID: 1217358381915387075, guid: 8d828050ce4d80246bf9f32131aa8431, type: 3}
+      objectReference: {fileID: 2696922133829033003, guid: 98315ff718add0647ba83fdfa6962cbc, type: 3}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[19].perfab
+      value: 
+      objectReference: {fileID: 1738175644799202, guid: c9e6ddab55c69eb4b81803e860d80c55, type: 3}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[20].perfab
+      value: 
+      objectReference: {fileID: 8953845473985608632, guid: 3ff428deaf0b28643a679572cab02b93, type: 3}
     - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: objectInfos.Array.data[5].objectName
       value: E1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[14].objectName
+      value: AoeBulletHit
       objectReference: {fileID: 0}
     - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: objectInfos.Array.data[15].objectName
@@ -1249,7 +1293,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: objectInfos.Array.data[18].objectName
-      value: AoeBulletHit
+      value: Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[19].objectName
+      value: Flash4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[20].objectName
+      value: Heal
       objectReference: {fileID: 0}
     - target: {fileID: 6372842070683576580, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: m_Name

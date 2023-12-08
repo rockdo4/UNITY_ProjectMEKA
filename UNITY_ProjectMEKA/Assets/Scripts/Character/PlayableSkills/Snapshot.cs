@@ -26,7 +26,7 @@ public class Snapshot : SkillBase
             {
                 if(player.currentState == PlayerController.CharacterStates.Attack)
                 {
-                    player.Fire();
+                    //player.Fire();
                 }
                 
             }
