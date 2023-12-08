@@ -47,6 +47,9 @@ public class ItemQuantityCard : MonoBehaviour
 
     public void OnClickAddItemButton()
     {
+        if (item == null)
+            return;
+
         if (selectedQuantity + 1 > item.Count)
             return;
 

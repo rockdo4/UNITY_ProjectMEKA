@@ -2,9 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
-using System.Text;
-using static UnityEditor.PlayerSettings;
-using Newtonsoft.Json.Linq;
 
 public class CharacterInfoUIManager : MonoBehaviour
 {

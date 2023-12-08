@@ -24,6 +24,9 @@ public class TableTest : MonoBehaviour
 		itemCardManager.UpdateItemCard();
 
 		Debug.Log(item.Name + "추가");
+
+		//세이브
+		GameManager.Instance.SaveExecution();
 	}
 
 	public void OnClickUpdateItemCard()

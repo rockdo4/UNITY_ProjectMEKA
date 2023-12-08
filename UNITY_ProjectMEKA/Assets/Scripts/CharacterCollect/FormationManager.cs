@@ -280,6 +280,7 @@ public class FormationManager : MonoBehaviour
 		//����
 		CloseCharacterList();
 		UpdatePlayData();
+		UpdateActiveCard();
 		GameManager.Instance.SaveExecution();
 	}
 

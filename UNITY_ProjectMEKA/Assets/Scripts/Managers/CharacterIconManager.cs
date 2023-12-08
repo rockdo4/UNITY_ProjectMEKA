@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static Defines;
 
 public class CharacterIconManager : MonoBehaviour
@@ -75,7 +76,7 @@ public class CharacterIconManager : MonoBehaviour
             var iconGo = Instantiate(iconPrefab, Iconpanel.transform);
 
             var characterIcon = iconGo.GetComponent<CharacterIcon>();
-            var characterIconImage = iconGo.GetComponent<UnityEngine.UI.Image>();
+            var characterIconImage = iconGo.GetComponent<Image>();
 
             characterIcon.characterPrefab = characterPrefabs[i];
             characterIconImage.sprite = iconImage;

@@ -39,6 +39,10 @@ public class CharacterPanelManager : MonoBehaviour
 				button.onClick.AddListener(() =>
 				{
 					OpenCharacterInfo(character.Value);
+					if (!character.Value.IsUnlock)
+					{
+						//CloseInfo();
+					}
 				});
 			else
 				Debug.LogError("버튼 못불러옴");
@@ -87,5 +91,10 @@ public class CharacterPanelManager : MonoBehaviour
 
 		var pos = GetComponentInParent<Canvas>().gameObject.transform.position;
 		characterInfoPanel.position = pos;
+	}
+
+	public void CloseInfo()
+	{
+		
 	}
 }

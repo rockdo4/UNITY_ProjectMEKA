@@ -100,11 +100,16 @@ public class EnhancePanel : MonoBehaviour
 	{
 		int totalExp = 0;
 		int remainExp = 0;
+
 		totalExp += currCharacter.CurrentExp;
 
 		foreach (var card in reportItemCard)
 		{
-			var value = card.item.Value;
+			int value = 0;
+			if(card.item != null)
+			{
+				value = card.item.Value;
+			}
 			totalExp += (card.selectedQuantity * value);
 		}
 
@@ -128,7 +133,11 @@ public class EnhancePanel : MonoBehaviour
 
 		foreach (var card in reportItemCard)
 		{
-			var value = card.item.Value;
+			int value = 0;
+			if (card.item != null)
+			{
+				value = card.item.Value;
+			}
 			totalExp += (card.selectedQuantity * value);
 		}
 
