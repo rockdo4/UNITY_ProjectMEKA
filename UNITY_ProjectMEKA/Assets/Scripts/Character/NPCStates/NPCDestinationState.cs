@@ -6,7 +6,8 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class NPCDestinationStates : NPCBaseState
 {
-
+    private float rotSpeed = 7f;
+    private bool isRotating;
     private Vector3 targetPos;
     private float threshold = 0.1f;
     //private float speed;
@@ -172,9 +173,32 @@ public class NPCDestinationStates : NPCBaseState
 
     public void MoveEnemyWaypoint()
     {
-        var pos = enemyCtrl.rb.position;
-        pos += direction * enemyCtrl.state.speed * Time.deltaTime;
-        enemyCtrl.rb.MovePosition(pos);
+        // 방향 돌려주기??
+
+        if (isRotating)
+        {
+            Debug.Log("로테이팅중");
+            var targetRotation = Quaternion.LookRotation(targetPos - enemyCtrl.rb.position);
+            enemyCtrl.rb.rotation = Quaternion.Slerp(enemyCtrl.rb.rotation, targetRotation, rotSpeed * Time.deltaTime);
+
+            //var lastRotation = 
+            float angleDifference = Quaternion.Angle(enemyCtrl.rb.rotation, targetRotation); // 현재 각도와 목표 각도 사이의 차이
+
+            if (angleDifference < 1f) // 각도 차이가 1도 미만이면
+            {
+                Debug.Log("회전 종료");
+                enemyCtrl.transform.LookAt(targetPos);
+                isRotating = false; // 회전 종료
+            }
+        }
+
+
+            var pos = enemyCtrl.rb.position;
+        if(!isRotating)
+        {
+            pos += direction * enemyCtrl.state.speed * Time.deltaTime;
+            enemyCtrl.rb.MovePosition(pos);
+        }
 
         if (Vector3.Distance(new Vector3(pos.x,pos.z), new Vector3(targetPos.x,targetPos.z)) < threshold) // 다음 웨이포인트 도착하면
         {
@@ -187,14 +211,15 @@ public class NPCDestinationStates : NPCBaseState
             }
             else
             {
+                isRotating = true;
+
                 enemyCtrl.waypointIndex++;
                 targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
                 targetPos.y = enemyCtrl.transform.position.y;
                 direction = (targetPos - enemyCtrl.transform.position).normalized;
-                enemyCtrl.transform.LookAt(targetPos);            
+                //enemyCtrl.transform.LookAt(targetPos);            
             }
         }
-        //enemyCtrl.transform.LookAt(targetPos);
     }
 
     public void MoveEnemyStraight()
