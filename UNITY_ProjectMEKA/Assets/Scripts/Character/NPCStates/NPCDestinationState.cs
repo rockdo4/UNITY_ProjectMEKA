@@ -243,7 +243,6 @@ public class NPCDestinationStates : NPCBaseState
 
         if (isRotating)
         {
-            Debug.Log("회전중 타겟포스" + targetPos);
             var targetRotation = Quaternion.LookRotation(targetPos - enemyCtrl.rb.position);
             enemyCtrl.rb.rotation = Quaternion.Slerp(enemyCtrl.rb.rotation, targetRotation, rotSpeed * Time.deltaTime);
 
@@ -257,7 +256,6 @@ public class NPCDestinationStates : NPCBaseState
         }
         else
         {
-            Debug.Log("이동중");
             pos += direction * enemyCtrl.state.speed * Time.deltaTime;
             enemyCtrl.rb.MovePosition(pos);
         }        
