@@ -15,7 +15,6 @@ public class NPCDestinationStates : NPCBaseState
     private int repeatCount = -1;
     private Vector3 direction;
 
-    private bool once = false;
     private bool isOne = false;
     private float timer;
     GameObject[] players;
@@ -47,7 +46,6 @@ public class NPCDestinationStates : NPCBaseState
         enemyCtrl.transform.LookAt(targetPos);
         //speed = enemyCtrl.state.speed;
         repeatCount = -1;
-        once = false;
     }
 
     public override void Exit()
@@ -222,7 +220,6 @@ public class NPCDestinationStates : NPCBaseState
         targetPosAppliedY.y = enemyCtrl.transform.position.y;
         if (targetPos != targetPosAppliedY)
         {
-            Debug.Log("타겟세팅");
             targetPos = enemyCtrl.wayPoint[enemyCtrl.wayPoint.Length-1].position;
             targetPos.y = enemyCtrl.transform.position.y;
             enemyCtrl.transform.LookAt(targetPos);
@@ -291,7 +288,6 @@ public class NPCDestinationStates : NPCBaseState
             targetPos.y = enemyCtrl.transform.position.y;
             direction = (targetPos - enemyCtrl.transform.position).normalized;
             isRotating = true;
-            //enemyCtrl.transform.LookAt(targetPos);
         }
     }
 }
