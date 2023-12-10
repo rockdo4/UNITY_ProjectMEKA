@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -173,27 +174,21 @@ public class NPCDestinationStates : NPCBaseState
 
     public void MoveEnemyWaypoint()
     {
-        // 방향 돌려주기??
-
         if (isRotating)
         {
-            Debug.Log("로테이팅중");
             var targetRotation = Quaternion.LookRotation(targetPos - enemyCtrl.rb.position);
             enemyCtrl.rb.rotation = Quaternion.Slerp(enemyCtrl.rb.rotation, targetRotation, rotSpeed * Time.deltaTime);
 
-            //var lastRotation = 
             float angleDifference = Quaternion.Angle(enemyCtrl.rb.rotation, targetRotation); // 현재 각도와 목표 각도 사이의 차이
 
-            if (angleDifference < 1f) // 각도 차이가 1도 미만이면
+            if (angleDifference < 1f)
             {
-                Debug.Log("회전 종료");
                 enemyCtrl.transform.LookAt(targetPos);
-                isRotating = false; // 회전 종료
+                isRotating = false;
             }
         }
 
-
-            var pos = enemyCtrl.rb.position;
+        var pos = enemyCtrl.rb.position;
         if(!isRotating)
         {
             pos += direction * enemyCtrl.state.speed * Time.deltaTime;
@@ -217,23 +212,25 @@ public class NPCDestinationStates : NPCBaseState
                 targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
                 targetPos.y = enemyCtrl.transform.position.y;
                 direction = (targetPos - enemyCtrl.transform.position).normalized;
-                //enemyCtrl.transform.LookAt(targetPos);            
             }
         }
     }
 
     public void MoveEnemyStraight()
     {
-        if(!once)
+        var targetPosAppliedY = enemyCtrl.wayPoint[enemyCtrl.wayPoint.Length - 1].position;
+        targetPosAppliedY.y = enemyCtrl.transform.position.y;
+        if (targetPos != targetPosAppliedY)
         {
+            Debug.Log("타겟세팅");
             targetPos = enemyCtrl.wayPoint[enemyCtrl.wayPoint.Length-1].position;
             targetPos.y = enemyCtrl.transform.position.y;
             enemyCtrl.transform.LookAt(targetPos);
-            once = true;
+            direction = (targetPos - enemyCtrl.transform.position).normalized;
         }
 
         var pos = enemyCtrl.rb.position;
-        pos += enemyCtrl.transform.forward * enemyCtrl.state.speed * Time.deltaTime;
+        pos += direction * enemyCtrl.state.speed * Time.deltaTime;
         enemyCtrl.rb.MovePosition(pos);
 
         if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
@@ -246,8 +243,27 @@ public class NPCDestinationStates : NPCBaseState
     public void MoveEnemyRepeat(int count)
     {
         var pos = enemyCtrl.rb.position;
-        pos += enemyCtrl.transform.forward * enemyCtrl.state.speed * Time.deltaTime;
-        enemyCtrl.rb.MovePosition(pos);
+
+        if (isRotating)
+        {
+            Debug.Log("회전중 타겟포스" + targetPos);
+            var targetRotation = Quaternion.LookRotation(targetPos - enemyCtrl.rb.position);
+            enemyCtrl.rb.rotation = Quaternion.Slerp(enemyCtrl.rb.rotation, targetRotation, rotSpeed * Time.deltaTime);
+
+            float angleDifference = Quaternion.Angle(enemyCtrl.rb.rotation, targetRotation); // 현재 각도와 목표 각도 사이의 차이
+
+            if (angleDifference < 1f)
+            {
+                enemyCtrl.transform.LookAt(targetPos);
+                isRotating = false;
+            }
+        }
+        else
+        {
+            Debug.Log("이동중");
+            pos += direction * enemyCtrl.state.speed * Time.deltaTime;
+            enemyCtrl.rb.MovePosition(pos);
+        }        
 
         if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
         {
@@ -273,7 +289,9 @@ public class NPCDestinationStates : NPCBaseState
             enemyCtrl.waypointIndex++;
             targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
             targetPos.y = enemyCtrl.transform.position.y;
-            enemyCtrl.transform.LookAt(targetPos);
+            direction = (targetPos - enemyCtrl.transform.position).normalized;
+            isRotating = true;
+            //enemyCtrl.transform.LookAt(targetPos);
         }
     }
 }
