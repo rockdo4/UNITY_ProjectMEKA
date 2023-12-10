@@ -31,6 +31,10 @@ public class PanelManager : MonoBehaviour
 	private RectTransform previousPanel;
 	private Vector3 previousPos;
 
+	// 12.10, 김민지, 스테이지타입패널 추가
+	public RectTransform stageTypePanel;
+	private Vector3 stageTypePos;
+
 	public void Awake()
 	{
 		mainPos = mainPanel.position;
@@ -38,8 +42,9 @@ public class PanelManager : MonoBehaviour
 		gachaPos = gachaPanel.position;
 		formationPos = formationPanel.position;
 		inventoryPos = inventoryPanel.position;
+        stageTypePos = stageTypePanel.position;
 
-		previousPanel = mainPanel;
+        previousPanel = mainPanel;
 		previousPos = mainPos;
 	}
 
@@ -79,6 +84,15 @@ public class PanelManager : MonoBehaviour
         previousPanel = inventoryPanel;
         inventoryPanel.position = mainPos;
         mainPanel.position = previousPos;
+    }
+
+	//12.10, 김민지, 스테이지종류패널 추가
+	public void ChangePanelStageType()
+	{
+        previousPos = stageTypePos;
+		previousPanel = stageTypePanel;
+		stageTypePanel.position = mainPos;
+		mainPanel.position = previousPos;
     }
 
 	public void LoadBattleScene()
