@@ -55,6 +55,12 @@ public class SynchroPanel : MonoBehaviour
 	//버튼 누르면 실행됨
 	public void SetCharacter(Character character)
 	{
+		if(character == null)
+		{
+            Debug.Log("캐릭터가 없습니다.");
+            return;
+        }
+
 		currCharacter = character;
 
 		var grade = currCharacter.CharacterGrade;
@@ -62,9 +68,17 @@ public class SynchroPanel : MonoBehaviour
 
 		synchroInfoData = synchroTable.GetSynchroData(grade, occupation);
 
-		synchroItemCard[0].SetItem(synchroInfoData.Tier1ID, synchroInfoData.RequireTier1);
-		synchroItemCard[1].SetItem(synchroInfoData.Tier2ID, synchroInfoData.RequireTier2);
-		synchroItemCard[2].SetItem(synchroInfoData.Tier3ID, synchroInfoData.RequireTier3);
+		if(synchroInfoData == null)
+		{
+            Debug.Log("합성 정보 없음");
+            return;
+        }
+		else
+		{
+            synchroItemCard[0].SetItem(synchroInfoData.Tier1ID, synchroInfoData.RequireTier1);
+            synchroItemCard[1].SetItem(synchroInfoData.Tier2ID, synchroInfoData.RequireTier2);
+            synchroItemCard[2].SetItem(synchroInfoData.Tier3ID, synchroInfoData.RequireTier3);
+        }
 
 		if (currCharacter.CharacterLevel < synchroInfoData.Grade * 10)
 		{
@@ -75,7 +89,7 @@ public class SynchroPanel : MonoBehaviour
 			levelText.SetText($"{currCharacter.CharacterLevel}");
 		}
 
-		UpdateRequired();
+        UpdateAfterSetCharacter();
 	}
 
 	//버튼 누르면 SetCharacter 다음으로 실행 
@@ -102,6 +116,13 @@ public class SynchroPanel : MonoBehaviour
 		}
 		SetCharacter(currCharacter);
 	}
+	public void UpdateAfterSetCharacter()
+	{
+        foreach (var card in synchroItemCard)
+        {
+            card.SetText();
+        }
+    }
 
 	public void ApplySynchro()
 	{
