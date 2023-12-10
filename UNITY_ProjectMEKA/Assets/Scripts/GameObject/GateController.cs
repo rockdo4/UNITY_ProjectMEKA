@@ -246,7 +246,6 @@ public class GateController : MonoBehaviour
 
     virtual public void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo, WaveInfo waveInfo)
     {
-        Debug.Log("enemyGo is null : " + enemyGo == null);
         var enemyController = enemyGo.GetComponent<EnemyController>();
 
         enemyController.wayPoint = waveInfo.waypoints;

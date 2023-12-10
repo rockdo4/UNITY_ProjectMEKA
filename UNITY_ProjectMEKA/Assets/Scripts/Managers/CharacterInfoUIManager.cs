@@ -32,11 +32,10 @@ public class CharacterInfoUIManager : MonoBehaviour
 
     public bool currentPlayerChanged;
     public bool currentPlayerOnTile;
-    public bool isInfoWindowOn = true;
-    public int prevCost;
-    public int prevSpawnedMonsterCount;
-    private float timer;
-
+    private bool isInfoWindowOn = true;
+    private int prevCost;
+    private int prevSpawnedMonsterCount;
+    private int prevHouseLife;
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
@@ -64,6 +63,7 @@ public class CharacterInfoUIManager : MonoBehaviour
         WindowModeUpdate();
         CostUpdate();
         SpawnedMonsterCountUpdate();
+        HouseLifeUpdate();
 
         var infoCondition = currentPlayerOnTile && isInfoWindowOn;
 
@@ -215,6 +215,15 @@ public class CharacterInfoUIManager : MonoBehaviour
         {
             spawnedMonsterCountText.SetText(stageManager.leftMonsterCount.ToString());
             prevSpawnedMonsterCount = stageManager.leftMonsterCount;
+        }
+    }
+
+    public void HouseLifeUpdate()
+    {
+        if(prevHouseLife != stageManager.currentHouseLife)
+        {
+            houseLifeText.SetText(stageManager.currentHouseLife.ToString());
+            prevHouseLife = stageManager.currentHouseLife;
         }
     }
 
