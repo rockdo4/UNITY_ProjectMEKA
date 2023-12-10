@@ -14,10 +14,12 @@ public class CharacterInfoUIManager : MonoBehaviour
     public TextMeshProUGUI characterOccupation;
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI characterDescription;
+
+    // cost & wave & monster & life infos
     public TextMeshProUGUI costText;
     public TextMeshProUGUI leftWaveText;
-    public TextMeshProUGUI spawnMonsterCountText;
     public TextMeshProUGUI allMonsterCountText;
+    public TextMeshProUGUI spawnedMonsterCountText;
     public TextMeshProUGUI houseLifeText;
     public Image costSlider;
 
@@ -32,6 +34,7 @@ public class CharacterInfoUIManager : MonoBehaviour
     public bool currentPlayerOnTile;
     public bool isInfoWindowOn = true;
     public int prevCost;
+    public int prevSpawnedMonsterCount;
     private float timer;
 
 
@@ -49,12 +52,18 @@ public class CharacterInfoUIManager : MonoBehaviour
         isInfoWindowOn = true;
     }
 
+    private void Start()
+    {
+        allMonsterCountText.SetText(stageManager.allMonsterCount.ToString());
+    }
+
     private void Update()
     {
         // windowMode Update
         prevWindowMode = windowMode;
         WindowModeUpdate();
         CostUpdate();
+        SpawnedMonsterCountUpdate();
 
         var infoCondition = currentPlayerOnTile && isInfoWindowOn;
 
@@ -198,6 +207,15 @@ public class CharacterInfoUIManager : MonoBehaviour
             value = 0f;
         }
         costSlider.fillAmount = value;
+    }
+
+    public void SpawnedMonsterCountUpdate()
+    {
+        if(prevSpawnedMonsterCount != stageManager.leftMonsterCount)
+        {
+            spawnedMonsterCountText.SetText(stageManager.leftMonsterCount.ToString());
+            prevSpawnedMonsterCount = stageManager.leftMonsterCount;
+        }
     }
 
     public void ChangeArrangableTileMesh()

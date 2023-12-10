@@ -1,9 +1,11 @@
+using CsvHelper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Defines;
 using static GateController;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -59,6 +61,8 @@ public class GateController : MonoBehaviour
     [SerializeField, Header("웨이브 정보 세팅")]
     public List<WaveInfo> waveInfos;
 
+    private StageManager stageManager;
+
     protected int currentWave = 0;
     protected int currentEnemyType = 0;
     protected int currentEnemyCount = 0;
@@ -99,6 +103,17 @@ public class GateController : MonoBehaviour
         if (enemyPath == null)
         {
             Debug.Log("enemyPath gameObject is null");
+        }
+
+        // ui update
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
+        foreach (var wave in waveInfos)
+        {
+            foreach(var enemyInfo in wave.enemySpawnInfos)
+            {
+                stageManager.allMonsterCount += enemyInfo.count;
+                stageManager.leftMonsterCount += enemyInfo.count;
+            }
         }
     }
 
@@ -183,6 +198,7 @@ public class GateController : MonoBehaviour
             }
             currentEnemyCount++;
             firstGetPool = true;
+            stageManager.leftMonsterCount--;
         }
 
         if (currentEnemyCount >= enemyInfo.count)
@@ -222,6 +238,7 @@ public class GateController : MonoBehaviour
             }
 
             currentEnemyCount++;
+            stageManager.leftMonsterCount--;
         }
         spawnTimer = 0f;
     }
@@ -229,6 +246,7 @@ public class GateController : MonoBehaviour
 
     virtual public void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo, WaveInfo waveInfo)
     {
+        Debug.Log("enemyGo is null : " + enemyGo == null);
         var enemyController = enemyGo.GetComponent<EnemyController>();
 
         enemyController.wayPoint = waveInfo.waypoints;
