@@ -102,7 +102,8 @@ public class AOE : MonoBehaviour
 
             //attackable.OnAttack(damage);
             IAttackable dd = target.GetComponentInParent<IAttackable>();
-            dd.OnAttack(damage);
+            dd.OnAttack((Player.GetComponent<PlayerController>().state.damage + Player.GetComponent<PlayerController>().Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.amror + 1f) * 1f);
+            
             //HitTarget();
             Vector3 os = transform.position;
             Vector3Int CurrentGridPos = new Vector3Int(Mathf.FloorToInt(os.x), Mathf.FloorToInt(os.y), Mathf.FloorToInt(os.z));

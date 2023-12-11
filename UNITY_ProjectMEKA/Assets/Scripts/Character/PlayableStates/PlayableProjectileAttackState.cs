@@ -38,10 +38,15 @@ public class PlayableProjectileAttackState : PlayableBaseState
             if (timer <= 0)
             {
                 timer = playerCtrl.state.attackDelay;
+                if (!playerCtrl.target.activeInHierarchy)
+                {
+                    playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+                    return;
+                }
                 playerCtrl.ani.SetTrigger("Attack");
                 playerCtrl.SetState(PlayerController.CharacterStates.Idle);
             }
-            if (playerCtrl.target == null)
+            if (playerCtrl.target.activeInHierarchy)
             {
                 playerCtrl.SetState(PlayerController.CharacterStates.Idle);
             }

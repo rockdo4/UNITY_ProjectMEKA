@@ -89,32 +89,6 @@ public class NPCDestinationStates : NPCBaseState
                         return;
                     }
 
-                    //PlayerController player = pl.GetComponentInParent<PlayerController>();
-
-                    //if (enemyCtrl.state.isBlock && player != null &&
-                    //    player.currentState != PlayerController.CharacterStates.Arrange)
-                    //{
-                    //    if (enemyCtrl.state.isFly)
-                    //    {
-                    //        if (pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Castor ||
-                    //            pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
-                    //            pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
-                    //        {
-                    //            enemyCtrl.target = pl;
-                    //            enemyCtrl.SetState(NPCStates.Idle);
-                    //            return;
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        enemyCtrl.target = pl;
-                    //        //enemyCtrl.SetState(NPCStates.Attack);
-                    //        enemyCtrl.SetState(NPCStates.Idle);
-                    //        return;
-                    //    }
-
-                    //}
-
                 }
             }
             

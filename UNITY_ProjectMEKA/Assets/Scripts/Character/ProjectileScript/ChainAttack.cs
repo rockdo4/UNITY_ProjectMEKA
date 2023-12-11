@@ -53,6 +53,7 @@ public class ChainAttack : MonoBehaviour
             if (CurrentGridPos == enemy.GetComponent<EnemyController>().CurrentGridPos&&enemy.activeSelf)
             {
                 IAttackable aoeDamage = enemy.GetComponent<IAttackable>();
+
                 if (aoeDamage != null)
                 {
                     aoeDamage.OnAttack(damage);//추후 주변 몬스터의 개수만큼 배율변경되도록 수정

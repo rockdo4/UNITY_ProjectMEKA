@@ -30,7 +30,8 @@ public class TakeDamage : MonoBehaviour, IAttackable
         {
             enemy.Hp -= damage - enemy.amror;
         }
-
+        
+        
     }
    public void OnHealing(float healValue)
     {

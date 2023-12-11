@@ -95,8 +95,9 @@ public class Bullet : MonoBehaviour
             IAttackable attackable = target.GetComponentInParent<IAttackable>();
 
             attackable.OnAttack(damage);
+            //attackable.OnAttack((Player.GetComponent<PlayerController>().state.damage + Player.GetComponent<PlayerController>().Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.amror + 1f) * 1f);
 
-            
+
             CreateHitEffect(transform.position, transform.forward);
 
             
