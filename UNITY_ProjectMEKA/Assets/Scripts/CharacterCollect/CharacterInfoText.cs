@@ -27,6 +27,7 @@ public class CharacterInfoText : MonoBehaviour
 		{
 			synchroPanel.gameObject.SetActive(true);
 			synchroPanel.SetCharacter(character);
+			//synchroPanel.CheckGrade();
 		});
 	}
 
