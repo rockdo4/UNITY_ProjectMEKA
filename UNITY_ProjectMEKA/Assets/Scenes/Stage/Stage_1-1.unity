@@ -282,6 +282,11 @@ MonoBehaviour:
   currentPlayerIcon: {fileID: 0}
   currentCost: 0
   maxCost: 99
+  allMonsterCount: 0
+  leftMonsterCount: 0
+  leftWaveCount: 0
+  currentHouseLife: 0
+  maxHouseLife: 0
 --- !u!4 &143171800
 Transform:
   m_ObjectHideFlags: 0
@@ -630,7 +635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2254228764867181573, guid: e2f0529a3ebbba0438f7272ba2b69ffa, type: 3}
       propertyPath: m_Name
-      value: Map_1-1
+      value: Map_0-1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
