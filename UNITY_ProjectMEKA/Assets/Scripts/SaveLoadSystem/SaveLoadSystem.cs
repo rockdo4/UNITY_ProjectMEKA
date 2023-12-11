@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SaveDataVC = SaveDataV3; // 교체
+using SaveDataVC = SaveDataV4; // 교체
 
 public static class SaveLoadSystem
 {
@@ -105,6 +105,9 @@ public static class SaveLoadSystem
                     break;
                 case 3:
                     data = serialize.Deserialize<SaveDataV3>(reader);
+                    break;
+                case 4:
+                    data = serialize.Deserialize<SaveDataV4>(reader);
                     break;
             }
 

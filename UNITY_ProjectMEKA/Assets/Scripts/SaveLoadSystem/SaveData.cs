@@ -95,6 +95,45 @@ public class SaveDataV3 : SaveDataV2
 
 	public override SaveData VersionUp()
     {
-		return null;
-	}
+        var data = new SaveDataV4()
+        {
+            IsFirstGame = IsFirstGame,
+            BGMVolume = BGMVolume,
+            SEVolume = SEVolume,
+            MasterVolume = MasterVolume,
+            IsMasterVolumMute = IsMasterVolumMute,
+            IsBGMVolumMute = IsBGMVolumMute,
+            IsSEVolumMute = IsSEVolumMute
+        };
+        data.formationList = formationList;
+        data.characterStorage = characterStorage;
+        data.itemStorage = itemStorage;
+
+        // add
+        data.storyStageInfos = new List<StageInfoData>();
+        data.assignmentStageInfos = new List<StageInfoData>();
+        data.challengeStageInfos = new List<StageInfoData>();
+
+        return data;
+    }
+}
+
+public class SaveDataV4 : SaveDataV3
+{
+	public SaveDataV4()
+	{
+		Version = 4;
+		storyStageInfos = new List<StageInfoData>();
+		assignmentStageInfos = new List<StageInfoData>();
+		challengeStageInfos = new List<StageInfoData>();
+    }
+
+	public List<StageInfoData> storyStageInfos;
+	public List<StageInfoData> assignmentStageInfos;
+	public List<StageInfoData> challengeStageInfos;
+
+    public override SaveData VersionUp()
+	{
+        return null;
+    }
 }
