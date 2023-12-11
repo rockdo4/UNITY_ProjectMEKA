@@ -101,5 +101,36 @@ public static class Defines
     public enum seType
     {
     }
+    public enum ProjectileType
+    {
+        Bullet,
+        Aoe,
+        PiercingShot,
+        ChainAttack,
+        HitScan,
+        Instantaneous,
+    }
+    public enum Passive
+    {
+        None,//없음
+        Unstoppable,//저지 불가
+        Explosion,//자폭
+        BusterCall,//지원 전술
+        SpeedUp,//이속 증가
+        Counterattack,//역습
+        Spite,//악의
+        Outlander,//아웃랜더
+        Tenacity,//망자의 집념
+        Revenge,//보복
+        Mechanic,//정비공
 
+    }
+    public enum Skills
+    {
+        None,
+        Snapshot,
+        StunningBlow,
+        Test2,
+        Test3,
+    }
 }

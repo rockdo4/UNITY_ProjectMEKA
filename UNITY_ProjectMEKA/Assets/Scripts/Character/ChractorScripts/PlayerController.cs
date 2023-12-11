@@ -126,14 +126,14 @@ public class PlayerController : MonoBehaviour
 
         switch (state.skill)
         {
-            case PlayerState.Skills.Snapshot:
+            case Skills.Snapshot:
                 var s = gameObject.AddComponent<Snapshot>();
                 skillCost = s.skillCost;
 
                 skillCoolTime = s.coolTime;
 
                 break;
-            case PlayerState.Skills.StunningBlow:
+            case Skills.StunningBlow:
                 var b = gameObject.AddComponent<StunningBlow>();
 
                 break;
@@ -142,10 +142,10 @@ public class PlayerController : MonoBehaviour
 
         switch (state.BulletType)
         {
-            case PlayerState.Type.HitScan:
+            case ProjectileType.HitScan:
                 gameObject.AddComponent<HitScan>();
                 break;
-            case PlayerState.Type.Instantaneous:
+            case ProjectileType.Instantaneous:
                 gameObject.AddComponent<Instantaneous>();
                 break;
         }
@@ -268,7 +268,7 @@ public class PlayerController : MonoBehaviour
 
         switch (state.BulletType)
         {
-            case PlayerState.Type.Bullet:
+            case ProjectileType.Bullet:
                 var projectile = obj.GetComponent<Bullet>();
                 projectile.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -279,7 +279,7 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case PlayerState.Type.Aoe:
+            case ProjectileType.Aoe:
                 var projectileA = obj.GetComponent<AOE>();
                 projectileA.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -290,7 +290,7 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case PlayerState.Type.PiercingShot:
+            case ProjectileType.PiercingShot:
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -302,7 +302,7 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case PlayerState.Type.ChainAttack:
+            case ProjectileType.ChainAttack:
                 ChainAttack magic = obj.GetComponent<ChainAttack>();
                 magic.ResetState(); 
                 Vector3 newTargetPosition = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
@@ -312,10 +312,10 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case PlayerState.Type.HitScan:
+            case ProjectileType.HitScan:
                 GetComponent<HitScan>().Shoot();
                 break;
-            case PlayerState.Type.Instantaneous:
+            case ProjectileType.Instantaneous:
                 GetComponent<Instantaneous>().Shoot();
 
                 break;

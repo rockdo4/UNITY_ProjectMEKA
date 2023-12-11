@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+using static Defines;
 public enum NPCStates
 {
     Idle,
@@ -100,34 +100,34 @@ public class EnemyController : PoolAble
         {
             switch (P)
             {
-                case EnemyState.Passive.Unstoppable:
+                case Passive.Unstoppable:
                     gameObject.AddComponent<Unstoppable>(); 
                     break;
-                case EnemyState.Passive.Explosion:
+                case Passive.Explosion:
                     gameObject.AddComponent<Explosion>();
                     break;
-                case EnemyState.Passive.BusterCall:
+                case Passive.BusterCall:
                     gameObject.AddComponent<BusterCall>();
                     break;
-                case EnemyState.Passive.SpeedUp:
+                case Passive.SpeedUp:
                     gameObject.AddComponent<SpeedUp>();
                     break;
-                case EnemyState.Passive.Counterattack:
+                case Passive.Counterattack:
                     gameObject.AddComponent<Counterattack>();
                     break;
-                case EnemyState.Passive.Spite:
+                case Passive.Spite:
                     gameObject.AddComponent<Spite>();
                     break;
-                case EnemyState.Passive.Outlander:
+                case Passive.Outlander:
                     gameObject.AddComponent<Outlander>();
                     break;
-                case EnemyState.Passive.Tenacity:
+                case Passive.Tenacity:
                     gameObject.AddComponent<Tenacity>();
                     break;
-                case EnemyState.Passive.Revenge:
+                case Passive.Revenge:
                     gameObject.AddComponent<Revenge>();
                     break;
-                case EnemyState.Passive.Mechanic:
+                case Passive.Mechanic:
                     gameObject.AddComponent<Mechanic>();
                     break;
 
@@ -232,7 +232,7 @@ public class EnemyController : PoolAble
 
         switch (state.BulletType)
         {
-            case EnemyState.Type.Bullet:
+            case ProjectileType.Bullet:
                 var projectile = obj.GetComponent<Bullet>();
                 projectile.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -243,7 +243,7 @@ public class EnemyController : PoolAble
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case EnemyState.Type.Aoe:
+            case ProjectileType.Aoe:
                 var projectileA = obj.GetComponent<AOE>();
                 projectileA.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -254,7 +254,7 @@ public class EnemyController : PoolAble
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case EnemyState.Type.PiercingShot:
+            case ProjectileType.PiercingShot:
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
                 obj.transform.position = FirePosition.transform.position;

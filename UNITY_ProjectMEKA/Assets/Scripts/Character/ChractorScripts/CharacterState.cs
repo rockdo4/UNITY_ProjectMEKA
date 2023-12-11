@@ -2,86 +2,89 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Defines;
+
 
 public class CharacterState : MonoBehaviour
 {
-    public enum Type
-    {
-        Bullet,
-        Aoe,
-        PiercingShot,
-        ChainAttack,
-        HitScan,
-        Instantaneous,
-    }
-    public enum Passive
-    {
-        None,//없음
-        Unstoppable,//저지 불가
-        Explosion,//자폭
-        BusterCall,//지원 전술
-        SpeedUp,//이속 증가
-        Counterattack,//역습
-        Spite,//악의
-        Outlander,//아웃랜더
-        Tenacity,//망자의 집념
-        Revenge,//보복
-        Mechanic,//정비공
+    //public enum Type
+    //{
+    //    Bullet,
+    //    Aoe,
+    //    PiercingShot,
+    //    ChainAttack,
+    //    HitScan,
+    //    Instantaneous,
+    //}
+    //public enum Passive
+    //{
+    //    None,//없음
+    //    Unstoppable,//저지 불가
+    //    Explosion,//자폭
+    //    BusterCall,//지원 전술
+    //    SpeedUp,//이속 증가
+    //    Counterattack,//역습
+    //    Spite,//악의
+    //    Outlander,//아웃랜더
+    //    Tenacity,//망자의 집념
+    //    Revenge,//보복
+    //    Mechanic,//정비공
 
-    }
-    public enum Skills
-    {
-        None,
-        Snapshot,
-        StunningBlow,
-        Test2,
-        Test3,
-    }
+    //}
+    //public enum Skills
+    //{
+    //    None,
+    //    Snapshot,
+    //    StunningBlow,
+    //    Test2,
+    //    Test3,
+    //}
 
     //공격 가능범위
     public int[,] AttackRange;
 
-    [SerializeField, Header("캐릭터 ID 설정")]//p
+    [SerializeField, Header("ID 설정")]//p
     public int id;
 
-    [SerializeField, Header("캐릭터 이름 설정")]//p
+    [SerializeField, Header("이름 설정")]//p
     public string name;
 
-    [SerializeField, Header("캐릭터 배치 코스트")]//p
-    public int arrangeCost;
+    //[SerializeField, Header("캐릭터 배치 코스트")]//p
+    //public int arrangeCost;
 
-    [SerializeField, Header("캐릭터 배치 쿨타임")]//p
-    public float arrangeCoolTime;
+    //[SerializeField, Header("캐릭터 배치 쿨타임")]//p
+    //public float arrangeCoolTime;
 
-    [SerializeField, Header("적 패시브 설정")]//e
-    public List<Passive> passive;
+    //[SerializeField, Header("적 패시브 설정")]//e
+    //public List<Passive> passive;
 
-    [SerializeField,Header("캐릭터 스킬 설정")]//p
-    public Skills skill;
+    //[SerializeField,Header("캐릭터 스킬 설정")]//p
+    //public Skills skill;
 
-    [HideInInspector]
-    public float cost;
+    //[HideInInspector]
+    //public float cost;
 
-    [SerializeField, Header("캐릭터 최대 시그마")]//p
-    public float maxCost;
+    //[SerializeField, Header("캐릭터 최대 시그마")]//p
+    /*[SerializeField]
+    public float maxCost;*/
 
-    [SerializeField, Header("캐릭터 스킬 코스트")]//p
-    public float skillCost;
+    //[SerializeField, Header("캐릭터 스킬 코스트")]//p
+    //public float skillCost;
 
-    [SerializeField, Header("스킬 쿨타임")]//p
-    public float skillCoolTime;
+    ////[SerializeField, Header("스킬 쿨타임")]//p
+    //public float skillCoolTime;
 
-    [SerializeField, Header("스킬 지속시간")]//p
-    public float skillDuration;
+    ////[SerializeField, Header("스킬 지속시간")]//p
+    //public float skillDuration;
 
-    [SerializeField, Header("적 타입 설정")]//e
-    public Defines.EnemyType enemyType;
+    //[SerializeField, Header("적 타입 설정")]//e
+    //public Defines.EnemyType enemyType;
 
     [SerializeField, Header("속성 설정")]//p,e
     public Defines.Property property;
 
-    [SerializeField, Header("캐릭터 클래스 설정")]//p
-    public Defines.Occupation occupation;
+    //[SerializeField, Header("캐릭터 클래스 설정")]//p
+    //public Defines.Occupation occupation;
 
     [SerializeField, Header("체력 설정")]//p,e
     public float maxHp;
@@ -90,11 +93,11 @@ public class CharacterState : MonoBehaviour
     public float amror;
 
     // 11.22, 김민지, 적 이동시 필요
-    [SerializeField, Header("이동속력 설정,적 이동시 필요")]//e
-    public float speed;
+    //[SerializeField, Header("이동속력 설정,적 이동시 필요")]//e
+    //public float speed;
 
-    [SerializeField, Header("스킬 쿨타입 설정")]//p
-    public float cooldown;
+    //[SerializeField, Header("스킬 쿨타입 설정")]//p
+    //public float cooldown;
 
     [SerializeField, Header("공격력 설정")]//p,e
     public float damage;
@@ -107,7 +110,7 @@ public class CharacterState : MonoBehaviour
     public string BulletName;
 
     [SerializeField, Header("발사체 타입")]//p,e
-    public Type BulletType;
+    public ProjectileType BulletType;
 
     [SerializeField, Header("발사할때 이팩트")]//p,e
     public string flashName;
@@ -124,8 +127,8 @@ public class CharacterState : MonoBehaviour
 
     
 
-    [SerializeField, Header("적 공중형, 지상형 선택(언체크 지상형)")]//e
-    public bool isFly;
+    //[SerializeField, Header("적 공중형, 지상형 선택(언체크 지상형)")]//e
+    //public bool isFly;
 
     
     public void ConvertTo2DArray()
@@ -158,20 +161,20 @@ public class CharacterState : MonoBehaviour
     [HideInInspector]
     public int grade;//등급 레벨의 10의자리에 해당하며 6까지만 존재가능
 
-    [HideInInspector]
+   /* [HideInInspector]
     public int experience;//이 경험치 이상이여야 레벨에 ++
 
     [HideInInspector]
     public int currentExperience;
-
+*/
     [HideInInspector]
     public float Hp;
 
     [HideInInspector]
     public int ID;
 
-    [HideInInspector]
-    public bool isBlock = true;
+    //[HideInInspector]//e
+    //public bool isBlock = true;
 
     private void Awake()
     {
