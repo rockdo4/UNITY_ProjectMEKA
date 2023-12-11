@@ -6,11 +6,11 @@ using UnityEngine;
  * StageInfoData : 스테이지 저장&로드용 데이터(유동 데이터)
  * StageData : 스테이지 데이터테이블(고정 데이터)
  */
-public class StageInfoData
+public class StageSaveData
 {
     public int stageID;
-    public int isUnlocked;
-    public int isCleared;
+    public bool isUnlocked;
+    public bool isCleared;
     public int clearScore;
 }
 

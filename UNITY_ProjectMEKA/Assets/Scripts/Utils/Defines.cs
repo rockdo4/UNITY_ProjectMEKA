@@ -133,4 +133,11 @@ public static class Defines
         Test2,
         Test3,
     }
+    public enum StageClass
+    {
+        None,
+        Story,
+        Assignment,
+        Challenge
+    }
 }
