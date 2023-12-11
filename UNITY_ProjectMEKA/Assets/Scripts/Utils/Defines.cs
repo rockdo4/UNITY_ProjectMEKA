@@ -39,8 +39,8 @@ public static class Defines
     {
         None,
         Prime,
+        Grieve, //순서 수정
         Edila,
-        Grieve,
     }
     public enum Occupation
     {

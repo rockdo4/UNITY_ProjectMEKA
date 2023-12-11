@@ -31,7 +31,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 	{
 		//button.onClick.RemoveAllListeners();
 		selectedQuantity = 0;
-		SetText();
+		//SetText();
 	}
 
 	public void SetItem(int id, int quantity)
@@ -45,7 +45,14 @@ public class ItemAutoQuantityCard : MonoBehaviour
 		this.item = item;
 		requiredQuantity = quantity;
 
-		Debug.Log(item.Name);
+		if(item == null)
+		{
+			Debug.Log("아이템 없음");
+		}
+		else
+		{
+			Debug.Log(item.Name);
+		}
 	}
 
 	public void SetText()
@@ -63,11 +70,11 @@ public class ItemAutoQuantityCard : MonoBehaviour
 		}
 		else
 		{
-			//
+			quantityText.SetText($"<color=red>0</color> / {requiredQuantity}");
 		}
 	}
 
-	public bool IsEnough()
+	public bool IsEnoughRequire()
 	{
 		if(item != null)
 		{
@@ -81,7 +88,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 
 	public void ConsumeItem()
 	{
-		if(!IsEnough())
+		if(!IsEnoughRequire())
 			return;
 
 		if(item != null)
