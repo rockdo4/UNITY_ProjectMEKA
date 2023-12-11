@@ -4,25 +4,27 @@ using static Defines;
 
 public class StageDataManager : MonoBehaviour
 {
-    public List<StageSaveData> currentStageData;
-    public StageClass currentStageClass;
+    public static StageDataManager Instance { get; private set; }
 
-    public void SetCurrentStageData(StageClass stageClass)
+    public StageSaveData selectedStageData;
+    public LinkedList<StageSaveData> selectedStageDatas;
+    private StageClass currentStageClass;
+
+    private void Awake()
     {
-        switch(stageClass)
+        if (Instance == null)
         {
-            case StageClass.None:
-                break;
-            case StageClass.Story:
-                currentStageData = PlayDataManager.data.storyStageInfos;
-                break;
-            case StageClass.Assignment:
-                currentStageData = PlayDataManager.data.assignmentStageInfos;
-                break;
-            case StageClass.Challenge:
-                currentStageData = PlayDataManager.data.challengeStageInfos;
-                break;
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void SetCurrentStageClass(StageClass stageClass)
+    {
         currentStageClass = stageClass;
     }
 
@@ -33,39 +35,39 @@ public class StageDataManager : MonoBehaviour
             case StageClass.None:
                 break;
             case StageClass.Story:
-                PlayDataManager.data.storyStageInfos = currentStageData;
+                PlayDataManager.data.storyStageDatas = selectedStageDatas;
                 break;
             case StageClass.Assignment:
-                PlayDataManager.data.assignmentStageInfos = currentStageData;
+                PlayDataManager.data.assignmentStageDatas = selectedStageDatas;
                 break;
             case StageClass.Challenge:
-                PlayDataManager.data.challengeStageInfos = currentStageData;
+                PlayDataManager.data.challengeStageDatas = selectedStageDatas;
                 break;
         }
     }
 
-    public void CheckPlayData()
+    public void LoadPlayData()
     {
         switch (currentStageClass)
         {
             case StageClass.None:
                 break;
             case StageClass.Story:
-                if(PlayDataManager.data.storyStageInfos != null)
+                if(PlayDataManager.data.storyStageDatas != null)
                 {
-                    currentStageData = PlayDataManager.data.storyStageInfos;
+                    selectedStageDatas = PlayDataManager.data.storyStageDatas;
                 }
                 break;
             case StageClass.Assignment:
-                if (PlayDataManager.data.assignmentStageInfos != null)
+                if (PlayDataManager.data.assignmentStageDatas != null)
                 {
-                    currentStageData = PlayDataManager.data.assignmentStageInfos;
+                    selectedStageDatas = PlayDataManager.data.assignmentStageDatas;
                 }
                 break;
             case StageClass.Challenge:
-                if(PlayDataManager.data.challengeStageInfos != null)
+                if(PlayDataManager.data.challengeStageDatas != null)
                 {
-                    currentStageData = PlayDataManager.data.challengeStageInfos;
+                    selectedStageDatas = PlayDataManager.data.challengeStageDatas;
                 }
                 break;
         }

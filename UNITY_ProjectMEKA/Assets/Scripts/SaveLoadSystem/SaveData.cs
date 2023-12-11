@@ -110,9 +110,9 @@ public class SaveDataV3 : SaveDataV2
         data.itemStorage = itemStorage;
 
         // add
-        data.storyStageInfos = new List<StageSaveData>();
-        data.assignmentStageInfos = new List<StageSaveData>();
-        data.challengeStageInfos = new List<StageSaveData>();
+        data.storyStageDatas = new LinkedList<StageSaveData>();
+        data.assignmentStageDatas = new LinkedList<StageSaveData>();
+        data.challengeStageDatas = new LinkedList<StageSaveData>();
 
         return data;
     }
@@ -123,14 +123,14 @@ public class SaveDataV4 : SaveDataV3
 	public SaveDataV4()
 	{
 		Version = 4;
-		storyStageInfos = new List<StageSaveData>();
-		assignmentStageInfos = new List<StageSaveData>();
-		challengeStageInfos = new List<StageSaveData>();
+		storyStageDatas = new LinkedList<StageSaveData>();
+		assignmentStageDatas = new LinkedList<StageSaveData>();
+		challengeStageDatas = new LinkedList<StageSaveData>();
     }
 
-	public List<StageSaveData> storyStageInfos;
-	public List<StageSaveData> assignmentStageInfos;
-	public List<StageSaveData> challengeStageInfos;
+	public LinkedList<StageSaveData> storyStageDatas;
+	public LinkedList<StageSaveData> assignmentStageDatas;
+	public LinkedList<StageSaveData> challengeStageDatas;
 
     public override SaveData VersionUp()
 	{

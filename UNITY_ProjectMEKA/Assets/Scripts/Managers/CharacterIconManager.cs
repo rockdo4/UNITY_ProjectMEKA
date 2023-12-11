@@ -57,7 +57,7 @@ public class CharacterIconManager : MonoBehaviour
                     characterState.property = (Property)characterData.CharacterProperty;
                     characterState.occupation = (Occupation)characterData.CharacterOccupation;
                     characterState.arrangeCost = characterData.ArrangementCost;
-                    characterState.maxCost = characterData.WithdrawCost;
+                    //characterState.maxCost = characterData.WithdrawCost;
                     characterState.arrangeCoolTime = characterData.ReArrangementCoolDown;
                     characterPrefabs.Add(prefab);
                     break;

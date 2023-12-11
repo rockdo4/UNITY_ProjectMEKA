@@ -9,9 +9,9 @@ using UnityEngine;
 public class StageSaveData
 {
     public int stageID;
-    public bool isUnlocked;
-    public bool isCleared;
-    public int clearScore;
+    public bool isUnlocked = false;
+    public bool isCleared = false;
+    public int clearScore = 0;
 }
 
 public class StageData
@@ -19,8 +19,9 @@ public class StageData
     public int StageID { get; set; }
     public int Class { get; set; }
     public int Type { get; set; }
-    public int ChapterNumber { get; set; }
+    public string ChapterNumber { get; set; }
     public int StageNumber { get; set; }
+    public int Index { get; set; }
     public string MapImagePath { get; set; }
     public string MapSoundPath { get; set; }
     public int NextStageID { get; set; }

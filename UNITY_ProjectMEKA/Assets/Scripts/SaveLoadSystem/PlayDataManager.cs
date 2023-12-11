@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using SaveDataVC = SaveDataV4;
@@ -38,5 +36,33 @@ public class PlayDataManager
         data.IsMasterVolumMute = false;
         data.IsBGMVolumMute = false;
         data.IsSEVolumMute = false;
+        FirstGameStageSaveDataSet();
+    }
+
+    private static void FirstGameStageSaveDataSet()
+    {
+        var stageTable = DataTableMgr.GetTable<StageTable>().GetOriginalTable();
+
+        foreach(var stage in stageTable)
+        {
+            var saveData = new StageSaveData();
+            saveData.stageID = stage.Key;
+            if (stage.Value.Index == 1)
+            {
+                saveData.isUnlocked = true;
+            }
+            if (stage.Value.Class == 1)
+            {
+                data.storyStageDatas.AddLast(saveData);
+            }
+            else if(stage.Value.Class == 2)
+            {
+                data.assignmentStageDatas.AddLast(saveData);
+            }
+            else if(stage.Value.Class == 3)
+            {
+                data.challengeStageDatas.AddLast(saveData);
+            }
+        }
     }
 }
