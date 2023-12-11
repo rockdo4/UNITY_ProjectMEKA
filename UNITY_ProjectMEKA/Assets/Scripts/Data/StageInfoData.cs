@@ -16,23 +16,28 @@ public class StageInfoData
 
 public class StageData
 {
-    public int stageID;
-    public int stageClass;
-    public int stageType;
-    public int chapterNumber;
-    public int stageNumber;
-    public string mapImagePath;
-    public string mapSoundPath;
-    public int nextStageID;
-    public string failConditionPath;
-    public string mission1Path;
-    public int[] missionType = new int[3];
-    public int[] missionValue = new int[3];
-    public string[] missionPath = new string[3];
-    public float stageTime;
-    public int houseLife;
-    public int isConfigurable;
-    public int configureID;
-    public int eventID;
-    public int rewardID;
+    public int StageID { get; set; }
+    public int Class { get; set; }
+    public int Type { get; set; }
+    public int ChapterNumber { get; set; }
+    public int StageNumber { get; set; }
+    public string MapImagePath { get; set; }
+    public string MapSoundPath { get; set; }
+    public int NextStageID { get; set; }
+    public string FailConditionPath { get; set; }
+    public string Mission1Path { get; set; }
+    public int Mission1Type { get; set; }
+    public int Mission1Value { get; set; }
+    public string Mission2Path { get; set; }
+    public int Mission2Type { get; set; }
+    public int Mission2Value { get; set; }
+    public string Mission3Path { get; set; }
+    public int Mission3Type { get; set; }
+    public int Mission3Value { get; set; }
+    public float StageTime { get; set; }
+    public int HouseLife { get; set; }
+    public int IsConfigurable { get; set; }
+    public int ConfigureID { get; set; }
+    public int EventID { get; set; }
+    public int RewardID { get; set; }
 }

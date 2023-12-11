@@ -37,7 +37,7 @@ public class StageTable : DataTable
             foreach (var record in records)
             {
                 StageData temp = record;
-                stageDict.Add(temp.stageID, temp);
+                stageDict.Add(temp.StageID, temp);
             }
         }
         catch (Exception ex)
