@@ -1,7 +1,6 @@
-using CsvHelper.Configuration;
 using CsvHelper;
+using CsvHelper.Configuration;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
