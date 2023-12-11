@@ -43,9 +43,9 @@ GameObject:
   - component: {fileID: 3673829422610302614}
   - component: {fileID: 6212856974334869611}
   - component: {fileID: 9009488073782945446}
-  - component: {fileID: 8252887769828789772}
   - component: {fileID: 6506148324622600131}
   - component: {fileID: 7955790683017641676}
+  - component: {fileID: -1491697962360126761}
   m_Layer: 6
   m_Name: MERIA
   m_TagString: Player
@@ -109,54 +109,6 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8252887769828789772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 116663185235443394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 13501
-  name: MERIA
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  passive: 
-  skill: 0
-  cost: 0
-  maxCost: 0
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
-  enemyType: 0
-  property: 2
-  occupation: 5
-  maxHp: 100
-  amror: 0
-  speed: 0
-  cooldown: 0
-  damage: 25
-  attackDelay: 1
-  exp: 0
-  BulletName: 
-  BulletType: 0
-  flashName: 
-  hitName: 
-  hang: 4
-  yal: 3
-  rangeAttack: 000000000100000000000000010000000100000001000000010000000200000001000000010000000100000001000000
-  isFly: 0
-  level: 0
-  grade: 0
-  experience: 0
-  currentExperience: 0
-  Hp: 0
-  ID: 0
-  isBlock: 1
 --- !u!114 &6506148324622600131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +157,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1491697962360126761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116663185235443394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 13501
+  name: MERIA
+  arrangeCost: 0
+  arrangeCoolTime: 0
+  skill: 0
+  cost: 0
+  maxCost: 0
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
+  property: 2
+  occupation: 5
+  maxHp: 100
+  amror: 0
+  cooldown: 0
+  damage: 25
+  attackDelay: 1
+  BulletName: 
+  BulletType: 0
+  flashName: 
+  hitName: Heal
+  hang: 4
+  yal: 3
+  rangeAttack: 000000000100000000000000010000000100000001000000010000000200000001000000010000000100000001000000
+  level: 0
+  grade: 0
+  experience: 0
+  currentExperience: 0
+  Hp: 0
+  ID: 0
 --- !u!1 &191698932232827442
 GameObject:
   m_ObjectHideFlags: 0

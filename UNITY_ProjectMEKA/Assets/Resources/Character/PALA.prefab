@@ -3323,9 +3323,9 @@ GameObject:
   - component: {fileID: 1870009350195892671}
   - component: {fileID: 5698099491142896581}
   - component: {fileID: 5409945786100367680}
-  - component: {fileID: 7938427654787571882}
   - component: {fileID: 8261665333311125661}
   - component: {fileID: 1397730595431032526}
+  - component: {fileID: -4357701381810184698}
   m_Layer: 6
   m_Name: PALA
   m_TagString: Player
@@ -3389,51 +3389,6 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7938427654787571882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1348910776175659781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 11201
-  name: PALA
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  passive: 
-  skill: 0
-  enemyType: 0
-  property: 1
-  occupation: 2
-  maxHp: 250
-  amror: 0
-  speed: 0
-  cooldown: 0
-  damage: 50
-  attackDelay: 0.5
-  exp: 0
-  BulletName: 
-  BulletType: 0
-  flashName: 
-  hitName: 
-  hang: 2
-  yal: 1
-  rangeAttack: 0100000002000000
-  cost: 0
-  maxCost: 0
-  isFly: 0
-  level: 0
-  grade: 0
-  experience: 0
-  currentExperience: 0
-  Hp: 0
-  ID: 0
-  isBlock: 1
 --- !u!114 &8261665333311125661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3461,7 +3416,7 @@ MonoBehaviour:
   skillCoolTime: 0
   attakableTiles: []
   arrangableTiles: []
-  ReturnPool:
+  PlayerInit:
     m_PersistentCalls:
       m_Calls: []
   joystick: {fileID: 0}
@@ -3469,7 +3424,7 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
-  characterInfoUIManager: {fileID: 0}
+  isDie: 0
 --- !u!114 &1397730595431032526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3482,6 +3437,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4357701381810184698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348910776175659781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 11201
+  name: PALA
+  arrangeCost: 0
+  arrangeCoolTime: 0
+  skill: 0
+  cost: 0
+  maxCost: 0
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
+  property: 1
+  occupation: 2
+  maxHp: 250
+  amror: 0
+  cooldown: 0
+  damage: 50
+  attackDelay: 0.5
+  BulletName: 
+  BulletType: 0
+  flashName: 
+  hitName: 
+  hang: 2
+  yal: 1
+  rangeAttack: 0100000002000000
+  level: 0
+  grade: 0
+  experience: 0
+  currentExperience: 0
+  Hp: 0
+  ID: 0
 --- !u!1 &1352842364137260915
 GameObject:
   m_ObjectHideFlags: 0

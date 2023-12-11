@@ -79,7 +79,7 @@ public class PiercingShot : MonoBehaviour
         PlayerController pl = Player.GetComponent<PlayerController>();
         EnemyController en = Player.GetComponent<EnemyController>();
 
-        if (other.CompareTag("Enemy") && pl != null)
+        if (other.CompareTag("EnemyCollider") && pl != null)
         {
             // 대상에 대미지 처리
             IAttackable attackable = target.GetComponentInParent<IAttackable>();

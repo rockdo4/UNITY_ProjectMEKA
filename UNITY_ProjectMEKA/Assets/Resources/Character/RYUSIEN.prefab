@@ -17850,9 +17850,9 @@ GameObject:
   - component: {fileID: 888718841823059072}
   - component: {fileID: 1144966547282869158}
   - component: {fileID: 7502621695328140325}
-  - component: {fileID: 4812465037585343496}
   - component: {fileID: 5082205830188824000}
   - component: {fileID: 4387861444516278781}
+  - component: {fileID: 8753700963476161200}
   m_Layer: 6
   m_Name: RYUSIEN
   m_TagString: Player
@@ -17916,53 +17916,6 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4812465037585343496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8192282358213904793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 13301
-  name: RYUSIEN
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  passive: 
-  skill: 0
-  cost: 0
-  maxCost: 0
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
-  enemyType: 0
-  property: 2
-  occupation: 3
-  maxHp: 100
-  amror: 0
-  speed: 0
-  cooldown: 0
-  damage: 50
-  attackDelay: 2.5
-  BulletName: MagicChain
-  BulletType: 3
-  flashName: 
-  hitName: 
-  hang: 3
-  yal: 3
-  rangeAttack: 010000000100000001000000010000000200000001000000010000000100000001000000
-  isFly: 0
-  level: 0
-  grade: 0
-  experience: 0
-  currentExperience: 0
-  Hp: 0
-  ID: 0
-  isBlock: 1
 --- !u!114 &5082205830188824000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18011,6 +17964,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8753700963476161200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8192282358213904793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 13301
+  name: RYUSIEN
+  arrangeCost: 0
+  arrangeCoolTime: 0
+  skill: 0
+  cost: 0
+  maxCost: 0
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
+  property: 2
+  occupation: 3
+  maxHp: 100
+  amror: 0
+  cooldown: 0
+  damage: 50
+  attackDelay: 2.5
+  BulletName: MagicChain
+  BulletType: 3
+  flashName: 
+  hitName: 
+  hang: 3
+  yal: 3
+  rangeAttack: 010000000100000001000000010000000200000001000000010000000100000001000000
+  level: 0
+  grade: 0
+  experience: 0
+  currentExperience: 0
+  Hp: 0
+  ID: 0
 --- !u!1 &8235964981381260527
 GameObject:
   m_ObjectHideFlags: 0

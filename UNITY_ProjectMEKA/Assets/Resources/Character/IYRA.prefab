@@ -14059,9 +14059,9 @@ GameObject:
   - component: {fileID: 6338701787978713993}
   - component: {fileID: 4805278219637486048}
   - component: {fileID: 8776950611136686697}
-  - component: {fileID: 2205963948350026374}
   - component: {fileID: 1834510190876064605}
   - component: {fileID: 9066949810129365537}
+  - component: {fileID: 7402171635051098320}
   m_Layer: 6
   m_Name: IYRA
   m_TagString: Player
@@ -14125,51 +14125,6 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2205963948350026374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6279598338925273691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 13201
-  name: IYRA
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  passive: 
-  skill: 0
-  enemyType: 0
-  property: 2
-  occupation: 2
-  maxHp: 250
-  amror: 0
-  speed: 0
-  cooldown: 0
-  damage: 50
-  attackDelay: 0.3
-  exp: 0
-  BulletName: 
-  BulletType: 0
-  flashName: 
-  hitName: 
-  hang: 2
-  yal: 1
-  rangeAttack: 0100000002000000
-  cost: 0
-  maxCost: 30
-  isFly: 0
-  level: 0
-  grade: 0
-  experience: 0
-  currentExperience: 0
-  Hp: 0
-  ID: 0
-  isBlock: 1
 --- !u!114 &1834510190876064605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14197,7 +14152,7 @@ MonoBehaviour:
   skillCoolTime: 0
   attakableTiles: []
   arrangableTiles: []
-  ReturnPool:
+  PlayerInit:
     m_PersistentCalls:
       m_Calls: []
   joystick: {fileID: 0}
@@ -14205,7 +14160,7 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
-  characterInfoUIManager: {fileID: 0}
+  isDie: 0
 --- !u!114 &9066949810129365537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14218,6 +14173,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7402171635051098320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6279598338925273691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 13201
+  name: IYRA
+  arrangeCost: 0
+  arrangeCoolTime: 0
+  skill: 0
+  cost: 0
+  maxCost: 30
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
+  property: 2
+  occupation: 2
+  maxHp: 250
+  amror: 0
+  cooldown: 0
+  damage: 50
+  attackDelay: 0.3
+  BulletName: 
+  BulletType: 0
+  flashName: 
+  hitName: 
+  hang: 2
+  yal: 1
+  rangeAttack: 0100000002000000
+  level: 0
+  grade: 0
+  experience: 0
+  currentExperience: 0
+  Hp: 0
+  ID: 0
 --- !u!1 &6290955771692547296
 GameObject:
   m_ObjectHideFlags: 0

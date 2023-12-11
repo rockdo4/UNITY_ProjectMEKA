@@ -5492,9 +5492,9 @@ GameObject:
   - component: {fileID: 7424962728011549011}
   - component: {fileID: 6959104672920319632}
   - component: {fileID: 948114422754965098}
-  - component: {fileID: 6956443903079376533}
   - component: {fileID: 6730937452685924288}
   - component: {fileID: 8410696357173322987}
+  - component: {fileID: -1453503732151428053}
   m_Layer: 6
   m_Name: AMBER
   m_TagString: Player
@@ -5532,7 +5532,7 @@ Animator:
   m_GameObject: {fileID: 2452888991731294278}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 417e358c130ae6c488f2ffe5d6c9830e, type: 3}
-  m_Controller: {fileID: 9100000, guid: e6403618b0d2ac648b6ee143dfaa98d4, type: 2}
+  m_Controller: {fileID: 9100000, guid: 968bff56b9b1bd34b9ed00e5df9749a4, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -5558,54 +5558,6 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6956443903079376533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2452888991731294278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 12301
-  name: AMBER
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  passive: 
-  skill: 0
-  cost: 0
-  maxCost: 0
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
-  enemyType: 0
-  property: 2
-  occupation: 3
-  maxHp: 100
-  amror: 0
-  speed: 0
-  cooldown: 0
-  damage: 50
-  attackDelay: 1.5
-  exp: 0
-  BulletName: Explosion
-  BulletType: 3
-  flashName: 
-  hitName: 
-  hang: 3
-  yal: 3
-  rangeAttack: 010000000100000001000000010000000100000001000000010000000200000001000000
-  isFly: 0
-  level: 0
-  grade: 0
-  experience: 0
-  currentExperience: 0
-  Hp: 0
-  ID: 0
-  isBlock: 1
 --- !u!114 &6730937452685924288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5654,6 +5606,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1453503732151428053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2452888991731294278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 12301
+  name: AMBER
+  arrangeCost: 0
+  arrangeCoolTime: 0
+  skill: 0
+  cost: 0
+  maxCost: 0
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
+  property: 2
+  occupation: 3
+  maxHp: 100
+  amror: 0
+  cooldown: 0
+  damage: 50
+  attackDelay: 1
+  BulletName: Explosion
+  BulletType: 3
+  flashName: 
+  hitName: 
+  hang: 3
+  yal: 3
+  rangeAttack: 010000000100000001000000010000000100000001000000010000000200000001000000
+  level: 0
+  grade: 0
+  experience: 0
+  currentExperience: 0
+  Hp: 0
+  ID: 0
 --- !u!1 &2479889199337685883
 GameObject:
   m_ObjectHideFlags: 0

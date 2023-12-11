@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public Vector3Int CurrentGridPos;
     [HideInInspector]
-    public CharacterState state;
+    public PlayerState state;
     [HideInInspector]
     public GameObject target;
     [HideInInspector]
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        state = GetComponent<CharacterState>();
+        state = GetComponent<PlayerState>();
         SetBlockCount();
         ani = GetComponent<Animator>();
         PlayerInit = new UnityEvent();
@@ -126,19 +126,30 @@ public class PlayerController : MonoBehaviour
 
         switch (state.skill)
         {
-            case CharacterState.Skills.Snapshot:
+            case PlayerState.Skills.Snapshot:
                 var s = gameObject.AddComponent<Snapshot>();
                 skillCost = s.skillCost;
 
                 skillCoolTime = s.coolTime;
 
                 break;
-            case CharacterState.Skills.StunningBlow:
+            case PlayerState.Skills.StunningBlow:
                 var b = gameObject.AddComponent<StunningBlow>();
 
                 break;
         }
         state.cost = state.maxCost;
+
+        switch (state.BulletType)
+        {
+            case PlayerState.Type.HitScan:
+                gameObject.AddComponent<HitScan>();
+                break;
+            case PlayerState.Type.Instantaneous:
+                gameObject.AddComponent<Instantaneous>();
+                break;
+        }
+
     }
     private void Update()
     {
@@ -165,21 +176,7 @@ public class PlayerController : MonoBehaviour
         //OnClickDown();
         OnClickDown();
 
-        //////Test Code------------------------------------------------------
-        if(Input.GetKey(KeyCode.S))
-        {
-            if(Input.GetKeyDown(KeyCode.K))
-            {
-                SkillBase skill = gameObject.GetComponent<SkillBase>();
-                if (skill != null) 
-                {
-                    Debug.Log("UseSkill");
-                    skill.UseSkill();
-                }
-            }
-        }
-        //------------------------------------------------------------------------//
-
+        
 
     }
     
@@ -269,10 +266,9 @@ public class PlayerController : MonoBehaviour
 
         //obj.transform.LookAt(target.transform.position);
 
-
         switch (state.BulletType)
         {
-            case CharacterState.Type.Bullet:
+            case PlayerState.Type.Bullet:
                 var projectile = obj.GetComponent<Bullet>();
                 projectile.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -283,7 +279,7 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case CharacterState.Type.Aoe:
+            case PlayerState.Type.Aoe:
                 var projectileA = obj.GetComponent<AOE>();
                 projectileA.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -294,11 +290,11 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case CharacterState.Type.PiercingShot:
+            case PlayerState.Type.PiercingShot:
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
                 obj.transform.position = FirePosition.transform.position;
-                Vector3 newTargetPos = new Vector3(target.transform.position.x, target.transform.position.y+0.5f, target.transform.position.z);
+                Vector3 newTargetPos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
                 obj.transform.LookAt(newTargetPos);
                 projectileP.damage = state.damage;
                 projectileP.target = target.transform;
@@ -306,17 +302,25 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case CharacterState.Type.ChainAttack:
+            case PlayerState.Type.ChainAttack:
                 ChainAttack magic = obj.GetComponent<ChainAttack>();
                 magic.ResetState(); 
                 Vector3 newTargetPosition = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
                 obj.transform.position = newTargetPosition;
                 magic.damage = state.damage;
+                magic.target = target.transform;
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
+            case PlayerState.Type.HitScan:
+                GetComponent<HitScan>().Shoot();
+                break;
+            case PlayerState.Type.Instantaneous:
+                GetComponent<Instantaneous>().Shoot();
+
+                break;
         }
-        
+
 
     }
 
@@ -326,7 +330,14 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+
         IAttackable heal = target.GetComponentInParent<IAttackable>();
+        var FlashInstance = ObjectPoolManager.instance.GetGo(state.hitName);
+        FlashInstance.transform.position = target.transform.position;
+        FlashInstance.transform.rotation = target.transform.rotation;
+        FlashInstance.SetActive(false);
+        FlashInstance.SetActive(true);
+        FlashInstance.GetComponent<PoolAble>().ReleaseObject(2f);
 
         if (heal != null) 
         {

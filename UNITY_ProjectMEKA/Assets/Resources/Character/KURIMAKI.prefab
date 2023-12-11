@@ -6131,9 +6131,9 @@ GameObject:
   - component: {fileID: 2366841817329066696}
   - component: {fileID: 8518728858622343346}
   - component: {fileID: 4510145017428617316}
-  - component: {fileID: 2156675517298506386}
   - component: {fileID: 5782128209812579353}
   - component: {fileID: 5779597442223778163}
+  - component: {fileID: -3805643780321930394}
   m_Layer: 6
   m_Name: KURIMAKI
   m_TagString: Player
@@ -6197,53 +6197,6 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2156675517298506386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3139966320091609202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 13401
-  name: "\uCFE0\uB85C\uCE74\uBBF8"
-  arrangeCost: 10
-  arrangeCoolTime: 45
-  passive: 
-  skill: 0
-  cost: 0
-  maxCost: 5
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
-  enemyType: 0
-  property: 3
-  occupation: 4
-  maxHp: 100
-  amror: 0
-  speed: 0
-  cooldown: 0
-  damage: 40
-  attackDelay: 0.1
-  BulletName: ps
-  BulletType: 2
-  flashName: Flash3
-  hitName: Hit3
-  hang: 5
-  yal: 5
-  rangeAttack: 00000000000000000100000000000000000000000000000001000000010000000100000000000000000000000100000001000000010000000000000000000000010000000100000001000000000000000000000001000000020000000100000000000000
-  isFly: 0
-  level: 0
-  grade: 0
-  experience: 0
-  currentExperience: 0
-  Hp: 0
-  ID: 0
-  isBlock: 1
 --- !u!114 &5782128209812579353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6292,6 +6245,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3805643780321930394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3139966320091609202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 13401
+  name: "\uCFE0\uB85C\uCE74\uBBF8"
+  arrangeCost: 10
+  arrangeCoolTime: 45
+  skill: 1
+  cost: 0
+  maxCost: 5
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
+  property: 3
+  occupation: 4
+  maxHp: 100
+  amror: 0
+  cooldown: 0
+  damage: 40
+  attackDelay: 0.5
+  BulletName: 
+  BulletType: 4
+  flashName: Flash4
+  hitName: Effect
+  hang: 5
+  yal: 3
+  rangeAttack: 000000000100000000000000010000000100000001000000010000000100000001000000010000000100000001000000010000000200000001000000
+  level: 0
+  grade: 0
+  experience: 0
+  currentExperience: 0
+  Hp: 0
+  ID: 0
 --- !u!1 &3154175488218858315
 GameObject:
   m_ObjectHideFlags: 0

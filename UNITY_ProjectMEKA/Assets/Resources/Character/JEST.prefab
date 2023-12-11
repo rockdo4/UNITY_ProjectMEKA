@@ -956,9 +956,9 @@ GameObject:
   - component: {fileID: 888354675364461467}
   - component: {fileID: 6535916073971753441}
   - component: {fileID: 4915663557679817973}
-  - component: {fileID: 8318688489232389825}
   - component: {fileID: 524112290103167360}
   - component: {fileID: 5155388692706183794}
+  - component: {fileID: 175761948890550145}
   m_Layer: 6
   m_Name: JEST
   m_TagString: Player
@@ -981,9 +981,9 @@ Transform:
   m_Children:
   - {fileID: 4601115132287687844}
   - {fileID: 7684639427397880481}
-  - {fileID: 2317198129279151726}
   - {fileID: 723150788728329216}
   - {fileID: 7671460780649417163}
+  - {fileID: 2317198129279151726}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6535916073971753441
@@ -1022,54 +1022,6 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8318688489232389825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 513341579006026017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 13101
-  name: JEST
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  passive: 
-  skill: 0
-  cost: 0
-  maxCost: 100
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
-  enemyType: 0
-  property: 2
-  occupation: 1
-  maxHp: 500
-  amror: 0
-  speed: 0
-  cooldown: 0
-  damage: 20
-  attackDelay: 0.3
-  exp: 0
-  BulletName: 
-  BulletType: 0
-  flashName: 
-  hitName: 
-  hang: 2
-  yal: 1
-  rangeAttack: 0100000002000000
-  isFly: 0
-  level: 0
-  grade: 0
-  experience: 0
-  currentExperience: 0
-  Hp: 0
-  ID: 0
-  isBlock: 1
 --- !u!114 &524112290103167360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1118,6 +1070,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &175761948890550145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513341579006026017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 13101
+  name: JEST
+  arrangeCost: 0
+  arrangeCoolTime: 0
+  skill: 0
+  cost: 0
+  maxCost: 100
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
+  property: 2
+  occupation: 1
+  maxHp: 500
+  amror: 0
+  cooldown: 0
+  damage: 20
+  attackDelay: 0.5
+  BulletName: 
+  BulletType: 0
+  flashName: 
+  hitName: 
+  hang: 2
+  yal: 1
+  rangeAttack: 0100000002000000
+  level: 0
+  grade: 0
+  experience: 0
+  currentExperience: 0
+  Hp: 0
+  ID: 0
 --- !u!1 &525027986430237208
 GameObject:
   m_ObjectHideFlags: 0
