@@ -14,6 +14,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
     public TextMeshProUGUI costText;
     public GameObject redFilter;
+    public GameObject blackFilter;
     public Slider coolTimeSlider;
     public TextMeshProUGUI coolTimeText;
 
@@ -48,7 +49,15 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     {
         if(isDie || isCollected)
         {
+            if(blackFilter.activeSelf)
+            {
+                blackFilter.SetActive(false);
+            }
             CoolTimeUpdate();
+        }
+        else
+        {
+            CheckCostEnough();
         }
     }
 
@@ -92,6 +101,19 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
             redFilter.SetActive(false);
             coolTimeSlider.gameObject.SetActive(false);
             //stageManager.characterIconManager.currentCharacterCount++;
+        }
+    }
+
+    public void CheckCostEnough()
+    {
+        var isCostEnough = stageManager.currentCost > cost;
+        if(!isCostEnough && !blackFilter.activeSelf)
+        {
+            blackFilter.SetActive(true);
+        }
+        else if(isCostEnough && blackFilter.activeSelf)
+        {
+            blackFilter.SetActive(false);
         }
     }
 

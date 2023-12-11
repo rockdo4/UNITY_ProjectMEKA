@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class NPCDestinationStates : NPCBaseState
 {
-
+    private float rotSpeed = 7f;
+    private bool isRotating;
     private Vector3 targetPos;
     private float threshold = 0.1f;
     //private float speed;
     private int repeatCount = -1;
     private Vector3 direction;
 
-    private bool once = false;
     private bool isOne = false;
     private float timer;
     GameObject[] players;
@@ -45,7 +46,6 @@ public class NPCDestinationStates : NPCBaseState
         enemyCtrl.transform.LookAt(targetPos);
         //speed = enemyCtrl.state.speed;
         repeatCount = -1;
-        once = false;
     }
 
     public override void Exit()
@@ -172,9 +172,26 @@ public class NPCDestinationStates : NPCBaseState
 
     public void MoveEnemyWaypoint()
     {
+        if (isRotating)
+        {
+            var targetRotation = Quaternion.LookRotation(targetPos - enemyCtrl.rb.position);
+            enemyCtrl.rb.rotation = Quaternion.Slerp(enemyCtrl.rb.rotation, targetRotation, rotSpeed * Time.deltaTime);
+
+            float angleDifference = Quaternion.Angle(enemyCtrl.rb.rotation, targetRotation); // 현재 각도와 목표 각도 사이의 차이
+
+            if (angleDifference < 1f)
+            {
+                enemyCtrl.transform.LookAt(targetPos);
+                isRotating = false;
+            }
+        }
+
         var pos = enemyCtrl.rb.position;
-        pos += direction * enemyCtrl.state.speed * Time.deltaTime;
-        enemyCtrl.rb.MovePosition(pos);
+        if(!isRotating)
+        {
+            pos += direction * enemyCtrl.state.speed * Time.deltaTime;
+            enemyCtrl.rb.MovePosition(pos);
+        }
 
         if (Vector3.Distance(new Vector3(pos.x,pos.z), new Vector3(targetPos.x,targetPos.z)) < threshold) // 다음 웨이포인트 도착하면
         {
@@ -187,28 +204,30 @@ public class NPCDestinationStates : NPCBaseState
             }
             else
             {
+                isRotating = true;
+
                 enemyCtrl.waypointIndex++;
                 targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
                 targetPos.y = enemyCtrl.transform.position.y;
                 direction = (targetPos - enemyCtrl.transform.position).normalized;
-                enemyCtrl.transform.LookAt(targetPos);            
             }
         }
-        //enemyCtrl.transform.LookAt(targetPos);
     }
 
     public void MoveEnemyStraight()
     {
-        if(!once)
+        var targetPosAppliedY = enemyCtrl.wayPoint[enemyCtrl.wayPoint.Length - 1].position;
+        targetPosAppliedY.y = enemyCtrl.transform.position.y;
+        if (targetPos != targetPosAppliedY)
         {
             targetPos = enemyCtrl.wayPoint[enemyCtrl.wayPoint.Length-1].position;
             targetPos.y = enemyCtrl.transform.position.y;
             enemyCtrl.transform.LookAt(targetPos);
-            once = true;
+            direction = (targetPos - enemyCtrl.transform.position).normalized;
         }
 
         var pos = enemyCtrl.rb.position;
-        pos += enemyCtrl.transform.forward * enemyCtrl.state.speed * Time.deltaTime;
+        pos += direction * enemyCtrl.state.speed * Time.deltaTime;
         enemyCtrl.rb.MovePosition(pos);
 
         if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
@@ -221,8 +240,25 @@ public class NPCDestinationStates : NPCBaseState
     public void MoveEnemyRepeat(int count)
     {
         var pos = enemyCtrl.rb.position;
-        pos += enemyCtrl.transform.forward * enemyCtrl.state.speed * Time.deltaTime;
-        enemyCtrl.rb.MovePosition(pos);
+
+        if (isRotating)
+        {
+            var targetRotation = Quaternion.LookRotation(targetPos - enemyCtrl.rb.position);
+            enemyCtrl.rb.rotation = Quaternion.Slerp(enemyCtrl.rb.rotation, targetRotation, rotSpeed * Time.deltaTime);
+
+            float angleDifference = Quaternion.Angle(enemyCtrl.rb.rotation, targetRotation); // 현재 각도와 목표 각도 사이의 차이
+
+            if (angleDifference < 1f)
+            {
+                enemyCtrl.transform.LookAt(targetPos);
+                isRotating = false;
+            }
+        }
+        else
+        {
+            pos += direction * enemyCtrl.state.speed * Time.deltaTime;
+            enemyCtrl.rb.MovePosition(pos);
+        }        
 
         if (Vector3.Distance(pos, targetPos) < threshold) // 다음 웨이포인트 도착하면
         {
@@ -248,7 +284,8 @@ public class NPCDestinationStates : NPCBaseState
             enemyCtrl.waypointIndex++;
             targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
             targetPos.y = enemyCtrl.transform.position.y;
-            enemyCtrl.transform.LookAt(targetPos);
+            direction = (targetPos - enemyCtrl.transform.position).normalized;
+            isRotating = true;
         }
     }
 }

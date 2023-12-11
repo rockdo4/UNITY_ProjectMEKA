@@ -1,9 +1,11 @@
+using CsvHelper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Defines;
 using static GateController;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -59,6 +61,8 @@ public class GateController : MonoBehaviour
     [SerializeField, Header("웨이브 정보 세팅")]
     public List<WaveInfo> waveInfos;
 
+    private StageManager stageManager;
+
     protected int currentWave = 0;
     protected int currentEnemyType = 0;
     protected int currentEnemyCount = 0;
@@ -71,6 +75,7 @@ public class GateController : MonoBehaviour
     protected GameObject enemyPath;
     protected Rigidbody enemyPathRb;
     protected Vector3 targetPos = Vector3.zero;
+    protected Vector3 enemyPathDirection;
     protected float threshold = 0.1f;
     protected int waypointIndex = 0;
     protected int repeatCount = -1;
@@ -98,6 +103,17 @@ public class GateController : MonoBehaviour
         if (enemyPath == null)
         {
             Debug.Log("enemyPath gameObject is null");
+        }
+
+        // ui update
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
+        foreach (var wave in waveInfos)
+        {
+            foreach(var enemyInfo in wave.enemySpawnInfos)
+            {
+                stageManager.allMonsterCount += enemyInfo.count;
+                stageManager.leftMonsterCount += enemyInfo.count;
+            }
         }
     }
 
@@ -182,6 +198,7 @@ public class GateController : MonoBehaviour
             }
             currentEnemyCount++;
             firstGetPool = true;
+            stageManager.leftMonsterCount--;
         }
 
         if (currentEnemyCount >= enemyInfo.count)
@@ -221,6 +238,7 @@ public class GateController : MonoBehaviour
             }
 
             currentEnemyCount++;
+            stageManager.leftMonsterCount--;
         }
         spawnTimer = 0f;
     }
@@ -257,10 +275,10 @@ public class GateController : MonoBehaviour
         }
 
         var pos = enemyPathRb.position;
-        pos += enemyPath.transform.forward * pathSpeed * Time.deltaTime;
+        pos += enemyPathRb.transform.forward * pathSpeed * Time.deltaTime;
         enemyPathRb.MovePosition(pos);
 
-        if (Vector3.Distance(pos, targetPos) < threshold)
+        if (Vector3.Distance(new Vector3(pos.x, pos.z), new Vector3(targetPos.x, targetPos.z)) < threshold)
         {
             waypointIndex++;
 
@@ -273,7 +291,6 @@ public class GateController : MonoBehaviour
             }
             targetPos = waveInfo.waypoints[waypointIndex].position;
             targetPos.y = enemyPath.transform.position.y;
-            enemyPath.transform.LookAt(targetPos);
         }
         enemyPath.transform.LookAt(targetPos);
     }
@@ -284,10 +301,6 @@ public class GateController : MonoBehaviour
         {
             enemyPath.SetActive(true);
             enemyPath.transform.localPosition = enemyPathInitPos;
-            waypointIndex = 0;
-            targetPos = waveInfo.waypoints[waypointIndex].position;
-            targetPos.y = enemyPath.transform.position.y;
-            enemyPath.transform.LookAt(targetPos);
         }
 
         if (!enemyPath.GetComponent<ParticleSystem>().isPlaying)
@@ -295,12 +308,14 @@ public class GateController : MonoBehaviour
             enemyPath.GetComponent<ParticleSystem>().Play();
         }
 
-        if (!once)
+        var targetPosAppliedY = waveInfo.waypoints[waveInfo.waypoints.Length - 1].position;
+        targetPosAppliedY.y = enemyPathRb.position.y;
+        if (targetPos != targetPosAppliedY)
         {
             targetPos = waveInfo.waypoints[waveInfo.waypoints.Length - 1].position;
             targetPos.y = enemyPathRb.position.y;
             enemyPath.transform.LookAt(targetPos);
-            once = true;
+            //once = true;
         }
 
         var pos = enemyPathRb.position;
@@ -361,7 +376,8 @@ public class GateController : MonoBehaviour
             waypointIndex++;
             targetPos = waveInfo.waypoints[waypointIndex].position;
             targetPos.y = enemyPath.transform.position.y;
-            enemyPath.transform.LookAt(targetPos);
+            //enemyPath.transform.LookAt(targetPos);
         }
+        enemyPath.transform.LookAt(targetPos);
     }
 }

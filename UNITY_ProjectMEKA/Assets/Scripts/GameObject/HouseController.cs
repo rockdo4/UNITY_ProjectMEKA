@@ -1,34 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Defines;
 
 public class HouseController : MonoBehaviour
 {
-    public float houseMaxHp;
-    public Defines.GateType gateType;
-
-    [HideInInspector]
-    public float houseHp;
+    private StageManager stageManager;
+    public GateType gateType;
 
     private void Awake()
     {
-        houseHp = houseMaxHp;
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if(other.gameObject.tag == Tags.enemy)
         {
-            houseHp -= 1f;
-        }
-    }
-
-    private void Update()
-    {
-        if(houseHp <= 0f)
-        {
-            // 스테이지 오버 함수 호출
-            //Debug.Log("STAGE FAIL");
+            Debug.Log(other.gameObject);
+            stageManager.currentHouseLife -= 1;
         }
     }
 }

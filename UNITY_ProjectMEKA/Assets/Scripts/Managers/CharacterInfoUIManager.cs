@@ -14,8 +14,13 @@ public class CharacterInfoUIManager : MonoBehaviour
     public TextMeshProUGUI characterOccupation;
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI characterDescription;
+
+    // cost & wave & monster & life infos
     public TextMeshProUGUI costText;
     public TextMeshProUGUI leftWaveText;
+    public TextMeshProUGUI allMonsterCountText;
+    public TextMeshProUGUI spawnedMonsterCountText;
+    public TextMeshProUGUI houseLifeText;
     public Image costSlider;
 
     // joystick
@@ -26,10 +31,11 @@ public class CharacterInfoUIManager : MonoBehaviour
     private Button skillButton;
 
     public bool currentPlayerChanged;
-
-    public int prevCost;
-    private float timer;
-
+    public bool currentPlayerOnTile;
+    private bool isInfoWindowOn = true;
+    private int prevCost;
+    private int prevSpawnedMonsterCount;
+    private int prevHouseLife;
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
@@ -41,6 +47,13 @@ public class CharacterInfoUIManager : MonoBehaviour
         collectButton = joystick.collectButton;
         skillButton = joystick.skillButton;
         stageManager = GameObject.FindGameObjectWithTag(Defines.Tags.stageManager).GetComponent<StageManager>();
+
+        isInfoWindowOn = true;
+    }
+
+    private void Start()
+    {
+        allMonsterCountText.SetText(stageManager.allMonsterCount.ToString());
     }
 
     private void Update()
@@ -49,11 +62,19 @@ public class CharacterInfoUIManager : MonoBehaviour
         prevWindowMode = windowMode;
         WindowModeUpdate();
         CostUpdate();
+        SpawnedMonsterCountUpdate();
+        HouseLifeUpdate();
 
-        if (prevWindowMode != windowMode || currentPlayerChanged)
+        var infoCondition = currentPlayerOnTile && isInfoWindowOn;
+
+        if (prevWindowMode != windowMode || currentPlayerChanged || infoCondition)
         {
             WindowSet();
-            currentPlayerChanged = false;
+            if(currentPlayerChanged)
+            {
+                currentPlayerChanged = false;
+                currentPlayerOnTile = false;
+            }
             return;
         }
 
@@ -89,19 +110,30 @@ public class CharacterInfoUIManager : MonoBehaviour
                 ClearTileMesh();
                 characterInfoPanel.SetActive(false);
                 joystick.gameObject.SetActive(false);
+                currentPlayerOnTile = false;
+                isInfoWindowOn = true;
                 break;
             case Defines.CharacterInfoMode.FirstArrange:
-                // 캐릭터 인포 on
-                characterInfoPanel.SetActive(true);
-                ChangeCharacterInfo();
+                // 캐릭터 타일위 아니면 인포 on
+                if(!currentPlayerOnTile)
+                {
+                    Debug.Log("켜줌");
+                    characterInfoPanel.SetActive(true);
+                    ChangeCharacterInfo();
+                }
+                else if(currentPlayerOnTile && isInfoWindowOn)
+                {
+                    Debug.Log("꺼줌");
+                    characterInfoPanel.SetActive(false);
+                    isInfoWindowOn = false;
+                }
                 joystick.gameObject.SetActive(false);
                 stageManager.currentPlayer.ArrangableTileSet(stageManager.currentPlayer.state.occupation);
                 ChangeArrangableTileMesh();
                 break;
             case Defines.CharacterInfoMode.SecondArrange:
-                // 캐릭터 인포 on
-                characterInfoPanel.SetActive(true);
-                ChangeCharacterInfo();
+                //characterInfoPanel.SetActive(false);
+                //ChangeCharacterInfo();
                 ClearTileMesh();
                 joystick.gameObject.SetActive(true);
                 joystick.SetPositionToCurrentPlayer(stageManager.currentPlayer.transform);
@@ -177,6 +209,24 @@ public class CharacterInfoUIManager : MonoBehaviour
         costSlider.fillAmount = value;
     }
 
+    public void SpawnedMonsterCountUpdate()
+    {
+        if(prevSpawnedMonsterCount != stageManager.leftMonsterCount)
+        {
+            spawnedMonsterCountText.SetText(stageManager.leftMonsterCount.ToString());
+            prevSpawnedMonsterCount = stageManager.leftMonsterCount;
+        }
+    }
+
+    public void HouseLifeUpdate()
+    {
+        if(prevHouseLife != stageManager.currentHouseLife)
+        {
+            houseLifeText.SetText(stageManager.currentHouseLife.ToString());
+            prevHouseLife = stageManager.currentHouseLife;
+        }
+    }
+
     public void ChangeArrangableTileMesh()
     {
         ClearTileMesh();
@@ -190,6 +240,7 @@ public class CharacterInfoUIManager : MonoBehaviour
 
     public void ChangeAttackableTileMesh()
     {
+        Debug.Log("어택 타일 메쉬 업데이트");
         ClearTileMesh();
 
         foreach (var tile in stageManager.currentPlayer.attakableTiles)

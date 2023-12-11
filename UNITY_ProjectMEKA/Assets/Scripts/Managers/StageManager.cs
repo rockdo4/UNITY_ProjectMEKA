@@ -11,10 +11,24 @@ public class StageManager : MonoBehaviour
     public CharacterIcon currentPlayerIcon;
 
     public float currentCost;
-    public int maxCost = 20;
+    public int maxCost;
+    public int allMonsterCount;
+    public int leftMonsterCount;
+    public int leftWaveCount;
+    public int currentHouseLife;
+    public int maxHouseLife;
 
     private void Awake()
     {
         currentCost = maxCost;
+        currentHouseLife = maxHouseLife;
+    }
+
+    private void Update()
+    {
+        if(currentHouseLife <= 0)
+        {
+            Debug.Log("게임오버");
+        }
     }
 }
