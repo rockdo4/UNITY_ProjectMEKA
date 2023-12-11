@@ -71,7 +71,10 @@ public class SynchroPanel : MonoBehaviour
 		if(synchroInfoData == null)
 		{
             Debug.Log("합성 정보 없음");
-            return;
+			synchroItemCard[0].SetItem(synchroInfoData.Tier1ID, synchroInfoData.RequireTier1);
+			synchroItemCard[1].SetItem(synchroInfoData.Tier2ID, synchroInfoData.RequireTier2);
+			synchroItemCard[2].SetItem(synchroInfoData.Tier3ID, synchroInfoData.RequireTier3);
+			return;
         }
 		else
 		{
