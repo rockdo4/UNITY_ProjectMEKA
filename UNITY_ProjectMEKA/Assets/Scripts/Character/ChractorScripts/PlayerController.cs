@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public Vector3Int CurrentGridPos;
     [HideInInspector]
-    public CharacterState state;
+    public PlayerState state;
     [HideInInspector]
     public GameObject target;
     [HideInInspector]
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        state = GetComponent<CharacterState>();
+        state = GetComponent<PlayerState>();
         SetBlockCount();
         ani = GetComponent<Animator>();
         PlayerInit = new UnityEvent();
@@ -126,14 +126,14 @@ public class PlayerController : MonoBehaviour
 
         switch (state.skill)
         {
-            case CharacterState.Skills.Snapshot:
+            case PlayerState.Skills.Snapshot:
                 var s = gameObject.AddComponent<Snapshot>();
                 skillCost = s.skillCost;
 
                 skillCoolTime = s.coolTime;
 
                 break;
-            case CharacterState.Skills.StunningBlow:
+            case PlayerState.Skills.StunningBlow:
                 var b = gameObject.AddComponent<StunningBlow>();
 
                 break;
@@ -142,10 +142,10 @@ public class PlayerController : MonoBehaviour
 
         switch (state.BulletType)
         {
-            case CharacterState.Type.HitScan:
+            case PlayerState.Type.HitScan:
                 gameObject.AddComponent<HitScan>();
                 break;
-            case CharacterState.Type.Instantaneous:
+            case PlayerState.Type.Instantaneous:
                 gameObject.AddComponent<Instantaneous>();
                 break;
         }
@@ -268,7 +268,7 @@ public class PlayerController : MonoBehaviour
 
         switch (state.BulletType)
         {
-            case CharacterState.Type.Bullet:
+            case PlayerState.Type.Bullet:
                 var projectile = obj.GetComponent<Bullet>();
                 projectile.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -279,7 +279,7 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case CharacterState.Type.Aoe:
+            case PlayerState.Type.Aoe:
                 var projectileA = obj.GetComponent<AOE>();
                 projectileA.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -290,7 +290,7 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case CharacterState.Type.PiercingShot:
+            case PlayerState.Type.PiercingShot:
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -302,7 +302,7 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case CharacterState.Type.ChainAttack:
+            case PlayerState.Type.ChainAttack:
                 ChainAttack magic = obj.GetComponent<ChainAttack>();
                 magic.ResetState(); 
                 Vector3 newTargetPosition = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
@@ -312,10 +312,10 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case CharacterState.Type.HitScan:
+            case PlayerState.Type.HitScan:
                 GetComponent<HitScan>().Shoot();
                 break;
-            case CharacterState.Type.Instantaneous:
+            case PlayerState.Type.Instantaneous:
                 GetComponent<Instantaneous>().Shoot();
 
                 break;

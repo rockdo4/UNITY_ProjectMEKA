@@ -33,7 +33,7 @@ public class EnemyController : PoolAble
     //[HideInInspector]
     public Animator ani;
     //[HideInInspector]
-    public CharacterState state;
+    public EnemyState state;
     //[HideInInspector]
     public GameObject target;
     public GameObject healingTarget;
@@ -74,7 +74,7 @@ public class EnemyController : PoolAble
 
 	private void Awake()
     {
-        state = GetComponent<CharacterState>();
+        state = GetComponent<EnemyState>();
         rb = GetComponent<Rigidbody>();
         ani = GetComponent<Animator>();
         state.isBlock = true;
@@ -100,40 +100,40 @@ public class EnemyController : PoolAble
         {
             switch (P)
             {
-                case CharacterState.Passive.Unstoppable:
+                case EnemyState.Passive.Unstoppable:
                     gameObject.AddComponent<Unstoppable>(); 
                     break;
-                case CharacterState.Passive.Explosion:
+                case EnemyState.Passive.Explosion:
                     gameObject.AddComponent<Explosion>();
                     break;
-                case CharacterState.Passive.BusterCall:
+                case EnemyState.Passive.BusterCall:
                     gameObject.AddComponent<BusterCall>();
                     break;
-                case CharacterState.Passive.SpeedUp:
+                case EnemyState.Passive.SpeedUp:
                     gameObject.AddComponent<SpeedUp>();
                     break;
-                case CharacterState.Passive.Counterattack:
+                case EnemyState.Passive.Counterattack:
                     gameObject.AddComponent<Counterattack>();
                     break;
-                case CharacterState.Passive.Spite:
+                case EnemyState.Passive.Spite:
                     gameObject.AddComponent<Spite>();
                     break;
-                case CharacterState.Passive.Outlander:
+                case EnemyState.Passive.Outlander:
                     gameObject.AddComponent<Outlander>();
                     break;
-                case CharacterState.Passive.Tenacity:
+                case EnemyState.Passive.Tenacity:
                     gameObject.AddComponent<Tenacity>();
                     break;
-                case CharacterState.Passive.Revenge:
+                case EnemyState.Passive.Revenge:
                     gameObject.AddComponent<Revenge>();
                     break;
-                case CharacterState.Passive.Mechanic:
+                case EnemyState.Passive.Mechanic:
                     gameObject.AddComponent<Mechanic>();
                     break;
 
             }
         }
-        CreateColliders();
+        //CreateColliders();
     }
 
     private void FixedUpdate()
@@ -149,42 +149,42 @@ public class EnemyController : PoolAble
         //Debug.Log(state.damage);
        
     }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("PlayerCollider"))
-        {
-            //Debug.Log(other, other);
-            if (!rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
-            {
-                //other�� enemy�� ����ĭ�� ������ ����Ʈ�� �����ʾƾ���
-                if (CurrentGridPos != other.GetComponentInParent<PlayerController>().CurrentGridPos)
-                {
-                    rangeInPlayers.Add(other.GetComponentInParent<Transform>().gameObject);
-                    var obj = other.GetComponentInParent<CanDie>();
-                    obj.action.AddListener(() =>
-                    {
-                        rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
-                    });
-                }
-            }
-        }
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("PlayerCollider"))
+    //    {
+    //        //Debug.Log(other, other);
+    //        if (!rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
+    //        {
+    //            //other�� enemy�� ����ĭ�� ������ ����Ʈ�� �����ʾƾ���
+    //            if (CurrentGridPos != other.GetComponentInParent<PlayerController>().CurrentGridPos)
+    //            {
+    //                rangeInPlayers.Add(other.GetComponentInParent<Transform>().gameObject);
+    //                var obj = other.GetComponentInParent<CanDie>();
+    //                obj.action.AddListener(() =>
+    //                {
+    //                    rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+    //                });
+    //            }
+    //        }
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("PlayerCollider"))
-        {
-            if (rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
-            {
-                rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
-                var obj = other.GetComponentInParent<CanDie>();
-                obj.action.RemoveListener(() =>
-                {
-                    rangeInPlayers.Remove(other.GetComponentInParent<GameObject>().gameObject);
-                });
-            }
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("PlayerCollider"))
+    //    {
+    //        if (rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
+    //        {
+    //            rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+    //            var obj = other.GetComponentInParent<CanDie>();
+    //            obj.action.RemoveListener(() =>
+    //            {
+    //                rangeInPlayers.Remove(other.GetComponentInParent<GameObject>().gameObject);
+    //            });
+    //        }
+    //    }
+    //}
     public void SetState(NPCStates state)
     {
         stateManager.ChangeState(states[(int)state]);
@@ -232,7 +232,7 @@ public class EnemyController : PoolAble
 
         switch (state.BulletType)
         {
-            case CharacterState.Type.Bullet:
+            case EnemyState.Type.Bullet:
                 var projectile = obj.GetComponent<Bullet>();
                 projectile.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -243,7 +243,7 @@ public class EnemyController : PoolAble
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case CharacterState.Type.Aoe:
+            case EnemyState.Type.Aoe:
                 var projectileA = obj.GetComponent<AOE>();
                 projectileA.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -254,7 +254,7 @@ public class EnemyController : PoolAble
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;
-            case CharacterState.Type.PiercingShot:
+            case EnemyState.Type.PiercingShot:
                 var projectileP = obj.GetComponent<PiercingShot>();
                 projectileP.ResetState();
                 obj.transform.position = FirePosition.transform.position;
@@ -297,54 +297,54 @@ public class EnemyController : PoolAble
                 return 0;
         }
     }
-    void CreateColliders()
-    {
-        if (state == null || state.AttackRange == null || transform == null)
-        {
-            return;
-        }
+    //void CreateColliders()
+    //{
+    //    if (state == null || state.AttackRange == null || transform == null)
+    //    {
+    //        return;
+    //    }
 
 
-        //Vector3 forward = transform.right;
-        //Vector3 right = -transform.forward;
-        //Vector3 parentScale = transform.localScale;
-        Vector3 forward = -transform.forward;
-        Vector3 right = transform.right;
-        Vector3 parentScale = transform.localScale;
-        int characterRow = 0;
-        int characterCol = 0;
+    //    //Vector3 forward = transform.right;
+    //    //Vector3 right = -transform.forward;
+    //    //Vector3 parentScale = transform.localScale;
+    //    Vector3 forward = -transform.forward;
+    //    Vector3 right = transform.right;
+    //    Vector3 parentScale = transform.localScale;
+    //    int characterRow = 0;
+    //    int characterCol = 0;
 
-        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
-        {
-            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
-            {
-                if (state.AttackRange[i, j] == 2)
-                {
-                    characterRow = i;
-                    characterCol = j;
-                }
-            }
-        }
+    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+    //    {
+    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+    //        {
+    //            if (state.AttackRange[i, j] == 2)
+    //            {
+    //                characterRow = i;
+    //                characterCol = j;
+    //            }
+    //        }
+    //    }
 
-        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
-        {
-            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
-            {
-                if (state.AttackRange[i, j] == 1)
-                {
-                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-                    Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);
+    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+    //    {
+    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+    //        {
+    //            if (state.AttackRange[i, j] == 1)
+    //            {
+    //                Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+    //                Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);
 
-                    BoxCollider collider = gameObject.AddComponent<BoxCollider>();
-                    collider.size = new Vector3(1 / parentScale.x, 3 / parentScale.y, 1 / parentScale.z);
-                    collider.center = correctedPosition;
-                    collider.isTrigger = true;
-                }
-            }
-        }
+    //                BoxCollider collider = gameObject.AddComponent<BoxCollider>();
+    //                collider.size = new Vector3(1 / parentScale.x, 3 / parentScale.y, 1 / parentScale.z);
+    //                collider.center = correctedPosition;
+    //                collider.isTrigger = true;
+    //            }
+    //        }
+    //    }
 
 
-    }
+    //}
     //private void OnDrawGizmos()
     //{
     //    if (state == null || state.AttackRange == null) return;

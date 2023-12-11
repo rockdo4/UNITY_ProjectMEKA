@@ -43,7 +43,8 @@ public class Snapshot : SkillBase
 
     public override void UseSkill()
     {
-        isUsingSkill = true;
+        //isUsingSkill = true;
         //속사스킬 구현
+        Debug.Log("쿠로카미 속사 발동");
     }
 }

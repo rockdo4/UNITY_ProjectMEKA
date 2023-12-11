@@ -167,7 +167,7 @@ public class GateController : MonoBehaviour
     {
         var waveInfo = waveInfos[currentWave];
         var enemyInfo = waveInfo.enemySpawnInfos[currentEnemyType];
-        var enemyName = enemyInfo.prefab.GetComponent<CharacterState>().name;
+        var enemyName = enemyInfo.prefab.GetComponent<EnemyState>().name;
 
         if (!firstGetPool)
         {

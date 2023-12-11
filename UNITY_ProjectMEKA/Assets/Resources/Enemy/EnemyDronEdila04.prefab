@@ -243,9 +243,9 @@ GameObject:
   - component: {fileID: 1457693947313142330}
   - component: {fileID: 1000774767051926149}
   - component: {fileID: 8707762823661450370}
-  - component: {fileID: 498041884477278918}
   - component: {fileID: 7100843140107952002}
   - component: {fileID: 4180137593750818761}
+  - component: {fileID: -584239137203813179}
   m_Layer: 7
   m_Name: EnemyDronEdila04
   m_TagString: Enemy
@@ -271,6 +271,7 @@ Transform:
   - {fileID: 2783868295310552598}
   - {fileID: 7169860121617943061}
   - {fileID: 2168743441987960644}
+  - {fileID: 2439974071278147802}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4036531254963638082
@@ -357,53 +358,6 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &498041884477278918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5729263994562716557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 0
-  name: E4
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  passive: 
-  skill: 0
-  cost: 0
-  maxCost: 0
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
-  enemyType: 2
-  property: 2
-  occupation: 0
-  maxHp: 100
-  amror: 0
-  speed: 1
-  cooldown: 0
-  damage: 10
-  attackDelay: 0.5
-  BulletName: bullet
-  BulletType: 0
-  flashName: Flash8
-  hitName: Hit8
-  hang: 2
-  yal: 1
-  rangeAttack: 0100000002000000
-  isFly: 0
-  level: 0
-  grade: 0
-  experience: 0
-  currentExperience: 0
-  Hp: 0
-  ID: 0
-  isBlock: 1
 --- !u!114 &7100843140107952002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,6 +398,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-584239137203813179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5729263994562716557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 573e76d19e153054b9babeb453df70a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  name: E4
+  passive: 
+  enemyType: 0
+  property: 0
+  occupation: 0
+  maxHp: 100
+  amror: 0
+  speed: 1
+  cooldown: 0
+  damage: 10
+  attackDelay: 0.5
+  BulletName: bullet
+  BulletType: 0
+  flashName: Flash8
+  hitName: Hit8
+  hang: 2
+  yal: 1
+  rangeAttack: 0100000002000000
+  isFly: 0
+  level: 0
+  grade: 0
+  experience: 0
+  currentExperience: 0
+  Hp: 0
+  ID: 0
+  isBlock: 1
 --- !u!1 &6371218051876616873
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,4 +880,66 @@ PrefabInstance:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 978643914820791498, guid: 77f0bd7eb2bb96c41902e71abcfce094, type: 3}
   m_PrefabInstance: {fileID: 3113849930562175708}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4001047492714950024
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2475385208254505887}
+    m_Modifications:
+    - target: {fileID: 1610621817826800978, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610621817826800978, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610621817826800978, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610621817826800978, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610621817826800978, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610621817826800978, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610621817826800978, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610621817826800978, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610621817826800978, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610621817826800978, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664345091418729059, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_Name
+      value: EnemyCollider
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+--- !u!4 &2439974071278147802 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1610621817826800978, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+  m_PrefabInstance: {fileID: 4001047492714950024}
   m_PrefabAsset: {fileID: 0}

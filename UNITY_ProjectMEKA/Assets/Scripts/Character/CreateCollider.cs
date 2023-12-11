@@ -1,16 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class CreateCollider : MonoBehaviour
 {
     PlayerController player;
-    CharacterState state;
 
     private void Awake()
     {
         player = transform.parent.GetComponent<PlayerController>();
-        state = transform.parent.GetComponent<CharacterState>();
     }
 
     // Start is called before the first frame update
@@ -21,7 +20,7 @@ public class CreateCollider : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("EnemyCollider") && state.occupation != Defines.Occupation.Supporters)
+        if (other.CompareTag("EnemyCollider") && player.state.occupation != Defines.Occupation.Supporters)
         {
             //Debug.Log(other, other);
             if (!player.rangeInEnemys.Contains(other.GetComponentInParent<Transform>().gameObject))
@@ -53,7 +52,7 @@ public class CreateCollider : MonoBehaviour
                 });
             }
         }
-        if (other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
+        if (other.CompareTag("PlayerCollider") && player.state.occupation == Defines.Occupation.Supporters)
         {
             if (!player.rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
             {
@@ -74,7 +73,7 @@ public class CreateCollider : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("EnemyCollider") && state.occupation != Defines.Occupation.Supporters)
+        if (other.CompareTag("EnemyCollider") && player.state.occupation != Defines.Occupation.Supporters)
         {
             if (player.rangeInEnemys.Contains(other.GetComponentInParent<Transform>().gameObject))
             {
@@ -105,7 +104,7 @@ public class CreateCollider : MonoBehaviour
             }
         }
         /*Debug.Log(other.tag);*/
-        if (other.CompareTag("PlayerCollider") && state.occupation == Defines.Occupation.Supporters)
+        if (other.CompareTag("PlayerCollider") && player.state.occupation == Defines.Occupation.Supporters)
         {
             if (player.rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
             {
@@ -123,11 +122,11 @@ public class CreateCollider : MonoBehaviour
 
     void CreateColliders()
     {
-        if (state == null || state.AttackRange == null || transform == null)
+        if (player.state == null || player.state.AttackRange == null || transform == null)
         {
             return;
         }
-        state.ConvertTo2DArray();
+        player.state.ConvertTo2DArray();
 
         Vector3 forward = -transform.parent.forward;
         Vector3 right = transform.parent.right;
@@ -136,11 +135,11 @@ public class CreateCollider : MonoBehaviour
         int characterRow = 0;
         int characterCol = 0;
 
-        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        for (int i = 0; i < player.state.AttackRange.GetLength(0); i++)
         {
-            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            for (int j = 0; j < player.state.AttackRange.GetLength(1); j++)
             {
-                if (state.AttackRange[i, j] == 2)
+                if (player.state.AttackRange[i, j] == 2)
                 {
                     characterRow = i;
                     characterCol = j;
@@ -148,11 +147,11 @@ public class CreateCollider : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < state.AttackRange.GetLength(0); i++)
+        for (int i = 0; i < player.state.AttackRange.GetLength(0); i++)
         {
-            for (int j = 0; j < state.AttackRange.GetLength(1); j++)
+            for (int j = 0; j < player.state.AttackRange.GetLength(1); j++)
             {
-                if (state.AttackRange[i, j] == 1)
+                if (player.state.AttackRange[i, j] == 1)
                 {
                     Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
                     Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);

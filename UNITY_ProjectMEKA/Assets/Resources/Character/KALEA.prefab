@@ -2303,9 +2303,9 @@ GameObject:
   - component: {fileID: 800155611851459075}
   - component: {fileID: 4738357054878614773}
   - component: {fileID: 1086203030342508729}
-  - component: {fileID: 4585494464854906913}
   - component: {fileID: 7820979281608524314}
   - component: {fileID: 3556840702550450928}
+  - component: {fileID: 8258203363899644789}
   m_Layer: 6
   m_Name: KALEA
   m_TagString: Player
@@ -2369,53 +2369,6 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4585494464854906913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120828772261120772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 11202
-  name: "\uCE7C\uB808\uC544"
-  arrangeCost: 20
-  arrangeCoolTime: 50
-  passive: 
-  skill: 0
-  cost: 0
-  maxCost: 10
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
-  enemyType: 0
-  property: 1
-  occupation: 2
-  maxHp: 250
-  amror: 0
-  speed: 0
-  cooldown: 0
-  damage: 30
-  attackDelay: 0.5
-  BulletName: 
-  BulletType: 0
-  flashName: 
-  hitName: 
-  hang: 2
-  yal: 1
-  rangeAttack: 0100000002000000
-  isFly: 0
-  level: 0
-  grade: 0
-  experience: 0
-  currentExperience: 0
-  Hp: 0
-  ID: 0
-  isBlock: 1
 --- !u!114 &7820979281608524314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2464,6 +2417,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8258203363899644789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120828772261120772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 11202
+  name: "\uCE7C\uB808\uC544"
+  arrangeCost: 20
+  arrangeCoolTime: 50
+  skill: 0
+  cost: 0
+  maxCost: 10
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
+  property: 1
+  occupation: 2
+  maxHp: 250
+  amror: 0
+  cooldown: 0
+  damage: 50
+  attackDelay: 0.5
+  BulletName: 
+  BulletType: 0
+  flashName: 
+  hitName: 
+  hang: 2
+  yal: 1
+  rangeAttack: 0100000002000000
+  level: 0
+  grade: 0
+  experience: 0
+  currentExperience: 0
+  Hp: 0
+  ID: 0
 --- !u!1 &1138678924049702508
 GameObject:
   m_ObjectHideFlags: 0

@@ -14894,9 +14894,9 @@ GameObject:
   - component: {fileID: 4930089139762083685}
   - component: {fileID: 7668953971164863199}
   - component: {fileID: 1314290193905223159}
-  - component: {fileID: 8454862894690247434}
   - component: {fileID: 1263468579595938256}
   - component: {fileID: 1139063066793553565}
+  - component: {fileID: -1910311875507887642}
   m_Layer: 6
   m_Name: TSUYUBAKA
   m_TagString: Player
@@ -14960,53 +14960,6 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8454862894690247434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6684218851763650818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d007f03248cee43b41f408c4aeeccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 13102
-  name: "\uCE20\uC720\uBC14\uCE74"
-  arrangeCost: 16
-  arrangeCoolTime: 40
-  passive: 
-  skill: 0
-  cost: 0
-  maxCost: 8
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
-  enemyType: 0
-  property: 2
-  occupation: 3
-  maxHp: 100
-  amror: 0
-  speed: 0
-  cooldown: 0
-  damage: 30
-  attackDelay: 2.5
-  BulletName: AoeBullet
-  BulletType: 5
-  flashName: Flash20
-  hitName: AoeBulletHit
-  hang: 4
-  yal: 3
-  rangeAttack: 000000000100000000000000010000000100000001000000010000000100000001000000010000000200000001000000
-  isFly: 0
-  level: 0
-  grade: 0
-  experience: 0
-  currentExperience: 0
-  Hp: 0
-  ID: 0
-  isBlock: 1
 --- !u!114 &1263468579595938256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15055,6 +15008,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1910311875507887642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6684218851763650818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 13102
+  name: "\uCE20\uC720\uBC14\uCE74"
+  arrangeCost: 16
+  arrangeCoolTime: 40
+  skill: 0
+  cost: 0
+  maxCost: 8
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
+  property: 2
+  occupation: 3
+  maxHp: 100
+  amror: 0
+  cooldown: 0
+  damage: 40
+  attackDelay: 2
+  BulletName: 
+  BulletType: 5
+  flashName: Flash20
+  hitName: AoeBulletHit
+  hang: 4
+  yal: 3
+  rangeAttack: 000000000100000000000000010000000100000001000000010000000100000001000000010000000200000001000000
+  level: 0
+  grade: 0
+  experience: 0
+  currentExperience: 0
+  Hp: 0
+  ID: 0
 --- !u!1 &6689180952653706931
 GameObject:
   m_ObjectHideFlags: 0
