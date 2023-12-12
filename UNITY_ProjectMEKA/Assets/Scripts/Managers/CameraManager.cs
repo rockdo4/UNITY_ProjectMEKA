@@ -24,7 +24,7 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        if(stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.Setting)
+        if(stageManager.ingameStageUIManager.windowMode == CharacterInfoMode.Setting)
         {
             if(stageManager.currentPlayer == null)
             {
@@ -45,7 +45,7 @@ public class CameraManager : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, targetPosition, zoomSpeed * Time.deltaTime * 2f);
             }            
         }
-        else if(!(stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.Setting))
+        else if(!(stageManager.ingameStageUIManager.windowMode == CharacterInfoMode.Setting))
         {
             // 각도 러프
             transform.rotation = Quaternion.Lerp(transform.rotation, initRotation, rotationSpeed * Time.deltaTime);

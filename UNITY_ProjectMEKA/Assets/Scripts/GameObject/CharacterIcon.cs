@@ -120,7 +120,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         var isCurrentPlayerThis = stageManager.currentPlayer == playerController;
-        var isPossibleMode = (stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.None) || (stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange);
+        var isPossibleMode = (stageManager.ingameStageUIManager.windowMode == CharacterInfoMode.None) || (stageManager.ingameStageUIManager.windowMode == CharacterInfoMode.FirstArrange);
         var isCostEnough = stageManager.currentCost > cost;
 
         if (isPossibleMode || (isCurrentPlayerThis && isPossibleMode))
@@ -133,7 +133,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
             stageManager.currentPlayerIcon = playerController.icon;
             characterGo.transform.position = transform.position;
             once = false;
-            stageManager.characterInfoUIManager.currentPlayerChanged = true;
+            stageManager.ingameStageUIManager.currentPlayerChanged = true;
         }
     }
 }

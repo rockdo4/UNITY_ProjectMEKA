@@ -4131,7 +4131,6 @@ MonoBehaviour:
   challengeStageButtonPanel: {fileID: 657136613}
   stageButtonPrefab: {fileID: 7055700305110128761, guid: ba67c3ea1fa01ef4c96d1403e23fa1ea, type: 3}
   stageInfoPanel: {fileID: 1843046831}
-  battleStartButton: {fileID: 1406813627}
 --- !u!4 &431790327
 Transform:
   m_ObjectHideFlags: 0
@@ -13751,6 +13750,18 @@ MonoBehaviour:
       - m_Target: {fileID: 728951529}
         m_TargetAssemblyTypeName: FormationManager, Assembly-CSharp
         m_MethodName: OnClickBattleButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 431790326}
+        m_TargetAssemblyTypeName: StageUIManager, Assembly-CSharp
+        m_MethodName: CloseStageInfoWindow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

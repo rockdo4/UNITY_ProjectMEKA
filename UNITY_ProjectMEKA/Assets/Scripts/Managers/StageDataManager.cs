@@ -18,10 +18,11 @@ public class StageDataManager
     public StageSaveData selectedStageData;
     public Dictionary<int,StageSaveData> selectedStageDatas;
     private StageClass currentStageClass;
+    public StageTable stageTable;
 
     private StageDataManager()
     {
-        
+        stageTable = DataTableMgr.GetTable<StageTable>();
     }
 
     public void SetCurrentStageClass(StageClass stageClass)

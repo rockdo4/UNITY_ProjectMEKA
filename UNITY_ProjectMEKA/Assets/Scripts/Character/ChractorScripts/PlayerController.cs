@@ -464,8 +464,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnClickDown()
     {
-        var otherCharacterArrange = stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.FirstArrange || stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.SecondArrange;
-        var otherCharacterSetting = stageManager.characterInfoUIManager.windowMode == CharacterInfoMode.Setting;
+        var otherCharacterArrange = stageManager.ingameStageUIManager.windowMode == CharacterInfoMode.FirstArrange || stageManager.ingameStageUIManager.windowMode == CharacterInfoMode.SecondArrange;
+        var otherCharacterSetting = stageManager.ingameStageUIManager.windowMode == CharacterInfoMode.Setting;
 
         if(otherCharacterArrange || otherCharacterSetting)
         {

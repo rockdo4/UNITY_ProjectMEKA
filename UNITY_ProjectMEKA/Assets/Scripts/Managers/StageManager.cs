@@ -3,7 +3,7 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
     //[HideInInspector]
-    public CharacterInfoUIManager characterInfoUIManager;
+    public IngameStageUIManager ingameStageUIManager;
     public CharacterIconManager characterIconManager;
     public ArrangeJoystick arrangeJoystick;
 
@@ -13,7 +13,9 @@ public class StageManager : MonoBehaviour
     public float currentCost;
     public int maxCost;
     public int allMonsterCount;
-    public int leftMonsterCount;
+    public int allTargetMonsterCount;
+    public int killMonsterCount;
+    public int killTargetMonsterCount;
     public int leftWaveCount;
     public int currentHouseLife;
     public int maxHouseLife;
