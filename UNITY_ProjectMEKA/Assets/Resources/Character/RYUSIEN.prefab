@@ -17949,6 +17949,10 @@ MonoBehaviour:
   joystick: {fileID: 0}
   icon: {fileID: 0}
   currentTile: {fileID: 0}
+  parentPos: {fileID: 0}
+  ChildPos: {fileID: 0}
+  animationController: {fileID: 0}
+  currnetAnimationController: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -17978,19 +17982,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 13301
   name: RYUSIEN
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  skill: 0
-  cost: 0
-  maxCost: 0
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
   property: 2
-  occupation: 3
   maxHp: 100
   amror: 0
-  cooldown: 0
   damage: 50
   attackDelay: 2.5
   BulletName: MagicChain
@@ -18002,10 +17996,19 @@ MonoBehaviour:
   rangeAttack: 010000000100000001000000010000000200000001000000010000000100000001000000
   level: 0
   grade: 0
-  experience: 0
-  currentExperience: 0
   Hp: 0
   ID: 0
+  arrangeCost: 0
+  arrangeCoolTime: 0
+  skill: 8
+  cost: 0
+  maxCost: 0
+  skillCost: 0
+  skillCoolTime: 0
+  skillDuration: 0
+  occupation: 3
+  experience: 0
+  currentExperience: 0
 --- !u!1 &8235964981381260527
 GameObject:
   m_ObjectHideFlags: 0

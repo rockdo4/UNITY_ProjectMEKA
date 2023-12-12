@@ -3363,7 +3363,7 @@ Animator:
   m_GameObject: {fileID: 1348910776175659781}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 417e358c130ae6c488f2ffe5d6c9830e, type: 3}
-  m_Controller: {fileID: 9100000, guid: dd0ec367451dfe2409ecb9c736b9adbc, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1d8938696b9f8e1448ec55878961410e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3422,6 +3422,10 @@ MonoBehaviour:
   joystick: {fileID: 0}
   icon: {fileID: 0}
   currentTile: {fileID: 0}
+  parentPos: {fileID: 0}
+  ChildPos: {fileID: 0}
+  animationController: {fileID: 0}
+  currnetAnimationController: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -3450,20 +3454,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 11201
-  name: PALA
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  skill: 0
-  cost: 0
-  maxCost: 0
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
+  name: "\uD30C\uB77C"
   property: 1
-  occupation: 2
   maxHp: 250
   amror: 0
-  cooldown: 0
   damage: 50
   attackDelay: 0.5
   BulletName: 
@@ -3475,10 +3469,19 @@ MonoBehaviour:
   rangeAttack: 0100000002000000
   level: 0
   grade: 0
-  experience: 0
-  currentExperience: 0
   Hp: 0
   ID: 0
+  arrangeCost: 16
+  arrangeCoolTime: 60
+  skill: 7
+  cost: 0
+  maxCost: 20
+  skillCost: 20
+  skillCoolTime: 25
+  skillDuration: 10
+  occupation: 2
+  experience: 0
+  currentExperience: 0
 --- !u!1 &1352842364137260915
 GameObject:
   m_ObjectHideFlags: 0

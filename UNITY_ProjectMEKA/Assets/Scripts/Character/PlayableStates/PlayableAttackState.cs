@@ -37,7 +37,8 @@ public class PlayableAttackState : PlayableBaseState
                     playerCtrl.SetState(PlayerController.CharacterStates.Idle);
                     return;
                 }
-
+                
+                
                 playerCtrl.ani.SetTrigger("Attack");
                 playerCtrl.SetState(PlayerController.CharacterStates.Idle);
             }

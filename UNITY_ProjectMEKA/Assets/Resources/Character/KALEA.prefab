@@ -2402,6 +2402,10 @@ MonoBehaviour:
   joystick: {fileID: 0}
   icon: {fileID: 0}
   currentTile: {fileID: 0}
+  parentPos: {fileID: 0}
+  ChildPos: {fileID: 0}
+  animationController: {fileID: 9100000, guid: 00ea5458924634342b159644626773a0, type: 2}
+  currnetAnimationController: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -2431,19 +2435,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 11202
   name: "\uCE7C\uB808\uC544"
-  arrangeCost: 20
-  arrangeCoolTime: 50
-  skill: 0
-  cost: 0
-  maxCost: 10
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
   property: 1
-  occupation: 2
   maxHp: 250
   amror: 0
-  cooldown: 0
   damage: 50
   attackDelay: 0.5
   BulletName: 
@@ -2455,10 +2449,19 @@ MonoBehaviour:
   rangeAttack: 0100000002000000
   level: 0
   grade: 0
-  experience: 0
-  currentExperience: 0
   Hp: 0
   ID: 0
+  arrangeCost: 20
+  arrangeCoolTime: 50
+  skill: 5
+  cost: 0
+  maxCost: 20
+  skillCost: 20
+  skillCoolTime: 30
+  skillDuration: 10
+  occupation: 2
+  experience: 0
+  currentExperience: 0
 --- !u!1 &1138678924049702508
 GameObject:
   m_ObjectHideFlags: 0
