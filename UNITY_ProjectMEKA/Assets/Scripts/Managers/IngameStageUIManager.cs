@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.XR;
+using static Defines;
 
 public class IngameStageUIManager : MonoBehaviour
 {
@@ -276,17 +278,14 @@ public class IngameStageUIManager : MonoBehaviour
             var stageData = stageTable.GetStageData(id);
             switch (stageData.Type)
             {
-                //deffense
-                case 1:
+                case (int)GameMode.Deffense:
                     monsterCountPanel.SetActive(true);
                     break;
-                //annihilation
-                case 2:
+                case (int)GameMode.Annihilation:
                     monsterCountPanel.SetActive(true);
                     timeProgressBarPanel.SetActive(true);
                     break;
-                //survival 
-                case 3:
+                case (int)GameMode.Survival:
                     waveCountPanel.SetActive(true);
                     timeProgressBarPanel.SetActive(true);
                     break;

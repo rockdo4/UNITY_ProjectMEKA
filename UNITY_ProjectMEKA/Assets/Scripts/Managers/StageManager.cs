@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Defines;
 
 public class StageManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class StageManager : MonoBehaviour
 
     public PlayerController currentPlayer;
     public CharacterIcon currentPlayerIcon;
+
+    public GameState gameState;
 
     public float currentCost;
     public int maxCost;
@@ -28,9 +31,52 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
-        if(currentHouseLife <= 0)
+        if(gameState == GameState.Playing)
         {
-            Debug.Log("게임오버");
+            CheckGameOver();
         }
+    }
+
+    public void CheckGameOver()
+    {
+        // 모드에 따라 구분
+        var id = StageDataManager.Instance.selectedStageData.stageID;
+        var stageData = StageDataManager.Instance.stageTable.GetStageData(id);
+        switch(stageData.Type)
+        {
+            case (int)GameMode.Deffense:
+                DefenseModeWinCondition();
+                break;
+            case (int)GameMode.Annihilation:
+                AnnihilationModeWinCondition();
+                break;
+            case (int)GameMode.Survival:
+                SurvivalModeWinCondition();
+                break;
+        }
+    }
+
+    public void DefenseModeWinCondition()
+    {
+        if (currentHouseLife <= 0)
+        {
+            gameState = GameState.Die;
+        }
+        else if (killMonsterCount == allMonsterCount)
+        {
+            gameState = GameState.Win;
+            StageDataManager.Instance.selectedStageData.isCleared = true;
+            // need to mission score apply
+        }
+    }
+
+    public void AnnihilationModeWinCondition()
+    {
+
+    }
+
+    public void SurvivalModeWinCondition()
+    {
+
     }
 }

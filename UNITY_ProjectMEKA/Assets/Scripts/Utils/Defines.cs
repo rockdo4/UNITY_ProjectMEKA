@@ -165,4 +165,20 @@ public static class Defines
         Assignment,
         Challenge
     }
+
+    public enum GameState
+    {
+        Playing,
+        Win,
+        Die,
+        Pause
+    }
+
+    public enum GameMode
+    {
+        None,
+        Deffense,
+        Annihilation,
+        Survival
+    }
 }

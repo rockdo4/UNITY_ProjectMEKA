@@ -25,7 +25,11 @@ public class HouseController : MonoBehaviour
                 stageManager.killMonsterCount++;
             });
             other.GetComponent<CharacterState>().Hp = 0;
-            stageManager.currentHouseLife -= 1;
+
+            if(stageManager.gameState != GameState.Die)
+            {
+                stageManager.currentHouseLife -= 1;
+            }
         }
     }
 }
