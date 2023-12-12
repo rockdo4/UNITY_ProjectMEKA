@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-//¸ðµç Ä³¸¯ÅÍ °ü¸®ÇÏ´Â ½Ì±ÛÅÏ Å¬·¡½º
+//ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 //Singleton class that manages all characters
 
 public class CharacterManager
@@ -45,7 +45,7 @@ public class CharacterManager
 			}
 		}
 
-		//¼¼ÀÌºêÆÄÀÏ ÀÖ´ÂÁö È®ÀÎ
+		//ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 
 		CheckPlayData();
     }
@@ -58,7 +58,7 @@ public class CharacterManager
 	{
 		if(PlayDataManager.data == null)
 		{
-			Debug.Log("µ¥ÀÌÅÍ ¾øÀ½");
+			Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			//return;
 		}
 
