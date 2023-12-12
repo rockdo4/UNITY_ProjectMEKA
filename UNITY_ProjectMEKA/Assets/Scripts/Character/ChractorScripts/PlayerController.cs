@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public Tile currentTile;
 
+    public Transform parentPos;
+    public Transform ChildPos;
+
     public enum CharacterStates
     {
         Arrange,
@@ -128,14 +131,15 @@ public class PlayerController : MonoBehaviour
         {
             case Skills.Snapshot:
                 var s = gameObject.AddComponent<Snapshot>();
-                skillCost = s.skillCost;
-
-                skillCoolTime = s.coolTime;
-
                 break;
             case Skills.StunningBlow:
                 var b = gameObject.AddComponent<StunningBlow>();
-
+                break;
+            case Skills.AmberSkill:
+                var a = gameObject.AddComponent<AmberSkill>();
+                break;
+            case Skills.IYRASkill:
+                var i = gameObject.AddComponent<IYRASkill>();
                 break;
         }
         state.cost = state.maxCost;
@@ -149,7 +153,8 @@ public class PlayerController : MonoBehaviour
                 gameObject.AddComponent<Instantaneous>();
                 break;
         }
-
+        parentPos = transform;
+        ChildPos = GetComponentInChildren<CreateCollider>().gameObject.transform;
     }
     private void Update()
     {
@@ -198,8 +203,10 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-
-        take.OnAttack(state.damage + Rockpaperscissors());
+        //(몬스터 공격력 x 공격력 계수 x 스킬 계수 x 속성 데미지 계수)-(캐릭터 방어력 + 장비 방어력 수치) x 장비 방어력 계수
+        
+        take.OnAttack((state.damage + Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.amror + 1f) * 1f);
+        //take.OnAttack(state.damage + Rockpaperscissors());
         
     }
     public float Rockpaperscissors()
@@ -256,6 +263,8 @@ public class PlayerController : MonoBehaviour
     
     public void Fire()
     {
+       
+
         if(target == null) return;
         //var obj = ObjectPoolManager.instance.GetGo("bullet");
         var obj = ObjectPoolManager.instance.GetGo(state.BulletName);

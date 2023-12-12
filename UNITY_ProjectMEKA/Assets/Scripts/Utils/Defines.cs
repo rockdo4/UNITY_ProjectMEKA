@@ -130,8 +130,8 @@ public static class Defines
         None,
         Snapshot,
         StunningBlow,
-        Test2,
-        Test3,
+        AmberSkill,
+        IYRASkill,
     }
     public enum StageClass
     {

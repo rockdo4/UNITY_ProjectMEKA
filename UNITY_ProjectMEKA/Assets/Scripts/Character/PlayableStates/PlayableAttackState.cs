@@ -32,6 +32,12 @@ public class PlayableAttackState : PlayableBaseState
             if (timer > playerCtrl.state.attackDelay)
             {
                 timer = 0;
+                if(!playerCtrl.target.activeInHierarchy)
+                {
+                    playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+                    return;
+                }
+
                 playerCtrl.ani.SetTrigger("Attack");
                 playerCtrl.SetState(PlayerController.CharacterStates.Idle);
             }

@@ -1055,6 +1055,8 @@ MonoBehaviour:
   joystick: {fileID: 0}
   icon: {fileID: 0}
   currentTile: {fileID: 0}
+  parentPos: {fileID: 0}
+  ChildPos: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -1084,19 +1086,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 13101
   name: JEST
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  skill: 0
-  cost: 0
-  maxCost: 100
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
   property: 2
-  occupation: 1
   maxHp: 500
   amror: 0
-  cooldown: 0
   damage: 20
   attackDelay: 0.5
   BulletName: 
@@ -1108,10 +1100,19 @@ MonoBehaviour:
   rangeAttack: 0100000002000000
   level: 0
   grade: 0
-  experience: 0
-  currentExperience: 0
   Hp: 0
   ID: 0
+  arrangeCost: 0
+  arrangeCoolTime: 0
+  skill: 2
+  cost: 0
+  maxCost: 100
+  skillCost: 50
+  skillCoolTime: 20
+  skillDuration: 0
+  occupation: 1
+  experience: 0
+  currentExperience: 0
 --- !u!1 &525027986430237208
 GameObject:
   m_ObjectHideFlags: 0

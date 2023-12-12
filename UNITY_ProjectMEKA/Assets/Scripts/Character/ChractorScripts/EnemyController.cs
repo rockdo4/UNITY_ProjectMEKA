@@ -207,7 +207,9 @@ public class EnemyController : PoolAble
             return;
         }
         
-        TakeDamage co = target.GetComponentInParent<TakeDamage>();
+        IAttackable co = target.GetComponentInParent<IAttackable>();
+        co.OnAttack((state.damage + Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.amror + 1f) * 1f);
+
         co.OnAttack(state.damage * damage);
     }
     public void Healing(float damage)
@@ -217,7 +219,7 @@ public class EnemyController : PoolAble
             return;
         }
 
-        TakeDamage co = healingTarget.GetComponent<TakeDamage>();
+        IAttackable co = healingTarget.GetComponent<IAttackable>();
         co.OnHealing(state.damage * damage);
     }
     

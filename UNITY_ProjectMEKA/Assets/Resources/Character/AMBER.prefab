@@ -5535,7 +5535,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 968bff56b9b1bd34b9ed00e5df9749a4, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -5591,6 +5591,8 @@ MonoBehaviour:
   joystick: {fileID: 0}
   icon: {fileID: 0}
   currentTile: {fileID: 0}
+  parentPos: {fileID: 0}
+  ChildPos: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -5619,20 +5621,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 12301
-  name: AMBER
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  skill: 0
-  cost: 0
-  maxCost: 0
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
+  name: "\uC5E0\uBC84"
   property: 2
-  occupation: 3
   maxHp: 100
   amror: 0
-  cooldown: 0
   damage: 50
   attackDelay: 1
   BulletName: Explosion
@@ -5644,10 +5636,19 @@ MonoBehaviour:
   rangeAttack: 010000000100000001000000010000000100000001000000010000000200000001000000
   level: 0
   grade: 0
-  experience: 0
-  currentExperience: 0
   Hp: 0
   ID: 0
+  arrangeCost: 16
+  arrangeCoolTime: 40
+  skill: 3
+  cost: 0
+  maxCost: 100
+  skillCost: 50
+  skillCoolTime: 22
+  skillDuration: 12
+  occupation: 3
+  experience: 0
+  currentExperience: 0
 --- !u!1 &2479889199337685883
 GameObject:
   m_ObjectHideFlags: 0
