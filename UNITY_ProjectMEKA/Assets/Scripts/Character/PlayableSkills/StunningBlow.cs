@@ -34,9 +34,10 @@ public class StunningBlow : SkillBase
     {
         Debug.Log("Stun");
         var obj = ObjectPoolManager.instance.GetGo("JestSkillEffect");
-        Vector3 pos = player.transform.position;
-        pos.x += 1f;
-        pos.y += 0.5f;
+        
+        Vector3 pos = player.transform.position + player.transform.forward * 1f;
+        pos.y += 0.5f; // y축 위치 조정
+
         obj.transform.position = pos;
         Quaternion rot = Quaternion.Euler(-90,0,0);
         obj.transform.rotation = rot;

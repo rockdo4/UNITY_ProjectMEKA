@@ -132,6 +132,10 @@ public static class Defines
         StunningBlow,
         AmberSkill,
         IYRASkill,
+        KALEASkill,
+        MERIASkill,
+        PALASkill,
+        RYUSIENSkill,
     }
     public enum StageClass
     {

@@ -392,6 +392,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.size
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[23].count
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[24].count
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[25].count
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[23].perfab
+      value: 
+      objectReference: {fileID: 4671236875573657839, guid: f8efe110b9efe91409a27a14f977d624, type: 3}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[24].perfab
+      value: 
+      objectReference: {fileID: 8953845473985608632, guid: 3ff428deaf0b28643a679572cab02b93, type: 3}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[25].perfab
+      value: 
+      objectReference: {fileID: 285242176088954088, guid: 8dad390ffd43a2145929fdc3f2e7c7f8, type: 3}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[23].objectName
+      value: MeriaSkillEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[24].objectName
+      value: Heal
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[25].objectName
+      value: IsabellaHeal
+      objectReference: {fileID: 0}
     - target: {fileID: 6372842070683576580, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: m_Name
       value: ObjectPoolManager
@@ -916,7 +956,7 @@ MonoBehaviour:
   currentPlayer: {fileID: 0}
   currentPlayerIcon: {fileID: 0}
   currentCost: 0
-  maxCost: 20
+  maxCost: 10000
   allMonsterCount: 0
   leftMonsterCount: 0
   leftWaveCount: 0

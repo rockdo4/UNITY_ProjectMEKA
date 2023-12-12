@@ -30,7 +30,7 @@ public class HitScan : MonoBehaviour
         {
             if (hit.collider.CompareTag("EnemyCollider"))
             {
-                Debug.Log("Enemy collider on Enemy layer hit: " + hit.collider.name);
+                //Debug.Log("Enemy collider on Enemy layer hit: " + hit.collider.name);
                 hit.collider.gameObject.GetComponentInParent<IAttackable>().OnAttack(player.state.damage + player.Rockpaperscissors());
 
                 var hitInstance = ObjectPoolManager.instance.GetGo(player.state.hitName);

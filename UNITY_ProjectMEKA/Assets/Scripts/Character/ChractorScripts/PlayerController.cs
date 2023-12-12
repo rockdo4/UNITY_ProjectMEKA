@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour
     public Transform parentPos;
     public Transform ChildPos;
 
+    public RuntimeAnimatorController animationController;
+    public RuntimeAnimatorController currnetAnimationController;
+
     public enum CharacterStates
     {
         Arrange,
@@ -140,6 +143,18 @@ public class PlayerController : MonoBehaviour
                 break;
             case Skills.IYRASkill:
                 var i = gameObject.AddComponent<IYRASkill>();
+                break;
+            case Skills.KALEASkill:
+                var k = gameObject.AddComponent<KALEASkill>();
+                break;
+            case Skills.MERIASkill:
+                var m = gameObject.AddComponent<MERIASkill>();
+                break;
+            case Skills.PALASkill:
+                var p = gameObject.AddComponent<PALASkill>();
+                break;
+            case Skills.RYUSIENSkill:
+                var r = gameObject.AddComponent<RYUSIENSkill>();
                 break;
         }
         state.cost = state.maxCost;
@@ -463,6 +478,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask) && Input.GetMouseButtonDown(0))
         {
+            
             var same = hit.transform.parent.GetComponent<CharacterState>().name == state.name;
             if (same && stageManager.currentPlayer == null)
             {
