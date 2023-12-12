@@ -34,11 +34,11 @@ public static class DataTableMgr
         var synchroTable = new SynchroTable();
         tables.Add(typeof(SynchroTable), synchroTable);
 
+		CharacterManager.Instance.InitCharacterStorage(charTable, characterLevelTable);
+
         var stageTable = new StageTable();
         tables.Add(typeof(StageTable), stageTable);
-
-		CharacterManager.Instance.InitCharacterStorage(charTable, characterLevelTable);
-	}
+    }
 
     public static T GetTable<T>() where T : DataTable
     {

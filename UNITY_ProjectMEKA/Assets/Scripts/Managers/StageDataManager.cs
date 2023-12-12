@@ -2,25 +2,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Defines;
 
-public class StageDataManager : MonoBehaviour
+public class StageDataManager
 {
-    public static StageDataManager Instance { get; private set; }
+    private static StageDataManager instance;
+    public static StageDataManager Instance 
+    {
+        get
+        { 
+            if(instance == null)
+                instance = new StageDataManager();
+            return instance;
+        }
+    }
 
     public StageSaveData selectedStageData;
     public LinkedList<StageSaveData> selectedStageDatas;
     private StageClass currentStageClass;
 
-    private void Awake()
+    private StageDataManager()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        
     }
 
     public void SetCurrentStageClass(StageClass stageClass)

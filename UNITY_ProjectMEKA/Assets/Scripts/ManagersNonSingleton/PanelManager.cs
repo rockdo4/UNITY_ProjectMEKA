@@ -32,8 +32,11 @@ public class PanelManager : MonoBehaviour
 	private Vector3 previousPos;
 
 	// 12.10, 김민지, 스테이지타입패널 추가
-	public RectTransform stageTypePanel;
-	private Vector3 stageTypePos;
+	public RectTransform stageClassPanel;
+	private Vector3 stageClassPos;
+
+	public RectTransform stageChoicePanel;
+	private Vector3 stageChoicePos;
 
 	public void Awake()
 	{
@@ -42,7 +45,8 @@ public class PanelManager : MonoBehaviour
 		gachaPos = gachaPanel.position;
 		formationPos = formationPanel.position;
 		inventoryPos = inventoryPanel.position;
-        //stageTypePos = stageTypePanel.position;
+        stageClassPos = stageClassPanel.position;
+        stageChoicePos = stageChoicePanel.position;
 
         previousPanel = mainPanel;
 		previousPos = mainPos;
@@ -87,38 +91,47 @@ public class PanelManager : MonoBehaviour
     }
 
 	//12.10, 김민지, 스테이지종류패널 추가
-	public void ChangePanelStageType()
+	public void ChangePanelStageClass()
 	{
-        previousPos = stageTypePos;
-		previousPanel = stageTypePanel;
-		stageTypePanel.position = mainPos;
+        previousPos = stageClassPos;
+		previousPanel = stageClassPanel;
+		stageClassPanel.position = mainPos;
 		mainPanel.position = previousPos;
     }
 
-	public void LoadBattleScene()
+	//12.12, 김민지, 스테이지선택패널 추가
+	public void ChangePanelStageChoice()
 	{
-		var formation = formationPanel.GetComponent<FormationManager>();
-		if(formation == null)
-		{
-			Debug.LogError("FormationManager 못불러옴");
-			return;
-		}
-		formation.SetHolderFormation();
+        previousPos = stageChoicePos;
+        previousPanel = stageChoicePanel;
+        stageChoicePanel.position = mainPos;
+        mainPanel.position = previousPos;
+    }
 
-		if(DataHolder.isVaild)
-		{
-			//UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
-			//UnityEngine.SceneManagement.SceneManager.LoadScene("BUGLHJ");
-			UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
-		}
-		else
-		{
-			Debug.Log("플레이어가 선택한 캐릭터가 없습니다.");
-		}
-		
-	}
+    //public void LoadBattleScene()
+    //{
+    //	var formation = formationPanel.GetComponent<FormationManager>();
+    //	if(formation == null)
+    //	{
+    //		Debug.LogError("FormationManager 못불러옴");
+    //		return;
+    //	}
+    //	formation.SetHolderFormation();
 
-	public void ExitGame() 
+    //	if(DataHolder.isVaild)
+    //	{
+    //		//UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
+    //		//UnityEngine.SceneManagement.SceneManager.LoadScene("BUGLHJ");
+    //		UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
+    //	}
+    //	else
+    //	{
+    //		Debug.Log("플레이어가 선택한 캐릭터가 없습니다.");
+    //	}
+
+    //}
+
+    public void ExitGame() 
 	{
 		Application.Quit();
 	}
