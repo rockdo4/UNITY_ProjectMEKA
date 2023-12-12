@@ -1,14 +1,13 @@
-using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using TMPro;
-using UnityEngine.XR;
+using UnityEngine;
+using UnityEngine.UI;
 using static Defines;
 
 public class IngameStageUIManager : MonoBehaviour
 {
-    public Defines.CharacterInfoMode windowMode;
-    private Defines.CharacterInfoMode prevWindowMode;
+    public WindowMode windowMode;
+    private WindowMode prevWindowMode;
     private StageManager stageManager;
 
     // panels
@@ -48,7 +47,6 @@ public class IngameStageUIManager : MonoBehaviour
 
     private void Awake()
     {
-        //currentCost = maxCost;
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
@@ -94,21 +92,25 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void WindowModeUpdate()
     {
-        if(stageManager.currentPlayer == null)
+        if (stageManager.currentPlayer == null)
         {
-            windowMode = Defines.CharacterInfoMode.None;
+            windowMode = WindowMode.None;
         }
-        else if(!stageManager.currentPlayer.stateManager.firstArranged)
+        else if (!stageManager.currentPlayer.stateManager.firstArranged)
         {
-            windowMode = Defines.CharacterInfoMode.FirstArrange;
+            windowMode = WindowMode.FirstArrange;
         }
         else if (stageManager.currentPlayer.stateManager.firstArranged && !stageManager.currentPlayer.stateManager.secondArranged)
         {
-            windowMode = Defines.CharacterInfoMode.SecondArrange;
+            windowMode = WindowMode.SecondArrange;
         }
         else if (stageManager.currentPlayer.stateManager.secondArranged)
         {
-            windowMode = Defines.CharacterInfoMode.Setting;
+            windowMode = WindowMode.Setting;
+        }
+        else if ()
+        {
+
         }
     }
 
@@ -116,7 +118,7 @@ public class IngameStageUIManager : MonoBehaviour
     {
         switch(windowMode)
         {
-            case Defines.CharacterInfoMode.None:
+            case WindowMode.None:
                 // 캐릭터 인포 off
                 ClearTileMesh();
                 characterInfoPanel.SetActive(false);
@@ -124,7 +126,7 @@ public class IngameStageUIManager : MonoBehaviour
                 currentPlayerOnTile = false;
                 isInfoWindowOn = true;
                 break;
-            case Defines.CharacterInfoMode.FirstArrange:
+            case WindowMode.FirstArrange:
                 // 캐릭터 타일위 아니면 인포 on
                 if(!currentPlayerOnTile)
                 {
@@ -140,7 +142,7 @@ public class IngameStageUIManager : MonoBehaviour
                 stageManager.currentPlayer.ArrangableTileSet(stageManager.currentPlayer.state.occupation);
                 ChangeArrangableTileMesh();
                 break;
-            case Defines.CharacterInfoMode.SecondArrange:
+            case WindowMode.SecondArrange:
                 //characterInfoPanel.SetActive(false);
                 //ChangeCharacterInfo();
                 ClearTileMesh();
@@ -151,7 +153,7 @@ public class IngameStageUIManager : MonoBehaviour
                 collectButton.gameObject.SetActive(false);
                 skillButton.gameObject.SetActive(false);
                 break;
-            case Defines.CharacterInfoMode.Setting:
+            case WindowMode.Setting:
                 // 캐릭터 인포 on
                 characterInfoPanel.SetActive(true);
                 ChangeCharacterInfo();
@@ -174,7 +176,7 @@ public class IngameStageUIManager : MonoBehaviour
         {
             isCurrentPlayerArranged = stageManager.currentPlayer.stateManager.firstArranged;
         }
-        var isSettingMode = windowMode == Defines.CharacterInfoMode.Setting;
+        var isSettingMode = windowMode == Defines.WindowMode.Setting;
 
         if (!isCurrentPlayerNull && (!isCurrentPlayerArranged || isSettingMode))
         {
@@ -278,14 +280,14 @@ public class IngameStageUIManager : MonoBehaviour
             var stageData = stageTable.GetStageData(id);
             switch (stageData.Type)
             {
-                case (int)GameMode.Deffense:
+                case (int)StageMode.Deffense:
                     monsterCountPanel.SetActive(true);
                     break;
-                case (int)GameMode.Annihilation:
+                case (int)StageMode.Annihilation:
                     monsterCountPanel.SetActive(true);
                     timeProgressBarPanel.SetActive(true);
                     break;
-                case (int)GameMode.Survival:
+                case (int)StageMode.Survival:
                     waveCountPanel.SetActive(true);
                     timeProgressBarPanel.SetActive(true);
                     break;

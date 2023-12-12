@@ -107,12 +107,13 @@ public static class Defines
         Left,
         Count
     }
-    public enum CharacterInfoMode
+    public enum WindowMode
     {
         None,
         FirstArrange,
         SecondArrange,
-        Setting
+        Setting,
+        Skill
     }
 
     public enum bgmType
@@ -122,6 +123,7 @@ public static class Defines
     public enum seType
     {
     }
+
     public enum ProjectileType
     {
         Bullet,
@@ -131,6 +133,7 @@ public static class Defines
         HitScan,
         Instantaneous,
     }
+
     public enum Passive
     {
         None,//없음
@@ -146,6 +149,7 @@ public static class Defines
         Mechanic,//정비공
 
     }
+
     public enum Skills
     {
         None,
@@ -158,12 +162,20 @@ public static class Defines
         PALASkill,
         RYUSIENSkill,
     }
+
     public enum StageClass
     {
         None,
         Story,
         Assignment,
         Challenge
+    }
+    public enum StageMode
+    {
+        None,
+        Deffense,
+        Annihilation,
+        Survival
     }
 
     public enum GameState
@@ -174,11 +186,4 @@ public static class Defines
         Pause
     }
 
-    public enum GameMode
-    {
-        None,
-        Deffense,
-        Annihilation,
-        Survival
-    }
 }

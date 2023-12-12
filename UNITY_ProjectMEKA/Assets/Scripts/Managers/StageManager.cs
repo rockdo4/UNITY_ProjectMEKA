@@ -9,6 +9,7 @@ public class StageManager : MonoBehaviour
     public ArrangeJoystick arrangeJoystick;
 
     public PlayerController currentPlayer;
+
     public CharacterIcon currentPlayerIcon;
 
     public GameState gameState;
@@ -45,13 +46,13 @@ public class StageManager : MonoBehaviour
         Debug.Log("stage id: " + id);
         switch(stageData.Type)
         {
-            case (int)GameMode.Deffense:
+            case (int)StageMode.Deffense:
                 DefenseModeWinCondition();
                 break;
-            case (int)GameMode.Annihilation:
+            case (int)StageMode.Annihilation:
                 AnnihilationModeWinCondition();
                 break;
-            case (int)GameMode.Survival:
+            case (int)StageMode.Survival:
                 SurvivalModeWinCondition();
                 break;
         }
