@@ -15,12 +15,12 @@ public class DeviceManager : MonoBehaviour
 		coreOption = new GachaSystem<int>();
 		engineOption = new GachaSystem<int>();
 		subOption = new GachaSystem<int>();
-
-		deviceOptionTable = DataTableMgr.GetTable<DeviceOptionTable>();
 	}
 
 	private void Start()
 	{
+		deviceOptionTable = DataTableMgr.GetTable<DeviceOptionTable>();
+
 		var coreOptions = deviceOptionTable.GetOrigianlCoreTable();
 		var engineOptions = deviceOptionTable.GetOrigianlEngineTable();
 		var subOptions = deviceOptionTable.GetOrigianlSubTable();
@@ -28,14 +28,17 @@ public class DeviceManager : MonoBehaviour
 		foreach(var item in coreOptions)
 		{
 			coreOption.Add(item.Key, item.Value.Weight);
+			//Debug.Log((item.Key, item.Value.Weight));
 		}
 		foreach(var item in engineOptions)
 		{
 			engineOption.Add(item.Key, item.Value.Weight);
+			//Debug.Log((item.Key, item.Value.Weight));
 		}
 		foreach(var item in subOptions)
 		{
 			subOption.Add(item.Key, item.Value.Weight);
+			//Debug.Log((item.Key, item.Value.Weight));
 		}
 	}
 

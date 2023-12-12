@@ -38,6 +38,9 @@ public static class DataTableMgr
 
         var stageTable = new StageTable();
         tables.Add(typeof(StageTable), stageTable);
+
+        var deviceOptionTable = new DeviceOptionTable();
+        tables.Add(typeof(DeviceOptionTable), deviceOptionTable);
     }
 
     public static T GetTable<T>() where T : DataTable

@@ -58,7 +58,7 @@ public class CharacterManager
 	{
 		if(PlayDataManager.data == null)
 		{
-			Debug.Log("������ ����");
+			Debug.Log("데이터 없음");
 			//return;
 		}
 

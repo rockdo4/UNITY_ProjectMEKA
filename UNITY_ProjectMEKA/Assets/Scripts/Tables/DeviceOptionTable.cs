@@ -37,16 +37,18 @@ public class DeviceOptionTable : DataTable
 			foreach (var record in records)
 			{
 				DeviceOption temp = record;
+
 				
-				if(temp.PartType == 0)
+				
+				if(temp.StatType == 2)
 				{
 					deviceSubOptionDict.Add(temp.ID, temp);
 				}
-				else if(temp.StatType == 1)
+				else if(temp.PartType == 1)
 				{
 					deviceCoreOptionDict.Add(temp.ID, temp);
 				}
-				else if(temp.StatType == 2)
+				else if(temp.PartType == 2)
 				{
 					deviceEngineOptionDict.Add(temp.ID, temp);
 				}

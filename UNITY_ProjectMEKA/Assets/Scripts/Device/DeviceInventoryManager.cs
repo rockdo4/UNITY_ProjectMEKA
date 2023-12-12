@@ -5,7 +5,7 @@ using UnityEngine;
 public class DeviceInventoryManager
 {
 	private static DeviceInventoryManager instance;
-	public SortedDictionary<int, Device> m_DeviceStorage;
+	public SortedDictionary<int, Device> m_DeviceStorage = new SortedDictionary<int, Device>();
 
 	private DeviceInventoryManager()
 	{
