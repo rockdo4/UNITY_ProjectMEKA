@@ -28,8 +28,6 @@ public class CharacterManager
 	public Dictionary<int, Character> m_CharacterStorage = new Dictionary<int, Character>();
 	public void InitCharacterStorage(CharacterTable charTable, CharacterLevelTable levelTable)
 	{
-		CheckPlayData();
-
 		var table = charTable.GetOriginalTable();
 
 		foreach(var character in table)
@@ -48,6 +46,7 @@ public class CharacterManager
 		}
 
 		//세이브파일 있는지 확인
+		CheckPlayData();
 	}
 
 	public void UpdatePlayData()
