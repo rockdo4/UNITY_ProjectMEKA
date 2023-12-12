@@ -46,6 +46,7 @@ public class GachaManager : MonoBehaviour
         ClearPanel();
 
 		var itemID = testPicker.GetItem();
+
         CharacterManager.Instance.m_CharacterStorage[itemID].IsUnlock = true;
 
         var item = characterTable.GetCharacterData(itemID);
@@ -63,8 +64,26 @@ public class GachaManager : MonoBehaviour
     {
         ClearPanel();
 
-		var itemIDs = testPicker.GetItem(10);
+        for(int i=0; i<10; i++)
+        {
+            var itemID = testPicker.GetItem();
 
+            CharacterManager.Instance.m_CharacterStorage[itemID].IsUnlock = true;
+
+            var item = characterTable.GetCharacterData(itemID);
+            characterManager.PickUpCharacter(itemID);
+
+            var itemImage = ObjectPoolManager.instance.GetGo("GachaCard");
+            itemImage.transform.SetParent(resultPanel.transform, false);
+            itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.CharacterName);
+
+            CharacterManager.Instance.UpdatePlayData();
+        }
+        GameManager.Instance.SaveExecution();
+
+        //var itemIDs = testPicker.GetItem(10);
+
+        /*
         foreach (var itemID in itemIDs)
         {
 			var item = characterTable.GetCharacterData(itemID);
@@ -77,7 +96,8 @@ public class GachaManager : MonoBehaviour
             itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.CharacterName);
         }
 		GameManager.Instance.SaveExecution();
-	}
+        */
+    }
 
     public void ClearPanel()
     {

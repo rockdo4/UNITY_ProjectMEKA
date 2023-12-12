@@ -38,6 +38,7 @@ public class PlayDataManager
         data.IsBGMVolumMute = false;
         data.IsSEVolumMute = false;
         FirstGameStageSaveDataSet();
+        FirstGameCharacterSaveDataSet();
     }
 
     private static void FirstGameStageSaveDataSet()
@@ -54,16 +55,41 @@ public class PlayDataManager
             }
             if (stage.Value.Class == 1)
             {
-                data.storyStageDatas.AddLast(saveData);
+                data.storyStageDatas.Add(stage.Key,saveData);
             }
             else if(stage.Value.Class == 2)
             {
-                data.assignmentStageDatas.AddLast(saveData);
+                data.assignmentStageDatas.Add(stage.Key, saveData);
             }
             else if(stage.Value.Class == 3)
             {
-                data.challengeStageDatas.AddLast(saveData);
+                data.challengeStageDatas.Add(stage.Key, saveData);
             }
         }
+    }
+
+    private static void FirstGameCharacterSaveDataSet()
+    {
+
+        var charTable = DataTableMgr.GetTable<CharacterTable>().GetOriginalTable();
+
+        var storage = CharacterManager.Instance.m_CharacterStorage;
+
+        foreach (var character in charTable)
+        {
+            var chara = new Character();
+            chara.CharacterID = character.Value.CharacterID;
+            chara.CharacterLevel = 1;
+            chara.CurrentExp = 0;
+            chara.CharacterGrade = 3;
+            chara.IsUnlock = false;
+
+            if (!storage.ContainsKey(chara.CharacterID))
+            {
+                storage.Add(chara.CharacterID, chara);
+            }
+        }
+
+        CharacterManager.Instance.CheckPlayData();
     }
 }

@@ -16,7 +16,7 @@ public class StageDataManager
     }
 
     public StageSaveData selectedStageData;
-    public LinkedList<StageSaveData> selectedStageDatas;
+    public Dictionary<int,StageSaveData> selectedStageDatas;
     private StageClass currentStageClass;
 
     private StageDataManager()

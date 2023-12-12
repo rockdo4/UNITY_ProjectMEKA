@@ -69,14 +69,14 @@ public class StageUIManager : MonoBehaviour
             var stringBuilder = new StringBuilder();
             foreach(var stage in StageDataManager.Instance.selectedStageDatas)
             {
+                //instantiate
                 var stageButtonGo = Instantiate(stageButtonPrefab, stageButtonPanel.transform);
 
-                // 객체화
+                // chapter + stage text apply
                 var stageButtonText = stageButtonGo.GetComponentInChildren<TextMeshProUGUI>();
 
-                // 챕터명 + 스테이지 텍스트로 할당
-                var chapter = stageTable.GetStageData(stage.stageID).ChapterNumber;
-                var stageNumber = stageTable.GetStageData(stage.stageID).StageNumber;
+                var chapter = stageTable.GetStageData(stage.Key).ChapterNumber;
+                var stageNumber = stageTable.GetStageData(stage.Key).StageNumber;
 
                 stringBuilder.Clear();
                 stringBuilder.Append(chapter);
@@ -85,7 +85,7 @@ public class StageUIManager : MonoBehaviour
                 stageButtonText.SetText(stringBuilder.ToString());
 
                 // 해금 안됐으면 비활성화
-                if(!stage.isUnlocked)
+                if(!stage.Value.isUnlocked)
                 {
                     stageButtonGo.SetActive(false);
                 }

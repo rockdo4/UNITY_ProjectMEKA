@@ -50,6 +50,8 @@ public class CharacterTable : DataTable
 			{
 				CharacterData temp = record;
 				characterDict.Add(temp.CharacterID, temp);
+
+				//Debug.Log((temp.CharacterID, temp.CharacterName));
 			}
 		}
 		catch (Exception ex)

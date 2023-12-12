@@ -71,7 +71,10 @@ public class CharacterPanelManager : MonoBehaviour
 	{
 		//Debug.Log(ID);
 		var chara = dict.GetCharacterData(ID);
-		Debug.Log("이름 :" + chara.CharacterName);
+
+		CharacterManager.Instance.m_CharacterStorage[ID].IsUnlock = true;
+
+        Debug.Log("이름 :" + chara.CharacterName);
 
 		//var item = transform.Find($"{chara.CharacterID}");
 		//item.GetComponentInChildren<TextMeshProUGUI>().SetText($"{chara.CharacterName}");

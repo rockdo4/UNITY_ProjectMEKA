@@ -67,6 +67,7 @@ public static class SaveLoadSystem
             Serialize.Converters.Add(new Vector3Converter());
             Serialize.Converters.Add(new QuaternionConverter());
             Serialize.Converters.Add(new CharacterDictConverter());
+            Serialize.Converters.Add(new StageDictConverter());
             Serialize.Serialize(writer, data);
         }
     }

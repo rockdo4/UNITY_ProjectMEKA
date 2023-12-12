@@ -241,8 +241,8 @@ public class FormationManager : MonoBehaviour
 			var cardInfo = cardList[i].GetComponent<CardInfo>();
             var cardId = cardInfo.GetCardID();
             var cardData = table.GetCharacterData(cardId);
-			
-			if(!CharacterManager.Instance.m_CharacterStorage[cardId].IsUnlock)
+
+			if (!CharacterManager.Instance.m_CharacterStorage[cardId].IsUnlock)
 			{
 				cardList[i].gameObject.SetActive(false);
             }
