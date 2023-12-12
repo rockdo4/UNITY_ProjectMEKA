@@ -13,7 +13,9 @@ public class StageUIManager : MonoBehaviour
     public Button assignmentStageButton;
     public Button challengeStageButton;
 
-    public GameObject stageButtonPanel;
+    public GameObject storyStageButtonPanel;
+    public GameObject assignmentStageButtonPanel;
+    public GameObject challengeStageButtonPanel;
     public GameObject stageButtonPrefab;
 
     private StageTable stageTable;
@@ -23,77 +25,90 @@ public class StageUIManager : MonoBehaviour
         PlayDataManager.Init();
         stageTable = DataTableMgr.GetTable<StageTable>();
 
+        SetStageButtons(StageClass.Story);
+        SetStageButtons(StageClass.Assignment);
+        SetStageButtons(StageClass.Challenge);
+
         storyStageButton.onClick.AddListener(() =>
         {
             ClassOnClick(StageClass.Story);
             StageDataManager.Instance.LoadPlayData();
             panelManager.ChangePanelMain();
-            panelManager.ChangePanelStageChoice();
-            SetStageButtons();
+            panelManager.ChangePanelStoryStageChoice();
+            //SetStageButtons(StageClass.Story);
         });
         assignmentStageButton.onClick.AddListener(() =>
         {
             ClassOnClick(StageClass.Assignment);
             StageDataManager.Instance.LoadPlayData();
             panelManager.ChangePanelMain();
-            panelManager.ChangePanelStageChoice();
-            SetStageButtons();
+            panelManager.ChangePanelAssignmentStageChoice();
+            //SetStageButtons(StageClass.Assignment);
         });
         challengeStageButton.onClick.AddListener(() =>
         {
             ClassOnClick(StageClass.Challenge);
             StageDataManager.Instance.LoadPlayData();
             panelManager.ChangePanelMain();
-            panelManager.ChangePanelStageChoice();
-            SetStageButtons();
+            panelManager.ChangePanelChallengeStageChoice();
+            //SetStageButtons(StageClass.Challenge);
         });
+    }
+
+    private void Start()
+    {
     }
 
     public void ClassOnClick(StageClass stageClass)
     {
         StageDataManager.Instance.SetCurrentStageClass(stageClass);
-        if(StageDataManager.Instance.selectedStageDatas == null)
+    }
+
+    public void SetStageButtons(StageClass stageClass)
+    {
+        switch (stageClass)
         {
-            Debug.Log("selectedStageDatas == null");
+            case StageClass.Story:
+                CreatStageButtons(storyStageButtonPanel.transform, PlayDataManager.data.storyStageDatas);
+                break;
+            case StageClass.Assignment:
+                CreatStageButtons(assignmentStageButtonPanel.transform, PlayDataManager.data.assignmentStageDatas);
+                break;
+            case StageClass.Challenge:
+                CreatStageButtons(challengeStageButtonPanel.transform, PlayDataManager.data.challengeStageDatas);
+                break;
         }
     }
 
-    public void SetStageButtons()
+    public void CreatStageButtons(Transform parentTr, Dictionary<int, StageSaveData> currentStageData)
     {
-        if (StageDataManager.Instance.selectedStageDatas != null)
+        var stringBuilder = new StringBuilder();
+        foreach (var stage in currentStageData)
         {
-            // 여기서 해당 패널에 스테이지버튼 추가
-            // 전부 생성해두고,
-            // 해금 안된 것들은 비활성화
+            //instantiate
+            var stageButtonGo = Instantiate(stageButtonPrefab, parentTr);
 
-            var stringBuilder = new StringBuilder();
-            foreach(var stage in StageDataManager.Instance.selectedStageDatas)
+            // chapter + stage text apply
+            var stageButtonText = stageButtonGo.GetComponentInChildren<TextMeshProUGUI>();
+
+            var chapter = stageTable.GetStageData(stage.Key).ChapterNumber;
+            var stageNumber = stageTable.GetStageData(stage.Key).StageNumber;
+
+            stringBuilder.Clear();
+            stringBuilder.Append(chapter);
+            stringBuilder.Append("-");
+            stringBuilder.Append(stageNumber.ToString());
+            stageButtonText.SetText(stringBuilder.ToString());
+
+            // id apply
+            var stageButtonScript = stageButtonGo.GetComponent<StageButton>();
+            stageButtonScript.stageID = stage.Key;
+
+            // active false
+            if (!stage.Value.isUnlocked)
             {
-                //instantiate
-                var stageButtonGo = Instantiate(stageButtonPrefab, stageButtonPanel.transform);
-
-                // chapter + stage text apply
-                var stageButtonText = stageButtonGo.GetComponentInChildren<TextMeshProUGUI>();
-
-                var chapter = stageTable.GetStageData(stage.Key).ChapterNumber;
-                var stageNumber = stageTable.GetStageData(stage.Key).StageNumber;
-
-                stringBuilder.Clear();
-                stringBuilder.Append(chapter);
-                stringBuilder.Append("-");
-                stringBuilder.Append(stageNumber.ToString());
-                stageButtonText.SetText(stringBuilder.ToString());
-
-                // 해금 안됐으면 비활성화
-                if(!stage.Value.isUnlocked)
-                {
-                    stageButtonGo.SetActive(false);
-                }
+                stageButtonGo.SetActive(false);
             }
-        }
-        else
-        {
-            Debug.Log("selected stage datas null!!!");
         }
     }
 }

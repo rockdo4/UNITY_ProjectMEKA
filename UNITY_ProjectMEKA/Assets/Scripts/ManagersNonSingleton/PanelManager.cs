@@ -35,8 +35,14 @@ public class PanelManager : MonoBehaviour
 	public RectTransform stageClassPanel;
 	private Vector3 stageClassPos;
 
-	public RectTransform stageChoicePanel;
-	private Vector3 stageChoicePos;
+	public RectTransform storyStageChoicePanel;
+	private Vector3 storyStageChoicePos;
+
+	public RectTransform assignmentStageChoicePanel;
+	private Vector3 assignmentStageChoicePos;
+
+	public RectTransform challengeStageChoicePanel;
+	private Vector3 challengeStageChoicePos;
 
 	public void Awake()
 	{
@@ -46,7 +52,9 @@ public class PanelManager : MonoBehaviour
 		formationPos = formationPanel.position;
 		inventoryPos = inventoryPanel.position;
         stageClassPos = stageClassPanel.position;
-        stageChoicePos = stageChoicePanel.position;
+        storyStageChoicePos = storyStageChoicePanel.position;
+        assignmentStageChoicePos = assignmentStageChoicePanel.position;
+		challengeStageChoicePos = challengeStageChoicePanel.position;
 
         previousPanel = mainPanel;
 		previousPos = mainPos;
@@ -100,11 +108,25 @@ public class PanelManager : MonoBehaviour
     }
 
 	//12.12, 김민지, 스테이지선택패널 추가
-	public void ChangePanelStageChoice()
+	public void ChangePanelStoryStageChoice()
 	{
-        previousPos = stageChoicePos;
-        previousPanel = stageChoicePanel;
-        stageChoicePanel.position = mainPos;
+        previousPos = storyStageChoicePos;
+        previousPanel = storyStageChoicePanel;
+        storyStageChoicePanel.position = mainPos;
+        mainPanel.position = previousPos;
+    }
+	public void ChangePanelAssignmentStageChoice()
+	{
+        previousPos = assignmentStageChoicePos;
+        previousPanel = assignmentStageChoicePanel;
+        assignmentStageChoicePanel.position = mainPos;
+        mainPanel.position = previousPos;
+    }
+	public void ChangePanelChallengeStageChoice()
+	{
+        previousPos = challengeStageChoicePos;
+        previousPanel = challengeStageChoicePanel;
+        challengeStageChoicePanel.position = mainPos;
         mainPanel.position = previousPos;
     }
 

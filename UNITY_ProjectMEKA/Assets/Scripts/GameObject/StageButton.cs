@@ -13,8 +13,9 @@ public class StageButton : MonoBehaviour
         stageButton = GetComponent<Button>();
         stageButton.onClick.AddListener(() =>
         {
-            //StageDataManager.Instance.selectedStageDatas.
-            //StageDataManager.Instance.selectedStageData = 
+            var stageData = StageDataManager.Instance.selectedStageDatas[stageID];
+            StageDataManager.Instance.selectedStageData = stageData;
+            Debug.Log(StageDataManager.Instance.selectedStageData.stageID);
         });
     }
 }
