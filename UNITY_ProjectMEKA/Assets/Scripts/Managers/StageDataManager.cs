@@ -38,12 +38,15 @@ public class StageDataManager
                 break;
             case StageClass.Story:
                 PlayDataManager.data.storyStageDatas = selectedStageDatas;
+                PlayDataManager.Save();
                 break;
             case StageClass.Assignment:
                 PlayDataManager.data.assignmentStageDatas = selectedStageDatas;
+                PlayDataManager.Save();
                 break;
             case StageClass.Challenge:
                 PlayDataManager.data.challengeStageDatas = selectedStageDatas;
+                PlayDataManager.Save();
                 break;
         }
     }

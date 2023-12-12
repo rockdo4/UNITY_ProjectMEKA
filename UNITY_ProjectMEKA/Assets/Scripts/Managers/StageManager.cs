@@ -42,6 +42,7 @@ public class StageManager : MonoBehaviour
         // 모드에 따라 구분
         var id = StageDataManager.Instance.selectedStageData.stageID;
         var stageData = StageDataManager.Instance.stageTable.GetStageData(id);
+        Debug.Log("stage id: " + id);
         switch(stageData.Type)
         {
             case (int)GameMode.Deffense:
@@ -58,15 +59,25 @@ public class StageManager : MonoBehaviour
 
     public void DefenseModeWinCondition()
     {
+        // win condition : mission clear at least 1
+        // loose condition : mission clear 0 or house hp 0
+
         if (currentHouseLife <= 0)
         {
             gameState = GameState.Die;
+            // show die result window
         }
         else if (killMonsterCount == allMonsterCount)
         {
+            var id = StageDataManager.Instance.selectedStageData.stageID;
+            var nextStageID = StageDataManager.Instance.stageTable.GetStageData(id).NextStageID;
+
             gameState = GameState.Win;
             StageDataManager.Instance.selectedStageData.isCleared = true;
+            StageDataManager.Instance.selectedStageDatas[nextStageID].isUnlocked = true;
+            StageDataManager.Instance.UpdatePlayData();
             // need to mission score apply
+            // show win result window
         }
     }
 
