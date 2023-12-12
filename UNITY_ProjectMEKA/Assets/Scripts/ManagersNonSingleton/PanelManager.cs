@@ -42,7 +42,7 @@ public class PanelManager : MonoBehaviour
 		gachaPos = gachaPanel.position;
 		formationPos = formationPanel.position;
 		inventoryPos = inventoryPanel.position;
-        stageTypePos = stageTypePanel.position;
+        //stageTypePos = stageTypePanel.position;
 
         previousPanel = mainPanel;
 		previousPos = mainPos;
