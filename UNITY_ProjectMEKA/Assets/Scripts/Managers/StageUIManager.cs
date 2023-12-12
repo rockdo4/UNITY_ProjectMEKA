@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Defines;
 
@@ -17,6 +18,8 @@ public class StageUIManager : MonoBehaviour
     public GameObject assignmentStageButtonPanel;
     public GameObject challengeStageButtonPanel;
     public GameObject stageButtonPrefab;
+
+    public GameObject stageInfoPanel;
 
     private StageTable stageTable;
 
@@ -35,7 +38,6 @@ public class StageUIManager : MonoBehaviour
             StageDataManager.Instance.LoadPlayData();
             panelManager.ChangePanelMain();
             panelManager.ChangePanelStoryStageChoice();
-            //SetStageButtons(StageClass.Story);
         });
         assignmentStageButton.onClick.AddListener(() =>
         {
@@ -43,7 +45,6 @@ public class StageUIManager : MonoBehaviour
             StageDataManager.Instance.LoadPlayData();
             panelManager.ChangePanelMain();
             panelManager.ChangePanelAssignmentStageChoice();
-            //SetStageButtons(StageClass.Assignment);
         });
         challengeStageButton.onClick.AddListener(() =>
         {
@@ -51,7 +52,6 @@ public class StageUIManager : MonoBehaviour
             StageDataManager.Instance.LoadPlayData();
             panelManager.ChangePanelMain();
             panelManager.ChangePanelChallengeStageChoice();
-            //SetStageButtons(StageClass.Challenge);
         });
     }
 
@@ -104,11 +104,50 @@ public class StageUIManager : MonoBehaviour
             var stageButtonScript = stageButtonGo.GetComponent<StageButton>();
             stageButtonScript.stageID = stage.Key;
 
+            var stageButton = stageButtonGo.GetComponent<Button>();
+            stageButton.onClick.AddListener(SetStageInfoWindow);
+
             // active false
             if (!stage.Value.isUnlocked)
             {
                 stageButtonGo.SetActive(false);
             }
+        }
+    }
+
+    public void SetStageInfoWindow()
+    {
+        stageInfoPanel.SetActive(true);
+        // 현재 선택된 스테이지 정보 받아서 ui 세팅
+        var stageTableData = stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
+    }
+
+    public void CloseStageInfoWindow()
+    {
+        stageInfoPanel.SetActive(false);
+    }
+
+    public void OnClickBattleStart()
+    {
+        var stageTableData = stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
+
+        switch (stageTableData.Class)
+        {
+            case (int)StageClass.Story:
+                var sceneNames1 = Utils.GetSceneNames(StageClass.Story);
+                panelManager.LoadFormation();
+                SceneManager.LoadScene(sceneNames1[stageTableData.Index]);
+                break;
+            case (int)StageClass.Assignment:
+                var sceneNames2 = Utils.GetSceneNames(StageClass.Assignment);
+                panelManager.LoadFormation();
+                SceneManager.LoadScene(sceneNames2[stageTableData.Index]);
+                break;
+            case (int)StageClass.Challenge:
+                var sceneNames3 = Utils.GetSceneNames(StageClass.Challenge);
+                panelManager.LoadFormation();
+                SceneManager.LoadScene(sceneNames3[stageTableData.Index]);
+                break;
         }
     }
 }

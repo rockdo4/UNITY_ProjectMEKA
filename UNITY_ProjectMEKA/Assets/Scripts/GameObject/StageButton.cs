@@ -15,6 +15,7 @@ public class StageButton : MonoBehaviour
         {
             var stageData = StageDataManager.Instance.selectedStageDatas[stageID];
             StageDataManager.Instance.selectedStageData = stageData;
+
             Debug.Log(StageDataManager.Instance.selectedStageData.stageID);
         });
     }

@@ -35,6 +35,27 @@ public static class Defines
         public const string slider = "Slider";
     }
 
+    public static class StorySceneNames
+    {
+        public const string stage0_1 = "Bug_KimMinji";
+        public const string stage0_2 = "a";
+        public const string stage0_3 = "b";
+
+
+    }
+    public static class AssignmentSceneNames
+    {
+        public const string stage0_1 = "Bug_KimMinji";
+        public const string stage0_2 = "a";
+        public const string stage0_3 = "b";
+    }
+    public static class ChallengeSceneNames
+    {
+        public const string stage0_1 = "Bug_KimMinji";
+        public const string stage0_2 = "a";
+        public const string stage0_3 = "b";
+    }
+
     public enum Property
     {
         None,

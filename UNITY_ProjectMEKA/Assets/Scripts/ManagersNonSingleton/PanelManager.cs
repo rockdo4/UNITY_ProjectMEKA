@@ -130,30 +130,18 @@ public class PanelManager : MonoBehaviour
         mainPanel.position = previousPos;
     }
 
-    //public void LoadBattleScene()
-    //{
-    //	var formation = formationPanel.GetComponent<FormationManager>();
-    //	if(formation == null)
-    //	{
-    //		Debug.LogError("FormationManager 못불러옴");
-    //		return;
-    //	}
-    //	formation.SetHolderFormation();
+	public void LoadFormation()
+	{
+		var formation = formationPanel.GetComponent<FormationManager>();
+		if (formation == null)
+		{
+			Debug.LogError("FormationManager 못불러옴");
+			return;
+		}
+		formation.SetHolderFormation();
+	}
 
-    //	if(DataHolder.isVaild)
-    //	{
-    //		//UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
-    //		//UnityEngine.SceneManagement.SceneManager.LoadScene("BUGLHJ");
-    //		UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
-    //	}
-    //	else
-    //	{
-    //		Debug.Log("플레이어가 선택한 캐릭터가 없습니다.");
-    //	}
-
-    //}
-
-    public void ExitGame() 
+	public void ExitGame() 
 	{
 		Application.Quit();
 	}
