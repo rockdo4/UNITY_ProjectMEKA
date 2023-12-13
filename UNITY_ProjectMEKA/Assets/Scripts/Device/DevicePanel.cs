@@ -184,11 +184,37 @@ public class DevicePanel : MonoBehaviour
 			item.GetComponent<Button>().onClick.AddListener(() =>
 			{
 				Debug.Log(("이름: " + str, "인스턴스아이디: " + device.Value.InstanceID, "레벨: " + device.Value.CurrLevel, "설명: " + device.Value.Description));
+				SetDeviceInfoText(device.Value);
 			});
 			item.name = device.Value.Name;
 			item.transform.SetParent(scrollContent, false);
 			item.gameObject.name = count++.ToString();
 			item.transform.SetAsLastSibling();
+		}
+	}
+
+	public void SetDeviceInfoText(Device device)
+	{
+		deviceName.SetText(device.Name);
+		level.SetText(device.CurrLevel.ToString());
+		type.SetText(device.PartType.ToString());
+
+		mainOption.SetText(deviceOptionTable.GetDeviceOptionData(device.MainOptionID).Name);
+		//mainOptionValue.SetText(deviceOptionTable.GetDeviceOptionData(device.MainOptionID).Weight.ToString());
+		subOption1.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption1ID).Name);
+		//mainOptionValue1;
+		subOption2.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption2ID).Name);
+		//mainOptionValue2;
+
+		if(device.SubOption3ID == 0)
+		{
+			subOption3.SetText("10레벨에 해금");
+			mainOptionValue3.SetText("--");
+		}
+		else
+		{
+			subOption3.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption3ID).Name);
+			//mainOptionValue3;
 		}
 	}
 }

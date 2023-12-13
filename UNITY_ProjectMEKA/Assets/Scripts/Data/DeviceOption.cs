@@ -20,3 +20,13 @@ public class DeviceOption
 	public string Name { get; set; }
 	public int Weight { get; set; }
 }
+
+public class DeviceValue
+{
+	public int ID { get; set; }
+	public string Name { get; set; }
+	public float Coefficient { get; set; }
+	public float Value { get; set; }
+	public float Increase { get; set; }
+	public float MaxValue { get; set; }
+}
