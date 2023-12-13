@@ -282,6 +282,11 @@ MonoBehaviour:
   currentPlayerIcon: {fileID: 0}
   currentCost: 0
   maxCost: 99
+  allMonsterCount: 0
+  leftMonsterCount: 0
+  leftWaveCount: 0
+  currentHouseLife: 0
+  maxHouseLife: 0
 --- !u!4 &143171800
 Transform:
   m_ObjectHideFlags: 0
@@ -319,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a022f28b9c4a5ee48914b9866e797c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &786877527
+--- !u!1001 &813234320
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -369,7 +374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2254228764867181573, guid: ce88a3b3b1432a7418ab73d336551b42, type: 3}
       propertyPath: m_Name
-      value: Map_2-1
+      value: Map_1-1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1341,7 +1346,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1343661722}
   - {fileID: 21544532}
-  - {fileID: 786877527}
+  - {fileID: 813234320}
   - {fileID: 2057198290}
   - {fileID: 1420254959}
   - {fileID: 143171800}

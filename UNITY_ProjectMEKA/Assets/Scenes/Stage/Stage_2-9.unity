@@ -282,6 +282,11 @@ MonoBehaviour:
   currentPlayerIcon: {fileID: 0}
   currentCost: 0
   maxCost: 99
+  allMonsterCount: 0
+  leftMonsterCount: 0
+  leftWaveCount: 0
+  currentHouseLife: 0
+  maxHouseLife: 0
 --- !u!4 &143171800
 Transform:
   m_ObjectHideFlags: 0
@@ -1142,7 +1147,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1903899201}
   m_CullTransparentMesh: 1
---- !u!1001 &2045994265
+--- !u!1001 &1954007823
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1192,7 +1197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2254228764867181573, guid: 703917551fa437e4d87525308257e307, type: 3}
       propertyPath: m_Name
-      value: Map_2-9
+      value: Map_1-9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1341,7 +1346,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1343661722}
   - {fileID: 21544532}
-  - {fileID: 2045994265}
+  - {fileID: 1954007823}
   - {fileID: 2057198290}
   - {fileID: 1420254959}
   - {fileID: 143171800}
