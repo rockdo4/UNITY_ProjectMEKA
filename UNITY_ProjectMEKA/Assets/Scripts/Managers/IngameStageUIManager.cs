@@ -25,7 +25,7 @@ public class IngameStageUIManager : MonoBehaviour
     public TextMeshProUGUI costText;
     public TextMeshProUGUI leftWaveText;
     public TextMeshProUGUI allMonsterCountText;
-    public TextMeshProUGUI spawnedMonsterCountText;
+    public TextMeshProUGUI killMonsterCountText;
     public TextMeshProUGUI houseLifeText;
     public Image costSlider;
 
@@ -108,10 +108,10 @@ public class IngameStageUIManager : MonoBehaviour
         {
             windowMode = WindowMode.Setting;
         }
-        else if ()
-        {
+        //else if ()
+        //{
 
-        }
+        //}
     }
 
     public void WindowSet()
@@ -224,7 +224,7 @@ public class IngameStageUIManager : MonoBehaviour
     {
         if(prevSpawnedMonsterCount != stageManager.killMonsterCount)
         {
-            spawnedMonsterCountText.SetText(stageManager.killMonsterCount.ToString());
+            killMonsterCountText.SetText(stageManager.killMonsterCount.ToString());
             prevSpawnedMonsterCount = stageManager.killMonsterCount;
         }
     }

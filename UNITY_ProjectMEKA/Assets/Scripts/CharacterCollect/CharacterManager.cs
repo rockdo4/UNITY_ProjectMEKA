@@ -51,7 +51,10 @@ public class CharacterManager
 	}
 	public void CheckPlayData()
 	{
-		if(PlayDataManager.data == null)
+		// for tilemap test
+		PlayDataManager.Init();
+
+        if (PlayDataManager.data == null)
 		{
 			Debug.Log("데이터 없음");
 			//return;

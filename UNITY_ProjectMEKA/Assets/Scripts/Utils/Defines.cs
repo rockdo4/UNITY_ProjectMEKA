@@ -19,6 +19,7 @@ public static class Defines
         public const string cancel = "Cancel";
         public const string collect = "Collect";
         public const string player = "Player";
+        public const string characterIconManager = "CharacterIconManager";
     }
 
     public static class Layers
