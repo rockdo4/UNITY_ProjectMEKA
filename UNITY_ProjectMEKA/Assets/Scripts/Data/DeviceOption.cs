@@ -11,6 +11,7 @@ public class Device
 	public int SubOption2ID;
 	public int SubOption3ID = 0;
 	public bool IsEquipped = false;
+	public int TargetCharacterID = 0;
 }
 
 public class DeviceOption

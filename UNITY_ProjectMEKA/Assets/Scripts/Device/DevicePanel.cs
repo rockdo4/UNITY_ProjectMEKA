@@ -29,6 +29,8 @@ public class DevicePanel : MonoBehaviour
 
 	[Header("Character Info")]
 	public TextMeshProUGUI characterName;
+	public Button coreItem;
+	public Button engineItem;
 
 
 	[Header("Device Info")]
@@ -242,36 +244,51 @@ public class DevicePanel : MonoBehaviour
 		mainOption.SetText(deviceOptionTable.GetDeviceOptionData(device.MainOptionID).Name);
 
 		float mainValue = deviceValueTable.GetDeviceValueData(device.MainOptionID).Coefficient;
-		if(mainValue == 0)
+		if(mainValue != 0)
+		{
+			mainValue += deviceValueTable.GetDeviceValueData(device.MainOptionID).Increase * (device.CurrLevel - 1);
+			mainOptionValue.SetText(mainValue.ToString() + "%");
+		}
+		else
 		{
 			mainValue = deviceValueTable.GetDeviceValueData(device.MainOptionID).Value;
+			mainValue += deviceValueTable.GetDeviceValueData(device.MainOptionID).Increase * (device.CurrLevel - 1);
+			mainOptionValue.SetText(mainValue.ToString());
 		}
-		mainValue += deviceValueTable.GetDeviceValueData(device.MainOptionID).Increase * (device.CurrLevel - 1);
-		mainOptionValue.SetText(mainValue.ToString());
 
 		//
 
 		subOption1.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption1ID).Name);
 
 		float subValue1 = deviceValueTable.GetDeviceValueData(device.SubOption1ID).Coefficient;
-		if (subValue1 == 0)
+		if (subValue1 != 0)
+		{
+			subValue1 += deviceValueTable.GetDeviceValueData(device.SubOption1ID).Increase * (device.CurrLevel - 1);
+			subOptionValue1.SetText(subValue1.ToString() + "%");
+		}
+		else
 		{
 			subValue1 = deviceValueTable.GetDeviceValueData(device.SubOption1ID).Value;
+			subValue1 += deviceValueTable.GetDeviceValueData(device.SubOption1ID).Increase * (device.CurrLevel - 1);
+			subOptionValue1.SetText(subValue1.ToString());
 		}
-		subValue1 += deviceValueTable.GetDeviceValueData(device.SubOption1ID).Increase * (device.CurrLevel - 1);
-		subOptionValue1.SetText(subValue1.ToString());
 
 		//
 
 		subOption2.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption2ID).Name);
 
 		float subValue2 = deviceValueTable.GetDeviceValueData(device.SubOption2ID).Coefficient;
-		if (subValue2 == 0)
+		if (subValue2 != 0)
+		{
+			subValue2 += deviceValueTable.GetDeviceValueData(device.SubOption2ID).Increase * (device.CurrLevel - 1);
+			subOptionValue2.SetText(subValue2.ToString() + "%");
+		}
+		else
 		{
 			subValue2 = deviceValueTable.GetDeviceValueData(device.SubOption2ID).Value;
+			subValue2 += deviceValueTable.GetDeviceValueData(device.SubOption2ID).Increase * (device.CurrLevel - 1);
+			subOptionValue2.SetText(subValue2.ToString());
 		}
-		subValue2 += deviceValueTable.GetDeviceValueData(device.SubOption2ID).Increase * (device.CurrLevel - 1);
-		subOptionValue2.SetText(subValue2.ToString());
 
 		//
 
@@ -282,38 +299,76 @@ public class DevicePanel : MonoBehaviour
 		}
 		else
 		{
-			subOption3.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption3ID).Name);
-
 			float subValue3 = deviceValueTable.GetDeviceValueData(device.SubOption3ID).Coefficient;
-			if (subValue3 == 0)
+			if (subValue3 != 0)
+			{
+				subValue3 += deviceValueTable.GetDeviceValueData(device.SubOption3ID).Increase * (device.CurrLevel - 1);
+				subOptionValue3.SetText(subValue3.ToString() + "%");
+			}
+			else
 			{
 				subValue3 = deviceValueTable.GetDeviceValueData(device.SubOption3ID).Value;
+				subValue3 += deviceValueTable.GetDeviceValueData(device.SubOption3ID).Increase * (device.CurrLevel - 1);
+				subOptionValue3.SetText(subValue3.ToString());
 			}
-			subValue3 += deviceValueTable.GetDeviceValueData(device.SubOption3ID).Increase * (device.CurrLevel - 1);
-			subOptionValue3.SetText(subValue3.ToString());
 		}
 	}
 
 	public void OnClickEquip()
 	{
-		if(selectedDevice.IsEquipped)
+		if(selectedDevice == null)
 		{
-			Debug.Log("이미 장착된 장비입니다.");
+			Debug.Log("장비를 선택해주세요.");
 			return;
 		}
-		else
+
+		//이미 어딘가 장착되었을 때
+		//원래 장착된 곳에서 해제하고 현재 캐릭터에 장착
+		//아이템의 타겟 캐릭터가 현재 캐릭터가 다르면 장착
+		if(selectedDevice.IsEquipped && selectedDevice.TargetCharacterID != currCharacter.CharacterID)
 		{
-			selectedDevice.IsEquipped = true;
-			
-			if(selectedDevice.PartType == (int)DevicePartType.Core)
+			var target = selectedDevice.TargetCharacterID;
+			var character = CharacterManager.Instance.m_CharacterStorage[target];
+
+			if(character == null)
 			{
-				currCharacter.DeviceCoreID = selectedDevice.InstanceID;
+				Debug.Log("장착된 캐릭터가 없습니다.");
+				return;
 			}
-			else if(selectedDevice.PartType == (int)DevicePartType.Engine)
+
+			if(selectedDevice.PartType == (int)DevicePartType.Engine)
 			{
+				character.DeviceEngineID = 0;
 				currCharacter.DeviceEngineID = selectedDevice.InstanceID;
+				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
+			}
+			else if(selectedDevice.PartType == (int)DevicePartType.Core)
+			{
+				character.DeviceCoreID = 0;
+				currCharacter.DeviceCoreID = selectedDevice.InstanceID;
+				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
 			}
 		}
+		//장착 안되어있으면,
+		else
+		{
+			if(selectedDevice.PartType == (int)DevicePartType.Engine)
+			{
+				currCharacter.DeviceEngineID = selectedDevice.InstanceID;
+				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
+			}
+			else if(selectedDevice.PartType == (int)DevicePartType.Core)
+			{
+				currCharacter.DeviceCoreID = selectedDevice.InstanceID;
+				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
+			}
+			selectedDevice.IsEquipped = true;
+		}
+	}
+
+	public void OnClickUnEquip()
+	{
+
 	}
 
 	public void CheckPlayData()
