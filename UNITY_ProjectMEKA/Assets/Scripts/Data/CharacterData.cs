@@ -12,6 +12,9 @@ public class Character
 	public int CharacterGrade;
 	public bool IsUnlock;
 
+	public int DeviceCoreID;
+	public int DeviceEngineID;
+
 	public float Damage
 	{
 		get

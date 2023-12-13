@@ -41,6 +41,9 @@ public static class DataTableMgr
 
         var deviceOptionTable = new DeviceOptionTable();
         tables.Add(typeof(DeviceOptionTable), deviceOptionTable);
+
+        var deviceValueTable = new DeviceValueTable();
+        tables.Add(typeof(DeviceValueTable), deviceValueTable);
     }
 
     public static T GetTable<T>() where T : DataTable

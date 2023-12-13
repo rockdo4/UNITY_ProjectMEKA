@@ -108,7 +108,7 @@ public class IngameStageUIManager : MonoBehaviour
         {
             windowMode = WindowMode.Setting;
         }
-        else if ()
+        else// if ()
         {
 
         }

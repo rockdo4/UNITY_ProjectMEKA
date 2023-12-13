@@ -11,6 +11,7 @@ public class DevicePanel : MonoBehaviour
 	private GachaSystem<int> subOption;
 
 	private DeviceOptionTable deviceOptionTable;
+	private DeviceValueTable deviceValueTable;
 
 	private Dictionary<int, Device> deviceDict;
 
@@ -24,11 +25,11 @@ public class DevicePanel : MonoBehaviour
 	public TextMeshProUGUI mainOption;
 	public TextMeshProUGUI mainOptionValue;
 	public TextMeshProUGUI subOption1;
-	public TextMeshProUGUI mainOptionValue1;
+	public TextMeshProUGUI subOptionValue1;
 	public TextMeshProUGUI subOption2;
-	public TextMeshProUGUI mainOptionValue2;
+	public TextMeshProUGUI subOptionValue2;
 	public TextMeshProUGUI subOption3;
-	public TextMeshProUGUI mainOptionValue3;
+	public TextMeshProUGUI subOptionValue3;
 
 	private void Awake()
 	{
@@ -41,6 +42,7 @@ public class DevicePanel : MonoBehaviour
 	{
 		deviceDict = DeviceInventoryManager.Instance.m_DeviceStorage;
 		deviceOptionTable = DataTableMgr.GetTable<DeviceOptionTable>();
+		deviceValueTable = DataTableMgr.GetTable<DeviceValueTable>();
 
 		var coreOptions = deviceOptionTable.GetOrigianlCoreTable();
 		var engineOptions = deviceOptionTable.GetOrigianlEngineTable();
@@ -200,21 +202,57 @@ public class DevicePanel : MonoBehaviour
 		type.SetText(device.PartType.ToString());
 
 		mainOption.SetText(deviceOptionTable.GetDeviceOptionData(device.MainOptionID).Name);
-		//mainOptionValue.SetText(deviceOptionTable.GetDeviceOptionData(device.MainOptionID).Weight.ToString());
-		subOption1.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption1ID).Name);
-		//mainOptionValue1;
-		subOption2.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption2ID).Name);
-		//mainOptionValue2;
 
-		if(device.SubOption3ID == 0)
+		float mainValue = deviceValueTable.GetDeviceValueData(device.MainOptionID).Coefficient;
+		if(mainValue == 0)
+		{
+			mainValue = deviceValueTable.GetDeviceValueData(device.MainOptionID).Value;
+		}
+		mainValue += deviceValueTable.GetDeviceValueData(device.MainOptionID).Increase * (device.CurrLevel - 1);
+		mainOptionValue.SetText(mainValue.ToString());
+
+		//
+
+		subOption1.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption1ID).Name);
+
+		float subValue1 = deviceValueTable.GetDeviceValueData(device.SubOption1ID).Coefficient;
+		if (subValue1 == 0)
+		{
+			subValue1 = deviceValueTable.GetDeviceValueData(device.SubOption1ID).Value;
+		}
+		subValue1 += deviceValueTable.GetDeviceValueData(device.SubOption1ID).Increase * (device.CurrLevel - 1);
+		subOptionValue1.SetText(subValue1.ToString());
+
+		//
+
+		subOption2.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption2ID).Name);
+
+		float subValue2 = deviceValueTable.GetDeviceValueData(device.SubOption2ID).Coefficient;
+		if (subValue2 == 0)
+		{
+			subValue2 = deviceValueTable.GetDeviceValueData(device.SubOption2ID).Value;
+		}
+		subValue2 += deviceValueTable.GetDeviceValueData(device.SubOption2ID).Increase * (device.CurrLevel - 1);
+		subOptionValue2.SetText(subValue2.ToString());
+
+		//
+
+		if (device.SubOption3ID == 0)
 		{
 			subOption3.SetText("10레벨에 해금");
-			mainOptionValue3.SetText("--");
+			subOptionValue3.SetText("--");
 		}
 		else
 		{
 			subOption3.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption3ID).Name);
-			//mainOptionValue3;
+
+			float subValue3 = deviceValueTable.GetDeviceValueData(device.SubOption3ID).Coefficient;
+			if (subValue3 == 0)
+			{
+				subValue3 = deviceValueTable.GetDeviceValueData(device.SubOption3ID).Value;
+			}
+			subValue3 += deviceValueTable.GetDeviceValueData(device.SubOption3ID).Increase * (device.CurrLevel - 1);
+			subOptionValue3.SetText(subValue3.ToString());
 		}
 	}
 }

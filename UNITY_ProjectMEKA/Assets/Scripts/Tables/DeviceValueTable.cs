@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class DeviceValueTable : DataTable
 {
-	protected Dictionary<int, DeviceOption> deviceValueDict = new Dictionary<int, DeviceOption>();
+	protected Dictionary<int, DeviceValue> deviceValueDict = new Dictionary<int, DeviceValue>();
 
 	public DeviceValueTable()
 	{
@@ -30,11 +30,11 @@ public class DeviceValueTable : DataTable
 
 		try
 		{
-			var records = csv.GetRecords<DeviceOption>();
+			var records = csv.GetRecords<DeviceValue>();
 
 			foreach (var record in records)
 			{
-				DeviceOption temp = record;
+				DeviceValue temp = record;
 
 				deviceValueDict.Add(temp.ID, temp);
 			}
@@ -46,7 +46,7 @@ public class DeviceValueTable : DataTable
 		}
 	}
 
-	public DeviceOption GetDeviceValueData(int id)
+	public DeviceValue GetDeviceValueData(int id)
 	{
 		if (deviceValueDict.ContainsKey(id))
 		{
@@ -59,8 +59,8 @@ public class DeviceValueTable : DataTable
 		}
 	}
 
-	public Dictionary<int, DeviceOption> GetOrigianlValueTable()
+	public Dictionary<int, DeviceValue> GetOrigianlValueTable()
 	{
-		return new Dictionary<int, DeviceOption>(deviceValueDict);
+		return new Dictionary<int, DeviceValue>(deviceValueDict);
 	}
 }

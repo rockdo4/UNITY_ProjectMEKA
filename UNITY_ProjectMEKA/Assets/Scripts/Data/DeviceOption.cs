@@ -28,5 +28,5 @@ public class DeviceValue
 	public float Coefficient { get; set; }
 	public float Value { get; set; }
 	public float Increase { get; set; }
-	public float MaxValue { get; set; }
+	public float MaxLevel { get; set; }
 }

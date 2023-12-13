@@ -13,17 +13,22 @@ public class TableTest : MonoBehaviour
 
 	public void OnClickAddItem()
 	{
-		var range = DataTableMgr.GetTable<ItemInfoTable>().Count;
+		int[] arr = { 5110001, 5120001, 5130001, 5610001, 5620001, 5630001, 5710001, 5720001, 5730001 };
 
-		var item = new Item();
+		var table = DataTableMgr.GetTable<ItemInfoTable>();
 
-		item.ID = Random.Range(1, range);
-		item.InstanceID = item.ID;
+		for(int i=0; i<arr.Length; i++)
+		{
+			var item = new Item();
+			var info = table.GetItemData(arr[i]);
 
-		ItemInventoryManager.Instance.AddItemByInstance(item);
+			item.ID = info.ID;
+			item.InstanceID = info.ID;
+			item.Count = 1;
+
+			ItemInventoryManager.Instance.AddItemByInstance(item);
+		}
 		itemCardManager.UpdateItemCard();
-
-		Debug.Log(item.Name + "추가");
 
 		//세이브
 		GameManager.Instance.SaveExecution();
