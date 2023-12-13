@@ -139,6 +139,14 @@ public static class Defines
         RYUSIENSkill,
         ISABELLASkill,
     }
+    public enum SkillType
+    {//어떤 스킬인지 표시: 자동, 즉발, 스나이핑 단일, 스나이핑 광역 
+        Auto,
+        Instant,
+        SnipingSingle,
+        SnipingArea,
+    }
+
     public enum StageClass
     {
         None,

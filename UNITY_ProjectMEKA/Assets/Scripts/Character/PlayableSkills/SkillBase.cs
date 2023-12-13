@@ -11,7 +11,8 @@ public abstract class SkillBase : MonoBehaviour
     public float skillCoolTime;
 
     //어떤 스킬인지 표시: 자동, 즉발, 스나이핑 단일, 스나이핑 광역 
-
+    [SerializeField, Header("스킬 타입")]
+    public Defines.SkillType skillType;
    
 
     public abstract void UseSkill();
