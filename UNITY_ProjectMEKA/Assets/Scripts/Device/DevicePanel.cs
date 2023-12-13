@@ -4,6 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum DevicePartType
+{
+	Core = 1,
+	Engine = 2,
+}
+
 public class DevicePanel : MonoBehaviour
 {
 	private GachaSystem<int> coreOption;
@@ -16,9 +22,16 @@ public class DevicePanel : MonoBehaviour
 	private Dictionary<int, Device> deviceDict;
 
 	public Transform characterInfoPanel;
+
+	[Header("Scroll View")]
 	public Transform scrollContent;
 	public DeviceInfo devicePrefab;
 
+	[Header("Character Info")]
+	public TextMeshProUGUI characterName;
+
+
+	[Header("Device Info")]
 	public TextMeshProUGUI deviceName;
 	public TextMeshProUGUI level;
 	public TextMeshProUGUI type;
@@ -30,6 +43,14 @@ public class DevicePanel : MonoBehaviour
 	public TextMeshProUGUI subOptionValue2;
 	public TextMeshProUGUI subOption3;
 	public TextMeshProUGUI subOptionValue3;
+
+	public Button equipButton;
+	public Button enhanceButton;
+
+	private Device selectedDevice;
+
+	private Character currCharacter;
+
 
 	private void Awake()
 	{
@@ -63,6 +84,8 @@ public class DevicePanel : MonoBehaviour
 			subOption.Add(item.Key, item.Value.Weight);
 			//Debug.Log((item.Key, item.Value.Weight));
 		}
+
+		CheckPlayData();
 	}
 
 	private void Update()
@@ -77,6 +100,20 @@ public class DevicePanel : MonoBehaviour
 			CreateDevice(2);
 			UpdateDeviceCard();
 		}
+	}
+
+	public void SetCharacter(Character character)
+	{
+		if(character == null)
+		{
+			Debug.Log("캐릭터가 없습니다.");
+			return;
+		}
+
+		currCharacter = character;
+		characterName.SetText(currCharacter.Name);
+
+		UpdateDeviceCard();
 	}
 
 	public void CreateDevice(int PartType)
@@ -182,11 +219,12 @@ public class DevicePanel : MonoBehaviour
 			var text = item.GetComponentInChildren<TextMeshProUGUI>();
 			var str = device.Value.Name;
 
-			text.SetText(device.Value.Name);
+			text.SetText(device.Value.PartType.ToString());
 			item.GetComponent<Button>().onClick.AddListener(() =>
 			{
 				Debug.Log(("이름: " + str, "인스턴스아이디: " + device.Value.InstanceID, "레벨: " + device.Value.CurrLevel, "설명: " + device.Value.Description));
 				SetDeviceInfoText(device.Value);
+				selectedDevice = device.Value;
 			});
 			item.name = device.Value.Name;
 			item.transform.SetParent(scrollContent, false);
@@ -254,5 +292,32 @@ public class DevicePanel : MonoBehaviour
 			subValue3 += deviceValueTable.GetDeviceValueData(device.SubOption3ID).Increase * (device.CurrLevel - 1);
 			subOptionValue3.SetText(subValue3.ToString());
 		}
+	}
+
+	public void OnClickEquip()
+	{
+		if(selectedDevice.IsEquipped)
+		{
+			Debug.Log("이미 장착된 장비입니다.");
+			return;
+		}
+		else
+		{
+			selectedDevice.IsEquipped = true;
+			
+			if(selectedDevice.PartType == (int)DevicePartType.Core)
+			{
+				currCharacter.DeviceCoreID = selectedDevice.InstanceID;
+			}
+			else if(selectedDevice.PartType == (int)DevicePartType.Engine)
+			{
+				currCharacter.DeviceEngineID = selectedDevice.InstanceID;
+			}
+		}
+	}
+
+	public void CheckPlayData()
+	{
+		DeviceInventoryManager.Instance.m_DeviceStorage = PlayDataManager.data.deviceStorage;
 	}
 }

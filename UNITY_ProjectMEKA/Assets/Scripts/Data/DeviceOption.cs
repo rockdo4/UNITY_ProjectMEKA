@@ -10,6 +10,7 @@ public class Device
 	public int SubOption1ID;
 	public int SubOption2ID;
 	public int SubOption3ID = 0;
+	public bool IsEquipped = false;
 }
 
 public class DeviceOption
