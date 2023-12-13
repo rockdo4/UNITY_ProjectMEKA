@@ -156,6 +156,9 @@ public class PlayerController : MonoBehaviour
             case Skills.RYUSIENSkill:
                 var r = gameObject.AddComponent<RYUSIENSkill>();
                 break;
+            case Skills.ISABELLASkill:
+                var isa = gameObject.AddComponent<ISABELLASkill>();
+                break;
         }
         state.cost = state.maxCost;
 
@@ -292,6 +295,8 @@ public class PlayerController : MonoBehaviour
 
         switch (state.BulletType)
         {
+            case ProjectileType.None:
+                break;
             case ProjectileType.Bullet:
                 var projectile = obj.GetComponent<Bullet>();
                 projectile.ResetState();
@@ -343,6 +348,7 @@ public class PlayerController : MonoBehaviour
                 GetComponent<Instantaneous>().Shoot();
 
                 break;
+            
         }
 
 

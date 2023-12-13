@@ -103,6 +103,7 @@ public static class Defines
     }
     public enum ProjectileType
     {
+        None,
         Bullet,
         Aoe,
         PiercingShot,
@@ -136,6 +137,7 @@ public static class Defines
         MERIASkill,
         PALASkill,
         RYUSIENSkill,
+        ISABELLASkill,
     }
     public enum StageClass
     {

@@ -5010,6 +5010,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8735126315884223859}
   - component: {fileID: 8129487063695721612}
+  - component: {fileID: 5306435420833964901}
   m_Layer: 13
   m_Name: GameObject
   m_TagString: PlayerCollider
@@ -5055,6 +5056,33 @@ CapsuleCollider:
   m_Height: 5.4065423
   m_Direction: 1
   m_Center: {x: -0.012627892, y: 2.7229102, z: 0}
+--- !u!54 &5306435420833964901
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2335269994003329547}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2413618552537347504
 GameObject:
   m_ObjectHideFlags: 0
@@ -14993,6 +15021,10 @@ MonoBehaviour:
   joystick: {fileID: 0}
   icon: {fileID: 0}
   currentTile: {fileID: 0}
+  parentPos: {fileID: 0}
+  ChildPos: {fileID: 0}
+  animationController: {fileID: 0}
+  currnetAnimationController: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -15022,6 +15054,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 13102
   name: "\uCE20\uC720\uBC14\uCE74"
+  property: 2
+  maxHp: 100
+  amror: 0
+  damage: 40
+  attackDelay: 2
+  BulletName: 
+  BulletType: 6
+  flashName: Flash20
+  hitName: AoeBulletHit
+  hang: 4
+  yal: 3
+  rangeAttack: 000000000100000000000000010000000100000001000000010000000100000001000000010000000200000001000000
+  level: 0
+  grade: 0
+  Hp: 0
+  ID: 0
   arrangeCost: 16
   arrangeCoolTime: 40
   skill: 0
@@ -15030,26 +15078,9 @@ MonoBehaviour:
   skillCost: 0
   skillCoolTime: 0
   skillDuration: 0
-  property: 2
   occupation: 3
-  maxHp: 100
-  amror: 0
-  cooldown: 0
-  damage: 40
-  attackDelay: 2
-  BulletName: 
-  BulletType: 5
-  flashName: Flash20
-  hitName: AoeBulletHit
-  hang: 4
-  yal: 3
-  rangeAttack: 000000000100000000000000010000000100000001000000010000000100000001000000010000000200000001000000
-  level: 0
-  grade: 0
   experience: 0
   currentExperience: 0
-  Hp: 0
-  ID: 0
 --- !u!1 &6689180952653706931
 GameObject:
   m_ObjectHideFlags: 0

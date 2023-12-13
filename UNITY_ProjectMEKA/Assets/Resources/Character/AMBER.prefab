@@ -5495,6 +5495,7 @@ GameObject:
   - component: {fileID: 6730937452685924288}
   - component: {fileID: 8410696357173322987}
   - component: {fileID: -1453503732151428053}
+  - component: {fileID: 4746050498152787915}
   m_Layer: 6
   m_Name: AMBER
   m_TagString: Player
@@ -5518,8 +5519,8 @@ Transform:
   - {fileID: 4297931798695213665}
   - {fileID: 7884777207155731657}
   - {fileID: 5675817208387476542}
-  - {fileID: 3835519842745755339}
   - {fileID: 3047952661607539293}
+  - {fileID: 3835519842745755339}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6959104672920319632
@@ -5593,6 +5594,8 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   parentPos: {fileID: 0}
   ChildPos: {fileID: 0}
+  animationController: {fileID: 0}
+  currnetAnimationController: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -5628,7 +5631,7 @@ MonoBehaviour:
   damage: 50
   attackDelay: 1
   BulletName: Explosion
-  BulletType: 3
+  BulletType: 4
   flashName: 
   hitName: 
   hang: 3
@@ -5649,6 +5652,26 @@ MonoBehaviour:
   occupation: 3
   experience: 0
   currentExperience: 0
+--- !u!114 &4746050498152787915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2452888991731294278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375317c1b2b29d341824d604467b31de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillCost: 50
+  skillCoolTime: 22
+  skillDuration: 12
+  isMe: 1
+  isSingle: 1
+  effectName: 
+  isChoice: 0
+  type: 1
 --- !u!1 &2479889199337685883
 GameObject:
   m_ObjectHideFlags: 0
@@ -7711,6 +7734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3047952661607539293}
   - component: {fileID: 5954678522587952411}
+  - component: {fileID: 7663603779965318014}
   m_Layer: 13
   m_Name: GameObject
   m_TagString: PlayerCollider
@@ -7756,6 +7780,33 @@ CapsuleCollider:
   m_Height: 5.5823665
   m_Direction: 1
   m_Center: {x: -0.017089844, y: 2.8511832, z: 0}
+--- !u!54 &7663603779965318014
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275446971267203620}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3277285307071069017
 GameObject:
   m_ObjectHideFlags: 0
