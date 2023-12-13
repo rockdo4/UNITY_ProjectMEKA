@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class IngameStageUIManager : MonoBehaviour
     public GameObject timeProgressBarPanel;
     public GameObject waveCountPanel;
     public GameObject monsterCountPanel;
+    public GameObject ResultPanel;
+    public GameObject ItemParentPanel;
 
     // character info
     public TextMeshProUGUI characterOccupation;
@@ -25,9 +28,19 @@ public class IngameStageUIManager : MonoBehaviour
     public TextMeshProUGUI costText;
     public TextMeshProUGUI leftWaveText;
     public TextMeshProUGUI allMonsterCountText;
-    public TextMeshProUGUI spawnedMonsterCountText;
+    public TextMeshProUGUI killMonsterCountText;
     public TextMeshProUGUI houseLifeText;
     public Image costSlider;
+
+    // Result info
+    public TextMeshProUGUI chapterText;
+    public TextMeshProUGUI stageNumText;
+    public TextMeshProUGUI stageNameText;
+    public TextMeshProUGUI stageTypeText;
+    public GameObject itemPrefab;
+    public Image itemImage;
+    public TextMeshProUGUI itemCount;
+    public TextMeshProUGUI itemName;
 
     // joystick
     public ArrangeJoystick joystick;
@@ -40,7 +53,7 @@ public class IngameStageUIManager : MonoBehaviour
     public bool currentPlayerOnTile;
     private bool isInfoWindowOn = true;
     private int prevCost;
-    private int prevSpawnedMonsterCount;
+    private int prevKillMonsterCount;
     private int prevHouseLife;
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
@@ -92,6 +105,19 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void WindowModeUpdate()
     {
+        if (stageManager.gameState == GameState.Win || stageManager.gameState == GameState.Die)
+        {
+            if (stageManager.gameState == GameState.Win)
+            {
+                windowMode = WindowMode.Win;
+            }
+            else
+            {
+                windowMode = WindowMode.Loose;
+            }
+            return;
+        }
+
         if (stageManager.currentPlayer == null)
         {
             windowMode = WindowMode.None;
@@ -108,10 +134,6 @@ public class IngameStageUIManager : MonoBehaviour
         {
             windowMode = WindowMode.Setting;
         }
-        //else if ()
-        //{
-
-        //}
     }
 
     public void WindowSet()
@@ -164,6 +186,13 @@ public class IngameStageUIManager : MonoBehaviour
                 collectButton.gameObject.SetActive(true);
                 skillButton.gameObject.SetActive(true);
                 ChangeAttackableTileMesh();
+                break;
+            case WindowMode.Win:
+                ResultPanel.SetActive(true);
+                break;
+            case WindowMode.Loose:
+                ResultPanel.SetActive(true);
+                LooseWindowSet();
                 break;
         }
     }
@@ -222,10 +251,10 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void KillMonsterCountUpdate()
     {
-        if(prevSpawnedMonsterCount != stageManager.killMonsterCount)
+        if(prevKillMonsterCount != stageManager.killMonsterCount)
         {
-            spawnedMonsterCountText.SetText(stageManager.killMonsterCount.ToString());
-            prevSpawnedMonsterCount = stageManager.killMonsterCount;
+            killMonsterCountText.SetText(stageManager.killMonsterCount.ToString());
+            prevKillMonsterCount = stageManager.killMonsterCount;
         }
     }
 
@@ -236,6 +265,13 @@ public class IngameStageUIManager : MonoBehaviour
             houseLifeText.SetText(stageManager.currentHouseLife.ToString());
             prevHouseLife = stageManager.currentHouseLife;
         }
+    }
+
+    public void LooseWindowSet()
+    {
+        ItemParentPanel.SetActive(false);
+        stageTypeText.SetText("Fail");
+        stageTypeText.color = Color.red;
     }
 
     public void ChangeArrangableTileMesh()
@@ -278,6 +314,9 @@ public class IngameStageUIManager : MonoBehaviour
             var id = StageDataManager.Instance.selectedStageData.stageID;
             var stageTable = StageDataManager.Instance.stageTable;
             var stageData = stageTable.GetStageData(id);
+
+            InitResultPanel(stageData);
+
             switch (stageData.Type)
             {
                 case (int)StageMode.Deffense:
@@ -293,5 +332,28 @@ public class IngameStageUIManager : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void InitResultPanel(StageData stageData)
+    {
+        chapterText.SetText(stageData.ChapterNumber);
+        stageNumText.SetText(stageData.StageNumber.ToString());
+        stageNameText.SetText(stageData.StageName);
+        
+        // need to apply string table later
+        switch(stageData.Type)
+        {
+            case (int)StageMode.Deffense:
+                stageTypeText.SetText("µðÆæ½º ¸ðµå");
+                break;
+            case (int)StageMode.Annihilation:
+                stageTypeText.SetText("¼¶¸ê ¸ðµå");
+                break;
+            case (int)StageMode.Survival:
+                stageTypeText.SetText("»ýÁ¸ ¸ðµå");
+                break;
+        }
+
+        // stageData => rewardID => rewardTable => apply
     }
 }
