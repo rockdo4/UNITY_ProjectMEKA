@@ -1496,6 +1496,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6154366252971857854}
   - component: {fileID: 5822221679159713657}
+  - component: {fileID: 2104370571791913189}
   m_Layer: 13
   m_Name: GameObject
   m_TagString: PlayerCollider
@@ -1541,6 +1542,33 @@ CapsuleCollider:
   m_Height: 5.5185366
   m_Direction: 1
   m_Center: {x: 0, y: 2.7976131, z: 0}
+--- !u!54 &2104370571791913189
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579909883236327709}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &613502968992256145
 GameObject:
   m_ObjectHideFlags: 0
@@ -17988,7 +18016,7 @@ MonoBehaviour:
   damage: 50
   attackDelay: 2.5
   BulletName: MagicChain
-  BulletType: 3
+  BulletType: 4
   flashName: 
   hitName: 
   hang: 3

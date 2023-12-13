@@ -2940,7 +2940,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2971,7 +2971,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -11601,6 +11601,7 @@ GameObject:
   - component: {fileID: 166229401915555168}
   - component: {fileID: 5531138866722357468}
   - component: {fileID: 1984565676475585485}
+  - component: {fileID: -1598105764748055061}
   m_Layer: 6
   m_Name: ISABELLA
   m_TagString: Player
@@ -11696,12 +11697,12 @@ MonoBehaviour:
   ID: 0
   arrangeCost: 0
   arrangeCoolTime: 0
-  skill: 0
+  skill: 9
   cost: 0
-  maxCost: 0
-  skillCost: 0
-  skillCoolTime: 0
-  skillDuration: 0
+  maxCost: 50
+  skillCost: 50
+  skillCoolTime: 40
+  skillDuration: 20
   occupation: 5
   experience: 0
   currentExperience: 0
@@ -11755,6 +11756,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1598105764748055061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4796961672501740009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375317c1b2b29d341824d604467b31de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4825448500136388745
