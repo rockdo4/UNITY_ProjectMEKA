@@ -18,10 +18,11 @@ public class StageDataManager
     public StageSaveData selectedStageData;
     public Dictionary<int,StageSaveData> selectedStageDatas;
     private StageClass currentStageClass;
+    public StageTable stageTable;
 
     private StageDataManager()
     {
-        
+        stageTable = DataTableMgr.GetTable<StageTable>();
     }
 
     public void SetCurrentStageClass(StageClass stageClass)
@@ -37,12 +38,15 @@ public class StageDataManager
                 break;
             case StageClass.Story:
                 PlayDataManager.data.storyStageDatas = selectedStageDatas;
+                PlayDataManager.Save();
                 break;
             case StageClass.Assignment:
                 PlayDataManager.data.assignmentStageDatas = selectedStageDatas;
+                PlayDataManager.Save();
                 break;
             case StageClass.Challenge:
                 PlayDataManager.data.challengeStageDatas = selectedStageDatas;
+                PlayDataManager.Save();
                 break;
         }
     }

@@ -50,9 +50,9 @@ public class PlayableArrangeState : PlayableBaseState
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
-                    if (!playerCtrl.stageManager.characterInfoUIManager.currentPlayerOnTile)
+                    if (!playerCtrl.stageManager.ingameStageUIManager.currentPlayerOnTile)
                     {
-                        playerCtrl.stageManager.characterInfoUIManager.currentPlayerOnTile = true;
+                        playerCtrl.stageManager.ingameStageUIManager.currentPlayerOnTile = true;
                         isOnPossibleTile = false;
                     }
 
@@ -82,7 +82,7 @@ public class PlayableArrangeState : PlayableBaseState
                     playerCtrl.currentTile = hitTile;
                     playerCtrl.stateManager.firstArranged = true;
                 }
-                else if(!isOnPossibleTile && playerCtrl.stageManager.characterInfoUIManager.currentPlayerOnTile)
+                else if(!isOnPossibleTile && playerCtrl.stageManager.ingameStageUIManager.currentPlayerOnTile)
                 {
                     Debug.Log("배치 불가 타일");
                     playerCtrl.stageManager.currentPlayer = null;

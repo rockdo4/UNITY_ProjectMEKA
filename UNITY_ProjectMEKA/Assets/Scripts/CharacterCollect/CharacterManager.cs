@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-//��� ĳ���� �����ϴ� �̱��� Ŭ����
-//Singleton class that manages all characters
-
 public class CharacterManager
 {
 	private static CharacterManager instance;
@@ -44,8 +41,6 @@ public class CharacterManager
 				m_CharacterStorage.Add(chara.CharacterID, chara);
 			}
 		}
-
-		//���̺����� �ִ��� Ȯ��
 
 		CheckPlayData();
     }

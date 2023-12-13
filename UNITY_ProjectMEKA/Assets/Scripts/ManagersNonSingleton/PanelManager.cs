@@ -5,9 +5,9 @@ using UnityEngine;
 /*
 	public
 
-	- void ChangePanelMain() : ¸ÞÀÎÈ­¸éÀ¸·Î µ¹¾Æ°¡±â ex) ESC ¹öÆ° ´­·¯¼­ µ¹¾Æ°¡±â
-	- void ChangePanelCharacterWindow() : Ä³¸¯ÅÍ Ã¢À¸·Î °¡±â
-	- void ChangePanelGacha() : °¡Ã­ Ã¢À¸·Î °¡±â
+	- void ChangePanelMain() : ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ex) ESC ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½
+	- void ChangePanelCharacterWindow() : Ä³ï¿½ï¿½ï¿½ï¿½ Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	- void ChangePanelGacha() : ï¿½ï¿½Ã­ Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 */
 
@@ -31,7 +31,7 @@ public class PanelManager : MonoBehaviour
 	private RectTransform previousPanel;
 	private Vector3 previousPos;
 
-	// 12.10, ±è¹ÎÁö, ½ºÅ×ÀÌÁöÅ¸ÀÔÆÐ³Î Ãß°¡
+	// 12.10, ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½Ð³ï¿½ ï¿½ß°ï¿½
 	public RectTransform stageClassPanel;
 	private Vector3 stageClassPos;
 
@@ -98,7 +98,7 @@ public class PanelManager : MonoBehaviour
         mainPanel.position = previousPos;
     }
 
-	//12.10, ±è¹ÎÁö, ½ºÅ×ÀÌÁöÁ¾·ùÆÐ³Î Ãß°¡
+	//12.10, ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ ï¿½ß°ï¿½
 	public void ChangePanelStageClass()
 	{
         previousPos = stageClassPos;
@@ -107,7 +107,7 @@ public class PanelManager : MonoBehaviour
 		mainPanel.position = previousPos;
     }
 
-	//12.12, ±è¹ÎÁö, ½ºÅ×ÀÌÁö¼±ÅÃÆÐ³Î Ãß°¡
+	//12.12, ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ ï¿½ß°ï¿½
 	public void ChangePanelStoryStageChoice()
 	{
         previousPos = storyStageChoicePos;
@@ -130,12 +130,12 @@ public class PanelManager : MonoBehaviour
         mainPanel.position = previousPos;
     }
 
-	public void LoadBattleScene()
+	public void LoadFormation()
 	{
 		var formation = formationPanel.GetComponent<FormationManager>();
 		if (formation == null)
 		{
-			Debug.LogError("FormationManager ¸øºÒ·¯¿È");
+			Debug.LogError("FormationManager ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½");
 			return;
 		}
 		formation.SetHolderFormation();
@@ -148,7 +148,7 @@ public class PanelManager : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("ÇÃ·¹ÀÌ¾î°¡ ¼±ÅÃÇÑ Ä³¸¯ÅÍ°¡ ¾ø½À´Ï´Ù.");
+			Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		}
 
 	}

@@ -18,7 +18,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
 
     private StageManager stageManager;
     private ArrangeJoystick joystick;
-    private CharacterInfoUIManager characterInfoUIManager;
+    private IngameStageUIManager characterInfoUIManager;
 
     private void Awake()
     {
@@ -48,7 +48,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     public void InitOnce()
     {
         joystick = transform.parent.GetComponent<ArrangeJoystick>();
-        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<CharacterInfoUIManager>();
+        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
 
         var boxCollider = GetComponent<BoxCollider>();

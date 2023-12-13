@@ -35,16 +35,37 @@ public static class Defines
         public const string slider = "Slider";
     }
 
+    public static class StorySceneNames
+    {
+        public const string stage0_1 = "Bug_KimMinji";
+        public const string stage0_2 = "a";
+        public const string stage0_3 = "b";
+
+
+    }
+    public static class AssignmentSceneNames
+    {
+        public const string stage0_1 = "Bug_KimMinji";
+        public const string stage0_2 = "a";
+        public const string stage0_3 = "b";
+    }
+    public static class ChallengeSceneNames
+    {
+        public const string stage0_1 = "Bug_KimMinji";
+        public const string stage0_2 = "a";
+        public const string stage0_3 = "b";
+    }
+
     public enum Property
     {
         None,
         Prime,
-        Grieve, //¼ø¼­ ¼öÁ¤
+        Grieve, //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Edila,
     }
     public enum Occupation
     {
-        None, // ±è¹ÎÁö°¡ ÀÌÇØ ¾È µÅ¼­ Ãß°¡ÇÔ
+        None, // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Å¼ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
         Guardian,
         Striker,
         Castor,
@@ -54,11 +75,11 @@ public static class Defines
     public enum EnemyType
     {
         None,
-        Monster,//±âº»ÇüÀ¸·Î ¾µ»ý°¢
-        LongDistance,//¿ø°Å¸®Çü
-        Offensive,//°ø°ÝÇü
-        OhYaBung,//¿À¾ßºØ||º¸½º
-        YangSehyung,//¾ç¼¼Çü
+        Monster,//ï¿½âº»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        LongDistance,//ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½
+        Offensive,//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        OhYaBung,//ï¿½ï¿½ï¿½ßºï¿½||ï¿½ï¿½ï¿½ï¿½
+        YangSehyung,//ï¿½ç¼¼ï¿½ï¿½
     }
     public enum GateType
     {
@@ -86,12 +107,13 @@ public static class Defines
         Left,
         Count
     }
-    public enum CharacterInfoMode
+    public enum WindowMode
     {
         None,
         FirstArrange,
         SecondArrange,
-        Setting
+        Setting,
+        Skill
     }
 
     public enum bgmType
@@ -101,6 +123,7 @@ public static class Defines
     public enum seType
     {
     }
+
     public enum ProjectileType
     {
         None,
@@ -111,21 +134,23 @@ public static class Defines
         HitScan,
         Instantaneous,
     }
+
     public enum Passive
     {
-        None,//¾øÀ½
-        Unstoppable,//ÀúÁö ºÒ°¡
-        Explosion,//ÀÚÆø
-        BusterCall,//Áö¿ø Àü¼ú
-        SpeedUp,//ÀÌ¼Ó Áõ°¡
-        Counterattack,//¿ª½À
-        Spite,//¾ÇÀÇ
-        Outlander,//¾Æ¿ô·£´õ
-        Tenacity,//¸ÁÀÚÀÇ Áý³ä
-        Revenge,//º¸º¹
-        Mechanic,//Á¤ºñ°ø
+        None,//ï¿½ï¿½ï¿½ï¿½
+        Unstoppable,//ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
+        Explosion,//ï¿½ï¿½ï¿½ï¿½
+        BusterCall,//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        SpeedUp,//ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Counterattack,//ï¿½ï¿½ï¿½ï¿½
+        Spite,//ï¿½ï¿½ï¿½ï¿½
+        Outlander,//ï¿½Æ¿ï¿½ï¿½ï¿½ï¿½ï¿½
+        Tenacity,//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Revenge,//ï¿½ï¿½ï¿½ï¿½
+        Mechanic,//ï¿½ï¿½ï¿½ï¿½ï¿½
 
     }
+
     public enum Skills
     {
         None,
@@ -140,7 +165,7 @@ public static class Defines
         ISABELLASkill,
     }
     public enum SkillType
-    {//¾î¶² ½ºÅ³ÀÎÁö Ç¥½Ã: ÀÚµ¿, Áï¹ß, ½º³ªÀÌÇÎ ´ÜÀÏ, ½º³ªÀÌÇÎ ±¤¿ª 
+    {//ï¿½î¶² ï¿½ï¿½Å³ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½: ï¿½Úµï¿½, ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
         Auto,
         Instant,
         SnipingSingle,
@@ -154,4 +179,20 @@ public static class Defines
         Assignment,
         Challenge
     }
+    public enum StageMode
+    {
+        None,
+        Deffense,
+        Annihilation,
+        Survival
+    }
+
+    public enum GameState
+    {
+        Playing,
+        Win,
+        Die,
+        Pause
+    }
+
 }

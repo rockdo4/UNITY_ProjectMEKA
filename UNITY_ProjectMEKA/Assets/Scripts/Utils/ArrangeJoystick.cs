@@ -12,14 +12,14 @@ public class ArrangeJoystick : MonoBehaviour
     public ArrangeJoystickHandler handler;
 
     private StageManager stageManager;
-    private CharacterInfoUIManager characterInfoUIManager;
+    private IngameStageUIManager characterInfoUIManager;
     private float yOffset = 1f;
 
     public UnityEvent ArrangeDone = new UnityEvent();
 
     private void Awake()
     {
-        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<CharacterInfoUIManager>();
+        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         ArrangeDone = new UnityEvent();
         ArrangeDone.AddListener(ArrangeDoneEvent);

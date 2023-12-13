@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using UnityEngine;
 using SaveDataVC = SaveDataV4;
+using static Defines;
 
 public class PlayDataManager
 {
@@ -49,19 +50,19 @@ public class PlayDataManager
         {
             var saveData = new StageSaveData();
             saveData.stageID = stage.Key;
-            if (stage.Value.Index == 1)
+            if (stage.Value.Index == 0)
             {
                 saveData.isUnlocked = true;
             }
-            if (stage.Value.Class == 1)
+            if (stage.Value.Class == (int)StageClass.Story)
             {
                 data.storyStageDatas.Add(stage.Key,saveData);
             }
-            else if(stage.Value.Class == 2)
+            else if(stage.Value.Class == (int)StageClass.Assignment)
             {
                 data.assignmentStageDatas.Add(stage.Key, saveData);
             }
-            else if(stage.Value.Class == 3)
+            else if(stage.Value.Class == (int)StageClass.Challenge)
             {
                 data.challengeStageDatas.Add(stage.Key, saveData);
             }

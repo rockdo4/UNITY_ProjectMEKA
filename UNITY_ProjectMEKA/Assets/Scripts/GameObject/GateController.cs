@@ -112,7 +112,6 @@ public class GateController : MonoBehaviour
             foreach(var enemyInfo in wave.enemySpawnInfos)
             {
                 stageManager.allMonsterCount += enemyInfo.count;
-                stageManager.leftMonsterCount += enemyInfo.count;
             }
         }
     }
@@ -198,7 +197,6 @@ public class GateController : MonoBehaviour
             }
             currentEnemyCount++;
             firstGetPool = true;
-            stageManager.leftMonsterCount--;
         }
 
         if (currentEnemyCount >= enemyInfo.count)
@@ -238,7 +236,6 @@ public class GateController : MonoBehaviour
             }
 
             currentEnemyCount++;
-            stageManager.leftMonsterCount--;
         }
         spawnTimer = 0f;
     }

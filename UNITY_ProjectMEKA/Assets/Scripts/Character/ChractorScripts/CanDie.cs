@@ -12,6 +12,7 @@ public class CanDie : MonoBehaviour
     
 
     public UnityEvent action;
+    public UnityEvent updateUI;
 
     private void Awake()
     {
@@ -22,10 +23,10 @@ public class CanDie : MonoBehaviour
     }
     void Update()
     {
-        
         if (state.Hp <= 0f)
         {
             action.Invoke();
+            updateUI.Invoke();
 
             // if this is a monster
             if (GetComponent<PoolAble>() != null)
@@ -35,10 +36,5 @@ public class CanDie : MonoBehaviour
                 GetComponent<PoolAble>().ReleaseObject();
             }
         }
-        
-
-
-
-        
     }
 }

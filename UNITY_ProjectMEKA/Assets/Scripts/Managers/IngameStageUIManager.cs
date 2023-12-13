@@ -1,16 +1,22 @@
-using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using static Defines;
 
-public class CharacterInfoUIManager : MonoBehaviour
+public class IngameStageUIManager : MonoBehaviour
 {
-    public Defines.CharacterInfoMode windowMode;
-    private Defines.CharacterInfoMode prevWindowMode;
+    public WindowMode windowMode;
+    private WindowMode prevWindowMode;
     private StageManager stageManager;
 
-    // character info
+    // panels
     public GameObject characterInfoPanel;
+    public GameObject timeProgressBarPanel;
+    public GameObject waveCountPanel;
+    public GameObject monsterCountPanel;
+
+    // character info
     public TextMeshProUGUI characterOccupation;
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI characterDescription;
@@ -41,7 +47,6 @@ public class CharacterInfoUIManager : MonoBehaviour
 
     private void Awake()
     {
-        //currentCost = maxCost;
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
@@ -53,7 +58,11 @@ public class CharacterInfoUIManager : MonoBehaviour
 
     private void Start()
     {
-        allMonsterCountText.SetText(stageManager.allMonsterCount.ToString());
+        Init();
+        if(monsterCountPanel.activeSelf)
+        {
+            allMonsterCountText.SetText(stageManager.allMonsterCount.ToString());
+        }
     }
 
     private void Update()
@@ -62,7 +71,7 @@ public class CharacterInfoUIManager : MonoBehaviour
         prevWindowMode = windowMode;
         WindowModeUpdate();
         CostUpdate();
-        SpawnedMonsterCountUpdate();
+        KillMonsterCountUpdate();
         HouseLifeUpdate();
 
         var infoCondition = currentPlayerOnTile && isInfoWindowOn;
@@ -83,21 +92,25 @@ public class CharacterInfoUIManager : MonoBehaviour
 
     public void WindowModeUpdate()
     {
-        if(stageManager.currentPlayer == null)
+        if (stageManager.currentPlayer == null)
         {
-            windowMode = Defines.CharacterInfoMode.None;
+            windowMode = WindowMode.None;
         }
-        else if(!stageManager.currentPlayer.stateManager.firstArranged)
+        else if (!stageManager.currentPlayer.stateManager.firstArranged)
         {
-            windowMode = Defines.CharacterInfoMode.FirstArrange;
+            windowMode = WindowMode.FirstArrange;
         }
         else if (stageManager.currentPlayer.stateManager.firstArranged && !stageManager.currentPlayer.stateManager.secondArranged)
         {
-            windowMode = Defines.CharacterInfoMode.SecondArrange;
+            windowMode = WindowMode.SecondArrange;
         }
         else if (stageManager.currentPlayer.stateManager.secondArranged)
         {
-            windowMode = Defines.CharacterInfoMode.Setting;
+            windowMode = WindowMode.Setting;
+        }
+        else if ()
+        {
+
         }
     }
 
@@ -105,7 +118,7 @@ public class CharacterInfoUIManager : MonoBehaviour
     {
         switch(windowMode)
         {
-            case Defines.CharacterInfoMode.None:
+            case WindowMode.None:
                 // 캐릭터 인포 off
                 ClearTileMesh();
                 characterInfoPanel.SetActive(false);
@@ -113,17 +126,15 @@ public class CharacterInfoUIManager : MonoBehaviour
                 currentPlayerOnTile = false;
                 isInfoWindowOn = true;
                 break;
-            case Defines.CharacterInfoMode.FirstArrange:
+            case WindowMode.FirstArrange:
                 // 캐릭터 타일위 아니면 인포 on
                 if(!currentPlayerOnTile)
                 {
-                    Debug.Log("켜줌");
                     characterInfoPanel.SetActive(true);
                     ChangeCharacterInfo();
                 }
                 else if(currentPlayerOnTile && isInfoWindowOn)
                 {
-                    Debug.Log("꺼줌");
                     characterInfoPanel.SetActive(false);
                     isInfoWindowOn = false;
                 }
@@ -131,7 +142,7 @@ public class CharacterInfoUIManager : MonoBehaviour
                 stageManager.currentPlayer.ArrangableTileSet(stageManager.currentPlayer.state.occupation);
                 ChangeArrangableTileMesh();
                 break;
-            case Defines.CharacterInfoMode.SecondArrange:
+            case WindowMode.SecondArrange:
                 //characterInfoPanel.SetActive(false);
                 //ChangeCharacterInfo();
                 ClearTileMesh();
@@ -142,7 +153,7 @@ public class CharacterInfoUIManager : MonoBehaviour
                 collectButton.gameObject.SetActive(false);
                 skillButton.gameObject.SetActive(false);
                 break;
-            case Defines.CharacterInfoMode.Setting:
+            case WindowMode.Setting:
                 // 캐릭터 인포 on
                 characterInfoPanel.SetActive(true);
                 ChangeCharacterInfo();
@@ -165,7 +176,7 @@ public class CharacterInfoUIManager : MonoBehaviour
         {
             isCurrentPlayerArranged = stageManager.currentPlayer.stateManager.firstArranged;
         }
-        var isSettingMode = windowMode == Defines.CharacterInfoMode.Setting;
+        var isSettingMode = windowMode == Defines.WindowMode.Setting;
 
         if (!isCurrentPlayerNull && (!isCurrentPlayerArranged || isSettingMode))
         {
@@ -209,12 +220,12 @@ public class CharacterInfoUIManager : MonoBehaviour
         costSlider.fillAmount = value;
     }
 
-    public void SpawnedMonsterCountUpdate()
+    public void KillMonsterCountUpdate()
     {
-        if(prevSpawnedMonsterCount != stageManager.leftMonsterCount)
+        if(prevSpawnedMonsterCount != stageManager.killMonsterCount)
         {
-            spawnedMonsterCountText.SetText(stageManager.leftMonsterCount.ToString());
-            prevSpawnedMonsterCount = stageManager.leftMonsterCount;
+            spawnedMonsterCountText.SetText(stageManager.killMonsterCount.ToString());
+            prevSpawnedMonsterCount = stageManager.killMonsterCount;
         }
     }
 
@@ -257,5 +268,30 @@ public class CharacterInfoUIManager : MonoBehaviour
             tile.ClearTileMesh();
         }
         tempTiles.Clear();
+    }
+
+    public void Init()
+    {
+       if(StageDataManager.Instance.selectedStageData != null)
+        {
+            // 해당 모드에 맞춰서 UI 세팅
+            var id = StageDataManager.Instance.selectedStageData.stageID;
+            var stageTable = StageDataManager.Instance.stageTable;
+            var stageData = stageTable.GetStageData(id);
+            switch (stageData.Type)
+            {
+                case (int)StageMode.Deffense:
+                    monsterCountPanel.SetActive(true);
+                    break;
+                case (int)StageMode.Annihilation:
+                    monsterCountPanel.SetActive(true);
+                    timeProgressBarPanel.SetActive(true);
+                    break;
+                case (int)StageMode.Survival:
+                    waveCountPanel.SetActive(true);
+                    timeProgressBarPanel.SetActive(true);
+                    break;
+            }
+        }
     }
 }
