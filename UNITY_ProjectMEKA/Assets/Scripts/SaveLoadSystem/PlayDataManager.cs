@@ -91,6 +91,7 @@ public class PlayDataManager
             }
         }
 
+        Save();
         CharacterManager.Instance.CheckPlayData();
     }
 }

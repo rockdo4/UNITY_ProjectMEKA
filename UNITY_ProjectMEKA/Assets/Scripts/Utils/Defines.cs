@@ -196,4 +196,9 @@ public static class Defines
         Pause
     }
 
+    public enum TileType
+    {
+        None,
+        Obstacle
+    }
 }
