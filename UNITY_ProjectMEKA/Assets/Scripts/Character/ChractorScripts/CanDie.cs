@@ -20,6 +20,11 @@ public class CanDie : MonoBehaviour
         state = GetComponent<CharacterState>();
         
         action = new UnityEvent();
+        updateUI = new UnityEvent();
+        updateUI.AddListener(() =>
+        {
+            stageManager.killMonsterCount++;
+        });
     }
     void Update()
     {

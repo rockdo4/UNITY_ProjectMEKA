@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Defines;
 
@@ -100,7 +101,8 @@ public class IngameStageUIManager : MonoBehaviour
             return;
         }
 
-        CloseWindow();
+        CloseResultWindow();
+        CloseCharacterInfoWindow();
     }
 
     public void WindowModeUpdate()
@@ -197,7 +199,7 @@ public class IngameStageUIManager : MonoBehaviour
         }
     }
 
-    public void CloseWindow()
+    public void CloseCharacterInfoWindow()
     {
         var isCurrentPlayerNull = stageManager.currentPlayer == null;
         bool isCurrentPlayerArranged = false;
@@ -216,6 +218,17 @@ public class IngameStageUIManager : MonoBehaviour
                 stageManager.currentPlayer = null;
                 stageManager.currentPlayerIcon = null;
             }
+        }
+    }
+
+    public void CloseResultWindow()
+    {
+        var isResultMode = windowMode == WindowMode.Win || windowMode == WindowMode.Loose;
+        if(isResultMode && Input.GetMouseButtonUp(0))
+        {
+            // 타이틀씬으로 감
+            StageDataManager.Instance.toStageChoicePanel = true;
+            SceneManager.LoadScene("GachaScene");
         }
     }
 
@@ -336,12 +349,43 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void InitResultPanel(StageData stageData)
     {
+        SetStageInfo(stageData);
+
+        // reward item setting
+        for (int i = 0; i < 3; ++i)
+        {
+            var itemGo = Instantiate(itemPrefab, ItemParentPanel.transform);
+            var itemInfo = itemGo.GetComponent<RewardItemInfo>();
+            Debug.Log(DataTableMgr.GetTable<RewardTable>() == null);
+
+            var rewardData = DataTableMgr.GetTable<RewardTable>().GetStageData(stageData.RewardID);
+
+            if(i == 0)
+            {
+                itemInfo.itemCountText.SetText(rewardData.Item1Count.ToString());
+                SetItemInfo(rewardData.Item1ID, itemInfo, rewardData);
+            }
+            else if(i == 1)
+            {
+                itemInfo.itemCountText.SetText(rewardData.Item2Count.ToString());
+                SetItemInfo(rewardData.Item2ID, itemInfo, rewardData);
+            }
+            else
+            {
+                itemInfo.itemCountText.SetText(rewardData.Item3Count.ToString());
+                SetItemInfo(rewardData.Item3ID, itemInfo, rewardData);
+            }
+        }
+    }
+
+    public void SetStageInfo(StageData stageData)
+    {
         chapterText.SetText(stageData.ChapterNumber);
         stageNumText.SetText(stageData.StageNumber.ToString());
         stageNameText.SetText(stageData.StageName);
-        
+
         // need to apply string table later
-        switch(stageData.Type)
+        switch (stageData.Type)
         {
             case (int)StageMode.Deffense:
                 stageTypeText.SetText("디펜스 모드");
@@ -353,7 +397,13 @@ public class IngameStageUIManager : MonoBehaviour
                 stageTypeText.SetText("생존 모드");
                 break;
         }
+    }
 
-        // stageData => rewardID => rewardTable => apply
+    public void SetItemInfo(int itemID, RewardItemInfo itemInfo, RewardData rewardData)
+    {
+        // item info setting : sprite
+        // item info setting : name
+        var rewardItem = DataTableMgr.GetTable<ItemInfoTable>().GetItemData(itemID);
+        itemInfo.itemName.SetText(rewardItem.Name);
     }
 }
