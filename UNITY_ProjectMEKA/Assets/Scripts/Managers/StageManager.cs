@@ -14,7 +14,7 @@ public class StageManager : MonoBehaviour
 
     public GameState gameState;
 
-    public float currentCost;
+    public float currentCost;//이거 가져와
     public int maxCost;
     public int allMonsterCount;
     public int allTargetMonsterCount;

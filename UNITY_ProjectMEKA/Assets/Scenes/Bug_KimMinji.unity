@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -676,6 +676,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.size
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[29].count
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[30].count
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[31].count
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[32].count
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[29].perfab
+      value: 
+      objectReference: {fileID: 6171131659093573798, guid: f977883f948a7774ebc6029fae3671e0, type: 3}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[30].perfab
+      value: 
+      objectReference: {fileID: 1339906448664605960, guid: dd15869566776344590f22f7b28c4833, type: 3}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[31].perfab
+      value: 
+      objectReference: {fileID: 1252761122538427479, guid: be1e1d827b1249643922bd54d08cdb46, type: 3}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[32].perfab
+      value: 
+      objectReference: {fileID: 8159430428541904159, guid: a126c42ee089ed34da9f4c0f2a6042e8, type: 3}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[29].objectName
+      value: GhostSkillEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[30].objectName
+      value: NemesisSkillEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[31].objectName
+      value: NeoHeal
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
+      propertyPath: objectInfos.Array.data[32].objectName
+      value: NeoSkillEffect
+      objectReference: {fileID: 0}
     - target: {fileID: 6372842070683576580, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: m_Name
       value: ObjectPoolManager
@@ -989,7 +1041,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 75fef7faedbf8ab4cab39b2f47ab8daa, type: 2}
     - target: {fileID: 4319404990111276572, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -12.64
       objectReference: {fileID: 0}
     - target: {fileID: 4319404990111276572, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -997,7 +1049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4319404990111276572, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 12.64
       objectReference: {fileID: 0}
     - target: {fileID: 4319404990111276572, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1740,7 +1792,7 @@ MonoBehaviour:
   currentPlayerIcon: {fileID: 0}
   gameState: 0
   currentCost: 0
-  maxCost: 10000
+  maxCost: 50
   allMonsterCount: 0
   allTargetMonsterCount: 0
   killMonsterCount: 0
@@ -2534,15 +2586,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].count
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].interval
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].interval

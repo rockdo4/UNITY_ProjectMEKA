@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-125191654144815841
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hammer
+  m_Shader: {fileID: -6465566751694194690, guid: 1ea7cc85e365cde49be639a9330c2378, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - ALBEDOMODESELECTOR_FILLMODE
+  - EMISSIONMODESELECTOR_FILLMODE
+  m_InvalidKeywords:
+  - ALBEDOMODESELECTOR_FIILMODE
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - AmbientOcclusion:
+        m_Texture: {fileID: 2800000, guid: 9e5ca191071911142a55a57cb481b42b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - MatellicMap:
+        m_Texture: {fileID: 2800000, guid: 206381c2126c4414598f86e57d00c70e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NormalMap:
+        m_Texture: {fileID: 2800000, guid: b900d48c06b353c4a99d28b6dcf15cca, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexBaseColor1:
+        m_Texture: {fileID: 2800000, guid: 36e7efea1f19c3248904f338e65ed439, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexBaseColor2:
+        m_Texture: {fileID: 2800000, guid: e064710bf60beed44bacaa83215d3d77, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexBaseColor3:
+        m_Texture: {fileID: 2800000, guid: feaa065cd8ede894ba3d6bfd7387d804, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexBaseColor4:
+        m_Texture: {fileID: 2800000, guid: ab68ab7e48c3a484db1a1b721e717a49, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexDetails:
+        m_Texture: {fileID: 2800000, guid: f67fc6a43adfa2c419e826d21202f46a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexFILLFX:
+        m_Texture: {fileID: 2800000, guid: 36f94146118ab4548b01bd07f70130b1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexLightColor:
+        m_Texture: {fileID: 2800000, guid: 62c5b8641dd980f49a0631e955d61f54, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexMODFX:
+        m_Texture: {fileID: 2800000, guid: f0511109f32cebb4685e9848e43d4921, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - ALBEDOMODESELECTOR: 1
+    - AOOpacity: 1
+    - AOStrength: 1
+    - EMISSIONMODESELECTOR: 1
+    - FILLStrength: 1
+    - MODStrength: 1
+    - NormalStrength: 1
+    - Vector1_8F835BD: 1
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    - _QueueControl: -1
+    - _QueueOffset: 0
+    m_Colors:
+    - Color1: {r: 0.098039225, g: 0.098039225, b: 0.098039225, a: 1}
+    - Color2: {r: 1, g: 1, b: 1, a: 1}
+    - Color3: {r: 0.37647063, g: 0.37647063, b: 0.37647063, a: 1}
+    - Color4: {r: 0.47058827, g: 0.29411766, b: 0, a: 1}
+    - ColorLight: {r: 0.83921576, g: 0, b: 1, a: 1}
+    - FILLColor: {r: 0, g: 0.72156864, b: 1, a: 1}
+    - MODColor: {r: 0, g: 1, b: 0.62352943, a: 1}
+    - MetallicAmount: {r: 0, g: 1, b: 0, a: 0}
+    - MetallicStrength: {r: 0, g: 1, b: 0, a: 0}
+    - SmoothnessStrength: {r: 0, g: 1, b: 0, a: 0}
+    - Vector2_2647AA30: {r: 0, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
+--- !u!114 &7391611860233762463
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7

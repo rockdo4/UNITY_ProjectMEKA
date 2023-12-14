@@ -30,7 +30,7 @@ public class PlayableProjectileAttackState : PlayableBaseState
         {
             playerCtrl.ani.SetTrigger("Idle");
         }
-        
+        playerCtrl.target = null;
     }
 
     public override void Update()

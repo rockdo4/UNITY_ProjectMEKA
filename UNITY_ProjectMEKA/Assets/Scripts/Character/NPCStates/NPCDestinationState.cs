@@ -75,7 +75,7 @@ public class NPCDestinationStates : NPCBaseState
         if(enemyCtrl.state.isFly)
         {
             timer += Time.deltaTime;
-            if(timer > enemyCtrl.state.attackDelay)
+            if(timer > /*enemyCtrl.state.attackDelay*/2f)
             {
                 timer = 0;
                 foreach (var pl in enemyCtrl.rangeInPlayers)
@@ -84,13 +84,15 @@ public class NPCDestinationStates : NPCBaseState
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
                     {
-                        if(enemyCtrl.forwardGrid == pl.GetComponentInParent<PlayerController>().CurrentGridPos)
-                        {
-                            enemyCtrl.target = pl;
-                            enemyCtrl.SetState(NPCStates.Idle);
-                            return;
-                        }
-                        
+                        //if(enemyCtrl.forwardGrid == pl.GetComponentInParent<PlayerController>().CurrentGridPos)
+                        //{
+                        //    enemyCtrl.target = pl;
+                        //    enemyCtrl.SetState(NPCStates.Idle);
+                        //    return;
+                        //}
+                        enemyCtrl.target = pl;
+                        enemyCtrl.SetState(NPCStates.Idle);
+                        return;
                     }
 
                 }
@@ -120,13 +122,16 @@ public class NPCDestinationStates : NPCBaseState
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
                     {
-                        if (enemyCtrl.forwardGrid == pl.GetComponentInParent<PlayerController>().CurrentGridPos)
-                        {
-                            enemyCtrl.target = pl;
-                            enemyCtrl.SetState(NPCStates.Idle);
-                            return;
-                        }
-                            
+                        //if (enemyCtrl.forwardGrid == pl.GetComponentInParent<PlayerController>().CurrentGridPos)
+                        //{
+                        //    enemyCtrl.target = pl;
+                        //    enemyCtrl.SetState(NPCStates.Idle);
+                        //    return;
+                        //}
+                        enemyCtrl.target = pl;
+                        enemyCtrl.SetState(NPCStates.Idle);
+                        return;
+
                     }
                 }
                 else
