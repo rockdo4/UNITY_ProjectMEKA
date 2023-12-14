@@ -230,7 +230,7 @@ public class EnemyController : PoolAble
         var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
 
         //obj.transform.LookAt(target.transform.position);
-
+        //if(obj == null) return; 
 
         switch (state.BulletType)
         {

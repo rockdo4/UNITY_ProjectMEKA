@@ -114,6 +114,8 @@ public static class Defines
         FirstArrange,
         SecondArrange,
         Setting,
+        Win,
+        Loose,
         Skill
     }
 

@@ -52,7 +52,6 @@ public class StageManager : MonoBehaviour
         // 모드에 따라 구분
         var id = StageDataManager.Instance.selectedStageData.stageID;
         var stageData = StageDataManager.Instance.stageTable.GetStageData(id);
-        Debug.Log("stage id: " + id);
         switch(stageData.Type)
         {
             case (int)StageMode.Deffense:
