@@ -17,13 +17,6 @@ public class HouseController : MonoBehaviour
     {
         if(other.gameObject.tag == Tags.enemy)
         {
-            var obj = other.GetComponent<CanDie>();
-            obj.updateUI.RemoveAllListeners();
-            obj.updateUI.AddListener(() =>
-            {
-                // if this is a general monster
-                stageManager.killMonsterCount++;
-            });
             other.GetComponent<CharacterState>().Hp = 0;
 
             if(stageManager.gameState != GameState.Die)

@@ -19,6 +19,7 @@ public class StageDataManager
     public Dictionary<int,StageSaveData> selectedStageDatas;
     private StageClass currentStageClass;
     public StageTable stageTable;
+    public bool toStageChoicePanel;
 
     private StageDataManager()
     {
@@ -38,17 +39,15 @@ public class StageDataManager
                 break;
             case StageClass.Story:
                 PlayDataManager.data.storyStageDatas = selectedStageDatas;
-                PlayDataManager.Save();
                 break;
             case StageClass.Assignment:
                 PlayDataManager.data.assignmentStageDatas = selectedStageDatas;
-                PlayDataManager.Save();
                 break;
             case StageClass.Challenge:
                 PlayDataManager.data.challengeStageDatas = selectedStageDatas;
-                PlayDataManager.Save();
                 break;
         }
+        PlayDataManager.Save();
     }
 
     public void LoadPlayData()

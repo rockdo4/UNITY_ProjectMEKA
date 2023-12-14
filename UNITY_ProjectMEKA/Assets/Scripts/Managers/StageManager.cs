@@ -43,7 +43,7 @@ public class StageManager : MonoBehaviour
         if(gameState == GameState.Playing)
         {
             // for tilemap test
-            //CheckGameOver();
+            CheckGameOver();
         }
     }
 
@@ -76,14 +76,14 @@ public class StageManager : MonoBehaviour
             gameState = GameState.Die;
             // show die result window
         }
-        else if (killMonsterCount == allMonsterCount)
+        else if (killMonsterCount == 1 /*allMonsterCount*/)
         {
             var id = StageDataManager.Instance.selectedStageData.stageID;
             var nextStageID = StageDataManager.Instance.stageTable.GetStageData(id).NextStageID;
 
             gameState = GameState.Win;
-            StageDataManager.Instance.selectedStageData.isCleared = true;
-            StageDataManager.Instance.selectedStageDatas[nextStageID].isUnlocked = true;
+            //StageDataManager.Instance.selectedStageData.isCleared = true;
+            //StageDataManager.Instance.selectedStageDatas[nextStageID].isUnlocked = true;
             StageDataManager.Instance.UpdatePlayData();
             // need to mission score apply
             // show win result window

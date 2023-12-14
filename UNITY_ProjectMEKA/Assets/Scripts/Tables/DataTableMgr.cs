@@ -37,6 +37,9 @@ public static class DataTableMgr
         var stageTable = new StageTable();
         tables.Add(typeof(StageTable), stageTable);
 
+        var rewarTable = new RewardTable();
+        tables.Add(typeof(RewardTable), rewarTable);
+
         var deviceOptionTable = new DeviceOptionTable();
         tables.Add(typeof(DeviceOptionTable), deviceOptionTable);
 

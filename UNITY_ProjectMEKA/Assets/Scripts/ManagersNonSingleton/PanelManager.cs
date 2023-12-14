@@ -60,7 +60,16 @@ public class PanelManager : MonoBehaviour
 		previousPos = mainPos;
 	}
 
-	public void ChangePanelMain()
+    private void Start()
+    {
+        if(StageDataManager.Instance.toStageChoicePanel)
+		{
+			ChangePanelStoryStageChoice();
+			StageDataManager.Instance.toStageChoicePanel = false;
+		}
+    }
+
+    public void ChangePanelMain()
 	{
 		previousPanel.position = previousPos;
 		mainPanel.position = mainPos;
