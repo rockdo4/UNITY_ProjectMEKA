@@ -90,7 +90,7 @@ public class CharacterState : MonoBehaviour
     public float maxHp;
 
     [SerializeField, Header("방어력 설정")]//p,e
-    public float amror;
+    public float armor;
 
     // 11.22, 김민지, 적 이동시 필요
     //[SerializeField, Header("이동속력 설정,적 이동시 필요")]//e

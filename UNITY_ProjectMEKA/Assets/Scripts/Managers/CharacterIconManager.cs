@@ -53,12 +53,23 @@ public class CharacterIconManager : MonoBehaviour
 
                 if(characterState.id == id)
                 {
-                    characterState.name = characterData.CharacterName;
+                    var data = CharacterManager.Instance.m_CharacterStorage[id];
+
+                    //characterState.arrangeCost = data.ArrangementCost;
+
+					characterState.name = characterData.CharacterName;
                     characterState.property = (Property)characterData.CharacterProperty;
                     characterState.occupation = (Occupation)characterData.CharacterOccupation;
                     characterState.arrangeCost = characterData.ArrangementCost;
                     characterState.arrangeCoolTime = characterData.ReArrangementCoolDown;
-                    characterPrefabs.Add(prefab);
+
+					characterState.damage = data.Damage;
+					characterState.maxHp = data.HP;
+					characterState.Hp = data.HP;
+					characterState.armor = data.Armor;
+					characterState.arrangeCost = (int)data.ArrangementCost;
+
+					characterPrefabs.Add(prefab);
                     break;
                 }
             }

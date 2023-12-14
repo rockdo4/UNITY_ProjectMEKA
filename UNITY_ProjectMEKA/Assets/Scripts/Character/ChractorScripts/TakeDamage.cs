@@ -24,11 +24,11 @@ public class TakeDamage : MonoBehaviour, IAttackable
         //state.Hp -= damage - state.amror;
         if(player != null)
         {
-            player.Hp -= damage - player.amror;
+            player.Hp -= damage - player.armor;
         }
         else
         {
-            enemy.Hp -= damage - enemy.amror;
+            enemy.Hp -= damage - enemy.armor;
         }
         
         

@@ -190,7 +190,7 @@ public class EnemyController : PoolAble
         }
         
         IAttackable co = target.GetComponentInParent<IAttackable>();
-        co.OnAttack((state.damage + Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.amror + 1f) * 1f);
+        co.OnAttack((state.damage + Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.armor + 1f) * 1f);
 
         co.OnAttack(state.damage * damage);
     }

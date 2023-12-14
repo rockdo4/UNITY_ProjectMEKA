@@ -21,7 +21,9 @@ public class Character
 		get
 		{
 			var levelTable = DataTableMgr.GetTable<CharacterLevelTable>();
-			var levelData = levelTable.GetLevelData(CharacterLevel);
+
+			var id = CharacterID * 100 + CharacterLevel;
+			var levelData = levelTable.GetLevelData(id);
 
 			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
 
@@ -92,7 +94,9 @@ public class Character
 		get
 		{
 			var levelTable = DataTableMgr.GetTable<CharacterLevelTable>();
-			var levelData = levelTable.GetLevelData(CharacterLevel);
+
+			var id = CharacterID * 100 + CharacterLevel;
+			var levelData = levelTable.GetLevelData(id);
 
 			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
 
@@ -162,7 +166,9 @@ public class Character
 		get
 		{
 			var levelTable = DataTableMgr.GetTable<CharacterLevelTable>();
-			var levelData = levelTable.GetLevelData(CharacterLevel);
+
+			var id = CharacterID * 100 + CharacterLevel;
+			var levelData = levelTable.GetLevelData(id);
 
 			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
 
@@ -234,6 +240,7 @@ public class Character
 		get
 		{
 			var charTable = DataTableMgr.GetTable<CharacterTable>();
+
 			var charData = charTable.GetCharacterData(CharacterID);
 
 			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();

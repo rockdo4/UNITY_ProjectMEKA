@@ -114,7 +114,9 @@ public static class Defines
         FirstArrange,
         SecondArrange,
         Setting,
-        Skill
+        Skill,
+        Loose,
+        Win,
     }
 
     public enum bgmType
@@ -195,6 +197,29 @@ public static class Defines
         Die,
         Pause
     }
+
+    public enum IncrementalForm
+    {
+        Percentage,
+        Magnification,
+    }
+
+	public enum MissionType
+	{
+		None,
+		MonsterKillCount,
+		SurviveTime,
+		ClearTime,
+		CostLimit,
+		HouseLifeLimit,
+		PlayerWin
+	}
+
+	public enum MissionClear
+    {
+		Clear,
+		Fail
+	}
 
     public enum TileType
     {
