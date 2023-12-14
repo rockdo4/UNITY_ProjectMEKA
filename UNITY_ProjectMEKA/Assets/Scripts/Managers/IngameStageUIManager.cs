@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -374,8 +375,9 @@ public class IngameStageUIManager : MonoBehaviour
         for (int i = 0; i < 5; ++i)
         {
             var rewardData = DataTableMgr.GetTable<RewardTable>().GetStageData(stageData.RewardID);
-            
-           
+            int id = 0;
+            int count = 0;
+
             var itemGo = Instantiate(itemPrefab, ItemParentPanel.transform);
             var itemInfo = itemGo.GetComponent<RewardItemInfo>();
 
@@ -384,8 +386,9 @@ public class IngameStageUIManager : MonoBehaviour
                 case 0:
                     if(rewardData.Item1ID != 0)
                     {
+                        id = rewardData.Item1ID;
+                        count =rewardData.Item1Count;
                         itemInfo.itemCountText.SetText(rewardData.Item1Count.ToString());
-                        SetItemInfo(rewardData.Item1ID, itemInfo, rewardData);
                     }
                     else
                     {
@@ -395,8 +398,9 @@ public class IngameStageUIManager : MonoBehaviour
                 case 1:
                     if(rewardData.Item2ID != 0)
                     {
+                        id = rewardData.Item2ID;
+                        count = rewardData.Item2Count;
                         itemInfo.itemCountText.SetText(rewardData.Item2Count.ToString());
-                        SetItemInfo(rewardData.Item2ID, itemInfo, rewardData);
                     }
                     else
                     {
@@ -406,8 +410,9 @@ public class IngameStageUIManager : MonoBehaviour
                 case 2:
                     if (rewardData.Item3ID != 0)
                     {
+                        id = rewardData.Item3ID;
+                        count = rewardData.Item3Count;
                         itemInfo.itemCountText.SetText(rewardData.Item3Count.ToString());
-                        SetItemInfo(rewardData.Item3ID, itemInfo, rewardData);
                     }
                     else
                     {
@@ -417,8 +422,9 @@ public class IngameStageUIManager : MonoBehaviour
                 case 3:
                     if (rewardData.Item4ID != 0)
                     {
+                        id = rewardData.Item4ID;
+                        count = rewardData.Item4Count;
                         itemInfo.itemCountText.SetText(rewardData.Item4Count.ToString());
-                        SetItemInfo(rewardData.Item4ID, itemInfo, rewardData);
                     }
                     else
                     {
@@ -428,8 +434,9 @@ public class IngameStageUIManager : MonoBehaviour
                 case 4:
                     if (rewardData.Item5ID != 0)
                     {
+                        id = rewardData.Item5ID;
+                        count = rewardData.Item5Count;
                         itemInfo.itemCountText.SetText(rewardData.Item5Count.ToString());
-                        SetItemInfo(rewardData.Item5ID, itemInfo, rewardData);
                     }
                     else
                     {
@@ -437,6 +444,8 @@ public class IngameStageUIManager : MonoBehaviour
                     }
                     break;
             }
+            SetItemInfo(id, itemInfo, rewardData);
+            stageManager.rewardList.Add((id, count));
         }
     }
 

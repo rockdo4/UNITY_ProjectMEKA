@@ -1,5 +1,5 @@
 using System;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 using static Defines;
 
@@ -29,6 +29,8 @@ public class StageManager : MonoBehaviour
     public int leftWaveCount;
     public int currentHouseLife;
     public int maxHouseLife;
+
+    public List<(int,int)> rewardList = new List<(int, int)>();
 
     private void OnEnable()
     {
@@ -71,42 +73,36 @@ public class StageManager : MonoBehaviour
                         if (MissionMonsterKillCount(missionTypes[i].Item2) == MissionClear.Clear)
                         {
                             tempClearCount++;
-                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                     case MissionType.SurviveTime:
                         if (MissionSurviveTime(missionTypes[i].Item2) == MissionClear.Clear)
                         {
                             tempClearCount++;
-                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                     case MissionType.ClearTime:
                         if (MissionClearTime(missionTypes[i].Item2) == MissionClear.Clear)
                         {
                             tempClearCount++;
-                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                     case MissionType.CostLimit:
                         if (MissionCostLimit(missionTypes[i].Item2) == MissionClear.Clear)
                         {
                             tempClearCount++;
-                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                     case MissionType.HouseLifeLimit:
                         if (MissionHouseLifeLimit(missionTypes[i].Item2) == MissionClear.Clear)
                         {
                             tempClearCount++;
-                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                     case MissionType.PlayerWin:
                         if (MissionPlayerWin() == GameState.Win)
                         {
                             tempClearCount++;
-                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                 }
@@ -117,6 +113,11 @@ public class StageManager : MonoBehaviour
                 StageDataManager.Instance.selectedStageData.isCleared = true;
                 StageDataManager.Instance.selectedStageDatas[stageData.NextStageID].isUnlocked = true;
                 StageDataManager.Instance.UpdatePlayData();
+                foreach(var reward in rewardList)
+                {
+                    ItemInventoryManager.Instance.AddItemByID(reward.Item1, reward.Item2);
+                }
+                PlayDataManager.Save();
             }
             else
             {
