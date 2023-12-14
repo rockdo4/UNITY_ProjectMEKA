@@ -12,6 +12,8 @@ public class IngameStageUIManager : MonoBehaviour
     private WindowMode prevWindowMode;
     private StageManager stageManager;
 
+    public Button exitButton;
+
     // panels
     public GameObject characterInfoPanel;
     public GameObject timeProgressBarPanel;
@@ -232,11 +234,15 @@ public class IngameStageUIManager : MonoBehaviour
         var isResultMode = windowMode == WindowMode.Win || windowMode == WindowMode.Loose;
         if(isResultMode && Input.GetMouseButtonUp(0))
         {
-            // 타이틀씬으로 감
-            Time.timeScale = 1f;
-            StageDataManager.Instance.toStageChoicePanel = true;
-            SceneManager.LoadScene("GachaScene");
+            CloseScene();
         }
+    }
+
+    public void CloseScene()
+    {
+        Time.timeScale = 1f;
+        StageDataManager.Instance.toStageChoicePanel = true;
+        SceneManager.LoadScene("GachaScene");
     }
 
     public void ChangeCharacterInfo()
@@ -328,7 +334,12 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void Init()
     {
-       if(StageDataManager.Instance.selectedStageData != null)
+        exitButton.onClick.AddListener(() =>
+        {
+            CloseScene();
+        });
+
+        if (StageDataManager.Instance.selectedStageData != null)
         {
             // 해당 모드에 맞춰서 UI 세팅
             var id = StageDataManager.Instance.selectedStageData.stageID;
