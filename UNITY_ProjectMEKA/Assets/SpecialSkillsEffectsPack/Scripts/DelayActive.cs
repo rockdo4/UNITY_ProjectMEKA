@@ -12,7 +12,10 @@ public class DelayActive : MonoBehaviour
     {
         m_time = Time.time;
     }
-
+    private void OnEnable()
+    {
+        m_time = Time.time;
+    }
     // Update is called once per frame
     void Update()
     {

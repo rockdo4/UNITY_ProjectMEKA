@@ -307,6 +307,37 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
+--- !u!1 &36857034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 36857035}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &36857035
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36857034}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &97008896
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,58 +707,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.size
-      value: 33
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[29].count
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[30].count
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[31].count
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[32].count
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[29].perfab
-      value: 
-      objectReference: {fileID: 6171131659093573798, guid: f977883f948a7774ebc6029fae3671e0, type: 3}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[30].perfab
-      value: 
-      objectReference: {fileID: 1339906448664605960, guid: dd15869566776344590f22f7b28c4833, type: 3}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[31].perfab
-      value: 
-      objectReference: {fileID: 1252761122538427479, guid: be1e1d827b1249643922bd54d08cdb46, type: 3}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[32].perfab
-      value: 
-      objectReference: {fileID: 8159430428541904159, guid: a126c42ee089ed34da9f4c0f2a6042e8, type: 3}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[29].objectName
-      value: GhostSkillEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[30].objectName
-      value: NemesisSkillEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[31].objectName
-      value: NeoHeal
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[32].objectName
-      value: NeoSkillEffect
-      objectReference: {fileID: 0}
     - target: {fileID: 6372842070683576580, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: m_Name
       value: ObjectPoolManager
@@ -1791,8 +1770,10 @@ MonoBehaviour:
   currentPlayer: {fileID: 0}
   currentPlayerIcon: {fileID: 0}
   gameState: 0
+  timer: 0
   currentCost: 0
   maxCost: 50
+  useCost: 0
   allMonsterCount: 0
   allTargetMonsterCount: 0
   killMonsterCount: 0
@@ -2586,7 +2567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].count
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
@@ -2650,7 +2631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5627667859293143261, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8719843802841994794, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: m_IsActive
@@ -2917,3 +2898,4 @@ SceneRoots:
   - {fileID: 579417436}
   - {fileID: 696819280}
   - {fileID: 6413333477721739111}
+  - {fileID: 36857035}
