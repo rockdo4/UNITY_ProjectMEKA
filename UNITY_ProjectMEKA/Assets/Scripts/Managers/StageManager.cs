@@ -193,7 +193,7 @@ public class StageManager : MonoBehaviour
 
     public MissionClear MissionHouseLifeLimit(int value)
     {
-        if( maxHouseLife-currentHouseLife >= value)
+        if(currentHouseLife >= value)
         {
             return MissionClear.Clear;
         }
