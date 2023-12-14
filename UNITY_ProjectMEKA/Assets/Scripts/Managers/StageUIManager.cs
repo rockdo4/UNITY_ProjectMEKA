@@ -90,6 +90,7 @@ public class StageUIManager : MonoBehaviour
             // chapter + stage text apply
             var stageButtonText = stageButtonGo.GetComponentInChildren<TextMeshProUGUI>();
 
+            Debug.Log(stageTable == null);
             var chapter = stageTable.GetStageData(stage.Key).ChapterNumber;
             var stageNumber = stageTable.GetStageData(stage.Key).StageNumber;
 

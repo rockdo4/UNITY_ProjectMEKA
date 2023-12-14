@@ -59,15 +59,20 @@ public class IngameStageUIManager : MonoBehaviour
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
-    private void Awake()
+    private void OnEnable()
     {
+        stageManager = GameObject.FindGameObjectWithTag(Defines.Tags.stageManager).GetComponent<StageManager>();
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
         skillButton = joystick.skillButton;
-        stageManager = GameObject.FindGameObjectWithTag(Defines.Tags.stageManager).GetComponent<StageManager>();
 
         isInfoWindowOn = true;
+
+    }
+
+    private void Awake()
+    {
     }
 
     private void Start()

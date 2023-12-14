@@ -38,11 +38,12 @@ public static class Defines
 
     public static class StorySceneNames
     {
-        public const string stage0_1 = "Bug_KimMinji";
-        public const string stage0_2 = "a";
-        public const string stage0_3 = "b";
-
-
+        public const string stage0_1 = "Stage_0-1";
+        public const string stage0_2 = "Stage_TR-1";
+        public const string stage0_3 = "Stage_0-2";
+        public const string stage0_4 = "Stage_0-3";
+        public const string stage0_5 = "Stage_0-4";
+        public const string stage0_6 = "Stage_TR-2";
     }
     public static class AssignmentSceneNames
     {

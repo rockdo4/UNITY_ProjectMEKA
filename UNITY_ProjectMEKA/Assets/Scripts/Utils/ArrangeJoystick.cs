@@ -22,6 +22,7 @@ public class ArrangeJoystick : MonoBehaviour
         characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         ArrangeDone = new UnityEvent();
+
         ArrangeDone.AddListener(ArrangeDoneEvent);
         cancelButton.onClick.AddListener(CancelEvent);
         collectButton.onClick.AddListener(CollectEvent);
@@ -30,7 +31,6 @@ public class ArrangeJoystick : MonoBehaviour
 
     private void OnEnable()
     {
-        
     }
 
     private void Start()
