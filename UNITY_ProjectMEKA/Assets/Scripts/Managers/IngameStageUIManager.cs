@@ -202,6 +202,7 @@ public class IngameStageUIManager : MonoBehaviour
                 break;
             case WindowMode.Loose:
                 ResultPanel.SetActive(true);
+                Time.timeScale = 0f;
                 LooseWindowSet();
                 break;
         }

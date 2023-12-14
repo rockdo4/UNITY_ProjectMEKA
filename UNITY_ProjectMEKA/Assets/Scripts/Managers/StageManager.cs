@@ -17,6 +17,7 @@ public class StageManager : MonoBehaviour
     public GameState gameState;
     public (MissionType, int)[] missionTypes = new (MissionType, int)[3];
 
+    public int tempClearCount = 0;
     public float timer;
     public float currentCost;
     public float maxCost;
@@ -69,42 +70,48 @@ public class StageManager : MonoBehaviour
                     case MissionType.MonsterKillCount:
                         if (MissionMonsterKillCount(missionTypes[i].Item2) == MissionClear.Clear)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
+                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                     case MissionType.SurviveTime:
                         if (MissionSurviveTime(missionTypes[i].Item2) == MissionClear.Clear)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
+                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                     case MissionType.ClearTime:
                         if (MissionClearTime(missionTypes[i].Item2) == MissionClear.Clear)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
+                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                     case MissionType.CostLimit:
                         if (MissionCostLimit(missionTypes[i].Item2) == MissionClear.Clear)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
+                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                     case MissionType.HouseLifeLimit:
                         if (MissionHouseLifeLimit(missionTypes[i].Item2) == MissionClear.Clear)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
+                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                     case MissionType.PlayerWin:
                         if (MissionPlayerWin() == GameState.Win)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
+                            //StageDataManager.Instance.selectedStageData.clearScore++;
                         }
                         break;
                 }
             }
-            if (StageDataManager.Instance.selectedStageData.clearScore > 0)
+            if (tempClearCount > StageDataManager.Instance.selectedStageData.clearScore)
             {
                 gameState = GameState.Win;
                 StageDataManager.Instance.selectedStageData.isCleared = true;
@@ -113,7 +120,14 @@ public class StageManager : MonoBehaviour
             }
             else
             {
-                gameState = GameState.Die;
+                if(tempClearCount == 0)
+                {
+                    gameState = GameState.Die;
+                }
+                else
+                {
+                    gameState = GameState.Win;
+                }
             }
         }
     }
