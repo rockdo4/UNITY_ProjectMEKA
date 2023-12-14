@@ -107,12 +107,14 @@ public class BuffSkilType : SkillBase
                     break;
                 case Defines.SkillType.Instant:
                     //즉발 시전->자신 || 주변 다른 캐릭터->어떤 능력치 수정-> 계산방법 % 배율 -> 이팩트 생성 -> 적용
-                    if(isAttackRage)
+                    
+                    if (isAttackRage)
                     {
                         player.ani.SetTrigger("Skill");
                     }
                     else
                     {
+                        
                         InstantSkill();
 
                     }
@@ -196,7 +198,17 @@ public class BuffSkilType : SkillBase
         }
         else
         {
-
+            switch (Inc)
+            {
+                case Defines.IncrementalForm.Percentage:
+                    player.state.damage += saveDamage * figure;
+                    PoolBuffEffactAll();
+                    break;
+                case Defines.IncrementalForm.Magnification:
+                    player.state.damage *= figure;
+                    PoolBuffEffactAll();
+                    break;
+            }
         }
     }
     public void PoolBuffEffact()
@@ -360,7 +372,10 @@ public class BuffSkilType : SkillBase
     void OnDrawGizmos()
     {
 
-
+        if(!isAttackRage)
+        {
+            return;
+        }
         ConvertTo2DArray();
 
         Vector3 forward = -player.transform.forward; // 플레이어의 로컬 포워드
