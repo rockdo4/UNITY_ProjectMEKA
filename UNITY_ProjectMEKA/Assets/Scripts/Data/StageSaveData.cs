@@ -8,7 +8,7 @@ using UnityEngine;
  */
 public class StageSaveData
 {
-    public int stageID;
+    public int stageID = 0;
     public bool isUnlocked = false;
     public bool isCleared = false;
     public int clearScore = 0;

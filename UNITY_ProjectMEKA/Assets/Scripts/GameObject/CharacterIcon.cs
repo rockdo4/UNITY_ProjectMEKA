@@ -120,6 +120,11 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         var isCurrentPlayerThis = stageManager.currentPlayer == playerController;
+
+        if(stageManager.ingameStageUIManager == null)
+        {
+            Debug.Log("Ёнюс");
+        }
         var isPossibleMode = (stageManager.ingameStageUIManager.windowMode == WindowMode.None) || (stageManager.ingameStageUIManager.windowMode == WindowMode.FirstArrange);
         var isCostEnough = stageManager.currentCost > cost;
 

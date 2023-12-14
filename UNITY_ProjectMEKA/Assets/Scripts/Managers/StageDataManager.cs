@@ -15,7 +15,8 @@ public class StageDataManager
         }
     }
 
-    public StageSaveData selectedStageData;
+
+    public StageSaveData selectedStageData = new StageSaveData();
     public Dictionary<int,StageSaveData> selectedStageDatas;
     private StageClass currentStageClass;
     public StageTable stageTable;

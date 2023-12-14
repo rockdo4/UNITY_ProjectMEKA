@@ -32,10 +32,14 @@ public class StageManager : MonoBehaviour
     private void OnEnable()
     {
         PlayDataManager.Init();
-        Init();
-    }
+		//Init();
+		ingameStageUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
+		characterIconManager = GameObject.FindGameObjectWithTag(Tags.characterIconManager).GetComponent<CharacterIconManager>();
+		arrangeJoystick = GameObject.FindGameObjectWithTag(Tags.joystick).GetComponent<ArrangeJoystick>();
 
-    private void Awake()
+	}
+
+	private void Awake()
     {
         currentCost = maxCost;
         currentHouseLife = maxHouseLife;
@@ -48,7 +52,7 @@ public class StageManager : MonoBehaviour
         if (gameState == GameState.Playing)
         {
             // for tilemap test
-            CheckGameOver();
+            //CheckGameOver();
         }
     }
 
