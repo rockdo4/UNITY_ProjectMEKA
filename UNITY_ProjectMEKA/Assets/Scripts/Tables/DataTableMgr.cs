@@ -6,7 +6,7 @@ public static class DataTableMgr
 {
     private static Dictionary<System.Type, DataTable> tables = new Dictionary<System.Type, DataTable>();
 
-    // ½ºÅÂÆ½ »ý¼ºÀÚ
+    // ï¿½ï¿½ï¿½ï¿½Æ½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     static DataTableMgr()
     {
         tables.Clear();
