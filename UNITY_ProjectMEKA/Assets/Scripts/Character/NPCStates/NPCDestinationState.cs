@@ -84,9 +84,13 @@ public class NPCDestinationStates : NPCBaseState
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
                     {
-                        enemyCtrl.target = pl;
-                        enemyCtrl.SetState(NPCStates.Idle);
-                        return;
+                        if(enemyCtrl.forwardGrid == pl.GetComponentInParent<PlayerController>().CurrentGridPos)
+                        {
+                            enemyCtrl.target = pl;
+                            enemyCtrl.SetState(NPCStates.Idle);
+                            return;
+                        }
+                        
                     }
 
                 }
@@ -116,17 +120,25 @@ public class NPCDestinationStates : NPCBaseState
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
                     {
-                        enemyCtrl.target = pl;
-                        enemyCtrl.SetState(NPCStates.Idle);
-                        return;
+                        if (enemyCtrl.forwardGrid == pl.GetComponentInParent<PlayerController>().CurrentGridPos)
+                        {
+                            enemyCtrl.target = pl;
+                            enemyCtrl.SetState(NPCStates.Idle);
+                            return;
+                        }
+                            
                     }
                 }
                 else
                 {
-                    enemyCtrl.target = pl;
-                    //enemyCtrl.SetState(NPCStates.Attack);
-                    enemyCtrl.SetState(NPCStates.Idle);
-                    return;
+                    if (enemyCtrl.forwardGrid == pl.GetComponentInParent<PlayerController>().CurrentGridPos)
+                    {
+                        enemyCtrl.target = pl;
+                        //enemyCtrl.SetState(NPCStates.Attack);
+                        enemyCtrl.SetState(NPCStates.Idle);
+                        return;
+                    }
+                        
                 }
                
             }

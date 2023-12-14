@@ -676,38 +676,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.size
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[25].count
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[26].count
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[25].perfab
-      value: 
-      objectReference: {fileID: 1156642180143556973, guid: e746196d79ac8e144be9223da92238c1, type: 3}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[26].perfab
-      value: 
-      objectReference: {fileID: 1217358381915387075, guid: 8d828050ce4d80246bf9f32131aa8431, type: 3}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[12].objectName
-      value: AoeBullet
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[25].objectName
-      value: IsabellaSkillEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[26].objectName
-      value: AoeBulletHit
-      objectReference: {fileID: 0}
     - target: {fileID: 6372842070683576580, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: m_Name
       value: ObjectPoolManager
@@ -2558,10 +2526,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[0].pathGuideOn
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[1].pathGuideOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
+      propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].interval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
+      propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].interval
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1346286344496382463, guid: e53d2632522f6a94dacd501747283afb, type: 3}
@@ -2611,6 +2595,10 @@ PrefabInstance:
     - target: {fileID: 2546967949494347156, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[1].pathGuideOn
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627667859293143261, guid: e53d2632522f6a94dacd501747283afb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8719843802841994794, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: m_IsActive

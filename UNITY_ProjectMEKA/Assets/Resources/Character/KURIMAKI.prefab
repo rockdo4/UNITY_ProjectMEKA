@@ -6282,7 +6282,7 @@ MonoBehaviour:
   ID: 0
   arrangeCost: 10
   arrangeCoolTime: 45
-  skill: 1
+  skill: 0
   cost: 0
   maxCost: 30
   skillCost: 30
@@ -6303,6 +6303,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375317c1b2b29d341824d604467b31de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillCost: 30
+  skillCoolTime: 20
+  skillType: 1
+  isSkillUsing: 0
+  skillDuration: 15
+  isMe: 1
+  isSingle: 1
+  effectName: SnapShotEffect
+  isChoice: 0
+  type: 1
+  Inc: 0
+  figure: 0.2
 --- !u!1 &3154175488218858315
 GameObject:
   m_ObjectHideFlags: 0

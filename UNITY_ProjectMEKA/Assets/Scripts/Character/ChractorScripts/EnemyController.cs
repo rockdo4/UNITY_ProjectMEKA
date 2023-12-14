@@ -47,7 +47,8 @@ public class EnemyController : PoolAble
 
     [HideInInspector]
     public bool isArrival = false;
-
+    public Vector3Int forwardGrid; 
+    
     private void OnEnable()
     {
         if (states.Count != 0)
@@ -62,15 +63,6 @@ public class EnemyController : PoolAble
 
 	}
 
-    
-	//private void OnDisable()
-	//{
-	//	var delete = GetComponents<BoxCollider>();
-	//	foreach (var c in delete)
-	//	{
-	//		Destroy(c);
-	//	}
-	//}
 
 	private void Awake()
     {
@@ -143,48 +135,23 @@ public class EnemyController : PoolAble
 
     private void Update()
     {
+        Vector3 currentPosition = transform.position; // 현재 위치
+        Vector3 forwardDirection = transform.forward; // 포워드 방향
+
+        // 포워드 방향으로 1 유닛 이동
+        Vector3 newPosition = currentPosition + new Vector3(forwardDirection.x, 0, forwardDirection.z);
+
+        // 그리드 인덱스 계산
+        forwardGrid = new Vector3Int(Mathf.RoundToInt(newPosition.x), 0, Mathf.RoundToInt(newPosition.z));
+
+        Debug.Log("그리드 인덱스: " + forwardGrid);
         stateManager.Update();
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
         //Debug.Log(state.damage);
        
     }
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.CompareTag("PlayerCollider"))
-    //    {
-    //        //Debug.Log(other, other);
-    //        if (!rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
-    //        {
-    //            //other�� enemy�� ����ĭ�� ������ ����Ʈ�� �����ʾƾ���
-    //            if (CurrentGridPos != other.GetComponentInParent<PlayerController>().CurrentGridPos)
-    //            {
-    //                rangeInPlayers.Add(other.GetComponentInParent<Transform>().gameObject);
-    //                var obj = other.GetComponentInParent<CanDie>();
-    //                obj.action.AddListener(() =>
-    //                {
-    //                    rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
-    //                });
-    //            }
-    //        }
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("PlayerCollider"))
-    //    {
-    //        if (rangeInPlayers.Contains(other.GetComponentInParent<Transform>().gameObject))
-    //        {
-    //            rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
-    //            var obj = other.GetComponentInParent<CanDie>();
-    //            obj.action.RemoveListener(() =>
-    //            {
-    //                rangeInPlayers.Remove(other.GetComponentInParent<GameObject>().gameObject);
-    //            });
-    //        }
-    //    }
-    //}
+    
     public void SetState(NPCStates state)
     {
         stateManager.ChangeState(states[(int)state]);

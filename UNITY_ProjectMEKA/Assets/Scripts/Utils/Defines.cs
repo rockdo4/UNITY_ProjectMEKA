@@ -198,4 +198,9 @@ public static class Defines
         Pause
     }
 
+    public enum IncrementalForm
+    {
+        Percentage,
+        Magnification,
+    }
 }

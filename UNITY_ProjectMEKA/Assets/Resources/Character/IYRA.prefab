@@ -14062,6 +14062,7 @@ GameObject:
   - component: {fileID: 1834510190876064605}
   - component: {fileID: 9066949810129365537}
   - component: {fileID: 7402171635051098320}
+  - component: {fileID: 6087518709424930133}
   m_Layer: 6
   m_Name: IYRA
   m_TagString: Player
@@ -14158,6 +14159,10 @@ MonoBehaviour:
   joystick: {fileID: 0}
   icon: {fileID: 0}
   currentTile: {fileID: 0}
+  parentPos: {fileID: 0}
+  ChildPos: {fileID: 0}
+  animationController: {fileID: 0}
+  currnetAnimationController: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -14205,7 +14210,7 @@ MonoBehaviour:
   ID: 0
   arrangeCost: 18
   arrangeCoolTime: 40
-  skill: 4
+  skill: 0
   cost: 0
   maxCost: 50
   skillCost: 50
@@ -14214,6 +14219,23 @@ MonoBehaviour:
   occupation: 2
   experience: 0
   currentExperience: 0
+--- !u!114 &6087518709424930133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6279598338925273691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ef1602078f546438c0d217f2743a09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillCost: 50
+  skillCoolTime: 10
+  skillType: 0
+  isSkillUsing: 0
+  projectileName: Slash
 --- !u!1 &6290955771692547296
 GameObject:
   m_ObjectHideFlags: 0

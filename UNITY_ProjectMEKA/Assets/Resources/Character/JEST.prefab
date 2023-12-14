@@ -959,6 +959,7 @@ GameObject:
   - component: {fileID: 524112290103167360}
   - component: {fileID: 5155388692706183794}
   - component: {fileID: 175761948890550145}
+  - component: {fileID: 4886655770934250221}
   m_Layer: 6
   m_Name: JEST
   m_TagString: Player
@@ -1057,6 +1058,8 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   parentPos: {fileID: 0}
   ChildPos: {fileID: 0}
+  animationController: {fileID: 0}
+  currnetAnimationController: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -1104,7 +1107,7 @@ MonoBehaviour:
   ID: 0
   arrangeCost: 0
   arrangeCoolTime: 0
-  skill: 2
+  skill: 0
   cost: 0
   maxCost: 100
   skillCost: 50
@@ -1113,6 +1116,25 @@ MonoBehaviour:
   occupation: 1
   experience: 0
   currentExperience: 0
+--- !u!114 &4886655770934250221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513341579006026017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ab6e8ef7cf4b748912ba1c46fd1479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillCost: 50
+  skillCoolTime: 20
+  skillType: 1
+  isSkillUsing: 0
+  effectName: JestSkillEffect
+  effect: 0
+  isSingle: 1
 --- !u!1 &525027986430237208
 GameObject:
   m_ObjectHideFlags: 0
