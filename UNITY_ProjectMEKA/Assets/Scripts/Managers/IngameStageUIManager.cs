@@ -59,15 +59,20 @@ public class IngameStageUIManager : MonoBehaviour
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
-    private void Awake()
+    private void OnEnable()
     {
+        stageManager = GameObject.FindGameObjectWithTag(Defines.Tags.stageManager).GetComponent<StageManager>();
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
         skillButton = joystick.skillButton;
-        stageManager = GameObject.FindGameObjectWithTag(Defines.Tags.stageManager).GetComponent<StageManager>();
 
         isInfoWindowOn = true;
+
+    }
+
+    private void Awake()
+    {
     }
 
     private void Start()
@@ -191,6 +196,7 @@ public class IngameStageUIManager : MonoBehaviour
                 break;
             case WindowMode.Win:
                 ResultPanel.SetActive(true);
+                Time.timeScale = 0f;
                 break;
             case WindowMode.Loose:
                 ResultPanel.SetActive(true);
@@ -227,6 +233,7 @@ public class IngameStageUIManager : MonoBehaviour
         if(isResultMode && Input.GetMouseButtonUp(0))
         {
             // 타이틀씬으로 감
+            Time.timeScale = 1f;
             StageDataManager.Instance.toStageChoicePanel = true;
             SceneManager.LoadScene("GachaScene");
         }
@@ -352,28 +359,71 @@ public class IngameStageUIManager : MonoBehaviour
         SetStageInfo(stageData);
 
         // reward item setting
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 5; ++i)
         {
+            var rewardData = DataTableMgr.GetTable<RewardTable>().GetStageData(stageData.RewardID);
+            
+           
             var itemGo = Instantiate(itemPrefab, ItemParentPanel.transform);
             var itemInfo = itemGo.GetComponent<RewardItemInfo>();
-            Debug.Log(DataTableMgr.GetTable<RewardTable>() == null);
 
-            var rewardData = DataTableMgr.GetTable<RewardTable>().GetStageData(stageData.RewardID);
-
-            if(i == 0)
+            switch(i)
             {
-                itemInfo.itemCountText.SetText(rewardData.Item1Count.ToString());
-                SetItemInfo(rewardData.Item1ID, itemInfo, rewardData);
-            }
-            else if(i == 1)
-            {
-                itemInfo.itemCountText.SetText(rewardData.Item2Count.ToString());
-                SetItemInfo(rewardData.Item2ID, itemInfo, rewardData);
-            }
-            else
-            {
-                itemInfo.itemCountText.SetText(rewardData.Item3Count.ToString());
-                SetItemInfo(rewardData.Item3ID, itemInfo, rewardData);
+                case 0:
+                    if(rewardData.Item1ID != 0)
+                    {
+                        itemInfo.itemCountText.SetText(rewardData.Item1Count.ToString());
+                        SetItemInfo(rewardData.Item1ID, itemInfo, rewardData);
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
+                case 1:
+                    if(rewardData.Item2ID != 0)
+                    {
+                        itemInfo.itemCountText.SetText(rewardData.Item2Count.ToString());
+                        SetItemInfo(rewardData.Item2ID, itemInfo, rewardData);
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
+                case 2:
+                    if (rewardData.Item3ID != 0)
+                    {
+                        itemInfo.itemCountText.SetText(rewardData.Item3Count.ToString());
+                        SetItemInfo(rewardData.Item3ID, itemInfo, rewardData);
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
+                case 3:
+                    if (rewardData.Item4ID != 0)
+                    {
+                        itemInfo.itemCountText.SetText(rewardData.Item4Count.ToString());
+                        SetItemInfo(rewardData.Item4ID, itemInfo, rewardData);
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
+                case 4:
+                    if (rewardData.Item5ID != 0)
+                    {
+                        itemInfo.itemCountText.SetText(rewardData.Item5Count.ToString());
+                        SetItemInfo(rewardData.Item5ID, itemInfo, rewardData);
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
             }
         }
     }
@@ -403,6 +453,10 @@ public class IngameStageUIManager : MonoBehaviour
     {
         // item info setting : sprite
         // item info setting : name
+        if(DataTableMgr.GetTable<ItemInfoTable>().GetItemData(itemID) == null)
+        {
+            return;
+        }
         var rewardItem = DataTableMgr.GetTable<ItemInfoTable>().GetItemData(itemID);
         itemInfo.itemName.SetText(rewardItem.Name);
     }

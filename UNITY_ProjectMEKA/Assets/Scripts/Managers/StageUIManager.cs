@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Defines;
@@ -54,8 +55,12 @@ public class StageUIManager : MonoBehaviour
         });
     }
 
-    private void Start()
+    private void Update()
     {
+        //if (stageInfoPanel.activeSelf && Input.GetMouseButtonUp(0))
+        //{
+        //    CloseStageInfoWindow();
+        //}
     }
 
     public void ClassOnClick(StageClass stageClass)
@@ -90,6 +95,7 @@ public class StageUIManager : MonoBehaviour
             // chapter + stage text apply
             var stageButtonText = stageButtonGo.GetComponentInChildren<TextMeshProUGUI>();
 
+            Debug.Log(stageTable == null);
             var chapter = stageTable.GetStageData(stage.Key).ChapterNumber;
             var stageNumber = stageTable.GetStageData(stage.Key).StageNumber;
 

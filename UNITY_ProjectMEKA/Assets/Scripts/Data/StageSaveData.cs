@@ -23,17 +23,14 @@ public class StageData
     public string ChapterNumber { get; set; }
     public int StageNumber { get; set; }
     public int Index { get; set; }
+    public int MaxCost { get; set; }
     public string MapImagePath { get; set; }
     public string MapSoundPath { get; set; }
     public int NextStageID { get; set; }
-    public string FailConditionPath { get; set; }
-    public string Mission1Path { get; set; }
     public int Mission1Type { get; set; }
     public int Mission1Value { get; set; }
-    public string Mission2Path { get; set; }
     public int Mission2Type { get; set; }
     public int Mission2Value { get; set; }
-    public string Mission3Path { get; set; }
     public int Mission3Type { get; set; }
     public int Mission3Value { get; set; }
     public float StageTime { get; set; }

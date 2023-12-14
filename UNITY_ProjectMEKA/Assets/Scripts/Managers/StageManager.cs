@@ -32,17 +32,15 @@ public class StageManager : MonoBehaviour
     private void OnEnable()
     {
         PlayDataManager.Init();
-		//Init();
-		ingameStageUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
-		characterIconManager = GameObject.FindGameObjectWithTag(Tags.characterIconManager).GetComponent<CharacterIconManager>();
-		arrangeJoystick = GameObject.FindGameObjectWithTag(Tags.joystick).GetComponent<ArrangeJoystick>();
+		Init();
+		//ingameStageUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
+		//characterIconManager = GameObject.FindGameObjectWithTag(Tags.characterIconManager).GetComponent<CharacterIconManager>();
+		//arrangeJoystick = GameObject.FindGameObjectWithTag(Tags.joystick).GetComponent<ArrangeJoystick>();
 
 	}
 
 	private void Awake()
     {
-        currentCost = maxCost;
-        currentHouseLife = maxHouseLife;
     }
 
     private void Update()
@@ -52,7 +50,7 @@ public class StageManager : MonoBehaviour
         if (gameState == GameState.Playing)
         {
             // for tilemap test
-            //CheckGameOver();
+            CheckGameOver();
         }
     }
 
@@ -226,11 +224,17 @@ public class StageManager : MonoBehaviour
         characterIconManager = GameObject.FindGameObjectWithTag(Tags.characterIconManager).GetComponent<CharacterIconManager>();
         arrangeJoystick = GameObject.FindGameObjectWithTag(Tags.joystick).GetComponent<ArrangeJoystick>();
 
+        var id = StageDataManager.Instance.selectedStageData.stageID;
+        var stageData = StageDataManager.Instance.stageTable.GetStageData(id);
+
+        maxCost = stageData.MaxCost;
+        currentCost = maxCost;
+
+        maxHouseLife = stageData.HouseLife;
+        currentHouseLife = maxHouseLife;
+
         for (int i = 0; i < missionTypes.Length; ++i)
         {
-            var id = StageDataManager.Instance.selectedStageData.stageID;
-            var stageData = StageDataManager.Instance.stageTable.GetStageData(id);
-
             if( i == 0 )
             {
                 missionTypes[i] = ((MissionType)stageData.Mission1Type, stageData.Mission1Value);
@@ -238,7 +242,6 @@ public class StageManager : MonoBehaviour
             else if(i == 1)
             {
                 missionTypes[i] = ((MissionType)stageData.Mission2Type, stageData.Mission2Value);
-
             }
             else
             {
