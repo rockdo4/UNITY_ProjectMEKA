@@ -88,6 +88,7 @@ public class GachaManager : MonoBehaviour
 			var itemImage = ObjectPoolManager.instance.GetGo("GachaCard");
 			itemImage.transform.SetParent(resultPanel.transform, false);
 			itemImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(item.PortraitPath);
+            itemImage.transform.SetAsLastSibling();
 
 			CharacterManager.Instance.UpdatePlayData();
 
