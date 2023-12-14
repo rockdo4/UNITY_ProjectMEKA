@@ -203,4 +203,22 @@ public static class Defines
         Percentage,
         Magnification,
     }
+
+    public enum MissionType
+    {
+        None,
+        MonsterKillCount,
+        SurviveTime,
+        ClearTime,
+        CostLimit,
+        HouseLifeLimit,
+        PlayerWin
+    }
+
+    public enum MissionClear
+    {
+        None,
+        Clear,
+        Fail
+    }
 }

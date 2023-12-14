@@ -67,7 +67,9 @@ public class ArrangeJoystick : MonoBehaviour
 
         }
         //stageManager.characterIconManager.currentCharacterCount--;
-        stageManager.currentCost -= stageManager.currentPlayer.state.arrangeCost;
+        var cost = stageManager.currentPlayer.state.arrangeCost;
+        stageManager.currentCost -= cost;
+        stageManager.useCost += cost;
         stageManager.currentPlayer.SetState(CharacterStates.Idle);
         stageManager.currentPlayer = null;
         stageManager.currentPlayerIcon = null;

@@ -1771,8 +1771,10 @@ MonoBehaviour:
   currentPlayer: {fileID: 0}
   currentPlayerIcon: {fileID: 0}
   gameState: 0
+  timer: 0
   currentCost: 0
   maxCost: 10000
+  useCost: 0
   allMonsterCount: 0
   allTargetMonsterCount: 0
   killMonsterCount: 0
@@ -2727,6 +2729,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
+      propertyPath: waveInfos.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[0].pathGuideOn
       value: 0
       objectReference: {fileID: 0}
@@ -2736,7 +2742,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].count
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1206794889752454504, guid: e53d2632522f6a94dacd501747283afb, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
