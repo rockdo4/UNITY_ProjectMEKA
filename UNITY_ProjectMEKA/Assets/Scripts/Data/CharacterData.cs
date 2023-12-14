@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //세이브 파일에 저장할 클래스
@@ -12,12 +13,31 @@ public class Character
 	public int CharacterGrade;
 	public bool IsUnlock;
 
+	public int DeviceCoreID;
+	public int DeviceEngineID;
+
 	public float Damage
 	{
 		get
 		{
 			var levelTable = DataTableMgr.GetTable<CharacterLevelTable>();
 			var levelData = levelTable.GetLevelData(CharacterLevel);
+
+			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
+			float value = 0;
+			int[] ids =
+			{
+				DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID].MainOptionID,
+				DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID].SubOption1ID,
+				DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID].SubOption2ID,
+				DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID].SubOption3ID
+			};
+
+			for (int i = 0; i < ids.Length; i++)
+			{
+				valueTable.GetDeviceValueData(ids[i]);
+			}
+
 			return levelData.CharacterDamage;
 		}
 	}
@@ -37,6 +57,46 @@ public class Character
 			var levelTable = DataTableMgr.GetTable<CharacterLevelTable>();
 			var levelData = levelTable.GetLevelData(CharacterLevel);
 			return levelData.CharacterHP;
+		}
+	}
+
+	public float ArrangementCost
+	{
+		get
+		{
+			var charTable = DataTableMgr.GetTable<CharacterTable>();
+			var charData = charTable.GetCharacterData(CharacterID);
+			return charData.ArrangementCost;
+		}
+	}
+
+	public float WithdrawCost
+	{
+		get
+		{
+			var charTable = DataTableMgr.GetTable<CharacterTable>();
+			var charData = charTable.GetCharacterData(CharacterID);
+			return charData.WithdrawCost;
+		}
+	}
+
+	public float ReArrangementCoolDown
+	{
+		get
+		{
+			var charTable = DataTableMgr.GetTable<CharacterTable>();
+			var charData = charTable.GetCharacterData(CharacterID);
+			return charData.ReArrangementCoolDown;
+		}
+	}
+
+	public string Name
+	{
+		get
+		{
+			var charTable = DataTableMgr.GetTable<CharacterTable>();
+			var charData = charTable.GetCharacterData(CharacterID);
+			return charData.CharacterName;
 		}
 	}
 }

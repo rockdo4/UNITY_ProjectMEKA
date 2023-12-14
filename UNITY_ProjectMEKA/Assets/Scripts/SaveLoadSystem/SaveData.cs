@@ -133,7 +133,28 @@ public class SaveDataV4 : SaveDataV3
 	public Dictionary<int, StageSaveData> challengeStageDatas;
 
     public override SaveData VersionUp()
-	{
-        return null;
+    {
+        var data = new SaveDataV5()
+        {
+            deviceStorage = new Dictionary<int, Device>()
+		};
+
+        return data;
     }
+}
+
+public class SaveDataV5 : SaveDataV4
+{
+    public SaveDataV5()
+    {
+        Version = 5;
+		deviceStorage = new Dictionary<int, Device>();
+	}
+
+    public Dictionary<int, Device> deviceStorage;
+
+	public override SaveData VersionUp()
+    {
+		return null;
+	}
 }

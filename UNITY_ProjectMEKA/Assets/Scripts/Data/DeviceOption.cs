@@ -10,6 +10,8 @@ public class Device
 	public int SubOption1ID;
 	public int SubOption2ID;
 	public int SubOption3ID = 0;
+	public bool IsEquipped = false;
+	public int TargetCharacterID = 0;
 }
 
 public class DeviceOption
@@ -28,5 +30,5 @@ public class DeviceValue
 	public float Coefficient { get; set; }
 	public float Value { get; set; }
 	public float Increase { get; set; }
-	public float MaxValue { get; set; }
+	public float MaxLevel { get; set; }
 }

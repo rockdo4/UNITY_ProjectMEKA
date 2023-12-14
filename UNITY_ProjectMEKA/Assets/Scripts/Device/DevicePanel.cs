@@ -4,6 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum DevicePartType
+{
+	Core = 1,
+	Engine = 2,
+}
+
 public class DevicePanel : MonoBehaviour
 {
 	private GachaSystem<int> coreOption;
@@ -11,24 +17,42 @@ public class DevicePanel : MonoBehaviour
 	private GachaSystem<int> subOption;
 
 	private DeviceOptionTable deviceOptionTable;
+	private DeviceValueTable deviceValueTable;
 
 	private Dictionary<int, Device> deviceDict;
 
 	public Transform characterInfoPanel;
+
+	[Header("Scroll View")]
 	public Transform scrollContent;
 	public DeviceInfo devicePrefab;
 
+	[Header("Character Info")]
+	public TextMeshProUGUI characterName;
+	public Button coreItem;
+	public Button engineItem;
+
+
+	[Header("Device Info")]
 	public TextMeshProUGUI deviceName;
 	public TextMeshProUGUI level;
 	public TextMeshProUGUI type;
 	public TextMeshProUGUI mainOption;
 	public TextMeshProUGUI mainOptionValue;
 	public TextMeshProUGUI subOption1;
-	public TextMeshProUGUI mainOptionValue1;
+	public TextMeshProUGUI subOptionValue1;
 	public TextMeshProUGUI subOption2;
-	public TextMeshProUGUI mainOptionValue2;
+	public TextMeshProUGUI subOptionValue2;
 	public TextMeshProUGUI subOption3;
-	public TextMeshProUGUI mainOptionValue3;
+	public TextMeshProUGUI subOptionValue3;
+
+	public Button equipButton;
+	public Button enhanceButton;
+
+	private Device selectedDevice;
+
+	private Character currCharacter;
+
 
 	private void Awake()
 	{
@@ -41,6 +65,7 @@ public class DevicePanel : MonoBehaviour
 	{
 		deviceDict = DeviceInventoryManager.Instance.m_DeviceStorage;
 		deviceOptionTable = DataTableMgr.GetTable<DeviceOptionTable>();
+		deviceValueTable = DataTableMgr.GetTable<DeviceValueTable>();
 
 		var coreOptions = deviceOptionTable.GetOrigianlCoreTable();
 		var engineOptions = deviceOptionTable.GetOrigianlEngineTable();
@@ -61,6 +86,8 @@ public class DevicePanel : MonoBehaviour
 			subOption.Add(item.Key, item.Value.Weight);
 			//Debug.Log((item.Key, item.Value.Weight));
 		}
+
+		CheckPlayData();
 	}
 
 	private void Update()
@@ -75,6 +102,20 @@ public class DevicePanel : MonoBehaviour
 			CreateDevice(2);
 			UpdateDeviceCard();
 		}
+	}
+
+	public void SetCharacter(Character character)
+	{
+		if(character == null)
+		{
+			Debug.Log("캐릭터가 없습니다.");
+			return;
+		}
+
+		currCharacter = character;
+		characterName.SetText(currCharacter.Name);
+
+		UpdateDeviceCard();
 	}
 
 	public void CreateDevice(int PartType)
@@ -180,11 +221,12 @@ public class DevicePanel : MonoBehaviour
 			var text = item.GetComponentInChildren<TextMeshProUGUI>();
 			var str = device.Value.Name;
 
-			text.SetText(device.Value.Name);
+			text.SetText(device.Value.PartType.ToString());
 			item.GetComponent<Button>().onClick.AddListener(() =>
 			{
 				Debug.Log(("이름: " + str, "인스턴스아이디: " + device.Value.InstanceID, "레벨: " + device.Value.CurrLevel, "설명: " + device.Value.Description));
 				SetDeviceInfoText(device.Value);
+				selectedDevice = device.Value;
 			});
 			item.name = device.Value.Name;
 			item.transform.SetParent(scrollContent, false);
@@ -200,21 +242,137 @@ public class DevicePanel : MonoBehaviour
 		type.SetText(device.PartType.ToString());
 
 		mainOption.SetText(deviceOptionTable.GetDeviceOptionData(device.MainOptionID).Name);
-		//mainOptionValue.SetText(deviceOptionTable.GetDeviceOptionData(device.MainOptionID).Weight.ToString());
-		subOption1.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption1ID).Name);
-		//mainOptionValue1;
-		subOption2.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption2ID).Name);
-		//mainOptionValue2;
 
-		if(device.SubOption3ID == 0)
+		float mainValue = deviceValueTable.GetDeviceValueData(device.MainOptionID).Coefficient;
+		if(mainValue != 0)
 		{
-			subOption3.SetText("10레벨에 해금");
-			mainOptionValue3.SetText("--");
+			mainValue += deviceValueTable.GetDeviceValueData(device.MainOptionID).Increase * (device.CurrLevel - 1);
+			mainOptionValue.SetText(mainValue.ToString() + "%");
 		}
 		else
 		{
-			subOption3.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption3ID).Name);
-			//mainOptionValue3;
+			mainValue = deviceValueTable.GetDeviceValueData(device.MainOptionID).Value;
+			mainValue += deviceValueTable.GetDeviceValueData(device.MainOptionID).Increase * (device.CurrLevel - 1);
+			mainOptionValue.SetText(mainValue.ToString());
 		}
+
+		//
+
+		subOption1.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption1ID).Name);
+
+		float subValue1 = deviceValueTable.GetDeviceValueData(device.SubOption1ID).Coefficient;
+		if (subValue1 != 0)
+		{
+			subValue1 += deviceValueTable.GetDeviceValueData(device.SubOption1ID).Increase * (device.CurrLevel - 1);
+			subOptionValue1.SetText(subValue1.ToString() + "%");
+		}
+		else
+		{
+			subValue1 = deviceValueTable.GetDeviceValueData(device.SubOption1ID).Value;
+			subValue1 += deviceValueTable.GetDeviceValueData(device.SubOption1ID).Increase * (device.CurrLevel - 1);
+			subOptionValue1.SetText(subValue1.ToString());
+		}
+
+		//
+
+		subOption2.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption2ID).Name);
+
+		float subValue2 = deviceValueTable.GetDeviceValueData(device.SubOption2ID).Coefficient;
+		if (subValue2 != 0)
+		{
+			subValue2 += deviceValueTable.GetDeviceValueData(device.SubOption2ID).Increase * (device.CurrLevel - 1);
+			subOptionValue2.SetText(subValue2.ToString() + "%");
+		}
+		else
+		{
+			subValue2 = deviceValueTable.GetDeviceValueData(device.SubOption2ID).Value;
+			subValue2 += deviceValueTable.GetDeviceValueData(device.SubOption2ID).Increase * (device.CurrLevel - 1);
+			subOptionValue2.SetText(subValue2.ToString());
+		}
+
+		//
+
+		if (device.SubOption3ID == 0)
+		{
+			subOption3.SetText("10레벨에 해금");
+			subOptionValue3.SetText("--");
+		}
+		else
+		{
+			float subValue3 = deviceValueTable.GetDeviceValueData(device.SubOption3ID).Coefficient;
+			if (subValue3 != 0)
+			{
+				subValue3 += deviceValueTable.GetDeviceValueData(device.SubOption3ID).Increase * (device.CurrLevel - 1);
+				subOptionValue3.SetText(subValue3.ToString() + "%");
+			}
+			else
+			{
+				subValue3 = deviceValueTable.GetDeviceValueData(device.SubOption3ID).Value;
+				subValue3 += deviceValueTable.GetDeviceValueData(device.SubOption3ID).Increase * (device.CurrLevel - 1);
+				subOptionValue3.SetText(subValue3.ToString());
+			}
+		}
+	}
+
+	public void OnClickEquip()
+	{
+		if(selectedDevice == null)
+		{
+			Debug.Log("장비를 선택해주세요.");
+			return;
+		}
+
+		//이미 어딘가 장착되었을 때
+		//원래 장착된 곳에서 해제하고 현재 캐릭터에 장착
+		//아이템의 타겟 캐릭터가 현재 캐릭터가 다르면 장착
+		if(selectedDevice.IsEquipped && selectedDevice.TargetCharacterID != currCharacter.CharacterID)
+		{
+			var target = selectedDevice.TargetCharacterID;
+			var character = CharacterManager.Instance.m_CharacterStorage[target];
+
+			if(character == null)
+			{
+				Debug.Log("장착된 캐릭터가 없습니다.");
+				return;
+			}
+
+			if(selectedDevice.PartType == (int)DevicePartType.Engine)
+			{
+				character.DeviceEngineID = 0;
+				currCharacter.DeviceEngineID = selectedDevice.InstanceID;
+				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
+			}
+			else if(selectedDevice.PartType == (int)DevicePartType.Core)
+			{
+				character.DeviceCoreID = 0;
+				currCharacter.DeviceCoreID = selectedDevice.InstanceID;
+				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
+			}
+		}
+		//장착 안되어있으면,
+		else
+		{
+			if(selectedDevice.PartType == (int)DevicePartType.Engine)
+			{
+				currCharacter.DeviceEngineID = selectedDevice.InstanceID;
+				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
+			}
+			else if(selectedDevice.PartType == (int)DevicePartType.Core)
+			{
+				currCharacter.DeviceCoreID = selectedDevice.InstanceID;
+				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
+			}
+			selectedDevice.IsEquipped = true;
+		}
+	}
+
+	public void OnClickUnEquip()
+	{
+
+	}
+
+	public void CheckPlayData()
+	{
+		DeviceInventoryManager.Instance.m_DeviceStorage = PlayDataManager.data.deviceStorage;
 	}
 }

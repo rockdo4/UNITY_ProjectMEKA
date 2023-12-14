@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -95,7 +96,7 @@ public class ItemCardManager : MonoBehaviour
 
 			
 
-			text.SetText(item.Name);
+			text.SetText(item.Name + " : " + item.Count);
 			itemCard.GetComponent<Button>().onClick.AddListener(() => 
 			{
 				Debug.Log(("이름: " + str, "아이디: " + item.ID, "인스턴스아이디: " + item.InstanceID, "밸류: " + item.Value, "수량: " +item.Count));
