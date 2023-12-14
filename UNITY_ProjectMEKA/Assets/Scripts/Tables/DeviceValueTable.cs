@@ -54,7 +54,7 @@ public class DeviceValueTable : DataTable
 		}
 		else
 		{
-			Debug.LogError("肋给等 可记 酒捞叼");
+			Debug.Log("肋给等 可记 酒捞叼");
 			return null;
 		}
 	}

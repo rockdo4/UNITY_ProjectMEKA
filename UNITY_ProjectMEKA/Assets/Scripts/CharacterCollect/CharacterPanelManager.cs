@@ -74,7 +74,7 @@ public class CharacterPanelManager : MonoBehaviour
 
 		CharacterManager.Instance.m_CharacterStorage[ID].IsUnlock = true;
 
-        Debug.Log("이름 :" + chara.CharacterName);
+        //Debug.Log("이름 :" + chara.CharacterName);
 
 		//var item = transform.Find($"{chara.CharacterID}");
 		//item.GetComponentInChildren<TextMeshProUGUI>().SetText($"{chara.CharacterName}");

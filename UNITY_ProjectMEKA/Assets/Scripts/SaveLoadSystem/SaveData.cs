@@ -11,6 +11,7 @@ public abstract class SaveData
 
 public class SaveDataV1 : SaveData
 {
+   
     public SaveDataV1()
     {
         Version = 1;

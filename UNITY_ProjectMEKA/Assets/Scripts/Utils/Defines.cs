@@ -203,4 +203,9 @@ public static class Defines
         Percentage,
         Magnification,
     }
+
+    public enum Stat
+    {
+        
+    }
 }
