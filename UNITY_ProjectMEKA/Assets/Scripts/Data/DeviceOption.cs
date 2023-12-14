@@ -4,6 +4,7 @@ public class Device
 	public string Name;
 	public string Description;
 	public int CurrLevel;
+	public int CurrExp;
 	public int MaxLevel;
 	public int PartType;
 	public int MainOptionID;
@@ -31,4 +32,11 @@ public class DeviceValue
 	public float Value { get; set; }
 	public float Increase { get; set; }
 	public float MaxLevel { get; set; }
+}
+
+public class DeviceExpData
+{
+	public int DeviceLevel { get; set; }
+	public int RequireExp { get; set; }
+	public int AccumulateExp { get; set; }
 }

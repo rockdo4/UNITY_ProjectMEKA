@@ -10,7 +10,7 @@ public class DeviceInventoryManager
 	private DeviceInventoryManager()
 	{
 		//세이브 파일 로드
-		//m_DeviceStorage = PlayDataManager.data.deviceStorage;
+		m_DeviceStorage = PlayDataManager.data.deviceStorage;
 	}
 	public static DeviceInventoryManager Instance
 	{

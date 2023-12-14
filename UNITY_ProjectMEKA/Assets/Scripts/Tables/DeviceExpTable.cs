@@ -7,13 +7,12 @@ using System.Globalization;
 using System.IO;
 using UnityEngine;
 
-public class DeviceValueTable : DataTable
+public class DeviceExpTable : DataTable
 {
-	protected Dictionary<int, DeviceValue> deviceValueDict = new Dictionary<int, DeviceValue>();
-
-	public DeviceValueTable()
+	protected List<DeviceExpData> expList = new List<DeviceExpData>();
+	public DeviceExpTable()
 	{
-		path = "Table/DeviceValueTable";
+		path = "Table/DeviceExpTable";
 		Load();
 	}
 
@@ -30,13 +29,12 @@ public class DeviceValueTable : DataTable
 
 		try
 		{
-			var records = csv.GetRecords<DeviceValue>();
+			var records = csv.GetRecords<DeviceExpData>();
 
 			foreach (var record in records)
 			{
-				DeviceValue temp = record;
-
-				deviceValueDict.Add(temp.ID, temp);
+				DeviceExpData temp = record;
+				expList.Add(temp);
 			}
 		}
 		catch (Exception ex)
@@ -46,21 +44,19 @@ public class DeviceValueTable : DataTable
 		}
 	}
 
-	public DeviceValue GetDeviceValueData(int id)
+	public DeviceExpData GetExpData(int level)
 	{
-		if (deviceValueDict.ContainsKey(id))
+		level--;
+		if (level < 0 || level > expList.Count)
 		{
-			return deviceValueDict[id];
-		}
-		else
-		{
-			Debug.Log("잘못된 옵션 아이디");
+			Debug.LogError("레벨 테이블 범위 초과");
 			return null;
 		}
+		return expList[level];
 	}
 
-	public Dictionary<int, DeviceValue> GetOrigianlValueTable()
+	public List<DeviceExpData> GetOriginalTable()
 	{
-		return new Dictionary<int, DeviceValue>(deviceValueDict);
+		return new List<DeviceExpData>(expList);
 	}
 }

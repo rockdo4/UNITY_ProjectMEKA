@@ -24,21 +24,67 @@ public class Character
 			var levelData = levelTable.GetLevelData(CharacterLevel);
 
 			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
-			float value = 0;
-			int[] ids =
-			{
-				DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID].MainOptionID,
-				DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID].SubOption1ID,
-				DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID].SubOption2ID,
-				DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID].SubOption3ID
-			};
 
-			for (int i = 0; i < ids.Length; i++)
+			float value = 0;
+			float coefficient = 0;
+
+			if(DeviceCoreID != 0)
 			{
-				valueTable.GetDeviceValueData(ids[i]);
+				var device = DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID];
+				if (device != null)
+				{
+					int[] ids =
+					{
+						device.MainOptionID,
+						device.SubOption1ID,
+						device.SubOption2ID,
+						device.SubOption3ID
+					};
+
+					for (int i = 0; i < ids.Length; i++)
+					{
+						var option = valueTable.GetDeviceValueData(ids[i]);
+						if (option.ID == 81102 || option.ID == 82102 || option.ID == 81203)
+						{
+							coefficient += option.Coefficient + option.Increase * (device.CurrLevel - 1);
+						}
+						else if (option.ID == 81204)
+						{
+							value += option.Value + option.Increase * (device.CurrLevel - 1);
+						}
+					}
+				}
 			}
 
-			return levelData.CharacterDamage;
+			if(DeviceEngineID != 0)
+			{
+				var device = DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID];
+				if(device != null)
+				{
+					int[] ids =
+					{
+						device.MainOptionID,
+						device.SubOption1ID,
+						device.SubOption2ID,
+						device.SubOption3ID
+					};
+
+					for (int i = 0; i < ids.Length; i++)
+					{
+						var option = valueTable.GetDeviceValueData(ids[i]);
+						if (option.ID == 81102 || option.ID == 82102 || option.ID == 81203)
+						{
+							coefficient += option.Coefficient;
+						}
+						else if (option.ID == 81204)
+						{
+							value += option.Value;
+						}
+					}
+				}
+			}
+
+			return (levelData.CharacterDamage + value) * (1 + coefficient);
 		}
 	}
 	public float Armor
@@ -47,7 +93,68 @@ public class Character
 		{
 			var levelTable = DataTableMgr.GetTable<CharacterLevelTable>();
 			var levelData = levelTable.GetLevelData(CharacterLevel);
-			return levelData.CharacterArmor;
+
+			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
+
+			float value = 0;
+			float coefficient = 0;
+
+			if (DeviceCoreID != 0)
+			{
+				var device = DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID];
+				if(device != null)
+				{
+					int[] ids =
+					{
+						device.MainOptionID,
+						device.SubOption1ID,
+						device.SubOption2ID,
+						device.SubOption3ID
+					};
+
+					for (int i = 0; i < ids.Length; i++)
+					{
+						var option = valueTable.GetDeviceValueData(ids[i]);
+						if (option.ID == 81103 || option.ID == 82103 || option.ID == 81205)
+						{
+							coefficient += option.Coefficient;
+						}
+						else if (option.ID == 81206)
+						{
+							value += option.Value;
+						}
+					}
+				}
+			}
+
+			if (DeviceEngineID != 0)
+			{
+				var device = DeviceInventoryManager.Instance.m_DeviceStorage[DeviceEngineID];
+				if(device != null)
+				{
+					int[] ids =
+					{
+						device.MainOptionID,
+						device.SubOption1ID,
+						device.SubOption2ID,
+						device.SubOption3ID
+					};
+
+					for (int i = 0; i < ids.Length; i++)
+					{
+						var option = valueTable.GetDeviceValueData(ids[i]);
+						if (option.ID == 81103 || option.ID == 82103 || option.ID == 81205)
+						{
+							coefficient += option.Coefficient;
+						}
+						else if (option.ID == 81206)
+						{
+							value += option.Value;
+						}
+					}
+				}
+			}
+			return (levelData.CharacterArmor + value) * (1 + coefficient);
 		}
 	}
 	public float HP
@@ -56,7 +163,69 @@ public class Character
 		{
 			var levelTable = DataTableMgr.GetTable<CharacterLevelTable>();
 			var levelData = levelTable.GetLevelData(CharacterLevel);
-			return levelData.CharacterHP;
+
+			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
+
+			float value = 0;
+			float coefficient = 0;
+
+			if (DeviceCoreID != 0)
+			{
+				var device = DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID];
+				if(device != null)
+				{
+					int[] ids =
+					{
+						device.MainOptionID,
+						device.SubOption1ID,
+						device.SubOption2ID,
+						device.SubOption3ID
+					};
+
+					for (int i = 0; i < ids.Length; i++)
+					{
+						var option = valueTable.GetDeviceValueData(ids[i]);
+						if (option.ID == 81101 || option.ID == 82101 || option.ID == 81201)
+						{
+							coefficient += option.Coefficient;
+						}
+						else if (option.ID == 81202)
+						{
+							value += option.Value;
+						}
+					}
+				}
+			}
+
+			if (DeviceEngineID != 0)
+			{
+				var device = DeviceInventoryManager.Instance.m_DeviceStorage[DeviceEngineID];
+				if(device != null)
+				{
+					int[] ids =
+					{
+						device.MainOptionID,
+						device.SubOption1ID,
+						device.SubOption2ID,
+						device.SubOption3ID
+					};
+
+					for (int i = 0; i < ids.Length; i++)
+					{
+						var option = valueTable.GetDeviceValueData(ids[i]);
+						if (option.ID == 81101 || option.ID == 82101 || option.ID == 81201)
+						{
+							coefficient += option.Coefficient;
+						}
+						else if (option.ID == 81202)
+						{
+							value += option.Value;
+						}
+					}
+				}
+			}
+
+			return (levelData.CharacterHP + value) * (1 + coefficient);
 		}
 	}
 
@@ -66,7 +235,61 @@ public class Character
 		{
 			var charTable = DataTableMgr.GetTable<CharacterTable>();
 			var charData = charTable.GetCharacterData(CharacterID);
-			return charData.ArrangementCost;
+
+			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
+
+			float value = 0;
+			float coefficient = 0;
+
+			if (DeviceCoreID != 0)
+			{
+				var device = DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID];
+				if(device != null)
+				{
+					int[] ids =
+					{
+						device.MainOptionID,
+						device.SubOption1ID,
+						device.SubOption2ID,
+						device.SubOption3ID
+					};
+
+					for (int i = 0; i < ids.Length; i++)
+					{
+						var option = valueTable.GetDeviceValueData(ids[i]);
+						if (option.ID == 82107)
+						{
+							value += option.Value;
+						}
+					}
+				}
+			}
+
+			if (DeviceEngineID != 0)
+			{
+				var device = DeviceInventoryManager.Instance.m_DeviceStorage[DeviceEngineID];
+				if(device != null)
+				{
+					int[] ids =
+					{
+						device.MainOptionID,
+						device.SubOption1ID,
+						device.SubOption2ID,
+						device.SubOption3ID
+					};
+
+					for (int i = 0; i < ids.Length; i++)
+					{
+						var option = valueTable.GetDeviceValueData(ids[i]);
+						if (option.ID == 82107)
+						{
+							value += option.Value;
+						}
+					}
+				}
+			}
+
+			return charData.ArrangementCost + value;
 		}
 	}
 
@@ -113,6 +336,9 @@ public class CharacterData
 	public int WithdrawCost { get; set; }
 	public int ReArrangementCoolDown { get; set; }
 	public string ImagePath { get; set; }
+	public string PortraitPath { get; set; }
+	public int SkillID { get; set; }
+	public int MaxSigma { get; set; }
 }
 
 //캐릭터ID + 레벨을 ID로 사용해서 레벨에 따른 스탯 불러옴

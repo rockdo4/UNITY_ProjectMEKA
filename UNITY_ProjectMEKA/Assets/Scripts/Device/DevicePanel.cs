@@ -23,6 +23,8 @@ public class DevicePanel : MonoBehaviour
 
 	public Transform characterInfoPanel;
 
+	public DeviceEnhance deviceEnhancePanel;
+
 	[Header("Scroll View")]
 	public Transform scrollContent;
 	public DeviceInfo devicePrefab;
@@ -59,6 +61,13 @@ public class DevicePanel : MonoBehaviour
 		coreOption = new GachaSystem<int>();
 		engineOption = new GachaSystem<int>();
 		subOption = new GachaSystem<int>();
+
+		equipButton.onClick.AddListener(OnClickEquip);
+		enhanceButton.onClick.AddListener(() =>
+		{
+			deviceEnhancePanel.gameObject.SetActive(true);
+			deviceEnhancePanel.SetDeivce(selectedDevice);
+		});
 	}
 
 	private void Start()
@@ -112,10 +121,47 @@ public class DevicePanel : MonoBehaviour
 			return;
 		}
 
+		deviceDict = DeviceInventoryManager.Instance.m_DeviceStorage;
 		currCharacter = character;
 		characterName.SetText(currCharacter.Name);
 
+		UpdateEquipedDeivce();
 		UpdateDeviceCard();
+	}
+
+	public void UpdateEquipedDeivce()
+	{
+		if(currCharacter.DeviceCoreID != 0)
+		{
+			coreItem.GetComponentInChildren<TextMeshProUGUI>().SetText(deviceDict[currCharacter.DeviceCoreID].Name);
+			coreItem.onClick.RemoveAllListeners();
+			coreItem.onClick.AddListener(() =>
+			{
+				SetDeviceInfoText(deviceDict[currCharacter.DeviceCoreID]);
+				selectedDevice = deviceDict[currCharacter.DeviceCoreID];
+			});
+		}
+		else
+		{
+			coreItem.GetComponentInChildren<TextMeshProUGUI>().SetText("비어있음");
+			coreItem.onClick.RemoveAllListeners();
+		}
+
+		if(currCharacter.DeviceEngineID != 0)
+		{
+			engineItem.GetComponentInChildren<TextMeshProUGUI>().SetText(deviceDict[currCharacter.DeviceEngineID].Name);
+			engineItem.onClick.RemoveAllListeners();
+			engineItem.onClick.AddListener(() =>
+			{
+				SetDeviceInfoText(deviceDict[currCharacter.DeviceEngineID]);
+				selectedDevice = deviceDict[currCharacter.DeviceEngineID];
+			});
+		}
+		else
+		{
+			engineItem.GetComponentInChildren<TextMeshProUGUI>().SetText("비어있음");
+			engineItem.onClick.RemoveAllListeners();
+		}
 	}
 
 	public void CreateDevice(int PartType)
@@ -204,7 +250,7 @@ public class DevicePanel : MonoBehaviour
 		var items = scrollContent.GetComponentsInChildren<DeviceInfo>();
 
 		if(devices == null)
-		{
+		{ 
 			devices = DeviceInventoryManager.Instance.m_DeviceStorage;
 		}
 
@@ -232,6 +278,15 @@ public class DevicePanel : MonoBehaviour
 			item.transform.SetParent(scrollContent, false);
 			item.gameObject.name = count++.ToString();
 			item.transform.SetAsLastSibling();
+
+			if(device.Value.TargetCharacterID != 0)
+			{
+				item.SetActive(false);
+			}
+			else
+			{
+				item.SetActive(true);
+			}
 		}
 	}
 
@@ -338,37 +393,72 @@ public class DevicePanel : MonoBehaviour
 
 			if(selectedDevice.PartType == (int)DevicePartType.Engine)
 			{
+				DeviceInventoryManager.Instance.m_DeviceStorage[currCharacter.DeviceEngineID].IsEquipped = false;
 				character.DeviceEngineID = 0;
 				currCharacter.DeviceEngineID = selectedDevice.InstanceID;
 				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
 			}
 			else if(selectedDevice.PartType == (int)DevicePartType.Core)
 			{
+				DeviceInventoryManager.Instance.m_DeviceStorage[currCharacter.DeviceCoreID].IsEquipped = false;
 				character.DeviceCoreID = 0;
 				currCharacter.DeviceCoreID = selectedDevice.InstanceID;
 				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
 			}
+
+			Debug.Log("기존 캐릭터에서 해제하고 장착 완료");
 		}
-		//장착 안되어있으면,
-		else
+		//아이템이 장착되어있고, 타겟 캐릭터가 현재 캐릭터면 장착 해제
+		else if(selectedDevice.IsEquipped && selectedDevice.TargetCharacterID == currCharacter.CharacterID)
 		{
 			if(selectedDevice.PartType == (int)DevicePartType.Engine)
 			{
+				currCharacter.DeviceEngineID = 0;
+				selectedDevice.TargetCharacterID = 0;
+			}
+			
+			if(selectedDevice.PartType == (int)DevicePartType.Core)
+			{
+				currCharacter.DeviceCoreID = 0;
+				selectedDevice.TargetCharacterID = 0;
+			}
+
+			selectedDevice.IsEquipped = false;
+			Debug.Log("장착 해제");
+		}
+		//장착 안되어있으면,
+		else if(!selectedDevice.IsEquipped)
+		{
+
+			if(selectedDevice.PartType == (int)DevicePartType.Engine)
+			{
+				if(currCharacter.DeviceEngineID != 0)
+				{
+					DeviceInventoryManager.Instance.m_DeviceStorage[currCharacter.DeviceEngineID].TargetCharacterID = 0;
+					DeviceInventoryManager.Instance.m_DeviceStorage[currCharacter.DeviceEngineID].IsEquipped = false;
+				}
+
 				currCharacter.DeviceEngineID = selectedDevice.InstanceID;
 				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
 			}
 			else if(selectedDevice.PartType == (int)DevicePartType.Core)
 			{
+				if (currCharacter.DeviceCoreID != 0)
+				{
+					DeviceInventoryManager.Instance.m_DeviceStorage[currCharacter.DeviceCoreID].TargetCharacterID = 0;
+					DeviceInventoryManager.Instance.m_DeviceStorage[currCharacter.DeviceCoreID].IsEquipped = false;
+				}
+
 				currCharacter.DeviceCoreID = selectedDevice.InstanceID;
 				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
 			}
 			selectedDevice.IsEquipped = true;
+
+			Debug.Log("장착");
 		}
-	}
 
-	public void OnClickUnEquip()
-	{
-
+		UpdateEquipedDeivce();
+		UpdateDeviceCard();
 	}
 
 	public void CheckPlayData()

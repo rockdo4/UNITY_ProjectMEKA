@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 /*
@@ -37,7 +38,15 @@ public class GachaManager : MonoBehaviour
         foreach(var item in items)
         {
             //Debug.Log((item.Key, item.Value.ArrangementCost));
-            testPicker.Add(item.Key, item.Value.ArrangementCost);
+            if(item.Value.PortraitPath != "None")
+            {
+                testPicker.Add(item.Key, item.Value.ArrangementCost);
+            }
+            else
+            {
+                CharacterManager.Instance.m_CharacterStorage[item.Key].IsUnlock = true;
+                Debug.Log($"{item.Value.CharacterName} Á¦¿Ü");
+            }
         }
     }
 

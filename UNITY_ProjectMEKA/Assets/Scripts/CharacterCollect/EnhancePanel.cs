@@ -70,6 +70,8 @@ public class EnhancePanel : MonoBehaviour
 
 		int currentLevel = currCharacter.CharacterLevel;
 		int targetLevel = currentLevel;
+		int maxLevel = currCharacter.CharacterGrade * 10;
+
 
 		while (totalExp > 0)
 		{
@@ -83,7 +85,7 @@ public class EnhancePanel : MonoBehaviour
 				break;
 			}
 
-			if (targetLevel > table.Count)
+			if (targetLevel > maxLevel)
 			{
 				targetLevel--;
 				break;
