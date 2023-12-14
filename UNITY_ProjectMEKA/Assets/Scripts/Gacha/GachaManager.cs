@@ -44,8 +44,8 @@ public class GachaManager : MonoBehaviour
             }
             else
             {
-                CharacterManager.Instance.m_CharacterStorage[item.Key].IsUnlock = true;
-                Debug.Log($"{item.Value.CharacterName} 제외");
+                //CharacterManager.Instance.m_CharacterStorage[item.Key].IsUnlock = true;
+                //Debug.Log($"{item.Value.CharacterName} 제외");
             }
         }
     }
