@@ -51,7 +51,7 @@ public class PlayableProjectileAttackState : PlayableBaseState
             if (timer <= 0)
             {
                 timer = playerCtrl.state.attackDelay;
-                if (!playerCtrl.target.activeInHierarchy)
+                if (!playerCtrl.target.activeInHierarchy || !playerCtrl.rangeInEnemys.Contains(playerCtrl.target))
                 {
                     playerCtrl.SetState(PlayerController.CharacterStates.Idle);
                     return;
