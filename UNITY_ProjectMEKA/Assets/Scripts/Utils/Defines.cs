@@ -114,8 +114,6 @@ public static class Defines
         FirstArrange,
         SecondArrange,
         Setting,
-        Win,
-        Loose,
         Skill
     }
 
@@ -198,27 +196,9 @@ public static class Defines
         Pause
     }
 
-    public enum IncrementalForm
-    {
-        Percentage,
-        Magnification,
-    }
-
-    public enum MissionType
+    public enum TileType
     {
         None,
-        MonsterKillCount,
-        SurviveTime,
-        ClearTime,
-        CostLimit,
-        HouseLifeLimit,
-        PlayerWin
-    }
-
-    public enum MissionClear
-    {
-        None,
-        Clear,
-        Fail
+        Obstacle
     }
 }

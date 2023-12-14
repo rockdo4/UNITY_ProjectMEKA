@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using UnityEngine;
-using SaveDataVC = SaveDataV5;
+using SaveDataVC = SaveDataV4;
 using static Defines;
 
 public class PlayDataManager
@@ -27,7 +27,6 @@ public class PlayDataManager
         data = new SaveDataVC();
         FirstGameSet();
         Save();
-        CharacterManager.Instance.CheckPlayData();
     }
 
     private static void FirstGameSet()
@@ -72,7 +71,9 @@ public class PlayDataManager
 
     private static void FirstGameCharacterSaveDataSet()
     {
+
         var charTable = DataTableMgr.GetTable<CharacterTable>().GetOriginalTable();
+
         var storage = CharacterManager.Instance.m_CharacterStorage;
 
         foreach (var character in charTable)
@@ -89,5 +90,8 @@ public class PlayDataManager
                 storage.Add(chara.CharacterID, chara);
             }
         }
+
+        Save();
+        CharacterManager.Instance.CheckPlayData();
     }
 }

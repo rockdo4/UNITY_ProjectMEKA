@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Defines;
 
 public class Tile : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Tile : MonoBehaviour
         Attack
     }
 
+    public TileType tileType = TileType.None;
     public Material arrangePossibleMaterial;
     public Material attackPossibleMaterial;
     private Material baseMaterial;
@@ -25,6 +27,11 @@ public class Tile : MonoBehaviour
 
     private void Awake()
     {
+        if(tileType == TileType.Obstacle)
+        {
+            arrangePossible = false;
+        }
+
         meshRenderer = GetComponent<MeshRenderer>();
         baseMaterial = GetComponent<MeshRenderer>().material;
         boxCollider = GetComponent<BoxCollider>();
@@ -40,6 +47,14 @@ public class Tile : MonoBehaviour
                 arrangePossible = false;
                 isSomthingOnTile = true;
             }
+        }
+    }
+
+    private void Update()
+    {
+        if (arrangePossible && tileType == TileType.Obstacle)
+        {
+            arrangePossible = false;
         }
     }
 
