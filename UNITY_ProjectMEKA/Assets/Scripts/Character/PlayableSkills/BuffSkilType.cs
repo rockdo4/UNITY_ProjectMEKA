@@ -22,6 +22,7 @@ public class BuffSkilType : SkillBase
     {
         damage,
         attackSpeed,
+        AddCost,
     }
     //public enum IncrementalForm
     //{
@@ -83,7 +84,11 @@ public class BuffSkilType : SkillBase
                 player.state.attackDelay = saveSpeed;
                 player.ani.speed = 1;
                 player.state.damage = saveDamage;
-                obj.GetComponent<PoolAble>().ReleaseObject();
+                if(obj != null)
+                {
+                    obj.GetComponent<PoolAble>().ReleaseObject();
+
+                }
             }
 
         }
@@ -128,9 +133,21 @@ public class BuffSkilType : SkillBase
                 InstantSkillAttackDamageBuff();
                 //공격력만증가
                 break;
+            case buffType.AddCost:
+                InstantSkillAddCost();
+                break;
         }
         
     }
+
+    public void InstantSkillAddCost()
+    {
+
+        PoolBuffEffactAll();
+        var cos = GameObject.FindGameObjectWithTag("StageManager");
+        cos.GetComponent<StageManager>().currentCost += player.rangeInPlayers.Count;
+    }
+
     public void InstantSkillAttackSpeedBuff()
     {
         if(isMe)
@@ -183,11 +200,33 @@ public class BuffSkilType : SkillBase
         pos.y += 0.5f;
         obj.transform.position = pos;
 
-        //Vector3 rot = gameObject.transform.rotation.eulerAngles;
-        //rot.x = -90;
-        //obj.transform.rotation = Quaternion.Euler(rot);
-
         obj.SetActive(false);
         obj.SetActive(true);
+    }
+    public void PoolBuffEffactAll()
+    {
+        var obs = ObjectPoolManager.instance.GetGo(effectName);
+
+        Vector3 pobs = gameObject.transform.position;
+        pobs.y += 0.5f;
+        obs.transform.position = pobs;
+
+        obs.GetComponent<PoolAble>().ReleaseObject(3f);
+
+        obs.SetActive(false);
+        obs.SetActive(true);
+        foreach (var a in player.rangeInPlayers)
+        {
+            var oh = ObjectPoolManager.instance.GetGo(effectName);
+
+            Vector3 pos = a.GetComponentInParent<PlayerController>().gameObject.transform.position;
+            pos.y += 0.5f;
+            oh.transform.position = pos;
+
+            oh.GetComponent<PoolAble>().ReleaseObject(3f);
+
+            oh.SetActive(false);
+            oh.SetActive(true);
+        }
     }
 }

@@ -64,11 +64,7 @@ public class PlayableIdleState : PlayableBaseState
                     playerCtrl.target = en;
                     enemy.HoIsHitMe = playerCtrl.gameObject;
 
-                    //Vector3 lookTarget = new Vector3(playerCtrl.target.transform.position.x, playerCtrl.transform.position.y, playerCtrl.target.transform.position.z);
-                    //playerCtrl.gameObject.transform.LookAt(lookTarget);
-                    //playerCtrl.GetComponentInChildren<CreateCollider>().gameObject.transform.position = playerCtrl.ChildPos.position;
-                    //playerCtrl.GetComponentInChildren<CreateCollider>().gameObject.transform.rotation = playerCtrl.ChildPos.rotation;
-
+                    
                     // 자식 오브젝트를 부모 계층 구조에서 일시적으로 분리
                     Transform obj = playerCtrl.GetComponentInChildren<CreateCollider>().gameObject.transform;
                     obj.parent = null;

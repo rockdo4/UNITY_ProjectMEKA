@@ -139,12 +139,27 @@ public class EnemyController : PoolAble
         Vector3 forwardDirection = transform.forward; // 포워드 방향
 
         // 포워드 방향으로 1 유닛 이동
-        Vector3 newPosition = currentPosition + new Vector3(forwardDirection.x, 0, forwardDirection.z);
+        
+
+       
+        // 대각선 방향을 제거하고, 가장 큰 축을 기준으로 설정
+        if (Mathf.Abs(forwardDirection.x) > Mathf.Abs(forwardDirection.z))
+        {
+            forwardDirection = new Vector3(Mathf.Sign(forwardDirection.x), 0, 0);
+        }
+        else
+        {
+            forwardDirection = new Vector3(0, 0, Mathf.Sign(forwardDirection.z));
+        }
+
+        // 포워드 방향으로 1 유닛 이동
+        Vector3 newPosition = currentPosition + forwardDirection;
 
         // 그리드 인덱스 계산
         forwardGrid = new Vector3Int(Mathf.RoundToInt(newPosition.x), 0, Mathf.RoundToInt(newPosition.z));
 
-        Debug.Log("그리드 인덱스: " + forwardGrid);
+
+        
         stateManager.Update();
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));

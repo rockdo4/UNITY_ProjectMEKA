@@ -98,8 +98,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnEnable()
     {
-        CurrentPos = transform.position;
-        CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
+        
         //CreateColliders();
 
         rangeInEnemys.Clear();
@@ -116,6 +115,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
+        
         state.ConvertTo2DArray();
 
         if (state.occupation == Defines.Occupation.Hunter || state.occupation == Defines.Occupation.Castor)
@@ -176,6 +176,9 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        
+        CurrentPos = transform.position;
+        CurrentGridPos = new Vector3Int(Mathf.RoundToInt(CurrentPos.x), 0, Mathf.RoundToInt(CurrentPos.z));
         //Debug.Log(stateManager.currentBase is PlayableArrangeState);
 
         stateManager.Update();

@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3310335191070753992
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Greatsword
+  m_Shader: {fileID: -6465566751694194690, guid: 1ea7cc85e365cde49be639a9330c2378, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - ALBEDOMODESELECTOR_MODMODE
+  - EMISSIONMODESELECTOR_MODMODE
+  m_InvalidKeywords:
+  - ALBEDOMODESELECTOR_FIILMODE
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - AmbientOcclusion:
+        m_Texture: {fileID: 2800000, guid: d26660ade5b1a9d429bce1014c0f7d87, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - MatellicMap:
+        m_Texture: {fileID: 2800000, guid: 282f3fd668b709445b301420bf837e60, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NormalMap:
+        m_Texture: {fileID: 2800000, guid: 4248835fe9e61214cb3988a4d7116a0d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexBaseColor1:
+        m_Texture: {fileID: 2800000, guid: 0f0ff175259b7ef4796d126d54c0f3c9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexBaseColor2:
+        m_Texture: {fileID: 2800000, guid: abf0f19c62c909e43a7d4636c632cbb1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexBaseColor3:
+        m_Texture: {fileID: 2800000, guid: f809dbd047beb044fbc03364c50160e6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexBaseColor4:
+        m_Texture: {fileID: 2800000, guid: 87c3b34b0ac402944b678348ae09cdea, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexDetails:
+        m_Texture: {fileID: 2800000, guid: 1900122b7d4b85444b00009d58b0e16a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexFILLFX:
+        m_Texture: {fileID: 2800000, guid: d64e38a14d591174b8fa33078c0eb774, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexLightColor:
+        m_Texture: {fileID: 2800000, guid: a0ee6ffc2361e3c46bf99eee9951630a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TexMODFX:
+        m_Texture: {fileID: 2800000, guid: 1c9da8e8933a4ff40aee8837b14ac3b1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - ALBEDOMODESELECTOR: 2
+    - AOStrength: 1
+    - EMISSIONMODESELECTOR: 2
+    - FILLStrength: 1
+    - MODStrength: 1
+    - NormalStrength: 1
+    - Vector1_8F835BD: 1
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    - _QueueControl: -1
+    - _QueueOffset: 0
+    m_Colors:
+    - Color1: {r: 0.098039225, g: 0.098039225, b: 0.098039225, a: 1}
+    - Color2: {r: 0.8000001, g: 0.8000001, b: 0.8000001, a: 1}
+    - Color3: {r: 0.37647063, g: 0.37647063, b: 0.37647063, a: 1}
+    - Color4: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
+    - ColorLight: {r: 0, g: 0.72156864, b: 1, a: 1}
+    - FILLColor: {r: 0.83921576, g: 0, b: 1, a: 1}
+    - MODColor: {r: 0.83921576, g: 0, b: 1, a: 1}
+    - MetallicStrength: {r: 0, g: 1, b: 0, a: 0}
+    - SmoothnessStrength: {r: 0, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
+--- !u!114 &5789071642981773305
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
