@@ -20,19 +20,6 @@ public class CardInfo : MonoBehaviour
 	{
 		cardID = id;
 		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(id);
-
-		//Debug.Log(id);
-
-		if(info != null)
-		{
-			//cardImage.sprite = default;
-			cardText.SetText($"{info.CharacterName}");
-		}
-		else
-		{
-			//cardImage.sprite = default;
-			cardText.SetText("None");
-		}
 	}
 
 	public int GetCardID()

@@ -98,19 +98,17 @@ public class DevicePanel : MonoBehaviour
 
 		CheckPlayData();
 	}
-
-	private void Update()
+	
+	public void CreateCore()
 	{
-		if (Input.GetKeyDown(KeyCode.Alpha1))
-		{
-			CreateDevice(1);
-			UpdateDeviceCard();
-		}
-		else if (Input.GetKeyDown(KeyCode.Alpha2))
-		{
-			CreateDevice(2);
-			UpdateDeviceCard();
-		}
+		CreateDevice(1);
+		UpdateDeviceCard();
+	}
+
+	public void CreateEngine()
+	{
+		CreateDevice(2);
+		UpdateDeviceCard();
 	}
 
 	public void SetCharacter(Character character)

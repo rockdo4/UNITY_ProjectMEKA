@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,11 @@ public class CharacterPanelManager : MonoBehaviour
 			var characterInfo = dict.GetCharacterData(character.Value.CharacterID);
 
 			card.name = characterInfo.CharacterName;
-			card.GetComponentInChildren<TextMeshProUGUI>().SetText($"{characterInfo.CharacterName}");
+			card.GetComponent<Image>().sprite = Resources.Load<Sprite>(characterInfo.PortraitPath);
+			if(characterInfo.PortraitPath == "None")
+			{
+				card.SetActive(false);
+			}
 
 			var button = card.GetComponent<Button>();
 

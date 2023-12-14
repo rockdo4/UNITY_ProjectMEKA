@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 /*
@@ -25,14 +24,18 @@ public class GachaManager : MonoBehaviour
 	[Header("characterTable")]
 	private CharacterTable characterTable;
 
+    private Coroutine gachaCoroutine;
+    private float timer = 0.5f;
+    private float time = 0f;
+
     private void Awake()
     {
         testPicker = new GachaSystem<int>();
-		characterTable = DataTableMgr.GetTable<CharacterTable>();
 	}
 
     private void Start()
     {
+		characterTable = DataTableMgr.GetTable<CharacterTable>();
         var items = characterTable.GetOriginalTable();
 
         foreach(var item in items)
@@ -63,49 +66,44 @@ public class GachaManager : MonoBehaviour
 
         var itemImage = ObjectPoolManager.instance.GetGo("GachaCard");
 		itemImage.transform.SetParent(resultPanel.transform, false);
-        itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.CharacterName);
+        itemImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(item.PortraitPath);
 
         CharacterManager.Instance.UpdatePlayData();
         GameManager.Instance.SaveExecution();
     }
 
-    public void Gacha10()
+    IEnumerator WaitGacha10()
     {
-        ClearPanel();
+		ClearPanel();
 
-        for(int i=0; i<10; i++)
-        {
-            var itemID = testPicker.GetItem();
+		for (int i = 0; i < 10; i++)
+		{
+			var itemID = testPicker.GetItem();
 
-            CharacterManager.Instance.m_CharacterStorage[itemID].IsUnlock = true;
-
-            var item = characterTable.GetCharacterData(itemID);
-            characterManager.PickUpCharacter(itemID);
-
-            var itemImage = ObjectPoolManager.instance.GetGo("GachaCard");
-            itemImage.transform.SetParent(resultPanel.transform, false);
-            itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.CharacterName);
-
-            CharacterManager.Instance.UpdatePlayData();
-        }
-        GameManager.Instance.SaveExecution();
-
-        //var itemIDs = testPicker.GetItem(10);
-
-        /*
-        foreach (var itemID in itemIDs)
-        {
-			var item = characterTable.GetCharacterData(itemID);
 			CharacterManager.Instance.m_CharacterStorage[itemID].IsUnlock = true;
 
+			var item = characterTable.GetCharacterData(itemID);
 			characterManager.PickUpCharacter(itemID);
 
 			var itemImage = ObjectPoolManager.instance.GetGo("GachaCard");
 			itemImage.transform.SetParent(resultPanel.transform, false);
-            itemImage.GetComponentInChildren<TextMeshProUGUI>().SetText(item.CharacterName);
-        }
+			itemImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(item.PortraitPath);
+
+			CharacterManager.Instance.UpdatePlayData();
+
+			yield return new WaitForSeconds(0.05f);
+		}
 		GameManager.Instance.SaveExecution();
-        */
+
+		yield return new WaitForSeconds(0.1f);
+		gachaCoroutine = null;
+    }
+    public void Gacha10()
+    {
+        if (gachaCoroutine == null)
+        {
+		    gachaCoroutine = StartCoroutine(WaitGacha10());
+        }
     }
 
     public void ClearPanel()
