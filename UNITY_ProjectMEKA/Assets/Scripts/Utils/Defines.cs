@@ -154,4 +154,9 @@ public static class Defines
         Assignment,
         Challenge
     }
+    public enum IncrementalForm
+    {
+        Percentage,
+        Magnification,
+    }
 }

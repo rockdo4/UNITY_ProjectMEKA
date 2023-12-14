@@ -175,8 +175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 13501
-  name: MERIA
-  property: 2
+  name: "\uBA54\uB9AC\uC544"
+  property: 3
   maxHp: 100
   amror: 0
   damage: 25
@@ -192,9 +192,9 @@ MonoBehaviour:
   grade: 0
   Hp: 0
   ID: 0
-  arrangeCost: 0
-  arrangeCoolTime: 0
-  skill: 6
+  arrangeCost: 12
+  arrangeCoolTime: 40
+  skill: 0
   cost: 0
   maxCost: 50
   skillCost: 50
@@ -215,6 +215,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375317c1b2b29d341824d604467b31de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillCost: 50
+  skillCoolTime: 20
+  skillType: 1
+  isSkillUsing: 0
+  skillDuration: 12
+  isMe: 1
+  isSingle: 1
+  effectName: MeriaSkillEffect
+  isChoice: 0
+  type: 1
+  Inc: 1
+  figure: 1.5
 --- !u!1 &191698932232827442
 GameObject:
   m_ObjectHideFlags: 0

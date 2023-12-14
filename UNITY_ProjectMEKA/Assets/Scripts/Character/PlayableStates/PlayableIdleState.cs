@@ -79,9 +79,12 @@ public class PlayableIdleState : PlayableBaseState
                     obj.parent = playerCtrl.transform;
 
 
-
-                    playerCtrl.SetState(PlayerController.CharacterStates.Attack);
-                    return;
+                    if(playerCtrl.rangeInEnemys.Contains(playerCtrl.target))
+                    {
+                        playerCtrl.SetState(PlayerController.CharacterStates.Attack);
+                        return;
+                    }
+                    
                 }
                 else
                 {
@@ -102,8 +105,11 @@ public class PlayableIdleState : PlayableBaseState
                         // 자식 오브젝트를 다시 부모 계층 구조에 연결
                         obj.parent = playerCtrl.transform;
 
-                        playerCtrl.SetState(PlayerController.CharacterStates.Attack);
-                        return;
+                        if (playerCtrl.rangeInEnemys.Contains(playerCtrl.target))
+                        {
+                            playerCtrl.SetState(PlayerController.CharacterStates.Attack);
+                            return;
+                        }
                     }
                     
                 }

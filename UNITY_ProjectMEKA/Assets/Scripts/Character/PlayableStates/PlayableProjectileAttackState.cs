@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,22 +12,34 @@ public class PlayableProjectileAttackState : PlayableBaseState
     private float timer;
     GameObject[] enemys;
     private int count;
+    bool isTarget = false;
     public PlayableProjectileAttackState(PlayerController player) : base(player)
     {
     }
 
     public override void Enter()
     {
-        
+        isTarget = false;
     }
 
     public override void Exit()
     {
         //timer = 0;
+
+        if(playerCtrl.ani.GetCurrentAnimatorStateInfo(0).loop)
+        {
+            playerCtrl.ani.SetTrigger("Idle");
+        }
+        
     }
 
     public override void Update()
     {
+        if (!playerCtrl.rangeInEnemys.Contains(playerCtrl.target))
+        {
+            playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+        }
+
         if (playerCtrl.state.Hp <= 0)
         {
             playerCtrl.SetState(PlayerController.CharacterStates.Die);
@@ -44,14 +57,12 @@ public class PlayableProjectileAttackState : PlayableBaseState
                     return;
                 }
                 playerCtrl.ani.SetTrigger("Attack");
-                playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+                //playerCtrl.SetState(PlayerController.CharacterStates.Idle);
             }
-            if (playerCtrl.target.activeInHierarchy)
-            {
-                playerCtrl.SetState(PlayerController.CharacterStates.Idle);
-            }
+            
         }
+
         
     }
-    
+   
 }

@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public Vector3Int CurrentGridPos;
     [HideInInspector]
     public PlayerState state;
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject target;
     [HideInInspector]
     public int blockCount;

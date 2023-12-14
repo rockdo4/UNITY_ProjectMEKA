@@ -3326,6 +3326,7 @@ GameObject:
   - component: {fileID: 8261665333311125661}
   - component: {fileID: 1397730595431032526}
   - component: {fileID: -4357701381810184698}
+  - component: {fileID: -2546139345164905363}
   m_Layer: 6
   m_Name: PALA
   m_TagString: Player
@@ -3482,6 +3483,29 @@ MonoBehaviour:
   occupation: 2
   experience: 0
   currentExperience: 0
+--- !u!114 &-2546139345164905363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348910776175659781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ab6e8ef7cf4b748912ba1c46fd1479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillCost: 20
+  skillCoolTime: 25
+  skillType: 1
+  isSkillUsing: 0
+  effectName: 
+  effect: 1
+  isDamageUp: 1
+  isSingle: 1
+  skillDuration: 10
+  inc: 0
+  figure: 0.2
 --- !u!1 &1352842364137260915
 GameObject:
   m_ObjectHideFlags: 0

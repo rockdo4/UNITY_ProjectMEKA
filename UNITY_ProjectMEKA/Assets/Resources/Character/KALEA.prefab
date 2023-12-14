@@ -2306,6 +2306,7 @@ GameObject:
   - component: {fileID: 7820979281608524314}
   - component: {fileID: 3556840702550450928}
   - component: {fileID: 8258203363899644789}
+  - component: {fileID: 7336441783428158923}
   m_Layer: 6
   m_Name: KALEA
   m_TagString: Player
@@ -2451,9 +2452,9 @@ MonoBehaviour:
   grade: 0
   Hp: 0
   ID: 0
-  arrangeCost: 20
+  arrangeCost: 15
   arrangeCoolTime: 50
-  skill: 5
+  skill: 0
   cost: 0
   maxCost: 20
   skillCost: 20
@@ -2462,6 +2463,24 @@ MonoBehaviour:
   occupation: 2
   experience: 0
   currentExperience: 0
+--- !u!114 &7336441783428158923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120828772261120772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9e0a68442fbe3488554654cafcc6d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillCost: 20
+  skillCoolTime: 30
+  skillType: 0
+  isSkillUsing: 0
+  newAnimationController: {fileID: 9100000, guid: 00ea5458924634342b159644626773a0, type: 2}
+  skillDuration: 10
 --- !u!1 &1138678924049702508
 GameObject:
   m_ObjectHideFlags: 0
