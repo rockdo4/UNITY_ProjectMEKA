@@ -27,6 +27,7 @@ public class PlayDataManager
         data = new SaveDataVC();
         FirstGameSet();
         Save();
+        CharacterManager.Instance.CheckPlayData();
     }
 
     private static void FirstGameSet()
@@ -71,9 +72,7 @@ public class PlayDataManager
 
     private static void FirstGameCharacterSaveDataSet()
     {
-
         var charTable = DataTableMgr.GetTable<CharacterTable>().GetOriginalTable();
-
         var storage = CharacterManager.Instance.m_CharacterStorage;
 
         foreach (var character in charTable)
@@ -90,7 +89,5 @@ public class PlayDataManager
                 storage.Add(chara.CharacterID, chara);
             }
         }
-
-        CharacterManager.Instance.CheckPlayData();
     }
 }

@@ -14,7 +14,7 @@ public class CharacterManager
 			if(instance == null)
 			{
 				instance = new CharacterManager();
-			}
+            }
 			else
 			{
 
@@ -51,9 +51,6 @@ public class CharacterManager
 	}
 	public void CheckPlayData()
 	{
-		// for tilemap test
-		PlayDataManager.Init();
-
         if (PlayDataManager.data == null)
 		{
 			Debug.Log("데이터 없음");
