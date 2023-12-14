@@ -73,6 +73,7 @@ public class PanelManager : MonoBehaviour
 	{
 		previousPanel.position = previousPos;
 		mainPanel.position = mainPos;
+
 	}
 
 	public void ChangePanelCharacterWindow()

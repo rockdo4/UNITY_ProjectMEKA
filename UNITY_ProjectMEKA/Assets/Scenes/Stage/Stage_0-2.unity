@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -580,6 +580,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2627471855118230718, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+      propertyPath: joystick
+      value: 
+      objectReference: {fileID: 78763872}
     - target: {fileID: 2924592624032922265, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1246,6 +1250,7 @@ GameObject:
   - component: {fileID: 1643873149103174058}
   - component: {fileID: 6438468774779342006}
   - component: {fileID: 3099619830612964117}
+  - component: {fileID: 8939906901023237499}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1349,6 +1354,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 61.471, y: 0, z: 0}
+--- !u!114 &8939906901023237499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2765714123678944433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875bed23c11de004db4aee35ecf6acb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDistance: 5
+  rotationSpeed: 5
+  zoomSpeed: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

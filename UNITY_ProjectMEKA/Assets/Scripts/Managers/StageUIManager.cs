@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Defines;
@@ -54,8 +55,12 @@ public class StageUIManager : MonoBehaviour
         });
     }
 
-    private void Start()
+    private void Update()
     {
+        //if (stageInfoPanel.activeSelf && Input.GetMouseButtonUp(0))
+        //{
+        //    CloseStageInfoWindow();
+        //}
     }
 
     public void ClassOnClick(StageClass stageClass)

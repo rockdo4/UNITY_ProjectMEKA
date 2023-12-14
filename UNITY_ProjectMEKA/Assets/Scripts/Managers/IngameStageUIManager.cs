@@ -196,6 +196,7 @@ public class IngameStageUIManager : MonoBehaviour
                 break;
             case WindowMode.Win:
                 ResultPanel.SetActive(true);
+                Time.timeScale = 0f;
                 break;
             case WindowMode.Loose:
                 ResultPanel.SetActive(true);
@@ -232,6 +233,7 @@ public class IngameStageUIManager : MonoBehaviour
         if(isResultMode && Input.GetMouseButtonUp(0))
         {
             // 타이틀씬으로 감
+            Time.timeScale = 1f;
             StageDataManager.Instance.toStageChoicePanel = true;
             SceneManager.LoadScene("GachaScene");
         }
