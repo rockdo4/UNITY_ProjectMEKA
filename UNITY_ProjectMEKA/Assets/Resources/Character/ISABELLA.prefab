@@ -11680,7 +11680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 12501
+  id: 15201
   name: ISABELLA
   property: 2
   maxHp: 100
@@ -11773,18 +11773,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375317c1b2b29d341824d604467b31de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillCost: 0
-  skillCoolTime: 0
-  skillType: 0
+  skillCost: 50
+  skillCoolTime: 40
+  skillType: 1
   isSkillUsing: 0
-  skillDuration: 0
+  skillDuration: 20
   isMe: 0
   isSingle: 0
-  effectName: 
+  effectName: IsabellaSkillEffect
   isChoice: 0
   type: 0
-  Inc: 0
-  figure: 0
+  Inc: 1
+  figure: 1.5
+  isAttackRage: 0
+  hang: 0
+  yal: 0
+  rangeAttack: 
 --- !u!1 &4825448500136388745
 GameObject:
   m_ObjectHideFlags: 0
@@ -20946,11 +20950,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1946536423071549819, guid: 77f0bd7eb2bb96c41902e71abcfce094, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8086114403405695194, guid: 77f0bd7eb2bb96c41902e71abcfce094, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

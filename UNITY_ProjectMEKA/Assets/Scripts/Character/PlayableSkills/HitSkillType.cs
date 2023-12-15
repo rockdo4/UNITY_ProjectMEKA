@@ -42,13 +42,14 @@ public class HitSkillType : SkillBase
     public int yal;
     [SerializeField, Header("공격범위설정")]//p,e
     public int[] rangeAttack;
+    [HideInInspector]
+    public int[,] AttackRange;
 
     [SerializeField, Header("데미지 타이밍 프레임 시작 몇초후")]
     public float delay;
     [SerializeField, Header("공격 애니매이션이 따로 있는가")]
     public bool isAttackAnimation;
-    [HideInInspector]
-    public int[,] AttackRange;
+    
 
 
 
@@ -247,61 +248,7 @@ public class HitSkillType : SkillBase
     }
     void CheckOverlapBoxes()
     {
-        //if (player == null || AttackRange == null || transform == null)
-        //{
-        //    return;
-        //}
-        //colliders = new List<Collider>(); // 리스트 초기화
-        //ConvertTo2DArray();
-        //Vector3 forward = transform.right; // 오브젝트의 전방이 로컬 x축이라면
-        //Vector3 right = transform.forward;
-        ////Vector3 forward = -transform.forward;
-        ////Vector3 right = transform.right;
-        //float scale = 0.2f; // 현재 오브젝트의 스케일
-
-        //int characterRow = 0;
-        //int characterCol = 0;
-
-        //// 캐릭터의 위치를 찾는 루프
-        //for (int i = 0; i < AttackRange.GetLength(0); i++)
-        //{
-        //    for (int j = 0; j < AttackRange.GetLength(1); j++)
-        //    {
-        //        if (AttackRange[i, j] == 2)
-        //        {
-        //            characterRow = i;
-        //            characterCol = j;
-        //            break; // 캐릭터 위치를 찾으면 반복문 탈출
-        //        }
-        //    }
-        //}
-
-
-
-        //// 상자 영역을 생성하고 콜라이더를 검출하는 루프
-        //for (int i = 0; i < AttackRange.GetLength(0); i++)
-        //{
-        //    for (int j = 0; j < AttackRange.GetLength(1); j++)
-        //    {
-        //        if (AttackRange[i, j] == 1)
-        //        {
-        //            Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-        //            Vector3 scaledPosition = relativePosition / scale; // 스케일로 나누어 위치 조정
-        //            Vector3 correctedPosition = transform.TransformPoint(scaledPosition);
-
-        //            Vector3 boxSize = new Vector3(1, 1, 1); // 상자 크기를 고정된 값으로 설정
-        //            Collider[] hitColliders = Physics.OverlapBox(correctedPosition, boxSize / 2, Quaternion.identity);
-
-        //            foreach (var hitCollider in hitColliders)
-        //            {
-        //                if (hitCollider.CompareTag("EnemyCollider") && !colliders.Contains(hitCollider))
-        //                {
-        //                    colliders.Add(hitCollider);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+        
         if (player == null || AttackRange == null || transform == null)
         {
             return;
