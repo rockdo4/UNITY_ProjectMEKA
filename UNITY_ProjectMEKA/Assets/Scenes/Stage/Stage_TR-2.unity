@@ -345,14 +345,14 @@ PrefabInstance:
     - target: {fileID: 8888793470118116258, guid: 0cb106696ae13a5449ee9630885f30ab, type: 3}
       propertyPath: waveInfos.Array.data[2].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 8236610387131559020, guid: 731bc19c66c001045b1ac296a94a2024, type: 3}
+      objectReference: {fileID: 8236610387131559020, guid: e3a4826c11742574e8abd652d1d23753, type: 3}
     - target: {fileID: 8888793470118116258, guid: 0cb106696ae13a5449ee9630885f30ab, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].attribute
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8888793470118116258, guid: 0cb106696ae13a5449ee9630885f30ab, type: 3}
       propertyPath: waveInfos.Array.data[2].enemySpawnInfos.Array.data[0].attribute
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1333,22 +1333,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.size
-      value: 26
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[25].count
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[25].perfab
-      value: 
-      objectReference: {fileID: 8236610387131559020, guid: 731bc19c66c001045b1ac296a94a2024, type: 3}
-    - target: {fileID: 2659896954888658400, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
-      propertyPath: objectInfos.Array.data[25].objectName
-      value: P1
-      objectReference: {fileID: 0}
     - target: {fileID: 6372842070683576580, guid: 1e14c944e58b0cf47b366bceefa66e75, type: 3}
       propertyPath: m_Name
       value: ObjectPoolManager
