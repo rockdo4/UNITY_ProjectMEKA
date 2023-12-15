@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
 
     public RuntimeAnimatorController animationController;
     public RuntimeAnimatorController currnetAnimationController;
+    private bool CharacterArrangeOne;
 
     public enum CharacterStates
     {
@@ -105,6 +106,7 @@ public class PlayerController : MonoBehaviour
         rangeInPlayers.Clear();
         enemyBlockCount.Clear();
         state.Hp = state.maxHp;
+        CharacterArrangeOne = false;
     }
     private void OnDisable()
     {
@@ -176,11 +178,15 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        
-        CurrentPos = transform.position;
-        CurrentGridPos = new Vector3Int(Mathf.RoundToInt(CurrentPos.x), 0, Mathf.RoundToInt(CurrentPos.z));
-        //Debug.Log(stateManager.currentBase is PlayableArrangeState);
+        //if(!CharacterArrangeOne)
+        //{
+        //    CurrentPos = transform.position;
+        //    CurrentGridPos = new Vector3Int(Mathf.RoundToInt(CurrentPos.x), 0, Mathf.RoundToInt(CurrentPos.z));
 
+        //}
+
+        //Debug.Log(stateManager.currentBase is PlayableArrangeState);
+        //Debug.Log($"{CurrentGridPos},{gameObject.name}");
         stateManager.Update();
         blockCount = enemyBlockCount.Count;
         state.cost += Time.deltaTime;
@@ -189,7 +195,6 @@ public class PlayerController : MonoBehaviour
         {
             state.cost = state.maxCost;
         }
-        //Debug.Log(CurrentGridPos);
         
         foreach (var a in rangeInEnemys)
         {
