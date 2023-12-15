@@ -31,6 +31,7 @@ public class CharacterPanelManager : MonoBehaviour
 			var card = Instantiate(characterCardPrefab, transform);
 			var characterInfo = dict.GetCharacterData(character.Value.CharacterID);
 
+			card.GetComponentInChildren<TextMeshProUGUI>().SetText("");
 			card.name = characterInfo.CharacterName;
 			card.GetComponent<Image>().sprite = Resources.Load<Sprite>(characterInfo.PortraitPath);
 			if(characterInfo.PortraitPath == "None")
