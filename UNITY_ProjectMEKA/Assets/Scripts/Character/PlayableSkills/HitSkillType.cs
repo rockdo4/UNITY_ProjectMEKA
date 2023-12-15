@@ -130,7 +130,7 @@ public class HitSkillType : SkillBase
                         if(!isAttackAnimation)
                         {
                             var obj = ObjectPoolManager.instance.GetGo(effectName);
-
+                            Debug.Log(obj);
                             Vector3 pos = player.transform.position/* + player.transform.forward * 1f*/;
                             pos.y += 0.5f; // y축 위치 조정
 
