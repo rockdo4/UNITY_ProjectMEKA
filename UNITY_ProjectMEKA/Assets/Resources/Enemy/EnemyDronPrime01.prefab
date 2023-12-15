@@ -682,6 +682,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
+  updateUI:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8212173730918372622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,6 +713,7 @@ MonoBehaviour:
   CurrentPos: {x: 0, y: 0, z: 0}
   CurrentGridPos: {x: 0, y: 0, z: 0}
   isArrival: 0
+  forwardGrid: {x: 0, y: 0, z: 0}
 --- !u!114 &5296831442463534906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,9 +761,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   name: P1
-  property: 0
+  property: 1
   maxHp: 100
-  amror: 0
+  armor: 0
   damage: 10
   attackDelay: 1
   BulletName: bullet
