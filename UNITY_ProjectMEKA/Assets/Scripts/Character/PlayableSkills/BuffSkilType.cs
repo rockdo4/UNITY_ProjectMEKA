@@ -67,7 +67,7 @@ public class BuffSkilType : SkillBase
         isSkillUsing = false;
         saveSpeed = player.state.attackDelay;
         saveDamage = player.state.damage;
-        saveArmor = player.state.amror;
+        saveArmor = player.state.armor;
     }
     private void Update()
     {
@@ -82,7 +82,7 @@ public class BuffSkilType : SkillBase
                 player.state.attackDelay = saveSpeed;
                 player.ani.speed = 1;
                 player.state.damage = saveDamage;
-                player.state.amror = saveArmor;
+                player.state.armor = saveArmor;
                 if(obj != null)
                 {
                     obj.GetComponent<PoolAble>().ReleaseObject();
@@ -316,7 +316,7 @@ public class BuffSkilType : SkillBase
             {
                 case Defines.IncrementalForm.Percentage:
                     var pl = hitCollider.GetComponentInParent<PlayerController>();
-                    pl.state.amror += saveArmor * figure;
+                    pl.state.armor += saveArmor * figure;
                     var obs = ObjectPoolManager.instance.GetGo(effectName);
 
                     Vector3 pobs = pl.gameObject.transform.position;
@@ -331,7 +331,7 @@ public class BuffSkilType : SkillBase
                 case Defines.IncrementalForm.Magnification:
                     
                     var player = hitCollider.GetComponentInParent<PlayerController>();
-                    player.state.amror = saveArmor * figure;
+                    player.state.armor = saveArmor * figure;
                     var obsa = ObjectPoolManager.instance.GetGo(effectName);
 
                     Vector3 pobss = player.gameObject.transform.position;
