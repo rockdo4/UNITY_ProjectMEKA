@@ -100,7 +100,7 @@ public class NPCDestinationStates : NPCBaseState
             
         }
         //원래는 0.3
-        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.3f && !enemyCtrl.state.isFly)
+        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.35f && !enemyCtrl.state.isFly)
         {
             CheckPlayer();
         }
@@ -122,12 +122,7 @@ public class NPCDestinationStates : NPCBaseState
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
                     {
-                        //if (enemyCtrl.forwardGrid == pl.GetComponentInParent<PlayerController>().CurrentGridPos)
-                        //{
-                        //    enemyCtrl.target = pl;
-                        //    enemyCtrl.SetState(NPCStates.Idle);
-                        //    return;
-                        //}
+                        
                         enemyCtrl.target = pl;
                         enemyCtrl.SetState(NPCStates.Idle);
                         return;

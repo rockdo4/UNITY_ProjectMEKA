@@ -137,12 +137,10 @@ public class EnemyController : PoolAble
     {
         Vector3 currentPosition = transform.position; // 현재 위치
         Vector3 forwardDirection = transform.forward; // 포워드 방향
-
-        // 포워드 방향으로 1 유닛 이동
+        
         
 
        
-        // 대각선 방향을 제거하고, 가장 큰 축을 기준으로 설정
         if (Mathf.Abs(forwardDirection.x) > Mathf.Abs(forwardDirection.z))
         {
             forwardDirection = new Vector3(Mathf.Sign(forwardDirection.x), 0, 0);
@@ -152,19 +150,15 @@ public class EnemyController : PoolAble
             forwardDirection = new Vector3(0, 0, Mathf.Sign(forwardDirection.z));
         }
 
-        // 포워드 방향으로 1 유닛 이동
         Vector3 newPosition = currentPosition + forwardDirection;
 
-        // 그리드 인덱스 계산
-        forwardGrid = new Vector3Int(Mathf.RoundToInt(newPosition.x), 0, Mathf.RoundToInt(newPosition.z));
-
-
+        forwardGrid = new Vector3Int(Mathf.FloorToInt(newPosition.x), 0, Mathf.FloorToInt(newPosition.z));
+        //Debug.Log($"{forwardGrid}{gameObject.name}");
         
         stateManager.Update();
         CurrentPos = transform.position;
         CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
-        //Debug.Log(state.damage);
-       
+        
     }
     
     public void SetState(NPCStates state)

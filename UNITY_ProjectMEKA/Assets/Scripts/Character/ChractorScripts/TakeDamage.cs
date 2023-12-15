@@ -20,15 +20,26 @@ public class TakeDamage : MonoBehaviour, IAttackable
     }
     public void OnAttack(float damage)
     {
-       
+
         //state.Hp -= damage - state.amror;
+        
         if(player != null)
         {
-            player.Hp -= damage - player.armor;
+            damage -= player.armor;
+            if (damage <= 0)
+            {
+                damage = 5;
+            }
+            player.Hp -= damage;
         }
         else
         {
-            enemy.Hp -= damage - enemy.armor;
+            damage -= enemy.armor;
+            if (damage <= 0)
+            {
+                damage = 5;
+            }
+            enemy.Hp -= damage;
         }
         
         

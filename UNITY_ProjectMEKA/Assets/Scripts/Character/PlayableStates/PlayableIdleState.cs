@@ -17,6 +17,7 @@ public class PlayableIdleState : PlayableBaseState
 
     public override void Enter()
     {
+        
         playerCtrl.CurrentGridPos = new Vector3Int(Mathf.FloorToInt(playerCtrl.transform.position.x), Mathf.FloorToInt(playerCtrl.transform.position.y), Mathf.FloorToInt(playerCtrl.transform.position.z));
     }
 
