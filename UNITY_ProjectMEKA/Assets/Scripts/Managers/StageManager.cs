@@ -19,6 +19,7 @@ public class StageManager : MonoBehaviour
 
     public int tempClearCount = 0;
     public float timer;
+    public float defaultCost;
     public float currentCost;
     public float maxCost;
     public float useCost;
@@ -242,8 +243,9 @@ public class StageManager : MonoBehaviour
         var id = StageDataManager.Instance.selectedStageData.stageID;
         var stageData = StageDataManager.Instance.stageTable.GetStageData(id);
 
+        defaultCost = stageData.DefaultCost;
         maxCost = stageData.MaxCost;
-        currentCost = maxCost;
+        currentCost = defaultCost;
 
         maxHouseLife = stageData.HouseLife;
         currentHouseLife = maxHouseLife;

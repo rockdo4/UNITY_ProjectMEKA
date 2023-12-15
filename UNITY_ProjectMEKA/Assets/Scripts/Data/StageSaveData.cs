@@ -24,6 +24,7 @@ public class StageData
     public int StageNumber { get; set; }
     public int Index { get; set; }
     public int MaxCost { get; set; }
+    public int DefaultCost { get; set; }
     public string MapImagePath { get; set; }
     public string MapSoundPath { get; set; }
     public int NextStageID { get; set; }
