@@ -180,6 +180,8 @@ public class SynchroPanel : MonoBehaviour
 		}
 
 		UpdateRequired();
+		
+		GameManager.Instance.SaveExecution();
 	}
 
 	public void OpenResultPanel()

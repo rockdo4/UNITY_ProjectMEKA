@@ -244,7 +244,7 @@ public class IngameStageUIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         StageDataManager.Instance.toStageChoicePanel = true;
-        SceneManager.LoadScene("GachaScene");
+        SceneManager.LoadScene("GachaSceneDevice");
     }
 
     public void ChangeCharacterInfo()
