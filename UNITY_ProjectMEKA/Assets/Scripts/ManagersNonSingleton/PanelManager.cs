@@ -154,7 +154,7 @@ public class PanelManager : MonoBehaviour
 		{
 			//UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
 			//UnityEngine.SceneManagement.SceneManager.LoadScene("BUGLHJ");
-			UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
+			//UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
 		}
 		else
 		{
