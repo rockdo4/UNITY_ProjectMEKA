@@ -1,5 +1,5 @@
 using System;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 using static Defines;
 
@@ -17,6 +17,7 @@ public class StageManager : MonoBehaviour
     public GameState gameState;
     public (MissionType, int)[] missionTypes = new (MissionType, int)[3];
 
+    public int tempClearCount = 0;
     public float timer;
     public float currentCost;
     public float maxCost;
@@ -28,6 +29,8 @@ public class StageManager : MonoBehaviour
     public int leftWaveCount;
     public int currentHouseLife;
     public int maxHouseLife;
+
+    public List<(int,int)> rewardList = new List<(int, int)>();
 
     private void OnEnable()
     {
@@ -69,51 +72,63 @@ public class StageManager : MonoBehaviour
                     case MissionType.MonsterKillCount:
                         if (MissionMonsterKillCount(missionTypes[i].Item2) == MissionClear.Clear)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
                         }
                         break;
                     case MissionType.SurviveTime:
                         if (MissionSurviveTime(missionTypes[i].Item2) == MissionClear.Clear)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
                         }
                         break;
                     case MissionType.ClearTime:
                         if (MissionClearTime(missionTypes[i].Item2) == MissionClear.Clear)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
                         }
                         break;
                     case MissionType.CostLimit:
                         if (MissionCostLimit(missionTypes[i].Item2) == MissionClear.Clear)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
                         }
                         break;
                     case MissionType.HouseLifeLimit:
                         if (MissionHouseLifeLimit(missionTypes[i].Item2) == MissionClear.Clear)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
                         }
                         break;
                     case MissionType.PlayerWin:
                         if (MissionPlayerWin() == GameState.Win)
                         {
-                            StageDataManager.Instance.selectedStageData.clearScore++;
+                            tempClearCount++;
                         }
                         break;
                 }
             }
-            if (StageDataManager.Instance.selectedStageData.clearScore > 0)
+            if (tempClearCount > StageDataManager.Instance.selectedStageData.clearScore)
             {
                 gameState = GameState.Win;
                 StageDataManager.Instance.selectedStageData.isCleared = true;
                 StageDataManager.Instance.selectedStageDatas[stageData.NextStageID].isUnlocked = true;
                 StageDataManager.Instance.UpdatePlayData();
+                foreach(var reward in rewardList)
+                {
+                    ItemInventoryManager.Instance.AddItemByID(reward.Item1, reward.Item2);
+                }
+                PlayDataManager.Save();
             }
             else
             {
-                gameState = GameState.Die;
+                if(tempClearCount == 0)
+                {
+                    gameState = GameState.Die;
+                }
+                else
+                {
+                    gameState = GameState.Win;
+                }
             }
         }
     }
@@ -193,7 +208,7 @@ public class StageManager : MonoBehaviour
 
     public MissionClear MissionHouseLifeLimit(int value)
     {
-        if( maxHouseLife-currentHouseLife >= value)
+        if(currentHouseLife >= value)
         {
             return MissionClear.Clear;
         }

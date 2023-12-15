@@ -50,8 +50,27 @@ public class ItemInventoryManager
 
 	public void AddItemByID(int ID, int count = 1)
 	{
-		//데이터 테이블에서 ID 찾아서 받아와서 추가
-		//m_ItemStorage.Add(item);
+		var itemData = DataTableMgr.GetTable<ItemInfoTable>();
+		var characterLevelData = DataTableMgr.GetTable<CharacterLevelTable>();
+		var characterData = DataTableMgr.GetTable<CharacterTable>();
+
+		if(itemData.GetItemData(ID) != null)
+		{
+			var item = new Item();
+			var data = itemData.GetItemData(ID);
+			item.ID = data.ID;
+			item.InstanceID = data.ID;
+			item.Count = count;
+			AddItemByInstance(item, count);
+        }
+		else if(characterLevelData.GetLevelData(ID) != null)
+		{
+			// ID 분리
+			int id = ID / 100;
+			int level = ID % 100;
+			CharacterManager.Instance.m_CharacterStorage[id].IsUnlock = true;
+			CharacterManager.Instance.m_CharacterStorage[id].CharacterLevel = level;
+        }
 	}
 
 	public void RemoveItemByInstance(Item item, int count = 1)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,6 +12,8 @@ public class IngameStageUIManager : MonoBehaviour
     public WindowMode windowMode;
     private WindowMode prevWindowMode;
     private StageManager stageManager;
+
+    public Button exitButton;
 
     // panels
     public GameObject characterInfoPanel;
@@ -200,6 +203,7 @@ public class IngameStageUIManager : MonoBehaviour
                 break;
             case WindowMode.Loose:
                 ResultPanel.SetActive(true);
+                Time.timeScale = 0f;
                 LooseWindowSet();
                 break;
         }
@@ -232,11 +236,15 @@ public class IngameStageUIManager : MonoBehaviour
         var isResultMode = windowMode == WindowMode.Win || windowMode == WindowMode.Loose;
         if(isResultMode && Input.GetMouseButtonUp(0))
         {
-            // 타이틀씬으로 감
-            Time.timeScale = 1f;
-            StageDataManager.Instance.toStageChoicePanel = true;
-            SceneManager.LoadScene("GachaScene");
+            CloseScene();
         }
+    }
+
+    public void CloseScene()
+    {
+        Time.timeScale = 1f;
+        StageDataManager.Instance.toStageChoicePanel = true;
+        SceneManager.LoadScene("GachaScene");
     }
 
     public void ChangeCharacterInfo()
@@ -328,7 +336,12 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void Init()
     {
-       if(StageDataManager.Instance.selectedStageData != null)
+        exitButton.onClick.AddListener(() =>
+        {
+            CloseScene();
+        });
+
+        if (StageDataManager.Instance.selectedStageData != null)
         {
             // 해당 모드에 맞춰서 UI 세팅
             var id = StageDataManager.Instance.selectedStageData.stageID;
@@ -362,8 +375,9 @@ public class IngameStageUIManager : MonoBehaviour
         for (int i = 0; i < 5; ++i)
         {
             var rewardData = DataTableMgr.GetTable<RewardTable>().GetStageData(stageData.RewardID);
-            
-           
+            int id = 0;
+            int count = 0;
+
             var itemGo = Instantiate(itemPrefab, ItemParentPanel.transform);
             var itemInfo = itemGo.GetComponent<RewardItemInfo>();
 
@@ -372,8 +386,9 @@ public class IngameStageUIManager : MonoBehaviour
                 case 0:
                     if(rewardData.Item1ID != 0)
                     {
+                        id = rewardData.Item1ID;
+                        count =rewardData.Item1Count;
                         itemInfo.itemCountText.SetText(rewardData.Item1Count.ToString());
-                        SetItemInfo(rewardData.Item1ID, itemInfo, rewardData);
                     }
                     else
                     {
@@ -383,8 +398,9 @@ public class IngameStageUIManager : MonoBehaviour
                 case 1:
                     if(rewardData.Item2ID != 0)
                     {
+                        id = rewardData.Item2ID;
+                        count = rewardData.Item2Count;
                         itemInfo.itemCountText.SetText(rewardData.Item2Count.ToString());
-                        SetItemInfo(rewardData.Item2ID, itemInfo, rewardData);
                     }
                     else
                     {
@@ -394,8 +410,9 @@ public class IngameStageUIManager : MonoBehaviour
                 case 2:
                     if (rewardData.Item3ID != 0)
                     {
+                        id = rewardData.Item3ID;
+                        count = rewardData.Item3Count;
                         itemInfo.itemCountText.SetText(rewardData.Item3Count.ToString());
-                        SetItemInfo(rewardData.Item3ID, itemInfo, rewardData);
                     }
                     else
                     {
@@ -405,8 +422,9 @@ public class IngameStageUIManager : MonoBehaviour
                 case 3:
                     if (rewardData.Item4ID != 0)
                     {
+                        id = rewardData.Item4ID;
+                        count = rewardData.Item4Count;
                         itemInfo.itemCountText.SetText(rewardData.Item4Count.ToString());
-                        SetItemInfo(rewardData.Item4ID, itemInfo, rewardData);
                     }
                     else
                     {
@@ -416,8 +434,9 @@ public class IngameStageUIManager : MonoBehaviour
                 case 4:
                     if (rewardData.Item5ID != 0)
                     {
+                        id = rewardData.Item5ID;
+                        count = rewardData.Item5Count;
                         itemInfo.itemCountText.SetText(rewardData.Item5Count.ToString());
-                        SetItemInfo(rewardData.Item5ID, itemInfo, rewardData);
                     }
                     else
                     {
@@ -425,6 +444,8 @@ public class IngameStageUIManager : MonoBehaviour
                     }
                     break;
             }
+            SetItemInfo(id, itemInfo, rewardData);
+            stageManager.rewardList.Add((id, count));
         }
     }
 

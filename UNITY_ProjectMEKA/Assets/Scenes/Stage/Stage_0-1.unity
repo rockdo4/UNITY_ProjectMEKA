@@ -585,6 +585,10 @@ PrefabInstance:
       propertyPath: joystick
       value: 
       objectReference: {fileID: 78763872}
+    - target: {fileID: 2627471855118230718, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+      propertyPath: exitButton
+      value: 
+      objectReference: {fileID: 1123018349}
     - target: {fileID: 6842484709175205273, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -669,11 +673,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: TilemapUI_Fixed
       objectReference: {fileID: 0}
+    - target: {fileID: 9210229403795877546, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+--- !u!114 &1123018349 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1009823246562728644, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+  m_PrefabInstance: {fileID: 1123018348}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1184148397 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 366830114254044856, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
