@@ -28,7 +28,7 @@ public class TakeDamage : MonoBehaviour, IAttackable
             damage -= player.armor;
             if (damage <= 0)
             {
-                damage = 0;
+                damage = 5;
             }
             player.Hp -= damage;
         }
@@ -37,7 +37,7 @@ public class TakeDamage : MonoBehaviour, IAttackable
             damage -= enemy.armor;
             if (damage <= 0)
             {
-                damage = 0;
+                damage = 5;
             }
             enemy.Hp -= damage;
         }
