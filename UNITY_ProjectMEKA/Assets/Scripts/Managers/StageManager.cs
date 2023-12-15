@@ -56,6 +56,15 @@ public class StageManager : MonoBehaviour
             // for tilemap test
             CheckGameOver();
         }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            var id = StageDataManager.Instance.selectedStageData.stageID;
+            var stageData = StageDataManager.Instance.stageTable.GetStageData(id);
+            gameState = GameState.Win;
+            StageDataManager.Instance.selectedStageData.isCleared = true;
+            StageDataManager.Instance.selectedStageDatas[stageData.NextStageID].isUnlocked = true;
+            StageDataManager.Instance.UpdatePlayData();
+        }
     }
 
     public void CheckGameOver()

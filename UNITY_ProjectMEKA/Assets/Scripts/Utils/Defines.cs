@@ -44,6 +44,8 @@ public static class Defines
         public const string stage0_4 = "Stage_0-3";
         public const string stage0_5 = "Stage_0-4";
         public const string stage0_6 = "Stage_TR-2";
+        public const string stage0_7 = "Stage_0-5";
+        public const string stage0_8 = "Stage_0-6";
     }
     public static class AssignmentSceneNames
     {
