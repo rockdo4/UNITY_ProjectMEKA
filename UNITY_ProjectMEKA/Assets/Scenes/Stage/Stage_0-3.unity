@@ -533,6 +533,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2627471855118230718, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+      propertyPath: joystick
+      value: 
+      objectReference: {fileID: 78763872}
     - target: {fileID: 2924592624032922265, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1375,6 +1379,7 @@ GameObject:
   - component: {fileID: 1586656504785168785}
   - component: {fileID: 6453327832083485837}
   - component: {fileID: 3157258170924116782}
+  - component: {fileID: 8990371993125469506}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1476,12 +1481,27 @@ Transform:
   m_GameObject: {fileID: 2789153221044245642}
   serializedVersion: 2
   m_LocalRotation: {x: 0.47840986, y: -0, z: -0, w: 0.8781367}
-  m_LocalPosition: {x: -0.5, y: 5.88, z: -8.75}
+  m_LocalPosition: {x: -0.5, y: 5.88, z: -9.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 57.163, y: 0, z: 0}
+--- !u!114 &8990371993125469506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2789153221044245642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875bed23c11de004db4aee35ecf6acb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDistance: 5
+  rotationSpeed: 5
+  zoomSpeed: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
