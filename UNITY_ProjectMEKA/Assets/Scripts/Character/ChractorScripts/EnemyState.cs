@@ -135,7 +135,7 @@ public class EnemyState : CharacterState
     //[HideInInspector]
     //public int ID;
 
-    [HideInInspector]
+    
     public bool isBlock = true;
 
     //private void Awake()
