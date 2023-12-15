@@ -81,9 +81,6 @@ public class CharacterIconManager : MonoBehaviour
         for(int i = 0; i < currentCharacterCount; i++)
         {
             var id = DataHolder.formation[i];
-
-            // 이걸 남석이형걸로 체인지
-
             var iconImage = Resources.Load<Sprite>(characterTable.GetCharacterData(id).ImagePath);
 
             var iconPrefab = Resources.Load<GameObject>(characterIconPath);
