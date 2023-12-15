@@ -42,6 +42,16 @@ public class DeviceEnhance : MonoBehaviour
 	private void Start()
 	{
 		expData = DataTableMgr.GetTable<DeviceExpTable>().GetOriginalTable();
+
+		var itemTable = DataTableMgr.GetTable<ItemInfoTable>();
+
+		var tier1 = itemTable.GetItemData(itemID[0]);
+		var tier2 = itemTable.GetItemData(itemID[1]);
+		var tier3 = itemTable.GetItemData(itemID[2]);
+
+		itemCard[0].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier1.Name}");
+		itemCard[1].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier2.Name}");
+		itemCard[2].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier3.Name}");
 	}
 
 	private void OnEnable()

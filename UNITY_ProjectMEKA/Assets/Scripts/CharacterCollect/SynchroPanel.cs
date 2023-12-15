@@ -71,7 +71,18 @@ public class SynchroPanel : MonoBehaviour
 
 		synchroInfoData = synchroTable.GetSynchroData(grade, occupation);
 
-		if(synchroInfoData == null)
+		
+		var itemTable = DataTableMgr.GetTable<ItemInfoTable>();
+
+		var tier1 = itemTable.GetItemData(synchroInfoData.Tier1ID);
+		var tier2 = itemTable.GetItemData(synchroInfoData.Tier2ID);
+		var tier3 = itemTable.GetItemData(synchroInfoData.Tier3ID);
+
+		synchroItemCard[0].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier1.Name}");
+		synchroItemCard[1].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier2.Name}");
+		synchroItemCard[2].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier3.Name}");
+
+		if (synchroInfoData == null)
 		{
             Debug.Log("합성 정보 없음");
 			synchroItemCard[0].SetItem(synchroInfoData.Tier1ID, synchroInfoData.RequireTier1);
