@@ -7,7 +7,10 @@ using UnityEngine.UI;
 public class SynchroPanel : MonoBehaviour
 {
 	public static readonly int MAX_SYNCHRO_GRADE = 6;
-	
+
+	public TextMeshProUGUI beforeGrade;
+	public TextMeshProUGUI afterGrade;
+
 	public TextMeshProUGUI levelText;
 	public ItemAutoQuantityCard[] synchroItemCard;
 	public ItemAutoQuantityCard silverItemCard;
@@ -91,6 +94,10 @@ public class SynchroPanel : MonoBehaviour
 		{
 			levelText.SetText($"{currCharacter.CharacterLevel}");
 		}
+
+
+		beforeGrade.SetText($"현재 등급 : {grade}");
+		afterGrade.SetText($"다음 등급 : {grade + 1}");
 
         UpdateAfterSetCharacter();
 	}
