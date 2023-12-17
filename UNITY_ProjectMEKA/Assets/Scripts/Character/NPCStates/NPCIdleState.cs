@@ -25,6 +25,7 @@ public class NPCIdleState : NPCBaseState
 
     public override void Update()
     {
+        Debug.Log(enemyCtrl.name + "±âº»Áß");
         //timer += Time.deltaTime;
         //if (timer > enemyCtrl.state.attackDelay)
         //{
