@@ -115,6 +115,5 @@ public class GachaManager : MonoBehaviour
 			if (it.gameObject == resultPanel) continue;
 			it.gameObject.GetComponent<PoolAble>().ReleaseObject();
 		}
-        
 	}
 }
