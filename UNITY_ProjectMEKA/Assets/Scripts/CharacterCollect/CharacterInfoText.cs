@@ -56,6 +56,13 @@ public class CharacterInfoText : MonoBehaviour
 			devicePanel.gameObject.SetActive(true);
 			devicePanel.SetCharacter(character);
 		});
+
+		skillButton.onClick.RemoveAllListeners();
+		skillButton.onClick.AddListener(() =>
+		{
+			skillPanel.gameObject.SetActive(true);
+			skillPanel.SetCharacter(character);
+		});
 	}
 
 	public void SetCharacter (Character data)

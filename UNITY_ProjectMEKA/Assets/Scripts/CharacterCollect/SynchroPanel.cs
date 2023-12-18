@@ -16,7 +16,7 @@ public class SynchroPanel : MonoBehaviour
 	public ItemAutoQuantityCard silverItemCard;
 	public Button applyButton;
 
-	public CharacterInfoText UpdateInfoPanel;
+	public CharacterInfoText infoPanel;
 	public RectTransform resultPanel;
 
 	private SynchroData synchroInfoData;
@@ -33,7 +33,7 @@ public class SynchroPanel : MonoBehaviour
 		applyButton.onClick.AddListener(() =>
 		{
 			ApplySynchro();
-			UpdateInfoPanel.UpdateText();
+			infoPanel.UpdateText();
 		});
 
 		//applyButton.onClick.AddListener(() =>
@@ -137,7 +137,7 @@ public class SynchroPanel : MonoBehaviour
 		}
 		SetCharacter(currCharacter);
 	}
-	public void UpdateAfterSetCharacter()
+	private void UpdateAfterSetCharacter()
 	{
         foreach (var card in synchroItemCard)
         {

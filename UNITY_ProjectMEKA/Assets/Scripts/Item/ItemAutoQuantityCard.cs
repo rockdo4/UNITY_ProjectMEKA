@@ -8,7 +8,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 {
 	public Image itemImage;
 	public TextMeshProUGUI quantityText;
-	public SynchroPanel panel;
+	public SkillPanel panel;
 	private Button button;
 
 	[HideInInspector]
@@ -18,7 +18,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 
 	private void Awake()
 	{
-		panel = GetComponentInParent<SynchroPanel>();
+		panel = GetComponentInParent<SkillPanel>();
 		button = GetComponent<Button>();
 	}
 
@@ -37,7 +37,23 @@ public class ItemAutoQuantityCard : MonoBehaviour
 	public void SetItem(int id, int quantity)
 	{
 		var item = ItemInventoryManager.Instance.GetItemByID(id);
-		SetItem(item, quantity);
+
+		if (item != null)
+		{
+			SetItem(item, quantity);
+		}
+		else
+		{
+			var itemTable = DataTableMgr.GetTable<ItemInfoTable>();
+			var data = itemTable.GetItemData(id);
+
+			var emptyItem = new Item();
+			emptyItem.ID = data.ID;
+			emptyItem.Count = 0;
+			emptyItem.InstanceID = id;
+
+			SetItem(emptyItem, quantity);
+		}
 	}
 
 	public void SetItem(Item item, int quantity)

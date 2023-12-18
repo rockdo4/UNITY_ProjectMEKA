@@ -51,6 +51,9 @@ public static class DataTableMgr
         var skillTable = new SkillTable();
         tables.Add(typeof(SkillTable), skillTable);
 
+        var skillUpgradeTable = new SkillUpgradeTable();
+        tables.Add(typeof(SkillUpgradeTable), skillUpgradeTable);
+
 		CharacterManager.Instance.InitCharacterStorage(charTable, characterLevelTable);
     }
 
