@@ -559,6 +559,7 @@ public class PlayerController : MonoBehaviour
                         {
                             attackableSkillTiles.Add(tileContoller);
                             prevAttackableSkillTiles.Add(tileContoller);
+                            tileContoller.SetTileMaterial(Tile.TileMaterial.Skill);
                         }
                     }
                 }

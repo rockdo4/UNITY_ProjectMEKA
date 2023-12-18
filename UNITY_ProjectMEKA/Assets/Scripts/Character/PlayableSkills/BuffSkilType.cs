@@ -78,7 +78,7 @@ public class BuffSkilType : SkillBase
             if(duration >= skillDuration) 
             {
                 duration = 0f;
-                isSkillUsing = false;
+                //isSkillUsing = false;
                 player.state.attackDelay = saveSpeed;
                 player.ani.speed = 1;
                 player.state.damage = saveDamage;
@@ -111,6 +111,8 @@ public class BuffSkilType : SkillBase
                     if (isAttackRage)
                     {
                         player.ani.SetTrigger("Skill");
+                        //12.18, ±è¹ÎÁö, Å×½ºÆ®¿ë
+                        CheckOverlapBoxes();
                     }
                     else
                     {

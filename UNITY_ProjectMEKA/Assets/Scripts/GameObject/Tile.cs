@@ -11,12 +11,14 @@ public class Tile : MonoBehaviour
     {
         None,
         Arrange,
-        Attack
+        Attack,
+        Skill
     }
 
     public TileType tileType = TileType.None;
     public Material arrangePossibleMaterial;
     public Material attackPossibleMaterial;
+    public Material skillAttackPossibleMaterial;
     private Material baseMaterial;
     public MeshRenderer meshRenderer;
     [HideInInspector]
@@ -67,16 +69,20 @@ public class Tile : MonoBehaviour
 
     public void SetTileMaterial(TileMaterial materialType)
     {
-       if (materialType == TileMaterial.Arrange)
+        Material[] materials = new Material[2];
+        switch (materialType)
         {
-            Material[] materials = new Material[] { baseMaterial, arrangePossibleMaterial }; // 두 개의 material을 배열로 만듭니다.
-            meshRenderer.materials = materials; // 두 개의 material을 오브젝트에 적용합니다.
+            case TileMaterial.Arrange:
+                materials = new Material[] { baseMaterial, arrangePossibleMaterial }; // 두 개의 material을 배열로 만듭니다.
+                break;
+            case TileMaterial.Attack:
+                materials = new Material[] { baseMaterial, attackPossibleMaterial }; // 두 개의 material을 배열로 만듭니다.
+                break;
+            case TileMaterial.Skill:
+                materials = new Material[] { baseMaterial, skillAttackPossibleMaterial }; // 두 개의 material을 배열로 만듭니다.
+                break;
         }
-       if (materialType == TileMaterial.Attack)
-        {
-            Material[] materials = new Material[] { baseMaterial, attackPossibleMaterial }; // 두 개의 material을 배열로 만듭니다.
-            meshRenderer.materials = materials; // 두 개의 material을 오브젝트에 적용합니다.
-        }
+        meshRenderer.materials = materials;
     }
 
     public void ClearTileMesh()
