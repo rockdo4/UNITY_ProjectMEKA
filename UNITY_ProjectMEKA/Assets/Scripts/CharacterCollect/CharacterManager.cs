@@ -54,9 +54,12 @@ public class CharacterManager
         if (PlayDataManager.data == null)
 		{
 			Debug.Log("데이터 없음");
-			//return;
+			return;
 		}
 
-		m_CharacterStorage = PlayDataManager.data.characterStorage;
+		if(PlayDataManager.data.characterStorage != null)
+		{
+			m_CharacterStorage = PlayDataManager.data.characterStorage;
+		}
 	}
 }
