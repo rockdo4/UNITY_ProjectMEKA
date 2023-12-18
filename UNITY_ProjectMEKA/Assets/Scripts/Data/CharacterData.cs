@@ -15,6 +15,7 @@ public class Character
 
 	public int DeviceCoreID;
 	public int DeviceEngineID;
+	public int SkillLevel;
 
 	public float Damage
 	{
@@ -339,6 +340,16 @@ public class Character
 			return charData.ImagePath;
 		}
 	}
+
+	public int SkillID
+	{
+		get
+		{
+			var charTable = DataTableMgr.GetTable<CharacterTable>();
+			var charData = charTable.GetCharacterData(CharacterID);
+			return charData.SkillID;
+		}
+	}
 }
 
 //캐릭터 정보
@@ -347,6 +358,7 @@ public class CharacterData
 {
 	public int CharacterID { get; set; }
 	public string CharacterName { get; set; }	
+	public int InitialGrade { get; set; }
 	public int CharacterProperty { get; set; }
 	public int CharacterOccupation { get; set; }
 	public int ArrangementCost { get; set; }

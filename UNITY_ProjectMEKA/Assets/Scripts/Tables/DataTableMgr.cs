@@ -6,7 +6,6 @@ public static class DataTableMgr
 {
     private static Dictionary<System.Type, DataTable> tables = new Dictionary<System.Type, DataTable>();
 
-    // ����ƽ ������
     static DataTableMgr()
     {
         tables.Clear();
@@ -48,6 +47,9 @@ public static class DataTableMgr
 
         var deviceExpTable = new DeviceExpTable();
         tables.Add(typeof(DeviceExpTable), deviceExpTable);
+
+        var skillTable = new SkillTable();
+        tables.Add(typeof(SkillTable), skillTable);
 
 		CharacterManager.Instance.InitCharacterStorage(charTable, characterLevelTable);
     }

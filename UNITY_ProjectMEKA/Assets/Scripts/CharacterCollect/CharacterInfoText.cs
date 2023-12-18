@@ -52,12 +52,16 @@ public class CharacterInfoText : MonoBehaviour
 		Debug.Log("CharacterIcon/" + character.ImagePath);
 		characterImage.sprite = Resources.Load<Sprite>("CharacterIcon/" + character.ImagePath);
 		characterImage.preserveAspect = true;
+
+		SetSkillInfo();
 	}
 
 	public void SetSkillInfo()
 	{
-		var info = skillButton.GetComponentInChildren<TextMeshProUGUI>();
+		//var table = DataTableMgr.GetTable<>();
+		var skillText = skillButton.GetComponentInChildren<TextMeshProUGUI>();
 
+		skillText.SetText("Skill ID: " + character.SkillID.ToString());
 	}
 
 	public void UpdateText()
