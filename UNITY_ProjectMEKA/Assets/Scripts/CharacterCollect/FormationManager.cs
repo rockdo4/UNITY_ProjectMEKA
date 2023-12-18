@@ -335,7 +335,7 @@ public class FormationManager : MonoBehaviour
 	public void OpenCharacterInfo(Character info)
 	{
 		characterInfoPanel.gameObject.SetActive(true);
-		characterInfoPanel.GetComponent<CharacterInfoText>().SetText(info);
+		characterInfoPanel.GetComponent<CharacterInfoText>().SetCharacter(info);
 
 		var pos = GetComponentInParent<Canvas>().gameObject.transform.position;
 

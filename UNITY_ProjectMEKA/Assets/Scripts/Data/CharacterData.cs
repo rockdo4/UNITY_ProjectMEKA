@@ -329,6 +329,16 @@ public class Character
 			return charData.CharacterName;
 		}
 	}
+
+	public string ImagePath
+	{
+		get
+		{
+			var charTable = DataTableMgr.GetTable<CharacterTable>();
+			var charData = charTable.GetCharacterData(CharacterID);
+			return charData.ImagePath;
+		}
+	}
 }
 
 //캐릭터 정보
