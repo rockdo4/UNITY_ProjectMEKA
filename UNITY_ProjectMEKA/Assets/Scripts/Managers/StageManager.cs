@@ -5,20 +5,24 @@ using static Defines;
 
 public class StageManager : MonoBehaviour
 {
-    //[HideInInspector]
+    [HideInInspector]
     public IngameStageUIManager ingameStageUIManager;
+    [HideInInspector]
     public CharacterIconManager characterIconManager;
+    [HideInInspector]
     public ArrangeJoystick arrangeJoystick;
 
-    public PlayerController currentPlayer;
 
-    public CharacterIcon currentPlayerIcon;
-
-    public GameState gameState;
-    public (MissionType, int)[] missionTypes = new (MissionType, int)[3];
-
+    [Header("테스트용 필수 작성 2가지")]
     public int stageID;
     public StageClass stageClass;
+
+    [Header("테스트 시 확인 변수들")]
+    public PlayerController currentPlayer;
+    [HideInInspector]
+    public CharacterIcon currentPlayerIcon;
+    public GameState gameState;
+    public (MissionType, int)[] missionTypes = new (MissionType, int)[3];
     public int tempClearCount = 0;
     public float timer;
     public float defaultCost;
@@ -39,10 +43,6 @@ public class StageManager : MonoBehaviour
     {
         PlayDataManager.Init();
 		Init();
-		//ingameStageUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
-		//characterIconManager = GameObject.FindGameObjectWithTag(Tags.characterIconManager).GetComponent<CharacterIconManager>();
-		//arrangeJoystick = GameObject.FindGameObjectWithTag(Tags.joystick).GetComponent<ArrangeJoystick>();
-
 	}
 
 	private void Awake()
