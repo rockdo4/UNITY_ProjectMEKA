@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -179,7 +180,13 @@ public class DevicePanel : MonoBehaviour
 				break;
 		}
 
-		device.InstanceID = DeviceInventoryManager.Instance.Count;
+		StringBuilder sb = new StringBuilder();
+		sb.Append(71);
+		sb.Append(DeviceInventoryManager.Instance.Count.ToString("0000"));
+
+		int.TryParse(sb.ToString(), out int id);
+
+		device.InstanceID = id;
 		device.Name = "아이템";
 		device.Description = "장비템임";
 		device.CurrLevel = 1;
@@ -438,6 +445,7 @@ public class DevicePanel : MonoBehaviour
 
 				currCharacter.DeviceEngineID = selectedDevice.InstanceID;
 				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
+				selectedDevice.IsEquipped = true;
 			}
 			else if(selectedDevice.PartType == (int)DevicePartType.Core)
 			{
@@ -449,8 +457,8 @@ public class DevicePanel : MonoBehaviour
 
 				currCharacter.DeviceCoreID = selectedDevice.InstanceID;
 				selectedDevice.TargetCharacterID = currCharacter.CharacterID;
+				selectedDevice.IsEquipped = true;
 			}
-			selectedDevice.IsEquipped = true;
 
 			Debug.Log("장착");
 		}
