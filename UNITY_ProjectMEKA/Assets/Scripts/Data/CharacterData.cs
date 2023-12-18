@@ -86,7 +86,7 @@ public class Character
 				}
 			}
 
-			return (levelData.CharacterDamage + value) * (1 + coefficient);
+			return (levelData.CharacterDamage + value) * (1 + (coefficient / 100));
 		}
 	}
 	public float Armor
@@ -158,7 +158,7 @@ public class Character
 					}
 				}
 			}
-			return (levelData.CharacterArmor + value) * (1 + coefficient);
+			return (levelData.CharacterArmor + value) * (1 + (coefficient / 100));
 		}
 	}
 	public float HP
@@ -231,7 +231,7 @@ public class Character
 				}
 			}
 
-			return (levelData.CharacterHP + value) * (1 + coefficient);
+			return (levelData.CharacterHP + value) * (1 + (coefficient / 100));
 		}
 	}
 

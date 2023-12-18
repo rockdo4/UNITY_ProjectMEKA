@@ -19,6 +19,7 @@ public class DeviceEnhance : MonoBehaviour
 
 	public ItemQuantityDeviceCard[] itemCard;
 	public Button applyButton;
+	public DevicePanel devicePanel;
 
 	private Device currDevice;
     private List<DeviceExpData> expData;
@@ -37,12 +38,12 @@ public class DeviceEnhance : MonoBehaviour
 			}
 			UpdateTargetLevel();
 		});
+
+		expData = DataTableMgr.GetTable<DeviceExpTable>().GetOriginalTable();
 	}
 
 	private void Start()
 	{
-		expData = DataTableMgr.GetTable<DeviceExpTable>().GetOriginalTable();
-
 		var itemTable = DataTableMgr.GetTable<ItemInfoTable>();
 
 		var tier1 = itemTable.GetItemData(itemID[0]);
@@ -67,6 +68,8 @@ public class DeviceEnhance : MonoBehaviour
 	{
 		currDevice = device;
 		currLevel = device.CurrLevel;
+
+		UpdateTargetLevel();
 	}
 
 	public int CalculateExp(int totalExp, out int remain)
@@ -188,6 +191,8 @@ public class DeviceEnhance : MonoBehaviour
 		}
 
 		textExp.SetText($"°æÇèÄ¡ : {currDevice.CurrExp} >> {remainExp}");
+
+		devicePanel.UpdateDeviceAfterUpgrade();
 
 		GameManager.Instance.SaveExecution();
 	}

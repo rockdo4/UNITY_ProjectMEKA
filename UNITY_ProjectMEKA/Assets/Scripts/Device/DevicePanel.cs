@@ -63,7 +63,7 @@ public class DevicePanel : MonoBehaviour
 		engineOption = new GachaSystem<int>();
 		subOption = new GachaSystem<int>();
 
-		equipButton.onClick.AddListener(OnClickEquip);
+		equipButton.onClick.AddListener(OnClickEquip_UnEquip);
 		enhanceButton.onClick.AddListener(() =>
 		{
 			deviceEnhancePanel.gameObject.SetActive(true);
@@ -104,12 +104,16 @@ public class DevicePanel : MonoBehaviour
 	{
 		CreateDevice(1);
 		UpdateDeviceCard();
+
+		GameManager.Instance.SaveExecution();
 	}
 
 	public void CreateEngine()
 	{
 		CreateDevice(2);
 		UpdateDeviceCard();
+
+		GameManager.Instance.SaveExecution();
 	}
 
 	public void SetCharacter(Character character)
@@ -144,6 +148,11 @@ public class DevicePanel : MonoBehaviour
 		{
 			coreItem.GetComponentInChildren<TextMeshProUGUI>().SetText("비어있음");
 			coreItem.onClick.RemoveAllListeners();
+			coreItem.onClick.AddListener(() =>
+			{
+				SetDeviceInfoText(null);
+				selectedDevice = null;
+			});
 		}
 
 		if(currCharacter.DeviceEngineID != 0)
@@ -160,6 +169,11 @@ public class DevicePanel : MonoBehaviour
 		{
 			engineItem.GetComponentInChildren<TextMeshProUGUI>().SetText("비어있음");
 			engineItem.onClick.RemoveAllListeners();
+			engineItem.onClick.AddListener(() =>
+			{
+				SetDeviceInfoText(null);
+				selectedDevice = null;
+			});
 		}
 	}
 
@@ -297,6 +311,28 @@ public class DevicePanel : MonoBehaviour
 
 	public void SetDeviceInfoText(Device device)
 	{
+		if(device == null)
+		{
+			deviceName.SetText("장비를 선택해주세요.");
+			level.SetText("--");
+			type.SetText("--");
+
+			mainOption.SetText("--");
+			mainOptionValue.SetText("--");
+
+			subOption1.SetText("--");
+			subOptionValue1.SetText("--");
+
+			subOption2.SetText("--");
+			subOptionValue2.SetText("--");
+
+			subOption3.SetText("--");
+			subOptionValue3.SetText("--");
+
+			return;
+		}
+
+
 		deviceName.SetText(device.Name);
 		level.SetText(device.CurrLevel.ToString());
 		type.SetText(device.PartType.ToString());
@@ -374,7 +410,15 @@ public class DevicePanel : MonoBehaviour
 		}
 	}
 
-	public void OnClickEquip()
+	public void UpdateDeviceAfterUpgrade()
+	{
+		if(selectedDevice != null)
+		{
+			SetDeviceInfoText(selectedDevice);
+		}
+	}
+
+	public void OnClickEquip_UnEquip()
 	{
 		if(selectedDevice == null)
 		{
@@ -465,6 +509,7 @@ public class DevicePanel : MonoBehaviour
 
 		UpdateEquipedDeivce();
 		UpdateDeviceCard();
+		GameManager.Instance.SaveExecution();
 	}
 
 	public void CheckPlayData()
