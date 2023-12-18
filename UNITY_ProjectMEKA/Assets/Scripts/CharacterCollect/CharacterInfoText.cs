@@ -5,18 +5,33 @@ using UnityEngine.UI;
 public class CharacterInfoText : MonoBehaviour
 {
 	public Image characterImage;
+
+	[Header("Button")]
 	public Button enhanceButton;
 	public Button synchroButton;
 	public Button deviceButton;
 	public Button skillButton;
+	public Button classButton;
+	public Button companyButton;
+
+	[Header("Panel")]
 	public EnhancePanel enhancePanel;
 	public SynchroPanel synchroPanel;
 	public DevicePanel devicePanel;
+	public SkillPanel skillPanel;
 
+	[Header("Text")]
 	public TextMeshProUGUI textInfo;
 
 	[HideInInspector]
 	public Character character;
+
+	private CharacterTable characterTable;
+
+	private void Start()
+	{
+		characterTable = DataTableMgr.GetTable<CharacterTable>();
+	}
 
 	private void SetListener()
 	{
@@ -53,15 +68,80 @@ public class CharacterInfoText : MonoBehaviour
 		characterImage.sprite = Resources.Load<Sprite>("CharacterIcon/" + character.ImagePath);
 		characterImage.preserveAspect = true;
 
+		UpdateCharacter();
+	}
+
+	public void UpdateCharacter()
+	{
 		SetSkillInfo();
+		SetLevelInfo();
+		SetSynchroInfo();
+		SetClass_Range_Keyword();
+		SetCompnayInfo();
+		SetDeviceInfo();
 	}
 
 	public void SetSkillInfo()
 	{
 		//var table = DataTableMgr.GetTable<>();
 		var skillText = skillButton.GetComponentInChildren<TextMeshProUGUI>();
+		var skillTable = DataTableMgr.GetTable<SkillTable>();
+		var datas = skillTable.GetSkillDatas(character.SkillID);
 
-		skillText.SetText("Skill ID: " + character.SkillID.ToString());
+
+		skillText.SetText(
+			$"Skill ID: {character.SkillID}\n" +
+			$"SkillLevel ID: {datas[character.SkillLevel - 1].SkillLevelID}\n" +
+			$"SkillLevel: {character.SkillLevel}\n" +
+			$"(스킬업버튼)");
+	}
+
+	public void SetLevelInfo()
+	{
+		var levelText = enhanceButton.GetComponentInChildren<TextMeshProUGUI>();
+
+		levelText.SetText(
+			$"LV: {character.CharacterLevel}\n" +
+			$"(레벨업버튼)");
+	}
+
+	public void SetSynchroInfo()
+	{
+		var synchroText = synchroButton.GetComponentInChildren<TextMeshProUGUI>();
+
+		synchroText.SetText(
+			$"현재등급: {character.CharacterGrade}\n" +
+			$"이름: {character.Name}\n" +
+			$"(싱크로버튼)");
+	}
+
+	public void SetClass_Range_Keyword()
+	{
+		var classText = classButton.GetComponentInChildren<TextMeshProUGUI>();
+		var classInfo = characterTable.GetCharacterData(character.CharacterID).CharacterOccupation;
+
+		classText.SetText(
+			$"클래스: {(Defines.Occupation)classInfo}\n" +
+			$"(공격범위, 키워드?)");
+	}
+
+	public void SetCompnayInfo()
+	{
+		var companyText = companyButton.GetComponentInChildren<TextMeshProUGUI>();
+		var companyInfo = characterTable.GetCharacterData(character.CharacterID).CharacterProperty;
+
+		companyText.SetText(
+			$"회사: {(Defines.Property)companyInfo}\n" +
+			$"(여기에 마크)");
+	}
+
+	public void SetDeviceInfo()
+	{
+		var deviceText = deviceButton.GetComponentInChildren<TextMeshProUGUI>();
+
+		deviceText.SetText(
+			$"코어: {character.DeviceCoreID}\n" +
+			$"엔진: {character.DeviceEngineID}");
 	}
 
 	public void UpdateText()

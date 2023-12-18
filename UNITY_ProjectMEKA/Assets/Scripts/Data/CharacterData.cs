@@ -11,11 +11,11 @@ public class Character
 	public int CharacterLevel;
 	public int CurrentExp;
 	public int CharacterGrade;
+	public int SkillLevel;
 	public bool IsUnlock;
 
 	public int DeviceCoreID;
 	public int DeviceEngineID;
-	public int SkillLevel;
 
 	public float Damage
 	{

@@ -33,7 +33,8 @@ public class CharacterManager
 			chara.CharacterID = character.Value.CharacterID;
 			chara.CharacterLevel = 1;
 			chara.CurrentExp = 0;
-			chara.CharacterGrade = character.Value.InitialGrade; 
+			chara.CharacterGrade = character.Value.InitialGrade;
+			chara.SkillLevel = 1;
 			chara.IsUnlock = false;
 
 			if(!m_CharacterStorage.ContainsKey(chara.CharacterID))

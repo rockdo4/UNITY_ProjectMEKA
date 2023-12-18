@@ -59,7 +59,7 @@ public class SkillTable : DataTable
 		}
 	}
 
-	public SkillData[] GetSkillData(int skillID)
+	public SkillData[] GetSkillDatas(int skillID)
 	{
 		if(skillDictArr.ContainsKey(skillID))
 		{
