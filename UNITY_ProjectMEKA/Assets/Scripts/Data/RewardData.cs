@@ -11,7 +11,7 @@ public class RewardData
     public int StageNumber { get; set; }
     public int Index { get; set; }
     public int FirstItemID { get; set; }
-    public int FistItemCount { get; set; }
+    public int FirstItemCount { get; set; }
     public int Item1ID { get; set; }
     public int Item1Count { get; set; }
     public int Item2ID { get; set; }

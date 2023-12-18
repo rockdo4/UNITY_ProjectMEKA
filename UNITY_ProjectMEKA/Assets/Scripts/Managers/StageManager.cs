@@ -18,6 +18,7 @@ public class StageManager : MonoBehaviour
     public (MissionType, int)[] missionTypes = new (MissionType, int)[3];
 
     public int stageID;
+    public StageClass stageClass;
     public int tempClearCount = 0;
     public float timer;
     public float defaultCost;
@@ -73,8 +74,26 @@ public class StageManager : MonoBehaviour
         // when battle is over, check mission clear
         if (MissionPlayerWin() != GameState.Playing)
         {
-            var id = StageDataManager.Instance.selectedStageData.stageID;
-            var stageData = StageDataManager.Instance.stageTable.GetStageData(id);
+            int id;
+            StageData stageData;
+            StageSaveData stageSaveData;
+
+            // original code
+            if (StageDataManager.Instance.selectedStageData != null)
+            {
+                id = StageDataManager.Instance.selectedStageData.stageID;
+                stageID = id;
+                stageData = StageDataManager.Instance.stageTable.GetStageData(id);
+                stageSaveData = StageDataManager.Instance.selectedStageDatas[stageID];
+            }
+            else
+            {
+                // for test
+                stageData = StageDataManager.Instance.stageTable.GetStageData(stageID);
+                StageDataManager.Instance.SetCurrentStageClass(stageClass);
+                StageDataManager.Instance.LoadPlayData();
+                stageSaveData = StageDataManager.Instance.selectedStageDatas[stageID];
+            }
 
             for(int i = 0; i< missionTypes.Length; ++i)
             {
@@ -118,10 +137,10 @@ public class StageManager : MonoBehaviour
                         break;
                 }
             }
-            if (tempClearCount > StageDataManager.Instance.selectedStageData.clearScore)
+            if (tempClearCount > stageSaveData.clearScore)
             {
                 gameState = GameState.Win;
-                StageDataManager.Instance.selectedStageData.isCleared = true;
+                stageSaveData.isCleared = true;
                 StageDataManager.Instance.selectedStageDatas[stageData.NextStageID].isUnlocked = true;
                 StageDataManager.Instance.UpdatePlayData();
                 foreach(var reward in rewardList)
@@ -254,16 +273,18 @@ public class StageManager : MonoBehaviour
         StageData stageData;
 
         // original code
-        if(StageDataManager.Instance.selectedStageData != null)
+        if (StageDataManager.Instance.selectedStageData != null)
         {
             id = StageDataManager.Instance.selectedStageData.stageID;
-            stageData = StageDataManager.Instance.stageTable.GetStageData(id);
             stageID = id;
+            stageData = StageDataManager.Instance.stageTable.GetStageData(id);
         }
         else
         {
             // for test
             stageData = StageDataManager.Instance.stageTable.GetStageData(stageID);
+            StageDataManager.Instance.SetCurrentStageClass(stageClass);
+            StageDataManager.Instance.LoadPlayData();
         }
 
         defaultCost = stageData.DefaultCost;
