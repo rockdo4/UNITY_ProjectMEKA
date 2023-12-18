@@ -14,6 +14,8 @@ public class CameraManager : MonoBehaviour
     private Quaternion initRotation;
     private Vector3 initPos;
     private Transform target;
+    private float threshold = 0.1f;
+    private bool isReached = false;
 
     private void Awake()
     {
@@ -26,7 +28,9 @@ public class CameraManager : MonoBehaviour
     {
         if(stageManager.ingameStageUIManager.windowMode == WindowMode.Setting)
         {
-            if(stageManager.currentPlayer == null)
+            isReached = false;
+
+            if (stageManager.currentPlayer == null)
             {
                 return;
             }
@@ -45,10 +49,25 @@ public class CameraManager : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, targetPosition, zoomSpeed * Time.deltaTime * 2f);
             }            
         }
-        else if(!(stageManager.ingameStageUIManager.windowMode == WindowMode.Setting))
+        else if(stageManager.ingameStageUIManager.windowMode == WindowMode.Skill)
         {
             // 각도 러프
-            transform.rotation = Quaternion.Lerp(transform.rotation, initRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, initRotation, rotationSpeed * Time.deltaTime * 4f);
+
+            // 무빙 러프
+            transform.position = Vector3.Lerp(transform.position, initPos, zoomSpeed * Time.deltaTime * 4f);
+
+            if (Quaternion.Angle(transform.rotation, initRotation) < threshold && Vector3.Distance(transform.position, initPos) < threshold)
+            {
+                isReached = true;
+                Time.timeScale = 0f;
+            }
+        }
+        else
+        {
+            isReached = false;
+            // 각도 러프
+            transform.rotation = Quaternion.Lerp(transform.rotation, initRotation, rotationSpeed * Time.deltaTime * 2f);
 
             // 무빙 러프
             transform.position = Vector3.Lerp(transform.position, initPos, zoomSpeed * Time.deltaTime * 2f);

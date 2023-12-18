@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 using static Defines;
 
 public class PlayerController : MonoBehaviour
@@ -43,6 +44,10 @@ public class PlayerController : MonoBehaviour
 
     public List<Tile> attakableTiles = new List<Tile>();
     public List<Tile> arrangableTiles = new List<Tile>();
+    public List<Tile> attackableSkillTiles = new List<Tile>();
+    public List<Tile> prevAttackableSkillTiles = new List<Tile>();
+    public SkillBase skillState;
+
     [HideInInspector]
     public UnityEvent PlayerInit;
     public GameObject joystick;
@@ -72,9 +77,9 @@ public class PlayerController : MonoBehaviour
     public StageManager stageManager;
     public bool isDie;
 
-
     private void Awake()
     {
+        skillState = GetComponent<SkillBase>();
         state = GetComponent<PlayerState>();
         SetBlockCount();
         ani = GetComponent<Animator>();
@@ -212,9 +217,15 @@ public class PlayerController : MonoBehaviour
 
         //OnClickDown();
         OnClickDown();
-
-        
-
+        Vector3 mousePosition = Vector3.zero;
+        if(skillState.isSkillUsing)
+        {
+            mousePosition = UpdateSkillMousePosition();
+        }
+        if(mousePosition != Vector3.zero && prevAttackableSkillTiles != attackableSkillTiles)
+        {
+            AttackableSkillTileSet(mousePosition);
+        }
     }
     
     public void SetState(CharacterStates state)
@@ -478,6 +489,88 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    public Vector3 UpdateSkillMousePosition()
+    {
+        var skill = skillState as BuffSkilType;
+        int layerMask = 0;
+        int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
+        int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
+        layerMask = lowTileMask | highTileMask;
+        Vector3 mousePosition = Vector3.zero;
+        RaycastHit hit1;
+
+        // 레이를 쏴서 타일에 맞았을 때, 그 타일이 어태커블 타일이면, 마우스 포지션에 해당 좌표의 vector3 int값 저장
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit1, Mathf.Infinity, layerMask))
+        {
+            return mousePosition = hit1.point;
+        }
+        return Vector3.zero;
+    }
+
+    public void AttackableSkillTileSet(Vector3 mousePosition)
+    {
+        // temporary code
+        var skill = skillState as BuffSkilType;
+        int layerMask = 0;
+        int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
+        int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
+        layerMask = lowTileMask | highTileMask;
+        int mouseRow = 0;
+        int mouseCol = 0;
+
+        for (int i = 0; i < skill.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < skill.AttackRange.GetLength(1); j++)
+            {
+                if (skill.AttackRange[i, j] == 2)
+                {
+                    mouseRow = i;
+                    mouseCol = j;
+                }
+            }
+        }
+
+        if (attackableSkillTiles.Count > 0)
+        {
+            attackableSkillTiles.Clear();
+        }
+
+        // attackableSkillTiles가 바뀔 때마다 타일 메쉬 바꿔주기
+        for (int i = 0; i < skill.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < skill.AttackRange.GetLength(1); j++)
+            {
+                if (skill.AttackRange[i, j] == 1)
+                {
+                    Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
+                    Vector3 tilePosition = mousePosition + relativePosition;
+                    var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
+
+                    RaycastHit hit2;
+                    var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
+                    if (Physics.Raycast(tempPos, Vector3.up, out hit2, Mathf.Infinity, layerMask))
+                    {
+                        var tileContoller = hit2.transform.GetComponent<Tile>();
+                        if (!tileContoller.isSomthingOnTile)
+                        {
+                            attackableSkillTiles.Add(tileContoller);
+                            prevAttackableSkillTiles.Add(tileContoller);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void OnDrawGizmos()
+    {
+        foreach(var tileController in attackableSkillTiles)
+        {
+            Gizmos.DrawCube(tileController.transform.position, new Vector3(1f, 1f, 1f));
         }
     }
 

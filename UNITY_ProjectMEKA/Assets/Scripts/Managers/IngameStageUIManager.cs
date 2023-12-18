@@ -128,21 +128,30 @@ public class IngameStageUIManager : MonoBehaviour
             return;
         }
 
-        if (stageManager.currentPlayer == null)
+        var isCurrentPlayer = stageManager.currentPlayer != null;
+        var isFirstArranged = isCurrentPlayer ? stageManager.currentPlayer.stateManager.firstArranged : false;
+        var isSecondArranged = isCurrentPlayer ? stageManager.currentPlayer.stateManager.secondArranged : false;
+        var isSkillUsing = isCurrentPlayer ? stageManager.currentPlayer.GetComponent<SkillBase>().isSkillUsing : false;
+
+        if (!isCurrentPlayer)
         {
             windowMode = WindowMode.None;
         }
-        else if (!stageManager.currentPlayer.stateManager.firstArranged)
+        else if (!isFirstArranged)
         {
             windowMode = WindowMode.FirstArrange;
         }
-        else if (stageManager.currentPlayer.stateManager.firstArranged && !stageManager.currentPlayer.stateManager.secondArranged)
+        else if (isFirstArranged && !isSecondArranged)
         {
             windowMode = WindowMode.SecondArrange;
         }
-        else if (stageManager.currentPlayer.stateManager.secondArranged)
+        else if (isSecondArranged && !isSkillUsing)
         {
             windowMode = WindowMode.Setting;
+        }
+        else if (isSkillUsing)
+        {
+            windowMode = WindowMode.Skill;
         }
     }
 
@@ -205,6 +214,9 @@ public class IngameStageUIManager : MonoBehaviour
                 ResultPanel.SetActive(true);
                 Time.timeScale = 0f;
                 LooseWindowSet();
+                break;
+            case WindowMode.Skill:
+
                 break;
         }
     }

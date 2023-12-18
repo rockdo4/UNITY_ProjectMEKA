@@ -126,10 +126,20 @@ public class ArrangeJoystick : MonoBehaviour
         {
             skillButton.gameObject.SetActive(false);
         }
+
         stageManager.currentPlayer.gameObject.GetComponent<SkillBase>().UseSkill();
-        stageManager.currentPlayer.SetState(CharacterStates.Idle);
-        stageManager.currentPlayer = null;
-        stageManager.currentPlayerIcon = null;
+        var skillType = stageManager.currentPlayer.GetComponent<SkillBase>().skillType;
+
+        if (skillType == SkillType.SnipingSingle || skillType == SkillType.SnipingArea)
+        {
+            stageManager.currentPlayer.GetComponent<SkillBase>().isSkillUsing = true;
+        }
+        else
+        {
+            stageManager.currentPlayer.SetState(CharacterStates.Idle);
+            stageManager.currentPlayer = null;
+            stageManager.currentPlayerIcon = null;
+        }
 
         gameObject.SetActive(false);
     }
