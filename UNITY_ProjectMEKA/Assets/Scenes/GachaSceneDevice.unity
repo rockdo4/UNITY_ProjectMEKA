@@ -12610,12 +12610,40 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2920514434523280375, guid: fba5fef9cbf53e3409c59523515c369d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920514434523280375, guid: fba5fef9cbf53e3409c59523515c369d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920514434523280375, guid: fba5fef9cbf53e3409c59523515c369d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1704917223}
     - target: {fileID: 2920514434523280375, guid: fba5fef9cbf53e3409c59523515c369d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 728951529}
+    - target: {fileID: 2920514434523280375, guid: fba5fef9cbf53e3409c59523515c369d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920514434523280375, guid: fba5fef9cbf53e3409c59523515c369d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ChangePanelStageClass
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920514434523280375, guid: fba5fef9cbf53e3409c59523515c369d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: CheckCollectCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920514434523280375, guid: fba5fef9cbf53e3409c59523515c369d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: FormationManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920514434523280375, guid: fba5fef9cbf53e3409c59523515c369d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3648864679162990322, guid: fba5fef9cbf53e3409c59523515c369d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -21739,6 +21767,7 @@ MonoBehaviour:
   - {fileID: 1212724060}
   - {fileID: 743716543}
   applyButton: {fileID: 1932298591}
+  devicePanel: {fileID: 12017060}
 --- !u!114 &1680568846
 MonoBehaviour:
   m_ObjectHideFlags: 0
