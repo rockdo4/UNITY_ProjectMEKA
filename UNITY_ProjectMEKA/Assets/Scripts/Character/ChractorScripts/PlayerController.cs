@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     public RuntimeAnimatorController animationController;
     public RuntimeAnimatorController currnetAnimationController;
     private bool CharacterArrangeOne;
-
+    private float addCostTimer;
     public enum CharacterStates
     {
         Arrange,
@@ -189,12 +189,18 @@ public class PlayerController : MonoBehaviour
         //Debug.Log($"{CurrentGridPos},{gameObject.name}");
         stateManager.Update();
         blockCount = enemyBlockCount.Count;
-        state.cost += Time.deltaTime;
-        //Debug.Log(state.cost);
-        if(state.cost >= state.maxCost)
+
+        addCostTimer += Time.deltaTime;
+        if(addCostTimer >= 2f)
         {
-            state.cost = state.maxCost;
+            addCostTimer = 0;
+            state.cost += 2f;
+            if (state.cost >= state.maxCost)
+            {
+                state.cost = state.maxCost;
+            }
         }
+        
         
         foreach (var a in rangeInEnemys)
         {
