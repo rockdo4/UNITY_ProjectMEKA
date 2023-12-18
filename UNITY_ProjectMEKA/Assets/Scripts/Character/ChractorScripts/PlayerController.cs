@@ -412,7 +412,6 @@ public class PlayerController : MonoBehaviour
 
     public void AttackableTileSet(Defines.Occupation occupation)
     {
-        Debug.Log("어택타일 업데이트");
         int layerMask = 0;
         int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
         int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);

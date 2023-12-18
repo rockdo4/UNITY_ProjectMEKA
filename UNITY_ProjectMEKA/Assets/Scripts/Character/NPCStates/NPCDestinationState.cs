@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Bson;
 using UnityEngine;
 
 public class NPCDestinationStates : NPCBaseState
@@ -6,12 +7,11 @@ public class NPCDestinationStates : NPCBaseState
     private bool isRotating;
     private Vector3 targetPos;
     private float threshold = 0.1f;
-    //private float speed;
     private int repeatCount = -1;
     private Vector3 direction;
 
     private bool isOne = false;
-    private float timer;
+    private float timer = 2f;
     GameObject[] players;
     private float distance;
     public NPCDestinationStates(EnemyController enemy) : base(enemy)
@@ -20,6 +20,13 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void Enter()
     {
+        Debug.Log("이동 상태 엔터");
+        isRotating = true;
+        targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
+        targetPos.y = enemyCtrl.transform.position.y;
+        direction = (targetPos - enemyCtrl.transform.position).normalized;
+        repeatCount = -1;
+
         //enemyCtrl.transform.position = enemyCtrl.initPos;
         //targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
         //targetPos.y = enemyCtrl.transform.position.y;
@@ -28,10 +35,9 @@ public class NPCDestinationStates : NPCBaseState
         ////speed = enemyCtrl.state.speed;
         //repeatCount = -1;
         //once = false;
-
         distance = Random.Range(0.3f,0.5f);
     }
-    public void Init()
+    public void InitOnce()
     {
         // 다른 상태 -> 이 상태로 들어왔을 때 포지션이 이전 포지션과 동일해야 함
         enemyCtrl.transform.position = enemyCtrl.initPos;
@@ -39,7 +45,6 @@ public class NPCDestinationStates : NPCBaseState
         targetPos.y = enemyCtrl.transform.position.y;
         direction = (targetPos - enemyCtrl.transform.position).normalized;
         enemyCtrl.transform.LookAt(targetPos);
-        //speed = enemyCtrl.state.speed;
         repeatCount = -1;
     }
 
@@ -72,19 +77,17 @@ public class NPCDestinationStates : NPCBaseState
             timer += Time.deltaTime;
             if(timer > /*enemyCtrl.state.attackDelay*/2f)
             {
-                timer = 0;
+                if (enemyCtrl.rangeInPlayers.Count != 0)
+                {
+                    timer = 0;
+                }
+
                 foreach (var pl in enemyCtrl.rangeInPlayers)
                 {
                     if (pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Castor ||
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
                     {
-                        //if(enemyCtrl.forwardGrid == pl.GetComponentInParent<PlayerController>().CurrentGridPos)
-                        //{
-                        //    enemyCtrl.target = pl;
-                        //    enemyCtrl.SetState(NPCStates.Idle);
-                        //    return;
-                        //}
                         enemyCtrl.target = pl;
                         enemyCtrl.SetState(NPCStates.Idle);
                         return;
@@ -117,11 +120,9 @@ public class NPCDestinationStates : NPCBaseState
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
                     {
-                        
                         enemyCtrl.target = pl;
                         enemyCtrl.SetState(NPCStates.Idle);
                         return;
-
                     }
                 }
                 else
@@ -129,11 +130,10 @@ public class NPCDestinationStates : NPCBaseState
                     if (enemyCtrl.forwardGrid == pl.GetComponentInParent<PlayerController>().CurrentGridPos)
                     {
                         enemyCtrl.target = pl;
-                        //enemyCtrl.SetState(NPCStates.Attack);
                         enemyCtrl.SetState(NPCStates.Idle);
                         return;
                     }
-                        
+
                 }
                
             }
@@ -146,29 +146,33 @@ public class NPCDestinationStates : NPCBaseState
     {
         if(!isOne)
         {
-            Init();
+            InitOnce();
             isOne = true;
+        }
+    }
+
+    public void Rotate()
+    {
+        var targetRotation = Quaternion.LookRotation(targetPos - enemyCtrl.rb.position);
+        enemyCtrl.rb.rotation = Quaternion.Slerp(enemyCtrl.rb.rotation, targetRotation, rotSpeed * Time.deltaTime);
+
+        float angleDifference = Quaternion.Angle(enemyCtrl.rb.rotation, targetRotation); // 현재 각도와 목표 각도 사이의 차이
+
+        if (angleDifference < 1f)
+        {
+            enemyCtrl.transform.LookAt(targetPos);
+            isRotating = false;
         }
     }
 
     public void MoveEnemyWaypoint()
     {
+        var pos = enemyCtrl.rb.position;
         if (isRotating)
         {
-            var targetRotation = Quaternion.LookRotation(targetPos - enemyCtrl.rb.position);
-            enemyCtrl.rb.rotation = Quaternion.Slerp(enemyCtrl.rb.rotation, targetRotation, rotSpeed * Time.deltaTime);
-
-            float angleDifference = Quaternion.Angle(enemyCtrl.rb.rotation, targetRotation); // 현재 각도와 목표 각도 사이의 차이
-
-            if (angleDifference < 1f)
-            {
-                enemyCtrl.transform.LookAt(targetPos);
-                isRotating = false;
-            }
+            Rotate();
         }
-
-        var pos = enemyCtrl.rb.position;
-        if(!isRotating)
+        else
         {
             pos += direction * enemyCtrl.state.speed * Time.deltaTime;
             enemyCtrl.rb.MovePosition(pos);
@@ -224,16 +228,7 @@ public class NPCDestinationStates : NPCBaseState
 
         if (isRotating)
         {
-            var targetRotation = Quaternion.LookRotation(targetPos - enemyCtrl.rb.position);
-            enemyCtrl.rb.rotation = Quaternion.Slerp(enemyCtrl.rb.rotation, targetRotation, rotSpeed * Time.deltaTime);
-
-            float angleDifference = Quaternion.Angle(enemyCtrl.rb.rotation, targetRotation); // 현재 각도와 목표 각도 사이의 차이
-
-            if (angleDifference < 1f)
-            {
-                enemyCtrl.transform.LookAt(targetPos);
-                isRotating = false;
-            }
+            Rotate();
         }
         else
         {

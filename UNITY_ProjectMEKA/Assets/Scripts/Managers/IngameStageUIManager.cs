@@ -315,7 +315,6 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void ChangeAttackableTileMesh()
     {
-        Debug.Log("어택 타일 메쉬 업데이트");
         ClearTileMesh();
 
         foreach (var tile in stageManager.currentPlayer.attakableTiles)

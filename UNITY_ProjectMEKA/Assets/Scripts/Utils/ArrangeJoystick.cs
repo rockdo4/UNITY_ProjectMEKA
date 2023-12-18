@@ -108,11 +108,10 @@ public class ArrangeJoystick : MonoBehaviour
         stageManager.currentPlayerIcon.isCollected = true;
         stageManager.currentPlayerIcon.arrangePossible = false;
 
-        // for tilemap test
-        //var id = stageManager.currentPlayer.state.id;
-        //var characterData = stageManager.characterIconManager.characterTable.GetCharacterData(id);
-        //var withdrawCost = characterData.WithdrawCost;
-        //stageManager.currentCost += withdrawCost;
+        var id = stageManager.currentPlayer.state.id;
+        var characterData = stageManager.characterIconManager.characterTable.GetCharacterData(id);
+        var withdrawCost = characterData.WithdrawCost;
+        stageManager.currentCost += withdrawCost;
 
         stageManager.currentPlayer.PlayerInit.Invoke();
         stageManager.currentPlayer = null;

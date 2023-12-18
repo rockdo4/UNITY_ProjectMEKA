@@ -193,7 +193,7 @@ public class GateController : MonoBehaviour
                 var enemyContoller = enemyGo.GetComponent<EnemyController>();
                 enemyContoller.SetState(NPCStates.Move);
                 var npcState = enemyContoller.stateManager.currentNPCBase as NPCDestinationStates;
-                npcState.Init();
+                npcState.InitOnce();
             }
             currentEnemyCount++;
             firstGetPool = true;
@@ -232,7 +232,7 @@ public class GateController : MonoBehaviour
                 var enemyContoller = enemy.GetComponent<EnemyController>();
                 enemyContoller.SetState(NPCStates.Move);
                 var npcState = enemyContoller.stateManager.currentNPCBase as NPCDestinationStates;
-                npcState.Init();
+                npcState.InitOnce();
             }
 
             currentEnemyCount++;

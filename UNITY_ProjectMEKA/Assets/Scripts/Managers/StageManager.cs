@@ -17,6 +17,7 @@ public class StageManager : MonoBehaviour
     public GameState gameState;
     public (MissionType, int)[] missionTypes = new (MissionType, int)[3];
 
+    public int stageID;
     public int tempClearCount = 0;
     public float timer;
     public float defaultCost;
@@ -228,8 +229,8 @@ public class StageManager : MonoBehaviour
 
     public GameState MissionPlayerWin()
     {
-        var id = StageDataManager.Instance.selectedStageData.stageID;
-        var stageData = StageDataManager.Instance.stageTable.GetStageData(id);
+        //var id = StageDataManager.Instance.selectedStageData.stageID;
+        var stageData = StageDataManager.Instance.stageTable.GetStageData(stageID);
         switch (stageData.Type)
         {
             case (int)StageMode.Deffense:
@@ -249,8 +250,21 @@ public class StageManager : MonoBehaviour
         characterIconManager = GameObject.FindGameObjectWithTag(Tags.characterIconManager).GetComponent<CharacterIconManager>();
         arrangeJoystick = GameObject.FindGameObjectWithTag(Tags.joystick).GetComponent<ArrangeJoystick>();
 
-        var id = StageDataManager.Instance.selectedStageData.stageID;
-        var stageData = StageDataManager.Instance.stageTable.GetStageData(id);
+        int id;
+        StageData stageData;
+
+        // original code
+        if(StageDataManager.Instance.selectedStageData != null)
+        {
+            id = StageDataManager.Instance.selectedStageData.stageID;
+            stageData = StageDataManager.Instance.stageTable.GetStageData(id);
+            stageID = id;
+        }
+        else
+        {
+            // for test
+            stageData = StageDataManager.Instance.stageTable.GetStageData(stageID);
+        }
 
         defaultCost = stageData.DefaultCost;
         maxCost = stageData.MaxCost;

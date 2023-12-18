@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngineInternal;
 using static Defines;
 
 public class Tile : MonoBehaviour
@@ -42,7 +43,13 @@ public class Tile : MonoBehaviour
         var tempPos = new Vector3(transform.parent.position.x, 100f, transform.parent.position.z);
         if (Physics.Raycast(tempPos, Vector3.down, out hit))
         {
-            if (hit.transform.gameObject.layer != gameObject.layer)
+            var hitLayer = hit.transform.gameObject.layer;
+            var isSameLayer = hitLayer == gameObject.layer;
+
+            var houseMask = LayerMask.NameToLayer(Layers.house);
+            var gateMask = LayerMask.NameToLayer(Layers.gate);
+            var isGateOrHouse = hitLayer == houseMask || hitLayer == gateMask;
+            if (!isSameLayer && !isGateOrHouse)
             {
                 arrangePossible = false;
                 isSomthingOnTile = true;
