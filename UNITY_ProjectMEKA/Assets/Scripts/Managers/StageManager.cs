@@ -34,7 +34,7 @@ public class StageManager : MonoBehaviour
 
     public List<(int,int)> rewardList = new List<(int, int)>();
 
-    private void OnEnable()
+    private void Start()
     {
         PlayDataManager.Init();
 		Init();

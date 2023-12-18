@@ -40,4 +40,5 @@ public class StageData
     public int ConfigureID { get; set; }
     public int EventID { get; set; }
     public int RewardID { get; set; }
+    public int RecommendedLevel { get; set; }
 }
