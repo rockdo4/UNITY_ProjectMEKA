@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class CharacterInfoText : MonoBehaviour
 {
 	public Image characterImage;
-	public TextMeshProUGUI textInfo;
 	public Button enhanceButton;
 	public Button synchroButton;
 	public Button deviceButton;
@@ -13,6 +12,8 @@ public class CharacterInfoText : MonoBehaviour
 	public EnhancePanel enhancePanel;
 	public SynchroPanel synchroPanel;
 	public DevicePanel devicePanel;
+
+	public TextMeshProUGUI textInfo;
 
 	[HideInInspector]
 	public Character character;
@@ -51,6 +52,12 @@ public class CharacterInfoText : MonoBehaviour
 		Debug.Log("CharacterIcon/" + character.ImagePath);
 		characterImage.sprite = Resources.Load<Sprite>("CharacterIcon/" + character.ImagePath);
 		characterImage.preserveAspect = true;
+	}
+
+	public void SetSkillInfo()
+	{
+		var info = skillButton.GetComponentInChildren<TextMeshProUGUI>();
+
 	}
 
 	public void UpdateText()
