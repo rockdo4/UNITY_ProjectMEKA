@@ -1146,6 +1146,10 @@ PrefabInstance:
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].interval
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4311136049034089686, guid: 2e4ed067e94761e4bac6b2ff1427926d, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].attribute
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4417983261650908526, guid: 2e4ed067e94761e4bac6b2ff1427926d, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1807,6 +1811,12 @@ MonoBehaviour:
     count: 30
   - objectName: Slash
     perfab: {fileID: 8805711564415134265, guid: 1541ce83c363252458842c959f620a9c, type: 3}
+    count: 5
+  - objectName: E1lv03
+    perfab: {fileID: 8236610387131559020, guid: fefe07cc1243748439a9dce3f3a5ffa5, type: 3}
+    count: 5
+  - objectName: FE1
+    perfab: {fileID: 4107162092666695933, guid: 47b300bfc7e30ac4c9bb9bfbf49dfe49, type: 3}
     count: 5
 --- !u!81 &6438468774779342006
 AudioListener:
