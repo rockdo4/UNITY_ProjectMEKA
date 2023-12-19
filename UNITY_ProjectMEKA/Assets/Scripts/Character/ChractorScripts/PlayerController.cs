@@ -562,7 +562,6 @@ public class PlayerController : MonoBehaviour
             attackableSkillTiles.Clear();
         }
 
-        Debug.Log("===================================");
         for (int i = 0; i < skill.AttackRange.GetLength(0); i++)
         {
             for (int j = 0; j < skill.AttackRange.GetLength(1); j++)
@@ -573,18 +572,18 @@ public class PlayerController : MonoBehaviour
 
                     // modified code
                     var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
-                    Debug.Log("mouse" + mousePosInt);
                     Vector3 tilePosition = mousePosInt + relativePosition;
                     Vector3Int tilePosInt = Utils.Vector3ToVector3Int(tilePosition);
-                    Debug.Log("tile" + tilePosInt);
                     foreach (var tile in stageManager.tileManager.allTiles)
                     {
-                        if (tile.Item2 == tilePosInt)
+                        var xEqual = tile.Item2.x == tilePosInt.x;
+                        var zEqual = tile.Item2.z == tilePosInt.z;
+                        if (xEqual && zEqual && tile.Item1.arrangePossible)
                         {
                             attackableSkillTiles.Add(tile.Item1);
                             prevAttackableSkillTiles.Add(tile.Item1);
                             tile.Item1.SetTileMaterial(Tile.TileMaterial.Skill);
-                            break;
+                            //break;
                         }
                     }
 
@@ -606,7 +605,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        Debug.Log("===================================");
     }
 
     public void OnClickDown()
