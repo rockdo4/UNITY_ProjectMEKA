@@ -572,6 +572,16 @@ public class PlayerController : MonoBehaviour
         var playerPosInt = Utils.Vector3ToVector3Int(transform.position);
         Vector3Int defaultOffset = new Vector3Int();
         Vector3Int skillOffset = mousePosInt - playerPosInt;
+        bool isSkillPossible = false;
+
+        // 마우스 포지션이 어택커블 타일 위에 있는지 검사
+        foreach (var attackableTile in attackableTiles)
+        {
+            if(attackableTile.index == mousePosInt)
+            {
+                isSkillPossible = true;
+            }
+        }
 
         for (int i = 0; i < skill.AttackRange.GetLength(0); i++)
         {
@@ -611,7 +621,15 @@ public class PlayerController : MonoBehaviour
                 prevAttackableSkillTiles.Add(tileContoller);
             }
         }
-        stageManager.ingameStageUIManager.ChangeSkillTileMesh();
+
+        if(isSkillPossible)
+        {
+            stageManager.ingameStageUIManager.ChangeSkillTileMesh();
+        }
+        else
+        {
+            stageManager.ingameStageUIManager.ChangeUnActiveTileMesh();
+        }
 
 
 
@@ -639,50 +657,50 @@ public class PlayerController : MonoBehaviour
         //        if (/*skill.AttackRange[i, j] == 1 || */skill.AttackRange[i, j] == 2)
         //        {
         //            {
-                        // modified code1
-                        //Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
-                        //var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
-                        //Vector3 tilePosition = mousePosInt + relativePosition;
-                        //Vector3Int tilePosInt = Utils.Vector3ToVector3Int(tilePosition);
-                        //foreach( var attackableTile in attackableTiles)
-                        //{
-                        //    foreach (var tile in stageManager.tileManager.allTiles)
-                        //    {
-                        //        var xEqual = tile.Item2.x == tilePosInt.x;
-                        //        var zEqual = tile.Item2.z == tilePosInt.z;
-                        //        if (xEqual && zEqual && tile.Item1.arrangePossible)
-                        //        {
-                        //            attackableSkillTiles.Add(tile.Item1);
-                        //            prevAttackableSkillTiles.Add(tile.Item1);
-                        //            if (attackableTile.index == mousePosInt)
-                        //            {
-                        //                stageManager.ingameStageUIManager.ChangeSkillTileMesh();
-                        //            }
-                        //            else
-                        //            {
-                        //                stageManager.ingameStageUIManager.ChangeUnActiveTileMesh();
-                        //            }
-                        //        }
-                        //    }
-                        //    break;
-                        //}
+        // modified code1
+        //Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
+        //var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
+        //Vector3 tilePosition = mousePosInt + relativePosition;
+        //Vector3Int tilePosInt = Utils.Vector3ToVector3Int(tilePosition);
+        //foreach( var attackableTile in attackableTiles)
+        //{
+        //    foreach (var tile in stageManager.tileManager.allTiles)
+        //    {
+        //        var xEqual = tile.Item2.x == tilePosInt.x;
+        //        var zEqual = tile.Item2.z == tilePosInt.z;
+        //        if (xEqual && zEqual && tile.Item1.arrangePossible)
+        //        {
+        //            attackableSkillTiles.Add(tile.Item1);
+        //            prevAttackableSkillTiles.Add(tile.Item1);
+        //            if (attackableTile.index == mousePosInt)
+        //            {
+        //                stageManager.ingameStageUIManager.ChangeSkillTileMesh();
+        //            }
+        //            else
+        //            {
+        //                stageManager.ingameStageUIManager.ChangeUnActiveTileMesh();
+        //            }
+        //        }
+        //    }
+        //    break;
+        //}
 
-                        // origin code
-                        //Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
-                        //Vector3 tilePosition = mousePosition + relativePosition;
-                        //var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
-                        //RaycastHit hit2;
-                        //var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
-                        //if (Physics.Raycast(tempPos, Vector3.up, out hit2, Mathf.Infinity, layerMask))
-                        //{
-                        //    var tileContoller = hit2.transform.GetComponent<Tile>();
-                        //    if (!tileContoller.isSomthingOnTile)
-                        //    {
-                        //        attackableSkillTiles.Add(tileContoller);
-                        //        prevAttackableSkillTiles.Add(tileContoller);
-                        //        tileContoller.SetTileMaterial(Tile.TileMaterial.Skill);
-                        //    }
-                        //}
+        // origin code
+        //Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
+        //Vector3 tilePosition = mousePosition + relativePosition;
+        //var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
+        //RaycastHit hit2;
+        //var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
+        //if (Physics.Raycast(tempPos, Vector3.up, out hit2, Mathf.Infinity, layerMask))
+        //{
+        //    var tileContoller = hit2.transform.GetComponent<Tile>();
+        //    if (!tileContoller.isSomthingOnTile)
+        //    {
+        //        attackableSkillTiles.Add(tileContoller);
+        //        prevAttackableSkillTiles.Add(tileContoller);
+        //        tileContoller.SetTileMaterial(Tile.TileMaterial.Skill);
+        //    }
+        //}
         //            }
         //        }
         //    }
