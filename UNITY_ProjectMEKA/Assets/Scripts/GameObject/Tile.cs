@@ -17,6 +17,7 @@ public class Tile : MonoBehaviour
     }
 
     public TileType tileType = TileType.None;
+    public TileMaterial currentTileMaterial = TileMaterial.None;
     public Material arrangePossibleMaterial;
     public Material attackPossibleMaterial;
     public Material skillAttackPossibleMaterial;
@@ -72,6 +73,7 @@ public class Tile : MonoBehaviour
 
     public void SetTileMaterial(TileMaterial materialType)
     {
+        currentTileMaterial = materialType;
         Material[] materials = new Material[2];
         switch (materialType)
         {
@@ -93,6 +95,7 @@ public class Tile : MonoBehaviour
 
     public void ClearTileMesh()
     {
+        currentTileMaterial = TileMaterial.None;
         Material[] materials = meshRenderer.materials; // 기존 재질 배열을 가져옵니다.
         List<Material> materialList = new List<Material>(materials); // 배열을 리스트로 변환합니다.
         if (materialList.Count > 1)

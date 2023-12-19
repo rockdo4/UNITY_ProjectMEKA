@@ -340,7 +340,13 @@ public class IngameStageUIManager : MonoBehaviour
     {
         ClearTileMesh();
 
-        foreach(var tile in stageManager.currentPlayer.attackableSkillTiles)
+        foreach (var tile in stageManager.currentPlayer.attackableTiles)
+        {
+            tile.SetTileMaterial(Tile.TileMaterial.Attack);
+            tempTiles.AddLast(tile);
+        }
+
+        foreach (var tile in stageManager.currentPlayer.attackableSkillTiles)
         {
             tile.SetTileMaterial(Tile.TileMaterial.Skill);
             tempTiles.AddLast(tile);
@@ -354,6 +360,12 @@ public class IngameStageUIManager : MonoBehaviour
         foreach (var tile in stageManager.currentPlayer.attackableSkillTiles)
         {
             tile.SetTileMaterial(Tile.TileMaterial.UnActive);
+            tempTiles.AddLast(tile);
+        }
+
+        foreach (var tile in stageManager.currentPlayer.attackableTiles)
+        {
+            tile.SetTileMaterial(Tile.TileMaterial.Attack);
             tempTiles.AddLast(tile);
         }
     }

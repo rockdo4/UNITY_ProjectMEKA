@@ -215,12 +215,12 @@ public class PlayerController : MonoBehaviour
         }
 
         //OnClickDown();
-        OnClickDown();
+        OnClickDownCharacter();
 
         Vector3 mousePosition = Vector3.zero;
         if(skillState.isSkillUsing)
         {
-            mousePosition = UpdateSkillMousePosition();
+            mousePosition = OnClickDownSkillTile();
             if(mousePosition != Camera.main.transform.position && prevAttackableSkillTiles != attackableSkillTiles)
             {
                 AttackableSkillTileSet(mousePosition);
@@ -509,7 +509,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public Vector3 UpdateSkillMousePosition()
+    public Vector3 OnClickDownSkillTile()
     {
         var skill = skillState as BuffSkilType;
         int layerMask = 0;
@@ -521,7 +521,7 @@ public class PlayerController : MonoBehaviour
 
         // 레이를 쏴서 타일에 맞았을 때, 그 타일이 어태커블 타일이면, 마우스 포지션에 해당 좌표의 vector3 int값 저장
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit1, Mathf.Infinity, layerMask))
+        if (Physics.Raycast(ray, out hit1, Mathf.Infinity, layerMask) && Input.GetMouseButton(0))
         {
             mousePosition = hit1.point;
         }
@@ -618,7 +618,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnClickDown()
+    public void OnClickDownCharacter()
     {
         var otherCharacterArrange = stageManager.ingameStageUIManager.windowMode == WindowMode.FirstArrange || stageManager.ingameStageUIManager.windowMode == WindowMode.SecondArrange;
         var otherCharacterSetting = stageManager.ingameStageUIManager.windowMode == WindowMode.Setting;
