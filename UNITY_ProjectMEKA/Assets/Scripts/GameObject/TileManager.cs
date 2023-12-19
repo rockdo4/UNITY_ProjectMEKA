@@ -43,7 +43,7 @@ public class TileManager
     {
         LayerMask layerMask = 1 << tile.gameObject.layer;
         RaycastHit hit;
-        if(Physics.Raycast(tile.transform.parent.position + Vector3.up * 10f, Vector3.down, out hit))
+        if(Physics.Raycast(tile.transform.parent.position + Vector3.up * 10f, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {
             return Utils.Vector3ToVector3Int(hit.point);
         }

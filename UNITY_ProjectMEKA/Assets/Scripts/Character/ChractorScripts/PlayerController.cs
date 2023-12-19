@@ -555,12 +555,14 @@ public class PlayerController : MonoBehaviour
         {
             tile.ClearTileMesh();
         }
+        prevAttackableSkillTiles.Clear();
 
         if (attackableSkillTiles.Count > 0)
         {
             attackableSkillTiles.Clear();
         }
 
+        Debug.Log("===================================");
         for (int i = 0; i < skill.AttackRange.GetLength(0); i++)
         {
             for (int j = 0; j < skill.AttackRange.GetLength(1); j++)
@@ -568,13 +570,16 @@ public class PlayerController : MonoBehaviour
                 if (skill.AttackRange[i, j] == 1 || skill.AttackRange[i, j] == 2)
                 {
                     Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
-                    Vector3 tilePosition = mousePosition + relativePosition;
-                    Vector3Int tilePosInt = Utils.Vector3ToVector3Int(tilePosition);
 
                     // modified code
-                    foreach(var tile in stageManager.tileManager.allTiles)
+                    var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
+                    Debug.Log("mouse" + mousePosInt);
+                    Vector3 tilePosition = mousePosInt + relativePosition;
+                    Vector3Int tilePosInt = Utils.Vector3ToVector3Int(tilePosition);
+                    Debug.Log("tile" + tilePosInt);
+                    foreach (var tile in stageManager.tileManager.allTiles)
                     {
-                        if(tile.Item2 == tilePosInt)
+                        if (tile.Item2 == tilePosInt)
                         {
                             attackableSkillTiles.Add(tile.Item1);
                             prevAttackableSkillTiles.Add(tile.Item1);
@@ -584,6 +589,7 @@ public class PlayerController : MonoBehaviour
                     }
 
                     // origin code
+                    //Vector3 tilePosition = mousePosition + relativePosition;
                     //var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
                     //RaycastHit hit2;
                     //var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
@@ -600,6 +606,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        Debug.Log("===================================");
     }
 
     public void OnClickDown()
