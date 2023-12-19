@@ -212,14 +212,18 @@ public class PlayerController : MonoBehaviour
         //OnClickDown();
         OnClickDownCharacter();
 
-        if(skillState.isSkillUsing)
+        if(skillState != null)
         {
-            mousePosition = OnClickDownSkillTile();
-            if(isDragging && prevAttackableSkillTiles != attackableSkillTiles)
+            if (skillState.isSkillUsing)
             {
-                AttackableSkillTileSet(mousePosition);
+                mousePosition = OnClickDownSkillTile();
+                if (isDragging && prevAttackableSkillTiles != attackableSkillTiles)
+                {
+                    AttackableSkillTileSet(mousePosition);
+                }
             }
         }
+        
     }
     
     public void SetState(CharacterStates state)

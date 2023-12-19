@@ -13628,6 +13628,7 @@ GameObject:
   - component: {fileID: 115921752473159158}
   - component: {fileID: 3566850386741745157}
   - component: {fileID: 2070249603338438176}
+  - component: {fileID: -198621477629170022}
   m_Layer: 6
   m_Name: DECEMBER
   m_TagString: Player
@@ -13720,8 +13721,11 @@ MonoBehaviour:
   enemyBlockCount: 
   skillCost: 0
   skillCoolTime: 0
-  attakableTiles: []
+  attackableTiles: []
   arrangableTiles: []
+  attackableSkillTiles: []
+  prevAttackableSkillTiles: []
+  skillState: {fileID: 0}
   PlayerInit:
     m_PersistentCalls:
       m_Calls: []
@@ -13790,6 +13794,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-198621477629170022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955242686928956500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1c331262c9c7e9419ce64e67924e3ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillCost: 0
+  skillCoolTime: 0
+  skillType: 2
+  isSkillUsing: 0
+  isRangeOut: 1
 --- !u!1 &5997466669096135573
 GameObject:
   m_ObjectHideFlags: 0
