@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
 using static Defines;
 
 public class PlayerController : MonoBehaviour
@@ -75,6 +73,7 @@ public class PlayerController : MonoBehaviour
     public CharacterStates currentState;
 
     public StageManager stageManager;
+    public TileManager tileManager;
     public bool isDie;
 
     private void Awake()
@@ -223,7 +222,7 @@ public class PlayerController : MonoBehaviour
         {
             mousePosition = UpdateSkillMousePosition();
         }
-        if(mousePosition != Vector3.zero && prevAttackableSkillTiles != attackableSkillTiles)
+        if(mousePosition != Camera.main.transform.position && prevAttackableSkillTiles != attackableSkillTiles)
         {
             AttackableSkillTileSet(mousePosition);
         }
@@ -500,27 +499,17 @@ public class PlayerController : MonoBehaviour
         int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
         int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
         layerMask = lowTileMask | highTileMask;
-        Vector3 mousePosition = Vector3.zero;
+        Vector3 mousePosition = Camera.main.transform.position;
         RaycastHit hit1;
 
         // 레이를 쏴서 타일에 맞았을 때, 그 타일이 어태커블 타일이면, 마우스 포지션에 해당 좌표의 vector3 int값 저장
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit1, Mathf.Infinity, layerMask))
         {
-            return mousePosition = hit1.point;
+            mousePosition = hit1.point;
         }
-        return Vector3.zero;
+        return mousePosition;
     }
-
-    //public Tile CoordinateToTile(Vector3 coords)
-    //{
-    //    var x = Mathf.RoundToInt(coords.x);
-    //    var y = Mathf.RoundToInt(coords.y);
-    //    var z = Mathf.RoundToInt(coords.z);
-    //    var tileIndex = new Vector3Int(x, y, z);
-
-
-    //}
 
     public void AttackableSkillTileSet(Vector3 mousePosition)
     {
@@ -565,6 +554,10 @@ public class PlayerController : MonoBehaviour
                     Vector3 tilePosition = mousePosition + relativePosition;
                     var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
 
+                    // modified code
+                    stageManager.gameObject.GetComponent<TileManager>();
+
+                    // origin code
                     RaycastHit hit2;
                     var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
                     if (Physics.Raycast(tempPos, Vector3.up, out hit2, Mathf.Infinity, layerMask))

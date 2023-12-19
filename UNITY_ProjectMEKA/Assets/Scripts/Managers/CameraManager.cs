@@ -15,7 +15,6 @@ public class CameraManager : MonoBehaviour
     private Vector3 initPos;
     private Transform target;
     private float threshold = 0.1f;
-    private bool isReached = false;
 
     private void Awake()
     {
@@ -28,8 +27,6 @@ public class CameraManager : MonoBehaviour
     {
         if(stageManager.ingameStageUIManager.windowMode == WindowMode.Setting)
         {
-            isReached = false;
-
             if (stageManager.currentPlayer == null)
             {
                 return;
@@ -59,13 +56,11 @@ public class CameraManager : MonoBehaviour
 
             if (Quaternion.Angle(transform.rotation, initRotation) < threshold && Vector3.Distance(transform.position, initPos) < threshold)
             {
-                isReached = true;
                 Time.timeScale = 0f;
             }
         }
         else
         {
-            isReached = false;
             // 각도 러프
             transform.rotation = Quaternion.Lerp(transform.rotation, initRotation, rotationSpeed * Time.deltaTime * 2f);
 
