@@ -33,7 +33,7 @@ public class SynchroPanel : MonoBehaviour
 		applyButton.onClick.AddListener(() =>
 		{
 			ApplySynchro();
-			infoPanel.UpdateText();
+			infoPanel.UpdateCharacter();
 		});
 
 		//applyButton.onClick.AddListener(() =>

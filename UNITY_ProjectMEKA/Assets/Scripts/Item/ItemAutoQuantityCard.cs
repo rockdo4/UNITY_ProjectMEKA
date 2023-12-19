@@ -7,8 +7,9 @@ using UnityEngine.UI;
 public class ItemAutoQuantityCard : MonoBehaviour
 {
 	public Image itemImage;
+	public TextMeshProUGUI mainText;
 	public TextMeshProUGUI quantityText;
-	public SkillPanel panel;
+	public SynchroPanel panel;
 	private Button button;
 
 	[HideInInspector]
@@ -18,7 +19,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 
 	private void Awake()
 	{
-		panel = GetComponentInParent<SkillPanel>();
+		panel = GetComponentInParent<SynchroPanel>();
 		button = GetComponent<Button>();
 	}
 
@@ -29,9 +30,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 
 	private void OnDisable()
 	{
-		//button.onClick.RemoveAllListeners();
 		selectedQuantity = 0;
-		//SetText();
 	}
 
 	public void SetItem(int id, int quantity)
@@ -52,6 +51,10 @@ public class ItemAutoQuantityCard : MonoBehaviour
 			emptyItem.Count = 0;
 			emptyItem.InstanceID = id;
 
+			this.item = emptyItem;
+			ItemInventoryManager.Instance.AddItemByInstance(emptyItem, emptyItem.Count);
+
+
 			SetItem(emptyItem, quantity);
 		}
 	}
@@ -60,8 +63,10 @@ public class ItemAutoQuantityCard : MonoBehaviour
 	{
 		this.item = item;
 		requiredQuantity = quantity;
+		selectedQuantity = item.Count;
+		mainText.SetText(item.Name);
 
-		if(item == null)
+		if (item == null)
 		{
 			Debug.Log("아이템 없음");
 		}
