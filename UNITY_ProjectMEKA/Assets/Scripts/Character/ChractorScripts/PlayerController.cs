@@ -41,8 +41,12 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public float skillCoolTime;
 
-    public List<Tile> attakableTiles = new List<Tile>();
+    public List<Tile> attackableTiles = new List<Tile>();
     public List<Tile> arrangableTiles = new List<Tile>();
+    public List<Tile> attackableSkillTiles = new List<Tile>();
+    public List<Tile> prevAttackableSkillTiles = new List<Tile>();
+    public SkillBase skillState;
+
     [HideInInspector]
     public UnityEvent PlayerInit;
     public GameObject joystick;
@@ -70,11 +74,14 @@ public class PlayerController : MonoBehaviour
     public CharacterStates currentState;
 
     public StageManager stageManager;
+    public TileManager tileManager;
+    private Vector3 mousePosition;
+    private bool isDragging;
     public bool isDie;
-
 
     private void Awake()
     {
+        skillState = GetComponent<SkillBase>();
         state = GetComponent<PlayerState>();
         SetBlockCount();
         ani = GetComponent<Animator>();
@@ -203,10 +210,16 @@ public class PlayerController : MonoBehaviour
         }
 
         //OnClickDown();
-        OnClickDown();
+        OnClickDownCharacter();
 
-        
-
+        if(skillState.isSkillUsing)
+        {
+            mousePosition = OnClickDownSkillTile();
+            if(isDragging && prevAttackableSkillTiles != attackableSkillTiles)
+            {
+                AttackableSkillTileSet(mousePosition);
+            }
+        }
     }
     
     public void SetState(CharacterStates state)
@@ -388,24 +401,41 @@ public class PlayerController : MonoBehaviour
         {
             case Defines.Occupation.Guardian:
             case Defines.Occupation.Striker:
-                tag = Tags.lowTile;
+                foreach (var tile in stageManager.tileManager.lowTiles)
+                {
+                    if (tile.Item1.arrangePossible)
+                    {
+                        arrangableTiles.Add(tile.Item1);
+                    }
+                }
                 break;
             default:
-                tag = Tags.highTile;
+                foreach (var tile in stageManager.tileManager.highTiles)
+                {
+                    if (tile.Item1.arrangePossible)
+                    {
+                        arrangableTiles.Add(tile.Item1);
+                    }
+                }
                 break;
         }
 
-        var tileParent = GameObject.FindGameObjectWithTag(tag);
-        var tileCount = tileParent.transform.childCount;
-        var tiles = new List<Tile>();
-        for (int i = 0; i < tileCount; ++i)
-        {
-            if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
-            {
-                tiles.Add(tileParent.transform.GetChild(i).GetComponentInChildren<Tile>());
-            }
-        }
-        arrangableTiles = tiles;
+        // modified code
+        //바닥타일들 가져와서
+        // arrangePossible 검사하고 arrangableTiles에 ADD
+
+        //// origin code
+        //var tileParent = GameObject.FindGameObjectWithTag(tag);
+        //var tileCount = tileParent.transform.childCount;
+        //var tiles = new List<Tile>();
+        //for (int i = 0; i < tileCount; ++i)
+        //{
+        //    if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
+        //    {
+        //        tiles.Add(tileParent.transform.GetChild(i).GetComponentInChildren<Tile>());
+        //    }
+        //}
+        //arrangableTiles = tiles;
     }
 
     public void AttackableTileSet(Defines.Occupation occupation)
@@ -443,9 +473,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (attakableTiles.Count > 0)
+        if (attackableTiles.Count > 0)
         {
-            attakableTiles.Clear();
+            attackableTiles.Clear();
         }
 
         for (int i = 0; i < state.AttackRange.GetLength(0); i++)
@@ -465,7 +495,7 @@ public class PlayerController : MonoBehaviour
                         var tileContoller = hit.transform.GetComponent<Tile>();
                         if (!tileContoller.isSomthingOnTile)
                         {
-                            attakableTiles.Add(tileContoller);                            
+                            attackableTiles.Add(tileContoller);                            
                         }
                     }
                 }
@@ -473,7 +503,140 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnClickDown()
+    public Vector3 OnClickDownSkillTile()
+    {
+        var skill = skillState as BuffSkilType;
+        int layerMask = 0;
+        int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
+        int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
+        layerMask = lowTileMask | highTileMask;
+        RaycastHit hit1;
+
+        // 레이를 쏴서 타일에 맞았을 때, 그 타일이 어태커블 타일이면, 마우스 포지션에 해당 좌표의 vector3 int값 저장
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var rayCast = Physics.Raycast(ray, out hit1, Mathf.Infinity, layerMask);
+        if (rayCast && Input.GetMouseButton(0))
+        {
+            mousePosition = hit1.point;
+            Debug.Log("마우스포지션 업데이트 : " + mousePosition);
+            isDragging = true;
+        }
+
+        if(Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
+            var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
+            // 마우스 포지션이 어택커블 타일 위에 있는지 검사
+            foreach (var attackableTile in attackableTiles)
+            {
+                if (mousePosInt == attackableTile.index)
+                {
+                    Debug.Log("스킬 발동!");
+                    skill.UseSkill();
+                    Time.timeScale = 1.0f;
+                    stageManager.currentPlayer = null;
+                }
+                else
+                {
+                    stageManager.ingameStageUIManager.ClearTileMesh();
+                }
+            }
+        }
+
+        return mousePosition;
+    }
+
+    public void AttackableSkillTileSet(Vector3 mousePosition)
+    {
+        // temporary code
+        var skill = skillState as BuffSkilType;
+        int layerMask = 0;
+        int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
+        int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
+        layerMask = lowTileMask | highTileMask;
+        int mouseRow = 0;
+        int mouseCol = 0;
+
+        for (int i = 0; i < skill.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < skill.AttackRange.GetLength(1); j++)
+            {
+                if (skill.AttackRange[i, j] == 2)
+                {
+                    mouseRow = i;
+                    mouseCol = j;
+                }
+            }
+        }
+
+        foreach (var tile in prevAttackableSkillTiles)
+        {
+            stageManager.ingameStageUIManager.ClearTileMesh();
+        }
+
+        prevAttackableSkillTiles.Clear();
+
+        if (attackableSkillTiles.Count > 0)
+        {
+            attackableSkillTiles.Clear();
+        }
+
+        for (int i = 0; i < skill.AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < skill.AttackRange.GetLength(1); j++)
+            {
+                if (skill.AttackRange[i, j] == 1 || skill.AttackRange[i, j] == 2)
+                {
+                    Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
+
+                    // modified code
+                    var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
+                    Vector3 tilePosition = mousePosInt + relativePosition;
+                    Vector3Int tilePosInt = Utils.Vector3ToVector3Int(tilePosition);
+                    foreach( var attackableTile in attackableTiles)
+                    {
+                        foreach (var tile in stageManager.tileManager.allTiles)
+                        {
+                            var xEqual = tile.Item2.x == tilePosInt.x;
+                            var zEqual = tile.Item2.z == tilePosInt.z;
+                            if (xEqual && zEqual && tile.Item1.arrangePossible)
+                            {
+                                attackableSkillTiles.Add(tile.Item1);
+                                prevAttackableSkillTiles.Add(tile.Item1);
+                                if (attackableTile.index == mousePosInt)
+                                {
+                                    stageManager.ingameStageUIManager.ChangeSkillTileMesh();
+                                }
+                                else
+                                {
+                                    stageManager.ingameStageUIManager.ChangeUnActiveTileMesh();
+                                }
+                            }
+                        }
+                        break;
+                    }
+
+                    // origin code
+                    //Vector3 tilePosition = mousePosition + relativePosition;
+                    //var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
+                    //RaycastHit hit2;
+                    //var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
+                    //if (Physics.Raycast(tempPos, Vector3.up, out hit2, Mathf.Infinity, layerMask))
+                    //{
+                    //    var tileContoller = hit2.transform.GetComponent<Tile>();
+                    //    if (!tileContoller.isSomthingOnTile)
+                    //    {
+                    //        attackableSkillTiles.Add(tileContoller);
+                    //        prevAttackableSkillTiles.Add(tileContoller);
+                    //        tileContoller.SetTileMaterial(Tile.TileMaterial.Skill);
+                    //    }
+                    //}
+                }
+            }
+        }
+    }
+
+    public void OnClickDownCharacter()
     {
         var otherCharacterArrange = stageManager.ingameStageUIManager.windowMode == WindowMode.FirstArrange || stageManager.ingameStageUIManager.windowMode == WindowMode.SecondArrange;
         var otherCharacterSetting = stageManager.ingameStageUIManager.windowMode == WindowMode.Setting;

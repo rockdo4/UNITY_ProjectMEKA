@@ -17716,7 +17716,7 @@ GameObject:
   - component: {fileID: 6707422695530942487}
   - component: {fileID: 5773596269398004328}
   - component: {fileID: -3010725236306297076}
-  - component: {fileID: -8706652044870492474}
+  - component: {fileID: -2442363780979413571}
   m_Layer: 6
   m_Name: BISK
   m_TagString: Player
@@ -17823,6 +17823,7 @@ MonoBehaviour:
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
+  isSkillUsing: 0
 --- !u!114 &5773596269398004328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17876,7 +17877,7 @@ MonoBehaviour:
   occupation: 1
   experience: 0
   currentExperience: 0
---- !u!114 &-8706652044870492474
+--- !u!114 &-2442363780979413571
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17888,22 +17889,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375317c1b2b29d341824d604467b31de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillCost: 0
-  skillCoolTime: 0
+  skillCost: 50
+  skillCoolTime: 22
   skillType: 3
   isSkillUsing: 0
-  skillDuration: 0
-  isMe: 0
+  skillDuration: 12
+  isMe: 1
   isSingle: 0
-  effectName: 
+  effectName: AmberSkillEffect
   isChoice: 0
   type: 0
   Inc: 0
-  figure: 0
-  isAttackRage: 0
-  hang: 0
-  yal: 0
-  rangeAttack: 
+  figure: 0.15
+  isAttackRage: 1
+  hang: 3
+  yal: 3
+  rangeAttack: 000000000100000000000000010000000200000001000000000000000100000000000000
 --- !u!1 &8363141463200748262
 GameObject:
   m_ObjectHideFlags: 0

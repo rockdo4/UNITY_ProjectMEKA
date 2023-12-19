@@ -252,6 +252,8 @@ public class GateController : MonoBehaviour
         enemyController.moveRepeatCount = waveInfo.moveRepeat;
         enemyController.state.property = spawnInfo.attribute;
         enemyController.state.level = spawnInfo.level;
+
+        // need to apply monster stats by level
     }
 
     private void ShowEnemyPathWaypoint(WaveInfo waveInfo)

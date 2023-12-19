@@ -173,11 +173,11 @@ public static class Defines
         ISABELLASkill,
     }
     public enum SkillType
-    {//� ��ų���� ǥ��: �ڵ�, ���, �������� ����, �������� ���� 
-        Auto,
-        Instant,
-        SnipingSingle,
-        SnipingArea,
+    {
+        Auto, // skill button delete
+        Instant, // 즉발
+        SnipingSingle, // 한칸
+        SnipingArea, // 범위 : +, 사각형, 1칸
     }
 
     public enum StageClass

@@ -68,6 +68,7 @@ public class BuffSkilType : SkillBase
         saveSpeed = player.state.attackDelay;
         saveDamage = player.state.damage;
         saveArmor = player.state.armor;
+        ConvertTo2DArray();
     }
     private void Update()
     {
@@ -78,7 +79,7 @@ public class BuffSkilType : SkillBase
             if(duration >= skillDuration) 
             {
                 duration = 0f;
-                isSkillUsing = false;
+                //isSkillUsing = false;
                 player.state.attackDelay = saveSpeed;
                 player.ani.speed = 1;
                 player.state.damage = saveDamage;
@@ -130,7 +131,7 @@ public class BuffSkilType : SkillBase
     }
     public void InstantSkill()
     {
-        
+        Debug.Log("´ÙÇß³×");
         switch(type)
         {
             case buffType.attackSpeed:

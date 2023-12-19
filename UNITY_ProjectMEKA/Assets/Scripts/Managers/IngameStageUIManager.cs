@@ -128,21 +128,30 @@ public class IngameStageUIManager : MonoBehaviour
             return;
         }
 
-        if (stageManager.currentPlayer == null)
+        var isCurrentPlayer = stageManager.currentPlayer != null;
+        var isFirstArranged = isCurrentPlayer ? stageManager.currentPlayer.stateManager.firstArranged : false;
+        var isSecondArranged = isCurrentPlayer ? stageManager.currentPlayer.stateManager.secondArranged : false;
+        var isSkillUsing = isCurrentPlayer ? stageManager.currentPlayer.GetComponent<SkillBase>().isSkillUsing : false;
+
+        if (!isCurrentPlayer)
         {
             windowMode = WindowMode.None;
         }
-        else if (!stageManager.currentPlayer.stateManager.firstArranged)
+        else if (!isFirstArranged)
         {
             windowMode = WindowMode.FirstArrange;
         }
-        else if (stageManager.currentPlayer.stateManager.firstArranged && !stageManager.currentPlayer.stateManager.secondArranged)
+        else if (isFirstArranged && !isSecondArranged)
         {
             windowMode = WindowMode.SecondArrange;
         }
-        else if (stageManager.currentPlayer.stateManager.secondArranged)
+        else if (isSecondArranged && !isSkillUsing)
         {
             windowMode = WindowMode.Setting;
+        }
+        else if (isSkillUsing)
+        {
+            windowMode = WindowMode.Skill;
         }
     }
 
@@ -205,6 +214,9 @@ public class IngameStageUIManager : MonoBehaviour
                 ResultPanel.SetActive(true);
                 Time.timeScale = 0f;
                 LooseWindowSet();
+                break;
+            case WindowMode.Skill:
+
                 break;
         }
     }
@@ -317,7 +329,41 @@ public class IngameStageUIManager : MonoBehaviour
     {
         ClearTileMesh();
 
-        foreach (var tile in stageManager.currentPlayer.attakableTiles)
+        foreach (var tile in stageManager.currentPlayer.attackableTiles)
+        {
+            tile.SetTileMaterial(Tile.TileMaterial.Attack);
+            tempTiles.AddLast(tile);
+        }
+    }
+
+    public void ChangeSkillTileMesh()
+    {
+        ClearTileMesh();
+
+        foreach (var tile in stageManager.currentPlayer.attackableTiles)
+        {
+            tile.SetTileMaterial(Tile.TileMaterial.Attack);
+            tempTiles.AddLast(tile);
+        }
+
+        foreach (var tile in stageManager.currentPlayer.attackableSkillTiles)
+        {
+            tile.SetTileMaterial(Tile.TileMaterial.Skill);
+            tempTiles.AddLast(tile);
+        }
+    }
+
+    public void ChangeUnActiveTileMesh()
+    {
+        ClearTileMesh();
+
+        foreach (var tile in stageManager.currentPlayer.attackableSkillTiles)
+        {
+            tile.SetTileMaterial(Tile.TileMaterial.UnActive);
+            tempTiles.AddLast(tile);
+        }
+
+        foreach (var tile in stageManager.currentPlayer.attackableTiles)
         {
             tile.SetTileMaterial(Tile.TileMaterial.Attack);
             tempTiles.AddLast(tile);
@@ -326,9 +372,18 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void ClearTileMesh()
     {
+        var isWindowModeSkill = windowMode == WindowMode.Skill;
         foreach (var tile in tempTiles)
         {
-            tile.ClearTileMesh();
+            var isMaterialAttack = tile.currentTileMaterial == Tile.TileMaterial.Attack;
+            if(isWindowModeSkill && isMaterialAttack)
+            {
+                continue;
+            }
+            else if(!isWindowModeSkill || (isWindowModeSkill && !isMaterialAttack))
+            {
+                tile.ClearTileMesh();
+            }
         }
         tempTiles.Clear();
     }

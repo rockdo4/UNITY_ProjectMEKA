@@ -97,13 +97,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273b4a0be6e63004a81e8ce932ea3a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileType: 0
   arrangePossibleMaterial: {fileID: 2100000, guid: 9aa5bd918f5d68c4f9a8f21b6284126d, type: 2}
-  attackPossibleMaterial: {fileID: 2100000, guid: 9e8ddf0e6fa9d7b4190ff03a516d1be1, type: 2}
+  attackPossibleMaterial: {fileID: 2100000, guid: da0c057b5ae03c34a8af75a55a104504, type: 2}
+  skillAttackPossibleMaterial: {fileID: 2100000, guid: 3b64851216e939b4f8c05edfa129661b, type: 2}
+  unActiveMaterial: {fileID: 2100000, guid: b755f8ba856cc2d44959b0fa8abe4d0d, type: 2}
   meshRenderer: {fileID: 0}
   height: 0
   arrangePossible: 0
   attackPossible: 0
   isSomthingOnTile: 0
+  index: {x: 0, y: 0, z: 0}
 --- !u!65 &2832105031589994630
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -136,7 +140,7 @@ GameObject:
   - component: {fileID: 6344923819566250925}
   m_Layer: 9
   m_Name: LowTile_18
-  m_TagString: Untagged
+  m_TagString: LowTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

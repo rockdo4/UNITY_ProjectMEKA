@@ -24,7 +24,7 @@ public class PlayableArrangeState : PlayableBaseState
             playerCtrl.transform.forward = Vector3.forward;
         }
 
-        Debug.Log($"arrange enter, arragable tiles {playerCtrl.arrangableTiles.Count}, attackable tiles {playerCtrl.attakableTiles.Count}");
+        Debug.Log($"arrange enter, arragable tiles {playerCtrl.arrangableTiles.Count}, attackable tiles {playerCtrl.attackableTiles.Count}");
     }
 
     public override void Exit()
