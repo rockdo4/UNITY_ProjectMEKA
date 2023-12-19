@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Defines;
 
-public class TileManager : MonoBehaviour
+public class TileManager
 {
     public List<(Tile, Vector3Int)> lowTiles = new List<(Tile, Vector3Int)>();
     public List<(Tile, Vector3Int)> highTiles = new List<(Tile, Vector3Int)>();
 
-    private void Awake()
+    public TileManager()
     {
         var allLowTiles = GameObject.FindGameObjectsWithTag(Tags.lowTile);
         var allHighTiles = GameObject.FindGameObjectsWithTag(Tags.highTile);

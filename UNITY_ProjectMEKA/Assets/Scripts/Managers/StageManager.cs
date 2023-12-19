@@ -39,6 +39,8 @@ public class StageManager : MonoBehaviour
 
     public List<(int,int)> rewardList = new List<(int, int)>();
 
+    public TileManager tileManager;
+
     private void OnEnable()
     {
         PlayDataManager.Init();
@@ -265,6 +267,7 @@ public class StageManager : MonoBehaviour
 
     public void Init()
     {
+        tileManager = new TileManager();
         ingameStageUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
         characterIconManager = GameObject.FindGameObjectWithTag(Tags.characterIconManager).GetComponent<CharacterIconManager>();
         arrangeJoystick = GameObject.FindGameObjectWithTag(Tags.joystick).GetComponent<ArrangeJoystick>();

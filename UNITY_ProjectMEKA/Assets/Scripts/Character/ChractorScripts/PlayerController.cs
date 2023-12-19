@@ -221,10 +221,10 @@ public class PlayerController : MonoBehaviour
         if(skillState.isSkillUsing)
         {
             mousePosition = UpdateSkillMousePosition();
-        }
-        if(mousePosition != Camera.main.transform.position && prevAttackableSkillTiles != attackableSkillTiles)
-        {
-            AttackableSkillTileSet(mousePosition);
+            if(mousePosition != Camera.main.transform.position && prevAttackableSkillTiles != attackableSkillTiles)
+            {
+                AttackableSkillTileSet(mousePosition);
+            }
         }
     }
     
