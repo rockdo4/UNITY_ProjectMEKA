@@ -27,11 +27,21 @@ public class Bullet : MonoBehaviour
    
     private void OnEnable()
     {
+        if (Player == null)
+        {
+            return; // Player가 null이면 메소드를 종료합니다.
+        }
         speed = maxSpeed;
         rb.constraints = RigidbodyConstraints.None;
         if (Player != null)
         {
-            var flahObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.flashName);
+            
+            //var flahObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<PlayerController>().state.flashName);
+            var flahObj = ObjectPoolManager.instance.GetGo(Player.GetComponent<EnemyController>().state.flashName);
+            if(flahObj == null)
+            {
+                return;
+            }
             flahObj.transform.position = transform.position;
             flahObj.transform.forward = gameObject.transform.forward;
             var flashPs = flahObj.GetComponent<ParticleSystem>();

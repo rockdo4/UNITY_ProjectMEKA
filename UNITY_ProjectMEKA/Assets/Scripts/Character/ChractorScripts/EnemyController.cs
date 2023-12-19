@@ -40,6 +40,7 @@ public class EnemyController : PoolAble
     public GameObject HoIsHitMe;
     public GameObject FirePosition;
     public List<GameObject> rangeInPlayers = new List<GameObject>();
+    public List<GameObject> rangeInSecondPlayers = new List<GameObject>();//보스 공격범위
 
     public Vector3 CurrentPos;
     [HideInInspector]
@@ -47,8 +48,16 @@ public class EnemyController : PoolAble
 
     [HideInInspector]
     public bool isArrival = false;
-    public Vector3Int forwardGrid; 
-    
+    [HideInInspector]
+    public Vector3Int forwardGrid;
+    [HideInInspector]
+    public int bossAttackCount;
+
+    [HideInInspector]
+    public float stunTime;
+    [HideInInspector]
+    public bool isMove;
+
     private void OnEnable()
     {
         if (states.Count != 0)
@@ -60,8 +69,9 @@ public class EnemyController : PoolAble
 
         state.Hp = state.maxHp;
         rangeInPlayers.Clear();
+        bossAttackCount = 0;
 
-	}
+    }
 
 
 	private void Awake()
@@ -138,9 +148,6 @@ public class EnemyController : PoolAble
         Vector3 currentPosition = transform.position; // 현재 위치
         Vector3 forwardDirection = transform.forward; // 포워드 방향
         
-        
-
-       
         if (Mathf.Abs(forwardDirection.x) > Mathf.Abs(forwardDirection.z))
         {
             forwardDirection = new Vector3(Mathf.Sign(forwardDirection.x), 0, 0);
@@ -150,10 +157,10 @@ public class EnemyController : PoolAble
             forwardDirection = new Vector3(0, 0, Mathf.Sign(forwardDirection.z));
         }
 
+        //Vector3 newPosition = currentPosition + forwardDirection * 2f;//전방 2타일 감지하는 로직
         Vector3 newPosition = currentPosition + forwardDirection;
 
         forwardGrid = new Vector3Int(Mathf.FloorToInt(newPosition.x), 0, Mathf.FloorToInt(newPosition.z));
-        //Debug.Log($"{forwardGrid}{gameObject.name}");
         
         stateManager.Update();
         CurrentPos = transform.position;
@@ -172,9 +179,14 @@ public class EnemyController : PoolAble
         {
             return;
         }
-        TakeDamage co = target.GetComponentInParent<TakeDamage>();
+        IAttackable co = target.GetComponentInParent<IAttackable>();
         if (co == null) return;
         co.OnAttack(state.damage + Rockpaperscissors());
+        if (state.enemyType == EnemyType.OhYaBung)
+        {
+            bossAttackCount++;
+        }
+
     }
     public void Hit(float damage)
     {
@@ -184,9 +196,22 @@ public class EnemyController : PoolAble
         }
         
         IAttackable co = target.GetComponentInParent<IAttackable>();
-        co.OnAttack((state.damage + Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.armor + 1f) * 1f);
 
         co.OnAttack(state.damage * damage);
+    }
+    public void StingerHit()
+    {
+        foreach(var a in rangeInPlayers)
+        {
+            IAttackable at = a.GetComponentInParent<IAttackable>();
+            if(at == null) continue;
+            at.OnAttack(state.damage + Rockpaperscissors());
+        }
+        if(state.enemyType == EnemyType.OhYaBung)
+        {
+            bossAttackCount++;
+        }
+
     }
     public void Healing(float damage)
     {
@@ -201,7 +226,7 @@ public class EnemyController : PoolAble
     
     public void Fire()
     {
-        if (target == null) return;
+        if (target == null || this.gameObject == null) return;
         //var obj = ObjectPoolManager.instance.GetGo("bullet");
         var obj = ObjectPoolManager.instance.GetGo(state.BulletName);
 
@@ -218,7 +243,12 @@ public class EnemyController : PoolAble
                 projectile.damage = state.damage;
                 projectile.target = target.transform;
                 projectile.Player = gameObject;
+                
                 obj.SetActive(false);
+                if (obj == null)
+                {
+                    return;
+                }
                 obj.SetActive(true);
                 break;
             case ProjectileType.Aoe:
@@ -275,99 +305,8 @@ public class EnemyController : PoolAble
                 return 0;
         }
     }
-    //void CreateColliders()
-    //{
-    //    if (state == null || state.AttackRange == null || transform == null)
-    //    {
-    //        return;
-    //    }
 
-
-    //    //Vector3 forward = transform.right;
-    //    //Vector3 right = -transform.forward;
-    //    //Vector3 parentScale = transform.localScale;
-    //    Vector3 forward = -transform.forward;
-    //    Vector3 right = transform.right;
-    //    Vector3 parentScale = transform.localScale;
-    //    int characterRow = 0;
-    //    int characterCol = 0;
-
-    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
-    //        {
-    //            if (state.AttackRange[i, j] == 2)
-    //            {
-    //                characterRow = i;
-    //                characterCol = j;
-    //            }
-    //        }
-    //    }
-
-    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
-    //        {
-    //            if (state.AttackRange[i, j] == 1)
-    //            {
-    //                Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-    //                Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);
-
-    //                BoxCollider collider = gameObject.AddComponent<BoxCollider>();
-    //                collider.size = new Vector3(1 / parentScale.x, 3 / parentScale.y, 1 / parentScale.z);
-    //                collider.center = correctedPosition;
-    //                collider.isTrigger = true;
-    //            }
-    //        }
-    //    }
-
-
-    //}
-    //private void OnDrawGizmos()
-    //{
-    //    if (state == null || state.AttackRange == null) return;
-
-    //    Gizmos.color = Color.red; // 기즈모 색상 설정
-
-    //    //Vector3 forward = transform.right;
-    //    //Vector3 right = -transform.forward;
-    //    //Vector3 parentScale = transform.localScale;
-
-
-    //    Vector3 forward = -transform.forward;
-    //    Vector3 right = transform.right;
-    //    Vector3 parentScale = transform.localScale;
-
-    //    int characterRow = 0;
-    //    int characterCol = 0;
-
-    //    // 캐릭터 위치 찾기
-    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
-    //        {
-    //            if (state.AttackRange[i, j] == 2)
-    //            {
-    //                characterRow = i;
-    //                characterCol = j;
-    //            }
-    //        }
-    //    }
-
-    //    // 콜라이더 기즈모 그리기
-    //    for (int i = 0; i < state.AttackRange.GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < state.AttackRange.GetLength(1); j++)
-    //        {
-    //            if (state.AttackRange[i, j] == 1)
-    //            {
-    //                Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-    //                Vector3 correctedPosition = new Vector3(relativePosition.x / parentScale.x, relativePosition.y / parentScale.y, relativePosition.z / parentScale.z);
-    //                Gizmos.DrawCube(transform.position + correctedPosition, new Vector3(1 / parentScale.x, 1 / parentScale.y, 1 / parentScale.z));
-    //            }
-    //        }
-    //    }
-    //}
-
+    
+    
 }
 

@@ -27,15 +27,35 @@ public class NPCAttackState : NPCBaseState
 
     public override void Update()
     {
-        //enemyCtrl.ani.SetTrigger("Attack");
-        Debug.Log(enemyCtrl.name + 
-        "공격중");
+        ////enemyCtrl.ani.SetTrigger("Attack");
+        //Debug.Log(enemyCtrl.name + 
+        //"공격중");
 
         timer += Time.deltaTime;
         if (timer > enemyCtrl.state.attackDelay)
         {
             timer = 0;
-            enemyCtrl.ani.SetTrigger("Attack");
+            if(enemyCtrl.state.enemyType == Defines.EnemyType.OhYaBung)
+            {
+                if(enemyCtrl.rangeInPlayers.Count >= 2f)
+                {
+                    enemyCtrl.ani.SetTrigger("Attack");
+                }
+                else if(enemyCtrl.rangeInSecondPlayers.Count >= 1f)
+                {
+                    enemyCtrl.ani.SetTrigger("SecondAttack");
+                }
+
+            }
+            else
+            {
+                enemyCtrl.ani.SetTrigger("Attack");
+            }
+        }
+        if(enemyCtrl.target == null)
+        {
+            enemyCtrl.SetState(NPCStates.Move);
+            enemyCtrl.ani.SetTrigger("Run");
         }
         if (enemyCtrl.target.GetComponentInParent<PlayerController>() == null)
         {

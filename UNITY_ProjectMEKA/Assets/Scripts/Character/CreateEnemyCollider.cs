@@ -60,9 +60,7 @@ public class CreateEnemyCollider : MonoBehaviour
         }
 
 
-        //Vector3 forward = transform.right;
-        //Vector3 right = -transform.forward;
-        //Vector3 parentScale = transform.localScale;
+        
         Vector3 forward = -enemy.transform.forward;
         Vector3 right = enemy.transform.right;
         Vector3 parentScale = enemy.transform.localScale;

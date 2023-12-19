@@ -218,7 +218,9 @@ public class HitSkillType : SkillBase
 
         foreach (var p in player.rangeInEnemys)
         {
-            p.GetComponentInParent<EnemyController>().SetState(NPCStates.Stun);
+            var en = p.GetComponentInParent<EnemyController>();
+            en.stunTime = 3f;
+            en.SetState(NPCStates.Stun);
         }
 
     }
