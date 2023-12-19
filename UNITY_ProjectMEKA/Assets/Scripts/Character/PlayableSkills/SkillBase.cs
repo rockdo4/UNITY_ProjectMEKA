@@ -19,5 +19,8 @@ public abstract class SkillBase : MonoBehaviour
     [SerializeField, Header("기본 공격 범위를 무시하는가")]
     public bool isRangeOut;
 
+    // 12.20, 김민지, 추가
+    public List<GameObject> targetList = new List<GameObject>();
+
     public abstract void UseSkill();
 }

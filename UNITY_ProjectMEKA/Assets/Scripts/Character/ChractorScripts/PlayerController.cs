@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 mousePosition;
     private bool isDragging;
     public bool isDie;
+    public bool isSkillPossible;
 
     private void Awake()
     {
@@ -212,12 +213,13 @@ public class PlayerController : MonoBehaviour
 
         //OnClickDown();
         OnClickDownCharacter();
+        bool isSkillPossible = false;
 
-        if(skillState != null)
+        if (skillState != null)
         {
             if (skillState.isSkillUsing)
             {
-                mousePosition = OnClickDownSkillTile();
+                mousePosition = OnClickSkillTile();
                 if (isDragging && prevAttackableSkillTiles != attackableSkillTiles)
                 {
                     AttackableSkillTileSet(mousePosition);
@@ -514,7 +516,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public Vector3 OnClickDownSkillTile()
+    public Vector3 OnClickSkillTile()
     {
         var skill = skillState as BuffSkilType;
         int layerMask = 0;
@@ -536,21 +538,19 @@ public class PlayerController : MonoBehaviour
         if(Input.GetMouseButtonUp(0))
         {
             isDragging = false;
-            var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
-            // 마우스 포지션이 어택커블 타일 위에 있는지 검사
-            foreach (var attackableTile in attackableTiles)
+            if(isSkillPossible)
             {
-                if (mousePosInt == attackableTile.index)
-                {
-                    Debug.Log("스킬 발동!");
-                    skill.UseSkill();
-                    Time.timeScale = 1.0f;
-                    stageManager.currentPlayer = null;
-                }
-                else
-                {
-                    stageManager.ingameStageUIManager.ClearTileMesh();
-                }
+                Debug.Log("스킬 발동! 부와아아아앙아ㅏㄱ");
+                // 스킬베이스의 targetList에 현재 타일에 있는 친구들 다 넘겨주기
+                //skill.targetList.Add();
+                skill.UseSkill();
+                Time.timeScale = 1.0f;
+                stageManager.currentPlayer = null;
+            }
+            else
+            {
+                Debug.Log("잘못된 타일 선택.");
+                stageManager.ingameStageUIManager.ClearTileMesh();
             }
         }
 
@@ -572,7 +572,6 @@ public class PlayerController : MonoBehaviour
         var playerPosInt = Utils.Vector3ToVector3Int(transform.position);
         Vector3Int defaultOffset = new Vector3Int();
         Vector3Int skillOffset = mousePosInt - playerPosInt;
-        bool isSkillPossible = false;
 
         // 마우스 포지션이 어택커블 타일 위에 있는지 검사
         foreach (var attackableTile in attackableTiles)
@@ -580,6 +579,10 @@ public class PlayerController : MonoBehaviour
             if(attackableTile.index == mousePosInt)
             {
                 isSkillPossible = true;
+            }
+            else
+            {
+                isSkillPossible = false;
             }
         }
 
@@ -630,83 +633,6 @@ public class PlayerController : MonoBehaviour
         {
             stageManager.ingameStageUIManager.ChangeUnActiveTileMesh();
         }
-
-
-
-
-
-
-
-        //Vector3Int offset = new Vector3Int();
-
-        //for (int i = 0; i < skill.AttackRange.GetLength(0); i++) // 행
-        //{
-        //    for (int j = 0; j < skill.AttackRange.GetLength(1); j++) // 열
-        //    {
-        //        // modified code2
-
-        //        //플레이어 타일 인덱스와 차 구하기
-        //        // 이거 아님
-        //        // 공격범위 타일 하나씩 돌면서? 오프셋 구하고, 그 오프셋 적용해서 하나씩 
-        //        var playerPosInt = Utils.Vector3ToVector3Int(transform.position);
-        //        defaultOffset.x = playerPosInt.x - i;
-        //        defaultOffset.z = playerPosInt.z - j;
-        //        defaultOffset.y = 0;
-
-
-        //        if (/*skill.AttackRange[i, j] == 1 || */skill.AttackRange[i, j] == 2)
-        //        {
-        //            {
-        // modified code1
-        //Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
-        //var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
-        //Vector3 tilePosition = mousePosInt + relativePosition;
-        //Vector3Int tilePosInt = Utils.Vector3ToVector3Int(tilePosition);
-        //foreach( var attackableTile in attackableTiles)
-        //{
-        //    foreach (var tile in stageManager.tileManager.allTiles)
-        //    {
-        //        var xEqual = tile.Item2.x == tilePosInt.x;
-        //        var zEqual = tile.Item2.z == tilePosInt.z;
-        //        if (xEqual && zEqual && tile.Item1.arrangePossible)
-        //        {
-        //            attackableSkillTiles.Add(tile.Item1);
-        //            prevAttackableSkillTiles.Add(tile.Item1);
-        //            if (attackableTile.index == mousePosInt)
-        //            {
-        //                stageManager.ingameStageUIManager.ChangeSkillTileMesh();
-        //            }
-        //            else
-        //            {
-        //                stageManager.ingameStageUIManager.ChangeUnActiveTileMesh();
-        //            }
-        //        }
-        //    }
-        //    break;
-        //}
-
-        // origin code
-        //Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
-        //Vector3 tilePosition = mousePosition + relativePosition;
-        //var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
-        //RaycastHit hit2;
-        //var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
-        //if (Physics.Raycast(tempPos, Vector3.up, out hit2, Mathf.Infinity, layerMask))
-        //{
-        //    var tileContoller = hit2.transform.GetComponent<Tile>();
-        //    if (!tileContoller.isSomthingOnTile)
-        //    {
-        //        attackableSkillTiles.Add(tileContoller);
-        //        prevAttackableSkillTiles.Add(tileContoller);
-        //        tileContoller.SetTileMaterial(Tile.TileMaterial.Skill);
-        //    }
-        //}
-        //            }
-        //        }
-        //    }
-        //}
-
-
     }
 
     public void OnClickDownCharacter()
