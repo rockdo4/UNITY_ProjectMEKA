@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using static Defines;
 
 public class PlayerController : MonoBehaviour
@@ -74,6 +75,8 @@ public class PlayerController : MonoBehaviour
 
     public StageManager stageManager;
     public TileManager tileManager;
+    private Vector3 mousePosition;
+    private bool isDragging;
     public bool isDie;
 
     private void Awake()
@@ -217,11 +220,10 @@ public class PlayerController : MonoBehaviour
         //OnClickDown();
         OnClickDownCharacter();
 
-        Vector3 mousePosition = Vector3.zero;
         if(skillState.isSkillUsing)
         {
             mousePosition = OnClickDownSkillTile();
-            if(mousePosition != Camera.main.transform.position && prevAttackableSkillTiles != attackableSkillTiles)
+            if(isDragging && prevAttackableSkillTiles != attackableSkillTiles)
             {
                 AttackableSkillTileSet(mousePosition);
             }
@@ -516,15 +518,42 @@ public class PlayerController : MonoBehaviour
         int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
         int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
         layerMask = lowTileMask | highTileMask;
-        Vector3 mousePosition = Camera.main.transform.position;
         RaycastHit hit1;
 
         // 레이를 쏴서 타일에 맞았을 때, 그 타일이 어태커블 타일이면, 마우스 포지션에 해당 좌표의 vector3 int값 저장
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit1, Mathf.Infinity, layerMask) && Input.GetMouseButton(0))
+        var rayCast = Physics.Raycast(ray, out hit1, Mathf.Infinity, layerMask);
+        if (rayCast && Input.GetMouseButton(0))
         {
             mousePosition = hit1.point;
+            Debug.Log("마우스포지션 업데이트 : " + mousePosition);
+            isDragging = true;
         }
+
+        if(Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
+            var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
+            // 마우스 포지션이 어택커블 타일 위에 있는지 검사
+            foreach (var attackableTile in attackableTiles)
+            {
+                if (mousePosInt == attackableTile.index)
+                {
+                    Debug.Log("스킬 발동!");
+                    // active skill
+                    // 스킬 발동 후 isSkill false
+                    // 시간 돌려주기
+                    // currentPlayer == null
+                }
+                else
+                {
+                    // 클리어 타일메쉬
+                    Debug.Log("다른곳에서 버튼업" + mousePosInt + "," + attackableTile.index);
+                    stageManager.ingameStageUIManager.ClearTileMesh();
+                }
+            }
+        }
+
         return mousePosition;
     }
 
@@ -553,9 +582,9 @@ public class PlayerController : MonoBehaviour
 
         foreach (var tile in prevAttackableSkillTiles)
         {
-            //tile.ClearTileMesh();
             stageManager.ingameStageUIManager.ClearTileMesh();
         }
+
         prevAttackableSkillTiles.Clear();
 
         if (attackableSkillTiles.Count > 0)

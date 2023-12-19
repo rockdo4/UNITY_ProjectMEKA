@@ -372,9 +372,18 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void ClearTileMesh()
     {
+        var isWindowModeSkill = windowMode == WindowMode.Skill;
         foreach (var tile in tempTiles)
         {
-            tile.ClearTileMesh();
+            var isMaterialAttack = tile.currentTileMaterial == Tile.TileMaterial.Attack;
+            if(isWindowModeSkill && isMaterialAttack)
+            {
+                continue;
+            }
+            else if(!isWindowModeSkill || (isWindowModeSkill && !isMaterialAttack))
+            {
+                tile.ClearTileMesh();
+            }
         }
         tempTiles.Clear();
     }
