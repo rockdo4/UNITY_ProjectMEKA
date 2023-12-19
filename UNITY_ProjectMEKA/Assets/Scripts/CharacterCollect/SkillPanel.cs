@@ -20,6 +20,7 @@ public class SkillPanel : MonoBehaviour
     private Character currCharacter;
 
     private SkillUpgradeTable skillUpgradeTable;
+	private SkillTable skillTable;
 
 	private void Awake()
 	{
@@ -27,8 +28,6 @@ public class SkillPanel : MonoBehaviour
 		{
 			ApplySkillUpgrade();
 		});
-
-		skillUpgradeTable = DataTableMgr.GetTable<SkillUpgradeTable>();
 	}
 
 	private void Start()
@@ -36,15 +35,39 @@ public class SkillPanel : MonoBehaviour
 		
 	}
 
+	public void UpdateSkillInfo()
+	{
+		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
+		//skillIconImage.sprite = 
+		skillNameText.SetText(currCharacter.SkillID.ToString());
+		skillDescriptionText.SetText(
+			$"{currCharacter.Name}의 스킬 레벨: {currCharacter.SkillLevel}\n" +
+			$"스킬 ID: {datas[currCharacter.SkillLevel - 1].SkillLevelID}");
+
+
+		for (int i = 0; i < datas.Length; i++)
+		{
+			//var temp = Instantiate(대충 레벨 별 스킬 설명, skillLevelInfoScroll);
+		}
+
+	}
+
 	public void SetCharacter(Character character)
 	{
-		if(character == null)
+		if(skillUpgradeTable == null)
+			skillUpgradeTable = DataTableMgr.GetTable<SkillUpgradeTable>();
+		if(skillTable == null)
+			skillTable = DataTableMgr.GetTable<SkillTable>();
+
+		if (character == null)
 		{
 			Debug.Log("캐릭터가 없습니다");
 			return;
 		}
 
 		currCharacter = character;
+
+		UpdateSkillInfo();
 
 		var skillLevel = currCharacter.SkillLevel;
 		var info = skillUpgradeTable.GetUpgradeData(skillLevel);
@@ -86,6 +109,19 @@ public class SkillPanel : MonoBehaviour
 			card.ConsumeItem();
 			card.SetText();
 		}
+
+		UpdateRequired();
+		infoPanel.UpdateCharacter();
+	}
+
+	public void UpdateRequired()
+	{
+		foreach (var card in requireItems)
+		{
+			card.SetText();
+		}
+
+		SetCharacter(currCharacter);
 	}
 
 	public bool CheckUpgrade()
@@ -101,7 +137,8 @@ public class SkillPanel : MonoBehaviour
 
 		if (info.RequireTier1 > requireItems[0].selectedQuantity)
 		{
-			Debug.Log("티어1 아이템이 부족합니다");
+
+			Debug.Log(("티어1 아이템이 부족합니다", info.RequireTier1, requireItems[0].selectedQuantity));
 			return false;
 		}
 

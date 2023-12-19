@@ -80,7 +80,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 	{
 		if(item != null)
 		{
-			if(item.Count >= requiredQuantity)
+			if (item.Count >= requiredQuantity)
 			{
 				quantityText.SetText($"{item.Count} / {requiredQuantity}");
 			}

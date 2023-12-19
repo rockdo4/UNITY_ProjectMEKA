@@ -67,7 +67,7 @@ public class EnhancePanel : MonoBehaviour
 	public LevelData CalculateData(int totalExp, out int remain)
 	{
 		var table = DataTableMgr.GetTable<ExpTable>().GetOriginalTable();
-
+		Debug.Log("´ÙÇß³×");
 		int currentLevel = currCharacter.CharacterLevel;
 		int targetLevel = currentLevel;
 		int maxLevel = currCharacter.CharacterGrade * 10;
@@ -77,17 +77,16 @@ public class EnhancePanel : MonoBehaviour
 		{
 			if (totalExp >= table[targetLevel - 1].RequireExp)
 			{
-				totalExp -= table[targetLevel - 1].RequireExp;
 				targetLevel++;
+				if (targetLevel > maxLevel)
+				{
+					targetLevel--;
+					break;
+				}
+				totalExp -= table[targetLevel - 1].RequireExp;
 			}
 			else
 			{
-				break;
-			}
-
-			if (targetLevel > maxLevel)
-			{
-				targetLevel--;
 				break;
 			}
 		}
