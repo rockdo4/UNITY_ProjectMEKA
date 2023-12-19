@@ -217,6 +217,7 @@ public class PlayerController : MonoBehaviour
 
         //OnClickDown();
         OnClickDown();
+
         Vector3 mousePosition = Vector3.zero;
         if(skillState.isSkillUsing)
         {
@@ -511,6 +512,16 @@ public class PlayerController : MonoBehaviour
         return Vector3.zero;
     }
 
+    //public Tile CoordinateToTile(Vector3 coords)
+    //{
+    //    var x = Mathf.RoundToInt(coords.x);
+    //    var y = Mathf.RoundToInt(coords.y);
+    //    var z = Mathf.RoundToInt(coords.z);
+    //    var tileIndex = new Vector3Int(x, y, z);
+
+
+    //}
+
     public void AttackableSkillTileSet(Vector3 mousePosition)
     {
         // temporary code
@@ -534,17 +545,21 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        foreach (var tile in prevAttackableSkillTiles)
+        {
+            tile.ClearTileMesh();
+        }
+
         if (attackableSkillTiles.Count > 0)
         {
             attackableSkillTiles.Clear();
         }
 
-        // attackableSkillTiles가 바뀔 때마다 타일 메쉬 바꿔주기
         for (int i = 0; i < skill.AttackRange.GetLength(0); i++)
         {
             for (int j = 0; j < skill.AttackRange.GetLength(1); j++)
             {
-                if (skill.AttackRange[i, j] == 1)
+                if (skill.AttackRange[i, j] == 1 || skill.AttackRange[i, j] == 2)
                 {
                     Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
                     Vector3 tilePosition = mousePosition + relativePosition;
@@ -564,14 +579,6 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-        }
-    }
-
-    public void OnDrawGizmos()
-    {
-        foreach(var tileController in attackableSkillTiles)
-        {
-            Gizmos.DrawCube(tileController.transform.position, new Vector3(1f, 1f, 1f));
         }
     }
 
