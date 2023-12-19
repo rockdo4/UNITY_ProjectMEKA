@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ItemAutoQuantityCard : MonoBehaviour
 {
 	public Image itemImage;
+	public TextMeshProUGUI mainText;
 	public TextMeshProUGUI quantityText;
 	public SynchroPanel panel;
 	private Button button;
@@ -29,23 +30,43 @@ public class ItemAutoQuantityCard : MonoBehaviour
 
 	private void OnDisable()
 	{
-		//button.onClick.RemoveAllListeners();
 		selectedQuantity = 0;
-		//SetText();
 	}
 
 	public void SetItem(int id, int quantity)
 	{
 		var item = ItemInventoryManager.Instance.GetItemByID(id);
-		SetItem(item, quantity);
+
+		if (item != null)
+		{
+			SetItem(item, quantity);
+		}
+		else
+		{
+			var itemTable = DataTableMgr.GetTable<ItemInfoTable>();
+			var data = itemTable.GetItemData(id);
+
+			var emptyItem = new Item();
+			emptyItem.ID = data.ID;
+			emptyItem.Count = 0;
+			emptyItem.InstanceID = id;
+
+			this.item = emptyItem;
+			ItemInventoryManager.Instance.AddItemByInstance(emptyItem, emptyItem.Count);
+
+
+			SetItem(emptyItem, quantity);
+		}
 	}
 
 	public void SetItem(Item item, int quantity)
 	{
 		this.item = item;
 		requiredQuantity = quantity;
+		selectedQuantity = item.Count;
+		mainText.SetText(item.Name);
 
-		if(item == null)
+		if (item == null)
 		{
 			Debug.Log("아이템 없음");
 		}

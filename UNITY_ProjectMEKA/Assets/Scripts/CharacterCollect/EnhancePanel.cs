@@ -19,7 +19,7 @@ public class EnhancePanel : MonoBehaviour
 	public ItemQuantityCard[] reportItemCard;
 	public Button applyButton;
 
-	public CharacterInfoText UpdateInfoPanel;
+	public CharacterInfoText infoPanel;
 	private Character currCharacter;
 
 	private void Awake()
@@ -46,7 +46,7 @@ public class EnhancePanel : MonoBehaviour
 			reportItemCard[i].SetText();
 		}
 
-		currCharacter = UpdateInfoPanel.character;
+		currCharacter = infoPanel.character;
 	}
 
 	public void SetCharacter(Character character)

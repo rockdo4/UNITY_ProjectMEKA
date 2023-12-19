@@ -385,7 +385,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &519348029371155824
 CanvasRenderer:
@@ -464,6 +464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 3457533208637478125}
+  mainText: {fileID: 5135733578267925358}
   quantityText: {fileID: 4292356504851479378}
   panel: {fileID: 0}
 --- !u!114 &568931369240856097
@@ -523,5 +524,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 0}
+  mainText: {fileID: 0}
   quantityText: {fileID: 0}
   panel: {fileID: 0}

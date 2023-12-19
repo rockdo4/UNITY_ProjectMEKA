@@ -19,6 +19,7 @@ public class CharacterDictConverter : JsonConverter<Dictionary<int, Character>>
 			character.CharacterLevel = (int)item.Value["CharacterLevel"];
 			character.CurrentExp = (int)item.Value["CurrentExp"];
 			character.CharacterGrade = (int)item.Value["CharacterGrade"];
+			character.SkillLevel = (int)item.Value["SkillLevel"];
 			character.IsUnlock = (bool)item.Value["IsUnlock"];
 			character.DeviceCoreID = (int)item.Value["DeviceCoreID"];
 			character.DeviceEngineID = (int)item.Value["DeviceEngineID"];
@@ -43,6 +44,8 @@ public class CharacterDictConverter : JsonConverter<Dictionary<int, Character>>
 			writer.WriteValue(info.Value.CurrentExp);
 			writer.WritePropertyName("CharacterGrade");
 			writer.WriteValue(info.Value.CharacterGrade);
+			writer.WritePropertyName("SkillLevel");
+			writer.WriteValue(info.Value.SkillLevel);
 			writer.WritePropertyName("IsUnlock");
 			writer.WriteValue(info.Value.IsUnlock);
 			writer.WritePropertyName("DeviceCoreID");

@@ -11,6 +11,7 @@ public class Character
 	public int CharacterLevel;
 	public int CurrentExp;
 	public int CharacterGrade;
+	public int SkillLevel;
 	public bool IsUnlock;
 
 	public int DeviceCoreID;
@@ -329,6 +330,26 @@ public class Character
 			return charData.CharacterName;
 		}
 	}
+
+	public string ImagePath
+	{
+		get
+		{
+			var charTable = DataTableMgr.GetTable<CharacterTable>();
+			var charData = charTable.GetCharacterData(CharacterID);
+			return charData.ImagePath;
+		}
+	}
+
+	public int SkillID
+	{
+		get
+		{
+			var charTable = DataTableMgr.GetTable<CharacterTable>();
+			var charData = charTable.GetCharacterData(CharacterID);
+			return charData.SkillID;
+		}
+	}
 }
 
 //캐릭터 정보
@@ -337,6 +358,7 @@ public class CharacterData
 {
 	public int CharacterID { get; set; }
 	public string CharacterName { get; set; }	
+	public int InitialGrade { get; set; }
 	public int CharacterProperty { get; set; }
 	public int CharacterOccupation { get; set; }
 	public int ArrangementCost { get; set; }

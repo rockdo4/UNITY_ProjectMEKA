@@ -33,4 +33,5 @@ public class ItemInfo
 	public int Type { get; set; }
 	public int Rare { get; set; }
 	public int Value { get; set; }
+	public string ImagePath { get; set; }
 }

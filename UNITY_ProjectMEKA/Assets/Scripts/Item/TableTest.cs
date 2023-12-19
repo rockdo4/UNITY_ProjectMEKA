@@ -13,7 +13,7 @@ public class TableTest : MonoBehaviour
 
 	public void OnClickAddItem()
 	{
-		int[] arr = { 5110001, 5120001, 5130001, 5610001, 5620001, 5630001, 5710001, 5720001, 5730001 };
+		int[] arr = { 5110001, 5120001, 5130001, 5610001, 5620001, 5630001, 5710001, 5720001, 5730001, 5810001, 5810002 , 5810003 };
 
 		var table = DataTableMgr.GetTable<ItemInfoTable>();
 

@@ -115,7 +115,36 @@ public class ObjectPoolManager : MonoBehaviour
             //Debug.LogFormat("{0} 오브젝트풀에 등록되지 않은 오브젝트입니다.", goName);
             return null;
         }
-
         return ojbectPoolDic[goName].Get();
     }
+
+    public void AddObjPooling(string Name, GameObject prefab, int count)
+    {
+        var obj = new ObjectInfo();
+        obj.objectName = Name;
+        obj.perfab = prefab;
+        obj.count = count;
+
+        var idx = objectInfos.Length - 1;
+
+		IObjectPool<GameObject> pool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool,
+		OnDestroyPoolObject, true, obj.count, obj.count);
+
+		if (goDic.ContainsKey(obj.objectName))
+		{
+			//Debug.LogFormat("{0} 이미 등록된 오브젝트입니다.", objectInfos[idx].objectName);
+			return;
+		}
+
+		goDic.Add(obj.objectName, obj.perfab);
+		ojbectPoolDic.Add(obj.objectName, pool);
+
+		// 미리 오브젝트 생성 해놓기
+		for (int i = 0; i < obj.count; i++)
+		{
+			objectName = obj.objectName;
+			PoolAble poolAbleGo = CreatePooledItem().GetComponent<PoolAble>();
+			poolAbleGo.Pool.Release(poolAbleGo.gameObject);
+		}
+	}
 }
