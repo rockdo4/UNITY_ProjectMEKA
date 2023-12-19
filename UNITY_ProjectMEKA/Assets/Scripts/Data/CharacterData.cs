@@ -26,6 +26,11 @@ public class Character
 			var id = CharacterID * 100 + CharacterLevel;
 			var levelData = levelTable.GetLevelData(id);
 
+			if(levelData == null )
+			{
+                levelData = levelTable.GetLevelData(1340103);
+            }
+
 			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
 
 			float value = 0;
@@ -99,7 +104,12 @@ public class Character
 			var id = CharacterID * 100 + CharacterLevel;
 			var levelData = levelTable.GetLevelData(id);
 
-			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
+            if (levelData == null)
+            {
+                levelData = levelTable.GetLevelData(1340103);
+            }
+
+            var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
 
 			float value = 0;
 			float coefficient = 0;
@@ -171,7 +181,12 @@ public class Character
 			var id = CharacterID * 100 + CharacterLevel;
 			var levelData = levelTable.GetLevelData(id);
 
-			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
+            if (levelData == null)
+            {
+                levelData = levelTable.GetLevelData(1340103);
+            }
+
+            var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
 
 			float value = 0;
 			float coefficient = 0;
