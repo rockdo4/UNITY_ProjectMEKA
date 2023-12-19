@@ -242,6 +242,11 @@ public class FormationManager : MonoBehaviour
             var cardId = cardInfo.GetCardID();
             var cardData = table.GetCharacterData(cardId);
 
+			if(CharacterManager.Instance.m_CharacterStorage == null)
+			{
+				Debug.Log("123");
+			}
+
 			if (!CharacterManager.Instance.m_CharacterStorage[cardId].IsUnlock)
 			{
 				cardList[i].gameObject.SetActive(false);

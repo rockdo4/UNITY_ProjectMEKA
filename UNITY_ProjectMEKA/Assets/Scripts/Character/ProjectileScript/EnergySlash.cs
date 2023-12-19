@@ -28,7 +28,10 @@ public class EnergySlash : MonoBehaviour
         {
             IAttackable dd = other.GetComponentInParent<IAttackable>();
             //dd.OnAttack((player.GetComponent<PlayerController>().state.damage + player.GetComponent<PlayerController>().Rockpaperscissors() * 1f * 1f) - (other.GetComponentInParent<EnemyController>().state.amror + 1f) * 1f);
-            dd.OnAttack(player.GetComponent<PlayerController>().state.damage);
+            var pl = player.GetComponent<PlayerController>();
+
+            
+            dd.OnAttack(pl.state.damage);
         }
         
     }

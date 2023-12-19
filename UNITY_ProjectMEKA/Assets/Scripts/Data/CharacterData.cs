@@ -28,10 +28,14 @@ public class Character
 
 			if(levelData == null )
 			{
-                levelData = levelTable.GetLevelData(1340103);
+                //levelData = levelTable.GetLevelData(1340103);
+                //levelData = levelTable.GetLevelData(1210103);
+                //levelData = levelTable.GetLevelData(1130103);
+                levelData = levelTable.GetLevelData(1350103);
+
             }
 
-			var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
+            var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
 
 			float value = 0;
 			float coefficient = 0;
@@ -106,7 +110,10 @@ public class Character
 
             if (levelData == null)
             {
-                levelData = levelTable.GetLevelData(1340103);
+                //levelData = levelTable.GetLevelData(1340103);
+                //levelData = levelTable.GetLevelData(1210103);
+                //levelData = levelTable.GetLevelData(1130103);
+                levelData = levelTable.GetLevelData(1350103);
             }
 
             var valueTable = DataTableMgr.GetTable<DeviceValueTable>();
@@ -183,7 +190,10 @@ public class Character
 
             if (levelData == null)
             {
-                levelData = levelTable.GetLevelData(1340103);
+                //levelData = levelTable.GetLevelData(1340103);
+                //levelData = levelTable.GetLevelData(1210103);
+                //levelData = levelTable.GetLevelData(1130103);
+                levelData = levelTable.GetLevelData(1350103);
             }
 
             var valueTable = DataTableMgr.GetTable<DeviceValueTable>();

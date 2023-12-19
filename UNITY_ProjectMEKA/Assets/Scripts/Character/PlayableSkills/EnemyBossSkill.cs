@@ -22,6 +22,7 @@ public class EnemyBossSkill : SkillBase
     private float timer;
     private bool isStun = false;
     private bool isOne = false;
+    private float saveDamage;
     public void ConvertTo2DArray()
     {
         // 1차원 배열의 길이가 행과 열의 곱과 일치하는지 확인
@@ -48,12 +49,14 @@ public class EnemyBossSkill : SkillBase
         enemy = GetComponent<EnemyController>();
         isHyper = false;
         saveGridPos = enemy.CurrentGridPos;
+        saveDamage = enemy.state.damage;
     }
     private void OnEnable()
     {
         timer = 0;
         isStun = false;
         isOne = false;
+        enemy.state.damage = saveDamage;
     }
 
 
@@ -91,7 +94,6 @@ public class EnemyBossSkill : SkillBase
         {
             if (enemy.CurrentGridPos != saveGridPos)
             {
-                // 타일을 이동했음을 감지하고 CheckOverlapBoxes 메서드 호출
                 UseSkill();
 
                 // 이전 위치 업데이트
@@ -99,14 +101,24 @@ public class EnemyBossSkill : SkillBase
             }
            
         }
-        //if (enemy.CurrentGridPos != saveGridPos)
-        //{
-        //    // 타일을 이동했음을 감지하고 CheckOverlapBoxes 메서드 호출
-        //    UseSkill();
+        float healthPercentage = enemy.state.Hp / enemy.state.maxHp;
 
-        //    // 이전 위치 업데이트
-        //    saveGridPos = enemy.CurrentGridPos;
-        //}
+        if (healthPercentage <= 0.25f)
+        {
+            // 체력이 25% 이하일 때
+            enemy.state.damage = saveDamage * 1.3f; // 30% 증가
+        }
+        else if (healthPercentage <= 0.5f)
+        {
+            // 체력이 50% 이하일 때
+            enemy.state.damage = saveDamage * 1.2f; // 20% 증가
+        }
+        else if (healthPercentage <= 0.75f)
+        {
+            // 체력이 75% 이하일 때
+            enemy.state.damage = saveDamage * 1.1f; // 10% 증가
+        }
+        
     }
     public override void UseSkill()
     {

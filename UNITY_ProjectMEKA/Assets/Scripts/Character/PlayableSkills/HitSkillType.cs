@@ -50,9 +50,6 @@ public class HitSkillType : SkillBase
     [SerializeField, Header("공격 애니매이션이 따로 있는가")]
     public bool isAttackAnimation;
     
-
-
-
     public void ConvertTo2DArray()
     {
         // 1차원 배열의 길이가 행과 열의 곱과 일치하는지 확인

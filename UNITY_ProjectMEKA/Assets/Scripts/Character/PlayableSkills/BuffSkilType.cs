@@ -12,6 +12,8 @@ public class BuffSkilType : SkillBase
         attackSpeed,
         AddCost,
         Armor,
+        CriticalChance,
+        EnemyArmor,
     }
 
 
@@ -41,6 +43,8 @@ public class BuffSkilType : SkillBase
 
     [SerializeField, Header("공격 범위가 따로 존재하는가")]
     public bool isAttackRage;
+    [SerializeField, Header("공격 애니매이션이 존재하는가")]
+    public bool isAttackAnimaiton;
 
     [SerializeField, Header("행")]//p,e
     public int hang;
@@ -57,6 +61,7 @@ public class BuffSkilType : SkillBase
     private float saveDamage;
     private float saveSpeed;
     private float saveArmor;
+    private float saveCriticalChance;
     private GameObject obj;
     private List<Collider> colliders;
     private void Start()
@@ -68,6 +73,7 @@ public class BuffSkilType : SkillBase
         saveSpeed = player.state.attackDelay;
         saveDamage = player.state.damage;
         saveArmor = player.state.armor;
+        saveCriticalChance = player.state.critChance;
     }
     private void Update()
     {
@@ -83,6 +89,7 @@ public class BuffSkilType : SkillBase
                 player.ani.speed = 1;
                 player.state.damage = saveDamage;
                 player.state.armor = saveArmor;
+                player.state.critChance = saveCriticalChance;
                 if(obj != null)
                 {
                     obj.GetComponent<PoolAble>().ReleaseObject();
@@ -108,7 +115,7 @@ public class BuffSkilType : SkillBase
                 case Defines.SkillType.Instant:
                     //즉발 시전->자신 || 주변 다른 캐릭터->어떤 능력치 수정-> 계산방법 % 배율 -> 이팩트 생성 -> 적용
                     
-                    if (isAttackRage)
+                    if (isAttackAnimaiton)
                     {
                         player.ani.SetTrigger("Skill");
                     }
@@ -145,10 +152,74 @@ public class BuffSkilType : SkillBase
             case buffType.AddCost:
                 InstantSkillAddCost();
                 break;
+            case buffType.CriticalChance:
+                InstantSkillAddCritical();
+                break;
+            case buffType.EnemyArmor:
+                InstantSkillDeductEnemyArmor();
+                break;
         }
         
     }
+    public void InstantSkillDeductEnemyArmor()
+    {
+        colliders = new List<Collider>(); // 리스트 초기화
+        ConvertTo2DArray();
+        PoolBuffEffact();
+        // 플레이어의 로컬 포워드 및 로컬 오른쪽 방향을 설정
+        Vector3 forward = -player.transform.forward; // 플레이어의 로컬 포워드
+        Vector3 right = player.transform.right; // 플레이어의 로컬 오른쪽
 
+        int characterRow = 0;
+        int characterCol = 0;
+
+        // 플레이어의 위치를 찾는 루프
+        for (int i = 0; i < AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < AttackRange.GetLength(1); j++)
+            {
+                if (AttackRange[i, j] == 2)
+                {
+                    characterRow = i;
+                    characterCol = j;
+                    break;
+                }
+            }
+        }
+
+        // 상자 영역을 생성하고 콜라이더를 검출하는 루프
+        for (int i = 0; i < AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < AttackRange.GetLength(1); j++)
+            {
+                if (AttackRange[i, j] == 1)
+                {
+                    // 플레이어 위치를 기준으로 상대적인 위치 계산
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    Vector3 correctedPosition = player.transform.position + relativePosition;
+
+                    // 상자 크기를 고정된 값으로 설정
+                    Vector3 boxSize = new Vector3(1, 5, 1);
+                    Collider[] hitColliders = Physics.OverlapBox(correctedPosition, boxSize / 2, Quaternion.identity);
+
+                    foreach (var hitCollider in hitColliders)
+                    {
+                        if (hitCollider.CompareTag("EnemyCollider") && !colliders.Contains(hitCollider))
+                        {
+                            var en = hitCollider.GetComponentInParent<EnemyController>();
+                            en.state.armor -= en.state.armor * figure;
+                            colliders.Add(hitCollider);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public void InstantSkillAddCritical()
+    {
+        PoolBuffEffact();
+        player.state.critChance += figure;
+    }
     public void InstantSkillAddCost()
     {
 
@@ -372,7 +443,7 @@ public class BuffSkilType : SkillBase
     void OnDrawGizmos()
     {
 
-        if(!isAttackRage)
+        if(!isAttackRage || AttackRange == null)
         {
             return;
         }
