@@ -24,7 +24,15 @@ public class Instantaneous : MonoBehaviour
                 IAttackable aoeDamage = enemy.GetComponent<IAttackable>();
                 if (aoeDamage != null && enemy.gameObject != player.target.gameObject)
                 {
-                    aoeDamage.OnAttack(player.state.damage);//추후 주변 몬스터의 개수만큼 배율변경되도록 수정
+                    if(Random.Range(0f,1f) >= player.state.critChance)
+                    {
+                        aoeDamage.OnAttack(player.state.damage * player.state.fatalDamage);
+                    }
+                    else
+                    {
+                        aoeDamage.OnAttack(player.state.damage);
+                    }
+                    //추후 주변 몬스터의 개수만큼 배율변경되도록 수정
                 }
             }
         }

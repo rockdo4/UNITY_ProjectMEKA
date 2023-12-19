@@ -12,41 +12,45 @@ public class BuffSkilType : SkillBase
         attackSpeed,
         AddCost,
         Armor,
+        CriticalChance,
+        EnemyArmor,
     }
 
 
-    [SerializeField, Header("½ºÅ³ Áö¼Ó½Ã°£")]
+    [SerializeField, Header("ìŠ¤í‚¬ ì§€ì†ì‹œê°„")]
     public float skillDuration;
 
-    [SerializeField, Header("ÀÚ½Å¿¡°Ô ¾²´Â°¡")]
+    [SerializeField, Header("ìì‹ ì—ê²Œ ì“°ëŠ”ê°€")]
     public bool isMe;
 
-    [SerializeField, Header("´ÜÀÏÀÎ°¡")]
+    [SerializeField, Header("ë‹¨ì¼ì¸ê°€")]
     public bool isSingle;
 
-    [SerializeField, Header("ÀÌÆÑÆ® ÀÌ¸§Àº ¹«¾ùÀÎ°¡")]
+    [SerializeField, Header("ì´íŒ©íŠ¸ ì´ë¦„ì€ ë¬´ì—‡ì¸ê°€")]
     public string effectName;
 
-    [SerializeField, Header("¼±ÅÃÇØ¼­ »ç¿ëÇÏ´Â°¡")]
+    [SerializeField, Header("ì„ íƒí•´ì„œ ì‚¬ìš©í•˜ëŠ”ê°€")]
     public bool isChoice;
 
-    [SerializeField, Header("¾î¶² ´É·ÂÄ¡¸¦ º¯°æÇÏ´Â°¡")]
+    [SerializeField, Header("ì–´ë–¤ ëŠ¥ë ¥ì¹˜ë¥¼ ë³€ê²½í•˜ëŠ”ê°€")]
     public buffType type;
 
-    [SerializeField, Header("Áõ°¡ ¹æ½Ä(ÆÛ¼¾Æ® or ¹èÀ²)")]
+    [SerializeField, Header("ì¦ê°€ ë°©ì‹(í¼ì„¼íŠ¸ or ë°°ìœ¨)")]
     public Defines.IncrementalForm Inc;
 
-    [SerializeField, Header("¾ó¸¶³ª Áõ°¡(¹èÀ²ÀÌ¸é ±×´ë·Î, ÆÛ¼¼Æ®¸é 1ÀÌ 100%)")]
+    [SerializeField, Header("ì–¼ë§ˆë‚˜ ì¦ê°€(ë°°ìœ¨ì´ë©´ ê·¸ëŒ€ë¡œ, í¼ì„¸íŠ¸ë©´ 1ì´ 100%)")]
     public float figure;
 
-    [SerializeField, Header("°ø°İ ¹üÀ§°¡ µû·Î Á¸ÀçÇÏ´Â°¡")]
+    [SerializeField, Header("ê³µê²© ë²”ìœ„ê°€ ë”°ë¡œ ì¡´ì¬í•˜ëŠ”ê°€")]
     public bool isAttackRage;
+    [SerializeField, Header("ê³µê²© ì• ë‹ˆë§¤ì´ì…˜ì´ ì¡´ì¬í•˜ëŠ”ê°€")]
+    public bool isAttackAnimaiton;
 
-    [SerializeField, Header("Çà")]//p,e
+    [SerializeField, Header("í–‰")]//p,e
     public int hang;
-    [SerializeField, Header("¿­")]//p,e
+    [SerializeField, Header("ì—´")]//p,e
     public int yal;
-    [SerializeField, Header("°ø°İ¹üÀ§¼³Á¤")]//p,e
+    [SerializeField, Header("ê³µê²©ë²”ìœ„ì„¤ì •")]//p,e
     public int[] rangeAttack;
     [HideInInspector]
     public int[,] AttackRange;
@@ -57,6 +61,7 @@ public class BuffSkilType : SkillBase
     private float saveDamage;
     private float saveSpeed;
     private float saveArmor;
+    private float saveCriticalChance;
     private GameObject obj;
     private List<Collider> colliders;
     private void Start()
@@ -69,6 +74,7 @@ public class BuffSkilType : SkillBase
         saveDamage = player.state.damage;
         saveArmor = player.state.armor;
         ConvertTo2DArray();
+        saveCriticalChance = player.state.critChance;
     }
     private void Update()
     {
@@ -84,6 +90,7 @@ public class BuffSkilType : SkillBase
                 player.ani.speed = 1;
                 player.state.damage = saveDamage;
                 player.state.armor = saveArmor;
+                player.state.critChance = saveCriticalChance;
                 if(obj != null)
                 {
                     obj.GetComponent<PoolAble>().ReleaseObject();
@@ -107,9 +114,9 @@ public class BuffSkilType : SkillBase
 
                     break;
                 case Defines.SkillType.Instant:
-                    //Áï¹ß ½ÃÀü->ÀÚ½Å || ÁÖº¯ ´Ù¸¥ Ä³¸¯ÅÍ->¾î¶² ´É·ÂÄ¡ ¼öÁ¤-> °è»ê¹æ¹ı % ¹èÀ² -> ÀÌÆÑÆ® »ı¼º -> Àû¿ë
+                    //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½->ï¿½Ú½ï¿½ || ï¿½Öºï¿½ ï¿½Ù¸ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½->ï¿½î¶² ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½-> ï¿½ï¿½ï¿½ï¿½ï¿½ % ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½
                     
-                    if (isAttackRage)
+                    if (isAttackAnimaiton)
                     {
                         player.ani.SetTrigger("Skill");
                     }
@@ -121,35 +128,99 @@ public class BuffSkilType : SkillBase
                     }
                     break;
                 case Defines.SkillType.SnipingSingle:
-                    //¼±ÅÃµÈ ³ğÀÌ ³Ñ¾î¿Ã°Í
+                    //ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½Ã°ï¿½
                     break;
                 case Defines.SkillType.SnipingArea:
-                    //¼±ÅÃµÈ ¿µ¿ªÀÇ ³ğµéÀÌ ³Ñ¾î¿Ã°Í
+                    //ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½Ã°ï¿½
                     break;
             }
         }
     }
     public void InstantSkill()
     {
-        Debug.Log("´ÙÇß³×");
+        Debug.Log("ï¿½ï¿½ï¿½ß³ï¿½");
         switch(type)
         {
             case buffType.attackSpeed:
-                //°ø¼Ó
-                //¾Ö´Ï¸ÅÀÌ¼Ç ºü¸£°Ô
+                //ï¿½ï¿½ï¿½ï¿½
+                //ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 InstantSkillAttackSpeedBuff();
                 break;
             case buffType.damage:
                 InstantSkillAttackDamageBuff();
-                //°ø°İ·Â¸¸Áõ°¡
+                //ï¿½ï¿½ï¿½İ·Â¸ï¿½ï¿½ï¿½ï¿½ï¿½
                 break;
             case buffType.AddCost:
                 InstantSkillAddCost();
                 break;
+            case buffType.CriticalChance:
+                InstantSkillAddCritical();
+                break;
+            case buffType.EnemyArmor:
+                InstantSkillDeductEnemyArmor();
+                break;
         }
         
     }
+    public void InstantSkillDeductEnemyArmor()
+    {
+        colliders = new List<Collider>(); // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
+        ConvertTo2DArray();
+        PoolBuffEffact();
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Vector3 forward = -player.transform.forward; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        Vector3 right = player.transform.right; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
+        int characterRow = 0;
+        int characterCol = 0;
+
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        for (int i = 0; i < AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < AttackRange.GetLength(1); j++)
+            {
+                if (AttackRange[i, j] == 2)
+                {
+                    characterRow = i;
+                    characterCol = j;
+                    break;
+                }
+            }
+        }
+
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½İ¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+        for (int i = 0; i < AttackRange.GetLength(0); i++)
+        {
+            for (int j = 0; j < AttackRange.GetLength(1); j++)
+            {
+                if (AttackRange[i, j] == 1)
+                {
+                    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    Vector3 correctedPosition = player.transform.position + relativePosition;
+
+                    // ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    Vector3 boxSize = new Vector3(1, 5, 1);
+                    Collider[] hitColliders = Physics.OverlapBox(correctedPosition, boxSize / 2, Quaternion.identity);
+
+                    foreach (var hitCollider in hitColliders)
+                    {
+                        if (hitCollider.CompareTag("EnemyCollider") && !colliders.Contains(hitCollider))
+                        {
+                            var en = hitCollider.GetComponentInParent<EnemyController>();
+                            en.state.armor -= en.state.armor * figure;
+                            colliders.Add(hitCollider);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public void InstantSkillAddCritical()
+    {
+        PoolBuffEffact();
+        player.state.critChance += figure;
+    }
     public void InstantSkillAddCost()
     {
 
@@ -261,17 +332,17 @@ public class BuffSkilType : SkillBase
         {
             return;
         }
-        colliders = new List<Collider>(); // ¸®½ºÆ® ÃÊ±âÈ­
+        colliders = new List<Collider>(); // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
         ConvertTo2DArray();
 
-        // ÇÃ·¹ÀÌ¾îÀÇ ·ÎÄÃ Æ÷¿öµå ¹× ·ÎÄÃ ¿À¸¥ÂÊ ¹æÇâÀ» ¼³Á¤
-        Vector3 forward = -player.transform.forward; // ÇÃ·¹ÀÌ¾îÀÇ ·ÎÄÃ Æ÷¿öµå
-        Vector3 right = player.transform.right; // ÇÃ·¹ÀÌ¾îÀÇ ·ÎÄÃ ¿À¸¥ÂÊ
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Vector3 forward = -player.transform.forward; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        Vector3 right = player.transform.right; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         int characterRow = 0;
         int characterCol = 0;
 
-        // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ Ã£´Â ·çÇÁ
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < AttackRange.GetLength(0); i++)
         {
             for (int j = 0; j < AttackRange.GetLength(1); j++)
@@ -285,18 +356,18 @@ public class BuffSkilType : SkillBase
             }
         }
 
-        // »óÀÚ ¿µ¿ªÀ» »ı¼ºÇÏ°í Äİ¶óÀÌ´õ¸¦ °ËÃâÇÏ´Â ·çÇÁ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½İ¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < AttackRange.GetLength(0); i++)
         {
             for (int j = 0; j < AttackRange.GetLength(1); j++)
             {
                 if (AttackRange[i, j] == 1)
                 {
-                    // ÇÃ·¹ÀÌ¾î À§Ä¡¸¦ ±âÁØÀ¸·Î »ó´ëÀûÀÎ À§Ä¡ °è»ê
+                    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½
                     Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
                     Vector3 correctedPosition = player.transform.position + relativePosition;
 
-                    // »óÀÚ Å©±â¸¦ °íÁ¤µÈ °ªÀ¸·Î ¼³Á¤
+                    // ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     Vector3 boxSize = new Vector3(1, 5, 1);
                     Collider[] hitColliders = Physics.OverlapBox(correctedPosition, boxSize / 2, Quaternion.identity);
 
@@ -310,7 +381,7 @@ public class BuffSkilType : SkillBase
                 }
             }
         }
-        // Äİ¶óÀÌ´õ ¸®½ºÆ®¸¦ ¼øÈ¸ÇÏ¸ç °ø°İ ·ÎÁ÷ ¼öÇà
+        // ï¿½İ¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         foreach (var hitCollider in colliders)
         {
             switch (Inc)
@@ -351,14 +422,14 @@ public class BuffSkilType : SkillBase
     }
     public void ConvertTo2DArray()
     {
-        // 1Â÷¿ø ¹è¿­ÀÇ ±æÀÌ°¡ Çà°ú ¿­ÀÇ °ö°ú ÀÏÄ¡ÇÏ´ÂÁö È®ÀÎ
+        // 1ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (rangeAttack.Length != hang * yal)
         {
-            Debug.LogError("1Â÷¿ø ¹è¿­ÀÇ ±æÀÌ°¡ Çà°ú ¿­ÀÇ °ö°ú ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+            Debug.LogError("1ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
             return;
         }
 
-        // »õ 2Â÷¿ø ¹è¿­ »ı¼º
+        // ï¿½ï¿½ 2ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½
         AttackRange = new int[hang, yal];
 
         for (int i = 0; i < hang; i++)
@@ -373,19 +444,19 @@ public class BuffSkilType : SkillBase
     void OnDrawGizmos()
     {
 
-        if(!isAttackRage)
+        if(!isAttackRage || AttackRange == null)
         {
             return;
         }
         ConvertTo2DArray();
 
-        Vector3 forward = -player.transform.forward; // ÇÃ·¹ÀÌ¾îÀÇ ·ÎÄÃ Æ÷¿öµå
-        Vector3 right = player.transform.right; // ÇÃ·¹ÀÌ¾îÀÇ ·ÎÄÃ ¿À¸¥ÂÊ
+        Vector3 forward = -player.transform.forward; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        Vector3 right = player.transform.right; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         int characterRow = 0;
         int characterCol = 0;
 
-        // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ Ã£´Â ·çÇÁ
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < AttackRange.GetLength(0); i++)
         {
             for (int j = 0; j < AttackRange.GetLength(1); j++)
@@ -399,9 +470,9 @@ public class BuffSkilType : SkillBase
             }
         }
 
-        Gizmos.color = Color.red; // »ö»ó ¼³Á¤
+        Gizmos.color = Color.red; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        // °ø°İ °¡´É ¿µ¿ªÀ» ³ªÅ¸³»´Â »óÀÚ ±×¸®±â
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
         for (int i = 0; i < AttackRange.GetLength(0); i++)
         {
             for (int j = 0; j < AttackRange.GetLength(1); j++)
@@ -411,7 +482,7 @@ public class BuffSkilType : SkillBase
                     Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
                     Vector3 correctedPosition = player.transform.position + relativePosition;
 
-                    Vector3 boxSize = new Vector3(1, 5, 1); // »óÀÚ Å©±â
+                    Vector3 boxSize = new Vector3(1, 5, 1); // ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
 
                     Gizmos.DrawWireCube(correctedPosition, boxSize);
                 }

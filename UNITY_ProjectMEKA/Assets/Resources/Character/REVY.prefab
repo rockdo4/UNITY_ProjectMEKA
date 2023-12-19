@@ -6597,6 +6597,7 @@ GameObject:
   - component: {fileID: 7512008709792089342}
   - component: {fileID: 4649877371235727431}
   - component: {fileID: 1744019838618715659}
+  - component: {fileID: 6245102046257989333}
   m_Layer: 6
   m_Name: REVY
   m_TagString: Player
@@ -6613,7 +6614,7 @@ Transform:
   m_GameObject: {fileID: 3247610175047420154}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -68.29, y: 0.33459735, z: -24.68}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -6717,12 +6718,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 11402
-  name: REVY
+  name: "\uB808\uBE44"
   property: 1
-  maxHp: 100
-  armor: 0
-  damage: 0
-  attackDelay: 0
+  maxHp: 88
+  armor: 8
+  damage: 36
+  attackDelay: 1
   BulletName: 
   BulletType: 5
   flashName: Flash4
@@ -6732,17 +6733,19 @@ MonoBehaviour:
   rangeAttack: 010000000100000001000000010000000100000001000000000000000000000000000000000000000000000000000000000000000200000000000000
   level: 0
   grade: 0
-  Hp: 0
+  Hp: 88
   ID: 0
-  arrangeCost: 0
-  arrangeCoolTime: 0
+  arrangeCost: 10
+  arrangeCoolTime: 45
   skill: 0
   cost: 0
-  maxCost: 0
+  maxCost: 60
   skillCost: 0
   skillCoolTime: 0
   skillDuration: 0
   occupation: 4
+  critChance: 0.2
+  fatalDamage: 1.8
   experience: 0
   currentExperience: 0
 --- !u!114 &1744019838618715659
@@ -6757,6 +6760,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6245102046257989333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3247610175047420154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375317c1b2b29d341824d604467b31de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillCost: 60
+  skillCoolTime: 45
+  skillType: 1
+  isSkillUsing: 0
+  skillDuration: 15
+  isMe: 1
+  isSingle: 1
+  effectName: SnapShotEffect
+  isChoice: 0
+  type: 4
+  Inc: 0
+  figure: 0.05
+  isAttackRage: 0
+  hang: 0
+  yal: 0
+  rangeAttack: 
 --- !u!1 &3306788501714493980
 GameObject:
   m_ObjectHideFlags: 0
