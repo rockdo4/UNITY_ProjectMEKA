@@ -577,40 +577,25 @@ public class PlayerController : MonoBehaviour
                     Vector3Int tilePosInt = Utils.Vector3ToVector3Int(tilePosition);
                     foreach( var attackableTile in attackableTiles)
                     {
-                        if (attackableTile.index == mousePosInt)
+                        foreach (var tile in stageManager.tileManager.allTiles)
                         {
-                            foreach (var tile in stageManager.tileManager.allTiles)
+                            var xEqual = tile.Item2.x == tilePosInt.x;
+                            var zEqual = tile.Item2.z == tilePosInt.z;
+                            if (xEqual && zEqual && tile.Item1.arrangePossible)
                             {
-                                var xEqual = tile.Item2.x == tilePosInt.x;
-                                var zEqual = tile.Item2.z == tilePosInt.z;
-                                if (xEqual && zEqual && tile.Item1.arrangePossible)
+                                attackableSkillTiles.Add(tile.Item1);
+                                prevAttackableSkillTiles.Add(tile.Item1);
+                                if (attackableTile.index == mousePosInt)
                                 {
-                                    attackableSkillTiles.Add(tile.Item1);
-                                    prevAttackableSkillTiles.Add(tile.Item1);
-                                    //tile.Item1.SetTileMaterial(Tile.TileMaterial.Skill);
                                     stageManager.ingameStageUIManager.ChangeSkillTileMesh();
-                                    //break;
+                                }
+                                else
+                                {
+                                    stageManager.ingameStageUIManager.ChangeUnActiveTileMesh();
                                 }
                             }
-                            break;
                         }
-                        else
-                        {
-                            foreach (var tile in stageManager.tileManager.allTiles)
-                            {
-                                var xEqual = tile.Item2.x == tilePosInt.x;
-                                var zEqual = tile.Item2.z == tilePosInt.z;
-                                if (xEqual && zEqual && tile.Item1.arrangePossible)
-                                {
-                                    attackableSkillTiles.Add(tile.Item1);
-                                    prevAttackableSkillTiles.Add(tile.Item1);
-                                    //tile.Item1.SetTileMaterial(Tile.TileMaterial.Skill);
-                                    stageManager.ingameStageUIManager.ChangeSkillTileMesh();
-                                    //break;
-                                }
-                            }
-                            break;
-                        }
+                        break;
                     }
 
                     // origin code

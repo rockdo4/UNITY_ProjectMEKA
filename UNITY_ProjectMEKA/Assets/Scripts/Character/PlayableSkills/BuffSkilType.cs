@@ -122,9 +122,13 @@ public class BuffSkilType : SkillBase
                     }
                     break;
                 case Defines.SkillType.SnipingSingle:
+                    //12.19, 김민지, 테스트용
+                    CheckOverlapBoxes();
                     //선택된 놈이 넘어올것
                     break;
                 case Defines.SkillType.SnipingArea:
+                    //12.19, 김민지, 테스트용
+                    CheckOverlapBoxes();
                     //선택된 영역의 놈들이 넘어올것
                     break;
             }
