@@ -27,6 +27,7 @@ public class Tile : MonoBehaviour
     public bool arrangePossible = true;
     public bool attackPossible;
     public bool isSomthingOnTile;
+    public Vector3Int index;
 
     private void Awake()
     {
