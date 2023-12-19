@@ -19,6 +19,9 @@ public class EnemyBossSkill : SkillBase
     private List<Collider> colliders = new List<Collider>();
     private Vector3Int saveGridPos;
     private GameObject obj;
+    private float timer;
+    private bool isStun = false;
+    private bool isOne = false;
     public void ConvertTo2DArray()
     {
         // 1차원 배열의 길이가 행과 열의 곱과 일치하는지 확인
@@ -40,20 +43,36 @@ public class EnemyBossSkill : SkillBase
         }
 
     }
-
-
     private void Start()
     {
         enemy = GetComponent<EnemyController>();
         isHyper = false;
         saveGridPos = enemy.CurrentGridPos;
     }
+    private void OnEnable()
+    {
+        timer = 0;
+        isStun = false;
+        isOne = false;
+    }
+
+
     private void Update()
     {
-        healthPercent = (enemy.state.Hp / enemy.state.maxHp) * 100f;
-        if(healthPercent <= 50f)
+        timer += Time.deltaTime;
+        if(timer >= 1f && !isStun)
         {
+            isStun = true;
+            enemy.stunTime = 5f;
+            enemy.isMove = true;
+            enemy.SetState(NPCStates.Stun);
+        }
 
+        healthPercent = (enemy.state.Hp / enemy.state.maxHp) * 100f;
+        if(healthPercent <= 50f && !isOne)
+        {
+            isOne = true;
+            enemy.SetState(NPCStates.Stun);
         }
         if(enemy.bossAttackCount >= 20)
         {
@@ -162,15 +181,14 @@ public class EnemyBossSkill : SkillBase
         }
        if(colliders.Count > 0 && colliders != null)
         {
-            //enemy.ani.SetTrigger();
-            //Debug.Log("주모 여기 스킬!");
+            
             HyperAttack();
         }
 
     }
     void OnDrawGizmos()
     {
-
+        if(AttackRange == null || this == null) return;
 
         ConvertTo2DArray();
 

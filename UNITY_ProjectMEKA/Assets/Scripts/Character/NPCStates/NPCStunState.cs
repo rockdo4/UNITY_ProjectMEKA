@@ -5,6 +5,7 @@ using UnityEngine;
 public class NPCStunState : NPCBaseState
 {
     float timer;
+    
     public NPCStunState(EnemyController enemy) : base(enemy)
     {
     }
@@ -26,10 +27,18 @@ public class NPCStunState : NPCBaseState
     public override void Update()
     {
         timer += Time.deltaTime;
-        if(timer >= 3f)
+        if(timer >= enemyCtrl.stunTime)
         {
             timer = 0;
-            enemyCtrl.SetState(NPCStates.Attack);
+            if(enemyCtrl.isMove)
+            {
+                enemyCtrl.SetState(NPCStates.Move);
+                enemyCtrl.ani.SetTrigger("Run");
+            }
+            else
+            {
+                enemyCtrl.SetState(NPCStates.Attack);
+            }
         }
     }
 }

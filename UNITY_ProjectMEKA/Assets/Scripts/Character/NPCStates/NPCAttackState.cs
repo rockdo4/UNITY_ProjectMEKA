@@ -52,6 +52,11 @@ public class NPCAttackState : NPCBaseState
                 enemyCtrl.ani.SetTrigger("Attack");
             }
         }
+        if(enemyCtrl.target == null)
+        {
+            enemyCtrl.SetState(NPCStates.Move);
+            enemyCtrl.ani.SetTrigger("Run");
+        }
         if (enemyCtrl.target.GetComponentInParent<PlayerController>() == null)
         {
             Debug.Log("target null");

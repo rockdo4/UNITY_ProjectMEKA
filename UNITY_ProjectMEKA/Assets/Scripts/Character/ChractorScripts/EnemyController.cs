@@ -53,7 +53,11 @@ public class EnemyController : PoolAble
     [HideInInspector]
     public int bossAttackCount;
 
-    
+    [HideInInspector]
+    public float stunTime;
+    [HideInInspector]
+    public bool isMove;
+
     private void OnEnable()
     {
         if (states.Count != 0)

@@ -28,6 +28,7 @@ public class NPCDestinationStates : NPCBaseState
         repeatCount = -1;
 
         distance = Random.Range(0.3f,0.5f);
+        
     }
     public void InitOnce()
     {
@@ -72,7 +73,7 @@ public class NPCDestinationStates : NPCBaseState
                 if (enemyCtrl.rangeInPlayers.Count != 0)
                 {
                     timer = 0;
-                }
+                } 
 
                 foreach (var pl in enemyCtrl.rangeInPlayers)
                 {
