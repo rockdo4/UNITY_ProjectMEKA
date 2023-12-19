@@ -27,14 +27,6 @@ public class NPCDestinationStates : NPCBaseState
         direction = (targetPos - enemyCtrl.transform.position).normalized;
         repeatCount = -1;
 
-        //enemyCtrl.transform.position = enemyCtrl.initPos;
-        //targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
-        //targetPos.y = enemyCtrl.transform.position.y;
-        //direction = (targetPos - enemyCtrl.transform.position).normalized;
-        //enemyCtrl.transform.LookAt(targetPos);
-        ////speed = enemyCtrl.state.speed;
-        //repeatCount = -1;
-        //once = false;
         distance = Random.Range(0.3f,0.5f);
     }
     public void InitOnce()
@@ -106,17 +98,18 @@ public class NPCDestinationStates : NPCBaseState
     void CheckPlayer()
     {
        
+        
         foreach (var pl in enemyCtrl.rangeInPlayers)
         {
             PlayerController player = pl.GetComponentInParent<PlayerController>();
             //float distance = Vector3.Distance(enemyCtrl.transform.position,player.transform.position);/*&& distance > 0.4f*/
-            if (player.blockCount < player.maxBlockCount && 
+            if (player.blockCount < player.maxBlockCount &&
                 enemyCtrl.state.isBlock && player != null &&
                 player.currentState != PlayerController.CharacterStates.Arrange)
             {
-                if(enemyCtrl.state.isFly)
+                if (enemyCtrl.state.isFly)
                 {
-                    if(pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Castor||
+                    if (pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Castor ||
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
                         pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
                     {
@@ -135,11 +128,11 @@ public class NPCDestinationStates : NPCBaseState
                     }
 
                 }
-               
-            }
-            
-        }
 
+            }
+
+        }
+        
     }
     
     public override void Update()

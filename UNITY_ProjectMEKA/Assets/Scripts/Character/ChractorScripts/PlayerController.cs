@@ -178,15 +178,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        //if(!CharacterArrangeOne)
-        //{
-        //    CurrentPos = transform.position;
-        //    CurrentGridPos = new Vector3Int(Mathf.RoundToInt(CurrentPos.x), 0, Mathf.RoundToInt(CurrentPos.z));
-
-        //}
-
-        //Debug.Log(stateManager.currentBase is PlayableArrangeState);
-        //Debug.Log($"{CurrentGridPos},{gameObject.name}");
+        
         stateManager.Update();
         blockCount = enemyBlockCount.Count;
 
