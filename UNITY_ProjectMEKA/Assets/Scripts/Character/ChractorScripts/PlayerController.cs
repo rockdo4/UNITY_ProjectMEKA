@@ -540,15 +540,12 @@ public class PlayerController : MonoBehaviour
                 if (mousePosInt == attackableTile.index)
                 {
                     Debug.Log("스킬 발동!");
-                    // active skill
-                    // 스킬 발동 후 isSkill false
-                    // 시간 돌려주기
-                    // currentPlayer == null
+                    skill.UseSkill();
+                    Time.timeScale = 1.0f;
+                    stageManager.currentPlayer = null;
                 }
                 else
                 {
-                    // 클리어 타일메쉬
-                    Debug.Log("다른곳에서 버튼업" + mousePosInt + "," + attackableTile.index);
                     stageManager.ingameStageUIManager.ClearTileMesh();
                 }
             }

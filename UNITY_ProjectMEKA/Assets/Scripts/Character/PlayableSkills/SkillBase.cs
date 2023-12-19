@@ -16,6 +16,8 @@ public abstract class SkillBase : MonoBehaviour
 
     [HideInInspector]
     public bool isSkillUsing;
+    [SerializeField, Header("기본 공격 범위를 무시하는가")]
+    public bool isRangeOut;
 
     public abstract void UseSkill();
 }
