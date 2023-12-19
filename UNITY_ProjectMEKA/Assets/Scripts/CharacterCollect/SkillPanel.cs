@@ -38,6 +38,8 @@ public class SkillPanel : MonoBehaviour
 	public void UpdateSkillInfo()
 	{
 		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
+
+
 		//skillIconImage.sprite = 
 		skillNameText.SetText(currCharacter.SkillID.ToString());
 		skillDescriptionText.SetText(
@@ -126,6 +128,16 @@ public class SkillPanel : MonoBehaviour
 
 	public bool CheckUpgrade()
 	{
+		bool check = true;
+
+		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
+
+		if (currCharacter.SkillLevel == datas.Length)
+		{
+			Debug.Log("스킬이 최대레벨 입니다");
+			return false;
+		}
+
 		var skillLevel = currCharacter.SkillLevel;
 		var info = skillUpgradeTable.GetUpgradeData(skillLevel);
 
@@ -139,21 +151,21 @@ public class SkillPanel : MonoBehaviour
 		{
 
 			Debug.Log(("티어1 아이템이 부족합니다", info.RequireTier1, requireItems[0].selectedQuantity));
-			return false;
+			check = false;
 		}
 
 		if (info.RequireTier2 > requireItems[1].selectedQuantity)
 		{
 			Debug.Log("티어2 아이템이 부족합니다");
-			return false;
+			check = false;
 		}
 
 		if (info.RequireTier3 > requireItems[2].selectedQuantity)
 		{
 			Debug.Log("티어3 아이템이 부족합니다");
-			return false;
+			check = false;
 		}
 
-		return true;
+		return check;
 	}
 }

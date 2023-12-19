@@ -46,14 +46,14 @@ public class SkillUpgradeTable : DataTable
 
 	public SkillUpgradeData GetUpgradeData(int level)
 	{
-		if(level == skillUpgradeTable.Count)
+		if(level - 1 == skillUpgradeTable.Count)
 		{
 			Debug.Log("최대 레벨입니다");
 			return null;
 		}
 			
 
-		if (level < 0 || level > skillUpgradeTable.Count)
+		if (level - 1 < 0 || level - 1 > skillUpgradeTable.Count)
 		{
 			Debug.LogError("레벨 테이블 범위 초과");
 			return null;

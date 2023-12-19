@@ -72,7 +72,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log(item.Name);
+			//Debug.Log(item.Name);
 		}
 	}
 
