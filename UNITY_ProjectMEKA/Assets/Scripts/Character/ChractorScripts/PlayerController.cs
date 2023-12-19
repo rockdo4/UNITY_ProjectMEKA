@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public float skillCoolTime;
 
-    public List<Tile> attakableTiles = new List<Tile>();
+    public List<Tile> attackableTiles = new List<Tile>();
     public List<Tile> arrangableTiles = new List<Tile>();
     public List<Tile> attackableSkillTiles = new List<Tile>();
     public List<Tile> prevAttackableSkillTiles = new List<Tile>();
@@ -479,9 +479,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (attakableTiles.Count > 0)
+        if (attackableTiles.Count > 0)
         {
-            attakableTiles.Clear();
+            attackableTiles.Clear();
         }
 
         for (int i = 0; i < state.AttackRange.GetLength(0); i++)
@@ -501,7 +501,7 @@ public class PlayerController : MonoBehaviour
                         var tileContoller = hit.transform.GetComponent<Tile>();
                         if (!tileContoller.isSomthingOnTile)
                         {
-                            attakableTiles.Add(tileContoller);                            
+                            attackableTiles.Add(tileContoller);                            
                         }
                     }
                 }
@@ -553,7 +553,8 @@ public class PlayerController : MonoBehaviour
 
         foreach (var tile in prevAttackableSkillTiles)
         {
-            tile.ClearTileMesh();
+            //tile.ClearTileMesh();
+            stageManager.ingameStageUIManager.ClearTileMesh();
         }
         prevAttackableSkillTiles.Clear();
 
@@ -574,16 +575,41 @@ public class PlayerController : MonoBehaviour
                     var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
                     Vector3 tilePosition = mousePosInt + relativePosition;
                     Vector3Int tilePosInt = Utils.Vector3ToVector3Int(tilePosition);
-                    foreach (var tile in stageManager.tileManager.allTiles)
+                    foreach( var attackableTile in attackableTiles)
                     {
-                        var xEqual = tile.Item2.x == tilePosInt.x;
-                        var zEqual = tile.Item2.z == tilePosInt.z;
-                        if (xEqual && zEqual && tile.Item1.arrangePossible)
+                        if (attackableTile.index == mousePosInt)
                         {
-                            attackableSkillTiles.Add(tile.Item1);
-                            prevAttackableSkillTiles.Add(tile.Item1);
-                            tile.Item1.SetTileMaterial(Tile.TileMaterial.Skill);
-                            //break;
+                            foreach (var tile in stageManager.tileManager.allTiles)
+                            {
+                                var xEqual = tile.Item2.x == tilePosInt.x;
+                                var zEqual = tile.Item2.z == tilePosInt.z;
+                                if (xEqual && zEqual && tile.Item1.arrangePossible)
+                                {
+                                    attackableSkillTiles.Add(tile.Item1);
+                                    prevAttackableSkillTiles.Add(tile.Item1);
+                                    //tile.Item1.SetTileMaterial(Tile.TileMaterial.Skill);
+                                    stageManager.ingameStageUIManager.ChangeSkillTileMesh();
+                                    //break;
+                                }
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            foreach (var tile in stageManager.tileManager.allTiles)
+                            {
+                                var xEqual = tile.Item2.x == tilePosInt.x;
+                                var zEqual = tile.Item2.z == tilePosInt.z;
+                                if (xEqual && zEqual && tile.Item1.arrangePossible)
+                                {
+                                    attackableSkillTiles.Add(tile.Item1);
+                                    prevAttackableSkillTiles.Add(tile.Item1);
+                                    //tile.Item1.SetTileMaterial(Tile.TileMaterial.Skill);
+                                    stageManager.ingameStageUIManager.ChangeSkillTileMesh();
+                                    //break;
+                                }
+                            }
+                            break;
                         }
                     }
 

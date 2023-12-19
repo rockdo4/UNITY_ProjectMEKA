@@ -12,13 +12,15 @@ public class Tile : MonoBehaviour
         None,
         Arrange,
         Attack,
-        Skill
+        Skill,
+        UnActive
     }
 
     public TileType tileType = TileType.None;
     public Material arrangePossibleMaterial;
     public Material attackPossibleMaterial;
     public Material skillAttackPossibleMaterial;
+    public Material unActiveMaterial;
     private Material baseMaterial;
     public MeshRenderer meshRenderer;
     [HideInInspector]
@@ -81,6 +83,9 @@ public class Tile : MonoBehaviour
                 break;
             case TileMaterial.Skill:
                 materials = new Material[] { baseMaterial, skillAttackPossibleMaterial }; // 두 개의 material을 배열로 만듭니다.
+                break;
+            case TileMaterial.UnActive:
+                materials = new Material[] { baseMaterial, unActiveMaterial };
                 break;
         }
         meshRenderer.materials = materials;
