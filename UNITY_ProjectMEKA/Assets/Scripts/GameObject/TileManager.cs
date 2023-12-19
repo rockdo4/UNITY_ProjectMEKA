@@ -7,6 +7,7 @@ public class TileManager
 {
     public List<(Tile, Vector3Int)> lowTiles = new List<(Tile, Vector3Int)>();
     public List<(Tile, Vector3Int)> highTiles = new List<(Tile, Vector3Int)>();
+    public List<(Tile, Vector3Int)> allTiles = new List<(Tile, Vector3Int)>();
 
     public TileManager()
     {
@@ -35,6 +36,7 @@ public class TileManager
         {
             highTiles.Add((tileController, index));
         }
+        allTiles.Add((tileController, index));
     }
 
     public Vector3Int GetTileIndex(Tile tile)
@@ -43,10 +45,7 @@ public class TileManager
         RaycastHit hit;
         if(Physics.Raycast(tile.transform.parent.position + Vector3.up * 10f, Vector3.down, out hit))
         {
-            var x = Mathf.RoundToInt(hit.point.x);
-            var y = Mathf.RoundToInt(hit.point.y);
-            var z = Mathf.RoundToInt(hit.point.z);
-            return new Vector3Int(x, y, z);
+            return Utils.Vector3ToVector3Int(hit.point);
         }
         return new Vector3Int(-100,-100,-100);
     }

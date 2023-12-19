@@ -407,24 +407,41 @@ public class PlayerController : MonoBehaviour
         {
             case Defines.Occupation.Guardian:
             case Defines.Occupation.Striker:
-                tag = Tags.lowTile;
+                foreach (var tile in stageManager.tileManager.lowTiles)
+                {
+                    if (tile.Item1.arrangePossible)
+                    {
+                        arrangableTiles.Add(tile.Item1);
+                    }
+                }
                 break;
             default:
-                tag = Tags.highTile;
+                foreach (var tile in stageManager.tileManager.highTiles)
+                {
+                    if (tile.Item1.arrangePossible)
+                    {
+                        arrangableTiles.Add(tile.Item1);
+                    }
+                }
                 break;
         }
 
-        var tileParent = GameObject.FindGameObjectWithTag(tag);
-        var tileCount = tileParent.transform.childCount;
-        var tiles = new List<Tile>();
-        for (int i = 0; i < tileCount; ++i)
-        {
-            if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
-            {
-                tiles.Add(tileParent.transform.GetChild(i).GetComponentInChildren<Tile>());
-            }
-        }
-        arrangableTiles = tiles;
+        // modified code
+        //바닥타일들 가져와서
+        // arrangePossible 검사하고 arrangableTiles에 ADD
+
+        //// origin code
+        //var tileParent = GameObject.FindGameObjectWithTag(tag);
+        //var tileCount = tileParent.transform.childCount;
+        //var tiles = new List<Tile>();
+        //for (int i = 0; i < tileCount; ++i)
+        //{
+        //    if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
+        //    {
+        //        tiles.Add(tileParent.transform.GetChild(i).GetComponentInChildren<Tile>());
+        //    }
+        //}
+        //arrangableTiles = tiles;
     }
 
     public void AttackableTileSet(Defines.Occupation occupation)
@@ -552,24 +569,34 @@ public class PlayerController : MonoBehaviour
                 {
                     Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
                     Vector3 tilePosition = mousePosition + relativePosition;
-                    var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
+                    Vector3Int tilePosInt = Utils.Vector3ToVector3Int(tilePosition);
 
                     // modified code
-                    stageManager.gameObject.GetComponent<TileManager>();
-
-                    // origin code
-                    RaycastHit hit2;
-                    var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
-                    if (Physics.Raycast(tempPos, Vector3.up, out hit2, Mathf.Infinity, layerMask))
+                    foreach(var tile in stageManager.tileManager.allTiles)
                     {
-                        var tileContoller = hit2.transform.GetComponent<Tile>();
-                        if (!tileContoller.isSomthingOnTile)
+                        if(tile.Item2 == tilePosInt)
                         {
-                            attackableSkillTiles.Add(tileContoller);
-                            prevAttackableSkillTiles.Add(tileContoller);
-                            tileContoller.SetTileMaterial(Tile.TileMaterial.Skill);
+                            attackableSkillTiles.Add(tile.Item1);
+                            prevAttackableSkillTiles.Add(tile.Item1);
+                            tile.Item1.SetTileMaterial(Tile.TileMaterial.Skill);
+                            break;
                         }
                     }
+
+                    // origin code
+                    //var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
+                    //RaycastHit hit2;
+                    //var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
+                    //if (Physics.Raycast(tempPos, Vector3.up, out hit2, Mathf.Infinity, layerMask))
+                    //{
+                    //    var tileContoller = hit2.transform.GetComponent<Tile>();
+                    //    if (!tileContoller.isSomthingOnTile)
+                    //    {
+                    //        attackableSkillTiles.Add(tileContoller);
+                    //        prevAttackableSkillTiles.Add(tileContoller);
+                    //        tileContoller.SetTileMaterial(Tile.TileMaterial.Skill);
+                    //    }
+                    //}
                 }
             }
         }
