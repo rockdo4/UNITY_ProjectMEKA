@@ -17,16 +17,19 @@ public class Laser : MonoBehaviour
     private Vector3 direction;
     private bool isOne;
     private GameObject obj;
-    private LayerMask layerMask = LayerMask.GetMask("LowTile", "HighTile");
+    private LayerMask layerMask;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-
+        layerMask = LayerMask.GetMask("LowTile", "HighTile");
     }
     private void OnEnable()
     {
-        endPosition = player.transform.position;
-        startPos = DetermineClosestDirection(player.transform.forward);
+        if(player!= null)
+        {
+            endPosition = player.transform.position;
+            startPos = DetermineClosestDirection(player.transform.forward);
+        }
         isOne = false;
     }
 
@@ -38,23 +41,22 @@ public class Laser : MonoBehaviour
         lineRenderer.SetPosition(0, player.FirePosition.transform.position);
         lineRenderer.SetPosition(1, endPosition);
 
-        if (Physics.Raycast(startPos, endPosition, out hit, layerMask))
+        if (Physics.Raycast(player.FirePosition.transform.position, endPosition, out hit, layerMask)&& !isOne)
         {
-            if(!isOne)
-            {
-                isOne = true;
-                obj = ObjectPoolManager.instance.GetGo("BlueBeamEffect");
-                obj.transform.position = hit.point;
-                obj.SetActive(false);
-                obj.SetActive(true);
-                obj.GetComponent<PoolAble>().ReleaseObject(1f);
-            }
-            else if (obj != null)
-            {
-                obj.transform.position = hit.point;
-            }
+            
+            isOne = true;
+            obj = ObjectPoolManager.instance.GetGo("BlueBeamEffect");
+            obj.transform.position = hit.point;
+            obj.SetActive(false);
+            obj.SetActive(true);
+            obj.GetComponent<PoolAble>().ReleaseObject(0.6f);
+            
         }
-        
+        if (obj != null)
+        {
+
+            obj.transform.position = endPosition;
+        }
         transform.position = endPosition;
     }
     private Vector3 DetermineClosestDirection(Vector3 forward)

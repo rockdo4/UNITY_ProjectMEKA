@@ -7,47 +7,21 @@ public class PassiveTypeSkill : SkillBase
 {
     [SerializeField, Header("공격 범위가 따로 존재하는가")]
     public bool isAttackRage;
-    [SerializeField, Header("행")]
-    public int hang;
-    [SerializeField, Header("열")]
-    public int yal;
-    [SerializeField, Header("공격범위설정")]
-    public int[] rangeAttack;
+    
     [SerializeField, Header("증가치")]
     public float figure;
 
     [SerializeField, Header("사용할 이팩트 이름")]
     public string effectName;
 
-    [HideInInspector]
-    public int[,] AttackRange;
+    
     private PlayerController player;
     private List<Collider> colliders;
     private float timer;
     private float saveArmor;
     private GameObject obj;
     private bool isOneEffect;
-    public void ConvertTo2DArray()
-    {
-        // 1차원 배열의 길이가 행과 열의 곱과 일치하는지 확인
-        if (rangeAttack.Length != hang * yal)   
-        {
-            Debug.LogError("1차원 배열의 길이가 행과 열의 곱과 일치하지 않습니다.");
-            return;
-        }
-
-        // 새 2차원 배열 생성
-        AttackRange = new int[hang, yal];
-
-        for (int i = 0; i < hang; i++)
-        {
-            for (int j = 0; j < yal; j++)
-            {
-                AttackRange[i, j] = rangeAttack[i * yal + j];
-            }
-        }
-
-    }
+    
     private void Start()
     {
         player = GetComponent<PlayerController>();
