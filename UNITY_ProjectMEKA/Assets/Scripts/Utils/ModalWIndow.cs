@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class ModalWIndow : MonoBehaviour
+public class ModalWindow : MonoBehaviour
 {
     public TextMeshProUGUI titleText;
     public Button yesButton;
@@ -28,7 +28,7 @@ public class ModalWIndow : MonoBehaviour
 
 	public static void Show(string titleText, Action yesAction, string yesText = null, string noText = null)
 	{
-		var modalWindow = FindObjectOfType<ModalWIndow>();
+		var modalWindow = FindObjectOfType<ModalWindow>();
 		modalWindow.titleText.SetText(titleText);
 		modalWindow.yesButton.GetComponentInChildren<TextMeshProUGUI>().SetText(yesText);
 		modalWindow.noButton.GetComponentInChildren<TextMeshProUGUI>().SetText(noText);

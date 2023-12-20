@@ -44,6 +44,9 @@ public class PanelManager : MonoBehaviour
 	public RectTransform challengeStageChoicePanel;
 	private Vector3 challengeStageChoicePos;
 
+	[Header("PopUp Panel")]
+	public RectTransform popUpPanel;
+
 	public void Awake()
 	{
 		mainPos = mainPanel.position;
