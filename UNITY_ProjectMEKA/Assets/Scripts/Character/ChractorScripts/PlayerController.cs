@@ -627,8 +627,9 @@ public class PlayerController : MonoBehaviour
         var playerPosInt = Utils.Vector3ToVector3Int(transform.position);
         Vector3Int defaultOffset = new Vector3Int();
         Vector3Int skillOffset = mousePosInt - playerPosInt;
+        int[,] tempAttackRange = skill.AttackRange;
 
-        // 마우스 포지션이 어택커블 타일 위에 있는지 검사
+        // Check mouse position is in the attackable tiles
         foreach (var attackableTile in attackableTiles)
         {
             if(attackableTile.index == mousePosInt)
@@ -641,15 +642,42 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < skill.AttackRange.GetLength(0); i++)
+        // apply skill attack tile rotation
+        var isOffsetXZero = skillOffset.x == 0;
+        if (isOffsetXZero && skillOffset.z < 0)
         {
-            for (int j = 0; j < skill.AttackRange.GetLength(1); j++)
+            // 아래로 회전
+            tempAttackRange = Utils.RotateArray(skill.AttackRange, 2);
+
+        }
+        else if (!isOffsetXZero)
+        {
+            if (skillOffset.x > 0)
             {
-                if (skill.AttackRange[i, j] == 1 || skill.AttackRange[i, j] == 2)
+                // 우회전
+                tempAttackRange = Utils.RotateArray(skill.AttackRange, 1);
+            }
+            else
+            {
+                // 좌회전
+                tempAttackRange = Utils.RotateArray(skill.AttackRange, 3);
+            }
+        }
+        //else if (isOffsetXZero && skillOffset.z > 0)
+        //{
+        //    tempAttackRange = Utils.RotateArray(skill.AttackRange, 2);
+        //}
+
+        //// Get default offsets : offset between player tile and skill tile pivot
+        for (int i = 0; i < tempAttackRange.GetLength(0); i++) // row
+        {
+            for (int j = 0; j < tempAttackRange.GetLength(1); j++) // col
+            {
+                if (tempAttackRange[i, j] == 1 || tempAttackRange[i, j] == 2)
                 {
                     skillRange.Add(new Vector3Int(i, 0, j));
-                    if(skill.AttackRange[i, j] == 2)
-                    {                        
+                    if (tempAttackRange[i, j] == 2)
+                    {
                         defaultOffset.x = playerPosInt.x - i;
                         defaultOffset.z = playerPosInt.z - j;
                         defaultOffset.y = 0;
@@ -658,18 +686,18 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        // skill world positions => add to attackable tiles
         RaycastHit hit;
         var lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
         var highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
         var layerMask = lowTileMask | highTileMask;
-
         for (int i = 0; i < skillRange.Count; ++i)
         {
-            // skillRange에 월드좌표 상 스킬공격범위 인덱스가 담김(위, 아래 X)
-            skillRange[i] += defaultOffset;
-            skillRange[i] += skillOffset;
+            // skill attack range by world pos
+            skillRange[i] += defaultOffset; // offset between player tile and skill tile 2
+            skillRange[i] += skillOffset; // offset between player tile and mouse tile
 
-            // 여기서 레이를 쏴서, 맞는 타일들을 attackableSkillTiles에 넣기
+            // skill attack range => attackableSkillTiles applyied tile height(first hit tile)
             var tempPos = skillRange[i];
             tempPos.y += 10;
             if (Physics.Raycast(tempPos, Vector3.down, out hit, Mathf.Infinity, layerMask))
@@ -679,7 +707,8 @@ public class PlayerController : MonoBehaviour
                 prevAttackableSkillTiles.Add(tileContoller);
             }
         }
-
+        
+        // change tile meshes
         if(isSkillPossible)
         {
             stageManager.ingameStageUIManager.ChangeSkillTileMesh();

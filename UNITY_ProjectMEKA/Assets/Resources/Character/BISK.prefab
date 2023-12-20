@@ -17825,6 +17825,7 @@ MonoBehaviour:
   effectName: 
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
+  firstLookPos: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -17856,9 +17857,9 @@ MonoBehaviour:
   id: 11101
   name: "\uBE44\uC2A4\uD06C"
   property: 1
-  maxHp: 500
-  armor: 0
-  damage: 20
+  maxHp: 200
+  armor: 18
+  damage: 22
   attackDelay: 0.5
   BulletName: 
   BulletType: 0
@@ -17869,9 +17870,9 @@ MonoBehaviour:
   rangeAttack: 0100000002000000
   level: 0
   grade: 0
-  Hp: 0
+  Hp: 200
   ID: 0
-  arrangeCost: 18
+  arrangeCost: 15
   arrangeCoolTime: 50
   skill: 0
   cost: 0
@@ -17898,9 +17899,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillCost: 50
   skillCoolTime: 22
-  skillType: 2
+  skillType: 3
   isSkillUsing: 0
   isRangeOut: 0
+  hang: 2
+  yal: 3
+  rangeAttack: 000000000100000000000000010000000200000001000000
   targetList: []
   skillDuration: 12
   isMe: 1
@@ -17912,9 +17916,6 @@ MonoBehaviour:
   figure: 0.15
   isAttackRage: 1
   isAttackAnimaiton: 0
-  hang: 3
-  yal: 3
-  rangeAttack: 000000000100000000000000010000000200000001000000000000000100000000000000
 --- !u!1 &8363141463200748262
 GameObject:
   m_ObjectHideFlags: 0
