@@ -26,7 +26,7 @@ public class SkillPanel : MonoBehaviour
 	{
 		applyButton.onClick.AddListener(() =>
 		{
-			ApplySkillUpgrade();
+			infoPanel.SetPopUpPanel("강화 할건가요?", () => { ApplySkillUpgrade(); }, "예", "아니오");
 		});
 	}
 

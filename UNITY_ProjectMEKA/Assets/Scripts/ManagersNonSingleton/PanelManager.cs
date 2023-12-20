@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 /*
@@ -45,7 +46,7 @@ public class PanelManager : MonoBehaviour
 	private Vector3 challengeStageChoicePos;
 
 	[Header("PopUp Panel")]
-	public RectTransform popUpPanel;
+	public ModalWindow popUpPanel;
 
 	public void Awake()
 	{
@@ -164,6 +165,13 @@ public class PanelManager : MonoBehaviour
 			Debug.Log("�÷��̾ ������ ĳ���Ͱ� �����ϴ�.");
 		}
 
+	}
+
+	public void SetPopUpPanel(string text, Action yesAction, string yesText = "", string noText = "")
+	{
+		var panel = popUpPanel.GetComponent<ModalWindow>();
+		panel.gameObject.SetActive(true);
+		panel.Show(text, yesAction, yesText, noText);
 	}
 
 	public void ExitGame() 

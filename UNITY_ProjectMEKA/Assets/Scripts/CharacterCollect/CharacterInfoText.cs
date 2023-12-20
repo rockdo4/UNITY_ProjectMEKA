@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class CharacterInfoText : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class CharacterInfoText : MonoBehaviour
 	public SynchroPanel synchroPanel;
 	public DevicePanel devicePanel;
 	public SkillPanel skillPanel;
+	public PanelManager panelManager;
 
 	[Header("Text")]
 	public TextMeshProUGUI textInfo;
@@ -192,5 +194,10 @@ public class CharacterInfoText : MonoBehaviour
 			$"캐릭터 레벨 : {data.CharacterLevel}\n" +
 			$"캐릭터 등급 : {data.CharacterGrade}\n" +
 			$"캐릭터 해금 : {data.IsUnlock}");
+	}
+
+	public void SetPopUpPanel(string text, Action yesAction, string yesText = null, string noText = null)
+	{
+		panelManager.SetPopUpPanel(text, yesAction, yesText, noText);
 	}
 }

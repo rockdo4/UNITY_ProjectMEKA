@@ -7,9 +7,9 @@ using System;
 
 public class ModalWindow : MonoBehaviour
 {
-    public TextMeshProUGUI titleText;
-    public Button yesButton;
-    public Button noButton;
+	public TextMeshProUGUI titleText;
+	public Button yesButton;
+	public Button noButton;
 
 	private void Awake()
 	{
@@ -24,28 +24,34 @@ public class ModalWindow : MonoBehaviour
 		{
 			gameObject.SetActive(false);
 		});
+
+		GetComponent<Button>().onClick.AddListener(() =>
+		{
+			gameObject.SetActive(false);
+		});
 	}
 
-	public static void Show(string titleText, Action yesAction, string yesText = null, string noText = null)
+	public void Show(string text, Action yesAction, string yesText = "", string noText = "")
 	{
-		var modalWindow = FindObjectOfType<ModalWindow>();
-		modalWindow.titleText.SetText(titleText);
-		modalWindow.yesButton.GetComponentInChildren<TextMeshProUGUI>().SetText(yesText);
-		modalWindow.noButton.GetComponentInChildren<TextMeshProUGUI>().SetText(noText);
+		var modalWindow = this;
 
-		modalWindow.yesButton.onClick.RemoveAllListeners();
-		modalWindow.yesButton.onClick.AddListener(() =>
+		titleText.SetText(text);
+		yesButton.GetComponentInChildren<TextMeshProUGUI>().SetText(yesText);
+		noButton.GetComponentInChildren<TextMeshProUGUI>().SetText(noText);
+
+		yesButton.onClick.RemoveAllListeners();
+		yesButton.onClick.AddListener(() =>
 		{
 			yesAction();
-			modalWindow.gameObject.SetActive(false);
+			gameObject.SetActive(false);
 		});
 
-		modalWindow.noButton.onClick.RemoveAllListeners();
-		modalWindow.noButton.onClick.AddListener(() =>
+		noButton.onClick.RemoveAllListeners();
+		noButton.onClick.AddListener(() =>
 		{
-			modalWindow.gameObject.SetActive(false);
+			gameObject.SetActive(false);
 		});
 
-		modalWindow.gameObject.SetActive(true);
+		gameObject.SetActive(true);
 	}
 }
