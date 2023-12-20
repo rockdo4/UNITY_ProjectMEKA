@@ -95,6 +95,18 @@ public class ItemAutoQuantityCard : MonoBehaviour
 		}
 	}
 
+	public void SetMaxLevel()
+	{
+		if(item != null)
+		{
+			quantityText.SetText($"{item.Count} / --");
+		}
+		else
+		{
+			quantityText.SetText($"0 / --");
+		}
+	}
+
 	public bool IsEnoughRequire()
 	{
 		if(item != null)

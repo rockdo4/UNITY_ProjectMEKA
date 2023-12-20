@@ -39,12 +39,22 @@ public class SkillPanel : MonoBehaviour
 	{
 		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
 
+		int skillID;
+
+		if(currCharacter.SkillLevel - 1 >= datas.Length)
+		{
+			skillID = 000000;
+		}
+		else
+		{
+			skillID = datas[currCharacter.SkillLevel - 1].SkillID;
+		}
 
 		//skillIconImage.sprite = 
 		skillNameText.SetText(currCharacter.SkillID.ToString());
 		skillDescriptionText.SetText(
 			$"{currCharacter.Name}의 스킬 레벨: {currCharacter.SkillLevel}\n" +
-			$"스킬 ID: {datas[currCharacter.SkillLevel - 1].SkillLevelID}");
+			$"스킬 ID: {skillID}");
 
 
 		for (int i = 0; i < datas.Length; i++)
@@ -100,7 +110,6 @@ public class SkillPanel : MonoBehaviour
 	{
 		if(!CheckUpgrade())
 		{
-			Debug.Log("재료가 모자랍니다");
 			return;
 		}
 
@@ -132,9 +141,15 @@ public class SkillPanel : MonoBehaviour
 
 		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
 
-		if (currCharacter.SkillLevel == datas.Length)
+		if (currCharacter.SkillLevel - 1 == datas.Length)
 		{
 			Debug.Log("스킬이 최대레벨 입니다");
+
+			foreach(var card in requireItems)
+			{
+				card.SetMaxLevel();
+			}
+
 			return false;
 		}
 

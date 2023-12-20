@@ -16,6 +16,8 @@ public class CharacterPanelManager : MonoBehaviour
 	public GameObject characterCardPrefab;
 
 	public RectTransform characterInfoPanel;
+	public Button enableButton;
+
 	private Vector3 characterInfoPos;
 
 	private void Awake()
@@ -28,16 +30,19 @@ public class CharacterPanelManager : MonoBehaviour
 
 		foreach(var character in charStorage)
 		{
-			var card = Instantiate(characterCardPrefab, transform);
 			var characterInfo = dict.GetCharacterData(character.Value.CharacterID);
 
-			card.GetComponentInChildren<TextMeshProUGUI>().SetText("");
+			if (characterInfo.PortraitPath == "None")
+			{
+				continue;
+			}
+
+			var card = Instantiate(characterCardPrefab, transform);
+
 			card.name = characterInfo.CharacterName;
 			card.GetComponent<Image>().sprite = Resources.Load<Sprite>(characterInfo.PortraitPath);
-			if(characterInfo.PortraitPath == "None")
-			{
-				card.SetActive(false);
-			}
+			card.GetComponent<CardInfo>().ChangeCardId(characterInfo.CharacterID);
+			card.GetComponentInChildren<TextMeshProUGUI>().SetText("");
 
 			var button = card.GetComponent<Button>();
 
@@ -51,26 +56,34 @@ public class CharacterPanelManager : MonoBehaviour
 					}
 				});
 			else
-				Debug.LogError("¹öÆ° ¸øºÒ·¯¿È");
+				Debug.LogError("ï¿½ï¿½Æ° ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½");
 		}
 
-		//foreach (var item in charDict)
-		//{
-		//	var card = Instantiate(characterCardPrefab, transform);
+		enableButton.onClick.AddListener(() =>
+		{
+			CharacterUnlockUpdate();
+		});
+	}
 
-		//	card.name = item.Value.CharacterName.ToString();
-		//	card.GetComponentInChildren<TextMeshProUGUI>().SetText($"{item.Value.CharacterName}");
+	public void CharacterUnlockUpdate()
+	{
+		var count = transform.childCount;
 
-		//	var button = card.GetComponent<Button>();
+		for(int i = 0; i < count; i++)
+		{
+			var card = transform.GetChild(i); 
+			var info = card.GetComponent<CardInfo>();
+			var id = info.GetCardID();
 
-		//	if (button != null)
-		//		button.onClick.AddListener( () => 
-		//		{
-		//			OpenCharacterInfo(item.Value);
-		//		});
-		//	else
-		//		Debug.LogError("¹öÆ° ¸øºÒ·¯¿È");
-		//}
+			if(CharacterManager.Instance.m_CharacterStorage[id].IsUnlock)
+			{
+				card.GetComponent<Button>().interactable = true;
+			}
+			else
+			{
+				card.GetComponent<Button>().interactable = false;
+			}
+		}
 	}
 
 	public void PickUpCharacter(int ID)
@@ -80,7 +93,7 @@ public class CharacterPanelManager : MonoBehaviour
 
 		CharacterManager.Instance.m_CharacterStorage[ID].IsUnlock = true;
 
-        //Debug.Log("ÀÌ¸§ :" + chara.CharacterName);
+        //Debug.Log("ï¿½Ì¸ï¿½ :" + chara.CharacterName);
 
 		//var item = transform.Find($"{chara.CharacterID}");
 		//item.GetComponentInChildren<TextMeshProUGUI>().SetText($"{chara.CharacterName}");
