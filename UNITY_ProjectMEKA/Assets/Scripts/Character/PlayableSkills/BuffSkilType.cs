@@ -47,14 +47,7 @@ public class BuffSkilType : SkillBase
     [SerializeField, Header("공격 애니매이션이 존재하는가")]
     public bool isAttackAnimaiton;
 
-    [SerializeField, Header("행")]//p,e
-    public int hang;
-    [SerializeField, Header("열")]//p,e
-    public int yal;
-    [SerializeField, Header("공격범위설정")]//p,e
-    public int[] rangeAttack;
-    [HideInInspector]
-    public int[,] AttackRange;
+    
 
     private PlayerController player;
     private float timer;
@@ -439,27 +432,7 @@ public class BuffSkilType : SkillBase
         }
 
     }
-    public void ConvertTo2DArray()
-    {
-        // 1���� �迭�� ���̰� ��� ���� ���� ��ġ�ϴ��� Ȯ��
-        if (rangeAttack.Length != hang * yal)
-        {
-            Debug.LogError("1���� �迭�� ���̰� ��� ���� ���� ��ġ���� �ʽ��ϴ�.");
-            return;
-        }
-
-        // �� 2���� �迭 ����
-        AttackRange = new int[hang, yal];
-
-        for (int i = 0; i < hang; i++)
-        {
-            for (int j = 0; j < yal; j++)
-            {
-                AttackRange[i, j] = rangeAttack[i * yal + j];
-            }
-        }
-
-    }
+    
     void OnDrawGizmos()
     {
 

@@ -9,13 +9,13 @@ public class EnemyBossSkill : SkillBase
     private float healthPercent;
     private bool isHyper;
     [SerializeField, Header("행")]//p,e
-    public int hang;
+    public int hangs;
     [SerializeField, Header("열")]//p,e
-    public int yal;
+    public int yals;
     [SerializeField, Header("공격범위설정")]//p,e
-    public int[] rangeAttack;
+    public int[] rangeAttacks;
     [HideInInspector]
-    public int[,] AttackRange;
+    public int[,] AttackRanges;
     private List<Collider> colliders = new List<Collider>();
     private Vector3Int saveGridPos;
     private GameObject obj;
@@ -23,23 +23,23 @@ public class EnemyBossSkill : SkillBase
     private bool isStun = false;
     private bool isOne = false;
     private float saveDamage;
-    public void ConvertTo2DArray()
+    public void Convert2DArray()
     {
         // 1차원 배열의 길이가 행과 열의 곱과 일치하는지 확인
-        if (rangeAttack.Length != hang * yal)
+        if (rangeAttacks.Length != hangs * yals)
         {
             Debug.LogError("1차원 배열의 길이가 행과 열의 곱과 일치하지 않습니다.");
             return;
         }
 
         // 새 2차원 배열 생성
-        AttackRange = new int[hang, yal];
+        AttackRanges = new int[hangs, yals];
 
-        for (int i = 0; i < hang; i++)
+        for (int i = 0; i < hangs; i++)
         {
-            for (int j = 0; j < yal; j++)
+            for (int j = 0; j < yals; j++)
             {
-                AttackRange[i, j] = rangeAttack[i * yal + j];
+                AttackRanges[i, j] = rangeAttacks[i * yals + j];
             }
         }
 
@@ -139,12 +139,12 @@ public class EnemyBossSkill : SkillBase
     }
     void CheckOverlapBoxes()
     {
-        if (enemy == null || AttackRange == null || transform == null)
+        if (enemy == null || AttackRanges == null || transform == null)
         {
             return;
         }
         colliders = new List<Collider>(); // 리스트 초기화
-        ConvertTo2DArray();
+        Convert2DArray();
 
         Vector3 forward = -enemy.transform.forward;
         Vector3 right = enemy.transform.right; 
@@ -153,11 +153,11 @@ public class EnemyBossSkill : SkillBase
         int characterCol = 0;
 
         // 플레이어의 위치를 찾는 루프
-        for (int i = 0; i < AttackRange.GetLength(0); i++)
+        for (int i = 0; i < AttackRanges.GetLength(0); i++)
         {
-            for (int j = 0; j < AttackRange.GetLength(1); j++)
+            for (int j = 0; j < AttackRanges.GetLength(1); j++)
             {
-                if (AttackRange[i, j] == 2)
+                if (AttackRanges[i, j] == 2)
                 {
                     characterRow = i;
                     characterCol = j;
@@ -167,11 +167,11 @@ public class EnemyBossSkill : SkillBase
         }
 
         // 상자 영역을 생성하고 콜라이더를 검출하는 루프
-        for (int i = 0; i < AttackRange.GetLength(0); i++)
+        for (int i = 0; i < AttackRanges.GetLength(0); i++)
         {
-            for (int j = 0; j < AttackRange.GetLength(1); j++)
+            for (int j = 0; j < AttackRanges.GetLength(1); j++)
             {
-                if (AttackRange[i, j] == 1)
+                if (AttackRanges[i, j] == 1)
                 {
                     // 플레이어 위치를 기준으로 상대적인 위치 계산
                     Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
@@ -200,9 +200,9 @@ public class EnemyBossSkill : SkillBase
     }
     void OnDrawGizmos()
     {
-        if(AttackRange == null || this == null) return;
+        if(AttackRanges == null || this == null) return;
 
-        ConvertTo2DArray();
+        Convert2DArray();
 
         Vector3 forward = -enemy.transform.forward; // 플레이어의 로컬 포워드
         Vector3 right = enemy.transform.right; // 플레이어의 로컬 오른쪽
@@ -211,11 +211,11 @@ public class EnemyBossSkill : SkillBase
         int characterCol = 0;
 
         // 플레이어의 위치를 찾는 루프
-        for (int i = 0; i < AttackRange.GetLength(0); i++)
+        for (int i = 0; i < AttackRanges.GetLength(0); i++)
         {
-            for (int j = 0; j < AttackRange.GetLength(1); j++)
+            for (int j = 0; j < AttackRanges.GetLength(1); j++)
             {
-                if (AttackRange[i, j] == 2)
+                if (AttackRanges[i, j] == 2)
                 {
                     characterRow = i;
                     characterCol = j;
@@ -227,11 +227,11 @@ public class EnemyBossSkill : SkillBase
         Gizmos.color = Color.red; // 색상 설정
 
         // 공격 가능 영역을 나타내는 상자 그리기
-        for (int i = 0; i < AttackRange.GetLength(0); i++)
+        for (int i = 0; i < AttackRanges.GetLength(0); i++)
         {
-            for (int j = 0; j < AttackRange.GetLength(1); j++)
+            for (int j = 0; j < AttackRanges.GetLength(1); j++)
             {
-                if (AttackRange[i, j] == 1)
+                if (AttackRanges[i, j] == 1)
                 {
                     Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
                     Vector3 correctedPosition = enemy.transform.position + relativePosition;

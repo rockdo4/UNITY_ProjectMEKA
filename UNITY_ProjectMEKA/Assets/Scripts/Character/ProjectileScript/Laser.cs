@@ -6,8 +6,8 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     
-    public float speed = 0.1f; // ·¹ÀÌÀúÀÇ ÀÌµ¿ ¼Óµµ
-    public float maxDistance = 100.0f; // ·¹ÀÌÀú°¡ ÀÌµ¿ÇÒ ÃÖ´ë °Å¸®
+    public float speed = 0.1f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½
+    public float maxDistance = 100.0f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Å¸ï¿½
 
     private LineRenderer lineRenderer;
     public PlayerController player;
@@ -22,40 +22,41 @@ public class Laser : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         layerMask = LayerMask.GetMask("LowTile", "HighTile");
-
     }
     private void OnEnable()
     {
-        endPosition = player.transform.position;
-        startPos = DetermineClosestDirection(player.transform.forward);
+        if(player!= null)
+        {
+            endPosition = player.transform.position;
+            startPos = DetermineClosestDirection(player.transform.forward);
+        }
         isOne = false;
     }
 
     void Update()
     {
-        // ·¹ÀÌÀúÀÇ ³¡Á¡À» Àü¹æÀ¸·Î ÀÌµ¿
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         float distance = speed * Time.deltaTime;
         endPosition += startPos * distance;
         lineRenderer.SetPosition(0, player.FirePosition.transform.position);
         lineRenderer.SetPosition(1, endPosition);
 
-        if (Physics.Raycast(startPos, endPosition, out hit, layerMask))
+        if (Physics.Raycast(player.FirePosition.transform.position, endPosition, out hit, layerMask)&& !isOne)
         {
-            if(!isOne)
-            {
-                isOne = true;
-                obj = ObjectPoolManager.instance.GetGo("BlueBeamEffect");
-                obj.transform.position = hit.point;
-                obj.SetActive(false);
-                obj.SetActive(true);
-                obj.GetComponent<PoolAble>().ReleaseObject(1f);
-            }
-            else if (obj != null)
-            {
-                obj.transform.position = hit.point;
-            }
+            
+            isOne = true;
+            obj = ObjectPoolManager.instance.GetGo("BlueBeamEffect");
+            obj.transform.position = hit.point;
+            obj.SetActive(false);
+            obj.SetActive(true);
+            obj.GetComponent<PoolAble>().ReleaseObject(0.6f);
+            
         }
-        
+        if (obj != null)
+        {
+
+            obj.transform.position = endPosition;
+        }
         transform.position = endPosition;
     }
     private Vector3 DetermineClosestDirection(Vector3 forward)

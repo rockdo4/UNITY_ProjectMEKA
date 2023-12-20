@@ -48,7 +48,7 @@ public class CharacterIconManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log(characterState.id);
+                    //Debug.Log(characterState.id);
                 }
 
                 if(characterState.id == id)
