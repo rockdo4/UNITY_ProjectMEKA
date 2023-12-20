@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -78,6 +79,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 mousePosition;
     private bool isDragging;
     public bool isDie;
+    public bool isSkillPossible;
 
     private void Awake()
     {
@@ -211,19 +213,19 @@ public class PlayerController : MonoBehaviour
 
         //OnClickDown();
         OnClickDownCharacter();
+        bool isSkillPossible = false;
 
-        if(skillState != null)
+        if (skillState != null)
         {
             if (skillState.isSkillUsing)
             {
-                mousePosition = OnClickDownSkillTile();
+                mousePosition = OnClickSkillTile();
                 if (isDragging && prevAttackableSkillTiles != attackableSkillTiles)
                 {
                     AttackableSkillTileSet(mousePosition);
                 }
             }
         }
-        
     }
     
     public void SetState(CharacterStates state)
@@ -514,21 +516,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public Vector3 OnClickDownSkillTile()
+    public Vector3 OnClickSkillTile()
     {
         var skill = skillState as BuffSkilType;
         int layerMask = 0;
         int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
         int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
         layerMask = lowTileMask | highTileMask;
-        RaycastHit hit1;
+        RaycastHit hit;
 
         // 레이를 쏴서 타일에 맞았을 때, 그 타일이 어태커블 타일이면, 마우스 포지션에 해당 좌표의 vector3 int값 저장
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        var rayCast = Physics.Raycast(ray, out hit1, Mathf.Infinity, layerMask);
+        var rayCast = Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask);
         if (rayCast && Input.GetMouseButton(0))
         {
-            mousePosition = hit1.point;
+            mousePosition = hit.point;
             Debug.Log("마우스포지션 업데이트 : " + mousePosition);
             isDragging = true;
         }
@@ -536,21 +538,19 @@ public class PlayerController : MonoBehaviour
         if(Input.GetMouseButtonUp(0))
         {
             isDragging = false;
-            var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
-            // 마우스 포지션이 어택커블 타일 위에 있는지 검사
-            foreach (var attackableTile in attackableTiles)
+            if(isSkillPossible)
             {
-                if (mousePosInt == attackableTile.index)
-                {
-                    Debug.Log("스킬 발동!");
-                    skill.UseSkill();
-                    Time.timeScale = 1.0f;
-                    stageManager.currentPlayer = null;
-                }
-                else
-                {
-                    stageManager.ingameStageUIManager.ClearTileMesh();
-                }
+                Debug.Log("스킬 발동! 부와아아아앙아ㅏㄱ");
+                // 스킬베이스의 targetList에 현재 타일에 있는 친구들 다 넘겨주기
+                //skill.targetList.Add();
+                skill.UseSkill();
+                Time.timeScale = 1.0f;
+                stageManager.currentPlayer = null;
+            }
+            else
+            {
+                Debug.Log("잘못된 타일 선택.");
+                stageManager.ingameStageUIManager.ClearTileMesh();
             }
         }
 
@@ -559,37 +559,31 @@ public class PlayerController : MonoBehaviour
 
     public void AttackableSkillTileSet(Vector3 mousePosition)
     {
-        // temporary code
-        var skill = skillState as BuffSkilType;
-        int layerMask = 0;
-        int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
-        int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
-        layerMask = lowTileMask | highTileMask;
-        int mouseRow = 0;
-        int mouseCol = 0;
-
-        for (int i = 0; i < skill.AttackRange.GetLength(0); i++)
-        {
-            for (int j = 0; j < skill.AttackRange.GetLength(1); j++)
-            {
-                if (skill.AttackRange[i, j] == 2)
-                {
-                    mouseRow = i;
-                    mouseCol = j;
-                }
-            }
-        }
-
-        foreach (var tile in prevAttackableSkillTiles)
-        {
-            stageManager.ingameStageUIManager.ClearTileMesh();
-        }
-
+        stageManager.ingameStageUIManager.ClearTileMesh();
         prevAttackableSkillTiles.Clear();
-
         if (attackableSkillTiles.Count > 0)
         {
             attackableSkillTiles.Clear();
+        }
+
+        var skill = skillState as BuffSkilType;
+        var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
+        List<Vector3Int> skillRange = new List<Vector3Int>();
+        var playerPosInt = Utils.Vector3ToVector3Int(transform.position);
+        Vector3Int defaultOffset = new Vector3Int();
+        Vector3Int skillOffset = mousePosInt - playerPosInt;
+
+        // 마우스 포지션이 어택커블 타일 위에 있는지 검사
+        foreach (var attackableTile in attackableTiles)
+        {
+            if(attackableTile.index == mousePosInt)
+            {
+                isSkillPossible = true;
+            }
+            else
+            {
+                isSkillPossible = false;
+            }
         }
 
         for (int i = 0; i < skill.AttackRange.GetLength(0); i++)
@@ -598,52 +592,46 @@ public class PlayerController : MonoBehaviour
             {
                 if (skill.AttackRange[i, j] == 1 || skill.AttackRange[i, j] == 2)
                 {
-                    Vector3 relativePosition = (i - mouseRow) * Vector3.forward + (j - mouseCol) * Vector3.right;
-
-                    // modified code
-                    var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
-                    Vector3 tilePosition = mousePosInt + relativePosition;
-                    Vector3Int tilePosInt = Utils.Vector3ToVector3Int(tilePosition);
-                    foreach( var attackableTile in attackableTiles)
-                    {
-                        foreach (var tile in stageManager.tileManager.allTiles)
-                        {
-                            var xEqual = tile.Item2.x == tilePosInt.x;
-                            var zEqual = tile.Item2.z == tilePosInt.z;
-                            if (xEqual && zEqual && tile.Item1.arrangePossible)
-                            {
-                                attackableSkillTiles.Add(tile.Item1);
-                                prevAttackableSkillTiles.Add(tile.Item1);
-                                if (attackableTile.index == mousePosInt)
-                                {
-                                    stageManager.ingameStageUIManager.ChangeSkillTileMesh();
-                                }
-                                else
-                                {
-                                    stageManager.ingameStageUIManager.ChangeUnActiveTileMesh();
-                                }
-                            }
-                        }
-                        break;
+                    skillRange.Add(new Vector3Int(i, 0, j));
+                    if(skill.AttackRange[i, j] == 2)
+                    {                        
+                        defaultOffset.x = playerPosInt.x - i;
+                        defaultOffset.z = playerPosInt.z - j;
+                        defaultOffset.y = 0;
                     }
-
-                    // origin code
-                    //Vector3 tilePosition = mousePosition + relativePosition;
-                    //var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
-                    //RaycastHit hit2;
-                    //var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
-                    //if (Physics.Raycast(tempPos, Vector3.up, out hit2, Mathf.Infinity, layerMask))
-                    //{
-                    //    var tileContoller = hit2.transform.GetComponent<Tile>();
-                    //    if (!tileContoller.isSomthingOnTile)
-                    //    {
-                    //        attackableSkillTiles.Add(tileContoller);
-                    //        prevAttackableSkillTiles.Add(tileContoller);
-                    //        tileContoller.SetTileMaterial(Tile.TileMaterial.Skill);
-                    //    }
-                    //}
                 }
             }
+        }
+
+        RaycastHit hit;
+        var lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
+        var highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
+        var layerMask = lowTileMask | highTileMask;
+
+        for (int i = 0; i < skillRange.Count; ++i)
+        {
+            // skillRange에 월드좌표 상 스킬공격범위 인덱스가 담김(위, 아래 X)
+            skillRange[i] += defaultOffset;
+            skillRange[i] += skillOffset;
+
+            // 여기서 레이를 쏴서, 맞는 타일들을 attackableSkillTiles에 넣기
+            var tempPos = skillRange[i];
+            tempPos.y += 10;
+            if (Physics.Raycast(tempPos, Vector3.down, out hit, Mathf.Infinity, layerMask))
+            {
+                var tileContoller = hit.transform.GetComponent<Tile>();
+                attackableSkillTiles.Add(tileContoller);
+                prevAttackableSkillTiles.Add(tileContoller);
+            }
+        }
+
+        if(isSkillPossible)
+        {
+            stageManager.ingameStageUIManager.ChangeSkillTileMesh();
+        }
+        else
+        {
+            stageManager.ingameStageUIManager.ChangeUnActiveTileMesh();
         }
     }
 

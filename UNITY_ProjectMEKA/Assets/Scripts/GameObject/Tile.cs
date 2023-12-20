@@ -31,6 +31,7 @@ public class Tile : MonoBehaviour
     public bool attackPossible;
     public bool isSomthingOnTile;
     public Vector3Int index;
+    public List<GameObject> objectsOnTile = new List<GameObject>(); // have to change to LinkedList
 
     private void Awake()
     {
@@ -47,15 +48,19 @@ public class Tile : MonoBehaviour
 
         RaycastHit hit;
         var tempPos = new Vector3(transform.parent.position.x, 100f, transform.parent.position.z);
-        if (Physics.Raycast(tempPos, Vector3.down, out hit))
+        var tileColliderMask = 1 << LayerMask.NameToLayer(Layers.onTile);
+        var tileMask = gameObject.layer;
+        var houseMask = LayerMask.NameToLayer(Layers.house);
+        var gateMask = LayerMask.NameToLayer(Layers.gate);
+        var layerMask = ~tileColliderMask;
+        if (Physics.Raycast(tempPos, Vector3.down, out hit, 100f, layerMask))
         {
             var hitLayer = hit.transform.gameObject.layer;
-            var isSameLayer = hitLayer == gameObject.layer;
-
-            var houseMask = LayerMask.NameToLayer(Layers.house);
-            var gateMask = LayerMask.NameToLayer(Layers.gate);
             var isGateOrHouse = hitLayer == houseMask || hitLayer == gateMask;
-            if (!isSameLayer && !isGateOrHouse)
+            var isSelf = hitLayer == tileMask;
+
+            // 고지대 타일이나 장애물이 위에 있을 때
+            if (!isGateOrHouse && !isSelf)
             {
                 arrangePossible = false;
                 isSomthingOnTile = true;
