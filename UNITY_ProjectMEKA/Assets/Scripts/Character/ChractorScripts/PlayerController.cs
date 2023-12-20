@@ -663,10 +663,6 @@ public class PlayerController : MonoBehaviour
                 tempAttackRange = Utils.RotateArray(skill.AttackRange, 3);
             }
         }
-        //else if (isOffsetXZero && skillOffset.z > 0)
-        //{
-        //    tempAttackRange = Utils.RotateArray(skill.AttackRange, 2);
-        //}
 
         //// Get default offsets : offset between player tile and skill tile pivot
         for (int i = 0; i < tempAttackRange.GetLength(0); i++) // row

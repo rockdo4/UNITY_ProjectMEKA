@@ -39,16 +39,7 @@ public abstract class SkillBase : MonoBehaviour
         }
 
         // 새 2차원 배열 생성
-        //AttackRange = new int[hang, yal];
         AttackRange = new int[yal, hang];
-
-        //for (int i = 0; i < hang; i++)
-        //{
-        //    for (int j = 0; j < yal; j++)
-        //    {
-        //        AttackRange[i, j] = rangeAttack[i * yal + j];
-        //    }
-        //}
 
         for (int i = 0; i < yal; i++)
         {
@@ -57,7 +48,6 @@ public abstract class SkillBase : MonoBehaviour
                 AttackRange[i, j] = rangeAttack[(hang - j - 1) * yal + i];
             }
         }
-
     }
 
 
