@@ -541,8 +541,14 @@ public class PlayerController : MonoBehaviour
             if(isSkillPossible)
             {
                 Debug.Log("스킬 발동! 부와아아아앙아ㅏㄱ");
-                // 스킬베이스의 targetList에 현재 타일에 있는 친구들 다 넘겨주기
-                //skill.targetList.Add();
+                // 스킬 타일들 순회
+                foreach(var skillTile in attackableSkillTiles)
+                {
+                    foreach(var obj in skillTile.objectsOnTile)
+                    {
+                        skill.targetList.Add(obj);
+                    }
+                }
                 skill.UseSkill();
                 Time.timeScale = 1.0f;
                 stageManager.currentPlayer = null;
