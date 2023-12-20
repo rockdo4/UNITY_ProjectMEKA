@@ -72,7 +72,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log(item.Name);
+			//Debug.Log(item.Name);
 		}
 	}
 
@@ -92,6 +92,18 @@ public class ItemAutoQuantityCard : MonoBehaviour
 		else
 		{
 			quantityText.SetText($"<color=red>0</color> / {requiredQuantity}");
+		}
+	}
+
+	public void SetMaxLevel()
+	{
+		if(item != null)
+		{
+			quantityText.SetText($"{item.Count} / --");
+		}
+		else
+		{
+			quantityText.SetText($"0 / --");
 		}
 	}
 

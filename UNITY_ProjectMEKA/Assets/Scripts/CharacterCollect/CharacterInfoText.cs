@@ -95,10 +95,19 @@ public class CharacterInfoText : MonoBehaviour
 		var skillTable = DataTableMgr.GetTable<SkillTable>();
 		var datas = skillTable.GetSkillDatas(character.SkillID);
 
+		int skillID;
+		if (datas.Length == character.SkillLevel - 1)
+		{
+			skillID = -1;
+		}
+		else
+		{
+			skillID = datas[character.SkillLevel - 1].SkillLevelID;
+		}
 
 		skillText.SetText(
 			$"Skill ID: {character.SkillID}\n" +
-			$"SkillLevel ID: {datas[character.SkillLevel - 1].SkillLevelID}\n" +
+			$"SkillLevel ID: {skillID}\n" +
 			$"SkillLevel: {character.SkillLevel}\n" +
 			$"(스킬업버튼)");
 	}

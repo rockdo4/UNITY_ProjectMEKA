@@ -38,18 +38,28 @@ public class SkillPanel : MonoBehaviour
 	public void UpdateSkillInfo()
 	{
 		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
+
+		int skillID;
+		if (datas.Length == currCharacter.SkillLevel - 1)
+		{
+			skillID = -1;
+		}
+		else
+		{
+			skillID = datas[currCharacter.SkillLevel - 1].SkillID;
+		}
+
 		//skillIconImage.sprite = 
 		skillNameText.SetText(currCharacter.SkillID.ToString());
 		skillDescriptionText.SetText(
 			$"{currCharacter.Name}의 스킬 레벨: {currCharacter.SkillLevel}\n" +
-			$"스킬 ID: {datas[currCharacter.SkillLevel - 1].SkillLevelID}");
+			$"스킬 ID: {skillID}");
 
 
 		for (int i = 0; i < datas.Length; i++)
 		{
 			//var temp = Instantiate(대충 레벨 별 스킬 설명, skillLevelInfoScroll);
 		}
-
 	}
 
 	public void SetCharacter(Character character)
@@ -75,13 +85,22 @@ public class SkillPanel : MonoBehaviour
 		if(info == null)
 		{
 			Debug.Log("스킬 업그레이드 정보가 없습니다");
+
+			foreach (var card in requireItems)
+			{
+				card.SetMaxLevel();
+				applyButton.interactable = false;
+			}
 			return;
+		}
+		else
+		{
+			applyButton.interactable = true;
 		}
 
 		requireItems[0].SetItem(info.Tier1ID, info.RequireTier1);
 		requireItems[1].SetItem(info.Tier2ID, info.RequireTier2);
 		requireItems[2].SetItem(info.Tier3ID, info.RequireTier3);
-
 
 		UpdateAfterSetCharacter();
 	}
@@ -98,11 +117,12 @@ public class SkillPanel : MonoBehaviour
 	{
 		if(!CheckUpgrade())
 		{
-			Debug.Log("재료가 모자랍니다");
 			return;
 		}
 
 		currCharacter.SkillLevel++;
+
+		CheckMaxLevel();
 
 		foreach (var card in requireItems)
 		{
@@ -120,12 +140,28 @@ public class SkillPanel : MonoBehaviour
 		{
 			card.SetText();
 		}
-
 		SetCharacter(currCharacter);
+	}
+
+	public void CheckMaxLevel()
+	{
+		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
+
+		if (currCharacter.SkillLevel == datas.Length)
+		{
+			Debug.Log("스킬이 최대레벨 입니다");
+
+			foreach (var card in requireItems)
+			{
+				card.SetMaxLevel();
+			}
+		}
 	}
 
 	public bool CheckUpgrade()
 	{
+		bool check = true;
+
 		var skillLevel = currCharacter.SkillLevel;
 		var info = skillUpgradeTable.GetUpgradeData(skillLevel);
 
@@ -139,21 +175,21 @@ public class SkillPanel : MonoBehaviour
 		{
 
 			Debug.Log(("티어1 아이템이 부족합니다", info.RequireTier1, requireItems[0].selectedQuantity));
-			return false;
+			check = false;
 		}
 
 		if (info.RequireTier2 > requireItems[1].selectedQuantity)
 		{
 			Debug.Log("티어2 아이템이 부족합니다");
-			return false;
+			check = false;
 		}
 
 		if (info.RequireTier3 > requireItems[2].selectedQuantity)
 		{
 			Debug.Log("티어3 아이템이 부족합니다");
-			return false;
+			check = false;
 		}
 
-		return true;
+		return check;
 	}
 }
