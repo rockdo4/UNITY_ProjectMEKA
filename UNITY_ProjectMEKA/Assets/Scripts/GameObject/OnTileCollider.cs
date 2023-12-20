@@ -21,6 +21,7 @@ public class OnTileCollider : MonoBehaviour
         {
             if(!tileController.objectsOnTile.Contains(other.transform.parent.gameObject))
             {
+                Debug.Log("≈∏¿œ¿Œ ∞¥√º : " + other.transform.parent.gameObject);
                 tileController.objectsOnTile.Add(other.transform.parent.gameObject);
             }
         }
@@ -28,12 +29,13 @@ public class OnTileCollider : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var isEnemyBody = other.gameObject.layer == LayerMask.NameToLayer(Layers.enemyCollider);
-        var isCharacterBody = other.gameObject.layer == LayerMask.NameToLayer(Layers.playerCollider);
+        var isEnemyBody = other.gameObject.tag == Tags.enemyCollider;
+        var isCharacterBody = other.gameObject.tag == Tags.playerCollider;
         if (isEnemyBody || isCharacterBody)
         {
             if (tileController.objectsOnTile.Contains(other.transform.parent.gameObject))
             {
+                Debug.Log("≈∏¿œæ∆øÙ ∞¥√º : " + other.transform.parent.gameObject);
                 tileController.objectsOnTile.Remove(other.transform.parent.gameObject);
             }
         }
