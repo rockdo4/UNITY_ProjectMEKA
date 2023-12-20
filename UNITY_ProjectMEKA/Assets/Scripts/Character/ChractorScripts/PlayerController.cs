@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
     public StageManager stageManager;
     public TileManager tileManager;
-    private Vector3 mousePosition;
+    private (Vector3, Tile) mouseClickInfo;
     private bool isDragging;
     public bool isDie;
     public bool isSkillPossible;
@@ -218,21 +218,20 @@ public class PlayerController : MonoBehaviour
 
         //OnClickDown();
         OnClickDownCharacter();
-        bool isSkillPossible = false;
-
         if (skillState != null)
         {
             if (skillState.isSkillUsing)
             {
-                mousePosition = OnClickSkillTile();
+                mouseClickInfo = OnClickSkillTile();
                 if (isDragging && prevAttackableSkillTiles != attackableSkillTiles)
                 {
                     switch (skillState.skillType)
                     {
                         case SkillType.SnipingArea:
-                            AttackableSkillTileSet(mousePosition);
+                            AttackableSkillAreaTileSet(mouseClickInfo.Item1);
                             break;
                         case SkillType.SnipingSingle:
+                            AttackableSkillSingleTileSet(mouseClickInfo.Item2);
                             break;
                     }
                 }
@@ -523,7 +522,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public Vector3 OnClickSkillTile()
+    public (Vector3, Tile) OnClickSkillTile()
     {
         var skill = skillState as BuffSkilType;
         int layerMask = 0;
@@ -537,43 +536,80 @@ public class PlayerController : MonoBehaviour
         var rayCast = Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask);
         if (rayCast && Input.GetMouseButton(0))
         {
-            mousePosition = hit.point;
-            Debug.Log("마우스포지션 업데이트 : " + mousePosition);
+            mouseClickInfo.Item1 = hit.point;
+            Debug.Log("마우스포지션 업데이트 : " + mouseClickInfo.Item1);
             isDragging = true;
+            return (mouseClickInfo.Item1, hit.transform.GetComponent<Tile>());
         }
 
         if(Input.GetMouseButtonUp(0))
         {
             isDragging = false;
-            if(isSkillPossible)
+            switch (skillState.skillType)
             {
-                Debug.Log("스킬 발동! 부와아아아앙아ㅏㄱ");
-                // 스킬 타일들 순회
-                foreach(var skillTile in attackableSkillTiles)
-                {
-                    foreach(var obj in skillTile.objectsOnTile)
-                    {
-                        skill.targetList.Add(obj);
-                    }
-                }
-                skill.UseSkill();
-                Time.timeScale = 1.0f;
-                stageManager.currentPlayer = null;
-
-                // temp code
-                skill.isSkillUsing = false;
-            }
-            else
-            {
-                Debug.Log("잘못된 타일 선택.");
-                stageManager.ingameStageUIManager.ClearTileMesh();
+                case SkillType.SnipingArea:
+                    OnClickUpSkillAreaTile();
+                    break;
+                case SkillType.SnipingSingle:
+                    OnClickUpSkillSingleTile();
+                    break;
             }
         }
-
-        return mousePosition;
+        return (mouseClickInfo.Item1, null);
     }
 
-    public void AttackableSkillTileSet(Vector3 mousePosition)
+    public void OnClickUpSkillAreaTile()
+    {
+        if (isSkillPossible)
+        {
+            Debug.Log("스킬 발동! 부와아아아앙아ㅏㄱ");
+            // 스킬 타일들 순회
+            foreach (var skillTile in attackableSkillTiles)
+            {
+                foreach (var obj in skillTile.objectsOnTile)
+                {
+                    skillState.targetList.Add(obj);
+                }
+            }
+            skillState.UseSkill();
+            Time.timeScale = 1.0f;
+            stageManager.currentPlayer = null;
+
+            // temp code
+            skillState.isSkillUsing = false;
+        }
+        else
+        {
+            Debug.Log("잘못된 타일 선택.");
+            stageManager.ingameStageUIManager.ClearTileMesh();
+        }
+    }
+
+    public void OnClickUpSkillSingleTile()
+    {
+        if(isSkillPossible)
+        {
+            Debug.Log("OnClickUpSkillSingleTile");
+            Debug.Log("싱글 스킬 발동! 부와아아아앙아ㅏㄱ");
+            // 스킬 타일들 순회
+            foreach (var skillTile in attackableSkillTiles)
+            {
+                foreach (var obj in skillTile.objectsOnTile)
+                {
+                    skillState.targetList.Add(obj);
+                }
+            }
+            skillState.UseSkill();
+            Time.timeScale = 1.0f;
+            stageManager.currentPlayer = null;
+
+            // temp code
+            skillState.isSkillUsing = false;
+        }
+        isSkillPossible = false;
+    }
+
+    public void AttackableSkillAreaTileSet(Vector3 mousePosition)
     {
         stageManager.ingameStageUIManager.ClearTileMesh();
         prevAttackableSkillTiles.Clear();
@@ -651,6 +687,22 @@ public class PlayerController : MonoBehaviour
         {
             stageManager.ingameStageUIManager.ChangeUnActiveTileMesh();
         }
+    }
+
+    public void AttackableSkillSingleTileSet(Tile selectedTile)
+    {
+        Debug.Log("AttackableSkillSingleTileSet" + selectedTile);
+        stageManager.ingameStageUIManager.ClearTileMesh();
+        prevAttackableSkillTiles.Clear();
+        if (attackableSkillTiles.Count > 0)
+        {
+            attackableSkillTiles.Clear();
+        }
+
+        attackableSkillTiles.Add(selectedTile);
+        prevAttackableSkillTiles.Add(selectedTile);
+        stageManager.ingameStageUIManager.ChangeSkillTileMesh();
+        isSkillPossible = true;
     }
 
     public void OnClickDownCharacter()
