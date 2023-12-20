@@ -14925,7 +14925,7 @@ GameObject:
   - component: {fileID: 1263468579595938256}
   - component: {fileID: 1139063066793553565}
   - component: {fileID: -1910311875507887642}
-  - component: {fileID: 4902923647170641243}
+  - component: {fileID: -3050887868217804015}
   m_Layer: 6
   m_Name: TSUYUBAKA
   m_TagString: Player
@@ -15037,6 +15037,7 @@ MonoBehaviour:
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
+  isSkillPossible: 0
 --- !u!114 &1139063066793553565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15063,10 +15064,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 11301
   name: "\uCE20\uC720\uBC14\uCE74"
-  property: 3
-  maxHp: 100
-  armor: 0
-  damage: 40
+  property: 1
+  maxHp: 60
+  armor: 18
+  damage: 20
   attackDelay: 2
   BulletName: 
   BulletType: 6
@@ -15077,22 +15078,22 @@ MonoBehaviour:
   rangeAttack: 000000000100000000000000010000000100000001000000010000000100000001000000010000000200000001000000
   level: 0
   grade: 0
-  Hp: 0
+  Hp: 60
   ID: 0
-  arrangeCost: 11
-  arrangeCoolTime: 45
+  arrangeCost: 15
+  arrangeCoolTime: 40
   skill: 0
   cost: 0
   maxCost: 8
   skillCost: 0
   skillCoolTime: 0
   skillDuration: 0
-  occupation: 1
+  occupation: 3
   critChance: 0
   fatalDamage: 0
   experience: 0
   currentExperience: 0
---- !u!114 &4902923647170641243
+--- !u!114 &-3050887868217804015
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15101,19 +15102,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 6684218851763650818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1c331262c9c7e9419ce64e67924e3ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 490396453566e2a4e941d7f185f939c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillCost: 0
   skillCoolTime: 0
-  skillType: 3
+  skillType: 1
   isSkillUsing: 0
   isRangeOut: 0
   hang: 4
   yal: 1
   rangeAttack: 01000000010000000100000002000000
-  delay: 0
-  isAttackAnimation: 1
+  targetList: []
+  skillDuration: 1
+  effectName: LaserBlue
 --- !u!1 &6689180952653706931
 GameObject:
   m_ObjectHideFlags: 0

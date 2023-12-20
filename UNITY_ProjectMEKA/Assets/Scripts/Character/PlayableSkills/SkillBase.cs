@@ -20,6 +20,38 @@ public abstract class SkillBase : MonoBehaviour
     [SerializeField, Header("기본 공격 범위를 무시하는가")]
     public bool isRangeOut;
 
+    [SerializeField, Header("행")]//p,e
+    public int hang;
+    [SerializeField, Header("열")]//p,e
+    public int yal;
+    [SerializeField, Header("공격범위설정")]//p,e
+    public int[] rangeAttack;
+    [HideInInspector]
+    public int[,] AttackRange;
+
+    public void ConvertTo2DArray()
+    {
+        // 1차원 배열의 길이가 행과 열의 곱과 일치하는지 확인
+        if (rangeAttack.Length != hang * yal)
+        {
+            Debug.LogError("1차원 배열의 길이가 행과 열의 곱과 일치하지 않습니다.");
+            return;
+        }
+
+        // 새 2차원 배열 생성
+        AttackRange = new int[hang, yal];
+
+        for (int i = 0; i < hang; i++)
+        {
+            for (int j = 0; j < yal; j++)
+            {
+                AttackRange[i, j] = rangeAttack[i * yal + j];
+            }
+        }
+
+    }
+
+
     // 12.20, 김민지, 추가
     public List<GameObject> targetList = new List<GameObject>();
 
