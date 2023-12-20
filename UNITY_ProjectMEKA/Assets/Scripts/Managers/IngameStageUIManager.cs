@@ -203,7 +203,10 @@ public class IngameStageUIManager : MonoBehaviour
                 joystickHandler.gameObject.SetActive(false);
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(true);
-                skillButton.gameObject.SetActive(true);
+                if(stageManager.currentPlayer.skillState.skillType != SkillType.Auto)
+                {
+                    skillButton.gameObject.SetActive(true);
+                }
                 ChangeAttackableTileMesh();
                 break;
             case WindowMode.Win:
