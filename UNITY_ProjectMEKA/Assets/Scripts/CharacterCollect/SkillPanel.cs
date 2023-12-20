@@ -40,10 +40,9 @@ public class SkillPanel : MonoBehaviour
 		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
 
 		int skillID;
-
-		if(currCharacter.SkillLevel - 1 >= datas.Length)
+		if (datas.Length == currCharacter.SkillLevel - 1)
 		{
-			skillID = 000000;
+			skillID = -1;
 		}
 		else
 		{
@@ -61,7 +60,6 @@ public class SkillPanel : MonoBehaviour
 		{
 			//var temp = Instantiate(대충 레벨 별 스킬 설명, skillLevelInfoScroll);
 		}
-
 	}
 
 	public void SetCharacter(Character character)
@@ -87,13 +85,22 @@ public class SkillPanel : MonoBehaviour
 		if(info == null)
 		{
 			Debug.Log("스킬 업그레이드 정보가 없습니다");
+
+			foreach (var card in requireItems)
+			{
+				card.SetMaxLevel();
+				applyButton.interactable = false;
+			}
 			return;
+		}
+		else
+		{
+			applyButton.interactable = true;
 		}
 
 		requireItems[0].SetItem(info.Tier1ID, info.RequireTier1);
 		requireItems[1].SetItem(info.Tier2ID, info.RequireTier2);
 		requireItems[2].SetItem(info.Tier3ID, info.RequireTier3);
-
 
 		UpdateAfterSetCharacter();
 	}
@@ -115,6 +122,8 @@ public class SkillPanel : MonoBehaviour
 
 		currCharacter.SkillLevel++;
 
+		CheckMaxLevel();
+
 		foreach (var card in requireItems)
 		{
 			card.ConsumeItem();
@@ -131,27 +140,27 @@ public class SkillPanel : MonoBehaviour
 		{
 			card.SetText();
 		}
-
 		SetCharacter(currCharacter);
+	}
+
+	public void CheckMaxLevel()
+	{
+		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
+
+		if (currCharacter.SkillLevel == datas.Length)
+		{
+			Debug.Log("스킬이 최대레벨 입니다");
+
+			foreach (var card in requireItems)
+			{
+				card.SetMaxLevel();
+			}
+		}
 	}
 
 	public bool CheckUpgrade()
 	{
 		bool check = true;
-
-		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
-
-		if (currCharacter.SkillLevel - 1 == datas.Length)
-		{
-			Debug.Log("스킬이 최대레벨 입니다");
-
-			foreach(var card in requireItems)
-			{
-				card.SetMaxLevel();
-			}
-
-			return false;
-		}
 
 		var skillLevel = currCharacter.SkillLevel;
 		var info = skillUpgradeTable.GetUpgradeData(skillLevel);
