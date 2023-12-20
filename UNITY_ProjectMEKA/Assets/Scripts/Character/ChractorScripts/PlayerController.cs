@@ -222,7 +222,14 @@ public class PlayerController : MonoBehaviour
                 mousePosition = OnClickSkillTile();
                 if (isDragging && prevAttackableSkillTiles != attackableSkillTiles)
                 {
-                    AttackableSkillTileSet(mousePosition);
+                    switch (skillState.skillType)
+                    {
+                        case SkillType.SnipingArea:
+                            AttackableSkillTileSet(mousePosition);
+                            break;
+                        case SkillType.SnipingSingle:
+                            break;
+                    }
                 }
             }
         }
@@ -409,7 +416,6 @@ public class PlayerController : MonoBehaviour
 
     public void ArrangableTileSet(Defines.Occupation occupation)
     {
-        string tag;
         switch (occupation)
         {
             case Defines.Occupation.Guardian:
@@ -432,23 +438,6 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
         }
-
-        // modified code
-        //바닥타일들 가져와서
-        // arrangePossible 검사하고 arrangableTiles에 ADD
-
-        //// origin code
-        //var tileParent = GameObject.FindGameObjectWithTag(tag);
-        //var tileCount = tileParent.transform.childCount;
-        //var tiles = new List<Tile>();
-        //for (int i = 0; i < tileCount; ++i)
-        //{
-        //    if (tileParent.transform.GetChild(i).GetComponentInChildren<Tile>().arrangePossible)
-        //    {
-        //        tiles.Add(tileParent.transform.GetChild(i).GetComponentInChildren<Tile>());
-        //    }
-        //}
-        //arrangableTiles = tiles;
     }
 
     public void AttackableTileSet(Defines.Occupation occupation)
@@ -552,6 +541,9 @@ public class PlayerController : MonoBehaviour
                 skill.UseSkill();
                 Time.timeScale = 1.0f;
                 stageManager.currentPlayer = null;
+
+                // temp code
+                skill.isSkillUsing = false;
             }
             else
             {
@@ -572,7 +564,9 @@ public class PlayerController : MonoBehaviour
             attackableSkillTiles.Clear();
         }
 
+        // temp code
         var skill = skillState as BuffSkilType;
+
         var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
         List<Vector3Int> skillRange = new List<Vector3Int>();
         var playerPosInt = Utils.Vector3ToVector3Int(transform.position);
