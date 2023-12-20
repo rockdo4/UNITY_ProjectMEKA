@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     public RuntimeAnimatorController currnetAnimationController;
     private bool CharacterArrangeOne;
     private float addCostTimer;
+    public Transform firstLookPos;
     public enum CharacterStates
     {
         Arrange,

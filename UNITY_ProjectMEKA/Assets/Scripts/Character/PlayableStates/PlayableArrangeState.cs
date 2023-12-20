@@ -32,6 +32,7 @@ public class PlayableArrangeState : PlayableBaseState
         Debug.Log("arrange exit");
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        playerCtrl.firstLookPos = playerCtrl.transform;
     }
 
     public override void Update()
