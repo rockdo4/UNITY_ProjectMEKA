@@ -59,7 +59,6 @@ public class PassiveTypeSkill : SkillBase
     {
         isSkillUsing = true;
         colliders = new List<Collider>(); // 리스트 초기화
-        
         isOneEffect = false;
     }
     private void OnDisable()

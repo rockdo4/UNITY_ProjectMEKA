@@ -11,23 +11,27 @@ public class ObjectMove : MonoBehaviour
     public bool AbleHit;
     public float HitDelay;
     public GameObject m_hitObject;
-    GameObject m_makedObject;
+    private GameObject m_makedObject;
+    public string effectName;
     public float MaxLength;
     public float DestroyTime2;
     float m_scalefactor;
 
     private void Start()
     {
-        m_scalefactor = VariousEffectsScene.m_gaph_scenesizefactor;//transform.parent.localScale.x;
+        m_scalefactor = VariousEffectsScene.m_gaph_scenesizefactor;
+        m_time = Time.time;
+        m_time2 = Time.time;
+    }
+    private void OnEnable()
+    {
+        m_scalefactor = VariousEffectsScene.m_gaph_scenesizefactor;
         m_time = Time.time;
         m_time2 = Time.time;
     }
 
     void LateUpdate()
     {
-        if (Time.time > m_time + time)
-            Destroy(gameObject);
-
         transform.Translate(Vector3.forward * Time.deltaTime * MoveSpeed * m_scalefactor);
         if(AbleHit)
         { 
@@ -45,8 +49,9 @@ public class ObjectMove : MonoBehaviour
 
     void HitObj(RaycastHit hit)
     {
-        m_makedObject = Instantiate(m_hitObject, hit.point, Quaternion.LookRotation(hit.normal)).gameObject;
-        Destroy(m_makedObject, DestroyTime2);
+        m_makedObject = ObjectPoolManager.instance.GetGo(effectName);
+        m_makedObject.GetComponent<PoolAble>().ReleaseObject(DestroyTime2);
     }
+    
 
 }

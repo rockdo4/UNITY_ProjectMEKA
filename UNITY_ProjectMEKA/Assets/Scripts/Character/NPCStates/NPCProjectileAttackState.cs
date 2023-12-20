@@ -28,10 +28,15 @@ public class NPCProjectileAttackState : NPCBaseState
         {
             timer = enemyCtrl.state.attackDelay;
             enemyCtrl.ani.SetTrigger("Attack");
-
+            if(enemyCtrl.state.isFly)
+            {
+                enemyCtrl.SetState(NPCStates.Move);
+                enemyCtrl.ani.SetTrigger("Run");
+            }
             if (!CheckDistance())
             {
                 enemyCtrl.SetState(NPCStates.Move);
+                enemyCtrl.ani.SetTrigger("Run");
             }
             
         }

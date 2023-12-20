@@ -58,6 +58,11 @@ public class PlayerController : MonoBehaviour
     public Transform parentPos;
     public Transform ChildPos;
 
+    [SerializeField, Header("Hit이팩트가 있는가?")]
+    public bool isHitEffect;
+    [SerializeField, Header("있다면 이팩트 이름은 무엇인가")]
+    public string effectName;
+
     public RuntimeAnimatorController animationController;
     public RuntimeAnimatorController currnetAnimationController;
     private bool CharacterArrangeOne;
@@ -254,6 +259,19 @@ public class PlayerController : MonoBehaviour
         {
             take.OnAttack((state.damage + Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.armor + 1f) * 1f);
 
+        }
+        if(isHitEffect)
+        {
+            var ef = ObjectPoolManager.instance.GetGo(effectName);
+            Vector3 pos = gameObject.transform.position;
+            pos.y += 0.5f;
+            pos.z += 0.1f;
+            ef.transform.position = pos;
+            ef.transform.rotation = gameObject.transform.rotation;
+            ef.SetActive(false);
+            ef.SetActive(true);
+            ef.GetComponent<PoolAble>().ReleaseObject(0.3f);
+            
         }
         //take.OnAttack(state.damage + Rockpaperscissors());
     }

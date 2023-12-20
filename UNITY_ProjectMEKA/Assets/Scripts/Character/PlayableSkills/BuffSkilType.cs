@@ -14,6 +14,7 @@ public class BuffSkilType : SkillBase
         Armor,
         CriticalChance,
         EnemyArmor,
+        Healing,
     }
 
 
@@ -99,6 +100,13 @@ public class BuffSkilType : SkillBase
             }
 
         }
+        if(skillType == Defines.SkillType.Auto && player.currentState != PlayerController.CharacterStates.Arrange)
+        {
+           
+            UseSkill();
+            
+        }
+
 
     }
     public override void UseSkill()
@@ -111,7 +119,7 @@ public class BuffSkilType : SkillBase
             switch(skillType)
             {
                 case Defines.SkillType.Auto:
-
+                    AutoHealingSkill();
                     break;
                 case Defines.SkillType.Instant:
                     //��� ����->�ڽ� || �ֺ� �ٸ� ĳ����->� �ɷ�ġ ����-> ����� % ���� -> ����Ʈ ���� -> ����
@@ -135,6 +143,17 @@ public class BuffSkilType : SkillBase
                     break;
             }
         }
+    }
+    
+    public void AutoHealingSkill()
+    {
+        player.state.Hp += player.state.maxHp * figure;
+        if(player.state.Hp >= player.state.maxHp) 
+        {
+            player.state.Hp = player.state.maxHp;
+        }
+
+        
     }
     public void InstantSkill()
     {

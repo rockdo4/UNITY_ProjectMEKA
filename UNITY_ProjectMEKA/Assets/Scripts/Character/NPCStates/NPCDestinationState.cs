@@ -14,6 +14,7 @@ public class NPCDestinationStates : NPCBaseState
     private float timer = 2f;
     GameObject[] players;
     private float distance;
+    private Vector3Int saveGridPos;
     public NPCDestinationStates(EnemyController enemy) : base(enemy)
     {
     }
@@ -62,18 +63,19 @@ public class NPCDestinationStates : NPCBaseState
                 break;
         }
 
-        Vector3Int gridPosition = Vector3Int.FloorToInt(enemyCtrl.transform.position);
-        Vector3 tileCenter = new Vector3(gridPosition.x + 0.5f, gridPosition.y, gridPosition.z + 0.5f);
+        //Vector3Int gridPosition = Vector3Int.FloorToInt(enemyCtrl.transform.position);
+        Vector3Int gridPosition = enemyCtrl.CurrentGridPos;
+        Vector3 tileCenter = new Vector3(gridPosition.x + 0.5f, enemyCtrl.transform.position.y, gridPosition.z + 0.5f);
 
         if(enemyCtrl.state.isFly)
         {
-            timer += Time.deltaTime;
-            if(timer > /*enemyCtrl.state.attackDelay*/2f)
+            if(saveGridPos != gridPosition) 
             {
+                saveGridPos = gridPosition;
                 if (enemyCtrl.rangeInPlayers.Count != 0)
                 {
                     timer = 0;
-                } 
+                }
 
                 foreach (var pl in enemyCtrl.rangeInPlayers)
                 {
@@ -88,6 +90,27 @@ public class NPCDestinationStates : NPCBaseState
 
                 }
             }
+            //timer += Time.deltaTime;
+            //if(timer > 2f)
+            //{
+            //    if (enemyCtrl.rangeInPlayers.Count != 0)
+            //    {
+            //        timer = 0;
+            //    }
+
+            //    foreach (var pl in enemyCtrl.rangeInPlayers)
+            //    {
+            //        if (pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Castor ||
+            //            pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
+            //            pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
+            //        {
+            //            enemyCtrl.target = pl;
+            //            enemyCtrl.SetState(NPCStates.Idle);
+            //            return;
+            //        }
+
+            //    }
+            //}
             
         }
         //원래는 0.3
