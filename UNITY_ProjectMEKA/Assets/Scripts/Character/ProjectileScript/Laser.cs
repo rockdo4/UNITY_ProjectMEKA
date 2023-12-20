@@ -17,10 +17,11 @@ public class Laser : MonoBehaviour
     private Vector3 direction;
     private bool isOne;
     private GameObject obj;
-    private LayerMask layerMask = LayerMask.GetMask("LowTile", "HighTile");
+    private LayerMask layerMask;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        layerMask = LayerMask.GetMask("LowTile", "HighTile");
 
     }
     private void OnEnable()
