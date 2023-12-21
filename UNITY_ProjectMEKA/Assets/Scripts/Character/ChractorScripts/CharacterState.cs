@@ -10,6 +10,9 @@ public class CharacterState : MonoBehaviour
     
     public int[,] AttackRange;
 
+    [SerializeField, Header("레벨 설정")]
+    public int lv;
+
     [SerializeField, Header("ID 설정")]//p
     public int id;
 
