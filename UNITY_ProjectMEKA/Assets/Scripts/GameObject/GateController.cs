@@ -152,6 +152,7 @@ public class GateController : MonoBehaviour
         enemyPathRb.transform.LookAt(targetPos);
         pathDuration = waveInfos[currentWave].pathDuration;
         pathDone = false;
+
     }
 
     private void Start()
@@ -302,6 +303,10 @@ public class GateController : MonoBehaviour
         enemyController.moveRepeatCount = waveInfo.moveRepeat;
         enemyController.state.property = spawnInfo.attribute;
         enemyController.state.level = spawnInfo.level;
+
+        var stats = enemyGo.GetComponent<CharacterState>();
+        //여기서 스탯 추가할 예정r
+        //
 
         // need to apply monster stats by level
     }
