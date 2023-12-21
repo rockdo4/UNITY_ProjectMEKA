@@ -21,6 +21,7 @@ public static class Defines
         public const string player = "Player";
         public const string characterIconManager = "CharacterIconManager";
         public const string house = "House";
+        public const string stageUIManager = "StageUIManager";
     }
 
     public static class Layers

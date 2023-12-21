@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEditor;
@@ -33,6 +34,8 @@ public class StageUIManager : MonoBehaviour
     public TextMeshProUGUI stageMission1Text;
     public TextMeshProUGUI stageMission2Text;
     public TextMeshProUGUI stageMission3Text;
+    public GameObject monsterButtonPrefab;
+    public GameObject monsterInfoPopUpWindow;
 
     private StageTable stageTable;
 
@@ -132,13 +135,18 @@ public class StageUIManager : MonoBehaviour
     public void SetStageInfoWindow()
     {
         stageInfoParentPanel.SetActive(true);
+
         // 현재 선택된 스테이지 정보 받아서 ui 세팅
         var stringTable = DataTableMgr.GetTable<StringTable>();
         var stageData = stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
-        SetStageInfo(stringTable, stageData);
+        SetStageInfoPanel(stringTable, stageData);
+        SetMonsterInfoPanel(stringTable, stageData);
+        SetMapInfoPanel();
+
+        StageInfoWindowOn();
     }
 
-    public void SetStageInfo(StringTable stringTable, StageData stageTable)
+    public void SetStageInfoPanel(StringTable stringTable, StageData stageTable)
     {
         // 버튼들 텍스트
         stageButtonText.SetText(stringTable.GetString("stage"));
@@ -161,16 +169,48 @@ public class StageUIManager : MonoBehaviour
         stageHeaderText.SetText(stringBuilder.ToString());
 
         // 스테이지 인포
+        var mission1 = stringTable.GetString(stageMission1ID);
+        mission1 = new string(mission1.Select(c => c == '0' ? stageTable.Mission1Value.ToString()[0] : c).ToArray());
+        var mission2 = stringTable.GetString(stageMission2ID);
+        mission2 = new string(mission2.Select(c => c == '0' ? stageTable.Mission2Value.ToString()[0] : c).ToArray());
+        var mission3 = stringTable.GetString(stageMission3ID);
+        mission3 = new string(mission3.Select(c => c == '0' ? stageTable.Mission3Value.ToString()[0] : c).ToArray());
         stageOutlineHeaderText.SetText(stringTable.GetString("outline"));
         stageOutlineText.SetText(stringTable.GetString(stageOutlineID));
         stageMissionHeaderText.SetText(stringTable.GetString("mission"));
-        stageMission1Text.SetText(stringTable.GetString(stageMission1ID));
-        stageMission2Text.SetText(stringTable.GetString(stageMission2ID));
-        stageMission3Text.SetText(stringTable.GetString(stageMission3ID));
+        stageMission1Text.SetText(mission1);
+        stageMission2Text.SetText(mission2);
+        stageMission3Text.SetText(mission3);
+    }
 
-        // 적 인포
+    public void SetMonsterInfoPanel(StringTable stringTable, StageData stageTable)
+    {
+        // temp code
+        var icons = monsterInfoPanel.GetComponentsInChildren<MonsterIcon>();
+        foreach(var icon in icons)
+        {
+            Destroy(icon.gameObject);
+        }
 
-        // 멥 인포
+        // 스테이지 테이블의 아이디를 받아와서 / 기준으로 나눠서, 아이디를 저장, 몬스터 레벨 테이블에서 스탯을 가져와서 찍어준다
+        var monsterLevelIDArray = stageTable.MonsterLevelID.Split('/');
+        // 이 수 만큼 프리팹 생성, 아이콘에 스프라이트 씌워주기
+        for (int i = 0; i < monsterLevelIDArray.Length; ++i)
+        {
+            // sprite는 나중에 몬스터 테이블에 몬스터 기본 id, 이름, 이미지 경로 이렇게 3개만 있게 만들고 가져와서 쓰기
+            //var id = monsterLevelIDArray[i].Substring(0, monsterLevelIDArray.Length-2);
+
+            var icon = Instantiate(monsterButtonPrefab, monsterInfoPanel.transform);
+            icon.GetComponentInChildren<TextMeshProUGUI>().SetText((i + 1).ToString());
+
+            var iconScript = icon.GetComponent<MonsterIcon>();
+            iconScript.Init(this, int.Parse(monsterLevelIDArray[i]), stringTable);
+        }
+    }
+
+    public void SetMapInfoPanel()
+    {
+
     }
 
     public void CloseStageInfoWindow()

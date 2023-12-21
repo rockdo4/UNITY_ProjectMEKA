@@ -46,4 +46,5 @@ public class StageData
     public string StageMission2StringID { get; set; }
     public string StageMission3StringID { get; set; }
     public string StageOutlineStringID { get; set; }
+    public string MonsterLevelID { get; set; }
 }
