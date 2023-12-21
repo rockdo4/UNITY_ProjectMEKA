@@ -53,6 +53,9 @@ public class IngameStageUIManager : MonoBehaviour
     private Button collectButton;
     private Button skillButton;
 
+    // skill
+    public TextMeshProUGUI skillTileGuideText;
+
     public bool currentPlayerChanged;
     public bool currentPlayerOnTile;
     private bool isInfoWindowOn = true;
@@ -163,6 +166,7 @@ public class IngameStageUIManager : MonoBehaviour
                 ClearTileMesh();
                 characterInfoPanel.SetActive(false);
                 joystick.gameObject.SetActive(false);
+                skillTileGuideText.gameObject.SetActive(false);
                 currentPlayerOnTile = false;
                 isInfoWindowOn = true;
                 break;
@@ -218,6 +222,7 @@ public class IngameStageUIManager : MonoBehaviour
                 LooseWindowSet();
                 break;
             case WindowMode.Skill:
+                skillTileGuideText.gameObject.SetActive(true);
                 break;
         }
     }

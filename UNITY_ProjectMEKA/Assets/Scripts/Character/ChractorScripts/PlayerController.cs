@@ -551,12 +551,10 @@ public class PlayerController : MonoBehaviour
             {
                 case SkillType.SnipingArea:
                     OnClickUpSkillAreaTile();
-                    stageManager.ingameStageUIManager.isSkillTileWindow = false;
                     attackableSkillTiles.Clear();
                     break;
                 case SkillType.SnipingSingle:
                     OnClickUpSkillSingleTile();
-                    stageManager.ingameStageUIManager.isSkillTileWindow = false;
                     attackableSkillTiles.Clear();
                     break;
             }
@@ -580,6 +578,7 @@ public class PlayerController : MonoBehaviour
             skillState.UseSkill();
             Time.timeScale = 1.0f;
             stageManager.currentPlayer = null;
+            stageManager.ingameStageUIManager.isSkillTileWindow = false;
         }
         else
         {
@@ -630,7 +629,9 @@ public class PlayerController : MonoBehaviour
         {
             if(attackableTile.index == mousePosInt)
             {
+                Debug.Log("어택타일 위 : " + mousePosInt);
                 isSkillPossible = true;
+                break;
             }
             else
             {
