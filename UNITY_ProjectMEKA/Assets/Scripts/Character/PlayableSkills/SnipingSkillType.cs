@@ -41,7 +41,7 @@ public class SnipingSkillType : SkillBase
     private void Update()
     {
         timer += Time.deltaTime;
-        
+        //player.SetState(PlayerController.CharacterStates.Arrange);//testcode
     }
     public override void UseSkill()
     {
@@ -82,23 +82,39 @@ public class SnipingSkillType : SkillBase
     }
     public void AreaSnipingAttack()
     {
-        attackableTiles = player.attackableSkillTiles;
+        attackableTiles = new List<Tile>(player.attackableSkillTiles);
+        StartCoroutine(Damage5Second(attackableTiles));
         var obj = ObjectPoolManager.instance.GetGo(effectName);
         var pos = attackableTiles[4].transform.position;
         pos.x += 0.5f;
         pos.z += 0.5f;
-        
         obj.transform.position = pos;
         obj.SetActive(false);
         obj.SetActive(true);
         
+        
     }
-    IEnumerator Damage5Second()
+    IEnumerator Damage5Second(List<Tile> tileList)
     {
-        while(true) 
+        int i = 0;
+        while(i < 5) 
         {
+            //yield return null;
+            
+            foreach (var attack in tileList)
+            {
+                foreach(var enemy in attack.objectsOnTile)
+                {
+                    if(enemy.tag == "Enemy")
+                    {
+                        enemy.GetComponent<IAttackable>().OnAttack(player.state.damage * figure);
+                        
+                    }
+                }
+            }
+            i++;
+            yield return new WaitForSeconds(1f);
             yield return null;
-
         }
     }
     public void SnipingSingle()
