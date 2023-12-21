@@ -258,13 +258,17 @@ public class PlayerController : MonoBehaviour
         }
         //(몬스터 공격력 x 공격력 계수 x 스킬 계수 x 속성 데미지 계수)-(캐릭터 방어력 + 장비 방어력 수치) x 장비 방어력 계수
         
-        if (Random.Range(0f, 1f) >= state.critChance)
+        if (Random.Range(0f, 1f) <= state.critChance)
         {
-            take.OnAttack(((state.damage * state.fatalDamage) + Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.armor + 1f) * 1f);
+            var calculatedDamage = ((state.damage * state.fatalDamage) + Rockpaperscissors()) - (target.GetComponentInParent<EnemyController>().state.armor);
+            take.OnAttack(calculatedDamage);
+            Debug.Log(calculatedDamage);
         }
         else
         {
-            take.OnAttack((state.damage + Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.armor + 1f) * 1f);
+            var calculatedDamage = (state.damage + Rockpaperscissors()) - (target.GetComponentInParent<EnemyController>().state.armor);
+            take.OnAttack(calculatedDamage);
+            Debug.Log(calculatedDamage);
 
         }
         if(isHitEffect)
