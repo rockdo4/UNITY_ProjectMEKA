@@ -16,7 +16,7 @@ public class WaveTimer : MonoBehaviour
     private void Start()
     {
         totalTimer = 0f;
-        activeTotalTimer = false;
+        activeTotalTimer = true;
 
         waveTimer = new List<string>();
         activeWaveTimer = false;
@@ -25,7 +25,6 @@ public class WaveTimer : MonoBehaviour
     {
         UpdateTimer();
         ActiveTimer();
-        DisplayTimer();
     }
     private void UpdateTimer()
     {
@@ -36,23 +35,6 @@ public class WaveTimer : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.F1))
         {
             activeTotalTimer = !activeTotalTimer;
-        }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            activeWaveTimer = !activeWaveTimer;
-        }
-    }
-    private void DisplayTimer()
-    {
-        if(activeTotalTimer)
-            Debug.Log(totalTimer);
-
-        if(activeWaveTimer)
-        {
-            for (int i = 0; i < waveTimer.Count; i++)
-            {
-                Debug.Log("Wave " + i + " : " + waveTimer[i]);
-            }
         }
     }
     public void AddStartWave(string name)
@@ -67,6 +49,8 @@ public class WaveTimer : MonoBehaviour
 
     void OnGUI()
     {
+        if (!activeTotalTimer) return;
+
         float offset = 40f;
 
         int w = Screen.width, h = Screen.height;

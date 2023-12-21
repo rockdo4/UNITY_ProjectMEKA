@@ -199,7 +199,7 @@ public class GateController : MonoBehaviour
             if (currentEnemyCount == 0)
             {
                 Debug.Log($"{currentWave} : {enemyName} 첫 번째 몬스터 스폰");
-                timerScript.AddStartWave($"{currentWave+1}번 웨이브");
+                timerScript.AddStartWave($"{transform.gameObject.name}/{currentWave+1}번 웨이브");
             }
 
             var enemyGo = ObjectPoolManager.instance.GetGo(enemyName);
@@ -218,7 +218,7 @@ public class GateController : MonoBehaviour
         //다음 종류 몹
         if (currentEnemyCount >= enemyInfo.count)
         {
-            timerScript.AddEndWave($"{currentWave + 1}:{enemyName}");
+            timerScript.AddEndWave($"{transform.gameObject.name}/{currentWave + 1}:{enemyName}");
             Debug.Log("다음 종류 몬스터");
 
             currentEnemyCount = 0;
