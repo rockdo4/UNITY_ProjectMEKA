@@ -82,12 +82,12 @@ public class CharacterInfoText : MonoBehaviour
 
 	public void UpdateCharacter()
 	{
-		SetSkillInfo();
-		SetLevelInfo();
-		SetSynchroInfo();
-		SetClass_Range_Keyword();
-		SetCompnayInfo();
-		SetDeviceInfo();
+		//SetSkillInfo();
+		//SetLevelInfo();
+		//SetSynchroInfo();
+		//SetClass_Range_Keyword();
+		//SetCompnayInfo();
+		//SetDeviceInfo();
 	}
 
 	public void SetSkillInfo()

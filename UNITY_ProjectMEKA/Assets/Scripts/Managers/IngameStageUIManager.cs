@@ -259,7 +259,7 @@ public class IngameStageUIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         StageDataManager.Instance.toStageChoicePanel = true;
-        SceneManager.LoadScene("GachaSceneDevice");
+        SceneManager.LoadScene("MainScene");
     }
 
     public void ChangeCharacterInfo()
