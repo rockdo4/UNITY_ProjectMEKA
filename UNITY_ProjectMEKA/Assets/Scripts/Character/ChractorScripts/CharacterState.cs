@@ -12,6 +12,7 @@ public class CharacterState : MonoBehaviour
 
     [SerializeField, Header("레벨 설정")]
     public int lv = 1;
+    private int prevLv;
 
     [SerializeField, Header("ID 설정")]//p
     public int id;
@@ -81,12 +82,35 @@ public class CharacterState : MonoBehaviour
     [HideInInspector]
     public int level;//레벨
 
-    [HideInInspector]
     public float Hp;
 
     private void Awake()
     {
         Hp = maxHp;
+        prevLv = lv;
     }
-   
+
+	private void Update()
+	{
+		if(prevLv != lv)
+        {
+            prevLv = lv;
+            var checkPlayer = gameObject.GetComponent<PlayerState>();
+            if(checkPlayer == null)
+            {
+                return;
+            }
+
+            var table = DataTableMgr.GetTable<CharacterLevelTable>();
+            var data = table.GetLevelData(id * 100 + lv);
+
+            if(data != null)
+            {
+                checkPlayer.damage = data.CharacterDamage;
+                checkPlayer.armor = data.CharacterArmor;
+                checkPlayer.maxHp = data.CharacterHP;
+                checkPlayer.Hp = data.CharacterHP;
+            }
+        }
+	}
 }
