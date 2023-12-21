@@ -9,24 +9,39 @@ public class SnipingSkillType : SkillBase
     public float figure;
     [SerializeField, Header("사용할 이팩트 이름")]
     public string effectName;
-
+    private bool isSniping;
+    private float timer;
     private void Start()
     {
         player = GetComponent<PlayerController>();
     }
+    private void OnEnable()
+    {
+        isSniping = false;
+    }
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        
+    }
     public override void UseSkill()
     {
-        switch (skillType)
+        if (player.state.cost >= player.state.skillCost && timer >= player.state.skillCoolTime)
         {
-            case Defines.SkillType.SnipingSingle:
-                SnipingSingle();
-                break;
-            case Defines.SkillType.SnipingArea:
+            timer = 0;
+            player.state.cost -= skillCost;
+            isSkillUsing = true;
+            switch (skillType)
+            {
+                case Defines.SkillType.SnipingSingle:
+                    SnipingSingle();
+                    break;
+                case Defines.SkillType.SnipingArea:
 
-                break;
+                    break;
 
+            }
         }
-
     }
     public void SnipingSingle()
     {
