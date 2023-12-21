@@ -48,7 +48,7 @@ public class MultipleObjectsMake : _ObjectsMakeBase
                     if(isObjectAttachToParent)
                         m_obj.transform.parent = this.transform;
                     m_obj.transform.localScale = m_scale;
-                    Destroy(m_obj, 3f);
+                    Destroy(m_obj, 6.25f);
                     
                 }
 

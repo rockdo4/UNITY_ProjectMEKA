@@ -28,7 +28,7 @@ public abstract class SkillBase : MonoBehaviour
     public int[] rangeAttack;
     [HideInInspector]
     public int[,] AttackRange;
-    [HideInInspector]
+    //[HideInInspector]
     public List<Tile> attackableTiles;
     [HideInInspector]
     public int[,] attackRangeRot;

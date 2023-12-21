@@ -98,6 +98,7 @@ public static class Utils
     public static int[,] RotateArray(int[,] arr, int rotationCount)
     {
         // ȸ�� Ƚ���� 4�� ���� �������� ���Ͽ� ���ʿ��� ȸ���� �ּ�ȭ�մϴ�.
+        Debug.Log(arr == null);
         rotationCount %= 4;
 
         // �迭�� ��� ���� ũ��
