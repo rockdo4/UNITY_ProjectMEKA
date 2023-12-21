@@ -15,6 +15,7 @@ public class BuffSkilType : SkillBase
         CriticalChance,
         EnemyArmor,
         Healing,
+        ArmorAndCost
     }
 
 
@@ -41,6 +42,8 @@ public class BuffSkilType : SkillBase
 
     [SerializeField, Header("얼마나 증가(배율이면 그대로, 퍼세트면 1이 100%)")]
     public float figure;
+    [SerializeField, Header("코스트 초당 몇증가?")]
+    public float addCost;
 
     [SerializeField, Header("공격 범위가 따로 존재하는가")]
     public bool isAttackRage;
@@ -58,6 +61,7 @@ public class BuffSkilType : SkillBase
     private float saveCriticalChance;
     private GameObject obj;
     private List<Collider> colliders;
+    private float tTimer;
     private void Start()
     {
         player = GetComponent<PlayerController>();
@@ -75,6 +79,16 @@ public class BuffSkilType : SkillBase
         timer += Time.deltaTime;
         if(isSkillUsing)
         {
+            if(type == buffType.ArmorAndCost)
+            {
+                tTimer += Time.deltaTime;
+                if(tTimer>=1f)
+                {
+                    tTimer = 0;
+                    var cos = GameObject.FindGameObjectWithTag("StageManager");
+                    cos.GetComponent<StageManager>().currentCost += addCost;
+                }
+            }
             duration += Time.deltaTime;
             if(duration >= skillDuration) 
             {
@@ -171,8 +185,15 @@ public class BuffSkilType : SkillBase
             case buffType.EnemyArmor:
                 InstantSkillDeductEnemyArmor();
                 break;
+            case buffType.ArmorAndCost:
+                InstantSkillArmorAndCost();
+                break;
         }
         
+    }
+    public void InstantSkillArmorAndCost()
+    {
+        player.state.armor += saveArmor + figure;
     }
     public void InstantSkillDeductEnemyArmor()
     {

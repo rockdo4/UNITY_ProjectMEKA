@@ -15,8 +15,12 @@ public class NukeSkill : SkillBase
     private void OnEnable()
     {
         isSkillUsing = false;
-        player.ani.speed = 1;
-        
+        if(player != null) 
+        {
+            player.ani.speed = 1;
+
+        }
+
     }
     private void Update()
     {

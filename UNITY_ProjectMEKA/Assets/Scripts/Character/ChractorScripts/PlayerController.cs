@@ -523,7 +523,7 @@ public class PlayerController : MonoBehaviour
 
     public (Vector3, Tile) OnClickSkillTile()
     {
-        var skill = skillState as BuffSkilType;
+        var skill = skillState as SkillBase;
         int layerMask = 0;
         int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
         int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
@@ -692,6 +692,7 @@ public class PlayerController : MonoBehaviour
             skillRange[i] += skillOffset; // offset between player tile and mouse tile
 
             // skill attack range => attackableSkillTiles applyied tile height(first hit tile)
+            
             var tempPos = skillRange[i];
             tempPos.y += 10;
             if (Physics.Raycast(tempPos, Vector3.down, out hit, Mathf.Infinity, layerMask))

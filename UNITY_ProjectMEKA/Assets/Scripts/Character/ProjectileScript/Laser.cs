@@ -6,8 +6,8 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     
-    public float speed = 0.1f; // �������� �̵� �ӵ�
-    public float maxDistance = 100.0f; // �������� �̵��� �ִ� �Ÿ�
+    public float speed = 0.1f; 
+    public float maxDistance = 100.0f; 
 
     private LineRenderer lineRenderer;
     public PlayerController player;
@@ -35,7 +35,6 @@ public class Laser : MonoBehaviour
 
     void Update()
     {
-        // �������� ������ �������� �̵�
         float distance = speed * Time.deltaTime;
         endPosition += startPos * distance;
         lineRenderer.SetPosition(0, player.FirePosition.transform.position);
