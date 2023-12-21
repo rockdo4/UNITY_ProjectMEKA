@@ -28,7 +28,10 @@ public abstract class SkillBase : MonoBehaviour
     public int[] rangeAttack;
     [HideInInspector]
     public int[,] AttackRange;
-
+    [HideInInspector]
+    public List<Tile> attackableTiles;
+    [HideInInspector]
+    public int[,] attackRangeRot;
     public void ConvertTo2DArray()
     {
         // 1차원 배열의 길이가 행과 열의 곱과 일치하는지 확인

@@ -35,7 +35,7 @@ public static class Utils
 
     public static bool IsCurrentPlayer(GameObject player)
     {
-        //·¹ÀÌ¸¦ ½÷¼­ ¸ÂÀº °Ô Ä¿·±Æ® ÇÃ·¹ÀÌ¾î¸é, true ¹ÝÈ¯
+        //ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ä¿ï¿½ï¿½Æ® ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½, true ï¿½ï¿½È¯
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -97,16 +97,16 @@ public static class Utils
 
     public static int[,] RotateArray(int[,] arr, int rotationCount)
     {
-        // È¸Àü È½¼ö¸¦ 4·Î ³ª´« ³ª¸ÓÁö¸¦ ±¸ÇÏ¿© ºÒÇÊ¿äÇÑ È¸ÀüÀ» ÃÖ¼ÒÈ­ÇÕ´Ï´Ù.
+        // È¸ï¿½ï¿½ È½ï¿½ï¿½ï¿½ï¿½ 4ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½È­ï¿½Õ´Ï´ï¿½.
         rotationCount %= 4;
 
-        // ¹è¿­ÀÇ Çà°ú ¿­ÀÇ Å©±â
+        // ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
         int rowCount = arr.GetLength(0);
         int colCount = arr.GetLength(1);
 
         for (int r = 0; r < rotationCount; r++)
         {
-            // ½Ã°è ¹æÇâÀ¸·Î 90µµ È¸ÀüÇÑ ¹è¿­À» ÀúÀåÇÒ »õ·Î¿î ¹è¿­À» »ý¼ºÇÕ´Ï´Ù.
+            // ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 90ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             int[,] rotatedArr = new int[colCount, rowCount];
 
             for (int i = 0; i < rowCount; i++)
@@ -117,14 +117,14 @@ public static class Utils
                 }
             }
 
-            // ´ÙÀ½ È¸ÀüÀ» À§ÇØ arr¸¦ rotatedArr·Î ¾÷µ¥ÀÌÆ®ÇÏ°í, Çà°ú ¿­ÀÇ Å©±â¸¦ ±³È¯ÇÕ´Ï´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ arrï¿½ï¿½ rotatedArrï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Ï°ï¿½, ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½È¯ï¿½Õ´Ï´ï¿½.
             arr = rotatedArr;
             int temp = rowCount;
             rowCount = colCount;
             colCount = temp;
         }
 
-        // ÃÖÁ¾ÀûÀ¸·Î È¸ÀüµÈ ¹è¿­À» ¹ÝÈ¯ÇÕ´Ï´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Õ´Ï´ï¿½.
         return arr;
     }
 }
