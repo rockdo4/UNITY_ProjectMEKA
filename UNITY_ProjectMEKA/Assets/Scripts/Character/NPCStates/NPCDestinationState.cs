@@ -21,7 +21,7 @@ public class NPCDestinationStates : NPCBaseState
 
     public override void Enter()
     {
-        Debug.Log("이동 상태 엔터");
+        //Debug.Log("이동 상태 엔터");
         isRotating = true;
         targetPos = enemyCtrl.wayPoint[enemyCtrl.waypointIndex].position;
         targetPos.y = enemyCtrl.transform.position.y;
