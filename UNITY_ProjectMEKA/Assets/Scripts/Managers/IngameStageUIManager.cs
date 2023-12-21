@@ -64,7 +64,7 @@ public class IngameStageUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        stageManager = GameObject.FindGameObjectWithTag(Defines.Tags.stageManager).GetComponent<StageManager>();
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
@@ -203,7 +203,10 @@ public class IngameStageUIManager : MonoBehaviour
                 joystickHandler.gameObject.SetActive(false);
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(true);
-                skillButton.gameObject.SetActive(true);
+                if(stageManager.currentPlayer.skillState.skillType != SkillType.Auto)
+                {
+                    skillButton.gameObject.SetActive(true);
+                }
                 ChangeAttackableTileMesh();
                 break;
             case WindowMode.Win:
