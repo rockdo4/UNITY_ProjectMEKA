@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour
         OnClickDownCharacter();
         if (skillState != null)
         {
-            if (skillState.isSkillUsing)
+            if (stageManager.ingameStageUIManager.isSkillTileWindow && (skillState.skillType != SkillType.Instant))
             {
                 mouseClickInfo = OnClickSkillTile();
                 if (isDragging && prevAttackableSkillTiles != attackableSkillTiles)
@@ -523,7 +523,6 @@ public class PlayerController : MonoBehaviour
 
     public (Vector3, Tile) OnClickSkillTile()
     {
-        var skill = skillState as SkillBase;
         int layerMask = 0;
         int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
         int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
@@ -541,16 +540,20 @@ public class PlayerController : MonoBehaviour
             return (mouseClickInfo.Item1, hit.transform.GetComponent<Tile>());
         }
 
-        if(Input.GetMouseButtonUp(0))
+        if(Input.GetMouseButtonUp(0) && attackableSkillTiles.Count != 0)
         {
             isDragging = false;
             switch (skillState.skillType)
             {
                 case SkillType.SnipingArea:
                     OnClickUpSkillAreaTile();
+                    stageManager.ingameStageUIManager.isSkillTileWindow = false;
+                    attackableSkillTiles.Clear();
                     break;
                 case SkillType.SnipingSingle:
                     OnClickUpSkillSingleTile();
+                    stageManager.ingameStageUIManager.isSkillTileWindow = false;
+                    attackableSkillTiles.Clear();
                     break;
             }
         }
@@ -573,9 +576,6 @@ public class PlayerController : MonoBehaviour
             skillState.UseSkill();
             Time.timeScale = 1.0f;
             stageManager.currentPlayer = null;
-
-            // temp code
-            skillState.isSkillUsing = false;
         }
         else
         {
@@ -601,9 +601,6 @@ public class PlayerController : MonoBehaviour
             skillState.UseSkill();
             Time.timeScale = 1.0f;
             stageManager.currentPlayer = null;
-
-            // temp code
-            //skillState.isSkillUsing = false;
         }
         isSkillPossible = false;
     }
@@ -617,15 +614,12 @@ public class PlayerController : MonoBehaviour
             attackableSkillTiles.Clear();
         }
 
-        // temp code
-        var skill = skillState as BuffSkilType;
-
         var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
         List<Vector3Int> skillRange = new List<Vector3Int>();
         var playerPosInt = Utils.Vector3ToVector3Int(transform.position);
         Vector3Int defaultOffset = new Vector3Int();
         Vector3Int skillOffset = mousePosInt - playerPosInt;
-        int[,] tempAttackRange = skill.AttackRange;
+        int[,] tempAttackRange = skillState.AttackRange;
 
         // Check mouse position is in the attackable tiles
         foreach (var attackableTile in attackableTiles)
@@ -645,7 +639,7 @@ public class PlayerController : MonoBehaviour
         if (isOffsetXZero && skillOffset.z < 0)
         {
             // 아래로 회전
-            tempAttackRange = Utils.RotateArray(skill.AttackRange, 2);
+            tempAttackRange = Utils.RotateArray(skillState.AttackRange, 2);
 
         }
         else if (!isOffsetXZero)
@@ -653,12 +647,12 @@ public class PlayerController : MonoBehaviour
             if (skillOffset.x > 0)
             {
                 // 우회전
-                tempAttackRange = Utils.RotateArray(skill.AttackRange, 1);
+                tempAttackRange = Utils.RotateArray(skillState.AttackRange, 1);
             }
             else
             {
                 // 좌회전
-                tempAttackRange = Utils.RotateArray(skill.AttackRange, 3);
+                tempAttackRange = Utils.RotateArray(skillState.AttackRange, 3);
             }
         }
 
@@ -734,8 +728,9 @@ public class PlayerController : MonoBehaviour
     {
         var otherCharacterArrange = stageManager.ingameStageUIManager.windowMode == WindowMode.FirstArrange || stageManager.ingameStageUIManager.windowMode == WindowMode.SecondArrange;
         var otherCharacterSetting = stageManager.ingameStageUIManager.windowMode == WindowMode.Setting;
+        var otherCharacterUsingSkill = stageManager.ingameStageUIManager.isSkillTileWindow;
 
-        if(otherCharacterArrange || otherCharacterSetting)
+        if(otherCharacterArrange || otherCharacterSetting || otherCharacterUsingSkill)
         {
             return;
         }

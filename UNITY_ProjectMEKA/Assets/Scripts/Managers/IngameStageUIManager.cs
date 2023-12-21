@@ -59,6 +59,7 @@ public class IngameStageUIManager : MonoBehaviour
     private int prevCost;
     private int prevKillMonsterCount;
     private int prevHouseLife;
+    public bool isSkillTileWindow;
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
@@ -71,7 +72,6 @@ public class IngameStageUIManager : MonoBehaviour
         skillButton = joystick.skillButton;
 
         isInfoWindowOn = true;
-
     }
 
     private void Awake()
@@ -131,7 +131,6 @@ public class IngameStageUIManager : MonoBehaviour
         var isCurrentPlayer = stageManager.currentPlayer != null;
         var isFirstArranged = isCurrentPlayer ? stageManager.currentPlayer.stateManager.firstArranged : false;
         var isSecondArranged = isCurrentPlayer ? stageManager.currentPlayer.stateManager.secondArranged : false;
-        var isSkillUsing = isCurrentPlayer ? stageManager.currentPlayer.GetComponent<SkillBase>().isSkillUsing : false;
 
         if (!isCurrentPlayer)
         {
@@ -145,11 +144,11 @@ public class IngameStageUIManager : MonoBehaviour
         {
             windowMode = WindowMode.SecondArrange;
         }
-        else if (isSecondArranged && !isSkillUsing)
+        else if (isSecondArranged && !isSkillTileWindow)
         {
             windowMode = WindowMode.Setting;
         }
-        else if (isSkillUsing)
+        else if (isSkillTileWindow)
         {
             windowMode = WindowMode.Skill;
         }
@@ -219,7 +218,6 @@ public class IngameStageUIManager : MonoBehaviour
                 LooseWindowSet();
                 break;
             case WindowMode.Skill:
-
                 break;
         }
     }
