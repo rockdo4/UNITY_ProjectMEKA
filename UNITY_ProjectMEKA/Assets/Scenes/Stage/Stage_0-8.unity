@@ -965,7 +965,7 @@ Transform:
   m_GameObject: {fileID: 1343661719}
   serializedVersion: 2
   m_LocalRotation: {x: 0.53921175, y: 0, z: 0, w: 0.8421703}
-  m_LocalPosition: {x: 0, y: 8, z: -9}
+  m_LocalPosition: {x: 1.25, y: 8, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1312,12 +1312,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 201647043515748662, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
+      propertyPath: waveInfos.Array.data[0].gateType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 201647043515748662, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[0].moveType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 201647043515748662, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
+      propertyPath: waveInfos.Array.data[1].gateType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 201647043515748662, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[1].moveType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 201647043515748662, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[0].waypointGo
@@ -1395,6 +1403,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 2296496408918711680, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
+      propertyPath: gateType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3600230243107126306, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1435,6 +1447,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4870624065337476975, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
+      propertyPath: gateType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5060174298327999355, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.25
@@ -1445,7 +1461,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5297598270164579994, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[0].moveType
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5297598270164579994, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
+      propertyPath: waveInfos.Array.data[1].moveType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5297598270164579994, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[0].pathDuration
@@ -1481,11 +1501,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5584877857256638258, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[0].moveType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5584877857256638258, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[1].moveType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5584877857256638258, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[0].waypointGo
@@ -1593,11 +1613,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7230406217632950514, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[0].moveType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7230406217632950514, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[1].moveType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7230406217632950514, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[0].moveRepeat
@@ -1700,12 +1720,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8451446329571985643, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
+      propertyPath: waveInfos.Array.data[0].gateType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8451446329571985643, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[0].moveType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8451446329571985643, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
+      propertyPath: waveInfos.Array.data[1].gateType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8451446329571985643, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[1].moveType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8451446329571985643, guid: 40b85b8e8815b1a40acbe45a03279a94, type: 3}
       propertyPath: waveInfos.Array.data[0].waypointGo
