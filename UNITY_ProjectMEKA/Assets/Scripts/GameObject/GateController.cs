@@ -87,7 +87,7 @@ public class GateController : MonoBehaviour
             if(wave.waypointGo != null)
             {
                 var waypointCount = wave.waypointGo.transform.childCount;
-                wave.waypoints = new Transform[waypointCount+1];
+                wave.waypoints = new Transform[waypointCount + 1];
                 for (int i = 0; i < waypointCount; ++i)
                 {
                     wave.waypoints[i] = wave.waypointGo.transform.GetChild(i).transform;
@@ -120,10 +120,10 @@ public class GateController : MonoBehaviour
         }
 
         // house setting
-        var houses = GameObject.FindGameObjectWithTag(Tags.house);
-        foreach (var houseController in houses.GetComponents<HouseController>())
+        var houses = GameObject.FindGameObjectsWithTag(Tags.house);
+        foreach (var house in houses)
         {
-            var houseType = houseController.gateType;
+            var houseType = house.GetComponent<HouseController>().gateType;
             foreach(var waveInfo in waveInfos)
             {
                 if(waveInfo.gateType != houseType)
@@ -132,7 +132,7 @@ public class GateController : MonoBehaviour
                 }
                 else
                 {
-                    waveInfo.house = houseController.transform;
+                    waveInfo.house = house.transform;
                     if(waveInfo.waypointGo == null)
                     {
                         waveInfo.waypoints = new Transform[1];

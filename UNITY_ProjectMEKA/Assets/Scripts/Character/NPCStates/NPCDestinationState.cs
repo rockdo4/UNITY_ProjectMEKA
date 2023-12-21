@@ -189,6 +189,12 @@ public class NPCDestinationStates : NPCBaseState
         }
         else
         {
+            var tempDirection = (targetPos - enemyCtrl.transform.position).normalized;
+            if (direction != tempDirection)
+            {
+                direction = tempDirection;
+            }
+
             pos += direction * enemyCtrl.state.speed * Time.deltaTime;
             enemyCtrl.rb.MovePosition(pos);
         }
