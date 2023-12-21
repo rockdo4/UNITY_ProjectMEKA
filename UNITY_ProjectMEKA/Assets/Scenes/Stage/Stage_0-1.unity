@@ -930,12 +930,16 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2588198151791207046, guid: 6288fdd65d0bc0942ad513e2642b2688, type: 3}
+      propertyPath: startInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588198151791207046, guid: 6288fdd65d0bc0942ad513e2642b2688, type: 3}
       propertyPath: waveInfos.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2588198151791207046, guid: 6288fdd65d0bc0942ad513e2642b2688, type: 3}
       propertyPath: waveInfos.Array.data[0].moveType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2588198151791207046, guid: 6288fdd65d0bc0942ad513e2642b2688, type: 3}
       propertyPath: waveInfos.Array.data[0].waypointGo
@@ -1708,7 +1712,7 @@ MonoBehaviour:
   tempClearCount: 0
   timer: 0
   defaultCost: 0
-  currentCost: 0
+  currentCost: 10
   maxCost: 99
   useCost: 0
   allMonsterCount: 0
@@ -1716,8 +1720,8 @@ MonoBehaviour:
   killMonsterCount: 0
   killTargetMonsterCount: 0
   leftWaveCount: 0
-  currentHouseLife: 0
-  maxHouseLife: 10
+  currentHouseLife: 7
+  maxHouseLife: 7
 --- !u!1 &9138138947051388992
 GameObject:
   m_ObjectHideFlags: 0
