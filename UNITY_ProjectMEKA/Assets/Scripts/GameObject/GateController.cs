@@ -89,11 +89,14 @@ public class GateController : MonoBehaviour
 
         foreach (var wave in  waveInfos)
         {
-            var waypointCount = wave.waypointGo.transform.childCount;
-            wave.waypoints = new Transform[waypointCount+1];
-            for (int i = 0; i < waypointCount; ++i)
+            if(wave.waypointGo != null)
             {
-                wave.waypoints[i] = wave.waypointGo.transform.GetChild(i).transform;
+                var waypointCount = wave.waypointGo.transform.childCount;
+                wave.waypoints = new Transform[waypointCount+1];
+                for (int i = 0; i < waypointCount; ++i)
+                {
+                    wave.waypoints[i] = wave.waypointGo.transform.GetChild(i).transform;
+                }
             }
         }
 
