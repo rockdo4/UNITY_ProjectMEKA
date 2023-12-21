@@ -36,6 +36,8 @@ public class CharacterState : MonoBehaviour
 
     [SerializeField, Header("방어막 수치 설정")]
     public float shield;
+    [HideInInspector]
+    public float maxShield = 0;
 
     [SerializeField, Header("원거리 타입일시 장착할 발사체")]//p,e
     public string BulletName;

@@ -321,7 +321,8 @@ public class GateController : MonoBehaviour
 
         stats.damage = data.MonsterAttackDamage;
         stats.armor = data.MonsterDefense;
-        stats.shield = data.MonsterShield;
+        stats.maxShield = data.MonsterShield;
+        stats.shield = stats.maxShield;
         stats.maxHp = data.MonsterHP;
         stats.Hp = stats.maxHp;
 
