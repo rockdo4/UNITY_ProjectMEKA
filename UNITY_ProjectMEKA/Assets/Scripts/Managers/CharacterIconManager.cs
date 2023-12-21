@@ -37,14 +37,14 @@ public class CharacterIconManager : MonoBehaviour
 
             foreach (var prefab in prefabs)
             {
-                Debug.Log(prefab.name);
+                //Debug.Log(prefab.name);
                 
                 //var characterState = prefab.GetComponent<CharacterState>();
                 var characterState = prefab.GetComponent<PlayerState>();
 
                 if(characterState == null)
                 {
-                    Debug.Log("��");
+                    Debug.Log("없음");
                 }
                 else
                 {

@@ -196,9 +196,9 @@ public class GateController : MonoBehaviour
 
         if (!firstGetPool)
         {
-            if (currentEnemyCount == 0)
+            if (currentEnemyCount == 0) //WaveTimer Log
             {
-                Debug.Log($"{currentWave} : {enemyName} 첫 번째 몬스터 스폰");
+                //Debug.Log($"{currentWave} : {enemyName} 첫 번째 몬스터 스폰");
                 timerScript.AddStartWave($"{transform.gameObject.name}/{currentWave+1}번 웨이브");
             }
 
@@ -216,9 +216,10 @@ public class GateController : MonoBehaviour
         }
 
         //다음 종류 몹
-        if (currentEnemyCount >= enemyInfo.count)
+        if (currentEnemyCount >= enemyInfo.count)   
         {
-            timerScript.AddEndWave($"{transform.gameObject.name}/{currentWave + 1}:{enemyName}");
+			//WaveTimer Log
+			timerScript.AddEndWave($"{transform.gameObject.name}/{currentWave + 1}:{enemyName}");
             Debug.Log("다음 종류 몬스터");
 
             currentEnemyCount = 0;
