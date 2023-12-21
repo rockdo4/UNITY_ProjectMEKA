@@ -525,7 +525,7 @@ public class PlayerController : MonoBehaviour
 
     public (Vector3, Tile) OnClickSkillTile()
     {
-        var skill = skillState as BuffSkilType;
+        var skill = skillState as SkillBase;
         int layerMask = 0;
         int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
         int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
@@ -669,7 +669,7 @@ public class PlayerController : MonoBehaviour
             skillRange[i] += defaultOffset;
             skillRange[i] += skillOffset;
 
-            // 여기서 레이를 쏴서, 맞는 타일들을 attackableSkillTiles에 넣기
+            // 여기서 레이를 쏴서, 맞는 타일들을 attackableSkillTiles에 넣기 히히
             var tempPos = skillRange[i];
             tempPos.y += 10;
             if (Physics.Raycast(tempPos, Vector3.down, out hit, Mathf.Infinity, layerMask))

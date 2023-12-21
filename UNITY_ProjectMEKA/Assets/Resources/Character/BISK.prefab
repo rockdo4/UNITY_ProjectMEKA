@@ -17825,6 +17825,7 @@ MonoBehaviour:
   effectName: 
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
+  firstLookPos: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -17896,25 +17897,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375317c1b2b29d341824d604467b31de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillCost: 50
-  skillCoolTime: 22
-  skillType: 2
+  skillCost: 20
+  skillCoolTime: 35
+  skillType: 1
   isSkillUsing: 0
   isRangeOut: 0
+  hang: 0
+  yal: 0
+  rangeAttack: 
   targetList: []
-  skillDuration: 12
+  skillDuration: 15
   isMe: 1
   isSingle: 0
   effectName: AmberSkillEffect
   isChoice: 0
-  type: 0
+  type: 7
   Inc: 0
-  figure: 0.15
-  isAttackRage: 1
+  figure: 0.2
+  addCost: 0.3
+  isAttackRage: 0
   isAttackAnimaiton: 0
-  hang: 3
-  yal: 3
-  rangeAttack: 000000000100000000000000010000000200000001000000000000000100000000000000
 --- !u!1 &8363141463200748262
 GameObject:
   m_ObjectHideFlags: 0
