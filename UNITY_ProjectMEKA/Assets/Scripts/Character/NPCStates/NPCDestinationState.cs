@@ -50,8 +50,6 @@ public class NPCDestinationStates : NPCBaseState
     {
         switch(enemyCtrl.moveType)
         {
-            case Defines.MoveType.AutoTile:
-                break;
             case Defines.MoveType.Waypoint:
                 MoveEnemyWaypoint();
                 break;

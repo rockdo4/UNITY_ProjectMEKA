@@ -1,13 +1,7 @@
-using CsvHelper;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
 using static Defines;
 using static GateController;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class GateController : MonoBehaviour
 {
@@ -29,6 +23,11 @@ public class GateController : MonoBehaviour
     [System.Serializable]
     public class WaveInfo
     {
+        [SerializeField, Header("게이트 종류")]
+        public HouseType gateType;
+        [HideInInspector]
+        public Transform house;
+
         [SerializeField, Header("몬스터 세팅")]
         public List<EnemySpawnInfo> enemySpawnInfos;
 
@@ -50,10 +49,6 @@ public class GateController : MonoBehaviour
 
     [SerializeField, Header("처음 대기 시간")]
     public float startInterval;
-
-    [SerializeField, Header("게이트 종류")]
-    public Defines.GateType gateType;
-    protected Transform house;
 
     [SerializeField, Header("이동라인  스피드")]
     public float pathSpeed;
@@ -87,8 +82,6 @@ public class GateController : MonoBehaviour
 
     virtual protected void Awake()
     {
-        spawnInitPos = new Vector3 (transform.position.x, 0.25f, transform.position.z);
-
         foreach (var wave in  waveInfos)
         {
             if(wave.waypointGo != null)
@@ -125,6 +118,40 @@ public class GateController : MonoBehaviour
         {
             Debug.Log("timerScript is null");
         }
+
+        // house setting
+        var houses = GameObject.FindGameObjectWithTag(Tags.house);
+        foreach (var houseController in houses.GetComponents<HouseController>())
+        {
+            var houseType = houseController.gateType;
+            foreach(var waveInfo in waveInfos)
+            {
+                if(waveInfo.gateType != houseType)
+                {
+                    continue;
+                }
+                else
+                {
+                    waveInfo.house = houseController.transform;
+                    if(waveInfo.waypointGo == null)
+                    {
+                        waveInfo.waypoints = new Transform[1];
+                        waveInfo.waypoints[0] = waveInfo.house;
+                    }
+                    else
+                    {
+                        var count = waveInfo.waypoints.Length - 1;
+                        waveInfo.waypoints[count] = waveInfo.house;
+                    }
+                }
+            }
+        }
+
+        targetPos = waveInfos[currentWave].waypoints[waypointIndex].position;
+        targetPos.y = enemyPathInitPos.y;
+        enemyPathRb.transform.LookAt(targetPos);
+        pathDuration = waveInfos[currentWave].pathDuration;
+        pathDone = false;
     }
 
     private void Start()
@@ -174,15 +201,13 @@ public class GateController : MonoBehaviour
         {
             switch (waveInfos[currentWave].moveType)
             {
-                case Defines.MoveType.AutoTile:
-                    break;
-                case Defines.MoveType.Waypoint:
+                case MoveType.Waypoint:
                     ShowEnemyPathWaypoint(waveInfos[currentWave]);
                     break;
-                case Defines.MoveType.Straight:
+                case MoveType.Straight:
                     ShowEnemyPathStraight(waveInfos[currentWave]);
                     break;
-                case Defines.MoveType.WaypointRepeat:
+                case MoveType.WaypointRepeat:
                     ShowEnemyPathRepeat(waveInfos[currentWave]);
                     break;
             }

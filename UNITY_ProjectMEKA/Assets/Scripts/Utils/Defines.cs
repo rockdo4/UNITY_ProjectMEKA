@@ -20,6 +20,7 @@ public static class Defines
         public const string collect = "Collect";
         public const string player = "Player";
         public const string characterIconManager = "CharacterIconManager";
+        public const string house = "House";
     }
 
     public static class Layers
@@ -88,20 +89,15 @@ public static class Defines
         OhYaBung,//���ߺ�||����
         YangSehyung,//�缼��
     }
-    public enum GateType
+    public enum HouseType
     {
-        LowGate1,
-        LowGate2,
-        LowGate3,
-        LowGate4,
-        HighGate1,
-        HighGate2,
-        HighGate3,
-        HighGate4,
+        House1,
+        House2,
+        House3,
+        House4
     }
     public enum MoveType
     {
-        AutoTile,
         Waypoint,
         WaypointRepeat,
         Straight,

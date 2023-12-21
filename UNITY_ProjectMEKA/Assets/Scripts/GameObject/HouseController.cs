@@ -6,7 +6,7 @@ using static Defines;
 public class HouseController : MonoBehaviour
 {
     private StageManager stageManager;
-    public GateType gateType;
+    public HouseType gateType;
 
     private void Awake()
     {
