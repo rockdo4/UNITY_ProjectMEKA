@@ -131,7 +131,7 @@ public class IngameStageUIManager : MonoBehaviour
         var isCurrentPlayer = stageManager.currentPlayer != null;
         var isFirstArranged = isCurrentPlayer ? stageManager.currentPlayer.stateManager.firstArranged : false;
         var isSecondArranged = isCurrentPlayer ? stageManager.currentPlayer.stateManager.secondArranged : false;
-        var isSkillUsing = isCurrentPlayer ? stageManager.currentPlayer.GetComponent<SkillBase>().isSkillUsing : false;
+        var isSkillUsing = isCurrentPlayer ? stageManager.currentPlayer.skillState.isSkillUsing : false;
 
         if (!isCurrentPlayer)
         {
