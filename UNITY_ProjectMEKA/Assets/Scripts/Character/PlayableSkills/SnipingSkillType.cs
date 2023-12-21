@@ -12,6 +12,7 @@ public class SnipingSkillType : SkillBase
     {
         Attack,
         PlayerDamageUp,
+        Shield,
     }
 
     private PlayerController player;
@@ -72,11 +73,36 @@ public class SnipingSkillType : SkillBase
                     case SkillType.PlayerDamageUp:
                         SingleSnipingPlayerDamageUp();
                         break;
+                    case SkillType.Shield:
+                        SingleSnipingPlayerShield();
+                        break;
                 }
                 
             }
         }
         Debug.Log("¾¯ÀÌ¹ú ÀÌ°Ô ½ºÅ³ÀÌÁö");
+    }
+    public void ShieldSkill()
+    {
+        foreach (var a in targetList)
+        {
+            if (a.tag == "Player")
+            {
+
+                var c = a.GetComponent<PlayerController>();
+                c.state.shield = figure;
+                var obj = ObjectPoolManager.instance.GetGo(effectName);
+                obj.transform.position = c.gameObject.transform.position;
+                obj.GetComponent<Shield>().player = c;
+                obj.SetActive(false);
+                obj.SetActive(true);
+                isSkillUsing = false;
+            }
+        }
+    }
+    public void SingleSnipingPlayerShield()
+    {
+        player.ani.SetTrigger("Skill");
     }
     public void SingleSnipingPlayerDamageUp()
     {

@@ -15185,8 +15185,11 @@ MonoBehaviour:
   enemyBlockCount: 
   skillCost: 0
   skillCoolTime: 0
-  attakableTiles: []
+  attackableTiles: []
   arrangableTiles: []
+  attackableSkillTiles: []
+  prevAttackableSkillTiles: []
+  skillState: {fileID: 0}
   PlayerInit:
     m_PersistentCalls:
       m_Calls: []
@@ -15195,11 +15198,15 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   parentPos: {fileID: 0}
   ChildPos: {fileID: 0}
+  isHitEffect: 0
+  effectName: 
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
+  firstLookPos: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
+  isSkillPossible: 0
 --- !u!114 &4522084676868832659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15215,9 +15222,9 @@ MonoBehaviour:
   id: 12101
   name: "\uB808\uC774\uBE10"
   property: 2
-  maxHp: 500
-  amror: 10
-  damage: 30
+  maxHp: 258
+  armor: 18
+  damage: 18
   attackDelay: 0.5
   BulletName: 
   BulletType: 0
@@ -15228,9 +15235,9 @@ MonoBehaviour:
   rangeAttack: 01000000010000000200000001000000
   level: 0
   grade: 0
-  Hp: 0
+  Hp: 258
   ID: 0
-  arrangeCost: 19
+  arrangeCost: 16
   arrangeCoolTime: 50
   skill: 0
   cost: 0
@@ -15239,6 +15246,8 @@ MonoBehaviour:
   skillCoolTime: 0
   skillDuration: 0
   occupation: 1
+  critChance: 0
+  fatalDamage: 0
   experience: 0
   currentExperience: 0
 --- !u!114 &6987191452782882908
@@ -15269,6 +15278,12 @@ MonoBehaviour:
   skillCoolTime: 0
   skillType: 1
   isSkillUsing: 0
+  isRangeOut: 0
+  hang: 3
+  yal: 3
+  rangeAttack: 000000000100000000000000010000000200000001000000000000000100000000000000
+  attackableTiles: []
+  targetList: []
   skillDuration: 10
   isMe: 0
   isSingle: 0
@@ -15277,10 +15292,9 @@ MonoBehaviour:
   type: 3
   Inc: 0
   figure: 0.2
+  addCost: 0
   isAttackRage: 1
-  hang: 3
-  yal: 3
-  rangeAttack: 000000000100000000000000010000000200000001000000000000000100000000000000
+  isAttackAnimaiton: 1
 --- !u!1 &6599911611535559560
 GameObject:
   m_ObjectHideFlags: 0

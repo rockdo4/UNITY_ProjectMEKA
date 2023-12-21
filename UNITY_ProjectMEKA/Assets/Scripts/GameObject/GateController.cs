@@ -152,6 +152,7 @@ public class GateController : MonoBehaviour
         enemyPathRb.transform.LookAt(targetPos);
         pathDuration = waveInfos[currentWave].pathDuration;
         pathDone = false;
+
     }
 
     private void Start()
@@ -302,6 +303,28 @@ public class GateController : MonoBehaviour
         enemyController.moveRepeatCount = waveInfo.moveRepeat;
         enemyController.state.property = spawnInfo.attribute;
         enemyController.state.level = spawnInfo.level;
+
+        var stats = enemyGo.GetComponent<CharacterState>();
+        //여기서 스탯 추가할 예정r
+
+        stats.lv = spawnInfo.level;
+
+		int levelId = stats.id * 100 + stats.lv;
+		Debug.Log(levelId);
+
+		var data = DataTableMgr.GetTable<MonsterLevelTable>().GetMonsterData(levelId);
+        if(data == null)
+        {            
+            return;
+		}
+        Debug.Log((data.MonsterAttackDamage, data.MonsterDefense, data.MonsterHP, data.MonsterShield));
+
+        stats.damage = data.MonsterAttackDamage;
+        stats.armor = data.MonsterDefense;
+        stats.maxShield = data.MonsterShield;
+        stats.shield = stats.maxShield;
+        stats.maxHp = data.MonsterHP;
+        stats.Hp = stats.maxHp;
 
         // need to apply monster stats by level
     }

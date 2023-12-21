@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class HPBar : MonoBehaviour
 {
+    public Image shield;
+
     private Image image;
     private Canvas canvas;
     private PlayerState player;
@@ -24,6 +26,14 @@ public class HPBar : MonoBehaviour
 
         canvas = GetComponentInParent<Canvas>();
         originalWidth = image.rectTransform.sizeDelta.x;
+
+        if(player != null)
+        {
+            if(player.maxShield == 0 )
+            {
+				shield.gameObject.SetActive(false);
+			}
+        }
     }
 
     void Update()
@@ -31,17 +41,21 @@ public class HPBar : MonoBehaviour
         canvas.transform.LookAt(Camera.main.transform);
 
         float hpFraction;
+        float shieldFraction;
 
         if(player != null ) 
         {
             hpFraction = player.Hp / player.maxHp;
+            shieldFraction = player.shield / player.maxShield;
         }
         else
         {
             hpFraction = enemy.Hp / enemy.maxHp;
+            shieldFraction = enemy.shield / enemy.maxShield;
         }
 
         image.rectTransform.sizeDelta = new Vector2(originalWidth * hpFraction, image.rectTransform.sizeDelta.y);
+        shield.rectTransform.sizeDelta = new Vector2(originalWidth * shieldFraction, shield.rectTransform.sizeDelta.y);
     }
 }
 
