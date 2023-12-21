@@ -31,7 +31,8 @@ public class CharacterState : MonoBehaviour
     [SerializeField, Header("공격 딜레이 설정")]//p,e
     public float attackDelay;
 
-
+    [SerializeField, Header("방어막 수치 설정")]
+    public float shield;
 
     [SerializeField, Header("원거리 타입일시 장착할 발사체")]//p,e
     public string BulletName;

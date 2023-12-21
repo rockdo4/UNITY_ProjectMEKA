@@ -30,7 +30,14 @@ public class TakeDamage : MonoBehaviour, IAttackable
             {
                 damage = 5;
             }
-            player.Hp -= damage;
+            if(player.shield > 0f)
+            {
+                player.shield -= damage;
+            }
+            else
+            {
+                player.Hp -= damage;
+            }
         }
         else
         {
@@ -39,7 +46,15 @@ public class TakeDamage : MonoBehaviour, IAttackable
             {
                 damage = 5;
             }
-            enemy.Hp -= damage;
+            if(enemy.shield > 0f)
+            {
+                enemy.shield -= damage;
+            }
+            else
+            {
+                enemy.Hp -= damage;
+            }
+            
         }
         
         
