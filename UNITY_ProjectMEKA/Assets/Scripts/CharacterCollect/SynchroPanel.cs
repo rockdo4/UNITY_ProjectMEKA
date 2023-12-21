@@ -8,14 +8,15 @@ public class SynchroPanel : MonoBehaviour
 {
 	public static readonly int MAX_SYNCHRO_GRADE = 6;
 
-	public TextMeshProUGUI beforeGrade;
-	public TextMeshProUGUI afterGrade;
+	public Image[] leftStar;
+	public Image[] rightStar;
 
-	public TextMeshProUGUI levelText;
 	public ItemAutoQuantityCard[] synchroItemCard;
-	public ItemAutoQuantityCard silverItemCard;
-	public Button applyButton;
+	public TextMeshProUGUI beforeLevel;
+	public TextMeshProUGUI afterLevel;
 
+	[Header("etc")]
+	public Button applyButton;
 	public CharacterInfoText infoPanel;
 	public RectTransform resultPanel;
 
@@ -32,8 +33,15 @@ public class SynchroPanel : MonoBehaviour
 
 		applyButton.onClick.AddListener(() =>
 		{
-			ApplySynchro();
-			infoPanel.UpdateCharacter();
+			infoPanel.SetPopUpPanel(
+				"싱크로하시겠습니까?",
+				() =>
+				{
+					ApplySynchro();
+					infoPanel.UpdateCharacter();
+				}, 
+				"예", "아니오"
+				);
 		});
 
 		//applyButton.onClick.AddListener(() =>
@@ -99,16 +107,28 @@ public class SynchroPanel : MonoBehaviour
 
 		if (currCharacter.CharacterLevel < synchroInfoData.Grade * 10)
 		{
-			levelText.SetText($"<color=red>{currCharacter.CharacterLevel}</color>");
+			beforeLevel.SetText($"<color=red>{synchroInfoData.Grade * 10}</color>");
+			afterLevel.SetText($"{(synchroInfoData.Grade + 1) * 10}");
 		}
 		else
 		{
-			levelText.SetText($"{currCharacter.CharacterLevel}");
+			beforeLevel.SetText($"{synchroInfoData.Grade * 10}");
+			afterLevel.SetText($"{(synchroInfoData.Grade + 1) * 10}");
 		}
 
-
-		beforeGrade.SetText($"현재 등급 : {grade}");
-		afterGrade.SetText($"다음 등급 : {grade + 1}");
+		for (int i = 0; i < leftStar.Length; i++)
+		{
+			if (i == grade - 3)
+			{
+				leftStar[i].gameObject.SetActive(true);
+				rightStar[i].gameObject.SetActive(true);
+			}
+			else
+			{
+				leftStar[i].gameObject.SetActive(false);
+				rightStar[i].gameObject.SetActive(false);
+			}
+		}
 
         UpdateAfterSetCharacter();
 	}

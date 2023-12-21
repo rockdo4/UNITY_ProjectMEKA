@@ -38,8 +38,7 @@ public class FormationManager : MonoBehaviour
 
 	public RectTransform popupPanel;
 
-	public Button yesButton;
-	public Button noButton;
+	public Button deleteButton;
 	public Button startButton;
 
 	public TextMeshProUGUI[] textUiArr;
@@ -113,16 +112,17 @@ public class FormationManager : MonoBehaviour
             });
 		}
 
-		//��ư ��������Ʈ �Ҵ�
-		yesButton.onClick.AddListener(() =>
+		deleteButton.onClick.RemoveAllListeners();
+		deleteButton.onClick.AddListener(() => 
 		{
-			OnClickDeleteCurrentFormation();
-			CloseDeletePopUp();
+			var panel = characterInfoPanel.GetComponent<CharacterInfoText>();
+			panel.SetPopUpPanel(
+				"정말 지우시겠습니까?",
+				() => OnClickDeleteCurrentFormation(),
+				"예", "아니오"
+				);
 		});
-		noButton.onClick.AddListener(() =>
-		{
-			CloseDeletePopUp();
-		});
+
 
 		cardList = characterCardScrollView.GetComponentsInChildren<CardInfo>();
 	}
