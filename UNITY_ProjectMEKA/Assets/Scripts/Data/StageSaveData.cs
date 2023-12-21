@@ -17,7 +17,6 @@ public class StageSaveData
 public class StageData
 {
     public int StageID { get; set; }
-    public string StageName { get; set; }
     public int Class { get; set; }
     public int Type { get; set; }
     public string ChapterNumber { get; set; }
@@ -41,4 +40,10 @@ public class StageData
     public int EventID { get; set; }
     public int RewardID { get; set; }
     public int RecommendedLevel { get; set; }
+    public string StageClassStringID {  get; set; }
+    public string StageNameStringID { get; set; }
+    public string StageMission1StringID { get; set; }
+    public string StageMission2StringID { get; set; }
+    public string StageMission3StringID { get; set; }
+    public string StageOutlineStringID { get; set; }
 }

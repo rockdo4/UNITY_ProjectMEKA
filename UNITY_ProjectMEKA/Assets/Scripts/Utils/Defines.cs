@@ -228,4 +228,10 @@ public static class Defines
         None,
         Obstacle
     }
+
+    public enum Language
+    {
+        Kor,
+        Eng
+    }
 }

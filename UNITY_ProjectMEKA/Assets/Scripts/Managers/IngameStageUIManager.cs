@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +10,8 @@ using static Defines;
 
 public class IngameStageUIManager : MonoBehaviour
 {
+    private StringTable stringTable;
+
     public WindowMode windowMode;
     private WindowMode prevWindowMode;
     private StageManager stageManager;
@@ -68,6 +71,7 @@ public class IngameStageUIManager : MonoBehaviour
 
     private void OnEnable()
     {
+        stringTable = DataTableMgr.GetTable<StringTable>();
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
@@ -513,7 +517,10 @@ public class IngameStageUIManager : MonoBehaviour
     {
         chapterText.SetText(stageData.ChapterNumber);
         stageNumText.SetText(stageData.StageNumber.ToString());
-        stageNameText.SetText(stageData.StageName);
+
+        var stringTable = DataTableMgr.GetTable<StringTable>();
+        var stageName = stringTable.GetString(stageData.StageNameStringID);
+        stageNameText.SetText(stageName);
 
         // need to apply string table later
         switch (stageData.Type)
