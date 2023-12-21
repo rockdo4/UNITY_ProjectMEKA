@@ -8,7 +8,7 @@ public class Shield : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player.state.shield >= 0f)
+        if(player.state.shield <= 0f || !player.gameObject.activeInHierarchy)
         {
             GetComponent<PoolAble>().ReleaseObject();
         }

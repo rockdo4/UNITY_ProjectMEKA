@@ -82,12 +82,13 @@ public class SnipingSkillType : SkillBase
         }
         Debug.Log("¾¯ÀÌ¹ú ÀÌ°Ô ½ºÅ³ÀÌÁö");
     }
-    public void SingleSnipingPlayerShield()
+    public void ShieldSkill()
     {
         foreach (var a in targetList)
         {
             if (a.tag == "Player")
             {
+
                 var c = a.GetComponent<PlayerController>();
                 c.state.shield = figure;
                 var obj = ObjectPoolManager.instance.GetGo(effectName);
@@ -95,8 +96,13 @@ public class SnipingSkillType : SkillBase
                 obj.GetComponent<Shield>().player = c;
                 obj.SetActive(false);
                 obj.SetActive(true);
+                isSkillUsing = false;
             }
         }
+    }
+    public void SingleSnipingPlayerShield()
+    {
+        player.ani.SetTrigger("Skill");
     }
     public void SingleSnipingPlayerDamageUp()
     {
