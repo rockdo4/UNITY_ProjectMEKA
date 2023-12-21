@@ -603,7 +603,7 @@ public class PlayerController : MonoBehaviour
             stageManager.currentPlayer = null;
 
             // temp code
-            skillState.isSkillUsing = false;
+            //skillState.isSkillUsing = false;
         }
         isSkillPossible = false;
     }

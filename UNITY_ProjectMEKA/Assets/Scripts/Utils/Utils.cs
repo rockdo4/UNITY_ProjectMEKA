@@ -88,10 +88,12 @@ public static class Utils
 
     public static Vector3Int Vector3ToVector3Int(Vector3 coords)
     {
-        var x = Mathf.RoundToInt(coords.x);
-        var y = Mathf.RoundToInt(coords.y);
-        var z = Mathf.RoundToInt(coords.z);
-
+        //var x = Mathf.RoundToInt(coords.x);
+        //var y = Mathf.RoundToInt(coords.y);
+        //var z = Mathf.RoundToInt(coords.z);
+        var x = Mathf.FloorToInt(coords.x);
+        var y = Mathf.FloorToInt(coords.y);
+        var z = Mathf.FloorToInt(coords.z);
         return new Vector3Int(x, y, z);
     }
 
