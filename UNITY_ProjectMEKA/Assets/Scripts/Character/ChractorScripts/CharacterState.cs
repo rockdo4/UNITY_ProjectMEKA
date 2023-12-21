@@ -11,7 +11,7 @@ public class CharacterState : MonoBehaviour
     public int[,] AttackRange;
 
     [SerializeField, Header("레벨 설정")]
-    public int lv;
+    public int lv = 1;
 
     [SerializeField, Header("ID 설정")]//p
     public int id;
@@ -80,13 +80,7 @@ public class CharacterState : MonoBehaviour
     public int level;//레벨
 
     [HideInInspector]
-    public int grade;//등급 레벨의 10의자리에 해당하며 6까지만 존재가능
-
-    [HideInInspector]
     public float Hp;
-
-    [HideInInspector]
-    public int ID;
 
     private void Awake()
     {

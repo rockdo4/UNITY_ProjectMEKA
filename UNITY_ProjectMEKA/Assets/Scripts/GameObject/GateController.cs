@@ -306,7 +306,24 @@ public class GateController : MonoBehaviour
 
         var stats = enemyGo.GetComponent<CharacterState>();
         //여기서 스탯 추가할 예정r
-        //
+
+        stats.lv = spawnInfo.level;
+
+		int levelId = stats.id * 100 + stats.lv;
+		Debug.Log(levelId);
+
+		var data = DataTableMgr.GetTable<MonsterLevelTable>().GetMonsterData(levelId);
+        if(data == null)
+        {            
+            return;
+		}
+        Debug.Log((data.MonsterAttackDamage, data.MonsterDefense, data.MonsterHP, data.MonsterShield));
+
+        stats.damage = data.MonsterAttackDamage;
+        stats.armor = data.MonsterDefense;
+        stats.shield = data.MonsterShield;
+        stats.maxHp = data.MonsterHP;
+        stats.Hp = stats.maxHp;
 
         // need to apply monster stats by level
     }
