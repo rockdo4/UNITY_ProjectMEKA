@@ -141,6 +141,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
+  updateUI:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8059986574405545375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,9 +169,14 @@ MonoBehaviour:
   HoIsHitMe: {fileID: 0}
   FirePosition: {fileID: 7034561075237896772}
   rangeInPlayers: []
+  rangeInSecondPlayers: []
   CurrentPos: {x: 0, y: 0, z: 0}
   CurrentGridPos: {x: 0, y: 0, z: 0}
   isArrival: 0
+  forwardGrid: {x: 0, y: 0, z: 0}
+  bossAttackCount: 0
+  stunTime: 0
+  isMove: 0
 --- !u!114 &1700501411975195125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +253,7 @@ MonoBehaviour:
   name: E2
   property: 0
   maxHp: 100
-  amror: 0
+  armor: 0
   damage: 10
   attackDelay: 1
   BulletName: bullet
