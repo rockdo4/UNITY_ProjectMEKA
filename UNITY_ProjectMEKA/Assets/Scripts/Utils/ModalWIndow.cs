@@ -44,6 +44,7 @@ public class ModalWindow : MonoBehaviour
 		{
 			yesAction();
 			gameObject.SetActive(false);
+			GameManager.Instance.SaveExecution();
 		});
 
 		noButton.onClick.RemoveAllListeners();

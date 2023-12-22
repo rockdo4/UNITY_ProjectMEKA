@@ -256,6 +256,7 @@ public class IngameStageUIManager : MonoBehaviour
             if (!Utils.IsUILayer() && !Utils.IsCurrentPlayer(stageManager.currentPlayer.gameObject) && Input.GetMouseButtonDown(0))
             {
                 Debug.Log("Ä³¸¯ÅÍ ÀÎÆ÷ ´İÈû");
+                Debug.LogWarning("ÀÎÆ÷ ´İÀ½");
                 stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
                 stageManager.currentPlayer = null;
                 stageManager.currentPlayerIcon = null;

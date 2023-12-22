@@ -9405,6 +9405,7 @@ MonoBehaviour:
   devicePanel: {fileID: 12017060}
   skillPanel: {fileID: 1336795714}
   panelManager: {fileID: 1704917223}
+  characterName: {fileID: 1999105204}
   textInfo: {fileID: 0}
 --- !u!1 &591133844
 GameObject:
@@ -21391,17 +21392,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172428409}
   m_CullTransparentMesh: 1
---- !u!114 &1176073501 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5196777458941327332, guid: b0452c21efe7c1f46a347869f5ca4205, type: 3}
-  m_PrefabInstance: {fileID: 567471741}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 683867a0f6ac7784fbda79ce99a37a51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1177248130
 GameObject:
   m_ObjectHideFlags: 0
@@ -24162,9 +24152,9 @@ MonoBehaviour:
   skillLevelInfoScroll: {fileID: 575344963}
   applyButton: {fileID: 402513085}
   requireItems:
-  - {fileID: 1413020292}
-  - {fileID: 1176073501}
-  - {fileID: 1979359127}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   infoPanel: {fileID: 578372460}
 --- !u!1 &1344077582
 GameObject:
@@ -25122,17 +25112,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1404047730}
   m_CullTransparentMesh: 1
---- !u!114 &1413020292 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5196777458941327332, guid: b0452c21efe7c1f46a347869f5ca4205, type: 3}
-  m_PrefabInstance: {fileID: 411190920}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 683867a0f6ac7784fbda79ce99a37a51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1421027397
 GameObject:
   m_ObjectHideFlags: 0
@@ -36481,17 +36460,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6908525036832744664, guid: b0452c21efe7c1f46a347869f5ca4205, type: 3}
   m_PrefabInstance: {fileID: 1979359124}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1979359127 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5196777458941327332, guid: b0452c21efe7c1f46a347869f5ca4205, type: 3}
-  m_PrefabInstance: {fileID: 1979359124}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 683867a0f6ac7784fbda79ce99a37a51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1979761214
 GameObject:
   m_ObjectHideFlags: 0

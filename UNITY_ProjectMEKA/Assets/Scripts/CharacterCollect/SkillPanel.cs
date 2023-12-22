@@ -12,7 +12,7 @@ public class SkillPanel : MonoBehaviour
     public TextMeshProUGUI skillDescriptionText;
     public Transform skillLevelInfoScroll;
 	public Button applyButton;
-    public ItemAutoQuantityCard[] requireItems;
+    public ItemAutoQuantitySkillCard[] requireItems;
 
 	[Header("InfoPanel")]
 	public CharacterInfoText infoPanel;
@@ -38,6 +38,9 @@ public class SkillPanel : MonoBehaviour
 	public void UpdateSkillInfo()
 	{
 		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
+
+		Debug.Log(datas.Length);
+		Debug.Log(currCharacter.SkillLevel);
 
 		int skillID;
 		if (datas.Length == currCharacter.SkillLevel - 1)

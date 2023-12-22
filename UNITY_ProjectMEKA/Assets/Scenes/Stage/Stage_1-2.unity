@@ -1116,7 +1116,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1086836751694332884, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1086836751694332884, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1124,7 +1124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1086836751694332884, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1086836751694332884, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1308,7 +1308,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5627667859293143261, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8630280107700790063, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: waveInfos.Array.data[0].gateType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8630280107700790063, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: waveInfos.Array.data[0].moveType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8863547098353349229, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: waveInfos.Array.data[0].moveType
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

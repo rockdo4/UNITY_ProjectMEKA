@@ -34,13 +34,13 @@ public static class Debug
         get { return UnityEngine.Debug.isDebugBuild; }
     }
 
-    [System.Diagnostics.Conditional("ENABLE_DEBUG_LOG")]
+    [System.Diagnostics.Conditional("ENABLE_DEBUG_LOG_LOG")]
     public static void Log(object message)
     {
         UnityEngine.Debug.Log(message);
     }
 
-    [System.Diagnostics.Conditional("ENABLE_DEBUG_LOG")]
+    [System.Diagnostics.Conditional("ENABLE_DEBUG_LOG_LOG")]
     public static void Log(object message, UnityEngine.Object context)
     {
         UnityEngine.Debug.Log(message, context);
