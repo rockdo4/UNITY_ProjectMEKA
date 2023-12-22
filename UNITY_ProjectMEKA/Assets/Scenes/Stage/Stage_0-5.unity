@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1223,7 +1223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 201099282373020065, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].moveType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 201099282373020065, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].waypointGo
@@ -1250,28 +1250,32 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 201099282373020065, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].level
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 201099282373020065, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 201099282373020065, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].level
-      value: 20
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 201099282373020065, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 8236610387131559020, guid: 31969843dba6af7448db410a55f96319, type: 3}
+      objectReference: {fileID: 8236610387131559020, guid: b9acaabe92eab7c43bbbd1c3246c462d, type: 3}
     - target: {fileID: 201099282373020065, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 8236610387131559020, guid: b8d12c5cda4f196489561d81a175ba3e, type: 3}
+      objectReference: {fileID: 8236610387131559020, guid: e3a4826c11742574e8abd652d1d23753, type: 3}
     - target: {fileID: 201099282373020065, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].interval
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 201099282373020065, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].attribute
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1086836751694332884, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1382,17 +1386,25 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3178088028404521007, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].level
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3178088028404521007, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3178088028404521007, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
+      propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].level
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3178088028404521007, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 8236610387131559020, guid: b8d12c5cda4f196489561d81a175ba3e, type: 3}
+      objectReference: {fileID: 8236610387131559020, guid: e3a4826c11742574e8abd652d1d23753, type: 3}
     - target: {fileID: 3178088028404521007, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 8236610387131559020, guid: b8d12c5cda4f196489561d81a175ba3e, type: 3}
+      objectReference: {fileID: 8236610387131559020, guid: e3a4826c11742574e8abd652d1d23753, type: 3}
     - target: {fileID: 3178088028404521007, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].attribute
       value: 2
@@ -1411,7 +1423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7837188116737740707, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].moveType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7837188116737740707, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].waypointGo
@@ -1430,21 +1442,25 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7837188116737740707, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].level
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837188116737740707, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7837188116737740707, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].level
-      value: 20
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7837188116737740707, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 8236610387131559020, guid: 31969843dba6af7448db410a55f96319, type: 3}
+      objectReference: {fileID: 8236610387131559020, guid: b9acaabe92eab7c43bbbd1c3246c462d, type: 3}
     - target: {fileID: 7837188116737740707, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 8236610387131559020, guid: b8d12c5cda4f196489561d81a175ba3e, type: 3}
+      objectReference: {fileID: 8236610387131559020, guid: b9acaabe92eab7c43bbbd1c3246c462d, type: 3}
     - target: {fileID: 7837188116737740707, guid: 933ba563daaeaa74789fe7b655180d90, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].interval
       value: 2
@@ -1598,11 +1614,11 @@ MonoBehaviour:
   - objectName: Slash
     perfab: {fileID: 8805711564415134265, guid: 1541ce83c363252458842c959f620a9c, type: 3}
     count: 5
-  - objectName: G1lv07
-    perfab: {fileID: 8236610387131559020, guid: b8d12c5cda4f196489561d81a175ba3e, type: 3}
+  - objectName: E1
+    perfab: {fileID: 8236610387131559020, guid: b9acaabe92eab7c43bbbd1c3246c462d, type: 3}
     count: 5
-  - objectName: E1lv07
-    perfab: {fileID: 8236610387131559020, guid: 31969843dba6af7448db410a55f96319, type: 3}
+  - objectName: G1
+    perfab: {fileID: 8236610387131559020, guid: e3a4826c11742574e8abd652d1d23753, type: 3}
     count: 5
 --- !u!114 &8988329855322922592
 MonoBehaviour:

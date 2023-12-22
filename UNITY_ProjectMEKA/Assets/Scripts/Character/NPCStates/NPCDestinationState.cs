@@ -62,7 +62,7 @@ public class NPCDestinationStates : NPCBaseState
 
         //Vector3Int gridPosition = Vector3Int.FloorToInt(enemyCtrl.transform.position);
         Vector3Int gridPosition = enemyCtrl.CurrentGridPos;
-        Vector3 tileCenter = new Vector3(gridPosition.x + 0.5f, enemyCtrl.transform.position.y, gridPosition.z + 0.5f);
+        Vector3 tileCenter = new Vector3(gridPosition.x /*+ 0.5f*/, enemyCtrl.transform.position.y, gridPosition.z /*+ 0.5f*/);
 
         if(enemyCtrl.state.isFly)
         {

@@ -28,8 +28,8 @@ public abstract class SkillBase : MonoBehaviour
     public int[] rangeAttack;
     [HideInInspector]
     public int[,] AttackRange;
-    [HideInInspector]
-    public List<Tile> attackableTiles;
+    //[HideInInspector]
+    public List<Tile> attackableTiles = new List<Tile>();
     [HideInInspector]
     public int[,] attackRangeRot;
     public void ConvertTo2DArray()

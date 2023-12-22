@@ -22,6 +22,8 @@ public class StageDataManager
     public StageTable stageTable;
     public bool toStageChoicePanel;
 
+    public Language language = Language.Kor;
+
     private StageDataManager()
     {
         stageTable = DataTableMgr.GetTable<StageTable>();
