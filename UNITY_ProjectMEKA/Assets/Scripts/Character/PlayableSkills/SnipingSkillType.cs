@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using static Defines;
 using System;
+using UnityEngine.Rendering;
 
 public class SnipingSkillType : SkillBase
 {
@@ -31,6 +32,7 @@ public class SnipingSkillType : SkillBase
     {
         player = GetComponent<PlayerController>();
         timer = skillCoolTime;
+        ConvertTo2DArray();
     }
     private void OnEnable()
     {
@@ -39,7 +41,7 @@ public class SnipingSkillType : SkillBase
     private void Update()
     {
         timer += Time.deltaTime;
-        
+        //player.SetState(PlayerController.CharacterStates.Arrange);//testcode
     }
     public override void UseSkill()
     {
@@ -50,11 +52,70 @@ public class SnipingSkillType : SkillBase
                 SnipingSingle();
                 break;
             case Defines.SkillType.SnipingArea:
-
+                SnipingArea();
                 break;
 
         }
         
+    }
+    public void SnipingArea()
+    {
+        if (targetList.Any())
+        {
+            if (player.state.cost >= player.state.skillCost && timer >= player.state.skillCoolTime)
+            {
+                timer = 0;
+                player.state.cost -= skillCost;
+                isSkillUsing = true;
+                switch (skillT)
+                {
+                    case SkillType.Attack:
+                        AreaSnipingAttack();
+                        break;
+                    case SkillType.PlayerDamageUp:
+                        break;
+                    case SkillType.Shield:
+                        break;
+                }
+            }
+        }
+    }
+    public void AreaSnipingAttack()
+    {
+        attackableTiles = new List<Tile>(player.attackableSkillTiles);
+        StartCoroutine(Damage5Second(attackableTiles));
+        var obj = ObjectPoolManager.instance.GetGo(effectName);
+        var pos = attackableTiles[4].transform.position;
+        pos.x += 0.5f;
+        pos.z += 0.5f;
+        obj.transform.position = pos;
+        obj.SetActive(false);
+        obj.SetActive(true);
+        
+        
+    }
+    IEnumerator Damage5Second(List<Tile> tileList)
+    {
+        int i = 0;
+        while(i < 5) 
+        {
+            //yield return null;
+            
+            foreach (var attack in tileList)
+            {
+                foreach(var enemy in attack.objectsOnTile)
+                {
+                    if(enemy.tag == "Enemy")
+                    {
+                        enemy.GetComponent<IAttackable>().OnAttack(player.state.damage * figure);
+                        
+                    }
+                }
+            }
+            i++;
+            yield return new WaitForSeconds(1f);
+            yield return null;
+        }
     }
     public void SnipingSingle()
     {
@@ -82,13 +143,13 @@ public class SnipingSkillType : SkillBase
         }
         Debug.Log("¾¯ÀÌ¹ú ÀÌ°Ô ½ºÅ³ÀÌÁö");
     }
+    
     public void ShieldSkill()
     {
         foreach (var a in targetList)
         {
             if (a.tag == "Player")
             {
-
                 var c = a.GetComponent<PlayerController>();
                 c.state.shield = figure;
                 var obj = ObjectPoolManager.instance.GetGo(effectName);
@@ -149,10 +210,7 @@ public class SnipingSkillType : SkillBase
         targetList.Clear();
         isSkillUsing = false;
     }
-    public void SnipingArea()
-    {
-
-    }
+    
     GameObject FindObjectWithHighestHpRatio(List<GameObject> list)
     {
         if (list == null || list.Count == 0)

@@ -10867,8 +10867,7 @@ MonoBehaviour:
   characterCardScrollView: {fileID: 567874440}
   characterCardPrefab: {fileID: 3706411763328831598, guid: 930b6865c1147a145807241a0471e1de, type: 3}
   popupPanel: {fileID: 204579627}
-  yesButton: {fileID: 387890791}
-  noButton: {fileID: 1185575018}
+  deleteButton: {fileID: 0}
   startButton: {fileID: 989650979}
   textUiArr:
   - {fileID: 2135943192}
@@ -19257,14 +19256,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33db0d2a0b1254849b93d42af902214d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beforeGrade: {fileID: 597770348}
-  afterGrade: {fileID: 1890510805}
-  levelText: {fileID: 280780932}
+  leftStar: []
+  rightStar: []
   synchroItemCard:
   - {fileID: 1835589234508276294}
   - {fileID: 1461493763}
   - {fileID: 9125822146001992371}
-  silverItemCard: {fileID: 0}
+  beforeLevel: {fileID: 0}
+  afterLevel: {fileID: 0}
   applyButton: {fileID: 1043125775}
   infoPanel: {fileID: 392304167}
   resultPanel: {fileID: 0}
@@ -21363,7 +21362,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 0}
   mainText: {fileID: 0}
-  quantityText: {fileID: 0}
+  haveQuantityText: {fileID: 0}
+  requireQuantityText: {fileID: 0}
   panel: {fileID: 0}
 --- !u!114 &1461493763 stripped
 MonoBehaviour:
@@ -29144,7 +29144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 0}
   mainText: {fileID: 0}
-  quantityText: {fileID: 0}
+  haveQuantityText: {fileID: 0}
+  requireQuantityText: {fileID: 0}
   panel: {fileID: 0}
 --- !u!1 &1940295698
 GameObject:
@@ -32691,63 +32692,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2142401113}
   m_CullTransparentMesh: 1
---- !u!1001 &742149156662085293
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2767905530544380274, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
-      propertyPath: m_Name
-      value: IsabellaSkillEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 5794403577818687892, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5794403577818687892, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5794403577818687892, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5794403577818687892, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5794403577818687892, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5794403577818687892, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5794403577818687892, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5794403577818687892, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5794403577818687892, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5794403577818687892, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
 --- !u!1001 &760064849745000586
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33944,4 +33888,3 @@ SceneRoots:
   - {fileID: 944387886}
   - {fileID: 330013734}
   - {fileID: 431790327}
-  - {fileID: 742149156662085293}
