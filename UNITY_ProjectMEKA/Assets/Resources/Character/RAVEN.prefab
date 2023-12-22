@@ -15203,6 +15203,7 @@ MonoBehaviour:
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
   firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -15219,6 +15220,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: RavenSkillEffect
+    perfab: {fileID: 30439360642031102, guid: f8929a116ede2bc4780d8f66a59dee3f, type: 3}
+    count: 10
+  lv: 1
   id: 12101
   name: "\uB808\uC774\uBE10"
   property: 2
@@ -15226,6 +15232,8 @@ MonoBehaviour:
   armor: 18
   damage: 18
   attackDelay: 0.5
+  shield: 0
+  maxShield: 0
   BulletName: 
   BulletType: 0
   flashName: 
@@ -15234,9 +15242,7 @@ MonoBehaviour:
   yal: 1
   rangeAttack: 01000000010000000200000001000000
   level: 0
-  grade: 0
   Hp: 258
-  ID: 0
   arrangeCost: 16
   arrangeCoolTime: 50
   skill: 0

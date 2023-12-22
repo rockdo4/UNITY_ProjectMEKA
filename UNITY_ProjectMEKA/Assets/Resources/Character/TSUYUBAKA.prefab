@@ -15035,6 +15035,7 @@ MonoBehaviour:
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
   firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -15063,6 +15064,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: Flash20
+    perfab: {fileID: 1840367976591474, guid: e9d1f52e709876143b75f93f52a48156, type: 3}
+    count: 10
+  - objectName: AoeBulletHit
+    perfab: {fileID: 1217358381915387075, guid: 8d828050ce4d80246bf9f32131aa8431, type: 3}
+    count: 10
+  - objectName: LaserBlue
+    perfab: {fileID: 1497330221894525315, guid: af913d093684c4a4580bd7c5dac47246, type: 3}
+    count: 5
+  lv: 1
   id: 11301
   name: "\uCE20\uC720\uBC14\uCE74"
   property: 1
@@ -15070,6 +15082,8 @@ MonoBehaviour:
   armor: 18
   damage: 20
   attackDelay: 2
+  shield: 0
+  maxShield: 0
   BulletName: 
   BulletType: 6
   flashName: Flash20
@@ -15078,9 +15092,7 @@ MonoBehaviour:
   yal: 3
   rangeAttack: 000000000100000000000000010000000100000001000000010000000100000001000000010000000200000001000000
   level: 0
-  grade: 0
   Hp: 60
-  ID: 0
   arrangeCost: 15
   arrangeCoolTime: 40
   skill: 0
@@ -15114,6 +15126,7 @@ MonoBehaviour:
   hang: 4
   yal: 1
   rangeAttack: 01000000010000000100000002000000
+  attackableTiles: []
   targetList: []
   skillDuration: 0.6
   effectName: LaserBlue

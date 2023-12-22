@@ -20079,8 +20079,11 @@ MonoBehaviour:
   enemyBlockCount: 
   skillCost: 0
   skillCoolTime: 0
-  attakableTiles: []
+  attackableTiles: []
   arrangableTiles: []
+  attackableSkillTiles: []
+  prevAttackableSkillTiles: []
+  skillState: {fileID: 0}
   PlayerInit:
     m_PersistentCalls:
       m_Calls: []
@@ -20089,11 +20092,16 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   parentPos: {fileID: 0}
   ChildPos: {fileID: 0}
+  isHitEffect: 0
+  effectName: 
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
+  firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
+  isSkillPossible: 0
 --- !u!114 &974115789599698162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20106,13 +20114,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: FireBullet
+    perfab: {fileID: 2548706898051856410, guid: f3dfa00025e7d8b4ba3f7bad57a7dd2a, type: 3}
+    count: 10
+  - objectName: Effect
+    perfab: {fileID: 2696922133829033003, guid: 98315ff718add0647ba83fdfa6962cbc, type: 3}
+    count: 10
+  lv: 1
   id: 12401
   name: TEIO
   property: 2
   maxHp: 100
-  amror: 0
+  armor: 0
   damage: 50
   attackDelay: 0.3
+  shield: 0
+  maxShield: 0
   BulletName: FireBullet
   BulletType: 1
   flashName: 
@@ -20121,9 +20139,7 @@ MonoBehaviour:
   yal: 3
   rangeAttack: 010000000100000001000000010000000100000001000000010000000100000001000000010000000200000001000000
   level: 0
-  grade: 0
   Hp: 0
-  ID: 0
   arrangeCost: 17
   arrangeCoolTime: 60
   skill: 0
@@ -20133,6 +20149,8 @@ MonoBehaviour:
   skillCoolTime: 0
   skillDuration: 0
   occupation: 4
+  critChance: 0
+  fatalDamage: 1
   experience: 0
   currentExperience: 0
 --- !u!114 &4291518255801451678
@@ -20163,6 +20181,12 @@ MonoBehaviour:
   skillCoolTime: 20
   skillType: 1
   isSkillUsing: 0
+  isRangeOut: 0
+  hang: 0
+  yal: 0
+  rangeAttack: 
+  attackableTiles: []
+  targetList: []
   pre: {fileID: 3355059767745017883, guid: 3fa35ae1607f68840b23c18957f0565a, type: 3}
 --- !u!1 &9121464562411327801
 GameObject:

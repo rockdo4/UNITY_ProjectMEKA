@@ -5606,6 +5606,7 @@ MonoBehaviour:
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
   firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -5634,6 +5635,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: Explosion
+    perfab: {fileID: 7032182195475253934, guid: 08beb78374a3dcd43abc2070b709f39d, type: 3}
+    count: 10
+  - objectName: AmberSkillEffect
+    perfab: {fileID: 8801525795127141306, guid: 837f887936c48ec4c8130d066e9c7563, type: 3}
+    count: 5
   lv: 0
   id: 12301
   name: "\uC5E0\uBC84"
@@ -5643,6 +5651,7 @@ MonoBehaviour:
   damage: 50
   attackDelay: 1
   shield: 0
+  maxShield: 0
   BulletName: Explosion
   BulletType: 4
   flashName: 
@@ -5651,9 +5660,7 @@ MonoBehaviour:
   yal: 3
   rangeAttack: 010000000100000001000000010000000100000001000000010000000200000001000000
   level: 0
-  grade: 0
   Hp: 0
-  ID: 0
   arrangeCost: 16
   arrangeCoolTime: 40
   skill: 0

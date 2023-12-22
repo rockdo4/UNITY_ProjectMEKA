@@ -11680,6 +11680,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: IsabellaHeal
+    perfab: {fileID: 285242176088954088, guid: 8dad390ffd43a2145929fdc3f2e7c7f8, type: 3}
+    count: 10
+  - objectName: IsabellaSkillEffect
+    perfab: {fileID: 2767905530544380274, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
+    count: 5
+  lv: 1
   id: 12501
   name: "\uC774\uC0AC\uBCA8\uB77C"
   property: 2
@@ -11687,6 +11695,8 @@ MonoBehaviour:
   armor: 6
   damage: 19
   attackDelay: 2.5
+  shield: 0
+  maxShield: 0
   BulletName: 
   BulletType: 0
   flashName: 
@@ -11695,9 +11705,7 @@ MonoBehaviour:
   yal: 3
   rangeAttack: 010000000100000001000000010000000100000001000000010000000200000001000000010000000100000001000000
   level: 0
-  grade: 0
   Hp: 114
-  ID: 0
   arrangeCost: 13
   arrangeCoolTime: 60
   skill: 9
@@ -11754,6 +11762,7 @@ MonoBehaviour:
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
   firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
