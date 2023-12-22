@@ -108,12 +108,26 @@ public class SynchroPanel : MonoBehaviour
 		if (currCharacter.CharacterLevel < synchroInfoData.Grade * 10)
 		{
 			beforeLevel.SetText($"<color=red>{synchroInfoData.Grade * 10}</color>");
-			afterLevel.SetText($"{(synchroInfoData.Grade + 1) * 10}");
+			if(synchroInfoData.Grade == 6)
+			{
+				afterLevel.SetText($"--");
+			}
+			else
+			{
+				afterLevel.SetText($"{(synchroInfoData.Grade + 1) * 10}");
+			}
 		}
 		else
 		{
 			beforeLevel.SetText($"{synchroInfoData.Grade * 10}");
-			afterLevel.SetText($"{(synchroInfoData.Grade + 1) * 10}");
+			if (synchroInfoData.Grade == 6)
+			{
+				afterLevel.SetText($"--");
+			}
+			else
+			{
+				afterLevel.SetText($"{(synchroInfoData.Grade + 1) * 10}");
+			}
 		}
 
 		for (int i = 0; i < leftStar.Length; i++)

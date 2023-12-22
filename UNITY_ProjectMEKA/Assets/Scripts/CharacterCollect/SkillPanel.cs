@@ -12,7 +12,7 @@ public class SkillPanel : MonoBehaviour
     public TextMeshProUGUI skillDescriptionText;
     public Transform skillLevelInfoScroll;
 	public Button applyButton;
-    public ItemAutoQuantityCard[] requireItems;
+    public ItemAutoQuantitySkillCard[] requireItems;
 
 	[Header("InfoPanel")]
 	public CharacterInfoText infoPanel;

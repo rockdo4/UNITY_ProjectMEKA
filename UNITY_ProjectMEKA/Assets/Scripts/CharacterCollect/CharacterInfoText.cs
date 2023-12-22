@@ -23,7 +23,9 @@ public class CharacterInfoText : MonoBehaviour
 	public PanelManager panelManager;
 
 	[Header("Text")]
+	public TextMeshProUGUI characterName;
 	public TextMeshProUGUI textInfo;
+
 
 	[HideInInspector]
 	public Character character;
@@ -71,6 +73,8 @@ public class CharacterInfoText : MonoBehaviour
 	{
 		character = data;
 		if (data == null) return;
+
+		characterName.SetText(data.Name);
 
 		SetListener();
 		Debug.Log("CharacterIcon/" + character.ImagePath);
