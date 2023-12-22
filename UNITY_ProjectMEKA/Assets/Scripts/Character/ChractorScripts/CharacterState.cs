@@ -8,7 +8,7 @@ using static Defines;
 public class CharacterState : MonoBehaviour
 {
     [System.Serializable]
-    private class PoolObject
+    public class PoolObject
     {
         // 오브젝트 이름
         public string objectName;
@@ -19,7 +19,7 @@ public class CharacterState : MonoBehaviour
     }
 
     [SerializeField, Header("현 캐릭터에서 사용할 풀")]
-    private PoolObject[] objectInfos = null;
+    public PoolObject[] objectInfos = null;
 
     public int[,] AttackRange;
 

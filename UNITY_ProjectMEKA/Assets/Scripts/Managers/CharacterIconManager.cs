@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static Defines;
+using static GateController;
 
 public class CharacterIconManager : MonoBehaviour
 {
@@ -70,7 +71,8 @@ public class CharacterIconManager : MonoBehaviour
 					characterState.arrangeCost = (int)data.ArrangementCost;
 
 					characterPrefabs.Add(prefab);
-                    break;
+
+					break;
                 }
             }
         }
