@@ -59,6 +59,10 @@ public class ISABELLASkill : SkillBase
                     pl.state.damage *= 1.5f;
                     //ÀÌÆÑÆ® »ý¼º IsabellaSkillEffect
                     var par = ObjectPoolManager.instance.GetGo("IsabellaSkillEffect");
+                    if (par == null)
+                    {
+                        return;
+                    }
 
                     Vector3 pos = pl.transform.position;
                     pos.y += 0.5f;

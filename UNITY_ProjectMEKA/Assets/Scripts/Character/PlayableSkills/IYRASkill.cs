@@ -29,6 +29,11 @@ public class IYRASkill : SkillBase
     public void SkillUse()
     {
         var s = ObjectPoolManager.instance.GetGo("Slash");
+        if (s == null)
+        {
+            return;
+        }
+
         Vector3 pos = transform.position;
         pos.y += 0.5f;
         s.transform.position = pos;

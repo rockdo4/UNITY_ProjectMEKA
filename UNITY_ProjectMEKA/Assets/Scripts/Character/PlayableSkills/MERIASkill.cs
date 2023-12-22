@@ -41,6 +41,10 @@ public class MERIASkill : SkillBase
             timer = 0;
             player.state.cost -= player.state.skillCost;
             var obj = ObjectPoolManager.instance.GetGo("MeriaSkillEffect");
+            if (obj == null)
+            {
+                return;
+            }
             obj.transform.position = player.transform.position;
             obj.SetActive(false);
             obj.SetActive(true);
