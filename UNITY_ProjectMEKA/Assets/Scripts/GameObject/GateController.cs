@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Defines;
 using static GateController;
@@ -113,7 +115,7 @@ public class GateController : MonoBehaviour
             }
         }
 
-        timerScript = FindObjectOfType<WaveTimer>();
+		timerScript = FindObjectOfType<WaveTimer>();
         if(timerScript == null)
         {
             Debug.Log("timerScript is null");
@@ -157,7 +159,22 @@ public class GateController : MonoBehaviour
 
     private void Start()
     {
-    }
+        //Set Monster In ObjectPool
+		foreach (var wave in waveInfos)
+		{
+			foreach (var enemyInfo in wave.enemySpawnInfos)
+			{
+				var name = enemyInfo.prefab.GetComponent<EnemyState>().name;
+				Debug.Log(name);
+				if (ObjectPoolManager.instance == null)
+				{
+					Debug.Log("ObjectPoolManager.instance is null");
+				}
+
+				ObjectPoolManager.instance.AddObjectToPool(name, enemyInfo.prefab, enemyInfo.count);
+			}
+		}
+	}
 
     virtual protected void FixedUpdate()
     {
