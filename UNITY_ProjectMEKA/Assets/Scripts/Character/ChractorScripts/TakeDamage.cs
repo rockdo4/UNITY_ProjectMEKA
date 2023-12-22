@@ -25,11 +25,11 @@ public class TakeDamage : MonoBehaviour, IAttackable
         
         if(player != null)
         {
-            damage -= player.armor;
-            if (damage <= 0)
-            {
-                damage = 5;
-            }
+            //damage -= player.armor;
+            //if (damage <= 0)
+            //{
+            //    damage = 5;
+            //}
             if(player.shield > 0f)
             {
                 player.shield -= damage;
@@ -41,14 +41,24 @@ public class TakeDamage : MonoBehaviour, IAttackable
         }
         else
         {
-            damage -= enemy.armor;
-            if (damage <= 0)
-            {
-                damage = 5;
-            }
+            //damage -= enemy.armor;
+            //if (damage <= 0)
+            //{
+            //    damage = 5;
+            //}
             if(enemy.shield > 0f)
             {
-                enemy.shield -= damage;
+                //enemy.shield -= damage;
+                if (damage > enemy.shield)
+                {
+                    float remainingDamage = damage - enemy.shield;
+                    enemy.shield = 0f;
+                    enemy.Hp -= remainingDamage;
+                }
+                else
+                {
+                    enemy.shield -= damage;
+                }
             }
             else
             {

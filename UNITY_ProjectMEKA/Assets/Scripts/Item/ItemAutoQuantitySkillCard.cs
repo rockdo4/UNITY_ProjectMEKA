@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -91,7 +92,19 @@ public class ItemAutoQuantitySkillCard : MonoBehaviour
 		}
 		else
 		{
-			quantityText.SetText($"<color=red>0</color> / {requiredQuantity}");
+			quantityText.SetText($"<color=red>{0}</color> / {requiredQuantity}");
+		}
+	}
+
+	public void SetMaxLevel()
+	{
+		if (item != null)
+		{
+			quantityText.SetText($"{item.Count} / --");
+		}
+		else
+		{
+			quantityText.SetText($"{0} / --");
 		}
 	}
 

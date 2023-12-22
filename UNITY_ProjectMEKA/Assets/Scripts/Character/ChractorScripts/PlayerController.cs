@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using static Defines;
@@ -67,6 +68,7 @@ public class PlayerController : MonoBehaviour
     private bool CharacterArrangeOne;
     private float addCostTimer;
     public Transform firstLookPos;
+    public Vector3Int skillPivot;
     public enum CharacterStates
     {
         Arrange,
@@ -410,9 +412,15 @@ public class PlayerController : MonoBehaviour
             
         }
 
-
+        StartCoroutine(AttackDelay());
     }
-
+    public IEnumerator AttackDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+        ani.speed = 0;
+        yield return new WaitForSeconds(state.attackDelay);
+        ani.speed = 1;
+    }
     public void Healing()
     {
         if(target==null)
@@ -618,6 +626,7 @@ public class PlayerController : MonoBehaviour
         }
 
         var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
+        skillPivot = Utils.Vector3ToVector3Int(mousePosition);
         List<Vector3Int> skillRange = new List<Vector3Int>();
         var playerPosInt = Utils.Vector3ToVector3Int(transform.position);
         Vector3Int defaultOffset = new Vector3Int();
@@ -666,15 +675,17 @@ public class PlayerController : MonoBehaviour
         {
             for (int j = 0; j < tempAttackRange.GetLength(1); j++) // col
             {
-                if (tempAttackRange[i, j] == 1 || tempAttackRange[i, j] == 2)
+                if (tempAttackRange[i, j] == 1)
                 {
                     skillRange.Add(new Vector3Int(i, 0, j));
-                    if (tempAttackRange[i, j] == 2)
-                    {
-                        defaultOffset.x = playerPosInt.x - i;
-                        defaultOffset.z = playerPosInt.z - j;
-                        defaultOffset.y = 0;
-                    }
+                }
+                else if(tempAttackRange[i, j] == 2)
+                {
+                    skillRange.Add(new Vector3Int(i, 0, j));
+                    //skillPivot = new Vector3Int(i, 0, j);
+                    defaultOffset.x = playerPosInt.x - i;
+                    defaultOffset.z = playerPosInt.z - j;
+                    defaultOffset.y = 0;
                 }
             }
         }
