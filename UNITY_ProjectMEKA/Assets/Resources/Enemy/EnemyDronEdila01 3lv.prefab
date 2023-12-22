@@ -731,6 +731,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573e76d19e153054b9babeb453df70a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: bullet
+    perfab: {fileID: 4747644174532001206, guid: b6275585e2956a247932c30204249487, type: 3}
+    count: 10
+  - objectName: Hit8
+    perfab: {fileID: 1493225883543534, guid: 245bf6b0acdf9474ca212c5a4f28b2ce, type: 3}
+    count: 10
+  - objectName: Flash8
+    perfab: {fileID: 1633242581645256, guid: 51e88bfc3811dab48ac0c06617654e1a, type: 3}
+    count: 10
+  lv: 1
   id: 0
   name: E1lv03
   property: 0
@@ -738,6 +749,8 @@ MonoBehaviour:
   armor: 0
   damage: 10
   attackDelay: 1
+  shield: 0
+  maxShield: 0
   BulletName: bullet
   BulletType: 1
   flashName: Flash8
@@ -746,9 +759,7 @@ MonoBehaviour:
   yal: 1
   rangeAttack: 0100000002000000
   level: 0
-  grade: 0
   Hp: 0
-  ID: 0
   passive: 
   enemyType: 0
   speed: 2
