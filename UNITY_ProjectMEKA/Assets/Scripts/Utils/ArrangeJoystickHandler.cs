@@ -33,16 +33,16 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     private void OnDisable()
     {
         cancelButtonOn = false;
-        var sliderMask = 1 << LayerMask.NameToLayer(Layers.slider);
-        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = ~0 ^ sliderMask;
+        //var sliderMask = 1 << LayerMask.NameToLayer(Layers.slider);
+        //Camera.main.GetComponent<PhysicsRaycaster>().eventMask = ~0 ^ sliderMask;
     }
 
     public void Init()
     {
         transform.localPosition = Vector3.zero;
         currentTile = null;
-        var handlerMask = 1 << LayerMask.NameToLayer(Layers.handler);
-        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = handlerMask;
+        //var handlerMask = 1 << LayerMask.NameToLayer(Layers.handler);
+        //Camera.main.GetComponent<PhysicsRaycaster>().eventMask = handlerMask;
     }
 
     public void InitOnce()
@@ -73,6 +73,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
     public void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
+        eventData.Use();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -105,6 +106,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
 
             RotateHandler(currentTile.transform, false);
         }
+        eventData.Use();
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -127,6 +129,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
                 joystick.ArrangeDone.Invoke();
             }
         }
+        eventData.Use();
     }
 
     public void RotateHandler(Transform currentTileParent, bool snap)

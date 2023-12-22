@@ -253,13 +253,13 @@ public class IngameStageUIManager : MonoBehaviour
 
         if (!isCurrentPlayerNull && (!isCurrentPlayerArranged || isSettingMode))
         {
-            if (!Utils.IsUILayer() && !Utils.IsCurrentPlayer(stageManager.currentPlayer.gameObject) && Input.GetMouseButtonDown(0))
-            {
-                Debug.Log("Ä³¸¯ÅÍ ÀÎÆ÷ ´ÝÈû");
-                stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
-                stageManager.currentPlayer = null;
-                stageManager.currentPlayerIcon = null;
-            }
+            //if (!Utils.IsUILayer() && !Utils.IsCurrentPlayer(stageManager.currentPlayer.gameObject) && Input.GetMouseButtonDown(0))
+            //{
+            //    Debug.Log("Ä³¸¯ÅÍ ÀÎÆ÷ ´ÝÈû");
+            //    stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
+            //    stageManager.currentPlayer = null;
+            //    stageManager.currentPlayerIcon = null;
+            //}
         }
     }
 

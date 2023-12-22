@@ -122,6 +122,7 @@ public class ArrangeJoystick : MonoBehaviour
 
     public void SkillEvent()
     {
+        Debug.Log("skill event");
         if (skillButton.gameObject.activeSelf)
         {
             skillButton.gameObject.SetActive(false);
