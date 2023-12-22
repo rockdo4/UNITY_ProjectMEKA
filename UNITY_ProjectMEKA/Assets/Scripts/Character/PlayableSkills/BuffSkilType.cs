@@ -195,6 +195,8 @@ public class BuffSkilType : SkillBase
     public void InstantSkillArmorAndCost()
     {
         player.state.armor += saveArmor + figure;
+        //요기 이팩트 추가
+        PoolBuffEffact();
     }
     public void InstantSkillDeductEnemyArmor()
     {
@@ -362,60 +364,6 @@ public class BuffSkilType : SkillBase
     void CheckOverlapBoxes()
     {
 
-        //if (player == null || AttackRange == null || transform == null)
-        //{
-        //    return;
-        //}
-        //colliders = new List<Collider>(); // ����Ʈ �ʱ�ȭ
-        //ConvertTo2DArray();
-
-        //// �÷��̾��� ���� ������ �� ���� ������ ������ ����
-        //Vector3 forward = -player.transform.forward; // �÷��̾��� ���� ������
-        //Vector3 right = player.transform.right; // �÷��̾��� ���� ������
-
-        //int characterRow = 0;
-        //int characterCol = 0;
-
-        //// �÷��̾��� ��ġ�� ã�� ����
-        //for (int i = 0; i < AttackRange.GetLength(0); i++)
-        //{
-        //    for (int j = 0; j < AttackRange.GetLength(1); j++)
-        //    {
-        //        if (AttackRange[i, j] == 2)
-        //        {
-        //            characterRow = i;
-        //            characterCol = j;
-        //            break;
-        //        }
-        //    }
-        //}
-
-        //// ���� ������ �����ϰ� �ݶ��̴��� �����ϴ� ����
-        //for (int i = 0; i < AttackRange.GetLength(0); i++)
-        //{
-        //    for (int j = 0; j < AttackRange.GetLength(1); j++)
-        //    {
-        //        if (AttackRange[i, j] == 1)
-        //        {
-        //            // �÷��̾� ��ġ�� �������� ������� ��ġ ���
-        //            Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-        //            Vector3 correctedPosition = player.transform.position + relativePosition;
-
-        //            // ���� ũ�⸦ ������ ������ ����
-        //            Vector3 boxSize = new Vector3(1, 5, 1);
-        //            Collider[] hitColliders = Physics.OverlapBox(correctedPosition, boxSize / 2, Quaternion.identity);
-
-        //            foreach (var hitCollider in hitColliders)
-        //            {
-        //                if (hitCollider.CompareTag("PlayerCollider") && !colliders.Contains(hitCollider))
-        //                {
-        //                    colliders.Add(hitCollider);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-        //// �ݶ��̴� ����Ʈ�� ��ȸ�ϸ� ���� ���� ����
         if (player == null || transform == null)
         {
             return;

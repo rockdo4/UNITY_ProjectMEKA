@@ -17826,6 +17826,7 @@ MonoBehaviour:
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
   firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -17854,13 +17855,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: AmberSkillEffect
+    perfab: {fileID: 8801525795127141306, guid: 837f887936c48ec4c8130d066e9c7563, type: 3}
+    count: 1
+  lv: 1
   id: 11101
   name: "\uBE44\uC2A4\uD06C"
   property: 1
-  maxHp: 500
-  armor: 0
-  damage: 20
+  maxHp: 200
+  armor: 18
+  damage: 22
   attackDelay: 0.5
+  shield: 0
+  maxShield: 0
   BulletName: 
   BulletType: 0
   flashName: 
@@ -17869,10 +17877,8 @@ MonoBehaviour:
   yal: 1
   rangeAttack: 0100000002000000
   level: 0
-  grade: 0
-  Hp: 0
-  ID: 0
-  arrangeCost: 18
+  Hp: 200
+  arrangeCost: 15
   arrangeCoolTime: 50
   skill: 0
   cost: 0
@@ -17905,6 +17911,7 @@ MonoBehaviour:
   hang: 0
   yal: 0
   rangeAttack: 
+  attackableTiles: []
   targetList: []
   skillDuration: 15
   isMe: 1
@@ -17915,7 +17922,7 @@ MonoBehaviour:
   Inc: 0
   figure: 0.2
   addCost: 0.3
-  isAttackRage: 0
+  isAttackRage: 1
   isAttackAnimaiton: 0
 --- !u!1 &8363141463200748262
 GameObject:

@@ -13502,8 +13502,11 @@ MonoBehaviour:
   enemyBlockCount: 
   skillCost: 0
   skillCoolTime: 0
-  attakableTiles: []
+  attackableTiles: []
   arrangableTiles: []
+  attackableSkillTiles: []
+  prevAttackableSkillTiles: []
+  skillState: {fileID: 0}
   PlayerInit:
     m_PersistentCalls:
       m_Calls: []
@@ -13512,11 +13515,16 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   parentPos: {fileID: 0}
   ChildPos: {fileID: 0}
+  isHitEffect: 0
+  effectName: 
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
+  firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
+  isSkillPossible: 0
 --- !u!114 &777403094984998779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13529,6 +13537,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: Flash4
+    perfab: {fileID: 1738175644799202, guid: c9e6ddab55c69eb4b81803e860d80c55, type: 3}
+    count: 10
+  - objectName: Effect
+    perfab: {fileID: 2696922133829033003, guid: 98315ff718add0647ba83fdfa6962cbc, type: 3}
+    count: 10
+  - objectName: SnapShotEffect
+    perfab: {fileID: 5966339886135021116, guid: d7f5cc6ff29381340b503f36e61930a3, type: 3}
+    count: 5
+  lv: 1
   id: 11401
   name: NASTRA
   property: 1
@@ -13536,6 +13555,8 @@ MonoBehaviour:
   armor: 0
   damage: 10
   attackDelay: 0.5
+  shield: 0
+  maxShield: 0
   BulletName: 
   BulletType: 5
   flashName: Flash4
@@ -13544,9 +13565,7 @@ MonoBehaviour:
   yal: 3
   rangeAttack: 010000000100000001000000010000000100000001000000010000000100000001000000010000000200000001000000
   level: 0
-  grade: 0
   Hp: 0
-  ID: 0
   arrangeCost: 14
   arrangeCoolTime: 40
   skill: 0
@@ -13556,6 +13575,8 @@ MonoBehaviour:
   skillCoolTime: 0
   skillDuration: 0
   occupation: 0
+  critChance: 0
+  fatalDamage: 1
   experience: 0
   currentExperience: 0
 --- !u!114 &2054840831210600993
@@ -13586,6 +13607,12 @@ MonoBehaviour:
   skillCoolTime: 20
   skillType: 1
   isSkillUsing: 0
+  isRangeOut: 0
+  hang: 0
+  yal: 0
+  rangeAttack: 
+  attackableTiles: []
+  targetList: []
   skillDuration: 10
   isMe: 1
   isSingle: 1
@@ -13594,10 +13621,9 @@ MonoBehaviour:
   type: 1
   Inc: 0
   figure: 0.2
+  addCost: 0
   isAttackRage: 0
-  hang: 0
-  yal: 0
-  rangeAttack: 
+  isAttackAnimaiton: 0
 --- !u!1 &6101596798703105872
 GameObject:
   m_ObjectHideFlags: 0

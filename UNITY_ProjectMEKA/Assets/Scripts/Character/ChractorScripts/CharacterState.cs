@@ -7,7 +7,20 @@ using static Defines;
 
 public class CharacterState : MonoBehaviour
 {
-    
+    [System.Serializable]
+    private class PoolObject
+    {
+        // 오브젝트 이름
+        public string objectName;
+        // 오브젝트 풀에서 관리할 오브젝트
+        public GameObject perfab;
+        // 몇개를 미리 생성 해놓을건지
+        public int count;
+    }
+
+    [SerializeField, Header("현 캐릭터에서 사용할 풀")]
+    private PoolObject[] objectInfos = null;
+
     public int[,] AttackRange;
 
     [SerializeField, Header("레벨 설정")]
