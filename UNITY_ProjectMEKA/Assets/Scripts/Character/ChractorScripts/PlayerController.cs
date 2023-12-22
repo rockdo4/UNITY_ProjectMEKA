@@ -613,6 +613,7 @@ public class PlayerController : MonoBehaviour
             skillState.UseSkill();
             Time.timeScale = 1.0f;
             stageManager.currentPlayer = null;
+            stageManager.ingameStageUIManager.isSkillTileWindow = false;
         }
         isSkillPossible = false;
     }
