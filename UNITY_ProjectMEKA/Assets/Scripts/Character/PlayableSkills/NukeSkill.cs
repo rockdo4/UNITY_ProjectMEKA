@@ -11,6 +11,14 @@ public class NukeSkill : SkillBase
         player = GetComponent<PlayerController>();
         isSkillUsing = false;
         player.ani.speed = 1;
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            pos = hit.point;
+            
+        }
     }
     private void OnEnable()
     {
@@ -51,14 +59,8 @@ public class NukeSkill : SkillBase
     {
 
         player.ani.SetTrigger("Skill");
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
-        {
-            pos = hit.point;
-        }
-
-        var nuke = Instantiate(pre, new Vector3(pos.x, 0.25f, pos.z), Quaternion.identity);
+        
+        var nuke = Instantiate(pre, new Vector3(pos.x, 0.25f, pos.z+2f), Quaternion.identity);
         isSkillUsing = true;
         Destroy(nuke, 15f);
     }
