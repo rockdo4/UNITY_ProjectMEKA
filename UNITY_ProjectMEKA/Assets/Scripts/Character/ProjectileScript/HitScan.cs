@@ -31,7 +31,7 @@ public class HitScan : MonoBehaviour
             if (hit.collider.CompareTag("EnemyCollider"))
             {
                 //Debug.Log("Enemy collider on Enemy layer hit: " + hit.collider.name);
-                if(Random.Range(0f,1f) >= player.state.critChance)
+                if(Random.Range(0f,1f) <= player.state.critChance)
                 {
                     hit.collider.gameObject.GetComponentInParent<IAttackable>().OnAttack((player.state.damage * player.state.fatalDamage) + player.Rockpaperscissors());
 

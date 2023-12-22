@@ -78,7 +78,7 @@ public class PlayerState : CharacterState
     public float critChance;
 
     [SerializeField, Header("치명타 피해 퍼센트 1 = 100")]//p
-    public float fatalDamage;
+    public float fatalDamage = 1;
 
 
     [HideInInspector]
