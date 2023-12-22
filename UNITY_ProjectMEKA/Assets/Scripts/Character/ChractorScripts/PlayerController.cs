@@ -417,7 +417,7 @@ public class PlayerController : MonoBehaviour
     public IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(0.2f);
-        ani.speed = 0;
+        ani.speed = 0.1f;
         yield return new WaitForSeconds(state.attackDelay);
         ani.speed = 1;
     }
