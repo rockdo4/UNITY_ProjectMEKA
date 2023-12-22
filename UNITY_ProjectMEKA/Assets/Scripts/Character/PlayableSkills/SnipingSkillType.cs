@@ -5,6 +5,7 @@ using System.Linq;
 using static Defines;
 using System;
 using UnityEngine.Rendering;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class SnipingSkillType : SkillBase
 {
@@ -28,6 +29,7 @@ public class SnipingSkillType : SkillBase
     public SkillType skillT;
     private bool isSniping;
     private float timer;
+    private Vector3Int skillPivot;
     private void Start()
     {
         player = GetComponent<PlayerController>();
@@ -85,13 +87,10 @@ public class SnipingSkillType : SkillBase
         attackableTiles = new List<Tile>(player.attackableSkillTiles);
         StartCoroutine(Damage5Second(attackableTiles));
         var obj = ObjectPoolManager.instance.GetGo(effectName);
-        var pos = attackableTiles[4].transform.position;
-        pos.x += 0.5f;
-        pos.z += 0.5f;
+        var pos = player.skillPivot;
         obj.transform.position = pos;
         obj.SetActive(false);
         obj.SetActive(true);
-        
         
     }
     IEnumerator Damage5Second(List<Tile> tileList)
@@ -99,22 +98,11 @@ public class SnipingSkillType : SkillBase
         int i = 0;
         while(i < 5) 
         {
-            //yield return null;
             
-            foreach (var attack in tileList)
-            {
-                foreach(var enemy in attack.objectsOnTile)
-                {
-                    if(enemy.tag == "Enemy")
-                    {
-                        enemy.GetComponent<IAttackable>().OnAttack(player.state.damage * figure);
-                        
-                    }
-                }
-            }
+            CheckOverlapBoxes();
             i++;
             yield return new WaitForSeconds(1f);
-            yield return null;
+            //yield return null;
         }
     }
     public void SnipingSingle()
@@ -141,7 +129,6 @@ public class SnipingSkillType : SkillBase
                 
             }
         }
-        Debug.Log("쒸이벌 이게 스킬이지");
     }
     
     public void ShieldSkill()
@@ -254,5 +241,137 @@ public class SnipingSkillType : SkillBase
         if (health.state.maxHp > 0)
             return (float)health.state.Hp / health.state.maxHp;
         return 0;
+    }
+    void CheckOverlapBoxes()
+    {
+
+        if (player == null || transform == null)
+        {
+            return;
+        }
+        ConvertTo2DArray();
+
+        Vector3 front = player.transform.forward;
+        front.y = 0; // 수평 방향만 고려하기 위해 y 축 컴포넌트를 0으로 설정
+
+        // 정규화하여 단위 벡터로 만듦
+        front.Normalize();
+
+        // 4개의 주요 방향을 나타내는 벡터
+        Vector3 north = Vector3.forward;
+        Vector3 south = Vector3.back;
+        Vector3 east = Vector3.right;
+        Vector3 west = Vector3.left;
+
+        // 가장 가까운 방향을 찾기 위해 내적을 사용
+        float maxDot = Mathf.Max(Vector3.Dot(front, north), Vector3.Dot(front, south),
+                                 Vector3.Dot(front, east), Vector3.Dot(front, west));
+
+        // 스위치문으로 각 방향을 판단
+        if (maxDot == Vector3.Dot(front, north))
+        {
+            // 북쪽을 보고 있음
+            attackRangeRot = AttackRange;
+        }
+        else if (maxDot == Vector3.Dot(front, south))
+        {
+            // 남쪽을 보고 있음
+            attackRangeRot = Utils.RotateArray(AttackRange, 2);
+        }
+        else if (maxDot == Vector3.Dot(front, east))
+        {
+            // 동쪽을 보고 있음
+            attackRangeRot = Utils.RotateArray(AttackRange, 1);
+        }
+        else if (maxDot == Vector3.Dot(front, west))
+        {
+            // 서쪽을 보고 있음
+            attackRangeRot = Utils.RotateArray(AttackRange, 3);
+        }
+
+        // 타일 레이어 마스크를 설정하기 위한 변수 초기화
+        int layerMask = 0;
+        int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
+        int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
+
+        layerMask = lowTileMask | highTileMask;
+        // 캐릭터의 현재 위치와 방향을 계산
+        //Vector3 characterPosition = player.transform.position;
+        Vector3 characterPosition = player.skillPivot;
+        //Vector3 forward = -player.transform.forward; 
+        Vector3 forward = -player.skillPivot; // 캐릭터가 바라보는 반대 방향
+        //Vector3 right = player.transform.right; 
+        Vector3 right = player.skillPivot; // 캐릭터의 오른쪽 방향
+
+        // 캐릭터의 현재 타일 위치 (행과 열)를 찾기 위한 변수 초기화
+        int characterRow = 0;
+        int characterCol = 0;
+
+        // state.AttackRange 배열을 순회하여 캐릭터의 위치를 찾음
+        for (int i = 0; i < attackRangeRot.GetLength(0); i++)
+        {
+            for (int j = 0; j < attackRangeRot.GetLength(1); j++)
+            {
+                if (attackRangeRot[i, j] == 2)
+                {
+                    characterRow = i;
+                    characterCol = j;
+                }
+            }
+        }
+
+        // 공격 가능한 타일 리스트를 초기화
+        if (attackableTiles.Count > 0)
+        {
+            attackableTiles.Clear();
+        }
+
+        // 공격 가능한 타일을 찾기 위해 state.AttackRange 배열을 다시 순회
+        for (int i = 0; i < attackRangeRot.GetLength(0); i++)
+        {
+            for (int j = 0; j < attackRangeRot.GetLength(1); j++)
+            {
+                if (attackRangeRot[i, j] == 1) // '1'은 공격 가능한 타일을 나타냄
+                {
+                    // 캐릭터로부터 상대적인 위치 계산
+                    Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
+                    Vector3 tilePosition = characterPosition + relativePosition; // 절대 타일 위치 계산
+
+                    // 타일 위치를 정수형으로 변환
+                    var tilePosInt = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
+
+                    // 레이캐스트를 사용하여 타일 검사
+                    RaycastHit hit;
+                    var tempPos = new Vector3(tilePosInt.x, tilePosInt.y - 10f, tilePosInt.z);
+                    if (Physics.Raycast(tempPos, Vector3.up, out hit, Mathf.Infinity, layerMask))
+                    {
+                        // 레이캐스트가 타일에 닿으면 해당 타일 컨트롤러를 가져옴
+                        var tileContoller = hit.transform.GetComponent<Tile>();
+                        if (!tileContoller.isSomthingOnTile) // 타일 위에 다른 것이 없으면
+                        {
+                            attackableTiles.Add(tileContoller); // 공격 가능한 타일 리스트에 추가
+
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach (var a in attackableTiles)
+        {
+            foreach (var b in a.objectsOnTile)
+            {
+                if (b.tag == "Enemy")
+                {
+                    IAttackable attackable = b.GetComponent<IAttackable>();
+                    if (attackable != null)
+                    {
+                        attackable.OnAttack(player.state.damage * figure);
+                        //attackable.OnAttack(100f);
+                     
+                    }
+                }
+            }
+        }
     }
 }
