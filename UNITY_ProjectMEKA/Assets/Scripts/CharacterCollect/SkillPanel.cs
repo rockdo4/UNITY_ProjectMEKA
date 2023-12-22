@@ -39,6 +39,9 @@ public class SkillPanel : MonoBehaviour
 	{
 		var datas = skillTable.GetSkillDatas(currCharacter.SkillID);
 
+		Debug.Log(datas.Length);
+		Debug.Log(currCharacter.SkillLevel);
+
 		int skillID;
 		if (datas.Length == currCharacter.SkillLevel - 1)
 		{
