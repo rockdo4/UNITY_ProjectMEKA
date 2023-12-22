@@ -56,7 +56,7 @@ public class EnemyBossSkill : SkillBase
         timer = 0;
         isStun = false;
         isOne = false;
-        enemy.state.damage = saveDamage;
+        //enemy.state.damage = saveDamage;
     }
 
 
