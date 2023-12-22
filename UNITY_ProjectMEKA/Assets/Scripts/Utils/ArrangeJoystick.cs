@@ -45,7 +45,7 @@ public class ArrangeJoystick : MonoBehaviour
 
     public void ArrangeDoneEvent()
     {
-        Debug.Log("arrange done");
+        Debug.LogWarning("arrange done");
 
         var secondArranged = stageManager.currentPlayer.stateManager.secondArranged;
         var arrangePossible = stageManager.currentPlayer.currentTile.arrangePossible;
@@ -79,13 +79,24 @@ public class ArrangeJoystick : MonoBehaviour
 
     public void CancelEvent()
     {
-        if (cancelButton.gameObject.activeSelf)
+		Debug.LogWarning("캔슬 이벤트");
+
+		if (cancelButton.gameObject.activeSelf)
         {
             cancelButton.gameObject.SetActive(false);
         }
         //stageManager.currentPlayer.stateManager.firstArranged = false;
         //stageManager.currentPlayer.stateManager.secondArranged = false;
         //ClearTileMesh(tempTiles);
+        if(stageManager == null)
+        {
+            Debug.LogWarning("스테이지 매니저 Null");
+        }
+        else if(stageManager.currentPlayer == null)
+        {
+			Debug.LogWarning("현재플레이어 Null");
+		}
+
         stageManager.currentPlayer.currentTile.arrangePossible = true;
         //stageManager.currentPlayer.SetState(CharacterStates.Idle);
         stageManager.currentPlayerIcon.created = false;
@@ -98,8 +109,9 @@ public class ArrangeJoystick : MonoBehaviour
 
     public void CollectEvent()
     {
-        Debug.Log("collect event");
-        if (collectButton.gameObject.activeSelf)
+		Debug.LogWarning("회수 이벤트");
+
+		if (collectButton.gameObject.activeSelf)
         {
             collectButton.gameObject.SetActive(false);
         }
@@ -122,6 +134,8 @@ public class ArrangeJoystick : MonoBehaviour
 
     public void SkillEvent()
     {
+        Debug.LogWarning("스킬 이벤트");
+
         if (skillButton.gameObject.activeSelf)
         {
             skillButton.gameObject.SetActive(false);
