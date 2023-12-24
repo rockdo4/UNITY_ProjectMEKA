@@ -181,6 +181,7 @@ public class GateController : MonoBehaviour
                 foreach(var effect in enemy.objectInfos)
                 {
                     ObjectPoolManager.instance.AddObjectToPool(effect.objectName, effect.perfab, effect.count);
+                    Debug.Log(effect.objectName);
                 }
 			}
 		}
@@ -337,14 +338,16 @@ public class GateController : MonoBehaviour
         stats.lv = spawnInfo.level;
 
 		int levelId = stats.id * 100 + stats.lv;
-		Debug.Log(levelId);
+
+		//Debug.Log(levelId);
 
 		var data = DataTableMgr.GetTable<MonsterLevelTable>().GetMonsterData(levelId);
         if(data == null)
         {            
             return;
 		}
-        Debug.Log((data.MonsterAttackDamage, data.MonsterDefense, data.MonsterHP, data.MonsterShield));
+
+        //Debug.Log((data.MonsterAttackDamage, data.MonsterDefense, data.MonsterHP, data.MonsterShield));
 
         stats.damage = data.MonsterAttackDamage;
         stats.armor = data.MonsterDefense;

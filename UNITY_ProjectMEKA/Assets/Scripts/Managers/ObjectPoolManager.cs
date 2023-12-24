@@ -121,8 +121,6 @@ public class ObjectPoolManager : MonoBehaviour
 
 	public void AddObjectToPool(string objName, GameObject prefab, int count)
 	{
-        Debug.Log("풀링 추가");
-
 		ObjectInfo newObjectInfo = new ObjectInfo
 		{
 			objectName = objName,

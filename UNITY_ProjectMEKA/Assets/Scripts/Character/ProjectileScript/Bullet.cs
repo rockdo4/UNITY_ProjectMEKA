@@ -103,7 +103,7 @@ public class Bullet : MonoBehaviour
         else if(other.CompareTag("PlayerCollider")&& en != null)
         {
             IAttackable attackable = target.GetComponentInParent<IAttackable>();
-            Debug.Log($"{damage},{target.GetComponentInParent<PlayerController>().state.Hp}");
+            //Debug.Log($"{damage},{target.GetComponentInParent<PlayerController>().state.Hp}");
             attackable.OnAttack(damage);
             
             //attackable.OnAttack((Player.GetComponent<PlayerController>().state.damage + Player.GetComponent<PlayerController>().Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.amror + 1f) * 1f);
