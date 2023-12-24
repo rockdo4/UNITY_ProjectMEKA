@@ -164,14 +164,24 @@ public class GateController : MonoBehaviour
 		{
 			foreach (var enemyInfo in wave.enemySpawnInfos)
 			{
-				var name = enemyInfo.prefab.GetComponent<EnemyState>().name;
-				Debug.Log(name);
+                var enemy = enemyInfo.prefab.GetComponent<EnemyState>();
+				
+                if(name == null)
+                {
+                    Debug.LogWarning("name is null");
+                    continue;
+                }
 				if (ObjectPoolManager.instance == null)
 				{
-					Debug.Log("ObjectPoolManager.instance is null");
+					Debug.LogError("ObjectPoolManager.instance is null");
 				}
 
-				ObjectPoolManager.instance.AddObjectToPool(name, enemyInfo.prefab, enemyInfo.count);
+				ObjectPoolManager.instance.AddObjectToPool(enemy.name, enemyInfo.prefab, enemyInfo.count);
+
+                foreach(var effect in enemy.objectInfos)
+                {
+                    ObjectPoolManager.instance.AddObjectToPool(effect.objectName, effect.perfab, effect.count);
+                }
 			}
 		}
 	}
