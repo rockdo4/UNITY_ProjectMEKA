@@ -1,14 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Data;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using static Defines;
-using UnityEditor.Rendering;
 
 public class IngameStageUIManager : MonoBehaviour
 {
