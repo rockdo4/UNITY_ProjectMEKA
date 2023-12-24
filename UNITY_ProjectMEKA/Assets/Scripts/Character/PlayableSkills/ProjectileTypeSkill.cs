@@ -56,6 +56,11 @@ public class ProjectileTypeSkill : SkillBase
     public void SkillUse()
     {
         var s = ObjectPoolManager.instance.GetGo(projectileName);
+        if (s == null)
+        {
+            isSkillUsing = false;
+            return;
+        }
         Vector3 pos = transform.position;
         pos.y += 0.5f;
         s.transform.position = pos;

@@ -17881,6 +17881,7 @@ GameObject:
   - component: {fileID: 5082205830188824000}
   - component: {fileID: 4387861444516278781}
   - component: {fileID: 8753700963476161200}
+  - component: {fileID: 6933080390061413223}
   m_Layer: 6
   m_Name: RYUSIEN
   m_TagString: Player
@@ -17944,6 +17945,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
+  updateUI:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5082205830188824000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17969,8 +17973,11 @@ MonoBehaviour:
   enemyBlockCount: 
   skillCost: 0
   skillCoolTime: 0
-  attakableTiles: []
+  attackableTiles: []
   arrangableTiles: []
+  attackableSkillTiles: []
+  prevAttackableSkillTiles: []
+  skillState: {fileID: 0}
   PlayerInit:
     m_PersistentCalls:
       m_Calls: []
@@ -17979,11 +17986,16 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   parentPos: {fileID: 0}
   ChildPos: {fileID: 0}
+  isHitEffect: 0
+  effectName: 
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
+  firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
+  isSkillPossible: 0
 --- !u!114 &4387861444516278781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18008,13 +18020,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: MagicChain
+    perfab: {fileID: 8447788278026024314, guid: 12dff322ee6cd2449876d0d660652f96, type: 3}
+    count: 10
+  - objectName: ShieldEffect
+    perfab: {fileID: 2786649271758789093, guid: 07b397f369cf8f64793e00e5497f33a9, type: 3}
+    count: 5
+  lv: 1
   id: 13301
   name: RYUSIEN
   property: 2
   maxHp: 100
-  amror: 0
+  armor: 0
   damage: 50
   attackDelay: 2.5
+  shield: 0
+  maxShield: 0
   BulletName: MagicChain
   BulletType: 4
   flashName: 
@@ -18023,20 +18045,46 @@ MonoBehaviour:
   yal: 3
   rangeAttack: 010000000100000001000000010000000200000001000000010000000100000001000000
   level: 0
-  grade: 0
   Hp: 0
-  ID: 0
   arrangeCost: 0
   arrangeCoolTime: 0
   skill: 8
   cost: 0
-  maxCost: 0
+  maxCost: 80
   skillCost: 0
   skillCoolTime: 0
   skillDuration: 0
   occupation: 3
+  critChance: 0
+  fatalDamage: 0
   experience: 0
   currentExperience: 0
+--- !u!114 &6933080390061413223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8192282358213904793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1c331262c9c7e9419ce64e67924e3ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillCost: 80
+  skillCoolTime: 20
+  skillType: 2
+  isSkillUsing: 0
+  isRangeOut: 0
+  hang: 0
+  yal: 0
+  rangeAttack: 
+  attackableTiles: []
+  targetList: []
+  figure: 100
+  effectName: ShieldEffect
+  duration: 0
+  skillT: 2
 --- !u!1 &8235964981381260527
 GameObject:
   m_ObjectHideFlags: 0

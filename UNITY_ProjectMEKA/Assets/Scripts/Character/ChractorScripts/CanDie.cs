@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -21,6 +22,7 @@ public class CanDie : MonoBehaviour
         
         action = new UnityEvent();
         updateUI = new UnityEvent();
+        action.AddListener(() => Debug.Log("Action invoked"));
         updateUI.AddListener(() =>
         {
             stageManager.killMonsterCount++;
@@ -30,7 +32,6 @@ public class CanDie : MonoBehaviour
     {
         if (state.Hp <= 0f)
         {
-            action.Invoke();
             updateUI.Invoke();
 
             // if this is a monster
@@ -40,6 +41,7 @@ public class CanDie : MonoBehaviour
                 stageManager.currentCost += 1f;
                 GetComponent<PoolAble>().ReleaseObject();
             }
+            action.Invoke();
         }
     }
 }

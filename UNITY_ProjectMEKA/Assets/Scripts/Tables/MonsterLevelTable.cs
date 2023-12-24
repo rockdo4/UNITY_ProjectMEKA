@@ -20,7 +20,7 @@ public class MonsterLevelTable : DataTable
 
     public MonsterLevelTable()
     {
-        path = "Table/MonsterTable";
+        path = "Table/MonsterLevelTable";
         Load();
     }
 

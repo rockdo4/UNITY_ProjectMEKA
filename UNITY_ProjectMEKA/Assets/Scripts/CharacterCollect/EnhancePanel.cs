@@ -67,7 +67,6 @@ public class EnhancePanel : MonoBehaviour
 	public LevelData CalculateData(int totalExp, out int remain)
 	{
 		var table = DataTableMgr.GetTable<ExpTable>().GetOriginalTable();
-		Debug.Log("´ÙÇß³×");
 		int currentLevel = currCharacter.CharacterLevel;
 		int targetLevel = currentLevel;
 		int maxLevel = currCharacter.CharacterGrade * 10;

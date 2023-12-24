@@ -15941,11 +15941,16 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   parentPos: {fileID: 0}
   ChildPos: {fileID: 0}
+  isHitEffect: 0
+  effectName: 
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
+  firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
+  isSkillPossible: 0
 --- !u!114 &8863327276771311867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15958,6 +15963,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: SienaProjectile
+    perfab: {fileID: 9178383734760530273, guid: a33b26c8fb96d61449c5596310f94f65, type: 3}
+    count: 10
+  - objectName: SienaSkillEffect
+    perfab: {fileID: 1371643410395728483, guid: e19e5df6499c4f9438cf93ca718746a4, type: 3}
+    count: 5
+  lv: 0
   id: 11302
   name: SIENA
   property: 1
@@ -15965,6 +15978,8 @@ MonoBehaviour:
   armor: 1
   damage: 50
   attackDelay: 1
+  shield: 0
+  maxShield: 0
   BulletName: 
   BulletType: 6
   flashName: 
@@ -15973,9 +15988,7 @@ MonoBehaviour:
   yal: 3
   rangeAttack: 010000000100000001000000010000000200000001000000010000000100000001000000
   level: 0
-  grade: 0
   Hp: 0
-  ID: 0
   arrangeCost: 0
   arrangeCoolTime: 0
   skill: 0
@@ -16015,9 +16028,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillCost: 0
   skillCoolTime: 0
-  skillType: 2
+  skillType: 3
   isSkillUsing: 0
   isRangeOut: 1
+  hang: 3
+  yal: 3
+  rangeAttack: 010000000100000001000000010000000200000001000000010000000100000001000000
+  attackableTiles: []
+  targetList: []
+  figure: 2
+  effectName: SienaSkillEffect
+  duration: 5
+  skillT: 0
 --- !u!1 &7476126426785866412
 GameObject:
   m_ObjectHideFlags: 0

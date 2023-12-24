@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using static Defines;
+using UnityEditor.Rendering;
 
 public class IngameStageUIManager : MonoBehaviour
 {
@@ -52,6 +55,10 @@ public class IngameStageUIManager : MonoBehaviour
     private Button cancelButton;
     private Button collectButton;
     private Button skillButton;
+    private Button closeButton;
+
+	// skill
+	public TextMeshProUGUI skillTileGuideText;
 
     public bool currentPlayerChanged;
     public bool currentPlayerOnTile;
@@ -59,23 +66,37 @@ public class IngameStageUIManager : MonoBehaviour
     private int prevCost;
     private int prevKillMonsterCount;
     private int prevHouseLife;
+    public bool isSkillTileWindow;
+
+    // tables
+    private CharacterTable characterTable;
+    private CharacterLevelTable characterLevelTable;
+    private StringTable stringTable;
+    private ItemInfoTable itemInfoTable;
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
     private void OnEnable()
     {
+        characterTable = DataTableMgr.GetTable<CharacterTable>();
+        characterLevelTable = DataTableMgr.GetTable<CharacterLevelTable>();
+        stringTable = DataTableMgr.GetTable<StringTable>();
+        itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
+
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
         skillButton = joystick.skillButton;
+        closeButton = joystick.closeButton;
 
-        isInfoWindowOn = true;
-
+		isInfoWindowOn = true;
     }
 
     private void Awake()
     {
+        var characterTable = DataTableMgr.GetTable<CharacterTable>();
+        var stringTable = DataTableMgr.GetTable<StringTable>();
     }
 
     private void Start()
@@ -110,7 +131,7 @@ public class IngameStageUIManager : MonoBehaviour
         }
 
         CloseResultWindow();
-        CloseCharacterInfoWindow();
+        //CloseCharacterInfoWindow();
     }
 
     public void WindowModeUpdate()
@@ -131,7 +152,6 @@ public class IngameStageUIManager : MonoBehaviour
         var isCurrentPlayer = stageManager.currentPlayer != null;
         var isFirstArranged = isCurrentPlayer ? stageManager.currentPlayer.stateManager.firstArranged : false;
         var isSecondArranged = isCurrentPlayer ? stageManager.currentPlayer.stateManager.secondArranged : false;
-        var isSkillUsing = isCurrentPlayer ? stageManager.currentPlayer.skillState.isSkillUsing : false;
 
         if (!isCurrentPlayer)
         {
@@ -145,11 +165,11 @@ public class IngameStageUIManager : MonoBehaviour
         {
             windowMode = WindowMode.SecondArrange;
         }
-        else if (isSecondArranged && !isSkillUsing)
+        else if (isSecondArranged && !isSkillTileWindow)
         {
             windowMode = WindowMode.Setting;
         }
-        else if (isSkillUsing)
+        else if (isSkillTileWindow)
         {
             windowMode = WindowMode.Skill;
         }
@@ -164,6 +184,7 @@ public class IngameStageUIManager : MonoBehaviour
                 ClearTileMesh();
                 characterInfoPanel.SetActive(false);
                 joystick.gameObject.SetActive(false);
+                skillTileGuideText.gameObject.SetActive(false);
                 currentPlayerOnTile = false;
                 isInfoWindowOn = true;
                 break;
@@ -193,6 +214,7 @@ public class IngameStageUIManager : MonoBehaviour
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(false);
                 skillButton.gameObject.SetActive(false);
+				closeButton.gameObject.SetActive(false);
                 break;
             case WindowMode.Setting:
                 // 캐릭터 인포 on
@@ -203,7 +225,8 @@ public class IngameStageUIManager : MonoBehaviour
                 joystickHandler.gameObject.SetActive(false);
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(true);
-                if(stageManager.currentPlayer.skillState.skillType != SkillType.Auto)
+                closeButton.gameObject.SetActive(true);
+				if (stageManager.currentPlayer.skillState.skillType != SkillType.Auto)
                 {
                     skillButton.gameObject.SetActive(true);
                 }
@@ -219,32 +242,38 @@ public class IngameStageUIManager : MonoBehaviour
                 LooseWindowSet();
                 break;
             case WindowMode.Skill:
-
+                skillTileGuideText.gameObject.SetActive(true);
                 break;
         }
     }
 
-    public void CloseCharacterInfoWindow()
-    {
-        var isCurrentPlayerNull = stageManager.currentPlayer == null;
-        bool isCurrentPlayerArranged = false;
-        if (!isCurrentPlayerNull)
-        {
-            isCurrentPlayerArranged = stageManager.currentPlayer.stateManager.firstArranged;
-        }
-        var isSettingMode = windowMode == Defines.WindowMode.Setting;
+  //  public void CloseCharacterInfoWindow()
+  //  {
+		//stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
+		//stageManager.currentPlayer = null;
+		//stageManager.currentPlayerIcon = null;
 
-        if (!isCurrentPlayerNull && (!isCurrentPlayerArranged || isSettingMode))
-        {
-            if (!Utils.IsUILayer() && !Utils.IsCurrentPlayer(stageManager.currentPlayer.gameObject) && Input.GetMouseButtonDown(0))
-            {
-                Debug.Log("캐릭터 인포 닫힘");
-                stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
-                stageManager.currentPlayer = null;
-                stageManager.currentPlayerIcon = null;
-            }
-        }
-    }
+
+		////var isCurrentPlayerNull = stageManager.currentPlayer == null;
+  ////      bool isCurrentPlayerArranged = false;
+  ////      if (!isCurrentPlayerNull)
+  ////      {
+  ////          isCurrentPlayerArranged = stageManager.currentPlayer.stateManager.firstArranged;
+  ////      }
+  ////      var isSettingMode = windowMode == Defines.WindowMode.Setting;
+  ////      var isEvent = EventSystem.current.IsPointerOverGameObject();
+
+  ////      if (!isCurrentPlayerNull && (!isCurrentPlayerArranged || isSettingMode))
+  ////      {
+  ////          if (!Utils.IsUILayer() && !Utils.IsCurrentPlayer(stageManager.currentPlayer.gameObject) && Input.GetMouseButtonDown(0))
+  ////          {
+  ////              Debug.Log("캐릭터 인포 닫힘");
+  ////              stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
+  ////              stageManager.currentPlayer = null;
+  ////              stageManager.currentPlayerIcon = null;
+  ////          }
+  ////      }
+  //  }
 
     public void CloseResultWindow()
     {
@@ -259,14 +288,21 @@ public class IngameStageUIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         StageDataManager.Instance.toStageChoicePanel = true;
-        SceneManager.LoadScene("GachaSceneDevice");
+        SceneManager.LoadScene("MainScene");
     }
 
     public void ChangeCharacterInfo()
     {
+        var characterId = stageManager.currentPlayer.state.id;
+        var characterData = characterTable.GetCharacterData(characterId);
+        var stringId = characterData.OccupationInfoStringID;
+        var occupationInfoString = stringTable.GetString(stringId);
+
+        // need to apply string table
         characterOccupation.SetText(stageManager.currentPlayer.state.occupation.ToString());
         characterName.SetText(stageManager.currentPlayer.state.name);
-        characterDescription.SetText($"임의 설명글\n박순국바보\n박광훈바보 김주현바보 에베베");
+
+        characterDescription.SetText(occupationInfoString);
     }
 
     public void CostUpdate()
@@ -441,11 +477,11 @@ public class IngameStageUIManager : MonoBehaviour
             switch(i)
             {
                 case 0:
-                    if(rewardData.Item1ID != 0)
+                    if(rewardData.FirstItemID != 0)
                     {
-                        id = rewardData.Item1ID;
-                        count =rewardData.Item1Count;
-                        itemInfo.itemCountText.SetText(rewardData.Item1Count.ToString());
+                        id = rewardData.FirstItemID;
+                        count =rewardData.FirstItemCount;
+                        itemInfo.itemCountText.SetText(rewardData.FirstItemCount.ToString());
                     }
                     else
                     {
@@ -453,7 +489,19 @@ public class IngameStageUIManager : MonoBehaviour
                     }
                     break;
                 case 1:
-                    if(rewardData.Item2ID != 0)
+                    if (rewardData.Item1ID != 0)
+                    {
+                        id = rewardData.Item1ID;
+                        count = rewardData.Item1Count;
+                        itemInfo.itemCountText.SetText(rewardData.Item1Count.ToString());
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
+                case 2:
+                    if (rewardData.Item2ID != 0)
                     {
                         id = rewardData.Item2ID;
                         count = rewardData.Item2Count;
@@ -464,7 +512,7 @@ public class IngameStageUIManager : MonoBehaviour
                         itemGo.SetActive(false);
                     }
                     break;
-                case 2:
+                case 3:
                     if (rewardData.Item3ID != 0)
                     {
                         id = rewardData.Item3ID;
@@ -476,24 +524,12 @@ public class IngameStageUIManager : MonoBehaviour
                         itemGo.SetActive(false);
                     }
                     break;
-                case 3:
+                case 4:
                     if (rewardData.Item4ID != 0)
                     {
                         id = rewardData.Item4ID;
                         count = rewardData.Item4Count;
                         itemInfo.itemCountText.SetText(rewardData.Item4Count.ToString());
-                    }
-                    else
-                    {
-                        itemGo.SetActive(false);
-                    }
-                    break;
-                case 4:
-                    if (rewardData.Item5ID != 0)
-                    {
-                        id = rewardData.Item5ID;
-                        count = rewardData.Item5Count;
-                        itemInfo.itemCountText.SetText(rewardData.Item5Count.ToString());
                     }
                     else
                     {
@@ -510,7 +546,10 @@ public class IngameStageUIManager : MonoBehaviour
     {
         chapterText.SetText(stageData.ChapterNumber);
         stageNumText.SetText(stageData.StageNumber.ToString());
-        stageNameText.SetText(stageData.StageName);
+
+        var stringTable = DataTableMgr.GetTable<StringTable>();
+        var stageName = stringTable.GetString(stageData.StageNameStringID);
+        stageNameText.SetText(stageName);
 
         // need to apply string table later
         switch (stageData.Type)
@@ -531,11 +570,26 @@ public class IngameStageUIManager : MonoBehaviour
     {
         // item info setting : sprite
         // item info setting : name
-        if(DataTableMgr.GetTable<ItemInfoTable>().GetItemData(itemID) == null)
+        var isItem = itemInfoTable.GetItemData(itemID) != null;
+        var isCharacter = characterLevelTable.GetLevelData(itemID) != null;
+
+        if (!isItem && !isCharacter)
         {
             return;
         }
-        var rewardItem = DataTableMgr.GetTable<ItemInfoTable>().GetItemData(itemID);
-        itemInfo.itemName.SetText(rewardItem.Name);
+
+        if(isItem)
+        {
+            var rewardItem = itemInfoTable.GetItemData(itemID);
+            itemInfo.itemName.SetText(rewardItem.Name);
+        }
+        else
+        {
+            var itemIDString = itemID.ToString();
+            var characterId = int.Parse(itemIDString.Substring(0, itemIDString.Length - 2));
+            var characterData = characterTable.GetCharacterData(characterId);
+            var characterName = characterData.CharacterName;
+            itemInfo.itemName.SetText(characterName);
+        }
     }
 }

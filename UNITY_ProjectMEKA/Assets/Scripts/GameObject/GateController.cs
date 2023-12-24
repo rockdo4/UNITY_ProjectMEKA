@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Defines;
 using static GateController;
@@ -113,7 +115,7 @@ public class GateController : MonoBehaviour
             }
         }
 
-        timerScript = FindObjectOfType<WaveTimer>();
+		timerScript = FindObjectOfType<WaveTimer>();
         if(timerScript == null)
         {
             Debug.Log("timerScript is null");
@@ -152,11 +154,27 @@ public class GateController : MonoBehaviour
         enemyPathRb.transform.LookAt(targetPos);
         pathDuration = waveInfos[currentWave].pathDuration;
         pathDone = false;
+
     }
 
     private void Start()
     {
-    }
+        //Set Monster In ObjectPool
+		foreach (var wave in waveInfos)
+		{
+			foreach (var enemyInfo in wave.enemySpawnInfos)
+			{
+				var name = enemyInfo.prefab.GetComponent<EnemyState>().name;
+				Debug.Log(name);
+				if (ObjectPoolManager.instance == null)
+				{
+					Debug.Log("ObjectPoolManager.instance is null");
+				}
+
+				ObjectPoolManager.instance.AddObjectToPool(name, enemyInfo.prefab, enemyInfo.count);
+			}
+		}
+	}
 
     virtual protected void FixedUpdate()
     {
@@ -302,6 +320,28 @@ public class GateController : MonoBehaviour
         enemyController.moveRepeatCount = waveInfo.moveRepeat;
         enemyController.state.property = spawnInfo.attribute;
         enemyController.state.level = spawnInfo.level;
+
+        var stats = enemyGo.GetComponent<CharacterState>();
+        //여기서 스탯 추가할 예정r
+
+        stats.lv = spawnInfo.level;
+
+		int levelId = stats.id * 100 + stats.lv;
+		Debug.Log(levelId);
+
+		var data = DataTableMgr.GetTable<MonsterLevelTable>().GetMonsterData(levelId);
+        if(data == null)
+        {            
+            return;
+		}
+        Debug.Log((data.MonsterAttackDamage, data.MonsterDefense, data.MonsterHP, data.MonsterShield));
+
+        stats.damage = data.MonsterAttackDamage;
+        stats.armor = data.MonsterDefense;
+        stats.maxShield = data.MonsterShield;
+        stats.shield = stats.maxShield;
+        stats.maxHp = data.MonsterHP;
+        stats.Hp = stats.maxHp;
 
         // need to apply monster stats by level
     }

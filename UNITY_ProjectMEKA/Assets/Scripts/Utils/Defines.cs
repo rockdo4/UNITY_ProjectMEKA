@@ -21,6 +21,7 @@ public static class Defines
         public const string player = "Player";
         public const string characterIconManager = "CharacterIconManager";
         public const string house = "House";
+        public const string stageUIManager = "StageUIManager";
     }
 
     public static class Layers
@@ -50,6 +51,14 @@ public static class Defines
         public const string stage0_6 = "Stage_TR-2";
         public const string stage0_7 = "Stage_0-5";
         public const string stage0_8 = "Stage_0-6";
+        public const string stage0_9 = "Stage_0-7";
+        public const string stage0_10 = "Stage_0-8";
+        public const string stage0_11 = "Stage_0-9";
+        public const string stage0_12 = "Stage_0-10";
+        public const string stage0_13 = "Stage_1-1";
+        public const string stage0_14 = "Stage_1-2";
+        public const string stage0_15 = "Stage_1-3";
+        public const string stage0_16 = "Stage_1-4";
     }
     public static class AssignmentSceneNames
     {
@@ -227,5 +236,11 @@ public static class Defines
     {
         None,
         Obstacle
+    }
+
+    public enum Language
+    {
+        Kor,
+        Eng
     }
 }

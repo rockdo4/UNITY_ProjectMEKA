@@ -6,6 +6,7 @@ using UnityEngine;
 public class NPCAttackState : NPCBaseState
 {
     private float timer;
+    List<GameObject> toRemove = new List<GameObject>();
     public NPCAttackState(EnemyController enemy) : base(enemy)
     {
     }
@@ -69,27 +70,44 @@ public class NPCAttackState : NPCBaseState
             enemyCtrl.SetState(NPCStates.Move);
             enemyCtrl.ani.SetTrigger("Run");
         }
+        //Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code 
+       
 
         foreach (var a in enemyCtrl.rangeInPlayers)
         {
-            if (a.GetComponentInParent<PlayerController>() == null)
+            if (a.GetComponentInParent<PlayerController>() == null || !a.activeSelf)
             {
-                if(enemyCtrl.rangeInPlayers.Contains(a))
-                {
-                    enemyCtrl.rangeInPlayers.Remove(a);
-
-                }
+                toRemove.Add(a);
                 enemyCtrl.SetState(NPCStates.Move);
                 enemyCtrl.ani.SetTrigger("Run");
             }
-            else if (!a.activeSelf)
-            {
-                enemyCtrl.rangeInPlayers.Remove(a);
-                enemyCtrl.SetState(NPCStates.Move);
-                enemyCtrl.ani.SetTrigger("Run");
-            }
-
         }
+
+        foreach (var item in toRemove)
+        {
+            enemyCtrl.rangeInPlayers.Remove(item);
+        }
+        //Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code 
+        //foreach (var a in enemyCtrl.rangeInPlayers)
+        //{
+        //    if (a.GetComponentInParent<PlayerController>() == null)
+        //    {
+        //        if(enemyCtrl.rangeInPlayers.Contains(a))
+        //        {
+        //            enemyCtrl.rangeInPlayers.Remove(a);
+
+        //        }
+        //        enemyCtrl.SetState(NPCStates.Move);
+        //        enemyCtrl.ani.SetTrigger("Run");
+        //    }
+        //    else if (!a.activeSelf)
+        //    {
+        //        enemyCtrl.rangeInPlayers.Remove(a);
+        //        enemyCtrl.SetState(NPCStates.Move);
+        //        enemyCtrl.ani.SetTrigger("Run");
+        //    }
+
+        //}
 
 
     }

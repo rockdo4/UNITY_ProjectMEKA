@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1435456294417054504
 Transform:
   m_ObjectHideFlags: 0
@@ -9885,7 +9885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8398045466629419056
 Transform:
   m_ObjectHideFlags: 0
@@ -9952,7 +9952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7614106379469757268
 Transform:
   m_ObjectHideFlags: 0
@@ -10049,8 +10049,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_makeObjs:
   - {fileID: 6289569497339140722, guid: d356daca159d82b4d944ff379d152967, type: 3}
-  m_startDelay: 2.25
-  m_makeCount: 3
+  m_startDelay: 1.8
+  m_makeCount: 1
   m_makeDelay: 0.5
   m_randomPos: {x: 0, y: 0, z: 0}
   m_randomRot: {x: 0, y: 0, z: 1}
@@ -10086,7 +10086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7630883065932941694
 Transform:
   m_ObjectHideFlags: 0
@@ -10162,8 +10162,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4222890416537728425}
   - {fileID: 7630883065932941694}
@@ -10193,7 +10193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3039647470206309037
 Transform:
   m_ObjectHideFlags: 0
@@ -10260,7 +10260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1743334363979830679
 Transform:
   m_ObjectHideFlags: 0
@@ -10358,7 +10358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5618999497825245512
 Transform:
   m_ObjectHideFlags: 0
@@ -10418,6 +10418,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1054618169204264893}
   - component: {fileID: 1969535433137427887}
+  - component: {fileID: -2669027512431053334}
   m_Layer: 0
   m_Name: SnipingEffectSkill
   m_TagString: Untagged
@@ -10435,7 +10436,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5740528, y: 6.1198587, z: -10.954354}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2212439956084061223}
@@ -10457,6 +10458,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea3ed2ceb5637048b4ee3a5b3166a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2669027512431053334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6572272158118022380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6ee7fe6f9e6f9418001fc128c0cf4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1 &6901704333886498492
 GameObject:
   m_ObjectHideFlags: 0
@@ -10474,7 +10488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6507110848649020104
 Transform:
   m_ObjectHideFlags: 0

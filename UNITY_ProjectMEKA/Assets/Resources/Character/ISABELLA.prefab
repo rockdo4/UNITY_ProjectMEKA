@@ -11601,7 +11601,7 @@ GameObject:
   - component: {fileID: 166229401915555168}
   - component: {fileID: 5531138866722357468}
   - component: {fileID: 1984565676475585485}
-  - component: {fileID: -1598105764748055061}
+  - component: {fileID: 5860739389757228717}
   m_Layer: 6
   m_Name: ISABELLA
   m_TagString: Player
@@ -11680,13 +11680,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: IsabellaHeal
+    perfab: {fileID: 285242176088954088, guid: 8dad390ffd43a2145929fdc3f2e7c7f8, type: 3}
+    count: 10
+  - objectName: IsabellaSkillEffect
+    perfab: {fileID: 2767905530544380274, guid: d091ccfa5da962d4daad55866f5404d0, type: 3}
+    count: 5
+  lv: 1
   id: 12501
-  name: ISABELLA
+  name: "\uC774\uC0AC\uBCA8\uB77C"
   property: 2
-  maxHp: 100
-  armor: 0
-  damage: 50
+  maxHp: 114
+  armor: 6
+  damage: 19
   attackDelay: 2.5
+  shield: 0
+  maxShield: 0
   BulletName: 
   BulletType: 0
   flashName: 
@@ -11695,11 +11705,9 @@ MonoBehaviour:
   yal: 3
   rangeAttack: 010000000100000001000000010000000100000001000000010000000200000001000000010000000100000001000000
   level: 0
-  grade: 0
-  Hp: 0
-  ID: 0
-  arrangeCost: 0
-  arrangeCoolTime: 0
+  Hp: 114
+  arrangeCost: 13
+  arrangeCoolTime: 60
   skill: 9
   cost: 0
   maxCost: 50
@@ -11707,6 +11715,8 @@ MonoBehaviour:
   skillCoolTime: 40
   skillDuration: 20
   occupation: 5
+  critChance: 0
+  fatalDamage: 0
   experience: 0
   currentExperience: 0
 --- !u!114 &5531138866722357468
@@ -11734,8 +11744,11 @@ MonoBehaviour:
   enemyBlockCount: 
   skillCost: 0
   skillCoolTime: 0
-  attakableTiles: []
+  attackableTiles: []
   arrangableTiles: []
+  attackableSkillTiles: []
+  prevAttackableSkillTiles: []
+  skillState: {fileID: 0}
   PlayerInit:
     m_PersistentCalls:
       m_Calls: []
@@ -11744,11 +11757,16 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   parentPos: {fileID: 0}
   ChildPos: {fileID: 0}
+  isHitEffect: 0
+  effectName: 
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
+  firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
+  isSkillPossible: 0
 --- !u!114 &1984565676475585485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11761,7 +11779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7388fd2f883b9b64184a8aa9b3f6391e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-1598105764748055061
+--- !u!114 &5860739389757228717
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11770,25 +11788,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 4796961672501740009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 375317c1b2b29d341824d604467b31de, type: 3}
+  m_Script: {fileID: 11500000, guid: f1c331262c9c7e9419ce64e67924e3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillCost: 50
   skillCoolTime: 40
-  skillType: 1
+  skillType: 2
   isSkillUsing: 0
-  skillDuration: 20
-  isMe: 0
-  isSingle: 0
-  effectName: IsabellaSkillEffect
-  isChoice: 0
-  type: 0
-  Inc: 1
-  figure: 1.5
-  isAttackRage: 0
+  isRangeOut: 0
   hang: 0
   yal: 0
   rangeAttack: 
+  attackableTiles: []
+  targetList: []
+  figure: 1.2
+  effectName: IsabellaSkillEffect
+  duration: 20
+  skillT: 1
 --- !u!1 &4825448500136388745
 GameObject:
   m_ObjectHideFlags: 0
