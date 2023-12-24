@@ -7,28 +7,35 @@ public static class Utils
 {
     public static bool IsUILayer()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            PointerEventData pointerData = new PointerEventData(EventSystem.current);
-            pointerData.position = Input.mousePosition;
-
-            List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(pointerData, results);
-
-            foreach (RaycastResult result in results)
+            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
-                //Debug.Log("Hit " + result.gameObject.name, result.gameObject);
-                var layerName = LayerMask.LayerToName(result.gameObject.layer);
+                PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                pointerData.position = Input.mousePosition;
 
-                switch(layerName)
+                List<RaycastResult> results = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(pointerData, results);
+
+                foreach (RaycastResult result in results)
                 {
-                    case "UI":
-                    case "ArrangeTile":
-                        return true;
-                    default:
-                        return false;
+                    //Debug.Log("Hit " + result.gameObject.name, result.gameObject);
+                    var layerName = LayerMask.LayerToName(result.gameObject.layer);
+
+                    switch (layerName)
+                    {
+                        case "UI":
+                        case "ArrangeTile":
+                            return true;
+                        default:
+                            return false;
+                    }
                 }
             }
+        }
+        else
+        {
+            Debug.Log("터치가 UI 위에 있지 않습니다.");
         }
         return false;
     }

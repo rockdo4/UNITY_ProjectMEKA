@@ -257,6 +257,8 @@ public class IngameStageUIManager : MonoBehaviour
         }
         var isSettingMode = windowMode == Defines.WindowMode.Setting;
 
+        Debug.Log("is ui layer :" + Utils.IsUILayer());
+
         if (!isCurrentPlayerNull && (!isCurrentPlayerArranged || isSettingMode))
         {
             if (!Utils.IsUILayer() && !Utils.IsCurrentPlayer(stageManager.currentPlayer.gameObject) && Input.GetMouseButtonDown(0))
