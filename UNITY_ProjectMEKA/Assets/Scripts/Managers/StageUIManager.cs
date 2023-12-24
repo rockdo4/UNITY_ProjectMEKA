@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,7 +20,22 @@ public class StageUIManager : MonoBehaviour
     public GameObject challengeStageButtonPanel;
     public GameObject stageButtonPrefab;
 
+    public GameObject stageInfoParentPanel;
     public GameObject stageInfoPanel;
+    public GameObject monsterInfoPanel;
+    public GameObject mapInfoPanel;
+    public TextMeshProUGUI stageButtonText;
+    public TextMeshProUGUI monsterButtonText;
+    public TextMeshProUGUI mapButtonText;
+    public TextMeshProUGUI stageHeaderText;
+    public TextMeshProUGUI stageOutlineHeaderText;
+    public TextMeshProUGUI stageOutlineText;
+    public TextMeshProUGUI stageMissionHeaderText;
+    public TextMeshProUGUI stageMission1Text;
+    public TextMeshProUGUI stageMission2Text;
+    public TextMeshProUGUI stageMission3Text;
+    public GameObject monsterButtonPrefab;
+    public GameObject monsterInfoPopUpWindow;
 
     private StageTable stageTable;
 
@@ -56,10 +73,6 @@ public class StageUIManager : MonoBehaviour
 
     private void Update()
     {
-        //if (stageInfoPanel.activeSelf && Input.GetMouseButtonUp(0))
-        //{
-        //    CloseStageInfoWindow();
-        //}
     }
 
     public void ClassOnClick(StageClass stageClass)
@@ -121,14 +134,88 @@ public class StageUIManager : MonoBehaviour
 
     public void SetStageInfoWindow()
     {
-        stageInfoPanel.SetActive(true);
+        stageInfoParentPanel.SetActive(true);
+
         // 현재 선택된 스테이지 정보 받아서 ui 세팅
-        var stageTableData = stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
+        var stringTable = DataTableMgr.GetTable<StringTable>();
+        var stageData = stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
+        SetStageInfoPanel(stringTable, stageData);
+        SetMonsterInfoPanel(stringTable, stageData);
+        SetMapInfoPanel();
+
+        StageInfoWindowOn();
+    }
+
+    public void SetStageInfoPanel(StringTable stringTable, StageData stageTable)
+    {
+        // 버튼들 텍스트
+        stageButtonText.SetText(stringTable.GetString("stage"));
+        monsterButtonText.SetText(stringTable.GetString("monsterInfo"));
+        mapButtonText.SetText(stringTable.GetString("mapInfo"));
+
+        // 챕터 - 스테이지넘버 스테이지이름
+        var stageNameID = stageTable.StageNameStringID;
+        var stageOutlineID = stageTable.StageOutlineStringID;
+        var stageMission1ID = stageTable.StageMission1StringID;
+        var stageMission2ID = stageTable.StageMission2StringID;
+        var stageMission3ID = stageTable.StageMission3StringID;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.Append(stageTable.ChapterNumber);
+        stringBuilder.Append("-");
+        stringBuilder.Append(stageTable.StageNumber);
+        stringBuilder.Append(" ");
+        stringBuilder.Append(stringTable.GetString(stageNameID));
+        stageHeaderText.SetText(stringBuilder.ToString());
+
+        // 스테이지 인포
+        var mission1 = stringTable.GetString(stageMission1ID);
+        mission1 = new string(mission1.Select(c => c == '0' ? stageTable.Mission1Value.ToString()[0] : c).ToArray());
+        var mission2 = stringTable.GetString(stageMission2ID);
+        mission2 = new string(mission2.Select(c => c == '0' ? stageTable.Mission2Value.ToString()[0] : c).ToArray());
+        var mission3 = stringTable.GetString(stageMission3ID);
+        mission3 = new string(mission3.Select(c => c == '0' ? stageTable.Mission3Value.ToString()[0] : c).ToArray());
+        stageOutlineHeaderText.SetText(stringTable.GetString("outline"));
+        stageOutlineText.SetText(stringTable.GetString(stageOutlineID));
+        stageMissionHeaderText.SetText(stringTable.GetString("mission"));
+        stageMission1Text.SetText(mission1);
+        stageMission2Text.SetText(mission2);
+        stageMission3Text.SetText(mission3);
+    }
+
+    public void SetMonsterInfoPanel(StringTable stringTable, StageData stageTable)
+    {
+        // temp code
+        var icons = monsterInfoPanel.GetComponentsInChildren<MonsterIcon>();
+        foreach(var icon in icons)
+        {
+            Destroy(icon.gameObject);
+        }
+
+        // 스테이지 테이블의 아이디를 받아와서 / 기준으로 나눠서, 아이디를 저장, 몬스터 레벨 테이블에서 스탯을 가져와서 찍어준다
+        var monsterLevelIDArray = stageTable.MonsterLevelID.Split('/');
+        // 이 수 만큼 프리팹 생성, 아이콘에 스프라이트 씌워주기
+        for (int i = 0; i < monsterLevelIDArray.Length; ++i)
+        {
+            // sprite는 나중에 몬스터 테이블에 몬스터 기본 id, 이름, 이미지 경로 이렇게 3개만 있게 만들고 가져와서 쓰기
+            //var id = monsterLevelIDArray[i].Substring(0, monsterLevelIDArray.Length-2);
+
+            var icon = Instantiate(monsterButtonPrefab, monsterInfoPanel.transform);
+            icon.GetComponentInChildren<TextMeshProUGUI>().SetText((i + 1).ToString());
+
+            var iconScript = icon.GetComponent<MonsterIcon>();
+            iconScript.Init(this, int.Parse(monsterLevelIDArray[i]), stringTable);
+        }
+    }
+
+    public void SetMapInfoPanel()
+    {
+
     }
 
     public void CloseStageInfoWindow()
     {
-        stageInfoPanel.SetActive(false);
+        stageInfoParentPanel.SetActive(false);
     }
 
     public void OnClickBattleStart()
@@ -152,6 +239,36 @@ public class StageUIManager : MonoBehaviour
                 panelManager.LoadFormation();
                 SceneManager.LoadScene(sceneNames3[stageTableData.Index]);
                 break;
+        }
+    }
+
+    public void StageInfoWindowOn()
+    {
+        if(!stageInfoPanel.activeSelf)
+        {
+            stageInfoPanel.SetActive(true);
+            monsterInfoPanel.SetActive(false);
+            mapInfoPanel.SetActive(false);
+        }
+    }
+
+    public void MonsterInfoWindowOn()
+    {
+        if(!monsterInfoPanel.activeSelf)
+        {
+            monsterInfoPanel.SetActive(true);
+            stageInfoPanel.SetActive(false);
+            mapInfoPanel.SetActive(false);
+        }
+    }
+
+    public void MapInfoWindowOn()
+    {
+        if(!mapInfoPanel.activeSelf)
+        {
+            mapInfoPanel.SetActive(true);
+            stageInfoPanel.SetActive(false);
+            monsterInfoPanel.SetActive(false);
         }
     }
 }

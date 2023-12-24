@@ -7,8 +7,25 @@ using static Defines;
 
 public class CharacterState : MonoBehaviour
 {
-    
+    [System.Serializable]
+    public class PoolObject
+    {
+        // 오브젝트 이름
+        public string objectName;
+        // 오브젝트 풀에서 관리할 오브젝트
+        public GameObject perfab;
+        // 몇개를 미리 생성 해놓을건지
+        public int count;
+    }
+
+    [SerializeField, Header("현 캐릭터에서 사용할 풀")]
+    public PoolObject[] objectInfos = null;
+
     public int[,] AttackRange;
+
+    [SerializeField, Header("레벨 설정")]
+    public int lv = 1;
+    private int prevLv;
 
     [SerializeField, Header("ID 설정")]//p
     public int id;
@@ -31,7 +48,10 @@ public class CharacterState : MonoBehaviour
     [SerializeField, Header("공격 딜레이 설정")]//p,e
     public float attackDelay;
 
-
+    [SerializeField, Header("방어막 수치 설정")]
+    public float shield;
+    [HideInInspector]
+    public float maxShield = 0;
 
     [SerializeField, Header("원거리 타입일시 장착할 발사체")]//p,e
     public string BulletName;
@@ -75,18 +95,35 @@ public class CharacterState : MonoBehaviour
     [HideInInspector]
     public int level;//레벨
 
-    [HideInInspector]
-    public int grade;//등급 레벨의 10의자리에 해당하며 6까지만 존재가능
-
-    [HideInInspector]
     public float Hp;
-
-    [HideInInspector]
-    public int ID;
 
     private void Awake()
     {
         Hp = maxHp;
+        prevLv = lv;
     }
-   
+
+	private void Update()
+	{
+		if(prevLv != lv)
+        {
+            prevLv = lv;
+            var checkPlayer = gameObject.GetComponent<PlayerState>();
+            if(checkPlayer == null)
+            {
+                return;
+            }
+
+            var table = DataTableMgr.GetTable<CharacterLevelTable>();
+            var data = table.GetLevelData(id * 100 + lv);
+
+            if(data != null)
+            {
+                checkPlayer.damage = data.CharacterDamage;
+                checkPlayer.armor = data.CharacterArmor;
+                checkPlayer.maxHp = data.CharacterHP;
+                checkPlayer.Hp = data.CharacterHP;
+            }
+        }
+	}
 }

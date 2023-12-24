@@ -47,6 +47,10 @@ public class AmberSkill : SkillBase
             isUsingSkill = true;
             player.state.cost -= player.state.skillCost;
             obj = ObjectPoolManager.instance.GetGo("AmberSkillEffect");
+            if(obj == null)
+            {
+                return;
+            }
 
             Vector3 pos = gameObject.transform.position;
             pos.y += 0.5f;

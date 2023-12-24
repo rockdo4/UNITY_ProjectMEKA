@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using static Defines;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -67,6 +69,7 @@ public class PlayerController : MonoBehaviour
     private bool CharacterArrangeOne;
     private float addCostTimer;
     public Transform firstLookPos;
+    public Vector3Int skillPivot;
     public enum CharacterStates
     {
         Arrange,
@@ -219,7 +222,7 @@ public class PlayerController : MonoBehaviour
         OnClickDownCharacter();
         if (skillState != null)
         {
-            if (skillState.isSkillUsing)
+            if (stageManager.ingameStageUIManager.isSkillTileWindow && (skillState.skillType != SkillType.Instant))
             {
                 mouseClickInfo = OnClickSkillTile();
                 if (isDragging && prevAttackableSkillTiles != attackableSkillTiles)
@@ -258,13 +261,17 @@ public class PlayerController : MonoBehaviour
         }
         //(몬스터 공격력 x 공격력 계수 x 스킬 계수 x 속성 데미지 계수)-(캐릭터 방어력 + 장비 방어력 수치) x 장비 방어력 계수
         
-        if (Random.Range(0f, 1f) >= state.critChance)
+        if (Random.Range(0f, 1f) <= state.critChance)
         {
-            take.OnAttack(((state.damage * state.fatalDamage) + Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.armor + 1f) * 1f);
+            var calculatedDamage = ((state.damage * state.fatalDamage) + Rockpaperscissors()) - (target.GetComponentInParent<EnemyController>().state.armor);
+            take.OnAttack(calculatedDamage);
+            Debug.Log(calculatedDamage);
         }
         else
         {
-            take.OnAttack((state.damage + Rockpaperscissors() * 1f * 1f) - (target.GetComponentInParent<EnemyController>().state.armor + 1f) * 1f);
+            var calculatedDamage = (state.damage + Rockpaperscissors()) - (target.GetComponentInParent<EnemyController>().state.armor);
+            take.OnAttack(calculatedDamage);
+            Debug.Log(calculatedDamage);
 
         }
         if(isHitEffect)
@@ -406,9 +413,15 @@ public class PlayerController : MonoBehaviour
             
         }
 
-
+        StartCoroutine(AttackDelay());
     }
-
+    public IEnumerator AttackDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+        ani.speed = 0.1f;
+        yield return new WaitForSeconds(state.attackDelay);
+        ani.speed = 1;
+    }
     public void Healing()
     {
         if(target==null)
@@ -523,7 +536,6 @@ public class PlayerController : MonoBehaviour
 
     public (Vector3, Tile) OnClickSkillTile()
     {
-        var skill = skillState as SkillBase;
         int layerMask = 0;
         int lowTileMask = 1 << LayerMask.NameToLayer(Layers.lowTile);
         int highTileMask = 1 << LayerMask.NameToLayer(Layers.highTile);
@@ -541,16 +553,18 @@ public class PlayerController : MonoBehaviour
             return (mouseClickInfo.Item1, hit.transform.GetComponent<Tile>());
         }
 
-        if(Input.GetMouseButtonUp(0))
+        if(Input.GetMouseButtonUp(0) && attackableSkillTiles.Count != 0)
         {
             isDragging = false;
             switch (skillState.skillType)
             {
                 case SkillType.SnipingArea:
                     OnClickUpSkillAreaTile();
+                    attackableSkillTiles.Clear();
                     break;
                 case SkillType.SnipingSingle:
                     OnClickUpSkillSingleTile();
+                    attackableSkillTiles.Clear();
                     break;
             }
         }
@@ -573,9 +587,7 @@ public class PlayerController : MonoBehaviour
             skillState.UseSkill();
             Time.timeScale = 1.0f;
             stageManager.currentPlayer = null;
-
-            // temp code
-            skillState.isSkillUsing = false;
+            stageManager.ingameStageUIManager.isSkillTileWindow = false;
         }
         else
         {
@@ -601,9 +613,7 @@ public class PlayerController : MonoBehaviour
             skillState.UseSkill();
             Time.timeScale = 1.0f;
             stageManager.currentPlayer = null;
-
-            // temp code
-            skillState.isSkillUsing = false;
+            stageManager.ingameStageUIManager.isSkillTileWindow = false;
         }
         isSkillPossible = false;
     }
@@ -617,22 +627,22 @@ public class PlayerController : MonoBehaviour
             attackableSkillTiles.Clear();
         }
 
-        // temp code
-        var skill = skillState as BuffSkilType;
-
         var mousePosInt = Utils.Vector3ToVector3Int(mousePosition);
+        skillPivot = Utils.Vector3ToVector3Int(mousePosition);
         List<Vector3Int> skillRange = new List<Vector3Int>();
         var playerPosInt = Utils.Vector3ToVector3Int(transform.position);
         Vector3Int defaultOffset = new Vector3Int();
         Vector3Int skillOffset = mousePosInt - playerPosInt;
-        int[,] tempAttackRange = skill.AttackRange;
+        int[,] tempAttackRange = skillState.AttackRange;
 
         // Check mouse position is in the attackable tiles
         foreach (var attackableTile in attackableTiles)
         {
             if(attackableTile.index == mousePosInt)
             {
+                Debug.Log("어택타일 위 : " + mousePosInt);
                 isSkillPossible = true;
+                break;
             }
             else
             {
@@ -645,7 +655,7 @@ public class PlayerController : MonoBehaviour
         if (isOffsetXZero && skillOffset.z < 0)
         {
             // 아래로 회전
-            tempAttackRange = Utils.RotateArray(skill.AttackRange, 2);
+            tempAttackRange = Utils.RotateArray(skillState.AttackRange, 2);
 
         }
         else if (!isOffsetXZero)
@@ -653,12 +663,12 @@ public class PlayerController : MonoBehaviour
             if (skillOffset.x > 0)
             {
                 // 우회전
-                tempAttackRange = Utils.RotateArray(skill.AttackRange, 1);
+                tempAttackRange = Utils.RotateArray(skillState.AttackRange, 1);
             }
             else
             {
                 // 좌회전
-                tempAttackRange = Utils.RotateArray(skill.AttackRange, 3);
+                tempAttackRange = Utils.RotateArray(skillState.AttackRange, 3);
             }
         }
 
@@ -667,15 +677,17 @@ public class PlayerController : MonoBehaviour
         {
             for (int j = 0; j < tempAttackRange.GetLength(1); j++) // col
             {
-                if (tempAttackRange[i, j] == 1 || tempAttackRange[i, j] == 2)
+                if (tempAttackRange[i, j] == 1)
                 {
                     skillRange.Add(new Vector3Int(i, 0, j));
-                    if (tempAttackRange[i, j] == 2)
-                    {
-                        defaultOffset.x = playerPosInt.x - i;
-                        defaultOffset.z = playerPosInt.z - j;
-                        defaultOffset.y = 0;
-                    }
+                }
+                else if(tempAttackRange[i, j] == 2)
+                {
+                    skillRange.Add(new Vector3Int(i, 0, j));
+                    //skillPivot = new Vector3Int(i, 0, j);
+                    defaultOffset.x = playerPosInt.x - i;
+                    defaultOffset.z = playerPosInt.z - j;
+                    defaultOffset.y = 0;
                 }
             }
         }
@@ -734,8 +746,9 @@ public class PlayerController : MonoBehaviour
     {
         var otherCharacterArrange = stageManager.ingameStageUIManager.windowMode == WindowMode.FirstArrange || stageManager.ingameStageUIManager.windowMode == WindowMode.SecondArrange;
         var otherCharacterSetting = stageManager.ingameStageUIManager.windowMode == WindowMode.Setting;
+        var otherCharacterUsingSkill = stageManager.ingameStageUIManager.isSkillTileWindow;
 
-        if(otherCharacterArrange || otherCharacterSetting)
+        if(otherCharacterArrange || otherCharacterSetting || otherCharacterUsingSkill)
         {
             return;
         }

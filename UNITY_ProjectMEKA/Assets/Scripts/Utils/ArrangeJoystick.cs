@@ -9,6 +9,7 @@ public class ArrangeJoystick : MonoBehaviour
     public Button cancelButton;
     public Button collectButton;
     public Button skillButton;
+    public Button closeButton;
     public ArrangeJoystickHandler handler;
 
     private StageManager stageManager;
@@ -27,7 +28,9 @@ public class ArrangeJoystick : MonoBehaviour
         cancelButton.onClick.AddListener(CancelEvent);
         collectButton.onClick.AddListener(CollectEvent);
         skillButton.onClick.AddListener(SkillEvent);
-    }
+		closeButton.onClick.AddListener(CloseEvent);
+
+	}
 
     private void OnEnable()
     {
@@ -96,7 +99,21 @@ public class ArrangeJoystick : MonoBehaviour
         transform.gameObject.SetActive(false);
     }
 
-    public void CollectEvent()
+    public void CloseEvent()
+    {
+		if (closeButton.gameObject.activeSelf)
+		{
+			closeButton.gameObject.SetActive(false);
+		}
+
+		stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
+		stageManager.currentPlayer = null;
+		stageManager.currentPlayerIcon = null;
+
+		transform.gameObject.SetActive(false);
+	}
+
+	public void CollectEvent()
     {
         Debug.Log("collect event");
         if (collectButton.gameObject.activeSelf)
@@ -122,20 +139,22 @@ public class ArrangeJoystick : MonoBehaviour
 
     public void SkillEvent()
     {
+        Debug.Log("skill event");
         if (skillButton.gameObject.activeSelf)
         {
             skillButton.gameObject.SetActive(false);
         }
 
-        stageManager.currentPlayer.gameObject.GetComponent<SkillBase>().UseSkill();
         var skillType = stageManager.currentPlayer.GetComponent<SkillBase>().skillType;
 
         if (skillType == SkillType.SnipingSingle || skillType == SkillType.SnipingArea)
         {
-            stageManager.currentPlayer.GetComponent<SkillBase>().isSkillUsing = true;
+            stageManager.currentPlayer.SetState(CharacterStates.Idle);
+            stageManager.ingameStageUIManager.isSkillTileWindow = true;
         }
         else
         {
+            stageManager.currentPlayer.gameObject.GetComponent<SkillBase>().UseSkill();
             stageManager.currentPlayer.SetState(CharacterStates.Idle);
             stageManager.currentPlayer = null;
             stageManager.currentPlayerIcon = null;

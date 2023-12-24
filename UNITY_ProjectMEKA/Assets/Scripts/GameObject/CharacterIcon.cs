@@ -36,8 +36,11 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
     private void Start()
     {
+        //Instantiate Character
         characterGo = Instantiate(characterPrefab);
-        playerController = characterGo.GetComponent<PlayerController>();
+		SetObjectPooling(characterGo);
+
+		playerController = characterGo.GetComponent<PlayerController>();
         cost = playerController.state.arrangeCost;
         costText.text = cost.ToString();
         arrangeCoolTime = playerController.state.arrangeCoolTime;
@@ -61,7 +64,29 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    public void CreateCharacter()
+	public void SetObjectPooling(GameObject characterGo)
+	{
+		if (characterGo == null)
+		{
+			Debug.Log("character is null");
+			return;
+		}
+
+		var objects = characterGo.GetComponent<PlayerState>().objectInfos;
+
+        if(objects == null)
+        {
+            Debug.Log("info is null");
+			return;
+        }
+
+		foreach (var data in objects)
+        {
+            ObjectPoolManager.instance.AddObjectToPool(data.objectName, data.perfab, data.count);
+        }
+	}
+
+	public void CreateCharacter()
     {
         characterGo.SetActive(true);
         created = true;

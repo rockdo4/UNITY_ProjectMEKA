@@ -25,6 +25,7 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log(stageManager.ingameStageUIManager == null);
         if(stageManager.ingameStageUIManager.windowMode == WindowMode.Setting)
         {
             if (stageManager.currentPlayer == null)

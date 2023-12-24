@@ -5521,6 +5521,7 @@ Transform:
   - {fileID: 5675817208387476542}
   - {fileID: 3047952661607539293}
   - {fileID: 3835519842745755339}
+  - {fileID: 5519942165144241922}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6959104672920319632
@@ -5559,6 +5560,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
+  updateUI:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6730937452685924288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5584,8 +5588,11 @@ MonoBehaviour:
   enemyBlockCount: 
   skillCost: 0
   skillCoolTime: 0
-  attakableTiles: []
+  attackableTiles: []
   arrangableTiles: []
+  attackableSkillTiles: []
+  prevAttackableSkillTiles: []
+  skillState: {fileID: 0}
   PlayerInit:
     m_PersistentCalls:
       m_Calls: []
@@ -5594,11 +5601,16 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   parentPos: {fileID: 0}
   ChildPos: {fileID: 0}
+  isHitEffect: 0
+  effectName: 
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
+  firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
+  isSkillPossible: 0
 --- !u!114 &8410696357173322987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5623,13 +5635,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: Explosion
+    perfab: {fileID: 7032182195475253934, guid: 08beb78374a3dcd43abc2070b709f39d, type: 3}
+    count: 10
+  - objectName: AmberSkillEffect
+    perfab: {fileID: 8801525795127141306, guid: 837f887936c48ec4c8130d066e9c7563, type: 3}
+    count: 5
+  lv: 0
   id: 12301
   name: "\uC5E0\uBC84"
   property: 2
   maxHp: 100
-  amror: 0
+  armor: 0
   damage: 50
   attackDelay: 1
+  shield: 0
+  maxShield: 0
   BulletName: Explosion
   BulletType: 4
   flashName: 
@@ -5638,9 +5660,7 @@ MonoBehaviour:
   yal: 3
   rangeAttack: 010000000100000001000000010000000100000001000000010000000200000001000000
   level: 0
-  grade: 0
   Hp: 0
-  ID: 0
   arrangeCost: 16
   arrangeCoolTime: 40
   skill: 0
@@ -5650,6 +5670,8 @@ MonoBehaviour:
   skillCoolTime: 22
   skillDuration: 12
   occupation: 3
+  critChance: 0
+  fatalDamage: 0
   experience: 0
   currentExperience: 0
 --- !u!114 &4746050498152787915
@@ -5668,6 +5690,12 @@ MonoBehaviour:
   skillCoolTime: 22
   skillType: 1
   isSkillUsing: 0
+  isRangeOut: 0
+  hang: 0
+  yal: 0
+  rangeAttack: 
+  attackableTiles: []
+  targetList: []
   skillDuration: 12
   isMe: 1
   isSingle: 1
@@ -5676,6 +5704,9 @@ MonoBehaviour:
   type: 0
   Inc: 0
   figure: 0.15
+  addCost: 0
+  isAttackRage: 0
+  isAttackAnimaiton: 0
 --- !u!1 &2479889199337685883
 GameObject:
   m_ObjectHideFlags: 0
@@ -20842,6 +20873,116 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 272223837526574314, guid: d810ffa03e621ff4894bd22377aedaed, type: 3}
   m_PrefabInstance: {fileID: 3962502308452426273}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4687703313110674376
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7424962728011549011}
+    m_Modifications:
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.1744
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.031982422
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 5.883
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946536423071549819, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_Name
+      value: CostBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946536423071549819, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8086114403405695194, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+--- !u!224 &5519942165144241922 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 978643914820791498, guid: 23d4511915b78694e937787207f3ac1e, type: 3}
+  m_PrefabInstance: {fileID: 4687703313110674376}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4850476688804524276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20916,7 +21057,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 978643914820791498, guid: 77f0bd7eb2bb96c41902e71abcfce094, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 5.719
+      value: 6.245
       objectReference: {fileID: 0}
     - target: {fileID: 978643914820791498, guid: 77f0bd7eb2bb96c41902e71abcfce094, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

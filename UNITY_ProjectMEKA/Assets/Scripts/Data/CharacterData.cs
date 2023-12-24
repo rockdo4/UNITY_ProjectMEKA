@@ -393,6 +393,7 @@ public class CharacterData
 	public string PortraitPath { get; set; }
 	public int SkillID { get; set; }
 	public int MaxSigma { get; set; }
+	public string OccupationInfoStringID { get; set; }
 }
 
 //캐릭터ID + 레벨을 ID로 사용해서 레벨에 따른 스탯 불러옴

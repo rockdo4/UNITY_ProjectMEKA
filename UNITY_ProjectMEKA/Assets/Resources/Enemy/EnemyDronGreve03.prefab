@@ -282,6 +282,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
+  updateUI:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &138150588106610363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,9 +310,14 @@ MonoBehaviour:
   HoIsHitMe: {fileID: 0}
   FirePosition: {fileID: 8777616742811308099}
   rangeInPlayers: []
+  rangeInSecondPlayers: []
   CurrentPos: {x: 0, y: 0, z: 0}
   CurrentGridPos: {x: 0, y: 0, z: 0}
   isArrival: 0
+  forwardGrid: {x: 0, y: 0, z: 0}
+  bossAttackCount: 0
+  stunTime: 0
+  isMove: 0
 --- !u!114 &8157498356080820454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,13 +390,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573e76d19e153054b9babeb453df70a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  lv: 1
+  id: 22103
   name: G3
   property: 0
   maxHp: 100
-  amror: 0
+  armor: 0
   damage: 10
   attackDelay: 1
+  shield: 0
   BulletName: bullet
   BulletType: 1
   flashName: Flash8
@@ -397,9 +407,7 @@ MonoBehaviour:
   yal: 1
   rangeAttack: 0100000002000000
   level: 0
-  grade: 0
   Hp: 0
-  ID: 0
   passive: 
   enemyType: 0
   speed: 1

@@ -8,7 +8,8 @@ public class ItemAutoQuantityCard : MonoBehaviour
 {
 	public Image itemImage;
 	public TextMeshProUGUI mainText;
-	public TextMeshProUGUI quantityText;
+	public TextMeshProUGUI haveQuantityText;
+	public TextMeshProUGUI requireQuantityText;
 	public SynchroPanel panel;
 	private Button button;
 
@@ -30,7 +31,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 
 	private void OnDisable()
 	{
-		selectedQuantity = 0;
+		selectedQuantity = 0; 
 	}
 
 	public void SetItem(int id, int quantity)
@@ -64,7 +65,11 @@ public class ItemAutoQuantityCard : MonoBehaviour
 		this.item = item;
 		requiredQuantity = quantity;
 		selectedQuantity = item.Count;
-		mainText.SetText(item.Name);
+
+		if(mainText!= null)
+		{
+			mainText.SetText(item.Name);
+		}
 
 		if (item == null)
 		{
@@ -82,16 +87,19 @@ public class ItemAutoQuantityCard : MonoBehaviour
 		{
 			if (item.Count >= requiredQuantity)
 			{
-				quantityText.SetText($"{item.Count} / {requiredQuantity}");
+				haveQuantityText.SetText($"{item.Count}");
+				requireQuantityText.SetText($"{requiredQuantity}");
 			}
 			else
 			{
-				quantityText.SetText($"<color=red>{item.Count}</color> / {requiredQuantity}");
+				haveQuantityText.SetText($"<color=red>{item.Count}</color>");
+				requireQuantityText.SetText($"{requiredQuantity}");
 			}
 		}
 		else
 		{
-			quantityText.SetText($"<color=red>0</color> / {requiredQuantity}");
+			haveQuantityText.SetText($"<color=red>0</color>");
+			requireQuantityText.SetText($"{requiredQuantity}");
 		}
 	}
 
@@ -99,11 +107,13 @@ public class ItemAutoQuantityCard : MonoBehaviour
 	{
 		if(item != null)
 		{
-			quantityText.SetText($"{item.Count} / --");
+			haveQuantityText.SetText($"{item.Count}");
+			requireQuantityText.SetText($"--");
 		}
 		else
 		{
-			quantityText.SetText($"0 / --");
+			haveQuantityText.SetText($"{0}");
+			requireQuantityText.SetText($"--");
 		}
 	}
 

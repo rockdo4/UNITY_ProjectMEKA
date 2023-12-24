@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CreateEnemyCollider : MonoBehaviour
@@ -28,9 +29,13 @@ public class CreateEnemyCollider : MonoBehaviour
                 {
                     enemy.rangeInPlayers.Add(other.GetComponentInParent<Transform>().gameObject);
                     var obj = other.GetComponentInParent<CanDie>();
-                    obj.action.AddListener(() =>
+                    obj.action?.AddListener(() =>
                     {
-                        enemy.rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+                        if (other.GetComponentInParent<Transform>().gameObject.activeInHierarchy)
+                        {
+                            enemy.rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+                        }
+                        //enemy.rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
                     });
                 }
             }

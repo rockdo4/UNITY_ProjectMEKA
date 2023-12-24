@@ -20,6 +20,4 @@ public class RewardData
     public int Item3Count { get; set;}
     public int Item4ID { get; set;}
     public int Item4Count { get; set;}
-    public int Item5ID { get; set;}
-    public int Item5Count { get; set;}
 }

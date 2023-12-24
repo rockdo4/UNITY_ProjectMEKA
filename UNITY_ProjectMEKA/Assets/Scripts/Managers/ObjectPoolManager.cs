@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -118,33 +119,36 @@ public class ObjectPoolManager : MonoBehaviour
         return ojbectPoolDic[goName].Get();
     }
 
-    public void AddObjPooling(string Name, GameObject prefab, int count)
-    {
-        var obj = new ObjectInfo();
-        obj.objectName = Name;
-        obj.perfab = prefab;
-        obj.count = count;
+	public void AddObjectToPool(string objName, GameObject prefab, int count)
+	{
+        Debug.Log("풀링 추가");
 
-        var idx = objectInfos.Length - 1;
-
-		IObjectPool<GameObject> pool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool,
-		OnDestroyPoolObject, true, obj.count, obj.count);
-
-		if (goDic.ContainsKey(obj.objectName))
+		ObjectInfo newObjectInfo = new ObjectInfo
 		{
-			//Debug.LogFormat("{0} 이미 등록된 오브젝트입니다.", objectInfos[idx].objectName);
-			return;
+			objectName = objName,
+			perfab = prefab,
+			count = count
+		};
+
+		// 추가할 오브젝트 정보가 이미 있는지 체크 후 추가
+		if (!goDic.ContainsKey(objName))
+		{
+			goDic.Add(objName, prefab);
+			IObjectPool<GameObject> pool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool,
+				OnDestroyPoolObject, true, count, count);
+			ojbectPoolDic.Add(objName, pool);
+
+			// 오브젝트를 미리 생성해놓기
+			for (int i = 0; i < count; i++)
+			{
+				objectName = objName;
+				PoolAble poolAbleGo = CreatePooledItem().GetComponent<PoolAble>();
+				poolAbleGo.Pool.Release(poolAbleGo.gameObject);
+			}
 		}
-
-		goDic.Add(obj.objectName, obj.perfab);
-		ojbectPoolDic.Add(obj.objectName, pool);
-
-		// 미리 오브젝트 생성 해놓기
-		for (int i = 0; i < obj.count; i++)
+		else
 		{
-			objectName = obj.objectName;
-			PoolAble poolAbleGo = CreatePooledItem().GetComponent<PoolAble>();
-			poolAbleGo.Pool.Release(poolAbleGo.gameObject);
+			Debug.LogWarning("이미 등록된 오브젝트입니다.");
 		}
 	}
 }

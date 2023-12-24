@@ -10867,8 +10867,7 @@ MonoBehaviour:
   characterCardScrollView: {fileID: 567874440}
   characterCardPrefab: {fileID: 3706411763328831598, guid: 930b6865c1147a145807241a0471e1de, type: 3}
   popupPanel: {fileID: 204579627}
-  yesButton: {fileID: 387890791}
-  noButton: {fileID: 1185575018}
+  deleteButton: {fileID: 0}
   startButton: {fileID: 989650979}
   textUiArr:
   - {fileID: 2135943192}
@@ -19257,14 +19256,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33db0d2a0b1254849b93d42af902214d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beforeGrade: {fileID: 597770348}
-  afterGrade: {fileID: 1890510805}
-  levelText: {fileID: 280780932}
+  leftStar: []
+  rightStar: []
   synchroItemCard:
   - {fileID: 1835589234508276294}
   - {fileID: 1461493763}
   - {fileID: 9125822146001992371}
-  silverItemCard: {fileID: 0}
+  beforeLevel: {fileID: 0}
+  afterLevel: {fileID: 0}
   applyButton: {fileID: 1043125775}
   infoPanel: {fileID: 392304167}
   resultPanel: {fileID: 0}
@@ -21363,7 +21362,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 0}
   mainText: {fileID: 0}
-  quantityText: {fileID: 0}
+  haveQuantityText: {fileID: 0}
+  requireQuantityText: {fileID: 0}
   panel: {fileID: 0}
 --- !u!114 &1461493763 stripped
 MonoBehaviour:
@@ -29144,7 +29144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 0}
   mainText: {fileID: 0}
-  quantityText: {fileID: 0}
+  haveQuantityText: {fileID: 0}
+  requireQuantityText: {fileID: 0}
   panel: {fileID: 0}
 --- !u!1 &1940295698
 GameObject:

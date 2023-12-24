@@ -110,6 +110,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls: []
+  updateUI:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6506148324622600131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,8 +138,11 @@ MonoBehaviour:
   enemyBlockCount: 
   skillCost: 0
   skillCoolTime: 0
-  attakableTiles: []
+  attackableTiles: []
   arrangableTiles: []
+  attackableSkillTiles: []
+  prevAttackableSkillTiles: []
+  skillState: {fileID: 0}
   PlayerInit:
     m_PersistentCalls:
       m_Calls: []
@@ -145,11 +151,16 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   parentPos: {fileID: 0}
   ChildPos: {fileID: 0}
+  isHitEffect: 0
+  effectName: 
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
+  firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
+  isSkillPossible: 0
 --- !u!114 &7955790683017641676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,13 +185,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: Heal
+    perfab: {fileID: 8953845473985608632, guid: 3ff428deaf0b28643a679572cab02b93, type: 3}
+    count: 10
+  - objectName: MeriaSkillEffect
+    perfab: {fileID: 8139558769267006628, guid: 529bbf6d77848824eba87511a832d260, type: 3}
+    count: 5
+  lv: 1
   id: 13501
   name: "\uBA54\uB9AC\uC544"
   property: 3
   maxHp: 100
-  amror: 0
+  armor: 0
   damage: 25
   attackDelay: 1
+  shield: 0
+  maxShield: 0
   BulletName: 
   BulletType: 0
   flashName: 
@@ -189,9 +210,7 @@ MonoBehaviour:
   yal: 3
   rangeAttack: 000000000100000000000000010000000100000001000000010000000200000001000000010000000100000001000000
   level: 0
-  grade: 0
   Hp: 0
-  ID: 0
   arrangeCost: 12
   arrangeCoolTime: 40
   skill: 0
@@ -201,6 +220,8 @@ MonoBehaviour:
   skillCoolTime: 20
   skillDuration: 12
   occupation: 5
+  critChance: 0
+  fatalDamage: 1
   experience: 0
   currentExperience: 0
 --- !u!114 &2503201362793710120
@@ -219,6 +240,12 @@ MonoBehaviour:
   skillCoolTime: 20
   skillType: 1
   isSkillUsing: 0
+  isRangeOut: 0
+  hang: 0
+  yal: 0
+  rangeAttack: 
+  attackableTiles: []
+  targetList: []
   skillDuration: 12
   isMe: 1
   isSingle: 1
@@ -227,6 +254,9 @@ MonoBehaviour:
   type: 1
   Inc: 1
   figure: 1.5
+  addCost: 0
+  isAttackRage: 0
+  isAttackAnimaiton: 0
 --- !u!1 &191698932232827442
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,7 +23,9 @@ public class CharacterInfoText : MonoBehaviour
 	public PanelManager panelManager;
 
 	[Header("Text")]
+	public TextMeshProUGUI characterName;
 	public TextMeshProUGUI textInfo;
+
 
 	[HideInInspector]
 	public Character character;
@@ -72,6 +74,8 @@ public class CharacterInfoText : MonoBehaviour
 		character = data;
 		if (data == null) return;
 
+		characterName.SetText(data.Name);
+
 		SetListener();
 		Debug.Log("CharacterIcon/" + character.ImagePath);
 		characterImage.sprite = Resources.Load<Sprite>("CharacterIcon/" + character.ImagePath);
@@ -82,12 +86,12 @@ public class CharacterInfoText : MonoBehaviour
 
 	public void UpdateCharacter()
 	{
-		SetSkillInfo();
-		SetLevelInfo();
-		SetSynchroInfo();
-		SetClass_Range_Keyword();
-		SetCompnayInfo();
-		SetDeviceInfo();
+		//SetSkillInfo();
+		//SetLevelInfo();
+		//SetSynchroInfo();
+		//SetClass_Range_Keyword();
+		//SetCompnayInfo();
+		//SetDeviceInfo();
 	}
 
 	public void SetSkillInfo()

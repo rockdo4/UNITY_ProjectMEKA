@@ -91,7 +91,19 @@ public class ItemAutoQuantitySkillCard : MonoBehaviour
 		}
 		else
 		{
-			quantityText.SetText($"<color=red>0</color> / {requiredQuantity}");
+			quantityText.SetText($"<color=red>{0}</color> / {requiredQuantity}");
+		}
+	}
+
+	public void SetMaxLevel()
+	{
+		if (item != null)
+		{
+			quantityText.SetText($"{item.Count} / --");
+		}
+		else
+		{
+			quantityText.SetText($"{0} / --");
 		}
 	}
 
