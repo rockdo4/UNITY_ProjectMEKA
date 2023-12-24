@@ -9,7 +9,7 @@ public class ArrangeJoystick : MonoBehaviour
     public Button cancelButton;
     public Button collectButton;
     public Button skillButton;
-    public Button closeButton;
+    //public Button closeButton;
     public ArrangeJoystickHandler handler;
 
     private StageManager stageManager;
@@ -28,7 +28,7 @@ public class ArrangeJoystick : MonoBehaviour
         cancelButton.onClick.AddListener(CancelEvent);
         collectButton.onClick.AddListener(CollectEvent);
         skillButton.onClick.AddListener(SkillEvent);
-		closeButton.onClick.AddListener(CloseEvent);
+		//closeButton.onClick.AddListener(CloseEvent);
 
 	}
 
@@ -99,19 +99,19 @@ public class ArrangeJoystick : MonoBehaviour
         transform.gameObject.SetActive(false);
     }
 
-    public void CloseEvent()
-    {
-		if (closeButton.gameObject.activeSelf)
-		{
-			closeButton.gameObject.SetActive(false);
-		}
+ //   public void CloseEvent()
+ //   {
+	//	if (closeButton.gameObject.activeSelf)
+	//	{
+	//		closeButton.gameObject.SetActive(false);
+	//	}
 
-		stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
-		stageManager.currentPlayer = null;
-		stageManager.currentPlayerIcon = null;
+	//	stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
+	//	stageManager.currentPlayer = null;
+	//	stageManager.currentPlayerIcon = null;
 
-		transform.gameObject.SetActive(false);
-	}
+	//	transform.gameObject.SetActive(false);
+	//}
 
 	public void CollectEvent()
     {

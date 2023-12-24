@@ -88,7 +88,7 @@ public class IngameStageUIManager : MonoBehaviour
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
         skillButton = joystick.skillButton;
-        closeButton = joystick.closeButton;
+        //closeButton = joystick.closeButton;
 
 		isInfoWindowOn = true;
     }
@@ -131,7 +131,7 @@ public class IngameStageUIManager : MonoBehaviour
         }
 
         CloseResultWindow();
-        //CloseCharacterInfoWindow();
+        CloseCharacterInfoWindow();
     }
 
     public void WindowModeUpdate()
@@ -247,33 +247,27 @@ public class IngameStageUIManager : MonoBehaviour
         }
     }
 
-  //  public void CloseCharacterInfoWindow()
-  //  {
-		//stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
-		//stageManager.currentPlayer = null;
-		//stageManager.currentPlayerIcon = null;
+    public void CloseCharacterInfoWindow()
+    {
+        var isCurrentPlayerNull = stageManager.currentPlayer == null;
+        bool isCurrentPlayerArranged = false;
+        if (!isCurrentPlayerNull)
+        {
+            isCurrentPlayerArranged = stageManager.currentPlayer.stateManager.firstArranged;
+        }
+        var isSettingMode = windowMode == Defines.WindowMode.Setting;
 
-
-		////var isCurrentPlayerNull = stageManager.currentPlayer == null;
-  ////      bool isCurrentPlayerArranged = false;
-  ////      if (!isCurrentPlayerNull)
-  ////      {
-  ////          isCurrentPlayerArranged = stageManager.currentPlayer.stateManager.firstArranged;
-  ////      }
-  ////      var isSettingMode = windowMode == Defines.WindowMode.Setting;
-  ////      var isEvent = EventSystem.current.IsPointerOverGameObject();
-
-  ////      if (!isCurrentPlayerNull && (!isCurrentPlayerArranged || isSettingMode))
-  ////      {
-  ////          if (!Utils.IsUILayer() && !Utils.IsCurrentPlayer(stageManager.currentPlayer.gameObject) && Input.GetMouseButtonDown(0))
-  ////          {
-  ////              Debug.Log("Ä³¸¯ÅÍ ÀÎÆ÷ ´ÝÈû");
-  ////              stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
-  ////              stageManager.currentPlayer = null;
-  ////              stageManager.currentPlayerIcon = null;
-  ////          }
-  ////      }
-  //  }
+        if (!isCurrentPlayerNull && (!isCurrentPlayerArranged || isSettingMode))
+        {
+            if (!Utils.IsUILayer() && !Utils.IsCurrentPlayer(stageManager.currentPlayer.gameObject) && Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Ä³¸¯ÅÍ ÀÎÆ÷ ´ÝÈû");
+                stageManager.currentPlayer.SetState(PlayerController.CharacterStates.Idle);
+                stageManager.currentPlayer = null;
+                stageManager.currentPlayerIcon = null;
+            }
+        }
+    }
 
     public void CloseResultWindow()
     {
