@@ -55,7 +55,7 @@ public class IngameStageUIManager : MonoBehaviour
     private Button cancelButton;
     private Button collectButton;
     private Button skillButton;
-    private Button closeButton;
+    //private Button closeButton;
 
 	// skill
 	public TextMeshProUGUI skillTileGuideText;
@@ -214,7 +214,7 @@ public class IngameStageUIManager : MonoBehaviour
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(false);
                 skillButton.gameObject.SetActive(false);
-				closeButton.gameObject.SetActive(false);
+				//closeButton.gameObject.SetActive(false);
                 break;
             case WindowMode.Setting:
                 // 캐릭터 인포 on
@@ -225,7 +225,7 @@ public class IngameStageUIManager : MonoBehaviour
                 joystickHandler.gameObject.SetActive(false);
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(true);
-                closeButton.gameObject.SetActive(true);
+                //closeButton.gameObject.SetActive(true);
 				if (stageManager.currentPlayer.skillState.skillType != SkillType.Auto)
                 {
                     skillButton.gameObject.SetActive(true);
