@@ -16352,6 +16352,8 @@ MonoBehaviour:
   isArrival: 0
   forwardGrid: {x: 0, y: 0, z: 0}
   bossAttackCount: 0
+  stunTime: 0
+  isMove: 0
 --- !u!114 &3514274216472670492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16364,6 +16366,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573e76d19e153054b9babeb453df70a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: BossHyperEffect
+    perfab: {fileID: 2284437692051422626, guid: c20db817101e0a64d9a229c73835ccdd, type: 3}
+    count: 10
+  - objectName: BossSkillEffect
+    perfab: {fileID: 1809675011291243099, guid: 2fb78afdc8bc4d3418895effe77b209a, type: 3}
+    count: 10
+  lv: 1
   id: 0
   name: Boss
   property: 0
@@ -16371,6 +16381,8 @@ MonoBehaviour:
   armor: 0
   damage: 50
   attackDelay: 4
+  shield: 0
+  maxShield: 0
   BulletName: 
   BulletType: 0
   flashName: 
@@ -16379,9 +16391,7 @@ MonoBehaviour:
   yal: 1
   rangeAttack: 010000000100000002000000
   level: 0
-  grade: 0
   Hp: 0
-  ID: 0
   passive: 
   enemyType: 4
   speed: 1
@@ -16415,9 +16425,15 @@ MonoBehaviour:
   skillCoolTime: 0
   skillType: 0
   isSkillUsing: 0
+  isRangeOut: 0
   hang: 3
   yal: 3
   rangeAttack: 010000000100000001000000010000000200000001000000010000000100000001000000
+  attackableTiles: []
+  targetList: []
+  hangs: 0
+  yals: 0
+  rangeAttacks: 
 --- !u!1 &7213988283869802930
 GameObject:
   m_ObjectHideFlags: 0
