@@ -35,10 +35,8 @@ public class IngameStageUIManager : MonoBehaviour
     public Image costSlider;
 
     // Result info
-    public TextMeshProUGUI chapterText;
-    public TextMeshProUGUI stageNumText;
-    public TextMeshProUGUI stageNameText;
-    public TextMeshProUGUI stageTypeText;
+    public TextMeshProUGUI stageInfoText;
+    public TextMeshProUGUI missionClearText;
     public GameObject itemPrefab;
     public Image itemImage;
     public TextMeshProUGUI itemCount;
@@ -64,19 +62,19 @@ public class IngameStageUIManager : MonoBehaviour
     public bool isSkillTileWindow;
 
     // tables
-    private CharacterTable characterTable;
-    private CharacterLevelTable characterLevelTable;
-    private StringTable stringTable;
-    private ItemInfoTable itemInfoTable;
+    //private CharacterTable characterTable;
+    //private CharacterLevelTable characterLevelTable;
+    //private StringTable stringTable;
+    //private ItemInfoTable itemInfoTable;
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
     private void OnEnable()
     {
-        characterTable = DataTableMgr.GetTable<CharacterTable>();
-        characterLevelTable = DataTableMgr.GetTable<CharacterLevelTable>();
-        stringTable = DataTableMgr.GetTable<StringTable>();
-        itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
+        //characterTable = DataTableMgr.GetTable<CharacterTable>();
+        //characterLevelTable = DataTableMgr.GetTable<CharacterLevelTable>();
+        //stringTable = DataTableMgr.GetTable<StringTable>();
+        //itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
 
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         joystickHandler = joystick.handler;
@@ -234,7 +232,7 @@ public class IngameStageUIManager : MonoBehaviour
             case WindowMode.Loose:
                 ResultPanel.SetActive(true);
                 Time.timeScale = 0f;
-                LooseWindowSet();
+                LoseWindowSet();
                 break;
             case WindowMode.Skill:
                 skillTileGuideText.gameObject.SetActive(true);
@@ -285,9 +283,9 @@ public class IngameStageUIManager : MonoBehaviour
     public void ChangeCharacterInfo()
     {
         var characterId = stageManager.currentPlayer.state.id;
-        var characterData = characterTable.GetCharacterData(characterId);
+        var characterData = StageDataManager.Instance.characterTable.GetCharacterData(characterId);
         var stringId = characterData.OccupationInfoStringID;
-        var occupationInfoString = stringTable.GetString(stringId);
+        var occupationInfoString = StageDataManager.Instance.stringTable.GetString(stringId);
 
         // need to apply string table
         characterOccupation.SetText(stageManager.currentPlayer.state.occupation.ToString());
@@ -337,11 +335,12 @@ public class IngameStageUIManager : MonoBehaviour
         }
     }
 
-    public void LooseWindowSet()
+    public void LoseWindowSet()
     {
+        var missionFailText = StageDataManager.Instance.stringTable.GetString("missionFail");
         ItemParentPanel.SetActive(false);
-        stageTypeText.SetText("Fail");
-        stageTypeText.color = Color.red;
+        missionClearText.SetText(missionFailText);
+        missionClearText.color = Color.red;
     }
 
     public void ChangeArrangableTileMesh()
@@ -535,24 +534,23 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void SetStageInfo(StageData stageData)
     {
-        chapterText.SetText(stageData.ChapterNumber);
-        stageNumText.SetText(stageData.StageNumber.ToString());
-
-        var stringTable = DataTableMgr.GetTable<StringTable>();
-        var stageName = stringTable.GetString(stageData.StageNameStringID);
-        stageNameText.SetText(stageName);
+        // chapter
+        var chapter = stageData.ChapterNumber;
+        var number = stageData.StageNumber;
+        var name = StageDataManager.Instance.stringTable.GetString(stageData.StageNameStringID);
+        stageInfoText.SetText($"{chapter} - {number} {name}");
 
         // need to apply string table later
         switch (stageData.Type)
         {
             case (int)StageMode.Deffense:
-                stageTypeText.SetText("µðÆæ½º ¸ðµå");
+                missionClearText.SetText("µðÆæ½º ¸ðµå");
                 break;
             case (int)StageMode.Annihilation:
-                stageTypeText.SetText("¼¶¸ê ¸ðµå");
+                missionClearText.SetText("¼¶¸ê ¸ðµå");
                 break;
             case (int)StageMode.Survival:
-                stageTypeText.SetText("»ýÁ¸ ¸ðµå");
+                missionClearText.SetText("»ýÁ¸ ¸ðµå");
                 break;
         }
     }
@@ -561,8 +559,8 @@ public class IngameStageUIManager : MonoBehaviour
     {
         // item info setting : sprite
         // item info setting : name
-        var isItem = itemInfoTable.GetItemData(itemID) != null;
-        var isCharacter = characterLevelTable.GetLevelData(itemID) != null;
+        var isItem = StageDataManager.Instance.itemInfoTable.GetItemData(itemID) != null;
+        var isCharacter = StageDataManager.Instance.characterLevelTable.GetLevelData(itemID) != null;
 
         if (!isItem && !isCharacter)
         {
@@ -571,14 +569,14 @@ public class IngameStageUIManager : MonoBehaviour
 
         if(isItem)
         {
-            var rewardItem = itemInfoTable.GetItemData(itemID);
+            var rewardItem = StageDataManager.Instance.itemInfoTable.GetItemData(itemID);
             itemInfo.itemName.SetText(rewardItem.Name);
         }
         else
         {
             var itemIDString = itemID.ToString();
             var characterId = int.Parse(itemIDString.Substring(0, itemIDString.Length - 2));
-            var characterData = characterTable.GetCharacterData(characterId);
+            var characterData = StageDataManager.Instance.characterTable.GetCharacterData(characterId);
             var characterName = characterData.CharacterName;
             itemInfo.itemName.SetText(characterName);
         }
