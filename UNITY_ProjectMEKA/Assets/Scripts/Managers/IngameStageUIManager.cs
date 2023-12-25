@@ -19,7 +19,8 @@ public class IngameStageUIManager : MonoBehaviour
     public GameObject waveCountPanel;
     public GameObject monsterCountPanel;
     public GameObject ResultPanel;
-    public GameObject ItemParentPanel;
+    public GameObject itemParentPanel;
+    public GameObject starsParentPanel;
 
     // character info
     public TextMeshProUGUI characterOccupation;
@@ -37,6 +38,7 @@ public class IngameStageUIManager : MonoBehaviour
     // Result info
     public TextMeshProUGUI stageInfoText;
     public TextMeshProUGUI missionClearText;
+    public GameObject starPrefab;
     public GameObject itemPrefab;
     public Image itemImage;
     public TextMeshProUGUI itemCount;
@@ -137,7 +139,7 @@ public class IngameStageUIManager : MonoBehaviour
             }
             else
             {
-                windowMode = WindowMode.Loose;
+                windowMode = WindowMode.Lose;
             }
             return;
         }
@@ -227,12 +229,13 @@ public class IngameStageUIManager : MonoBehaviour
                 break;
             case WindowMode.Win:
                 ResultPanel.SetActive(true);
+                WinWindowSet();
                 Time.timeScale = 0f;
                 break;
-            case WindowMode.Loose:
+            case WindowMode.Lose:
                 ResultPanel.SetActive(true);
-                Time.timeScale = 0f;
                 LoseWindowSet();
+                Time.timeScale = 0f;
                 break;
             case WindowMode.Skill:
                 skillTileGuideText.gameObject.SetActive(true);
@@ -266,8 +269,8 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void CloseResultWindow()
     {
-        var isResultMode = windowMode == WindowMode.Win || windowMode == WindowMode.Loose;
-        if(isResultMode && Input.GetMouseButtonUp(0))
+        var isResultMode = windowMode == WindowMode.Win || windowMode == WindowMode.Lose;
+        if(isResultMode && !Utils.IsUILayer() && Input.GetMouseButtonDown(0))
         {
             CloseScene();
         }
@@ -338,9 +341,19 @@ public class IngameStageUIManager : MonoBehaviour
     public void LoseWindowSet()
     {
         var missionFailText = StageDataManager.Instance.stringTable.GetString("missionFail");
-        ItemParentPanel.SetActive(false);
+        itemParentPanel.SetActive(false);
         missionClearText.SetText(missionFailText);
         missionClearText.color = Color.red;
+    }
+
+    public void WinWindowSet()
+    {
+        var starNumber = stageManager.tempClearCount;
+
+        for(int i = 0; i < starNumber; ++i)
+        {
+            Instantiate(starPrefab, starsParentPanel.transform);
+        }
     }
 
     public void ChangeArrangableTileMesh()
@@ -430,38 +443,44 @@ public class IngameStageUIManager : MonoBehaviour
             var id = StageDataManager.Instance.selectedStageData.stageID;
             var stageTable = StageDataManager.Instance.stageTable;
             var stageData = stageTable.GetStageData(id);
+            var stageSaveData = StageDataManager.Instance.selectedStageData;
 
-            InitResultPanel(stageData);
+            InitResultPanel(stageData, stageSaveData);
 
-            switch (stageData.Type)
-            {
-                case (int)StageMode.Deffense:
-                    monsterCountPanel.SetActive(true);
-                    break;
-                case (int)StageMode.Annihilation:
-                    monsterCountPanel.SetActive(true);
-                    timeProgressBarPanel.SetActive(true);
-                    break;
-                case (int)StageMode.Survival:
-                    waveCountPanel.SetActive(true);
-                    timeProgressBarPanel.SetActive(true);
-                    break;
-            }
+            //switch (stageData.Type)
+            //{
+            //    case (int)StageMode.Deffense:
+            //        monsterCountPanel.SetActive(true);
+            //        break;
+            //    case (int)StageMode.Annihilation:
+            //        monsterCountPanel.SetActive(true);
+            //        timeProgressBarPanel.SetActive(true);
+            //        break;
+            //    case (int)StageMode.Survival:
+            //        waveCountPanel.SetActive(true);
+            //        timeProgressBarPanel.SetActive(true);
+            //        break;
+            //}
         }
     }
 
-    public void InitResultPanel(StageData stageData)
+    public void InitResultPanel(StageData stageData, StageSaveData stageSaveData)
     {
         SetStageInfo(stageData);
 
         // reward item setting
         for (int i = 0; i < 5; ++i)
         {
+            if(i == 0 && stageSaveData.isCleared)
+            {
+                continue;
+            }
+
             var rewardData = DataTableMgr.GetTable<RewardTable>().GetStageData(stageData.RewardID);
             int id = 0;
             int count = 0;
 
-            var itemGo = Instantiate(itemPrefab, ItemParentPanel.transform);
+            var itemGo = Instantiate(itemPrefab, itemParentPanel.transform);
             var itemInfo = itemGo.GetComponent<RewardItemInfo>();
 
             switch(i)
@@ -470,7 +489,7 @@ public class IngameStageUIManager : MonoBehaviour
                     if(rewardData.FirstItemID != 0)
                     {
                         id = rewardData.FirstItemID;
-                        count =rewardData.FirstItemCount;
+                        count = rewardData.FirstItemCount;
                         itemInfo.itemCountText.SetText(rewardData.FirstItemCount.ToString());
                     }
                     else
@@ -539,20 +558,8 @@ public class IngameStageUIManager : MonoBehaviour
         var number = stageData.StageNumber;
         var name = StageDataManager.Instance.stringTable.GetString(stageData.StageNameStringID);
         stageInfoText.SetText($"{chapter} - {number} {name}");
-
-        // need to apply string table later
-        switch (stageData.Type)
-        {
-            case (int)StageMode.Deffense:
-                missionClearText.SetText("µðÆæ½º ¸ðµå");
-                break;
-            case (int)StageMode.Annihilation:
-                missionClearText.SetText("¼¶¸ê ¸ðµå");
-                break;
-            case (int)StageMode.Survival:
-                missionClearText.SetText("»ýÁ¸ ¸ðµå");
-                break;
-        }
+        var clearText = StageDataManager.Instance.stringTable.GetString("missionClear");
+        missionClearText.SetText(clearText);
     }
 
     public void SetItemInfo(int itemID, RewardItemInfo itemInfo, RewardData rewardData)

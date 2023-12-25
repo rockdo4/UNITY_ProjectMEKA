@@ -19,7 +19,7 @@ public static class Utils
 
                 foreach (RaycastResult result in results)
                 {
-                    //Debug.Log("Hit " + result.gameObject.name, result.gameObject);
+                    Debug.Log("Hit " + result.gameObject.name, result.gameObject);
                     var layerName = LayerMask.LayerToName(result.gameObject.layer);
 
                     switch (layerName)
