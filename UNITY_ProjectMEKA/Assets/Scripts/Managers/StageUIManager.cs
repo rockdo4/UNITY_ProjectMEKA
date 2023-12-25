@@ -24,7 +24,7 @@ public class StageUIManager : MonoBehaviour
     public GameObject stageInfoPanel;
     public GameObject monsterInfoPanel;
     public GameObject mapInfoPanel;
-    public Transform starPanel;
+    public Transform stageInfoStarPanel;
     public TextMeshProUGUI stageButtonText;
     public TextMeshProUGUI monsterButtonText;
     public TextMeshProUGUI mapButtonText;
@@ -99,21 +99,17 @@ public class StageUIManager : MonoBehaviour
         var stringBuilder = new StringBuilder();
         foreach (var stage in currentStageData)
         {
-            //instantiate
+            // instantiate
             var stageButtonGo = Instantiate(stageButtonPrefab, parentTr);
 
             // chapter + stage text apply
             var stageButtonText = stageButtonGo.GetComponentInChildren<TextMeshProUGUI>();
 
-            //Debug.Log(stageTable == null);
             var chapter = StageDataManager.Instance.stageTable.GetStageData(stage.Key).ChapterNumber;
             var stageNumber = StageDataManager.Instance.stageTable.GetStageData(stage.Key).StageNumber;
 
-            stringBuilder.Clear();
-            stringBuilder.Append(chapter);
-            stringBuilder.Append("-");
-            stringBuilder.Append(stageNumber.ToString());
-            stageButtonText.SetText(stringBuilder.ToString());
+            var stageButtonName = new string($"{chapter} - {stageNumber}");
+            stageButtonText.SetText(stageButtonName);
 
             // id apply
             var stageButtonScript = stageButtonGo.GetComponent<StageButton>();
@@ -121,6 +117,20 @@ public class StageUIManager : MonoBehaviour
 
             var stageButton = stageButtonGo.GetComponent<Button>();
             stageButton.onClick.AddListener(SetStageInfoWindow);
+
+            // clear score
+            var count = stage.Value.clearScore;
+            for(int i = 0; i < 3; ++i)
+            {
+                if(count > i)
+                {
+                    stageButtonGo.transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
+                }
+                else
+                {
+                    stageButtonGo.transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+                }
+            }
 
             // active false
             if (!stage.Value.isUnlocked)
@@ -187,11 +197,11 @@ public class StageUIManager : MonoBehaviour
         {
             if(count > i)
             {
-                starPanel.GetChild(i).gameObject.SetActive(true);
+                stageInfoStarPanel.GetChild(i).gameObject.SetActive(true);
             }
             else
             {
-                starPanel.GetChild(i).gameObject.SetActive(false);
+                stageInfoStarPanel.GetChild(i).gameObject.SetActive(false);
             }
         }
     }
