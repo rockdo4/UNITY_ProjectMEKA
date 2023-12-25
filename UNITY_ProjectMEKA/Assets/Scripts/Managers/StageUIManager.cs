@@ -24,6 +24,7 @@ public class StageUIManager : MonoBehaviour
     public GameObject stageInfoPanel;
     public GameObject monsterInfoPanel;
     public GameObject mapInfoPanel;
+    public Transform starPanel;
     public TextMeshProUGUI stageButtonText;
     public TextMeshProUGUI monsterButtonText;
     public TextMeshProUGUI mapButtonText;
@@ -37,13 +38,9 @@ public class StageUIManager : MonoBehaviour
     public GameObject monsterButtonPrefab;
     public GameObject monsterInfoPopUpWindow;
 
-    private StageTable stageTable;
-
     private void Awake()
     {
         PlayDataManager.Init();
-        stageTable = DataTableMgr.GetTable<StageTable>();
-
         SetStageButtons(StageClass.Story);
         SetStageButtons(StageClass.Assignment);
         SetStageButtons(StageClass.Challenge);
@@ -108,8 +105,8 @@ public class StageUIManager : MonoBehaviour
             var stageButtonText = stageButtonGo.GetComponentInChildren<TextMeshProUGUI>();
 
             //Debug.Log(stageTable == null);
-            var chapter = stageTable.GetStageData(stage.Key).ChapterNumber;
-            var stageNumber = stageTable.GetStageData(stage.Key).StageNumber;
+            var chapter = StageDataManager.Instance.stageTable.GetStageData(stage.Key).ChapterNumber;
+            var stageNumber = StageDataManager.Instance.stageTable.GetStageData(stage.Key).StageNumber;
 
             stringBuilder.Clear();
             stringBuilder.Append(chapter);
@@ -137,8 +134,8 @@ public class StageUIManager : MonoBehaviour
         stageInfoParentPanel.SetActive(true);
 
         // 현재 선택된 스테이지 정보 받아서 ui 세팅
-        var stringTable = DataTableMgr.GetTable<StringTable>();
-        var stageData = stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
+        var stringTable = StageDataManager.Instance.stringTable;
+        var stageData = StageDataManager.Instance.stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
         SetStageInfoPanel(stringTable, stageData);
         SetMonsterInfoPanel(stringTable, stageData);
         SetMapInfoPanel();
@@ -181,6 +178,20 @@ public class StageUIManager : MonoBehaviour
         stageMission1Text.SetText(mission1);
         stageMission2Text.SetText(mission2);
         stageMission3Text.SetText(mission3);
+
+        // 별
+        var count = StageDataManager.Instance.selectedStageData.clearScore;
+        for(int i = 0; i < 3; ++i)
+        {
+            if(count > i)
+            {
+                starPanel.GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                starPanel.GetChild(i).gameObject.SetActive(false);
+            }
+        }
     }
 
     public void SetMonsterInfoPanel(StringTable stringTable, StageData stageTable)
@@ -220,7 +231,7 @@ public class StageUIManager : MonoBehaviour
 
     public void OnClickBattleStart()
     {
-        var stageTableData = stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
+        var stageTableData = StageDataManager.Instance.stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
 
         switch (stageTableData.Class)
         {
