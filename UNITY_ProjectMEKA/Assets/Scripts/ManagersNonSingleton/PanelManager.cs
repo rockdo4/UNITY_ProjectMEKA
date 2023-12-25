@@ -50,23 +50,25 @@ public class PanelManager : MonoBehaviour
 
 	public void Awake()
 	{
-		mainPos = mainPanel.position;
-		characterWindowPos = characterWindowPanel.position;
-		gachaPos = gachaPanel.position;
-		formationPos = formationPanel.position;
-		inventoryPos = inventoryPanel.position;
-        stageClassPos = stageClassPanel.position;
-        storyStageChoicePos = storyStageChoicePanel.position;
-        assignmentStageChoicePos = assignmentStageChoicePanel.position;
-		challengeStageChoicePos = challengeStageChoicePanel.position;
-
-        previousPanel = mainPanel;
-		previousPos = mainPos;
+		
 	}
 
     private void Start()
     {
-        if(StageDataManager.Instance.toStageChoicePanel)
+        mainPos = mainPanel.position;
+        characterWindowPos = characterWindowPanel.position;
+        gachaPos = gachaPanel.position;
+        formationPos = formationPanel.position;
+        inventoryPos = inventoryPanel.position;
+        stageClassPos = stageClassPanel.position;
+        storyStageChoicePos = storyStageChoicePanel.position;
+        assignmentStageChoicePos = assignmentStageChoicePanel.position;
+        challengeStageChoicePos = challengeStageChoicePanel.position;
+
+        previousPanel = mainPanel;
+        previousPos = mainPos;
+
+        if (StageDataManager.Instance.toStageChoicePanel)
 		{
 			ChangePanelStoryStageChoice();
 			StageDataManager.Instance.toStageChoicePanel = false;
@@ -162,7 +164,7 @@ public class PanelManager : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("�÷��̾ ������ ĳ���Ͱ� �����ϴ�.");
+			Debug.Log("DataHolder is not Vaild");
 		}
 
 	}

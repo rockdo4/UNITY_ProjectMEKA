@@ -163,18 +163,6 @@ public class FormationManager : MonoBehaviour
 		currentPresetText.SetText($"현재 프리셋 : {selectedFormationList + 1}");
 	}
 
-	//���� �˾�â ����
-	public void OpenDeletePopUp()
-	{
-		popupPanel.gameObject.SetActive(true);
-	}
-
-	//���� �˾�â �ݱ�
-	public void CloseDeletePopUp()
-	{
-		popupPanel.gameObject.SetActive(false);
-	}
-
 	//���� ���������� �ٲٱ�
 	public void ChangePresetPrevious()
 	{
