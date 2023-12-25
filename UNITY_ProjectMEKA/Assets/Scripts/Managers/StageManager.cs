@@ -104,50 +104,57 @@ public class StageManager : MonoBehaviour
                     case MissionType.MonsterKillCount:
                         if (MissionMonsterKillCount(missionTypes[i].Item2) == MissionClear.Clear)
                         {
+                            Debug.Log("***Mission clear*** : MonsterKillCount");
                             tempClearCount++;
                         }
                         break;
                     case MissionType.SurviveTime:
                         if (MissionSurviveTime(missionTypes[i].Item2) == MissionClear.Clear)
                         {
+                            Debug.Log("***Mission clear*** : SurviveTime");
                             tempClearCount++;
                         }
                         break;
                     case MissionType.ClearTime:
                         if (MissionClearTime(missionTypes[i].Item2) == MissionClear.Clear)
                         {
+                            Debug.Log("***Mission clear*** : ClearTime");
                             tempClearCount++;
                         }
                         break;
                     case MissionType.CostLimit:
                         if (MissionCostLimit(missionTypes[i].Item2) == MissionClear.Clear)
                         {
+                            Debug.Log("***Mission clear*** : CostLimit");
                             tempClearCount++;
                         }
                         break;
                     case MissionType.HouseLifeLimit:
                         if (MissionHouseLifeLimit(missionTypes[i].Item2) == MissionClear.Clear)
                         {
+                            Debug.Log("***Mission clear*** : HouseLifeLimit");
                             tempClearCount++;
                         }
                         break;
                     case MissionType.PlayerWin:
                         if (MissionPlayerWin() == GameState.Win)
                         {
+                            Debug.Log("***Mission clear*** : PlayerWin");
                             tempClearCount++;
                         }
                         break;
                 }
             }
-            if (tempClearCount > stageSaveData.clearScore)
+            if (tempClearCount >= 0 && !stageSaveData.isCleared) // first clear
             {
                 gameState = GameState.Win;
                 stageSaveData.isCleared = true;
+                stageSaveData.clearScore = tempClearCount;
                 StageDataManager.Instance.selectedStageDatas[stageData.NextStageID].isUnlocked = true;
                 StageDataManager.Instance.UpdatePlayData();
-                foreach(var reward in rewardList)
+                for(int i = 0; i < rewardList.Count; ++i)
                 {
-                    ItemInventoryManager.Instance.AddItemByID(reward.Item1, reward.Item2);
+                    ItemInventoryManager.Instance.AddItemByID(rewardList[i].Item1, rewardList[i].Item2);
                 }
                 PlayDataManager.Save();
             }
@@ -160,6 +167,10 @@ public class StageManager : MonoBehaviour
                 else
                 {
                     gameState = GameState.Win;
+                    for (int i = 1; i < rewardList.Count; ++i)
+                    {
+                        ItemInventoryManager.Instance.AddItemByID(rewardList[i].Item1, rewardList[i].Item2);
+                    }
                 }
             }
         }
@@ -182,20 +193,20 @@ public class StageManager : MonoBehaviour
         return GameState.Playing;
     }
 
-    public GameState AnnihilationModeWinCondition()
-    {
-        // win condition : kill all target monsters in time
-        // loose condition : time over or target monster get to house
+    //public GameState AnnihilationModeWinCondition()
+    //{
+    //    // win condition : kill all target monsters in time
+    //    // loose condition : time over or target monster get to house
 
-        return GameState.Playing;
-    }
+    //    return GameState.Playing;
+    //}
 
-    public GameState SurvivalModeWinCondition()
-    {
-        // win condition : kill all monsters
-        // loose condition : house hp 0
-        return GameState.Playing;
-    }
+    //public GameState SurvivalModeWinCondition()
+    //{
+    //    // win condition : kill all monsters
+    //    // loose condition : house hp 0
+    //    return GameState.Playing;
+    //}
 
     public MissionClear MissionMonsterKillCount(int value)
     {
@@ -252,17 +263,27 @@ public class StageManager : MonoBehaviour
     {
         //var id = StageDataManager.Instance.selectedStageData.stageID;
         var stageData = StageDataManager.Instance.stageTable.GetStageData(stageID);
-        switch (stageData.Type)
+
+        if (currentHouseLife <= 0)
         {
-            case (int)StageMode.Deffense:
-                return DefenseModeWinCondition();
-            case (int)StageMode.Annihilation:
-                return AnnihilationModeWinCondition();
-            case (int)StageMode.Survival:
-                return SurvivalModeWinCondition();
+            return GameState.Die;
+        }
+        else if (killMonsterCount == allMonsterCount)
+        {
+            return GameState.Win;
         }
 
         return GameState.Playing;
+
+        //switch (stageData.Type)
+        //{
+        //    case (int)StageMode.Deffense:
+        //        return DefenseModeWinCondition();
+        //    case (int)StageMode.Annihilation:
+        //        return AnnihilationModeWinCondition();
+        //    case (int)StageMode.Survival:
+        //        return SurvivalModeWinCondition();
+        //}
     }
 
     public void Init()

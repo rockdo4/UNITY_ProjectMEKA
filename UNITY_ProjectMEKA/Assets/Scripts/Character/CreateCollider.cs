@@ -39,7 +39,10 @@ public class CreateCollider : MonoBehaviour
                 var obj = other.GetComponentInParent<CanDie>();
                 obj.action.AddListener(() =>
                 {
-                    player.rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
+                    if(player.rangeInEnemys.Contains(other.GetComponentInParent<Transform>().gameObject))
+                    {
+                        player.rangeInEnemys.Remove(other.GetComponentInParent<Transform>().gameObject);
+                    }
                     if (other.GetComponentInParent<EnemyController>().state.enemyType == Defines.EnemyType.OhYaBung)
                     {
                         player.enemyBlockCount.Remove(1);

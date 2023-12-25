@@ -126,7 +126,7 @@ public static class Defines
         SecondArrange,
         Setting,
         Skill,
-        Loose,
+        Lose,
         Win,
     }
 

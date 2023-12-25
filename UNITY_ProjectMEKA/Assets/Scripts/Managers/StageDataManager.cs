@@ -19,14 +19,24 @@ public class StageDataManager
     public StageSaveData selectedStageData;
     public Dictionary<int,StageSaveData> selectedStageDatas;
     private StageClass currentStageClass;
-    public StageTable stageTable;
     public bool toStageChoicePanel;
+    
+    // tables
+    public StageTable stageTable;
+    public CharacterTable characterTable;
+    public CharacterLevelTable characterLevelTable;
+    public StringTable stringTable;
+    public ItemInfoTable itemInfoTable;
 
     public Language language = Language.Kor;
 
     private StageDataManager()
     {
         stageTable = DataTableMgr.GetTable<StageTable>();
+        characterTable = DataTableMgr.GetTable<CharacterTable>();
+        characterLevelTable = DataTableMgr.GetTable<CharacterLevelTable>();
+        stringTable = DataTableMgr.GetTable<StringTable>();
+        itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
     }
 
     public void SetCurrentStageClass(StageClass stageClass)

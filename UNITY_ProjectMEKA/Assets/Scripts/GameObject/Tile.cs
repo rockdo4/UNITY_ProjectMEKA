@@ -29,7 +29,7 @@ public class Tile : MonoBehaviour
     private BoxCollider boxCollider;
     public bool arrangePossible = true;
     public bool attackPossible;
-    public bool isSomthingOnTile;
+    public bool isSomthingOnTile; // for check attackable tile
     public Vector3Int index;
     public List<GameObject> objectsOnTile = new List<GameObject>(); // have to change to LinkedList
 
@@ -59,11 +59,14 @@ public class Tile : MonoBehaviour
             var isGateOrHouse = hitLayer == houseMask || hitLayer == gateMask;
             var isSelf = hitLayer == tileMask;
 
-            // 고지대 타일이나 장애물이 위에 있을 때
-            if (!isGateOrHouse && !isSelf)
+            if (!isGateOrHouse && !isSelf) // when highTile is on this tile
             {
                 arrangePossible = false;
                 isSomthingOnTile = true;
+            }
+            else if(isGateOrHouse) // when gate or house is on this tile
+            {
+                arrangePossible = false;
             }
         }
     }

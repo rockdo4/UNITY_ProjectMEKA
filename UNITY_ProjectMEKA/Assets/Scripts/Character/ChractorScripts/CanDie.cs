@@ -33,6 +33,7 @@ public class CanDie : MonoBehaviour
         if (state.Hp <= 0f)
         {
             updateUI.Invoke();
+            action.Invoke();
 
             // if this is a monster
             if (GetComponent<PoolAble>() != null)
@@ -41,7 +42,6 @@ public class CanDie : MonoBehaviour
                 stageManager.currentCost += 1f;
                 GetComponent<PoolAble>().ReleaseObject();
             }
-            action.Invoke();
         }
     }
 }
