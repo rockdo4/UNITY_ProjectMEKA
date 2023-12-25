@@ -35,7 +35,7 @@ public static class Utils
         }
         else
         {
-            Debug.Log("터치가 UI 위에 있지 않습니다.");
+            //Debug.Log("터치가 UI 위에 있지 않습니다.");
         }
         return false;
     }
