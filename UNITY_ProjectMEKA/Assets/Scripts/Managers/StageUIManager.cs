@@ -35,6 +35,7 @@ public class StageUIManager : MonoBehaviour
     public TextMeshProUGUI stageMission1Text;
     public TextMeshProUGUI stageMission2Text;
     public TextMeshProUGUI stageMission3Text;
+    public TextMeshProUGUI recommendedLevelText;
     public GameObject monsterButtonPrefab;
     public GameObject monsterInfoPopUpWindow;
 
@@ -157,13 +158,10 @@ public class StageUIManager : MonoBehaviour
         var stageMission2ID = stageTable.StageMission2StringID;
         var stageMission3ID = stageTable.StageMission3StringID;
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.Append(stageTable.ChapterNumber);
-        stringBuilder.Append("-");
-        stringBuilder.Append(stageTable.StageNumber);
-        stringBuilder.Append(" ");
-        stringBuilder.Append(stringTable.GetString(stageNameID));
-        stageHeaderText.SetText(stringBuilder.ToString());
+        var stageHeader = new string($"{stageTable.ChapterNumber} - {stageTable.StageNumber} {stringTable.GetString(stageNameID)}");
+        stageHeaderText.SetText(stageHeader);
+
+
 
         // 스테이지 인포
         var mission1 = stringTable.GetString(stageMission1ID);
@@ -178,6 +176,10 @@ public class StageUIManager : MonoBehaviour
         stageMission1Text.SetText(mission1);
         stageMission2Text.SetText(mission2);
         stageMission3Text.SetText(mission3);
+
+        // 권장 레벨
+        var recommendedLevel = new string($"({stringTable.GetString("recommendedLevel")} : {stageTable.RecommendedLevel})");
+        recommendedLevelText.SetText(recommendedLevel);
 
         // 별
         var count = StageDataManager.Instance.selectedStageData.clearScore;
