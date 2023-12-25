@@ -352,7 +352,8 @@ public class Character
 		{
 			var charTable = DataTableMgr.GetTable<CharacterTable>();
 			var charData = charTable.GetCharacterData(CharacterID);
-			return charData.CharacterName;
+			var stringTable = StageDataManager.Instance.stringTable;
+			return stringTable.GetString(charData.CharacterNameStringID);
 		}
 	}
 
@@ -393,6 +394,7 @@ public class CharacterData
 	public string PortraitPath { get; set; }
 	public int SkillID { get; set; }
 	public int MaxSigma { get; set; }
+
 	public string OccupationInfoStringID { get; set; }
 }
 

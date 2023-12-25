@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,8 +24,8 @@ public class IngameStageUIManager : MonoBehaviour
     public GameObject starsParentPanel;
 
     // character info
-    public TextMeshProUGUI characterOccupation;
     public TextMeshProUGUI characterName;
+    public TextMeshProUGUI characterOccupation;
     public TextMeshProUGUI characterDescription;
 
     // cost & wave & monster & life infos
@@ -47,6 +48,9 @@ public class IngameStageUIManager : MonoBehaviour
     // joystick
     public ArrangeJoystick joystick;
     private ArrangeJoystickHandler joystickHandler;
+    public TextMeshProUGUI cancelText;
+    public TextMeshProUGUI collectText;
+    public TextMeshProUGUI skillText;
     private Button cancelButton;
     private Button collectButton;
     private Button skillButton;
@@ -437,6 +441,11 @@ public class IngameStageUIManager : MonoBehaviour
             CloseScene();
         });
 
+        var stringTable = StageDataManager.Instance.stringTable;
+        cancelText.SetText(stringTable.GetString("cancelArrangement"));
+        collectText.SetText(stringTable.GetString("collection"));
+        skillText.SetText(stringTable.GetString("skill"));
+
         if (StageDataManager.Instance.selectedStageData != null)
         {
             // 해당 모드에 맞춰서 UI 세팅
@@ -446,21 +455,6 @@ public class IngameStageUIManager : MonoBehaviour
             var stageSaveData = StageDataManager.Instance.selectedStageData;
 
             InitResultPanel(stageData, stageSaveData);
-
-            //switch (stageData.Type)
-            //{
-            //    case (int)StageMode.Deffense:
-            //        monsterCountPanel.SetActive(true);
-            //        break;
-            //    case (int)StageMode.Annihilation:
-            //        monsterCountPanel.SetActive(true);
-            //        timeProgressBarPanel.SetActive(true);
-            //        break;
-            //    case (int)StageMode.Survival:
-            //        waveCountPanel.SetActive(true);
-            //        timeProgressBarPanel.SetActive(true);
-            //        break;
-            //}
         }
     }
 
@@ -568,6 +562,7 @@ public class IngameStageUIManager : MonoBehaviour
         // item info setting : name
         var isItem = StageDataManager.Instance.itemInfoTable.GetItemData(itemID) != null;
         var isCharacter = StageDataManager.Instance.characterLevelTable.GetLevelData(itemID) != null;
+        var stringTable = StageDataManager.Instance.stringTable;
 
         if (!isItem && !isCharacter)
         {
@@ -584,7 +579,7 @@ public class IngameStageUIManager : MonoBehaviour
             var itemIDString = itemID.ToString();
             var characterId = int.Parse(itemIDString.Substring(0, itemIDString.Length - 2));
             var characterData = StageDataManager.Instance.characterTable.GetCharacterData(characterId);
-            var characterName = characterData.CharacterName;
+            var characterName = stringTable.GetString(characterData.CharacterNameStringID);
             itemInfo.itemName.SetText(characterName);
         }
     }

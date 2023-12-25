@@ -23,6 +23,7 @@ public class CharacterPanelManager : MonoBehaviour
 	private void Awake()
 	{
 		dict = DataTableMgr.GetTable<CharacterTable>();
+		var stringTable = StageDataManager.Instance.stringTable;
 		charDict = dict.GetOriginalTable();
 		characterInfoPos = characterInfoPanel.position;
 
@@ -39,7 +40,7 @@ public class CharacterPanelManager : MonoBehaviour
 
 			var card = Instantiate(characterCardPrefab, transform);
 
-			card.name = characterInfo.CharacterName;
+			card.name = stringTable.GetString(characterInfo.CharacterNameStringID);
 			card.GetComponent<Image>().sprite = Resources.Load<Sprite>(characterInfo.PortraitPath);
 			card.GetComponent<CardInfo>().ChangeCardId(characterInfo.CharacterID);
 			card.GetComponentInChildren<TextMeshProUGUI>().SetText("");

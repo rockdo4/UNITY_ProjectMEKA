@@ -172,10 +172,11 @@ public class CharacterInfoText : MonoBehaviour
 			return;
 
 		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(character.CharacterID);
+		var stringTable = StageDataManager.Instance.stringTable;
 
 		textInfo.SetText(
 			$"캐릭터 아이디 : {info.CharacterID}\n" +
-			$"캐릭터 이름 : {info.CharacterName}\n" +
+			$"캐릭터 이름 : {stringTable.GetString(info.CharacterNameStringID)}\n" +
 			$"캐릭터 속성 : {(Defines.Property)info.CharacterProperty}\n" +
 			$"캐릭터 직업 : {(Defines.Occupation)info.CharacterOccupation}\n" +
 			$"캐릭터 레벨 : {character.CharacterLevel}\n" +
@@ -189,10 +190,11 @@ public class CharacterInfoText : MonoBehaviour
 			return;
 
 		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(data.CharacterID);
+        var stringTable = StageDataManager.Instance.stringTable;
 
-		textInfo.SetText(
+        textInfo.SetText(
 			$"캐릭터 아이디 : {info.CharacterID}\n" +
-			$"캐릭터 이름 : {info.CharacterName}\n" +
+			$"캐릭터 이름 : {stringTable.GetString(info.CharacterNameStringID)}\n" +
 			$"캐릭터 속성 : {(Defines.Property)info.CharacterProperty}\n" +
 			$"캐릭터 직업 : {(Defines.Occupation)info.CharacterOccupation}\n" +
 			$"캐릭터 레벨 : {data.CharacterLevel}\n" +

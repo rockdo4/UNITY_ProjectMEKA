@@ -55,10 +55,10 @@ public class CharacterIconManager : MonoBehaviour
                 if(characterState.id == id)
                 {
                     var data = CharacterManager.Instance.m_CharacterStorage[id];
-
+                    var stringTable = StageDataManager.Instance.stringTable;
                     //characterState.arrangeCost = data.ArrangementCost;
 
-					characterState.name = characterData.CharacterName;
+					characterState.name = stringTable.GetString(characterData.CharacterNameStringID);
                     characterState.property = (Property)characterData.CharacterProperty;
                     characterState.occupation = (Occupation)characterData.CharacterOccupation;
                     characterState.arrangeCost = characterData.ArrangementCost;
