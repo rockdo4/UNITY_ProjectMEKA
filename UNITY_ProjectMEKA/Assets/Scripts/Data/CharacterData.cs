@@ -382,7 +382,7 @@ public class Character
 public class CharacterData
 {
 	public int CharacterID { get; set; }
-	public string CharacterName { get; set; }	
+	public string CharacterNameStringID { get; set; }	
 	public int InitialGrade { get; set; }
 	public int CharacterProperty { get; set; }
 	public int CharacterOccupation { get; set; }
