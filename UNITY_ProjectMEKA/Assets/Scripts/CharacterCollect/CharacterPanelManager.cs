@@ -103,7 +103,7 @@ public class CharacterPanelManager : MonoBehaviour
 	{
 		characterInfoPanel.gameObject.SetActive(false);
 
-		characterInfoPanel.position = characterInfoPos;
+		//characterInfoPanel.position = characterInfoPos;
 	}
 
 	public void OpenCharacterInfo(Character info)
@@ -111,12 +111,7 @@ public class CharacterPanelManager : MonoBehaviour
 		characterInfoPanel.gameObject.SetActive(true);
 		characterInfoPanel.GetComponent<CharacterInfoText>().SetCharacter(info);
 
-		var pos = GetComponentInParent<Canvas>().gameObject.transform.position;
-		characterInfoPanel.position = pos;
-	}
-
-	public void CloseInfo()
-	{
-		
+		//var pos = GetComponentInParent<Canvas>().gameObject.transform.position;
+		//characterInfoPanel.position = pos;
 	}
 }

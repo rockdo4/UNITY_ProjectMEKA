@@ -34,6 +34,9 @@ public class ObjectPoolManager : MonoBehaviour
     // 오브젝트풀에서 오브젝트를 새로 생성할때 사용할 딕셔너리
     private Dictionary<string, GameObject> goDic = new Dictionary<string, GameObject>();
 
+    // 오브젝트 자식들 넣어놓을 부모오브젝트
+    private GameObject poolManager;
+
     private void Awake()
     {
         if (instance == null)
@@ -41,6 +44,7 @@ public class ObjectPoolManager : MonoBehaviour
         else
             Destroy(this.gameObject);
 
+        poolManager = new GameObject("ObjectPoolManager");
     }
 
     private void Start()
@@ -86,6 +90,8 @@ public class ObjectPoolManager : MonoBehaviour
         GameObject poolGo = Instantiate(goDic[objectName], new Vector3(100, 100, 100), Quaternion.identity);
 
         poolGo.GetComponent<PoolAble>().Pool = ojbectPoolDic[objectName];
+        poolGo.transform.SetParent(poolManager.transform);
+
         return poolGo;
     }
 
