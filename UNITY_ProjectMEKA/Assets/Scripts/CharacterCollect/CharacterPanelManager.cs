@@ -16,7 +16,9 @@ public class CharacterPanelManager : MonoBehaviour
 	public GameObject characterCardPrefab;
 
 	public RectTransform characterInfoPanel;
+	public RectTransform characterAffectionPanel;
 	public Button enableButton;
+
 
 	private Vector3 characterInfoPos;
 
@@ -40,14 +42,14 @@ public class CharacterPanelManager : MonoBehaviour
 			var card = Instantiate(characterCardPrefab, transform);
 
 			card.name = characterInfo.CharacterName;
-			card.GetComponent<Image>().sprite = Resources.Load<Sprite>(characterInfo.PortraitPath);
-			card.GetComponent<CardInfo>().ChangeCardId(characterInfo.CharacterID);
-			card.GetComponentInChildren<TextMeshProUGUI>().SetText("");
+			card.GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>(characterInfo.PortraitPath);
+			card.GetComponentInChildren<CardInfo>().ChangeCardId(characterInfo.CharacterID);
 
-			var button = card.GetComponent<Button>();
+			var button0 = card.GetComponentsInChildren<Button>()[0];
+			var button1 = card.GetComponentsInChildren<Button>()[1];
 
-			if(button != null)
-				button.onClick.AddListener(() =>
+			if(button1 != null)
+				button1.onClick.AddListener(() =>
 				{
 					OpenCharacterInfo(character.Value);
 					if (!character.Value.IsUnlock)
@@ -57,12 +59,24 @@ public class CharacterPanelManager : MonoBehaviour
 				});
 			else
 				Debug.LogError("��ư ���ҷ���");
+
+			if(button0 != null)
+			{
+				button0.onClick.AddListener(() =>
+				{
+					Debug.Log("캐릭터 창 오픈");
+					characterAffectionPanel.gameObject.SetActive(true);
+					characterAffectionPanel.GetComponent<AffectionPanel>().SetCharacter(character.Value);
+				});
+			}
 		}
 
 		enableButton.onClick.AddListener(() =>
 		{
 			CharacterUnlockUpdate();
 		});
+
+		characterAffectionPanel.gameObject.SetActive(false);
 	}
 
 	public void CharacterUnlockUpdate()
@@ -72,16 +86,18 @@ public class CharacterPanelManager : MonoBehaviour
 		for(int i = 0; i < count; i++)
 		{
 			var card = transform.GetChild(i); 
-			var info = card.GetComponent<CardInfo>();
+			var info = card.GetComponentInChildren<CardInfo>();
 			var id = info.GetCardID();
 
 			if(CharacterManager.Instance.m_CharacterStorage[id].IsUnlock)
 			{
-				card.GetComponent<Button>().interactable = true;
+				card.GetComponentsInChildren<Button>()[0].interactable = true;
+				card.GetComponentsInChildren<Button>()[1].interactable = true;
 			}
 			else
 			{
-				card.GetComponent<Button>().interactable = false;
+				card.GetComponentsInChildren<Button>()[0].interactable = false;
+				card.GetComponentsInChildren<Button>()[1].interactable = false;
 			}
 		}
 	}

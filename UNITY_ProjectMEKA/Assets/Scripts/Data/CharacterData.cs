@@ -417,3 +417,11 @@ public class ExpData
 	public int RequireExp { get; set; }
 	public int AccumulateExp { get; set; }
 }
+
+public class CharacterAffection
+{
+	public int CharacterID { get; set; }
+	public int AffectionLevel { get; set; }
+	public int AffectionExp { get; set; }
+	public int AffectionMaxExp { get; set; }
+}
