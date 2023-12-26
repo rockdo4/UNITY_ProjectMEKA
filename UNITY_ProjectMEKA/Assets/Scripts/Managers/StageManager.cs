@@ -25,6 +25,7 @@ public class StageManager : MonoBehaviour
     public (MissionType, int)[] missionTypes = new (MissionType, int)[3];
     public int tempClearCount = 0;
     public float timer;
+    public float maxTime;
     public float defaultCost;
     public float currentCost;
     public float maxCost;
@@ -318,6 +319,8 @@ public class StageManager : MonoBehaviour
 
         maxHouseLife = stageData.HouseLife;
         currentHouseLife = maxHouseLife;
+
+        maxTime = stageData.StageTime;
 
         for (int i = 0; i < missionTypes.Length; ++i)
         {

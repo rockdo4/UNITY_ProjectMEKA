@@ -109,6 +109,7 @@ public class GateController : MonoBehaviour
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         foreach (var wave in waveInfos)
         {
+            stageManager.leftWaveCount++;
             foreach(var enemyInfo in wave.enemySpawnInfos)
             {
                 stageManager.allMonsterCount += enemyInfo.count;
@@ -285,6 +286,7 @@ public class GateController : MonoBehaviour
             {
                 waveTimer = waveInfos[currentWave].waveInterval;
 
+                stageManager.leftWaveCount--;
                 currentWave++;
                 currentEnemyType = 0;
                 currentEnemyCount = 0;
@@ -318,7 +320,6 @@ public class GateController : MonoBehaviour
         }
         spawnTimer = 0f;
     }
-
 
     virtual public void SetEnemy(GameObject enemyGo, EnemySpawnInfo spawnInfo, WaveInfo waveInfo)
     {
