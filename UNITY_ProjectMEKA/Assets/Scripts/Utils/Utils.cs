@@ -19,13 +19,14 @@ public static class Utils
 
                 foreach (RaycastResult result in results)
                 {
-                    Debug.Log("Hit " + result.gameObject.name, result.gameObject);
+                    //Debug.Log("Hit " + result.gameObject.name, result.gameObject);
                     var layerName = LayerMask.LayerToName(result.gameObject.layer);
 
                     switch (layerName)
                     {
                         case "UI":
                         case "ArrangeTile":
+                        case "Option":
                             return true;
                         default:
                             return false;
@@ -36,6 +37,35 @@ public static class Utils
         else
         {
             //Debug.Log("터치가 UI 위에 있지 않습니다.");
+        }
+        return false;
+    }
+
+    public static bool IsButtonLayer(string buttonLayerName)
+    {
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+            {
+                PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                pointerData.position = Input.mousePosition;
+
+                List<RaycastResult> results = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(pointerData, results);
+
+                foreach (RaycastResult result in results)
+                {
+                    var layerName = LayerMask.LayerToName(result.gameObject.layer);
+                    if (layerName == buttonLayerName)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
         }
         return false;
     }

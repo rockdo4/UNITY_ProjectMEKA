@@ -428,10 +428,7 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void Init()
     {
-        exitButton.onClick.AddListener(() =>
-        {
-            CloseScene();
-        });
+        exitButton.onClick.AddListener(CloseScene);
 
         var buttonsParentTr = joystick.transform.GetChild(5);
         cancelText = buttonsParentTr.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();

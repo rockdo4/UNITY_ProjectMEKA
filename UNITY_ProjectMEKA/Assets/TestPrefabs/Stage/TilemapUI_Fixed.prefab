@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 2979708847681493712}
   - component: {fileID: 5256082563536137623}
   - component: {fileID: 2664541106708346385}
-  m_Layer: 5
+  m_Layer: 19
   m_Name: SoundButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -917,7 +917,7 @@ GameObject:
   - component: {fileID: 1760827222367623556}
   - component: {fileID: 7299894080393511026}
   - component: {fileID: 3667990582624714401}
-  m_Layer: 5
+  m_Layer: 19
   m_Name: PauseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1954,7 +1954,7 @@ GameObject:
   - component: {fileID: 317674939206696196}
   - component: {fileID: 1209118033864955283}
   - component: {fileID: 6088683378122982291}
-  m_Layer: 5
+  m_Layer: 19
   m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3591,7 +3591,7 @@ GameObject:
   - component: {fileID: 5349779787537367573}
   - component: {fileID: 4211857492866336345}
   - component: {fileID: 3583351933837003217}
-  m_Layer: 5
+  m_Layer: 19
   m_Name: PlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5849,13 +5849,13 @@ GameObject:
   - component: {fileID: 8823701255358655053}
   - component: {fileID: 4708242644975537704}
   - component: {fileID: 6349586898318428840}
-  m_Layer: 5
+  m_Layer: 19
   m_Name: OptionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8823701255358655053
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6078,13 +6078,14 @@ GameObject:
   - component: {fileID: 37302706503139609}
   - component: {fileID: 2616892544005206453}
   - component: {fileID: 4672664795135344084}
-  m_Layer: 5
+  - component: {fileID: 3200481927341202983}
+  m_Layer: 19
   m_Name: OptionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1635674711806882145
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6127,7 +6128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6182,11 +6183,23 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 2616892544005206453}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3200481927341202983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9210229403795877546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908913901fc874a4d9e0d4121ea6ac60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5774226132057630677
 PrefabInstance:
   m_ObjectHideFlags: 0
