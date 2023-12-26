@@ -39,6 +39,7 @@ public static class Defines
         public const string house = "House";
         public const string gate = "Gate";
         public const string onTile = "OnTile";
+        public const string option = "Option";
     }
 
     public static class StorySceneNames
