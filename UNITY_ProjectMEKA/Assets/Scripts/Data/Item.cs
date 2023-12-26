@@ -29,7 +29,7 @@ public class Item
 public class ItemInfo
 {
 	public int ID { get; set; }
-	public string Name { get; set; }
+	public string NameStringID { get; set; }
 	public int Type { get; set; }
 	public int Rare { get; set; }
 	public int Value { get; set; }
