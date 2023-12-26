@@ -35,8 +35,8 @@ public class MonsterIcon : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         var rect = GetComponent<RectTransform>().rect;
         var iconPos = transform.position;
 
-        iconPos.x += rect.width * 1.5f;
-        iconPos.y += rect.height * 0.5f;
+        iconPos.x += rect.width * 2f;
+        iconPos.y += rect.height * 4f;
 
         monsterInfoPopUpWindow.transform.position = iconPos;
     }

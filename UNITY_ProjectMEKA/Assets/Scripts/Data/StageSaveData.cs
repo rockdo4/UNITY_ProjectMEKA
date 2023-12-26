@@ -18,7 +18,6 @@ public class StageData
 {
     public int StageID { get; set; }
     public int Class { get; set; }
-    public int Type { get; set; }
     public string ChapterNumber { get; set; }
     public int StageNumber { get; set; }
     public int Index { get; set; }

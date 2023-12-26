@@ -296,8 +296,9 @@ public class FormationManager : MonoBehaviour
 		selectedCharacterID = ID;
 
 		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(ID);
+		var stringTable = StageDataManager.Instance.stringTable;
 
-		textUiArr[(int)UINumeric.Name].SetText(info.CharacterName);
+		textUiArr[(int)UINumeric.Name].SetText(stringTable.GetString(info.CharacterNameStringID));
 		textUiArr[(int)UINumeric.Company].SetText(((Defines.Property)info.CharacterProperty).ToString());
 		textUiArr[(int)UINumeric.Level].SetText(((Defines.Occupation)info.CharacterOccupation).ToString());
 

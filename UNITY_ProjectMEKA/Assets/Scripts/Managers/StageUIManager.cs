@@ -24,6 +24,7 @@ public class StageUIManager : MonoBehaviour
     public GameObject stageInfoPanel;
     public GameObject monsterInfoPanel;
     public GameObject mapInfoPanel;
+    public Transform stageInfoStarPanel;
     public TextMeshProUGUI stageButtonText;
     public TextMeshProUGUI monsterButtonText;
     public TextMeshProUGUI mapButtonText;
@@ -34,16 +35,13 @@ public class StageUIManager : MonoBehaviour
     public TextMeshProUGUI stageMission1Text;
     public TextMeshProUGUI stageMission2Text;
     public TextMeshProUGUI stageMission3Text;
+    public TextMeshProUGUI recommendedLevelText;
     public GameObject monsterButtonPrefab;
     public GameObject monsterInfoPopUpWindow;
-
-    private StageTable stageTable;
 
     private void Awake()
     {
         PlayDataManager.Init();
-        stageTable = DataTableMgr.GetTable<StageTable>();
-
         SetStageButtons(StageClass.Story);
         SetStageButtons(StageClass.Assignment);
         SetStageButtons(StageClass.Challenge);
@@ -101,21 +99,17 @@ public class StageUIManager : MonoBehaviour
         var stringBuilder = new StringBuilder();
         foreach (var stage in currentStageData)
         {
-            //instantiate
+            // instantiate
             var stageButtonGo = Instantiate(stageButtonPrefab, parentTr);
 
             // chapter + stage text apply
             var stageButtonText = stageButtonGo.GetComponentInChildren<TextMeshProUGUI>();
 
-            //Debug.Log(stageTable == null);
-            var chapter = stageTable.GetStageData(stage.Key).ChapterNumber;
-            var stageNumber = stageTable.GetStageData(stage.Key).StageNumber;
+            var chapter = StageDataManager.Instance.stageTable.GetStageData(stage.Key).ChapterNumber;
+            var stageNumber = StageDataManager.Instance.stageTable.GetStageData(stage.Key).StageNumber;
 
-            stringBuilder.Clear();
-            stringBuilder.Append(chapter);
-            stringBuilder.Append("-");
-            stringBuilder.Append(stageNumber.ToString());
-            stageButtonText.SetText(stringBuilder.ToString());
+            var stageButtonName = new string($"{chapter} - {stageNumber}");
+            stageButtonText.SetText(stageButtonName);
 
             // id apply
             var stageButtonScript = stageButtonGo.GetComponent<StageButton>();
@@ -123,6 +117,20 @@ public class StageUIManager : MonoBehaviour
 
             var stageButton = stageButtonGo.GetComponent<Button>();
             stageButton.onClick.AddListener(SetStageInfoWindow);
+
+            // clear score
+            var count = stage.Value.clearScore;
+            for(int i = 0; i < 3; ++i)
+            {
+                if(count > i)
+                {
+                    stageButtonGo.transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
+                }
+                else
+                {
+                    stageButtonGo.transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+                }
+            }
 
             // active false
             if (!stage.Value.isUnlocked)
@@ -137,8 +145,8 @@ public class StageUIManager : MonoBehaviour
         stageInfoParentPanel.SetActive(true);
 
         // 현재 선택된 스테이지 정보 받아서 ui 세팅
-        var stringTable = DataTableMgr.GetTable<StringTable>();
-        var stageData = stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
+        var stringTable = StageDataManager.Instance.stringTable;
+        var stageData = StageDataManager.Instance.stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
         SetStageInfoPanel(stringTable, stageData);
         SetMonsterInfoPanel(stringTable, stageData);
         SetMapInfoPanel();
@@ -160,13 +168,10 @@ public class StageUIManager : MonoBehaviour
         var stageMission2ID = stageTable.StageMission2StringID;
         var stageMission3ID = stageTable.StageMission3StringID;
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.Append(stageTable.ChapterNumber);
-        stringBuilder.Append("-");
-        stringBuilder.Append(stageTable.StageNumber);
-        stringBuilder.Append(" ");
-        stringBuilder.Append(stringTable.GetString(stageNameID));
-        stageHeaderText.SetText(stringBuilder.ToString());
+        var stageHeader = new string($"{stageTable.ChapterNumber} - {stageTable.StageNumber} {stringTable.GetString(stageNameID)}");
+        stageHeaderText.SetText(stageHeader);
+
+
 
         // 스테이지 인포
         var mission1 = stringTable.GetString(stageMission1ID);
@@ -181,6 +186,24 @@ public class StageUIManager : MonoBehaviour
         stageMission1Text.SetText(mission1);
         stageMission2Text.SetText(mission2);
         stageMission3Text.SetText(mission3);
+
+        // 권장 레벨
+        var recommendedLevel = new string($"({stringTable.GetString("recommendedLevel")} : {stageTable.RecommendedLevel})");
+        recommendedLevelText.SetText(recommendedLevel);
+
+        // 별
+        var count = StageDataManager.Instance.selectedStageData.clearScore;
+        for(int i = 0; i < 3; ++i)
+        {
+            if(count > i)
+            {
+                stageInfoStarPanel.GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                stageInfoStarPanel.GetChild(i).gameObject.SetActive(false);
+            }
+        }
     }
 
     public void SetMonsterInfoPanel(StringTable stringTable, StageData stageTable)
@@ -220,7 +243,7 @@ public class StageUIManager : MonoBehaviour
 
     public void OnClickBattleStart()
     {
-        var stageTableData = stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
+        var stageTableData = StageDataManager.Instance.stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
 
         switch (stageTableData.Class)
         {

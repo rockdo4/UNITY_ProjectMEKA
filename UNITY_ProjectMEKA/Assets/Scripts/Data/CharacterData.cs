@@ -352,7 +352,8 @@ public class Character
 		{
 			var charTable = DataTableMgr.GetTable<CharacterTable>();
 			var charData = charTable.GetCharacterData(CharacterID);
-			return charData.CharacterName;
+			var stringTable = StageDataManager.Instance.stringTable;
+			return stringTable.GetString(charData.CharacterNameStringID);
 		}
 	}
 
@@ -382,7 +383,7 @@ public class Character
 public class CharacterData
 {
 	public int CharacterID { get; set; }
-	public string CharacterName { get; set; }	
+	public string CharacterNameStringID { get; set; }	
 	public int InitialGrade { get; set; }
 	public int CharacterProperty { get; set; }
 	public int CharacterOccupation { get; set; }
@@ -393,7 +394,9 @@ public class CharacterData
 	public string PortraitPath { get; set; }
 	public int SkillID { get; set; }
 	public int MaxSigma { get; set; }
+
 	public string OccupationInfoStringID { get; set; }
+	public string OccupationStringID { get; set; }
 }
 
 //캐릭터ID + 레벨을 ID로 사용해서 레벨에 따른 스탯 불러옴
