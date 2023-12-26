@@ -67,7 +67,7 @@ public class AffectionPanel : MonoBehaviour
 		if(ratio == 0) ratio = 0.01f;
 		affectionSlider.fillAmount = ratio;
 
-		LayoutRebuilder.ForceRebuildLayoutImmediate(affectionSlider.rectTransform);
+		UpdateLayout();
 	}
 
 	public void AddAffectionPoint(int point)
@@ -107,5 +107,12 @@ public class AffectionPanel : MonoBehaviour
 	{
 		modalWindow.gameObject.SetActive(true);
 		modalWindow.Notice($"최대 호감도 레벨입니다", "확인");
+	}
+
+	private void UpdateLayout()
+	{
+		LayoutRebuilder.ForceRebuildLayoutImmediate(affectionText.rectTransform);
+		LayoutRebuilder.ForceRebuildLayoutImmediate(characterName.rectTransform);
+		LayoutRebuilder.ForceRebuildLayoutImmediate(affectionSlider.rectTransform);
 	}
 }
