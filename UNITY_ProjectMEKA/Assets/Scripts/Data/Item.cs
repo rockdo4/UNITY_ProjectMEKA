@@ -12,7 +12,10 @@ public class Item
 	{ 
 		get
 		{
-			return DataTableMgr.GetTable<ItemInfoTable>().GetItemData(ID).Name;
+			var stringTable = DataTableMgr.GetTable<StringTable>();
+			var nameID = DataTableMgr.GetTable<ItemInfoTable>().GetItemData(ID).NameStringID;
+            var name = stringTable.GetString(nameID);
+			return name;
 		}
 	}
 

@@ -605,9 +605,10 @@ public class IngameStageUIManager : MonoBehaviour
 
         if(isItem)
         {
-            // have to change to apply string table
             var rewardItem = StageDataManager.Instance.itemInfoTable.GetItemData(itemID);
-            itemInfo.itemName.SetText(rewardItem.Name);
+            var nameStringID = rewardItem.NameStringID;
+            var name = stringTable.GetString(nameStringID);
+            itemInfo.itemName.SetText(name);
         }
         else if(isCharacter)
         {
@@ -619,9 +620,10 @@ public class IngameStageUIManager : MonoBehaviour
         }
         else if(isSystem)
         {
-            // have to change to apply string table
             var rewardItem = StageDataManager.Instance.itemInfoTable.GetItemData(itemID);
-            itemInfo.itemName.SetText(rewardItem.Name);
+            var nameStringID = rewardItem.NameStringID;
+            var name = stringTable.GetString(nameStringID);
+            itemInfo.itemName.SetText(name);
         }
     }
 }
