@@ -78,7 +78,7 @@ public class FormationManager : MonoBehaviour
 			var card = Instantiate(characterCardPrefab);
 			card.transform.SetParent(characterCardScrollView);
 
-			var info = card.GetComponent<CardInfo>();
+			var info = card.GetComponent<SelectCardInfo>();
 			info.ChangeCardId(character.Key);
 
 			card.GetComponent<Button>().onClick.AddListener(() => 
@@ -142,7 +142,7 @@ public class FormationManager : MonoBehaviour
 
 		for (int i = 0; i < numberOfCharacters; i++)
 		{
-			characterCard[i].GetComponent<CardInfo>().ChangeCardId(formationList[selectedFormationList][i]);
+			characterCard[i].GetComponent<SelectCardInfo>().ChangeCardId(formationList[selectedFormationList][i]);
 		}
 
 		for (int i = 0; i < cardList.Length; i++)
@@ -226,7 +226,7 @@ public class FormationManager : MonoBehaviour
 
 		for (int i = 0; i < cardList.Length; i++)
 		{
-			var cardInfo = cardList[i].GetComponent<CardInfo>();
+			var cardInfo = cardList[i].GetComponent<SelectCardInfo>();
             var cardId = cardInfo.GetCardID();
             var cardData = table.GetCharacterData(cardId);
 
@@ -260,7 +260,7 @@ public class FormationManager : MonoBehaviour
 	public void ChangeCharacterCard()
 	{
 		//ī������ �ٲ�
-		var cardInfo = characterCard[selectedFormationIndex].GetComponent<CardInfo>();
+		var cardInfo = characterCard[selectedFormationIndex].GetComponent<SelectCardInfo>();
 		bool isDuplication = false;
 
 		for (int i = 0; i < numberOfCharacters; i++)
@@ -289,7 +289,7 @@ public class FormationManager : MonoBehaviour
 	}
 
 	//���� ������ ī�� ����
-	public void ChangeSelectCharacterCard(CardInfo card)
+	public void ChangeSelectCharacterCard(SelectCardInfo card)
 	{
 		var ID = card.GetCardID();
 
@@ -317,7 +317,7 @@ public class FormationManager : MonoBehaviour
 		for (int i = 0; i < numberOfCharacters; i++)
 		{
 			formationList[selectedFormationList][i] = 0;
-			characterCard[i].GetComponent<CardInfo>().ChangeCardId(0);
+			characterCard[i].GetComponent<SelectCardInfo>().ChangeCardId(0);
 		}
 
 		UpdateActiveCard();
