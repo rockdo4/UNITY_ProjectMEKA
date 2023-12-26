@@ -10,73 +10,69 @@ using UnityEngine;
 public class CommuinicationDictionary
 {
 	//캐릭터 대화 종류 ID, 그 ID에 해당하는 리스트
-	public Dictionary<int, List<CommunicationData>> idCommunicationList;
+	public Dictionary<int, List<CommunicationData>> idCommunicationList = new Dictionary<int, List<CommunicationData>>();
 }
 
-//public class AffectionCommunicationTable : DataTable
-//{
-//	//캐릭터 <ID, 캐릭터 대화 내용>
-//	protected Dictionary<int, CommuinicationDictionary> characterCommunicationDict = new Dictionary<int, CommuinicationDictionary>();
-//	public AffectionCommunicationTable()
-//	{
-//		path = "Table/AffectionCommunicationTable";
-//		Load();
-//	}
+public class AffectionCommunicationTable : DataTable
+{
+	//캐릭터 <ID, 캐릭터 대화 내용>
+	protected Dictionary<int, CommuinicationDictionary> characterCommunicationDict = new Dictionary<int, CommuinicationDictionary>();
+	public AffectionCommunicationTable()
+	{
+		path = "Table/AffectionCommunicationTable";
+		Load();
+	}
 
-//	public override void Load()
-//	{
-//		var csvData = Resources.Load<TextAsset>(path);
+	public override void Load()
+	{
+		var csvData = Resources.Load<TextAsset>(path);
 
-//		TextReader reader = new StringReader(csvData.text);
+		TextReader reader = new StringReader(csvData.text);
 
-//		var csvConfiguration = new CsvConfiguration(CultureInfo.InvariantCulture);
-//		csvConfiguration.HasHeaderRecord = true;
+		var csvConfiguration = new CsvConfiguration(CultureInfo.InvariantCulture);
+		csvConfiguration.HasHeaderRecord = true;
 
-//		var csv = new CsvReader(reader, csvConfiguration);
+		var csv = new CsvReader(reader, csvConfiguration);
 
-//		try
-//		{
-//			var records = csv.GetRecords<CommunicationData>();
+		try
+		{
+			var records = csv.GetRecords<CommunicationData>();
 
-//			foreach (var record in records)
-//			{
-//				CommunicationData temp = record;
+			foreach (var record in records)
+			{
+				CommunicationData temp = record;
 
-//				if (!characterCommunicationDict.ContainsKey(temp.CharacterID))
-//				{
-//					var list = new CommuinicationDictionary();
-//					characterCommunicationDict.Add(temp.CharacterID, list);
-//				}
+				if (!characterCommunicationDict.ContainsKey(temp.CharacterID))
+				{
+					var dict = new CommuinicationDictionary();
+					characterCommunicationDict.Add(temp.CharacterID, dict);
+				}
 
-//				if (!characterCommunicationDict[temp.CharacterID].Exists(x => x.key == temp.ID))
-//				{
-//					var data = new CommuinicationDictionary();
-//					data.key = temp.ID;
-//					data.dataList = new List<CommunicationData>();
-//					data.dataList.Add(temp);
-//				}
-//				else
-//				{
-//					characterCommunicationDict[temp.CharacterID].Find(x => x.key == temp.ID).dataList.Add(temp);
-//				}
-//				Debug.Log((temp.ID, temp.Script));
-//				//Debug.Log(temp.Script);
-//			}
-//		}
-//		catch (Exception ex)
-//		{
-//			Debug.Log(ex.Message);
-//			Debug.LogError("csv 로드 에러");
-//		}
-//	}
+				var charDict = characterCommunicationDict[temp.CharacterID];
 
-//	public List<CommuinicationDictionary> GetAffectionData(int CharacterID)
-//	{
-//		if (characterCommunicationDict.ContainsKey(CharacterID))
-//		{
-//			Debug.LogWarning("캐릭터가 보유한 대화 없음");
-//			return null;
-//		}
-//		return characterCommunicationDict[CharacterID];
-//	}
-//}
+				if (!charDict.idCommunicationList.ContainsKey(temp.ID)) 
+				{
+					var list = new List<CommunicationData>();
+					charDict.idCommunicationList.Add(temp.ID, list);
+                }
+
+                charDict.idCommunicationList[temp.ID].Add(temp);
+			}
+		}
+		catch (Exception ex)
+		{
+			Debug.Log(ex.Message);
+			Debug.LogError("csv 로드 에러");
+		}
+	}
+
+	public CommuinicationDictionary GetAffectionData(int CharacterID)
+	{
+		if (characterCommunicationDict.ContainsKey(CharacterID))
+		{
+			Debug.LogWarning("캐릭터가 보유한 대화 없음");
+			return null;
+		}
+		return characterCommunicationDict[CharacterID];
+	}
+}

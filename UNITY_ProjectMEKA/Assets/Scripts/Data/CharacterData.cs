@@ -397,7 +397,6 @@ public class CharacterData
 	public string PortraitPath { get; set; }
 	public int SkillID { get; set; }
 	public int MaxSigma { get; set; }
-
 	public string OccupationInfoStringID { get; set; }
 	public string OccupationStringID { get; set; }
 }
