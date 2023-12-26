@@ -396,6 +396,7 @@ public class CharacterData
 	public int MaxSigma { get; set; }
 
 	public string OccupationInfoStringID { get; set; }
+	public string OccupationStringID { get; set; }
 }
 
 //캐릭터ID + 레벨을 ID로 사용해서 레벨에 따른 스탯 불러옴

@@ -31,6 +31,7 @@ public class IngameStageUIManager : MonoBehaviour
     // cost & wave & monster & life infos
     public TextMeshProUGUI costText;
     public TextMeshProUGUI leftWaveText;
+    public TextMeshProUGUI killMonsterHeaderText;
     public TextMeshProUGUI allMonsterCountText;
     public TextMeshProUGUI killMonsterCountText;
     public TextMeshProUGUI houseLifeText;
@@ -54,7 +55,6 @@ public class IngameStageUIManager : MonoBehaviour
     private Button cancelButton;
     private Button collectButton;
     private Button skillButton;
-    //private Button closeButton;
 
 	// skill
 	public TextMeshProUGUI skillTileGuideText;
@@ -67,28 +67,15 @@ public class IngameStageUIManager : MonoBehaviour
     private int prevHouseLife;
     public bool isSkillTileWindow;
 
-    // tables
-    //private CharacterTable characterTable;
-    //private CharacterLevelTable characterLevelTable;
-    //private StringTable stringTable;
-    //private ItemInfoTable itemInfoTable;
-
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
     private void OnEnable()
     {
-        //characterTable = DataTableMgr.GetTable<CharacterTable>();
-        //characterLevelTable = DataTableMgr.GetTable<CharacterLevelTable>();
-        //stringTable = DataTableMgr.GetTable<StringTable>();
-        //itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
-
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
         skillButton = joystick.skillButton;
-        //closeButton = joystick.closeButton;
-
 		isInfoWindowOn = true;
     }
 
@@ -289,16 +276,21 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void ChangeCharacterInfo()
     {
+        var stringTable = StageDataManager.Instance.stringTable;
         var characterId = stageManager.currentPlayer.state.id;
         var characterData = StageDataManager.Instance.characterTable.GetCharacterData(characterId);
-        var stringId = characterData.OccupationInfoStringID;
-        var occupationInfoString = StageDataManager.Instance.stringTable.GetString(stringId);
 
-        // need to apply string table
-        characterOccupation.SetText(stageManager.currentPlayer.state.occupation.ToString());
-        characterName.SetText(stageManager.currentPlayer.state.name);
+        var characterOccupationStringId = characterData.OccupationStringID;
+        var occupation = stringTable.GetString(characterOccupationStringId);
+        characterOccupation.SetText(occupation);
 
-        characterDescription.SetText(occupationInfoString);
+        var characterNameStringId = characterData.CharacterNameStringID;
+        var name = stringTable.GetString(characterNameStringId);
+        characterName.SetText(name);
+
+        var characterOccupationInfoStringId = characterData.OccupationInfoStringID;
+        var occupationInfo = StageDataManager.Instance.stringTable.GetString(characterOccupationInfoStringId);
+        characterDescription.SetText(occupationInfo);
     }
 
     public void CostUpdate()
@@ -441,10 +433,16 @@ public class IngameStageUIManager : MonoBehaviour
             CloseScene();
         });
 
+        var buttonsParentTr = joystick.transform.GetChild(5);
+        cancelText = buttonsParentTr.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+        collectText = buttonsParentTr.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+        skillText = buttonsParentTr.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
+
         var stringTable = StageDataManager.Instance.stringTable;
         cancelText.SetText(stringTable.GetString("cancelArrangement"));
         collectText.SetText(stringTable.GetString("collection"));
         skillText.SetText(stringTable.GetString("skill"));
+        killMonsterHeaderText.SetText(stringTable.GetString("killMonsterCount"));
 
         if (StageDataManager.Instance.selectedStageData != null)
         {
