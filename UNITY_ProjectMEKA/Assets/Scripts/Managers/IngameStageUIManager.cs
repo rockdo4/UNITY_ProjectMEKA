@@ -12,8 +12,6 @@ public class IngameStageUIManager : MonoBehaviour
     private WindowMode prevWindowMode;
     private StageManager stageManager;
 
-    public Button exitButton;
-
     // panels
     public GameObject characterInfoPanel;
     public GameObject timeProgressBarPanel;
@@ -30,6 +28,7 @@ public class IngameStageUIManager : MonoBehaviour
 
     // cost & wave & monster & life infos
     public TextMeshProUGUI costText;
+    public TextMeshProUGUI leftWaveHeaderText;
     public TextMeshProUGUI leftWaveText;
     public TextMeshProUGUI killMonsterHeaderText;
     public TextMeshProUGUI allMonsterCountText;
@@ -65,7 +64,12 @@ public class IngameStageUIManager : MonoBehaviour
     private int prevCost;
     private int prevKillMonsterCount;
     private int prevHouseLife;
+    private int prevWave;
     public bool isSkillTileWindow;
+
+    // table
+    private StringTable stringTable;
+    private CharacterTable characterTable;
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
@@ -81,8 +85,8 @@ public class IngameStageUIManager : MonoBehaviour
 
     private void Awake()
     {
-        var characterTable = DataTableMgr.GetTable<CharacterTable>();
-        var stringTable = DataTableMgr.GetTable<StringTable>();
+        characterTable = StageDataManager.Instance.characterTable;
+        stringTable = StageDataManager.Instance.stringTable;
     }
 
     private void Start()
@@ -98,10 +102,11 @@ public class IngameStageUIManager : MonoBehaviour
     {
         // windowMode Update
         prevWindowMode = windowMode;
-        WindowModeUpdate();
-        CostUpdate();
-        KillMonsterCountUpdate();
-        HouseLifeUpdate();
+        UpdateWindowMode();
+        UpdateCost();
+        UpdateKillMonsterCount();
+        UpdateHouseLife();
+        UpdateWave();
 
         var infoCondition = currentPlayerOnTile && isInfoWindowOn;
 
@@ -120,7 +125,7 @@ public class IngameStageUIManager : MonoBehaviour
         CloseCharacterInfoWindow();
     }
 
-    public void WindowModeUpdate()
+    public void UpdateWindowMode()
     {
         if (stageManager.gameState == GameState.Win || stageManager.gameState == GameState.Die)
         {
@@ -293,7 +298,7 @@ public class IngameStageUIManager : MonoBehaviour
         characterDescription.SetText(occupationInfo);
     }
 
-    public void CostUpdate()
+    public void UpdateCost()
     {
         stageManager.currentCost += Time.deltaTime * 0.5f;
 
@@ -316,7 +321,7 @@ public class IngameStageUIManager : MonoBehaviour
         costSlider.fillAmount = value;
     }
 
-    public void KillMonsterCountUpdate()
+    public void UpdateKillMonsterCount()
     {
         if(prevKillMonsterCount != stageManager.killMonsterCount)
         {
@@ -325,12 +330,21 @@ public class IngameStageUIManager : MonoBehaviour
         }
     }
 
-    public void HouseLifeUpdate()
+    public void UpdateHouseLife()
     {
         if(prevHouseLife != stageManager.currentHouseLife)
         {
             houseLifeText.SetText(stageManager.currentHouseLife.ToString());
             prevHouseLife = stageManager.currentHouseLife;
+        }
+    }
+
+    public void UpdateWave()
+    {
+        if(prevWave != stageManager.leftWaveCount)
+        {
+            leftWaveText.SetText(stageManager.leftWaveCount.ToString());
+            prevWave = stageManager.leftWaveCount;
         }
     }
 
@@ -428,14 +442,11 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void Init()
     {
-        exitButton.onClick.AddListener(CloseScene);
+        var joystickButtonsParentTr = joystick.transform.GetChild(5);
+        cancelText = joystickButtonsParentTr.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+        collectText = joystickButtonsParentTr.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+        skillText = joystickButtonsParentTr.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
 
-        var buttonsParentTr = joystick.transform.GetChild(5);
-        cancelText = buttonsParentTr.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
-        collectText = buttonsParentTr.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
-        skillText = buttonsParentTr.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
-
-        var stringTable = StageDataManager.Instance.stringTable;
         var arrangement = stringTable.GetString("arrangement");
         var cancel = stringTable.GetString("cancel");
         var arrangeCancel = new string($"{arrangement}\n{cancel}");
@@ -443,6 +454,11 @@ public class IngameStageUIManager : MonoBehaviour
         collectText.SetText(stringTable.GetString("collection"));
         skillText.SetText(stringTable.GetString("skill"));
         killMonsterHeaderText.SetText(stringTable.GetString("killMonsterCount"));
+
+        var wave = stringTable.GetString("wave");
+        var waveTextAdditional = stringTable.GetString("waveTextAdditional");
+        var waveHeaderText = new string($"{wave}:       {waveTextAdditional}");
+        leftWaveHeaderText.SetText(waveHeaderText);
 
         if (StageDataManager.Instance.selectedStageData != null)
         {
