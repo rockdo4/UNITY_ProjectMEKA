@@ -28,7 +28,6 @@ public class CharacterDictConverter : JsonConverter<Dictionary<int, Character>>
 			character.affection.AffectionLevel = (int)item.Value["AffectionLevel"];
 			character.affection.AffectionPoint = (int)item.Value["AffectionPoint"];
 			character.affection.LastTime = (DateTime)item.Value["AffectionExp"];
-			Debug.Log(character.affection.LastTime);
 			result.Add(int.Parse(item.Key), character);
 		}
 

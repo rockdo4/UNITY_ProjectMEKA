@@ -200,11 +200,11 @@ public class SynchroPanel : MonoBehaviour
 
 		if(isRequired)
 		{
-			Debug.Log("합성 성공");
+			infoPanel.SetNoticePanel("싱크로 성공", "확인");
 		}
 		else
 		{
-			Debug.Log("실패");
+			infoPanel.SetNoticePanel("싱크로 실패", "확인");
 		}
 
 		if(isRequired)

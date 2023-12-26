@@ -61,11 +61,13 @@ public class AffectionPanel : MonoBehaviour
 		}
 		else
 		{
-			ratio = (float)this.currCharacter.affection.AffectionPoint / info.AffectionPoint;
+			ratio = (float)currCharacter.affection.AffectionPoint / info.AffectionPoint;
 		}
 
 		if(ratio == 0) ratio = 0.01f;
 		affectionSlider.fillAmount = ratio;
+
+		LayoutRebuilder.ForceRebuildLayoutImmediate(affectionSlider.rectTransform);
 	}
 
 	public void AddAffectionPoint(int point)
@@ -98,12 +100,12 @@ public class AffectionPanel : MonoBehaviour
 	public void NoticeAffection(int point)
 	{
 		modalWindow.gameObject.SetActive(true);
-		modalWindow.Show($"호감도를 {point} 얻었습니다!", "확인");
+		modalWindow.Notice($"호감도를 {point} 얻었습니다!", "확인");
 	}
 
 	public void NoticeMaxAffection()
 	{
 		modalWindow.gameObject.SetActive(true);
-		modalWindow.Show($"최대 호감도 레벨입니다", "확인");
+		modalWindow.Notice($"최대 호감도 레벨입니다", "확인");
 	}
 }

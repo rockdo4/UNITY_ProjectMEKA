@@ -101,6 +101,8 @@ public class ItemAutoQuantityCard : MonoBehaviour
 			haveQuantityText.SetText($"<color=red>0</color>");
 			requireQuantityText.SetText($"{requiredQuantity}");
 		}
+
+		UpdateLayout();
 	}
 
 	public void SetMaxLevel()
@@ -115,6 +117,14 @@ public class ItemAutoQuantityCard : MonoBehaviour
 			haveQuantityText.SetText($"{0}");
 			requireQuantityText.SetText($"--");
 		}
+
+		UpdateLayout();
+	}
+
+	public void UpdateLayout()
+	{
+		LayoutRebuilder.ForceRebuildLayoutImmediate(haveQuantityText.rectTransform);
+		LayoutRebuilder.ForceRebuildLayoutImmediate(requireQuantityText.rectTransform);
 	}
 
 	public bool IsEnoughRequire()

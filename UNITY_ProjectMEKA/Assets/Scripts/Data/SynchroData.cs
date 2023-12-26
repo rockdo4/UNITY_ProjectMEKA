@@ -12,5 +12,4 @@ public class SynchroData
 	public int RequireTier2 { get; set; }
 	public int Tier3ID { get; set; }
 	public int RequireTier3 { get; set; }
-	public int Silver { get; set; }
 }

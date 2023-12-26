@@ -176,6 +176,13 @@ public class PanelManager : MonoBehaviour
 		panel.Show(text, yesAction, yesText, noText);
 	}
 
+	public void SetNoticePanel(string text, string yesText = "")
+	{
+		var panel = popUpPanel.GetComponent<ModalWindow>();
+		panel.gameObject.SetActive(true);
+		panel.Notice(text, yesText);
+	}
+
 	public void ExitGame() 
 	{
 		Application.Quit();

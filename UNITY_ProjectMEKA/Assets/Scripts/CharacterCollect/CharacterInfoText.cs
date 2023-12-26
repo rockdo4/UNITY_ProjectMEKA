@@ -206,4 +206,9 @@ public class CharacterInfoText : MonoBehaviour
 	{
 		panelManager.SetPopUpPanel(text, yesAction, yesText, noText);
 	}
+
+	public void SetNoticePanel(string text, string yesText = null)
+	{
+		panelManager.SetNoticePanel(text, yesText);
+	}
 }

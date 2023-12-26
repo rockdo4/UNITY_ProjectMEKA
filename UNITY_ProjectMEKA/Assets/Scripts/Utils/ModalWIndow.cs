@@ -57,7 +57,7 @@ public class ModalWindow : MonoBehaviour
 		gameObject.SetActive(true);
 	}
 
-	public void Show(string text, string yesText = "")
+	public void Notice(string text, string yesText = "")
 	{
 		var modalWindow = this;
 
