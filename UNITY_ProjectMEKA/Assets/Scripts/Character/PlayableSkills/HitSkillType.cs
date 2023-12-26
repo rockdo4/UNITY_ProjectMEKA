@@ -44,8 +44,6 @@ public class HitSkillType : SkillBase
     [SerializeField, Header("공격 애니매이션이 따로 있는가")]
     public bool isAttackAnimation;
     
-    
-
     private float saveDamage;
     private float saveAttackDelay;
     private float timer;
@@ -244,26 +242,30 @@ public class HitSkillType : SkillBase
         // 가장 가까운 방향을 찾기 위해 내적을 사용
         float maxDot = Mathf.Max(Vector3.Dot(front, north), Vector3.Dot(front, south),
                                  Vector3.Dot(front, east), Vector3.Dot(front, west));
-        
+
         // 스위치문으로 각 방향을 판단
         if (maxDot == Vector3.Dot(front, north))
         {
             // 북쪽을 보고 있음
-            attackRangeRot = AttackRange;
+            //attackRangeRot = AttackRange;//앞을 볼때 오른쪽으로 공격범위가잡힘
+            attackRangeRot = Utils.RotateArray(AttackRange, 3);
         }
         else if (maxDot == Vector3.Dot(front, south))
         {
             // 남쪽을 보고 있음
-            attackRangeRot = Utils.RotateArray(AttackRange,2);
+            //attackRangeRot = Utils.RotateArray(AttackRange,2);
+            attackRangeRot = Utils.RotateArray(AttackRange, 3);
         }
         else if (maxDot == Vector3.Dot(front, east))
         {
             // 동쪽을 보고 있음
-            attackRangeRot = Utils.RotateArray(AttackRange, 1);
+            //attackRangeRot = Utils.RotateArray(AttackRange, 1);
+            attackRangeRot = Utils.RotateArray(AttackRange, 3);
         }
         else if (maxDot == Vector3.Dot(front, west))
         {
             // 서쪽을 보고 있음
+            //attackRangeRot = Utils.RotateArray(AttackRange, 3);
             attackRangeRot = Utils.RotateArray(AttackRange, 3);
         }
 

@@ -99,6 +99,9 @@ public static class Utils
         var x = Mathf.RoundToInt(coords.x);
         var z = Mathf.RoundToInt(coords.z);
         var y = Mathf.RoundToInt(coords.y);
+        //var x = Mathf.FloorToInt(coords.x);
+        //var z = Mathf.FloorToInt(coords.z);
+        //var y = Mathf.FloorToInt(coords.y);
 
         return new Vector3Int(x, y, z);
     }

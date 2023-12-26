@@ -20,7 +20,11 @@ public class PlayableIdleState : PlayableBaseState
 
     public override void Enter()
     {
-        
+        if(playerCtrl.trail != null)
+        {
+            playerCtrl.trail.gameObject.SetActive(false);
+
+        }
         playerCtrl.CurrentGridPos = new Vector3Int(Mathf.FloorToInt(playerCtrl.transform.position.x), Mathf.FloorToInt(playerCtrl.transform.position.y), Mathf.FloorToInt(playerCtrl.transform.position.z));
     }
 
