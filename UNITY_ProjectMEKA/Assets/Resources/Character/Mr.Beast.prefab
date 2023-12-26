@@ -4622,9 +4622,13 @@ MonoBehaviour:
   effectName: BeastOutEffect
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
+  firstLookPos: {fileID: 0}
+  skillPivot: {x: 0, y: 0, z: 0}
+  trail: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
+  isSkillPossible: 0
 --- !u!114 &1436989491291422508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4637,6 +4641,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570a1a51ab5d5664c9ffe8aba61075a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectInfos:
+  - objectName: BeastOutEffect
+    perfab: {fileID: 4656338121185817704, guid: 7d9dafd8a94a54a43a8e9b1990ea8a35, type: 3}
+    count: 10
+  - objectName: EnemyHitEffect
+    perfab: {fileID: 6233771327654094976, guid: 1a654d5f7b342574b8120a1d7aad60f6, type: 3}
+    count: 10
+  lv: 1
   id: 12102
   name: BEAST
   property: 2
@@ -4644,6 +4656,8 @@ MonoBehaviour:
   armor: 10
   damage: 20
   attackDelay: 0.5
+  shield: 0
+  maxShield: 0
   BulletName: 
   BulletType: 0
   flashName: 
@@ -4652,9 +4666,7 @@ MonoBehaviour:
   yal: 1
   rangeAttack: 010000000200000001000000
   level: 0
-  grade: 0
   Hp: 0
-  ID: 0
   arrangeCost: 15
   arrangeCoolTime: 50
   skill: 0
@@ -4666,6 +4678,7 @@ MonoBehaviour:
   occupation: 1
   critChance: 0.1
   fatalDamage: 1.5
+  isFirstTargetIsFly: 0
   experience: 0
   currentExperience: 0
 --- !u!114 &4333651100658047980
@@ -4697,6 +4710,11 @@ MonoBehaviour:
   skillType: 0
   isSkillUsing: 0
   isRangeOut: 0
+  hang: 0
+  yal: 0
+  rangeAttack: 
+  attackableTiles: []
+  targetList: []
   skillDuration: 0
   isMe: 1
   isSingle: 1
@@ -4705,11 +4723,9 @@ MonoBehaviour:
   type: 6
   Inc: 0
   figure: 0.1
+  addCost: 0
   isAttackRage: 0
   isAttackAnimaiton: 0
-  hang: 0
-  yal: 0
-  rangeAttack: 
 --- !u!1 &1861218928822394891
 GameObject:
   m_ObjectHideFlags: 0

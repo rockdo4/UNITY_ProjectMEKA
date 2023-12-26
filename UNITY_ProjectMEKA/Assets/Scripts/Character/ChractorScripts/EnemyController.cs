@@ -41,7 +41,7 @@ public class EnemyController : PoolAble
     public GameObject FirePosition;
     public List<GameObject> rangeInPlayers = new List<GameObject>();
     public List<GameObject> rangeInSecondPlayers = new List<GameObject>();//보스 공격범위
-
+    public NPCStates currentState;
     public Vector3 CurrentPos;
     [HideInInspector]
     public Vector3Int CurrentGridPos;
@@ -160,17 +160,21 @@ public class EnemyController : PoolAble
         //Vector3 newPosition = currentPosition + forwardDirection * 2f;//전방 2타일 감지하는 로직
         Vector3 newPosition = currentPosition + forwardDirection;
 
-        forwardGrid = new Vector3Int(Mathf.FloorToInt(newPosition.x), 0, Mathf.FloorToInt(newPosition.z));
+        //forwardGrid = new Vector3Int(Mathf.FloorToInt(newPosition.x), 0, Mathf.FloorToInt(newPosition.z));
+        forwardGrid = new Vector3Int(Mathf.RoundToInt(newPosition.x), 0, Mathf.RoundToInt(newPosition.z));
         
         stateManager.Update();
         CurrentPos = transform.position;
-        CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
+        //CurrentGridPos = new Vector3Int(Mathf.FloorToInt(CurrentPos.x), Mathf.FloorToInt(CurrentPos.y), Mathf.FloorToInt(CurrentPos.z));
+        CurrentGridPos = new Vector3Int(Mathf.RoundToInt(CurrentPos.x), Mathf.RoundToInt(CurrentPos.y), Mathf.RoundToInt(CurrentPos.z));
         
     }
     
     public void SetState(NPCStates state)
     {
         stateManager.ChangeState(states[(int)state]);
+        currentState = state;
+        Debug.Log($"{gameObject.name}: {state}");
     }
     public void WheelWindEffect()
     {

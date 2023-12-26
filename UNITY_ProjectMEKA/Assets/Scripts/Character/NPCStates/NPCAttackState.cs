@@ -51,6 +51,11 @@ public class NPCAttackState : NPCBaseState
             else
             {
                 enemyCtrl.ani.SetTrigger("Attack");
+                if (enemyCtrl.state.isMovingShot)
+                {
+                    enemyCtrl.SetState(NPCStates.Move);
+                    enemyCtrl.ani.SetTrigger("Run");
+                }
             }
         }
         if(enemyCtrl.target == null)
@@ -70,15 +75,14 @@ public class NPCAttackState : NPCBaseState
             enemyCtrl.SetState(NPCStates.Move);
             enemyCtrl.ani.SetTrigger("Run");
         }
-        //Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code 
        
-
         foreach (var a in enemyCtrl.rangeInPlayers)
         {
             if (a.GetComponentInParent<PlayerController>() == null || !a.activeSelf)
             {
                 toRemove.Add(a);
                 enemyCtrl.SetState(NPCStates.Move);
+                enemyCtrl.target = null;
                 enemyCtrl.ani.SetTrigger("Run");
             }
         }

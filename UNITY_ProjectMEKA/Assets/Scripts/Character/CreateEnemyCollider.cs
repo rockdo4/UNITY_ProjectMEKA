@@ -31,7 +31,8 @@ public class CreateEnemyCollider : MonoBehaviour
                     var obj = other.GetComponentInParent<CanDie>();
                     obj.action?.AddListener(() =>
                     {
-                        if (other.GetComponentInParent<Transform>().gameObject.activeInHierarchy)
+                        //if (other.GetComponentInParent<Transform>().gameObject.activeInHierarchy)//34번째줄
+                        if (other != null && other.GetComponentInParent<Transform>() != null)
                         {
                             enemy.rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
                         }

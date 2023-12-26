@@ -66,6 +66,7 @@ public class NPCDestinationStates : NPCBaseState
 
         if(enemyCtrl.state.isFly)
         {
+            timer += Time.deltaTime;
             if(saveGridPos != gridPosition) 
             {
                 saveGridPos = gridPosition;
@@ -90,22 +91,24 @@ public class NPCDestinationStates : NPCBaseState
             
             
         }
-        //원래는 0.3
-        if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.35f && !enemyCtrl.state.isFly)
+        else if (Vector3.Distance(enemyCtrl.transform.position, tileCenter) < 0.35f && !enemyCtrl.state.isFly)
         {
             CheckPlayer();
         }
     }
     void CheckPlayer()
     {
-       
-        
+
+        Debug.Log($"{enemyCtrl.gameObject.name} RangeInPlayers: {enemyCtrl.rangeInPlayers.Count}");
         foreach (var pl in enemyCtrl.rangeInPlayers)
         {
             PlayerController player = pl.GetComponentInParent<PlayerController>();
-            //float distance = Vector3.Distance(enemyCtrl.transform.position,player.transform.position);/*&& distance > 0.4f*/
-            if (player.blockCount < player.maxBlockCount &&
-                enemyCtrl.state.isBlock && player != null &&
+            if (player == null)
+            {
+                continue;
+            }
+            if (/*player != null && */player.blockCount < player.maxBlockCount &&//여기가 107번쨰줄
+                enemyCtrl.state.isBlock && 
                 player.currentState != PlayerController.CharacterStates.Arrange)
             {
                 if (enemyCtrl.state.isFly)

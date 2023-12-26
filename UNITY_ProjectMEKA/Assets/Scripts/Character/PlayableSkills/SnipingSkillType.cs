@@ -98,10 +98,21 @@ public class SnipingSkillType : SkillBase
         int i = 0;
         while(i < 5) 
         {
-            
-            CheckOverlapBoxes();
+
+            //CheckOverlapBoxes();
+            foreach(var onObject in attackableTiles)
+            {
+                foreach(var target in onObject.objectsOnTile)
+                {
+                    if(target.tag == "Enemy")
+                    {
+                        target.GetComponent<IAttackable>().OnAttack(player.state.damage * figure);
+                        //target.GetComponent<IAttackable>().OnAttack(1000);
+                    }
+                }
+            }
             i++;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.7f);
             //yield return null;
         }
     }
