@@ -13,7 +13,6 @@ public class CardInfo : MonoBehaviour
 	private void Awake()
 	{
 		cardImage = GetComponent<Image>();
-		cardText = GetComponentInChildren<TextMeshProUGUI>();
 	}
 
 	public void ChangeCardId(int id)
@@ -25,7 +24,9 @@ public class CardInfo : MonoBehaviour
 		if (info != null)
 		{
 			//cardImage.sprite = default;
-			cardText.SetText(stringTable.GetString(info.CharacterNameStringID));
+			cardText.SetText(
+				$"{stringTable.GetString(info.CharacterNameStringID)}\n" +
+				$"호감도 단계 : ?");
 		}
 		else
 		{
