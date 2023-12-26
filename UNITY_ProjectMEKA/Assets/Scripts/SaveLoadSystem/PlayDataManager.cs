@@ -71,6 +71,11 @@ public class PlayDataManager
                 data.challengeStageDatas.Add(stage.Key, saveData);
             }
         }
+
+        for(int i = 0; i < 7; ++i)
+        {
+            data.systemUnlockData.Add(i + 1, false);
+        }
     }
 
     private static void FirstGameCharacterSaveDataSet()

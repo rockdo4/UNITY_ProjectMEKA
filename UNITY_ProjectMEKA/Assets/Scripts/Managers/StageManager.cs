@@ -119,7 +119,7 @@ public class StageManager : MonoBehaviour
                     case MissionType.ClearTime:
                         if (MissionClearTime(missionTypes[i].Item2) == MissionClear.Clear)
                         {
-                            Debug.Log("***Mission clear*** : ClearTime");
+                            Debug.Log($"***Mission clear*** : {missionTypes[i].Item2} ClearTime");
                             tempClearCount++;
                         }
                         break;
@@ -176,14 +176,14 @@ public class StageManager : MonoBehaviour
             StageDataManager.Instance.UpdatePlayData();
             for (int i = 0; i < rewardList.Count; ++i)
             {
-                ItemInventoryManager.Instance.AddItemByID(rewardList[i].Item1, rewardList[i].Item2);
+                ItemInventoryManager.Instance.AddRewardByID(rewardList[i].Item1, rewardList[i].Item2);
             }
         }
         else
         {
             for (int i = 1; i < rewardList.Count; ++i)
             {
-                ItemInventoryManager.Instance.AddItemByID(rewardList[i].Item1, rewardList[i].Item2);
+                ItemInventoryManager.Instance.AddRewardByID(rewardList[i].Item1, rewardList[i].Item2);
             }
         }
     }
@@ -207,7 +207,6 @@ public class StageManager : MonoBehaviour
 
     public MissionClear MissionMonsterKillCount(int value)
     {
-        // win condition : kill monsters * value
         if(killMonsterCount >= value)
         {
             return MissionClear.Clear;
@@ -228,7 +227,7 @@ public class StageManager : MonoBehaviour
 
     public MissionClear MissionClearTime(int value)
     {
-        if(MissionPlayerWin() == GameState.Win && timer <= value)
+        if(timer <= value)
         {
             return MissionClear.Clear;
         }
@@ -301,10 +300,8 @@ public class StageManager : MonoBehaviour
         defaultCost = stageData.DefaultCost;
         maxCost = stageData.MaxCost;
         currentCost = defaultCost;
-
         maxHouseLife = stageData.HouseLife;
         currentHouseLife = maxHouseLife;
-
         maxTime = stageData.StageTime;
 
         for (int i = 0; i < missionTypes.Length; ++i)
