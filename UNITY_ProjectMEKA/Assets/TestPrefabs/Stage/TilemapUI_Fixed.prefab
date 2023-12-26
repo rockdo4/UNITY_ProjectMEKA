@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 2979708847681493712}
   - component: {fileID: 5256082563536137623}
   - component: {fileID: 2664541106708346385}
-  m_Layer: 5
+  m_Layer: 19
   m_Name: SoundButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -917,8 +917,8 @@ GameObject:
   - component: {fileID: 1760827222367623556}
   - component: {fileID: 7299894080393511026}
   - component: {fileID: 3667990582624714401}
-  m_Layer: 5
-  m_Name: PauseButton
+  m_Layer: 19
+  m_Name: SpeedButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -964,14 +964,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ee58dad670da94f4cb56248fbd4ee995, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 652205b43b389dc47bbe14d747b32798, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1954,8 +1954,8 @@ GameObject:
   - component: {fileID: 317674939206696196}
   - component: {fileID: 1209118033864955283}
   - component: {fileID: 6088683378122982291}
-  m_Layer: 5
-  m_Name: RestartButton
+  m_Layer: 19
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2008,7 +2008,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d59c1f47cd8fedf48aee90abc2b32760, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5e3593ddd97094c48ab9dc3aa06cecad, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3591,8 +3591,8 @@ GameObject:
   - component: {fileID: 5349779787537367573}
   - component: {fileID: 4211857492866336345}
   - component: {fileID: 3583351933837003217}
-  m_Layer: 5
-  m_Name: PlayButton
+  m_Layer: 19
+  m_Name: PauseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5849,13 +5849,13 @@ GameObject:
   - component: {fileID: 8823701255358655053}
   - component: {fileID: 4708242644975537704}
   - component: {fileID: 6349586898318428840}
-  m_Layer: 5
+  m_Layer: 19
   m_Name: OptionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8823701255358655053
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6078,13 +6078,14 @@ GameObject:
   - component: {fileID: 37302706503139609}
   - component: {fileID: 2616892544005206453}
   - component: {fileID: 4672664795135344084}
-  m_Layer: 5
+  - component: {fileID: 3200481927341202983}
+  m_Layer: 19
   m_Name: OptionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1635674711806882145
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6127,7 +6128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6182,11 +6183,42 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 2616892544005206453}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3200481927341202983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9210229403795877546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908913901fc874a4d9e0d4121ea6ac60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundButtonSprites:
+  - {fileID: 21300000, guid: 00a33f4671c4bf54696e04b636876720, type: 3}
+  - {fileID: 21300000, guid: 972d87981c73fd445b90dd8aaa7c6e13, type: 3}
+  pauseButtonSprites:
+  - {fileID: 21300000, guid: 84cd1b1cdcaf07d4ba1157479b793185, type: 3}
+  - {fileID: 21300000, guid: ee58dad670da94f4cb56248fbd4ee995, type: 3}
+  speedButtonSprites:
+  - {fileID: 21300000, guid: 652205b43b389dc47bbe14d747b32798, type: 3}
+  - {fileID: 21300000, guid: 79cac89f8fd6a0249b69ea1851e0edc6, type: 3}
+  - {fileID: 21300000, guid: 4602384fbb723d34a91636c01cd147e4, type: 3}
+  - {fileID: 21300000, guid: bb54372999085b94da1d7cc1e00459ff, type: 3}
+  soundButton: {fileID: 2664541106708346385}
+  exitButton: {fileID: 6088683378122982291}
+  pauseButton: {fileID: 3583351933837003217}
+  speedButton: {fileID: 3667990582624714401}
+  currentSoundType: 0
+  currentPlayType: 0
+  currentSpeedType: 0
+  currentSpeed: 0
 --- !u!1001 &5774226132057630677
 PrefabInstance:
   m_ObjectHideFlags: 0

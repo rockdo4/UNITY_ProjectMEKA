@@ -77,6 +77,13 @@ public class ChageAttackStileSkill : SkillBase
     {
         var p = player.target.GetComponentInParent<IAttackable>();
         p.OnAttack(player.state.damage);
+        Vector3 enemyPos = player.target.GetComponentInParent<EnemyController>().gameObject.transform.position;
+        enemyPos.y += 0.5f;
+        var obbj = ObjectPoolManager.instance.GetGo("EnemyHitEffect");
+        obbj.transform.position = enemyPos;
+        obbj.SetActive(false);
+        obbj.SetActive(true);
+        obbj.GetComponent<PoolAble>().ReleaseObject(1f);
     }
     public void NextAttack()
     {

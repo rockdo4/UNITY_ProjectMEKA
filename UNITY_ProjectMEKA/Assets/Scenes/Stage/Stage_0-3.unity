@@ -336,7 +336,7 @@ Transform:
   m_GameObject: {fileID: 88352405}
   serializedVersion: 2
   m_LocalRotation: {x: 0.48682922, y: -0, z: -0, w: 0.87349725}
-  m_LocalPosition: {x: -1, y: 6.05, z: -9.09}
+  m_LocalPosition: {x: -1, y: 4.42, z: -7.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -706,7 +706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5021434835737427312, guid: e583c847318e22646a20a18a9b099d49, type: 3}
       propertyPath: startInterval
-      value: 20
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 5021434835737427312, guid: e583c847318e22646a20a18a9b099d49, type: 3}
       propertyPath: waveInfos.Array.size
@@ -726,7 +726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5021434835737427312, guid: e583c847318e22646a20a18a9b099d49, type: 3}
       propertyPath: waveInfos.Array.data[0].pathDuration
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5021434835737427312, guid: e583c847318e22646a20a18a9b099d49, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.size
@@ -738,7 +738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5021434835737427312, guid: e583c847318e22646a20a18a9b099d49, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].level
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5021434835737427312, guid: e583c847318e22646a20a18a9b099d49, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].prefab
@@ -822,7 +822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5843024395888630189, guid: e583c847318e22646a20a18a9b099d49, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].level
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5843024395888630189, guid: e583c847318e22646a20a18a9b099d49, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
@@ -1015,7 +1015,7 @@ MonoBehaviour:
   gameState: 0
   tempClearCount: 0
   timer: 0
-  defaultCost: 0
+  defaultCost: 25
   currentCost: 0
   maxCost: 99
   useCost: 0
