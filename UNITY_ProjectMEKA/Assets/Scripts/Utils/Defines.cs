@@ -244,4 +244,16 @@ public static class Defines
         Kor,
         Eng
     }
+
+    public enum SystemForUnlock
+    {
+        None,
+        Gacha,
+        AssignmentStage,
+        Affection,
+        Device,
+        Synchro,
+        Skill,
+        Challenge
+    }
 }

@@ -148,16 +148,7 @@ public class StageManager : MonoBehaviour
             }
             if (tempClearCount >= 0 && !stageSaveData.isCleared) // first clear
             {
-                gameState = GameState.Win;
-                stageSaveData.isCleared = true;
-                stageSaveData.clearScore = tempClearCount;
-                StageDataManager.Instance.selectedStageDatas[stageData.NextStageID].isUnlocked = true;
-                StageDataManager.Instance.UpdatePlayData();
-                for(int i = 0; i < rewardList.Count; ++i)
-                {
-                    ItemInventoryManager.Instance.AddItemByID(rewardList[i].Item1, rewardList[i].Item2);
-                }
-                PlayDataManager.Save();
+                WinDataSave(stageSaveData, stageData, true);
             }
             else
             {
@@ -167,12 +158,32 @@ public class StageManager : MonoBehaviour
                 }
                 else
                 {
-                    gameState = GameState.Win;
-                    for (int i = 1; i < rewardList.Count; ++i)
-                    {
-                        ItemInventoryManager.Instance.AddItemByID(rewardList[i].Item1, rewardList[i].Item2);
-                    }
+                    WinDataSave(stageSaveData, stageData, false);
                 }
+            }
+        }
+    }
+
+    public void WinDataSave(StageSaveData stageSaveData, StageData stageData, bool isFirstWin)
+    {
+        gameState = GameState.Win;
+
+        if(isFirstWin)
+        {
+            stageSaveData.isCleared = true;
+            stageSaveData.clearScore = tempClearCount;
+            StageDataManager.Instance.selectedStageDatas[stageData.NextStageID].isUnlocked = true;
+            StageDataManager.Instance.UpdatePlayData();
+            for (int i = 0; i < rewardList.Count; ++i)
+            {
+                ItemInventoryManager.Instance.AddItemByID(rewardList[i].Item1, rewardList[i].Item2);
+            }
+        }
+        else
+        {
+            for (int i = 1; i < rewardList.Count; ++i)
+            {
+                ItemInventoryManager.Instance.AddItemByID(rewardList[i].Item1, rewardList[i].Item2);
             }
         }
     }
@@ -193,21 +204,6 @@ public class StageManager : MonoBehaviour
 
         return GameState.Playing;
     }
-
-    //public GameState AnnihilationModeWinCondition()
-    //{
-    //    // win condition : kill all target monsters in time
-    //    // loose condition : time over or target monster get to house
-
-    //    return GameState.Playing;
-    //}
-
-    //public GameState SurvivalModeWinCondition()
-    //{
-    //    // win condition : kill all monsters
-    //    // loose condition : house hp 0
-    //    return GameState.Playing;
-    //}
 
     public MissionClear MissionMonsterKillCount(int value)
     {
@@ -263,7 +259,6 @@ public class StageManager : MonoBehaviour
 
     public GameState MissionPlayerWin()
     {
-        //var id = StageDataManager.Instance.selectedStageData.stageID;
         var stageData = StageDataManager.Instance.stageTable.GetStageData(stageID);
 
         if (currentHouseLife <= 0)
@@ -276,16 +271,6 @@ public class StageManager : MonoBehaviour
         }
 
         return GameState.Playing;
-
-        //switch (stageData.Type)
-        //{
-        //    case (int)StageMode.Deffense:
-        //        return DefenseModeWinCondition();
-        //    case (int)StageMode.Annihilation:
-        //        return AnnihilationModeWinCondition();
-        //    case (int)StageMode.Survival:
-        //        return SurvivalModeWinCondition();
-        //}
     }
 
     public void Init()

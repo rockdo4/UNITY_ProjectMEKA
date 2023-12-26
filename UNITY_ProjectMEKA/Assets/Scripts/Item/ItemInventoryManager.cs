@@ -71,6 +71,7 @@ public class ItemInventoryManager
 			CharacterManager.Instance.m_CharacterStorage[id].IsUnlock = true;
 			CharacterManager.Instance.m_CharacterStorage[id].CharacterLevel = level;
         }
+		PlayDataManager.Save();
 	}
 
 	public void RemoveItemByInstance(Item item, int count = 1)
