@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using static Defines;
+using static UnityEngine.ParticleSystem;
 
 
 public class PlayerController : MonoBehaviour
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public List<GameObject> rangeInEnemys = new List<GameObject>();
     //[HideInInspector]
     public List<GameObject> rangeInPlayers = new List<GameObject>();
-    [HideInInspector]
+    //[HideInInspector]
     public List<int> enemyBlockCount = new List<int>();
 
     [HideInInspector]
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour
     private float addCostTimer;
     public Transform firstLookPos;
     public Vector3Int skillPivot;
+    public TrailRenderer trail;
     public enum CharacterStates
     {
         Arrange,
@@ -94,6 +96,11 @@ public class PlayerController : MonoBehaviour
         state = GetComponent<PlayerState>();
         SetBlockCount();
         ani = GetComponent<Animator>();
+        trail = GetComponentInChildren<TrailRenderer>();
+        if(trail != null) 
+        {
+            trail.gameObject.SetActive(false);
+        }
         PlayerInit = new UnityEvent();
         PlayerInit.AddListener(() =>
         {
@@ -250,11 +257,22 @@ public class PlayerController : MonoBehaviour
 
     public void Hit()
     {
+        
         if (target == null)
         {
             return;
         }
         IAttackable take = target.GetComponentInParent<IAttackable>();
+        Vector3 enemyPos = target.GetComponentInParent<EnemyController>().gameObject.transform.position;
+        if(enemyPos != null)
+        {
+            enemyPos.y += 0.5f;
+            var obbj = ObjectPoolManager.instance.GetGo("EnemyHitEffect");
+            obbj.transform.position = enemyPos;
+            obbj.SetActive(false);
+            obbj.SetActive(true);
+            obbj.GetComponent<PoolAble>().ReleaseObject(1f);
+        }
         
         if(take == null)
         {

@@ -719,6 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38a402ef5031524cb76e3bec1e47542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  victonEffectName: 
   rb: {fileID: 0}
   initPos: {x: 0, y: 0, z: 0}
   waypointIndex: 0
@@ -733,6 +734,7 @@ MonoBehaviour:
   FirePosition: {fileID: 2213370220453095148}
   rangeInPlayers: []
   rangeInSecondPlayers: []
+  currentState: 0
   CurrentPos: {x: 0, y: 0, z: 0}
   CurrentGridPos: {x: 0, y: 0, z: 0}
   isArrival: 0
@@ -845,6 +847,7 @@ MonoBehaviour:
   enemyType: 0
   speed: 1
   isFly: 1
+  isMovingShot: 1
   isBlock: 1
 --- !u!1 &6837239756594124158
 GameObject:

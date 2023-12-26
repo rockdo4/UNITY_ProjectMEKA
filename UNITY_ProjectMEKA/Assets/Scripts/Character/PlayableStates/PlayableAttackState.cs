@@ -11,7 +11,10 @@ public class PlayableAttackState : PlayableBaseState
 
     public override void Enter()
     {
-        
+        if(playerCtrl.trail != null)
+        {
+            playerCtrl.trail.gameObject.SetActive(true);
+        }
         timer = 0;
     }
 
@@ -32,7 +35,7 @@ public class PlayableAttackState : PlayableBaseState
             if (timer > playerCtrl.state.attackDelay)
             {
                 timer = 0;
-                if(!playerCtrl.target.activeInHierarchy)
+                if(playerCtrl.target == null ||!playerCtrl.target.activeInHierarchy)
                 {
                     playerCtrl.SetState(PlayerController.CharacterStates.Idle);
                     return;
