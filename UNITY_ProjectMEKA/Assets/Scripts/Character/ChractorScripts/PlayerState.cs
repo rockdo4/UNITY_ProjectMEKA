@@ -80,6 +80,8 @@ public class PlayerState : CharacterState
     [SerializeField, Header("치명타 피해 퍼센트 1 = 100")]//p
     public float fatalDamage = 1;
 
+    [SerializeField, Header("공중유닛 우선타겟인가")]
+    public bool isFirstTargetIsFly;
 
     [HideInInspector]
     public int experience;//이 경험치 이상이여야 레벨에 ++

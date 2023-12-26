@@ -16,7 +16,7 @@ public class EnemyController : PoolAble
     public StateManager stateManager = new StateManager();
     [HideInInspector]
     public List<NPCBaseState> states = new List<NPCBaseState>();
-
+    public string victonEffectName;
     //[HideInInspector]
     public Rigidbody rb;
     //[HideInInspector]
@@ -50,7 +50,7 @@ public class EnemyController : PoolAble
     public bool isArrival = false;
     [HideInInspector]
     public Vector3Int forwardGrid;
-    [HideInInspector]
+    //[HideInInspector]
     public int bossAttackCount;
 
     [HideInInspector]
@@ -172,7 +172,15 @@ public class EnemyController : PoolAble
     {
         stateManager.ChangeState(states[(int)state]);
     }
-    
+    public void WheelWindEffect()
+    {
+        var poolObject = ObjectPoolManager.instance.GetGo(victonEffectName);
+        poolObject.transform.position = gameObject.transform.position;
+        poolObject.SetActive(false);
+        poolObject.SetActive(true);
+        poolObject.GetComponent<PoolAble>().ReleaseObject(1.2f);
+    }
+
     public void Hit()
     {
         if(target == null)
@@ -182,7 +190,7 @@ public class EnemyController : PoolAble
         IAttackable co = target.GetComponentInParent<IAttackable>();
         if (co == null) return;
         co.OnAttack(state.damage + Rockpaperscissors());
-        if (state.enemyType == EnemyType.OhYaBung)
+        if (state.enemyType == EnemyType.OhYaBung || state.enemyType == EnemyType.YangSehyung)
         {
             bossAttackCount++;
         }
@@ -207,11 +215,18 @@ public class EnemyController : PoolAble
             if(at == null) continue;
             at.OnAttack(state.damage + Rockpaperscissors());
         }
-        if(state.enemyType == EnemyType.OhYaBung)
+        if(state.enemyType == EnemyType.OhYaBung||state.enemyType == EnemyType.YangSehyung)
         {
             bossAttackCount++;
         }
 
+    }
+    public void WheelWind()
+    {
+        foreach(var player in rangeInPlayers)
+        {
+            player.GetComponentInParent<IAttackable>().OnAttack(state.damage * 0.3f);
+        }   
     }
     public void Healing(float damage)
     {

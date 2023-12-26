@@ -245,6 +245,7 @@ public class PlayerController : MonoBehaviour
     {
         stateManager.ChangeState(states[(int)state]);
         currentState = state;
+        Debug.Log($"{gameObject.name} state : {state}");
     }
 
     public void Hit()
@@ -413,7 +414,7 @@ public class PlayerController : MonoBehaviour
             
         }
 
-        StartCoroutine(AttackDelay());
+        //StartCoroutine(AttackDelay());
     }
     public IEnumerator AttackDelay()
     {

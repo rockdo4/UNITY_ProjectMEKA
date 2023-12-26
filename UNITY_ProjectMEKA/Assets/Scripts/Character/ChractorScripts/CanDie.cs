@@ -22,7 +22,7 @@ public class CanDie : MonoBehaviour
         
         action = new UnityEvent();
         updateUI = new UnityEvent();
-        action.AddListener(() => Debug.Log("Action invoked"));
+        
         updateUI.AddListener(() =>
         {
             stageManager.killMonsterCount++;
@@ -32,6 +32,7 @@ public class CanDie : MonoBehaviour
     {
         if (state.Hp <= 0f)
         {
+            action.Invoke();
             updateUI.Invoke();
             action.Invoke();
 

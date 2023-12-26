@@ -87,28 +87,7 @@ public class NPCAttackState : NPCBaseState
         {
             enemyCtrl.rangeInPlayers.Remove(item);
         }
-        //Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code Test Code 
-        //foreach (var a in enemyCtrl.rangeInPlayers)
-        //{
-        //    if (a.GetComponentInParent<PlayerController>() == null)
-        //    {
-        //        if(enemyCtrl.rangeInPlayers.Contains(a))
-        //        {
-        //            enemyCtrl.rangeInPlayers.Remove(a);
-
-        //        }
-        //        enemyCtrl.SetState(NPCStates.Move);
-        //        enemyCtrl.ani.SetTrigger("Run");
-        //    }
-        //    else if (!a.activeSelf)
-        //    {
-        //        enemyCtrl.rangeInPlayers.Remove(a);
-        //        enemyCtrl.SetState(NPCStates.Move);
-        //        enemyCtrl.ani.SetTrigger("Run");
-        //    }
-
-        //}
-
+        
 
     }
 }

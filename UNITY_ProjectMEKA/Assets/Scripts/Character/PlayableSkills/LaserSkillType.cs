@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Defines;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class LaserSkillType : SkillBase
 {
@@ -87,60 +86,6 @@ public class LaserSkillType : SkillBase
     void CheckOverlapBoxes()
     {
 
-        //if (player == null || AttackRange == null || transform == null)
-        //{
-        //    return;
-        //}
-        //colliders = new List<Collider>(); // 리스트 초기화
-        //ConvertTo2DArray();
-
-        //// 플레이어의 로컬 포워드 및 로컬 오른쪽 방향을 설정
-        //Vector3 forward = -player.transform.forward; // 플레이어의 로컬 포워드
-        //Vector3 right = player.transform.right; // 플레이어의 로컬 오른쪽
-
-        //int characterRow = 0;
-        //int characterCol = 0;
-
-        //// 플레이어의 위치를 찾는 루프
-        //for (int i = 0; i < AttackRange.GetLength(0); i++)
-        //{
-        //    for (int j = 0; j < AttackRange.GetLength(1); j++)
-        //    {
-        //        if (AttackRange[i, j] == 2)
-        //        {
-        //            characterRow = i;
-        //            characterCol = j;
-        //            break;
-        //        }
-        //    }
-        //}
-
-        //// 상자 영역을 생성하고 콜라이더를 검출하는 루프
-        //for (int i = 0; i < AttackRange.GetLength(0); i++)
-        //{
-        //    for (int j = 0; j < AttackRange.GetLength(1); j++)
-        //    {
-        //        if (AttackRange[i, j] == 1)
-        //        {
-        //            // 플레이어 위치를 기준으로 상대적인 위치 계산
-        //            Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-        //            Vector3 correctedPosition = player.transform.position + relativePosition;
-
-        //            // 상자 크기를 고정된 값으로 설정
-        //            Vector3 boxSize = new Vector3(1, 5, 1);
-        //            Collider[] hitColliders = Physics.OverlapBox(correctedPosition, boxSize / 2, Quaternion.identity);
-
-        //            foreach (var hitCollider in hitColliders)
-        //            {
-        //                if (hitCollider.CompareTag("EnemyCollider") && !colliders.Contains(hitCollider))
-        //                {
-        //                    hitCollider.GetComponentInParent<IAttackable>().OnAttack(player.state.damage * figure);
-        //                    colliders.Add(hitCollider);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
         if (player == null || transform == null)
         {
             return;
@@ -170,18 +115,19 @@ public class LaserSkillType : SkillBase
         {
             // 북쪽을 보고 있음
             attackRangeRot = AttackRange;
+            attackRangeRot = Utils.RotateArray(AttackRange, 3);
             Debug.Log("앞쪽");
         }
         else if (maxDot == Vector3.Dot(front, south))
         {
             // 남쪽을 보고 있음
-            attackRangeRot = Utils.RotateArray(AttackRange, 2);
+            attackRangeRot = Utils.RotateArray(AttackRange, 3);
             Debug.Log("뒤쪽");
         }
         else if (maxDot == Vector3.Dot(front, east))
         {
             // 동쪽을 보고 있음
-            attackRangeRot = Utils.RotateArray(AttackRange, 1);
+            attackRangeRot = Utils.RotateArray(AttackRange, 3);
             Debug.Log("오른쪽");
         }
         else if (maxDot == Vector3.Dot(front, west))
@@ -272,48 +218,7 @@ public class LaserSkillType : SkillBase
             }
         }
 
+        player.SetState(PlayerController.CharacterStates.Idle);
     }
-    //void OnDrawGizmos()
-    //{
-    //    ConvertTo2DArray();
-
-    //    Vector3 forward = -player.transform.forward; // 플레이어의 로컬 포워드
-    //    Vector3 right = player.transform.right; // 플레이어의 로컬 오른쪽
-
-    //    int characterRow = 0;
-    //    int characterCol = 0;
-
-    //    // 플레이어의 위치를 찾는 루프
-    //    for (int i = 0; i < AttackRange.GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < AttackRange.GetLength(1); j++)
-    //        {
-    //            if (AttackRange[i, j] == 2)
-    //            {
-    //                characterRow = i;
-    //                characterCol = j;
-    //                break;
-    //            }
-    //        }
-    //    }
-
-    //    Gizmos.color = Color.red; // 색상 설정
-
-    //    // 공격 가능 영역을 나타내는 상자 그리기
-    //    for (int i = 0; i < AttackRange.GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < AttackRange.GetLength(1); j++)
-    //        {
-    //            if (AttackRange[i, j] == 1)
-    //            {
-    //                Vector3 relativePosition = (i - characterRow) * forward + (j - characterCol) * right;
-    //                Vector3 correctedPosition = player.transform.position + relativePosition;
-
-    //                Vector3 boxSize = new Vector3(1, 5, 1); // 상자 크기
-
-    //                Gizmos.DrawWireCube(correctedPosition, boxSize);
-    //            }
-    //        }
-    //    }
-    //}
+    
 }
