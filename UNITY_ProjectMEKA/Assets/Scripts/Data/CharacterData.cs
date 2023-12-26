@@ -440,6 +440,7 @@ public class AffectionData
 public class CommunicationData
 {
 	public int CharacterID { get; set; }
+	public int ID { get; set; }
 	public int ScriptID { get; set; }
 	public string Script { get; set; }
 	public int Value { get; set; }
