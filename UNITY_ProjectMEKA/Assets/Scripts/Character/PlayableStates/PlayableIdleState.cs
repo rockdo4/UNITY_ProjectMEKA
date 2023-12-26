@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,7 +11,9 @@ public class PlayableIdleState : PlayableBaseState
     GameObject[] enemys;
     GameObject[] playerses;
     PlayerController character;
-
+    List<EnemyController> PriorityTarget = new List<EnemyController>();
+    List<EnemyController> AtherTarget = new List<EnemyController>();
+    
     public PlayableIdleState(PlayerController player) : base(player)
     {
     }
@@ -53,6 +56,7 @@ public class PlayableIdleState : PlayableBaseState
     void CheckEnemy()
     {
         
+       
         foreach (var en in playerCtrl.rangeInEnemys)
         {
             
@@ -75,11 +79,21 @@ public class PlayableIdleState : PlayableBaseState
                     // 자식 오브젝트를 다시 부모 계층 구조에 연결
                     obj.parent = playerCtrl.transform;
 
-
-                    if(playerCtrl.rangeInEnemys.Contains(playerCtrl.target))
+                    if(playerCtrl.state.isFirstTargetIsFly)
                     {
-                        playerCtrl.SetState(PlayerController.CharacterStates.Attack);
-                        return;
+                        if (playerCtrl.rangeInEnemys.Contains(playerCtrl.target) && enemy.state.isFly)
+                        {
+                            playerCtrl.SetState(PlayerController.CharacterStates.Attack);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (playerCtrl.rangeInEnemys.Contains(playerCtrl.target))
+                        {
+                            playerCtrl.SetState(PlayerController.CharacterStates.Attack);
+                            return;
+                        }
                     }
                     
                 }
@@ -114,6 +128,18 @@ public class PlayableIdleState : PlayableBaseState
 
             }
         }
+        // 공중 몬스터를 우선 타겟으로 설정했으나 범위 내에 없는 경우, 
+        // 첫 번째 범위 내 몬스터를 대체 타겟으로 설정합니다.
+        if (playerCtrl.state.isFirstTargetIsFly)
+        {
+            GameObject firstAvailableTarget = playerCtrl.rangeInEnemys.FirstOrDefault();
+            if (firstAvailableTarget != null)
+            {
+                playerCtrl.target = firstAvailableTarget;
+                playerCtrl.SetState(PlayerController.CharacterStates.Attack);
+            }
+        }
+
     }
 
     void SetPlayers()

@@ -966,11 +966,27 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2588198151791207046, guid: 6288fdd65d0bc0942ad513e2642b2688, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588198151791207046, guid: 6288fdd65d0bc0942ad513e2642b2688, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588198151791207046, guid: 6288fdd65d0bc0942ad513e2642b2688, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].prefab
       value: 
       objectReference: {fileID: 8236610387131559020, guid: b9acaabe92eab7c43bbbd1c3246c462d, type: 3}
     - target: {fileID: 2588198151791207046, guid: 6288fdd65d0bc0942ad513e2642b2688, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 8839393760802745288, guid: ae045f8d988d81f4c8c59b27a1df0208, type: 3}
+    - target: {fileID: 2588198151791207046, guid: 6288fdd65d0bc0942ad513e2642b2688, type: 3}
       propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].interval
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588198151791207046, guid: 6288fdd65d0bc0942ad513e2642b2688, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].interval
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2650971484423642516, guid: 6288fdd65d0bc0942ad513e2642b2688, type: 3}
@@ -1660,6 +1676,12 @@ MonoBehaviour:
   - objectName: SOLDIER
     perfab: {fileID: 107204554209761003, guid: 68940efde3dd5f645aa83f9dcfd352aa, type: 3}
     count: 10
+  - objectName: VICTON
+    perfab: {fileID: 8839393760802745288, guid: ae045f8d988d81f4c8c59b27a1df0208, type: 3}
+    count: 1
+  - objectName: VictonSkillEffect
+    perfab: {fileID: 6443513891212647164, guid: 6d77e14a380f5d244a4c00f344cdb503, type: 3}
+    count: 5
 --- !u!81 &6438468772999309290
 AudioListener:
   m_ObjectHideFlags: 0

@@ -51,13 +51,19 @@ public class PlayableProjectileAttackState : PlayableBaseState
             if (timer <= 0)
             {
                 timer = playerCtrl.state.attackDelay;
-                if (!playerCtrl.target.activeInHierarchy || !playerCtrl.rangeInEnemys.Contains(playerCtrl.target))
+                //if (!playerCtrl.target.activeInHierarchy || !playerCtrl.rangeInEnemys.Contains(playerCtrl.target))
+                //{
+                //    playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+                //    return;
+                //}
+                if (playerCtrl.target.activeInHierarchy || playerCtrl.rangeInEnemys.Contains(playerCtrl.target))
                 {
-                    playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+                    //playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+                    playerCtrl.ani.SetTrigger("Attack");
                     return;
                 }
-                playerCtrl.ani.SetTrigger("Attack");
-                //playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+                //playerCtrl.ani.SetTrigger("Attack");
+                playerCtrl.SetState(PlayerController.CharacterStates.Idle);
             }
             
         }

@@ -87,27 +87,7 @@ public class NPCDestinationStates : NPCBaseState
 
                 }
             }
-            //timer += Time.deltaTime;
-            //if(timer > 2f)
-            //{
-            //    if (enemyCtrl.rangeInPlayers.Count != 0)
-            //    {
-            //        timer = 0;
-            //    }
-
-            //    foreach (var pl in enemyCtrl.rangeInPlayers)
-            //    {
-            //        if (pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Castor ||
-            //            pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Hunter ||
-            //            pl.GetComponentInParent<PlayerController>().state.occupation == Defines.Occupation.Supporters)
-            //        {
-            //            enemyCtrl.target = pl;
-            //            enemyCtrl.SetState(NPCStates.Idle);
-            //            return;
-            //        }
-
-            //    }
-            //}
+            
             
         }
         //원래는 0.3
