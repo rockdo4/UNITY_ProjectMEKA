@@ -9,7 +9,11 @@ public class PlayDataManager
 
     public static void Init()
     {
-        data = SaveLoadSystem.Load("savefile.json") as SaveDataVC;
+        if (GameManager.IsLoaded) return;
+
+        GameManager.IsLoaded = true;
+
+		data = SaveLoadSystem.Load("savefile.json") as SaveDataVC;
 
         if (data == null)
         {

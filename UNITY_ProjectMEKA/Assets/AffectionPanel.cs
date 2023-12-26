@@ -16,6 +16,7 @@ public class AffectionPanel : MonoBehaviour
 
 	[Header("Etc")]
 	public Button closeButton;
+	public ModalWindow modalWindow;
 
 	private Character currCharacter;
 
@@ -36,20 +37,20 @@ public class AffectionPanel : MonoBehaviour
 
 	public void UpdateCharacter(Character character = null)
 	{
-		if(character == null)
+		if(character != null)
 		{
-			character = currCharacter;
+			currCharacter = character;
 		}
 		if (currCharacter == null)
 		{
 			return;
 		}
 
-		var info = DataTableMgr.GetTable<AffectionTable>().GetAffectionData(currCharacter.affection.AffectionLevel);
+		var info = DataTableMgr.GetTable<AffectionTable>().GetAffectionData(this.currCharacter.affection.AffectionLevel);
 
-		characterImage.sprite = Resources.Load<Sprite>("CharacterIcon/" + character.ImagePath);
+		characterImage.sprite = Resources.Load<Sprite>("CharacterIcon/" + currCharacter.ImagePath);
 		characterImage.preserveAspect = true;
-		characterName.SetText(character.Name);
+		characterName.SetText(currCharacter.Name);
 		affectionText.SetText($"Lv : {currCharacter.affection.AffectionLevel}");
 
 		float ratio = 1;
@@ -60,7 +61,7 @@ public class AffectionPanel : MonoBehaviour
 		}
 		else
 		{
-			ratio = (float)currCharacter.affection.AffectionPoint / info.AffectionPoint;
+			ratio = (float)this.currCharacter.affection.AffectionPoint / info.AffectionPoint;
 		}
 
 		if(ratio == 0) ratio = 0.01f;
@@ -74,7 +75,7 @@ public class AffectionPanel : MonoBehaviour
 		if(info == null)
 		{
 			currCharacter.affection.AffectionPoint = 0;
-			Debug.Log("최대 호감도 레벨");
+			NoticeMaxAffection();
 			return;
 		}
 
@@ -91,5 +92,18 @@ public class AffectionPanel : MonoBehaviour
 		currCharacter.affection.LastTime = System.DateTime.Now;
 
 		UpdateCharacter();
+		NoticeAffection(point);
+	}
+
+	public void NoticeAffection(int point)
+	{
+		modalWindow.gameObject.SetActive(true);
+		modalWindow.Show($"호감도를 {point} 얻었습니다!", "확인");
+	}
+
+	public void NoticeMaxAffection()
+	{
+		modalWindow.gameObject.SetActive(true);
+		modalWindow.Show($"최대 호감도 레벨입니다", "확인");
 	}
 }

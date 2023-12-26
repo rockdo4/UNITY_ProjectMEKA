@@ -37,6 +37,7 @@ public class ModalWindow : MonoBehaviour
 
 		titleText.SetText(text);
 		yesButton.GetComponentInChildren<TextMeshProUGUI>().SetText(yesText);
+		noButton.gameObject.SetActive(true);
 		noButton.GetComponentInChildren<TextMeshProUGUI>().SetText(noText);
 
 		yesButton.onClick.RemoveAllListeners();
@@ -51,6 +52,24 @@ public class ModalWindow : MonoBehaviour
 		noButton.onClick.AddListener(() =>
 		{
 			gameObject.SetActive(false);
+		});
+
+		gameObject.SetActive(true);
+	}
+
+	public void Show(string text, string yesText = "")
+	{
+		var modalWindow = this;
+
+		titleText.SetText(text);
+		yesButton.GetComponentInChildren<TextMeshProUGUI>().SetText(yesText);
+		noButton.gameObject.SetActive(false);
+
+		yesButton.onClick.RemoveAllListeners();
+		yesButton.onClick.AddListener(() =>
+		{
+			gameObject.SetActive(false);
+			GameManager.Instance.SaveExecution();
 		});
 
 		gameObject.SetActive(true);
