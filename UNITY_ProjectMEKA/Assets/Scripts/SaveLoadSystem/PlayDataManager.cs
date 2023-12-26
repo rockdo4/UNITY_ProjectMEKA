@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using UnityEngine;
-using SaveDataVC = SaveDataV5;
+using SaveDataVC = SaveDataV6;
 using static Defines;
 
 public class PlayDataManager
@@ -85,6 +85,13 @@ public class PlayDataManager
             chara.CharacterGrade = character.Value.InitialGrade;
             chara.SkillLevel = 1;
             chara.IsUnlock = false;
+
+            chara.affection = new CharacterAffection();
+            chara.affection.AffectionLevel = 1;
+            chara.affection.AffectionPoint = 0;
+            chara.affection.LastTime = default;
+
+            Debug.Log(chara.affection.LastTime);
 
             if (!storage.ContainsKey(chara.CharacterID))
             {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,27 +34,62 @@ public class AffectionPanel : MonoBehaviour
 		UpdateCharacter(currCharacter);
 	}
 
-	public void UpdateCharacter(Character character)
+	public void UpdateCharacter(Character character = null)
 	{
-		currCharacter = character;
+		if(character == null)
+		{
+			character = currCharacter;
+		}
 		if (currCharacter == null)
 		{
 			return;
 		}
 
+		var info = DataTableMgr.GetTable<AffectionTable>().GetAffectionData(currCharacter.affection.AffectionLevel);
+
 		characterImage.sprite = Resources.Load<Sprite>("CharacterIcon/" + character.ImagePath);
 		characterImage.preserveAspect = true;
 		characterName.SetText(character.Name);
-		affectionText.SetText($"Lv : {0}");
-		affectionSlider.fillAmount = 0.5f;
+		affectionText.SetText($"Lv : {currCharacter.affection.AffectionLevel}");
 
+		float ratio = 1;
 
-		//var affection = currCharacter.Affection;
+		if (info == null)
+		{
+			affectionText.SetText($"Lv : Max");
+		}
+		else
+		{
+			ratio = (float)currCharacter.affection.AffectionPoint / info.AffectionPoint;
+		}
 
-		//var affectionText = GetComponentsInChildren<Text>()[0];
-		//var affectionSlider = GetComponentsInChildren<Slider>()[0];
+		if(ratio == 0) ratio = 0.01f;
+		affectionSlider.fillAmount = ratio;
+	}
 
-		//affectionText.text = affection.ToString();
-		//affectionSlider.value = affection;
+	public void AddAffectionPoint(int point)
+	{
+		var info = DataTableMgr.GetTable<AffectionTable>().GetAffectionData(currCharacter.affection.AffectionLevel);
+
+		if(info == null)
+		{
+			currCharacter.affection.AffectionPoint = 0;
+			Debug.Log("최대 호감도 레벨");
+			return;
+		}
+
+		currCharacter.affection.AffectionPoint += point;
+
+		if(info.AffectionPoint <= currCharacter.affection.AffectionPoint)
+		{
+			currCharacter.affection.AffectionLevel++;
+			currCharacter.affection.AffectionPoint -= info.AffectionPoint;
+
+			Debug.Log("호감도 레벨업");
+		}
+
+		currCharacter.affection.LastTime = System.DateTime.Now;
+
+		UpdateCharacter();
 	}
 }

@@ -135,12 +135,27 @@ public class SaveDataV4 : SaveDataV3
 
     public override SaveData VersionUp()
     {
-        var data = new SaveDataV5()
-        {
-            deviceStorage = new Dictionary<int, Device>()
-		};
+        var data = new SaveDataV5();
 
-        return data;
+        data.IsFirstGame = IsFirstGame;
+        data.BGMVolume = BGMVolume;
+        data.SEVolume = SEVolume;
+        data.MasterVolume = MasterVolume;
+        data.IsMasterVolumMute = IsMasterVolumMute;
+        data.IsBGMVolumMute = IsBGMVolumMute;
+        data.IsSEVolumMute = IsSEVolumMute;
+
+		data.formationList = formationList;
+		data.characterStorage = characterStorage;
+		data.itemStorage = itemStorage;
+
+		data.storyStageDatas = storyStageDatas;
+		data.assignmentStageDatas = assignmentStageDatas;
+		data.challengeStageDatas = challengeStageDatas;
+
+        data.deviceStorage = new Dictionary<int, Device>();
+
+		return data;
     }
 }
 
@@ -153,6 +168,50 @@ public class SaveDataV5 : SaveDataV4
 	}
 
     public Dictionary<int, Device> deviceStorage;
+
+	public override SaveData VersionUp()
+    {
+		var data = new SaveDataV6();
+
+		data.IsFirstGame = IsFirstGame;
+		data.BGMVolume = BGMVolume;
+		data.SEVolume = SEVolume;
+		data.MasterVolume = MasterVolume;
+		data.IsMasterVolumMute = IsMasterVolumMute;
+		data.IsBGMVolumMute = IsBGMVolumMute;
+		data.IsSEVolumMute = IsSEVolumMute;
+
+		data.formationList = formationList;
+		data.characterStorage = characterStorage;
+		data.itemStorage = itemStorage;
+
+		data.storyStageDatas = storyStageDatas;
+		data.assignmentStageDatas = assignmentStageDatas;
+		data.challengeStageDatas = challengeStageDatas;
+
+		data.deviceStorage = new Dictionary<int, Device>();
+
+		foreach(var character in characterStorage)
+		{
+			var info = character.Value;
+			if(info.affection == null)
+			{
+				info.affection = new CharacterAffection();
+			}
+		}
+
+		return data;
+	}
+}
+
+public class SaveDataV6 : SaveDataV5
+{
+	public SaveDataV6()
+    {
+		Version = 6;
+	}
+
+
 
 	public override SaveData VersionUp()
     {

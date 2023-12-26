@@ -36,7 +36,12 @@ public class CharacterManager
 			chara.SkillLevel = 1;
 			chara.IsUnlock = false;
 
-			if(!m_CharacterStorage.ContainsKey(chara.CharacterID))
+			chara.affection = new CharacterAffection();
+			chara.affection.AffectionLevel = 1;
+			chara.affection.AffectionPoint = 0;
+			chara.affection.LastTime = default;
+
+			if (!m_CharacterStorage.ContainsKey(chara.CharacterID))
 			{
 				m_CharacterStorage.Add(chara.CharacterID, chara);
 			}

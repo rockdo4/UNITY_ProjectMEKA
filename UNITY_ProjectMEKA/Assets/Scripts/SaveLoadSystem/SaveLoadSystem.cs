@@ -4,7 +4,8 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SaveDataVC = SaveDataV5; // 교체
+using SaveDataVC = SaveDataV6; // 교체
+using System;
 
 public static class SaveLoadSystem
 {
@@ -15,7 +16,7 @@ public static class SaveLoadSystem
         EncryptedBinary
     }
     public static Modes FileMode { get; } = Modes.Json;
-    public static int SaveDataVersion { get; } = 1; // 버전
+    public static int SaveDataVersion { get; } = 6; // 버전
     private static string[] SaveSlotFileNames =
     {
         "Save0.json",
@@ -96,7 +97,7 @@ public static class SaveLoadSystem
             serialize.Converters.Add(new QuaternionConverter());
             serialize.Converters.Add(new CharacterDictConverter());
 
-            switch (version)
+			switch (version)
             {
                 case 1:
                     data = serialize.Deserialize<SaveDataV1>(reader);
@@ -111,15 +112,27 @@ public static class SaveLoadSystem
                     data = serialize.Deserialize<SaveDataV4>(reader);
                     break;
                 case 5:
-                    data = serialize.Deserialize<SaveDataV5>(reader);
+					try
+					{
+						data = serialize.Deserialize<SaveDataV5>(reader);
+					}
+					catch (Exception ex)
+					{
+						if (data == null)
+							data = new SaveDataV5();
+                        Debug.Log(ex.Message);
+					}
                     break;
+				case 6:
+					data = serialize.Deserialize<SaveDataV6>(reader);
+					break;
             }
 
-            while (data.Version < SaveDataVersion)
-            {
-                data = data.VersionUp();
-            }
-        }
+			while (data.Version < SaveDataVersion)
+			{
+				data = data.VersionUp();
+			}
+		}
 
         return data;
     }

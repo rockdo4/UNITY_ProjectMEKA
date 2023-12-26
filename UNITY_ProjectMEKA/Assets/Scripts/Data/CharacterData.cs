@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,6 +17,8 @@ public class Character
 
 	public int DeviceCoreID;
 	public int DeviceEngineID;
+
+	public CharacterAffection affection;
 
 	public float Damage
 	{
@@ -423,8 +426,13 @@ public class ExpData
 
 public class CharacterAffection
 {
-	public int CharacterID { get; set; }
 	public int AffectionLevel { get; set; }
-	public int AffectionExp { get; set; }
-	public int AffectionMaxExp { get; set; }
+	public int AffectionPoint { get; set; }
+	public DateTime LastTime { get; set; }
+}
+
+public class AffectionData
+{
+	public int Level { get; set; }
+	public int AffectionPoint { get; set; }
 }
