@@ -14,7 +14,6 @@ public class IngameStageUIManager : MonoBehaviour
 
     // panels
     public GameObject characterInfoPanel;
-    public GameObject timeProgressBarPanel;
     public GameObject waveCountPanel;
     public GameObject monsterCountPanel;
     public GameObject ResultPanel;
@@ -26,7 +25,8 @@ public class IngameStageUIManager : MonoBehaviour
     public TextMeshProUGUI characterOccupation;
     public TextMeshProUGUI characterDescription;
 
-    // cost & wave & monster & life infos
+    // cost & wave & monster & life & time infos
+    public Slider timeProgressSlider;
     public TextMeshProUGUI costText;
     public TextMeshProUGUI leftWaveHeaderText;
     public TextMeshProUGUI leftWaveText;
@@ -58,6 +58,7 @@ public class IngameStageUIManager : MonoBehaviour
 	// skill
 	public TextMeshProUGUI skillTileGuideText;
 
+    private float currentTimeLeft;
     public bool currentPlayerChanged;
     public bool currentPlayerOnTile;
     private bool isInfoWindowOn = true;
@@ -81,6 +82,7 @@ public class IngameStageUIManager : MonoBehaviour
         collectButton = joystick.collectButton;
         skillButton = joystick.skillButton;
 		isInfoWindowOn = true;
+        timeProgressSlider.value = 1f;
     }
 
     private void Awake()
@@ -92,10 +94,6 @@ public class IngameStageUIManager : MonoBehaviour
     private void Start()
     {
         Init();
-        if(monsterCountPanel.activeSelf)
-        {
-            allMonsterCountText.SetText(stageManager.allMonsterCount.ToString());
-        }
     }
 
     private void Update()
@@ -107,6 +105,7 @@ public class IngameStageUIManager : MonoBehaviour
         UpdateKillMonsterCount();
         UpdateHouseLife();
         UpdateWave();
+        UpdateTimeProgress();
 
         var infoCondition = currentPlayerOnTile && isInfoWindowOn;
 
@@ -348,6 +347,12 @@ public class IngameStageUIManager : MonoBehaviour
         }
     }
 
+    public void UpdateTimeProgress()
+    {
+        currentTimeLeft -= Time.deltaTime;
+        timeProgressSlider.value = (float)(currentTimeLeft / stageManager.maxTime);
+    }
+
     public void LoseWindowSet()
     {
         var missionFailText = StageDataManager.Instance.stringTable.GetString("missionFail");
@@ -470,6 +475,9 @@ public class IngameStageUIManager : MonoBehaviour
 
             InitResultPanel(stageData, stageSaveData);
         }
+
+        allMonsterCountText.SetText(stageManager.allMonsterCount.ToString());
+        currentTimeLeft = stageManager.maxTime;
     }
 
     public void InitResultPanel(StageData stageData, StageSaveData stageSaveData)

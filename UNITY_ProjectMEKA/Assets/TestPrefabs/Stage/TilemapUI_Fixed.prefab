@@ -4790,7 +4790,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   windowMode: 0
   characterInfoPanel: {fileID: 6608801680533407177}
-  timeProgressBarPanel: {fileID: 8453943866234600152}
   waveCountPanel: {fileID: 2924592624032922265}
   monsterCountPanel: {fileID: 528407511284926221}
   ResultPanel: {fileID: 454002639816729499}
@@ -4799,6 +4798,7 @@ MonoBehaviour:
   characterName: {fileID: 7928042620759330282}
   characterOccupation: {fileID: 1682879715086974464}
   characterDescription: {fileID: 7957952023368428201}
+  timeProgressSlider: {fileID: 368002952365675901}
   costText: {fileID: 7385030595868492951}
   leftWaveHeaderText: {fileID: 8548735931312390280}
   leftWaveText: {fileID: 3070065674148029391}
@@ -5374,7 +5374,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.2
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5817,7 +5817,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1635674711806882145
 RectTransform:
   m_ObjectHideFlags: 0
