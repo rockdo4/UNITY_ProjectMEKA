@@ -1,10 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Defines;
+
+public enum SoundType
+{
+    SoundOn,
+    SoundOff
+}
+
+public enum PlayType
+{
+    Play,
+    Pause
+}
+
+public enum SpeedType
+{
+    x1,
+    x2,
+    x4,
+    x8
+}
 
 public class OptionManager : MonoBehaviour
 {
@@ -21,28 +37,36 @@ public class OptionManager : MonoBehaviour
     public Button pauseButton; // sprite : pause, play
     public Button speedButton; // sprite : 1,2,4,8 ¹è¼Ó
 
+    public SoundType currentSoundType;
+    public PlayType currentPlayType;
+    public SpeedType currentSpeedType;
+    public float currentSpeed;
+
     private string buttonLayerName;
 
     private void Awake()
     {
+        currentSpeed = 1f;
         ingameUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
         buttonLayerName = LayerMask.LayerToName(gameObject.layer);
         optionButton = GetComponent<Button>();
         optionPanel = transform.GetChild(0).gameObject;
         optionButton.onClick.AddListener(OpenAndCloseOptionPanel);
 
-        exitButton.onClick.AddListener(() =>
-        {
-            ingameUIManager.CloseScene();
-        });
+        exitButton.onClick.AddListener(ingameUIManager.CloseScene);
         soundButton.onClick.AddListener(() => 
-        { ChangeButtonSprite(soundButton, soundButtonSprites); 
+        { 
+            ChangeButtonSpriteAndState(soundButton, soundButtonSprites); 
         });
         pauseButton.onClick.AddListener(() => 
-        { ChangeButtonSprite(pauseButton, pauseButtonSprites);
+        { 
+            ChangeButtonSpriteAndState(pauseButton, pauseButtonSprites);
+            PlayOrPause();
         });
         speedButton.onClick.AddListener(() => 
-        { ChangeButtonSprite(speedButton, speedButtonSprites); 
+        { 
+            ChangeButtonSpriteAndState(speedButton, speedButtonSprites);
+            ChangePlaySpeed();
         });
     }
 
@@ -79,22 +103,70 @@ public class OptionManager : MonoBehaviour
         optionPanel.SetActive(false);
     }
 
-    public void ChangeButtonSprite(Button button, Sprite[] spritePool)
+    public void ChangeButtonSpriteAndState(Button button, Sprite[] spritePool)
     {
-        for(int i = 0; i < spritePool.Length; ++i)
+        var index = 0;
+        for (int i = 0; i < spritePool.Length; ++i)
         {
             if (button.GetComponent<Image>().sprite == spritePool[i])
             {
-                if(i >= soundButtonSprites.Length - 1)
+                if(i >= spritePool.Length - 1)
                 {
                     button.GetComponent<Image>().sprite = spritePool[0];
+                    index = 0;
                 }
                 else
                 {
                     button.GetComponent<Image>().sprite = spritePool[i + 1];
+                    index = i + 1;
                 }
                 break;
             }
         }
+
+        if(button == soundButton)
+        {
+            currentSoundType = (SoundType)index;
+        }
+        else if(button == pauseButton)
+        {
+            currentPlayType  = (PlayType)index;
+        }
+        else if(button == speedButton)
+        {
+            currentSpeedType = (SpeedType)index;
+        }
+    }
+
+    public void PlayOrPause()
+    {
+        if(currentPlayType == PlayType.Play)
+        {
+            Time.timeScale = currentSpeed;
+        }
+        else
+        {
+            Time.timeScale = 0f;
+        }
+    }
+
+    public void ChangePlaySpeed()
+    {
+        switch (currentSpeedType)
+        {
+            case SpeedType.x1:
+                currentSpeed = 1f;
+                break;
+            case SpeedType.x2:
+                currentSpeed = 2f;
+                break;
+            case SpeedType.x4:
+                currentSpeed = 4f;
+                break;
+            case SpeedType.x8:
+                currentSpeed = 8f;
+                break;
+        }
+        Time.timeScale = currentSpeed;
     }
 }
