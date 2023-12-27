@@ -12,7 +12,10 @@ public class AffectionPanel : MonoBehaviour
     private void Awake()
     {
         communicationPanel.gameObject.SetActive(false);
+    }
 
+    private void Start()
+    {
         CreateCard();
     }
 
