@@ -276,7 +276,8 @@ public class IngameStageUIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         StageDataManager.Instance.toStageChoicePanel = true;
-        SceneManager.LoadScene("MainScene");
+        //SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("MainScene_SystemUnlock");
     }
 
     public void ChangeCharacterInfo()

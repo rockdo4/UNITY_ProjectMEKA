@@ -63,15 +63,17 @@ public static class Defines
     }
     public static class AssignmentSceneNames
     {
-        public const string stage0_1 = "Bug_KimMinji";
-        public const string stage0_2 = "a";
-        public const string stage0_3 = "b";
+        public const string stage0_1 = "Stage_PR-1";
+        public const string stage0_2 = "Stage_PR-2";
+        public const string stage0_3 = "Stage_PR-3";
+        public const string stage0_4 = "Stage_PR-4";
+        public const string stage0_5 = "Stage_PR-5";
+        public const string stage0_6 = "Stage_PR-6";
     }
     public static class ChallengeSceneNames
     {
-        public const string stage0_1 = "Bug_KimMinji";
-        public const string stage0_2 = "a";
-        public const string stage0_3 = "b";
+        public const string stage0_1 = "Stage_CN-1";
+        public const string stage0_2 = "Stage_CN-2";
     }
 
     public enum Property
