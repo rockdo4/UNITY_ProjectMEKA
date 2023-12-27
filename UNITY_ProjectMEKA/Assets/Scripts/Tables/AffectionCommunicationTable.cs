@@ -64,11 +64,21 @@ public class AffectionCommunicationTable : DataTable
 			Debug.Log(ex.Message);
 			Debug.LogError("csv 로드 에러");
 		}
+
+		if(characterCommunicationDict == null)
+		{
+			Debug.Log("123");
+		}
+		else
+		{
+			Debug.Log("123");
+		}
+
 	}
 
 	public CommuinicationDictionary GetAffectionData(int CharacterID)
 	{
-		if (characterCommunicationDict.ContainsKey(CharacterID))
+		if (!characterCommunicationDict.ContainsKey(CharacterID))
 		{
 			Debug.LogWarning("캐릭터가 보유한 대화 없음");
 			return null;

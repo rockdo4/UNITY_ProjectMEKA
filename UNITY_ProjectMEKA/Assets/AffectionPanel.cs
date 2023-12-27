@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
-using UnityEditor.Tilemaps;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,11 +15,19 @@ public class AffectionPanel : MonoBehaviour
 	public Image affectionSlider;
 	public Button communicationButton;
 
+	[Header("Communication")]
+	public Button textWindow;
+	public RectTransform infoBox;
+	public RectTransform selectPanel;
+
 	[Header("Etc")]
 	public Button closeButton;
 	public ModalWindow modalWindow;
 
 	private Character currCharacter;
+	private CommuinicationDictionary commuinicationDict;
+	private List<CommunicationData> currentCommunicationList;
+	private int count = 0;
 
 	private void Awake()
 	{
@@ -26,6 +35,12 @@ public class AffectionPanel : MonoBehaviour
 		{
 			gameObject.SetActive(false);
 		});
+	}
+
+	private void OnDisable()
+	{
+		commuinicationDict = null;
+		currentCommunicationList = null;
 	}
 
 	public void SetCharacter(Character character)
@@ -95,6 +110,125 @@ public class AffectionPanel : MonoBehaviour
 
 		UpdateCharacter();
 		NoticeAffection(point);
+	}
+
+	public void OnClickCommunication()
+	{
+		if (!LoadCommunication()) return;
+
+		count = 0;
+
+		textWindow.gameObject.SetActive(true);
+		NextScript();
+		textWindow.onClick.AddListener(() =>
+		{
+			NextScript();
+		});
+	}
+
+	public void NextScript()
+	{
+		if(count == -1)
+		{
+			textWindow.onClick.RemoveAllListeners();
+			textWindow.gameObject.SetActive(false);
+			return;
+		}
+
+		var info = currentCommunicationList[count];
+
+		if (info.Script[0] == '!') //선택지인 경우
+		{
+			var selects = SelectScript(); //선택지 끝날때까지 스크립트 List로 받아옴
+
+			selectPanel.gameObject.SetActive(true); //선택지 패널 활성화
+
+			var buttons = selectPanel.GetComponentsInChildren<Button>(); //선택지 버튼들
+			for (int i = 0; i < buttons.Length; i++)
+			{
+				buttons[i].gameObject.SetActive(true);
+				if (i >= selects.Count)
+				{
+					buttons[i].gameObject.SetActive(false);
+					continue;
+				}
+				buttons[i].GetComponentInChildren<TextMeshProUGUI>().SetText(selects[i].Script.Replace("!","")); //선택지 버튼에 스크립트 넣기
+
+				var index = i;
+				buttons[index].onClick.RemoveAllListeners();
+				buttons[index].onClick.AddListener(() => //선택지 버튼에 클릭 이벤트 넣기
+				{
+					selectPanel.gameObject.SetActive(false);
+					AddAffectionPoint(selects[index].Value); //선택지 호감도 증가
+
+					if (selects[index].Branch != -1)
+					{
+						count = currentCommunicationList.FindIndex(x => x.ScriptID == selects[index].Branch); 
+					}
+
+					NextScript();
+				});
+			}
+			return;
+		}
+
+		textWindow.GetComponentInChildren<TextMeshProUGUI>().SetText(info.Script);
+
+		if (info.Branch != -1)
+		{
+			count = currentCommunicationList.FindIndex(x => x.ScriptID == info.Branch);
+			return;
+		}
+
+		if (info.Branch == 0) 
+		{
+			count = -1;
+			return;
+		}
+
+		count++;
+	}
+
+	public List<CommunicationData> SelectScript()
+	{
+		var info = currentCommunicationList[count];
+		List<CommunicationData> selectScripts = new List<CommunicationData>();
+
+		while (info.Script[0] == '!')
+		{
+			selectScripts.Add(info);
+			count++;
+			info = currentCommunicationList[count];
+		}
+
+		return selectScripts;
+	}
+
+	public bool LoadCommunication()
+	{
+		if(commuinicationDict == null)
+		{
+			commuinicationDict = DataTableMgr.GetTable<AffectionCommunicationTable>().GetAffectionData(currCharacter.CharacterID);
+			if (commuinicationDict == null)
+			{
+				modalWindow.gameObject.SetActive(true);
+				modalWindow.Notice($"{currCharacter.Name}와 가능한 대화가 없습니다", "확인");
+				return false;
+			}
+		}
+
+		List<int> keys = new List<int>(commuinicationDict.idCommunicationList.Keys);
+		int randomKey = keys[Random.Range(0, keys.Count)];
+
+		currentCommunicationList = commuinicationDict.idCommunicationList[randomKey];
+
+		if (currentCommunicationList == null)
+		{
+			modalWindow.gameObject.SetActive(true);
+			modalWindow.Notice("대화 리스트가 비어 있습니다", "확인");
+			return false;
+		}
+		return true;
 	}
 
 	public void NoticeAffection(int point)
