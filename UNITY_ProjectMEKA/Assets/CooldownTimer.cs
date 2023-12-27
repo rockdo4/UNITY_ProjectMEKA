@@ -3,26 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static Defines;
+using static UnityEngine.Rendering.DebugUI;
 
 public class CooldownTimer : MonoBehaviour
 {
     private Image cooldownImage; // Inspector에서 할당
-    public float cooldownDuration = 5f; // 쿨다운 시간 (초)
     private StageManager stageManager;
-    private float cooldownTimer;
+    private float originalWidth;
+
     private void Start()
     {
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         cooldownImage = GetComponent<Image>();
+        originalWidth = cooldownImage.rectTransform.sizeDelta.x;
+
     }
     private void Update()
     {
-        if (stageManager == null || stageManager.currentPlayer == null || stageManager.currentPlayer.skillState == null || cooldownImage == null)
+        if (stageManager == null || stageManager.currentPlayer == null ||
+       stageManager.currentPlayer.skillState == null || cooldownImage == null)
         {
             return;
         }
-        cooldownImage.fillAmount = stageManager.currentPlayer.skillState.currentSkillTimer / stageManager.currentPlayer.skillState.skillCoolTime;//20번쨰 줄
-        
+
+        float hpFraction = stageManager.currentPlayer.skillState.currentSkillTimer /
+                           stageManager.currentPlayer.skillState.skillCoolTime;
+
+        cooldownImage.rectTransform.sizeDelta = new Vector2(originalWidth * hpFraction,
+                                                            cooldownImage.rectTransform.sizeDelta.y);
+
+        if (hpFraction >= 1)
+        {
+            cooldownImage.rectTransform.sizeDelta = new Vector2(originalWidth,
+                                                                cooldownImage.rectTransform.sizeDelta.y);
+        }
     }
 
 }

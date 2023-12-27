@@ -327,7 +327,12 @@ public class BuffSkilType : SkillBase
         Vector3 pos = gameObject.transform.position;
         pos.y += 0.5f;
         obj.transform.position = pos;
-        obj.GetComponent<PlayerDieEffectDelete>().player = player;
+        var idontknow = obj.GetComponent<PlayerDieEffectDelete>();
+        if (idontknow != null)
+        {
+            idontknow.player = player;
+
+        }
         obj.SetActive(false);
         obj.SetActive(true);
     }

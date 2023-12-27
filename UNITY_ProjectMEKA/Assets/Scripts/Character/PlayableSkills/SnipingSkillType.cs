@@ -43,6 +43,7 @@ public class SnipingSkillType : SkillBase
     private void Update()
     {
         timer += Time.deltaTime;
+        currentSkillTimer = timer;
         //player.SetState(PlayerController.CharacterStates.Arrange);//testcode
     }
     public override void UseSkill()

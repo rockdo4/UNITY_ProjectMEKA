@@ -223,22 +223,28 @@ public class IngameStageUIManager : MonoBehaviour
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(true);
                 //closeButton.gameObject.SetActive(true);
-
-                //임형준 스킬 버튼 스킬 쿨타임 관련 활성화 비활성화 로직 추가
-                if (stageManager.currentPlayer.skillState.skillType == SkillType.Auto ||
-                    stageManager.currentPlayer.skillState.skillCoolTime > stageManager.currentPlayer.skillState.currentSkillTimer)
-                {
-                    
-                    skillButton.gameObject.SetActive(false);
-                    skillTimerBar.gameObject.SetActive(true);
-                    //여기 쿨타임 버튼?이미지?추가해야할듯
-                }
-                else
+                if (stageManager.currentPlayer.skillState.skillType != SkillType.Auto)
                 {
                     skillButton.gameObject.SetActive(true);
-                    skillTimerBar.gameObject.SetActive(false);
-                    //여기서 쿨타임 이미지든 버튼이든 비활성화
+                    skillTimerBar.gameObject.SetActive(true);
                 }
+
+
+                //임형준 스킬 버튼 스킬 쿨타임 관련 활성화 비활성화 로직 추가
+                //if (stageManager.currentPlayer.skillState.skillType == SkillType.Auto ||
+                //    stageManager.currentPlayer.skillState.skillCoolTime > stageManager.currentPlayer.skillState.currentSkillTimer)
+                //{
+                    
+                //    skillButton.gameObject.SetActive(false);
+                //    skillTimerBar.gameObject.SetActive(true);
+                //    //여기 쿨타임 버튼?이미지?추가해야할듯
+                //}
+                //else
+                //{
+                //    skillButton.gameObject.SetActive(true);
+                //    skillTimerBar.gameObject.SetActive(false);
+                //    //여기서 쿨타임 이미지든 버튼이든 비활성화
+                //}
                 ChangeAttackableTileMesh();
                 break;
             case WindowMode.Win:

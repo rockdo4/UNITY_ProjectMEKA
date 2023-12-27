@@ -22,7 +22,8 @@ public class ProjectileTypeSkill : SkillBase
     private void Update()
     {
         timer += Time.deltaTime;
-        if(skillType == Defines.SkillType.Auto && player.currentState != PlayerController.CharacterStates.Arrange)
+        currentSkillTimer = timer;
+        if (skillType == Defines.SkillType.Auto && player.currentState != PlayerController.CharacterStates.Arrange)
         {
             UseSkill();
             //자동->쿨타임&&코스트->실행

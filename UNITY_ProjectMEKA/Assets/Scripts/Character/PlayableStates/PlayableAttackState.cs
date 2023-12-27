@@ -37,13 +37,14 @@ public class PlayableAttackState : PlayableBaseState
                 timer = 0;
                 if(playerCtrl.target == null ||!playerCtrl.target.activeInHierarchy)
                 {
+                    playerCtrl.target = null;//문제생기면 제거
                     playerCtrl.SetState(PlayerController.CharacterStates.Idle);
                     return;
                 }
                 
                 
                 playerCtrl.ani.SetTrigger("Attack");
-                playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+                //playerCtrl.SetState(PlayerController.CharacterStates.Idle);
             }
         }
 

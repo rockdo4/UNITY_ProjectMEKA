@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Timeline;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -51,19 +52,17 @@ public class PlayableProjectileAttackState : PlayableBaseState
             if (timer <= 0)
             {
                 timer = playerCtrl.state.attackDelay;
-                //if (!playerCtrl.target.activeInHierarchy || !playerCtrl.rangeInEnemys.Contains(playerCtrl.target))
-                //{
-                //    playerCtrl.SetState(PlayerController.CharacterStates.Idle);
-                //    return;
-                //}
-                if (playerCtrl.target.activeInHierarchy || playerCtrl.rangeInEnemys.Contains(playerCtrl.target))
+                
+                if(playerCtrl.target == null)
                 {
-                    //playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+                    playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+
+                }
+                if (playerCtrl.target.activeInHierarchy || playerCtrl.rangeInEnemys.Contains(playerCtrl.target))//59
+                {
                     playerCtrl.ani.SetTrigger("Attack");
                     return;
                 }
-                //playerCtrl.ani.SetTrigger("Attack");
-                playerCtrl.SetState(PlayerController.CharacterStates.Idle);
             }
             
         }
