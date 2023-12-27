@@ -326,7 +326,7 @@ public class BuffSkilType : SkillBase
         Vector3 pos = gameObject.transform.position;
         pos.y += 0.5f;
         obj.transform.position = pos;
-
+        obj.GetComponent<PlayerDieEffectDelete>().player = player;
         obj.SetActive(false);
         obj.SetActive(true);
     }
@@ -339,7 +339,7 @@ public class BuffSkilType : SkillBase
         obs.transform.position = pobs;
 
         obs.GetComponent<PoolAble>().ReleaseObject(3f);
-
+        obs.GetComponent<PlayerDieEffectDelete>().player = player;
         obs.SetActive(false);
         obs.SetActive(true);
         foreach (var a in player.rangeInPlayers)
@@ -514,43 +514,7 @@ public class BuffSkilType : SkillBase
                 }
             }
         }
-        //foreach (var hitCollider in colliders)
-        //{
-        //    switch (Inc)
-        //    {
-        //        case Defines.IncrementalForm.Percentage:
-        //            var pl = hitCollider.GetComponentInParent<PlayerController>();
-        //            pl.state.armor += saveArmor * figure;
-        //            var obs = ObjectPoolManager.instance.GetGo(effectName);
-
-        //            Vector3 pobs = pl.gameObject.transform.position;
-        //            pobs.y += 0.5f;
-        //            obs.transform.position = pobs;
-
-        //            obs.GetComponent<PoolAble>().ReleaseObject(skillDuration);
-
-        //            obs.SetActive(false);
-        //            obs.SetActive(true);
-        //            break;
-        //        case Defines.IncrementalForm.Magnification:
-                    
-        //            var player = hitCollider.GetComponentInParent<PlayerController>();
-        //            player.state.armor = saveArmor * figure;
-        //            var obsa = ObjectPoolManager.instance.GetGo(effectName);
-
-        //            Vector3 pobss = player.gameObject.transform.position;
-        //            pobss.y += 0.5f;
-        //            obsa.transform.position = pobss;
-
-        //            obsa.GetComponent<PoolAble>().ReleaseObject(skillDuration);
-
-        //            obsa.SetActive(false);
-        //            obsa.SetActive(true);
-        //            break;
-        //    }
-            
-        //}
-
+        
     }
     
 }

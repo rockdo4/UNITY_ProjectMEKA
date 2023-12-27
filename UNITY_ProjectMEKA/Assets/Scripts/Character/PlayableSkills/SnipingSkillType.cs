@@ -118,31 +118,43 @@ public class SnipingSkillType : SkillBase
     }
     public void SnipingSingle()
     {
-        if (targetList.Any())
+        //if (targetList.Any())
+        //{
+        //    if (player.state.cost >= player.state.skillCost && timer >= player.state.skillCoolTime)
+        //    {
+        //        timer = 0;
+        //        player.state.cost -= skillCost;
+        //        isSkillUsing = true;
+        //        switch(skillT)
+        //        {
+        //            case SkillType.Attack:
+        //                SingleSnipingAttack();
+        //                break;
+        //            case SkillType.PlayerDamageUp:
+        //                SingleSnipingPlayerDamageUp();
+        //                break;
+        //            case SkillType.Shield:
+        //                SingleSnipingPlayerShield();
+        //                break;
+        //        }
+
+        //    }
+        //}
+        switch (skillT)
         {
-            if (player.state.cost >= player.state.skillCost && timer >= player.state.skillCoolTime)
-            {
-                timer = 0;
-                player.state.cost -= skillCost;
-                isSkillUsing = true;
-                switch(skillT)
-                {
-                    case SkillType.Attack:
-                        SingleSnipingAttack();
-                        break;
-                    case SkillType.PlayerDamageUp:
-                        SingleSnipingPlayerDamageUp();
-                        break;
-                    case SkillType.Shield:
-                        SingleSnipingPlayerShield();
-                        break;
-                }
-                
-            }
+            case SkillType.Attack:
+                SingleSnipingAttack();
+                break;
+            case SkillType.PlayerDamageUp:
+                SingleSnipingPlayerDamageUp();
+                break;
+            case SkillType.Shield:
+                SingleSnipingPlayerShield();
+                break;
         }
     }
-    
-    public void ShieldSkill()
+
+        public void ShieldSkill()
     {
         foreach (var a in targetList)
         {
@@ -174,6 +186,13 @@ public class SnipingSkillType : SkillBase
                 pl.state.damage *= figure;
                 var ob = ObjectPoolManager.instance.GetGo(effectName);
                 ob.transform.position = pl.gameObject.transform.position;
+
+                var ef = ob.GetComponent<PlayerDieEffectDelete>();
+                if (ef != null)
+                {
+                    ef.player = pl;
+                }
+
                 ob.SetActive(false);
                 ob.SetActive(true);
                 ob.GetComponent<PoolAble>().ReleaseObject(duration);
