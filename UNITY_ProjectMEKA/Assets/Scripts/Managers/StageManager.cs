@@ -37,6 +37,7 @@ public class StageManager : MonoBehaviour
     public int leftWaveCount;
     public int currentHouseLife;
     public int maxHouseLife;
+    public float CurrentSpeed { get; set; } = 1f;
 
     public List<(int,int)> rewardList = new List<(int, int)>();
 

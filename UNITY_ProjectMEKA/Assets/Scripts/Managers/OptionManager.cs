@@ -27,6 +27,7 @@ public class OptionManager : MonoBehaviour
     protected GameObject optionPanel;
     protected Button optionButton;
     private IngameStageUIManager ingameUIManager;
+    private StageManager stageManager;
 
     public Sprite[] soundButtonSprites = new Sprite[2];
     public Sprite[] pauseButtonSprites = new Sprite[2];
@@ -40,13 +41,12 @@ public class OptionManager : MonoBehaviour
     public SoundType currentSoundType;
     public PlayType currentPlayType;
     public SpeedType currentSpeedType;
-    public float currentSpeed;
 
     private string buttonLayerName;
 
     private void Awake()
     {
-        currentSpeed = 1f;
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         ingameUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
         buttonLayerName = LayerMask.LayerToName(gameObject.layer);
         optionButton = GetComponent<Button>();
@@ -142,7 +142,7 @@ public class OptionManager : MonoBehaviour
     {
         if(currentPlayType == PlayType.Play)
         {
-            Time.timeScale = currentSpeed;
+            Time.timeScale = stageManager.CurrentSpeed;
         }
         else
         {
@@ -155,18 +155,18 @@ public class OptionManager : MonoBehaviour
         switch (currentSpeedType)
         {
             case SpeedType.x1:
-                currentSpeed = 1f;
+                stageManager.CurrentSpeed = 1f;
                 break;
             case SpeedType.x2:
-                currentSpeed = 2f;
+                stageManager.CurrentSpeed = 2f;
                 break;
             case SpeedType.x4:
-                currentSpeed = 4f;
+                stageManager.CurrentSpeed = 4f;
                 break;
             case SpeedType.x8:
-                currentSpeed = 8f;
+                stageManager.CurrentSpeed = 8f;
                 break;
         }
-        Time.timeScale = currentSpeed;
+        Time.timeScale = stageManager.CurrentSpeed;
     }
 }
