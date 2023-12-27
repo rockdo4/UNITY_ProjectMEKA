@@ -74,6 +74,7 @@ public class IngameStageUIManager : MonoBehaviour
     // table
     private StringTable stringTable;
     private CharacterTable characterTable;
+    private SkillInfoTable skillInfoTable;
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
 
@@ -93,6 +94,7 @@ public class IngameStageUIManager : MonoBehaviour
     {
         characterTable = StageDataManager.Instance.characterTable;
         stringTable = StageDataManager.Instance.stringTable;
+        skillInfoTable = DataTableMgr.GetTable<SkillInfoTable>();
     }
 
     private void Start()
@@ -226,9 +228,15 @@ public class IngameStageUIManager : MonoBehaviour
                 if (stageManager.currentPlayer.skillState.skillType != SkillType.Auto)
                 {
                     //여기서 스킬 아이콘 바꿔주면 될듯 currentPlayer, skillState 받아올 수 있으니께
+                    var id = stageManager.currentPlayer.state.id;
+                    var info = characterTable.GetCharacterData(id);
+                    var skillInfo = skillInfoTable.GetSkillDatas(info.SkillID);
 
                     skillButton.gameObject.SetActive(true);
                     skillTimerBar.gameObject.SetActive(true);
+
+                    skillButton.GetComponent<Image>().sprite = Resources.Load<Sprite>(skillInfo[0].ImagePath);
+
                 }
 
                 ChangeAttackableTileMesh();
@@ -462,14 +470,14 @@ public class IngameStageUIManager : MonoBehaviour
         var joystickButtonsParentTr = joystick.transform.GetChild(5);
         cancelText = joystickButtonsParentTr.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
         collectText = joystickButtonsParentTr.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
-        skillText = joystickButtonsParentTr.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
+        //skillText = joystickButtonsParentTr.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
 
         var arrangement = stringTable.GetString("arrangement");
         var cancel = stringTable.GetString("cancel");
         var arrangeCancel = new string($"{arrangement}\n{cancel}");
         cancelText.SetText(arrangeCancel);
         collectText.SetText(stringTable.GetString("collection"));
-        skillText.SetText(stringTable.GetString("skill"));
+        //skillText.SetText(stringTable.GetString("skill"));
         killMonsterHeaderText.SetText(stringTable.GetString("killMonsterCount"));
 
         var wave = stringTable.GetString("wave");

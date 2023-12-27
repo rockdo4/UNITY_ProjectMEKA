@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayableAttackState : PlayableBaseState
@@ -41,8 +42,11 @@ public class PlayableAttackState : PlayableBaseState
                     playerCtrl.SetState(PlayerController.CharacterStates.Idle);
                     return;
                 }
-                
-                
+
+                if (playerCtrl.sound != null)
+                {
+                    SoundManager.instance.PlayerSEAudio(playerCtrl.sound);
+                }
                 playerCtrl.ani.SetTrigger("Attack");
                 //playerCtrl.SetState(PlayerController.CharacterStates.Idle);
             }

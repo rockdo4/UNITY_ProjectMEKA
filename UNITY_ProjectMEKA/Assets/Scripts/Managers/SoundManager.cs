@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Playables;
+using UnityEngine.Rendering;
 
 // ΩÃ±€≈Ê
 public class SoundManager : MonoBehaviour
@@ -13,6 +15,13 @@ public class SoundManager : MonoBehaviour
     public List<AudioSource> bgmAudioSource;
     public List<AudioSource> seAudioSource;
 
+    [System.Serializable]
+    public class AudioClipList
+    {
+        public string name;
+        public AudioClip clip;
+    }
+    public List<AudioClipList> audioClips;
 
     private void Awake()
     {
@@ -105,5 +114,21 @@ public class SoundManager : MonoBehaviour
         PlayDataManager.data.SEVolume = value;
 
         PlayDataManager.Save();
+    }
+
+    public void PlayerSEAudio(string sound)
+    {
+        Debug.Log(sound);
+        foreach(var clip in audioClips)
+        {
+            if(clip.name == sound)
+            {
+                seAudioSource.First().clip = clip.clip;
+                //seAudioSource.First().PlayOneShot(clip.clip);
+                seAudioSource.First().Play();
+                return;
+            }
+        }
+
     }
 }
