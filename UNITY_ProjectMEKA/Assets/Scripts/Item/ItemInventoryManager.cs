@@ -53,8 +53,12 @@ public class ItemInventoryManager
 		var itemData = DataTableMgr.GetTable<ItemInfoTable>();
 		var characterLevelData = DataTableMgr.GetTable<CharacterLevelTable>();
 		//var characterData = DataTableMgr.GetTable<CharacterTable>();
-
-		if(itemData.GetItemData(ID) != null)
+		
+		if(PlayDataManager.data.systemUnlockData.ContainsKey(ID))
+		{
+            PlayDataManager.data.systemUnlockData[ID] = true;
+        }
+		else if(itemData.GetItemData(ID) != null)
 		{
 			var item = new Item();
 			var data = itemData.GetItemData(ID);
@@ -71,10 +75,6 @@ public class ItemInventoryManager
 			CharacterManager.Instance.m_CharacterStorage[id].IsUnlock = true;
 			CharacterManager.Instance.m_CharacterStorage[id].CharacterLevel = level;
         }
-		else if(PlayDataManager.data.systemUnlockData.ContainsKey(ID))
-		{
-			PlayDataManager.data.systemUnlockData[ID] = true;
-		}
 
 		PlayDataManager.Save();
 	}

@@ -93,8 +93,7 @@ public class StageManager : MonoBehaviour
             {
                 // for test
                 stageData = StageDataManager.Instance.stageTable.GetStageData(stageID);
-                StageDataManager.Instance.SetCurrentStageClass(stageClass);
-                StageDataManager.Instance.LoadPlayData();
+                StageDataManager.Instance.CurrentStageClass = stageClass;
                 stageSaveData = StageDataManager.Instance.selectedStageDatas[stageID];
             }
 
@@ -172,8 +171,14 @@ public class StageManager : MonoBehaviour
         {
             stageSaveData.isCleared = true;
             stageSaveData.clearScore = tempClearCount;
-            StageDataManager.Instance.selectedStageDatas[stageData.NextStageID].isUnlocked = true;
+
+            if(stageData.NextStageID != 0)
+            {
+                StageDataManager.Instance.selectedStageDatas[stageData.NextStageID].isUnlocked = true;
+            }
+
             StageDataManager.Instance.UpdatePlayData();
+
             for (int i = 0; i < rewardList.Count; ++i)
             {
                 ItemInventoryManager.Instance.AddRewardByID(rewardList[i].Item1, rewardList[i].Item2);
@@ -293,8 +298,7 @@ public class StageManager : MonoBehaviour
         {
             // for test
             stageData = StageDataManager.Instance.stageTable.GetStageData(stageID);
-            StageDataManager.Instance.SetCurrentStageClass(stageClass);
-            StageDataManager.Instance.LoadPlayData();
+            StageDataManager.Instance.CurrentStageClass = stageClass;
         }
 
         defaultCost = stageData.DefaultCost;

@@ -18,6 +18,18 @@ public class StageDataManager
     public StageSaveData selectedStageData;
     public Dictionary<int,StageSaveData> selectedStageDatas;
     private StageClass currentStageClass;
+    public StageClass CurrentStageClass
+    {
+        get
+        {
+            return currentStageClass;
+        }
+        set
+        {
+            currentStageClass = value;
+            LoadPlayData();
+        }
+    }
     public bool toStageChoicePanel;
     
     // tables
@@ -26,6 +38,7 @@ public class StageDataManager
     public CharacterLevelTable characterLevelTable;
     public StringTable stringTable;
     public ItemInfoTable itemInfoTable;
+    public RewardTable rewardTable;
 
     public Language language = Language.Kor;
 
@@ -36,16 +49,12 @@ public class StageDataManager
         characterLevelTable = DataTableMgr.GetTable<CharacterLevelTable>();
         stringTable = DataTableMgr.GetTable<StringTable>();
         itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
-    }
-
-    public void SetCurrentStageClass(StageClass stageClass)
-    {
-        currentStageClass = stageClass;
+        rewardTable = DataTableMgr.GetTable<RewardTable>();
     }
 
     public void UpdatePlayData()
     {
-        switch (currentStageClass)
+        switch (CurrentStageClass)
         {
             case StageClass.None:
                 break;
@@ -64,7 +73,7 @@ public class StageDataManager
 
     public void LoadPlayData()
     {
-        switch (currentStageClass)
+        switch (CurrentStageClass)
         {
             case StageClass.None:
                 break;

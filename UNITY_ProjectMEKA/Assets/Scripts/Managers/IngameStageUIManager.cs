@@ -286,7 +286,8 @@ public class IngameStageUIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         StageDataManager.Instance.toStageChoicePanel = true;
-        SceneManager.LoadScene("MainScene");
+        //SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("MainScene_SystemUnlock");
     }
 
     public void ChangeCharacterInfo()
@@ -498,12 +499,12 @@ public class IngameStageUIManager : MonoBehaviour
         // reward item setting
         for (int i = 0; i < 6; ++i)
         {
-            if ((i == 0 || i == 6) && stageSaveData.isCleared)
+            if ((i == 0 || i == 5) && stageSaveData.isCleared)
             {
                 continue;
             }
 
-            var rewardData = DataTableMgr.GetTable<RewardTable>().GetStageData(stageData.RewardID);
+            var rewardData = StageDataManager.Instance.rewardTable.GetStageData(stageData.RewardID);
             int id = 100;
             int count = 0;
 
@@ -613,7 +614,7 @@ public class IngameStageUIManager : MonoBehaviour
             return;
         }
 
-        if(isItem)
+        if(isItem || isSystem)
         {
             var rewardItem = StageDataManager.Instance.itemInfoTable.GetItemData(itemID);
             var nameStringID = rewardItem.NameStringID;
@@ -627,13 +628,6 @@ public class IngameStageUIManager : MonoBehaviour
             var characterData = StageDataManager.Instance.characterTable.GetCharacterData(characterId);
             var characterName = stringTable.GetString(characterData.CharacterNameStringID);
             itemInfo.itemName.SetText(characterName);
-        }
-        else if(isSystem)
-        {
-            var rewardItem = StageDataManager.Instance.itemInfoTable.GetItemData(itemID);
-            var nameStringID = rewardItem.NameStringID;
-            var name = stringTable.GetString(nameStringID);
-            itemInfo.itemName.SetText(name);
         }
     }
 }

@@ -28,7 +28,10 @@ public class ChainAttack : MonoBehaviour
         }
         else
         {
-            transform.position = target.position;
+            if(transform != null || target != null)
+            {
+                transform.position = target.position;
+            }
         }
         sTimer += Time.deltaTime;
         if(sTimer > ddt.deleteTime)
