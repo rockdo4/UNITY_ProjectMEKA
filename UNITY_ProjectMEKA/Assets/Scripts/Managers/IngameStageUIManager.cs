@@ -55,6 +55,8 @@ public class IngameStageUIManager : MonoBehaviour
     private Button cancelButton;
     private Button collectButton;
     private Button skillButton;
+    //임형준 추가 스킬 쿨타임바
+    private Image skillTimerBar;
 
 	// skill
 	public TextMeshProUGUI skillTileGuideText;
@@ -82,7 +84,8 @@ public class IngameStageUIManager : MonoBehaviour
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
         skillButton = joystick.skillButton;
-		isInfoWindowOn = true;
+        skillTimerBar = joystick.skillTimerBar;
+        isInfoWindowOn = true;
         timeProgressSlider.value = 1f;
     }
 
@@ -123,6 +126,8 @@ public class IngameStageUIManager : MonoBehaviour
 
         CloseResultWindow();
         CloseCharacterInfoWindow();
+        
+        
     }
 
     public void UpdateWindowMode()
@@ -205,6 +210,7 @@ public class IngameStageUIManager : MonoBehaviour
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(false);
                 skillButton.gameObject.SetActive(false);
+                skillTimerBar.gameObject.SetActive(false);
 				//closeButton.gameObject.SetActive(false);
                 break;
             case WindowMode.Setting:
@@ -217,10 +223,14 @@ public class IngameStageUIManager : MonoBehaviour
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(true);
                 //closeButton.gameObject.SetActive(true);
-				if (stageManager.currentPlayer.skillState.skillType != SkillType.Auto)
+                if (stageManager.currentPlayer.skillState.skillType != SkillType.Auto)
                 {
+                    //여기서 스킬 아이콘 바꿔주면 될듯 currentPlayer, skillState 받아올 수 있으니께
+
                     skillButton.gameObject.SetActive(true);
+                    skillTimerBar.gameObject.SetActive(true);
                 }
+
                 ChangeAttackableTileMesh();
                 break;
             case WindowMode.Win:

@@ -62,7 +62,8 @@ public class HitSkillType : SkillBase
     private void Update()
     {
         timer += Time.deltaTime;
-        if(isSkillUsing)
+        currentSkillTimer = timer; 
+        if (isSkillUsing)
         {
             duration += Time.deltaTime;
             

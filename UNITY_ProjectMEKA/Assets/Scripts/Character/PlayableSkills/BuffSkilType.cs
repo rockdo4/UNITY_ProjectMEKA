@@ -78,7 +78,8 @@ public class BuffSkilType : SkillBase
     private void Update()
     {
         timer += Time.deltaTime;
-        if(isSkillUsing)
+        currentSkillTimer = timer;
+        if (isSkillUsing)
         {
             if(type == buffType.ArmorAndCost)
             {
@@ -326,7 +327,12 @@ public class BuffSkilType : SkillBase
         Vector3 pos = gameObject.transform.position;
         pos.y += 0.5f;
         obj.transform.position = pos;
-        obj.GetComponent<PlayerDieEffectDelete>().player = player;
+        var idontknow = obj.GetComponent<PlayerDieEffectDelete>();
+        if (idontknow != null)
+        {
+            idontknow.player = player;
+
+        }
         obj.SetActive(false);
         obj.SetActive(true);
     }
@@ -345,13 +351,13 @@ public class BuffSkilType : SkillBase
         foreach (var a in player.rangeInPlayers)
         {
             var oh = ObjectPoolManager.instance.GetGo(effectName);
-
-            Vector3 pos = a.GetComponentInParent<PlayerController>().gameObject.transform.position;
+            var aPlayer = a.GetComponentInParent<PlayerController>();
+            Vector3 pos = aPlayer.gameObject.transform.position;
             pos.y += 0.5f;
             oh.transform.position = pos;
 
             oh.GetComponent<PoolAble>().ReleaseObject(3f);
-
+            oh.GetComponent<PlayerDieEffectDelete>().player = aPlayer;
             oh.SetActive(false);
             oh.SetActive(true);
         }
