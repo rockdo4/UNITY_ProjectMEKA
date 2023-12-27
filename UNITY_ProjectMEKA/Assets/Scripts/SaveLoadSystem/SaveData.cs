@@ -189,7 +189,7 @@ public class SaveDataV5 : SaveDataV4
 		data.assignmentStageDatas = assignmentStageDatas;
 		data.challengeStageDatas = challengeStageDatas;
 
-		data.deviceStorage = new Dictionary<int, Device>();
+		data.deviceStorage = deviceStorage;
 
 		foreach(var character in characterStorage)
 		{
@@ -200,7 +200,7 @@ public class SaveDataV5 : SaveDataV4
 			}
 		}
 
-		return data;
+        return data;
 	}
 }
 
@@ -209,11 +209,12 @@ public class SaveDataV6 : SaveDataV5
 	public SaveDataV6()
     {
 		Version = 6;
-	}
+		systemUnlockData = new Dictionary<int, bool>();
+    }
 
+    public Dictionary<int, bool> systemUnlockData;
 
-
-	public override SaveData VersionUp()
+    public override SaveData VersionUp()
     {
 		return null;
 	}

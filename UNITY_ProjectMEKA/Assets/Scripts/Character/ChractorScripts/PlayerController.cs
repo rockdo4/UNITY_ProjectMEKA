@@ -257,56 +257,71 @@ public class PlayerController : MonoBehaviour
 
     public void Hit()
     {
-        
+
         if (target == null)
         {
             return;
         }
         IAttackable take = target.GetComponentInParent<IAttackable>();
-        Vector3 enemyPos = target.GetComponentInParent<EnemyController>().gameObject.transform.position;
-        if(enemyPos != null)
+        if (target != null)
         {
-            enemyPos.y += 0.5f;
-            var obbj = ObjectPoolManager.instance.GetGo("EnemyHitEffect");
-            obbj.transform.position = enemyPos;
-            obbj.SetActive(false);
-            obbj.SetActive(true);
-            obbj.GetComponent<PoolAble>().ReleaseObject(1f);
-        }
-        
-        if(take == null)
-        {
-            return;
-        }
-        //(몬스터 공격력 x 공격력 계수 x 스킬 계수 x 속성 데미지 계수)-(캐릭터 방어력 + 장비 방어력 수치) x 장비 방어력 계수
-        
-        if (Random.Range(0f, 1f) <= state.critChance)
-        {
-            var calculatedDamage = ((state.damage * state.fatalDamage) + Rockpaperscissors()) - (target.GetComponentInParent<EnemyController>().state.armor);
-            take.OnAttack(calculatedDamage);
-            Debug.Log(calculatedDamage);
-        }
-        else
-        {
-            var calculatedDamage = (state.damage + Rockpaperscissors()) - (target.GetComponentInParent<EnemyController>().state.armor);
-            take.OnAttack(calculatedDamage);
-            Debug.Log(calculatedDamage);
+            if (target != null)
+            {
+                // target에서 EnemyController 컴포넌트를 가져옴
+                EnemyController enemyController = target.GetComponentInParent<EnemyController>();
 
+                // enemyController가 null이 아닌지 확인
+                if (enemyController != null)
+                {
+                    Vector3 enemyPos = enemyController.transform.position;
+                    // enemyPos를 사용하는 로직
+                    if (enemyPos != null)
+                    {
+                        enemyPos.y += 0.5f;
+                        var obbj = ObjectPoolManager.instance.GetGo("EnemyHitEffect");
+                        obbj.transform.position = enemyPos;
+                        obbj.SetActive(false);
+                        obbj.SetActive(true);
+                        obbj.GetComponent<PoolAble>().ReleaseObject(1f);
+                    }
+                }
+            }
+
+
+            if (take == null)
+            {
+                return;
+            }
+            //(몬스터 공격력 x 공격력 계수 x 스킬 계수 x 속성 데미지 계수)-(캐릭터 방어력 + 장비 방어력 수치) x 장비 방어력 계수
+
+            if (Random.Range(0f, 1f) <= state.critChance)
+            {
+                var calculatedDamage = ((state.damage * state.fatalDamage) + Rockpaperscissors()) - (target.GetComponentInParent<EnemyController>().state.armor);
+                take.OnAttack(calculatedDamage);
+                Debug.Log(calculatedDamage);
+            }
+            else
+            {
+                var calculatedDamage = (state.damage + Rockpaperscissors()) - (target.GetComponentInParent<EnemyController>().state.armor);
+                take.OnAttack(calculatedDamage);
+                Debug.Log(calculatedDamage);
+
+            }
+            if (isHitEffect)
+            {
+                var ef = ObjectPoolManager.instance.GetGo(effectName);
+                Vector3 pos = gameObject.transform.position;
+                pos.y += 0.5f;
+                pos.z += 0.1f;
+                ef.transform.position = pos;
+                ef.transform.rotation = gameObject.transform.rotation;
+                ef.SetActive(false);
+                ef.SetActive(true);
+                ef.GetComponent<PoolAble>().ReleaseObject(0.3f);
+
+            }
+            //take.OnAttack(state.damage + Rockpaperscissors());
         }
-        if(isHitEffect)
-        {
-            var ef = ObjectPoolManager.instance.GetGo(effectName);
-            Vector3 pos = gameObject.transform.position;
-            pos.y += 0.5f;
-            pos.z += 0.1f;
-            ef.transform.position = pos;
-            ef.transform.rotation = gameObject.transform.rotation;
-            ef.SetActive(false);
-            ef.SetActive(true);
-            ef.GetComponent<PoolAble>().ReleaseObject(0.3f);
-            
-        }
-        //take.OnAttack(state.damage + Rockpaperscissors());
     }
     public float Rockpaperscissors()
     {

@@ -26,9 +26,12 @@ public class SynchroPanel : MonoBehaviour
 	private CharacterTable charTable;
 	private SynchroTable synchroTable;
 
+	private StringTable stringTable;
+
 	private void Awake()
 	{
-		charTable = DataTableMgr.GetTable<CharacterTable>();
+        stringTable = StageDataManager.Instance.stringTable;
+        charTable = DataTableMgr.GetTable<CharacterTable>();
 		synchroTable = DataTableMgr.GetTable<SynchroTable>();
 
 		applyButton.onClick.AddListener(() =>
@@ -86,9 +89,13 @@ public class SynchroPanel : MonoBehaviour
 		var tier2 = itemTable.GetItemData(synchroInfoData.Tier2ID);
 		var tier3 = itemTable.GetItemData(synchroInfoData.Tier3ID);
 
-		synchroItemCard[0].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier1.Name}");
-		synchroItemCard[1].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier2.Name}");
-		synchroItemCard[2].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier3.Name}");
+        var tier1Name = stringTable.GetString(tier1.NameStringID);
+        var tier2Name = stringTable.GetString(tier2.NameStringID);
+        var tier3Name = stringTable.GetString(tier3.NameStringID);
+
+        synchroItemCard[0].GetComponentInChildren<TextMeshProUGUI>().SetText(tier1Name);
+		synchroItemCard[1].GetComponentInChildren<TextMeshProUGUI>().SetText(tier2Name);
+		synchroItemCard[2].GetComponentInChildren<TextMeshProUGUI>().SetText(tier3Name);
 
 		if (synchroInfoData == null)
 		{

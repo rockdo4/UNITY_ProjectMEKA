@@ -175,11 +175,11 @@ public class StageUIManager : MonoBehaviour
 
         // 스테이지 인포
         var mission1 = stringTable.GetString(stageMission1ID);
-        mission1 = new string(mission1.Select(c => c == '0' ? stageTable.Mission1Value.ToString()[0] : c).ToArray());
+        mission1 = mission1.Replace("0", stageTable.Mission1Value.ToString());
         var mission2 = stringTable.GetString(stageMission2ID);
-        mission2 = new string(mission2.Select(c => c == '0' ? stageTable.Mission2Value.ToString()[0] : c).ToArray());
+        mission2 = mission2.Replace("0", stageTable.Mission2Value.ToString());
         var mission3 = stringTable.GetString(stageMission3ID);
-        mission3 = new string(mission3.Select(c => c == '0' ? stageTable.Mission3Value.ToString()[0] : c).ToArray());
+        mission3 = mission3.Replace("0", stageTable.Mission3Value.ToString());
         stageOutlineHeaderText.SetText(stringTable.GetString("outline"));
         stageOutlineText.SetText(stringTable.GetString(stageOutlineID));
         stageMissionHeaderText.SetText(stringTable.GetString("mission"));

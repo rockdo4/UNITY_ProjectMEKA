@@ -65,7 +65,11 @@ public class CreateCollider : MonoBehaviour
                 var obj = other.GetComponentInParent<CanDie>();
                 obj.action.AddListener(() =>
                 {
-                    player.rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);
+                    if (other != null && other.GetComponentInParent<Transform>() != null)
+                    {
+                        player.rangeInPlayers.Remove(other.GetComponentInParent<Transform>().gameObject);//68 여기서 버그
+                    }
+                    
 
                 });
             }

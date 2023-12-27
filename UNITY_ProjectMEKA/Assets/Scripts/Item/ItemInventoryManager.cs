@@ -48,11 +48,11 @@ public class ItemInventoryManager
 		m_ItemStorage.Add(item);
 	}
 
-	public void AddItemByID(int ID, int count = 1)
+	public void AddRewardByID(int ID, int count = 1)
 	{
 		var itemData = DataTableMgr.GetTable<ItemInfoTable>();
 		var characterLevelData = DataTableMgr.GetTable<CharacterLevelTable>();
-		var characterData = DataTableMgr.GetTable<CharacterTable>();
+		//var characterData = DataTableMgr.GetTable<CharacterTable>();
 
 		if(itemData.GetItemData(ID) != null)
 		{
@@ -71,6 +71,12 @@ public class ItemInventoryManager
 			CharacterManager.Instance.m_CharacterStorage[id].IsUnlock = true;
 			CharacterManager.Instance.m_CharacterStorage[id].CharacterLevel = level;
         }
+		else if(PlayDataManager.data.systemUnlockData.ContainsKey(ID))
+		{
+			PlayDataManager.data.systemUnlockData[ID] = true;
+		}
+
+		PlayDataManager.Save();
 	}
 
 	public void RemoveItemByInstance(Item item, int count = 1)
