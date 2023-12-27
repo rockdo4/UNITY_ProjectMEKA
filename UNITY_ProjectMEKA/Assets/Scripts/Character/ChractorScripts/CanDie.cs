@@ -22,10 +22,14 @@ public class CanDie : MonoBehaviour
         
         action = new UnityEvent();
         updateUI = new UnityEvent();
-        
+
         updateUI.AddListener(() =>
         {
-            stageManager.killMonsterCount++;
+            if(GetComponent<PlayerState>() == null)
+            {
+                stageManager.killMonsterCount++;
+            }
+            Debug.Log(Time.time + " killMonsterCount++");
         });
     }
     void Update()
@@ -34,7 +38,6 @@ public class CanDie : MonoBehaviour
         {
             action.Invoke();
             updateUI.Invoke();
-            action.Invoke();
 
             // if this is a monster
             if (GetComponent<PoolAble>() != null)
