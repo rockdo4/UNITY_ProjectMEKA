@@ -12,7 +12,10 @@ public class Item
 	{ 
 		get
 		{
-			return DataTableMgr.GetTable<ItemInfoTable>().GetItemData(ID).Name;
+			var stringTable = DataTableMgr.GetTable<StringTable>();
+			var nameID = DataTableMgr.GetTable<ItemInfoTable>().GetItemData(ID).NameStringID;
+            var name = stringTable.GetString(nameID);
+			return name;
 		}
 	}
 
@@ -29,7 +32,7 @@ public class Item
 public class ItemInfo
 {
 	public int ID { get; set; }
-	public string Name { get; set; }
+	public string NameStringID { get; set; }
 	public int Type { get; set; }
 	public int Rare { get; set; }
 	public int Value { get; set; }

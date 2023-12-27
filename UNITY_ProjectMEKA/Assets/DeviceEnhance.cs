@@ -24,6 +24,7 @@ public class DeviceEnhance : MonoBehaviour
 	private Device currDevice;
     private List<DeviceExpData> expData;
 	private int currLevel;
+	private StringTable stringTable;
 
 	private void Awake()
 	{
@@ -40,7 +41,9 @@ public class DeviceEnhance : MonoBehaviour
 		});
 
 		expData = DataTableMgr.GetTable<DeviceExpTable>().GetOriginalTable();
-	}
+		stringTable = StageDataManager.Instance.stringTable;
+
+    }
 
 	private void Start()
 	{
@@ -50,9 +53,13 @@ public class DeviceEnhance : MonoBehaviour
 		var tier2 = itemTable.GetItemData(itemID[1]);
 		var tier3 = itemTable.GetItemData(itemID[2]);
 
-		itemCard[0].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier1.Name}");
-		itemCard[1].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier2.Name}");
-		itemCard[2].GetComponentInChildren<TextMeshProUGUI>().SetText($"{tier3.Name}");
+		var tier1Name = stringTable.GetString(tier1.NameStringID);
+		var tier2Name = stringTable.GetString(tier2.NameStringID);
+		var tier3Name = stringTable.GetString(tier3.NameStringID);
+
+        itemCard[0].GetComponentInChildren<TextMeshProUGUI>().SetText(tier1Name);
+		itemCard[1].GetComponentInChildren<TextMeshProUGUI>().SetText(tier2Name);
+		itemCard[2].GetComponentInChildren<TextMeshProUGUI>().SetText(tier3Name);
 	}
 
 	private void OnEnable()

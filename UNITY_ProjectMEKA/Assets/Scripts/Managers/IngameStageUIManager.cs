@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using TMPro;
@@ -485,15 +486,15 @@ public class IngameStageUIManager : MonoBehaviour
         SetStageInfo(stageData);
 
         // reward item setting
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < 6; ++i)
         {
-            if(i == 0 && stageSaveData.isCleared)
+            if ((i == 0 || i == 6) && stageSaveData.isCleared)
             {
                 continue;
             }
 
             var rewardData = DataTableMgr.GetTable<RewardTable>().GetStageData(stageData.RewardID);
-            int id = 0;
+            int id = 100;
             int count = 0;
 
             var itemGo = Instantiate(itemPrefab, itemParentPanel.transform);
@@ -561,8 +562,18 @@ public class IngameStageUIManager : MonoBehaviour
                         itemGo.SetActive(false);
                     }
                     break;
+                case 5:
+                    if(rewardData.SystemUnlock != 0)
+                    {
+                        id = rewardData.SystemUnlock;
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
             }
-            SetItemInfo(id, itemInfo, rewardData);
+            SetItemInfo(id, itemInfo);
             stageManager.rewardList.Add((id, count));
         }
     }
@@ -578,15 +589,16 @@ public class IngameStageUIManager : MonoBehaviour
         missionClearText.SetText(clearText);
     }
 
-    public void SetItemInfo(int itemID, RewardItemInfo itemInfo, RewardData rewardData)
+    public void SetItemInfo(int itemID, RewardItemInfo itemInfo)
     {
         // item info setting : sprite
         // item info setting : name
         var isItem = StageDataManager.Instance.itemInfoTable.GetItemData(itemID) != null;
         var isCharacter = StageDataManager.Instance.characterLevelTable.GetLevelData(itemID) != null;
+        var isSystem = Enum.IsDefined(typeof(SystemForUnlock), itemID);
         var stringTable = StageDataManager.Instance.stringTable;
 
-        if (!isItem && !isCharacter)
+        if(!isItem && !isCharacter && !isSystem)
         {
             return;
         }
@@ -594,15 +606,24 @@ public class IngameStageUIManager : MonoBehaviour
         if(isItem)
         {
             var rewardItem = StageDataManager.Instance.itemInfoTable.GetItemData(itemID);
-            itemInfo.itemName.SetText(rewardItem.Name);
+            var nameStringID = rewardItem.NameStringID;
+            var name = stringTable.GetString(nameStringID);
+            itemInfo.itemName.SetText(name);
         }
-        else
+        else if(isCharacter)
         {
             var itemIDString = itemID.ToString();
             var characterId = int.Parse(itemIDString.Substring(0, itemIDString.Length - 2));
             var characterData = StageDataManager.Instance.characterTable.GetCharacterData(characterId);
             var characterName = stringTable.GetString(characterData.CharacterNameStringID);
             itemInfo.itemName.SetText(characterName);
+        }
+        else if(isSystem)
+        {
+            var rewardItem = StageDataManager.Instance.itemInfoTable.GetItemData(itemID);
+            var nameStringID = rewardItem.NameStringID;
+            var name = stringTable.GetString(nameStringID);
+            itemInfo.itemName.SetText(name);
         }
     }
 }
