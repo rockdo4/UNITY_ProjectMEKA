@@ -26,6 +26,7 @@ public class StageDataManager
     public CharacterLevelTable characterLevelTable;
     public StringTable stringTable;
     public ItemInfoTable itemInfoTable;
+    public RewardTable rewardTable;
 
     public Language language = Language.Kor;
 
@@ -36,6 +37,7 @@ public class StageDataManager
         characterLevelTable = DataTableMgr.GetTable<CharacterLevelTable>();
         stringTable = DataTableMgr.GetTable<StringTable>();
         itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
+        rewardTable = DataTableMgr.GetTable<RewardTable>();
     }
 
     public void SetCurrentStageClass(StageClass stageClass)
