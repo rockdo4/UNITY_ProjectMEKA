@@ -69,6 +69,11 @@ public class CharacterPanelManager : MonoBehaviour
 					characterAffectionPanel.GetComponent<AffectionPanel>().SetCharacter(character.Value);
 				});
 			}
+
+			if (characterInfo.PortraitPath == "None")
+			{
+				card.SetActive(false);
+			}
 		}
 
 		enableButton.onClick.AddListener(() =>

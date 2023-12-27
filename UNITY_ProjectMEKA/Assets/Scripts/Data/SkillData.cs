@@ -20,3 +20,20 @@ public class SkillUpgradeData
 	public int Tier3ID { get; set; }
 	public int RequireTier3 { get; set; }
 }
+
+public class SkillInfo
+{
+	public int SkillID { get; set; }
+	public int SkillLevelID { get; set; }
+	public int SkillLevel { get; set; }
+	public int SkillMaxLevel { get; set; }
+	public string ImagePath { get; set; }
+	public int MaxSigma { get; set; }
+	public int UseSigma { get; set; }
+	public int CoolTime { get; set; }
+	public int Duration { get; set; }
+	public float SkillDamageCoefficient { get; set; }
+	public float SkillValueIncrease { get; set; }
+	public float ArrangeCostSec { get; set; }
+	public float ArrangeCostRecovery { get; set; }
+}

@@ -75,6 +75,11 @@ public class FormationManager : MonoBehaviour
 		//ĳ���� ����Ʈ ī�� ����
 		foreach (var character in table)
 		{
+			if (character.Value.PortraitPath == "None")
+			{
+				continue;
+			}
+
 			var card = Instantiate(characterCardPrefab);
 			card.transform.SetParent(characterCardScrollView);
 
@@ -98,7 +103,6 @@ public class FormationManager : MonoBehaviour
 			{
 				OpenCharacterList();
 				selectedFormationIndex = index;
-				Debug.Log("click");
 			});
 
 			button.holdButton.AddListener(() =>
@@ -131,10 +135,11 @@ public class FormationManager : MonoBehaviour
 	{
 		CheckPlayData();
 		CheckCollectCharacter();
+		OnClickFormationButton();
 		ChangeFormationSet(selectedFormationList);
 	}
 
-	//���� ������ �ٲٱ�
+	//Change Formation Preset
 	public void ChangeFormationSet(int formationListIndex)
 	{
 		UpdateActiveCard();
@@ -153,7 +158,6 @@ public class FormationManager : MonoBehaviour
 			{
 				if (formationList[selectedFormationList][j] == id)
 				{
-					//�ߺ�ĳ���� ������
 					cardList[i].gameObject.SetActive(false);
 					activeFalseList.Add(cardList[i].gameObject);
 				}
@@ -163,7 +167,7 @@ public class FormationManager : MonoBehaviour
 		currentPresetText.SetText($"현재 프리셋 : {selectedFormationList + 1}");
 	}
 
-	//���� ���������� �ٲٱ�
+	//Change Preset Previous
 	public void ChangePresetPrevious()
 	{
 		if (selectedFormationList > 0)
@@ -176,7 +180,7 @@ public class FormationManager : MonoBehaviour
 		}
 	}
 
-	//���� ���������� �ٲٱ�
+	//Change Preset Next
 	public void ChangePresetNext()
 	{
 		if(selectedFormationList < numberOfFormations - 1)
@@ -189,7 +193,7 @@ public class FormationManager : MonoBehaviour
 		}
 	}
 
-	//ĳ���� �����ϴ� â ����
+	//CloseCharacterList
 	public void CloseCharacterList()
 	{
 		var table = DataTableMgr.GetTable<TestCharacterTable>();
@@ -198,7 +202,7 @@ public class FormationManager : MonoBehaviour
 		ResetSelectCharacterCard();
 	}
 
-	//ĳ���� �����ϴ� â ����
+	//OpenCharacterList
 	public void OpenCharacterList()
 	{
 		characterPanel.gameObject.SetActive(true);
@@ -256,10 +260,9 @@ public class FormationManager : MonoBehaviour
 		activeFalseList.Clear();
 	}
 
-	//���� ������ ĳ���� �� ī�� id �ٲ�
+	//캐릭터 카드 바꾸기
 	public void ChangeCharacterCard()
 	{
-		//ī������ �ٲ�
 		var cardInfo = characterCard[selectedFormationIndex].GetComponent<SelectCardInfo>();
 		bool isDuplication = false;
 
@@ -278,13 +281,13 @@ public class FormationManager : MonoBehaviour
 
 			//selectedFormationList�����¿� selectedFormationIndex�ε����� ���̵� �ٲ�
 			formationList[selectedFormationList][selectedFormationIndex] = selectedCharacterID;
-            activeFalseList.Add(cardInfo.gameObject);
+			//activeFalseList.Add(cardInfo.gameObject);
         }
 
 		//����
 		CloseCharacterList();
 		UpdatePlayData();
-		UpdateActiveCard();
+		//UpdateActiveCard();
 		GameManager.Instance.SaveExecution();
 	}
 

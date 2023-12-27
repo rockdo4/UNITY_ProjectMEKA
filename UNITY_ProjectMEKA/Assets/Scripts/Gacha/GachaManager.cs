@@ -41,15 +41,14 @@ public class GachaManager : MonoBehaviour
         foreach(var item in items)
         {
             //Debug.Log((item.Key, item.Value.ArrangementCost));
-            if(item.Value.PortraitPath != "None")
+            if(item.Value.PortraitPath == "None")
             {
-                testPicker.Add(item.Key, item.Value.ArrangementCost);
+                continue;
             }
             else
             {
-                //CharacterManager.Instance.m_CharacterStorage[item.Key].IsUnlock = true;
-                //Debug.Log($"{item.Value.CharacterName} Á¦¿Ü");
-            }
+				testPicker.Add(item.Key, item.Value.ArrangementCost);
+			}
         }
     }
 

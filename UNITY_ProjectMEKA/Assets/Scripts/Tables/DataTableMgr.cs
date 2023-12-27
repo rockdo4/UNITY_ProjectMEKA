@@ -66,6 +66,9 @@ public static class DataTableMgr
         var affectionCommunicationTable = new AffectionCommunicationTable();
         tables.Add(typeof(AffectionCommunicationTable), affectionCommunicationTable);
 
+        var skillinfoTable = new SkillInfoTable();
+        tables.Add(typeof(SkillInfoTable), skillinfoTable);
+
 		CharacterManager.Instance.InitCharacterStorage(charTable, characterLevelTable);
     }
 

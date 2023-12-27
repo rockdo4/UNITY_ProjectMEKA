@@ -9,7 +9,6 @@ using UnityEngine;
 
 public class SkillTable : DataTable
 {
-	
 	protected Dictionary<int, SkillData[]> skillDictArr = new Dictionary<int, SkillData[]>();
 
 	public SkillTable()
