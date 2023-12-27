@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,14 +40,13 @@ public class CharacterPanelManager : MonoBehaviour
 
 			var card = Instantiate(characterCardPrefab, transform);
 			card.name = stringTable.GetString(characterInfo.CharacterNameStringID);
-			card.GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>(characterInfo.PortraitPath);
-			card.GetComponentInChildren<CardInfo>().ChangeCardId(characterInfo.CharacterID);
+			card.GetComponent<Image>().sprite = Resources.Load<Sprite>(characterInfo.PortraitPath);
+			card.GetComponent<CardInfo>().ChangeCardId(characterInfo.CharacterID);
 
-			var button0 = card.GetComponentsInChildren<Button>()[0];
-			var button1 = card.GetComponentsInChildren<Button>()[1];
+			var button = card.GetComponent<Button>();
 
-			if(button1 != null)
-				button1.onClick.AddListener(() =>
+			if(button != null)
+				button.onClick.AddListener(() =>
 				{
 					OpenCharacterInfo(character.Value);
 					if (!character.Value.IsUnlock)
@@ -58,16 +56,6 @@ public class CharacterPanelManager : MonoBehaviour
 				});
 			else
 				Debug.LogError("��ư ���ҷ���");
-
-			if(button0 != null)
-			{
-				button0.onClick.AddListener(() =>
-				{
-					Debug.Log("캐릭터 창 오픈");
-					characterAffectionPanel.gameObject.SetActive(true);
-					characterAffectionPanel.GetComponent<AffectionPanel>().SetCharacter(character.Value);
-				});
-			}
 
 			if (characterInfo.PortraitPath == "None")
 			{
@@ -90,18 +78,16 @@ public class CharacterPanelManager : MonoBehaviour
 		for(int i = 0; i < count; i++)
 		{
 			var card = transform.GetChild(i); 
-			var info = card.GetComponentInChildren<CardInfo>();
+			var info = card.GetComponent<CardInfo>();
 			var id = info.GetCardID();
 
 			if(CharacterManager.Instance.m_CharacterStorage[id].IsUnlock)
 			{
-				card.GetComponentsInChildren<Button>()[0].interactable = true;
-				card.GetComponentsInChildren<Button>()[1].interactable = true;
+				card.GetComponent<Button>().interactable = true;
 			}
 			else
 			{
-				card.GetComponentsInChildren<Button>()[0].interactable = false;
-				card.GetComponentsInChildren<Button>()[1].interactable = false;
+				card.GetComponent<Button>().interactable = false;
 			}
 		}
 	}

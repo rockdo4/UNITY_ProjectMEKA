@@ -100,8 +100,6 @@ public class PlayDataManager
             chara.affection.AffectionPoint = 0;
             chara.affection.LastTime = default;
 
-            Debug.Log(chara.affection.LastTime);
-
             if (!storage.ContainsKey(chara.CharacterID))
             {
                 storage.Add(chara.CharacterID, chara);
