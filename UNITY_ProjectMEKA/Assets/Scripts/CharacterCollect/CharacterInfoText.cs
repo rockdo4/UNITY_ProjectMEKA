@@ -9,17 +9,17 @@ public class CharacterInfoText : MonoBehaviour
 
 	[Header("Button")]
 	public Button enhanceButton;
-	public Button synchroButton;
-	public Button deviceButton;
-	public Button skillButton;
+	//public Button synchroButton;
+	//public Button deviceButton;
+	//public Button skillButton;
 	public Button classButton;
 	public Button companyButton;
 
 	[Header("Panel")]
 	public EnhancePanel enhancePanel;
-	public SynchroPanel synchroPanel;
-	public DevicePanel devicePanel;
-	public SkillPanel skillPanel;
+	//public SynchroPanel synchroPanel;
+	//public DevicePanel devicePanel;
+	//public SkillPanel skillPanel;
 	public PanelManager panelManager;
 
 	[Header("Text")]
@@ -46,27 +46,27 @@ public class CharacterInfoText : MonoBehaviour
 			enhancePanel.SetCharacter(character);
 		});
 
-		synchroButton.onClick.RemoveAllListeners();
-		synchroButton.onClick.AddListener(() =>
-		{
-			synchroPanel.gameObject.SetActive(true);
-			synchroPanel.SetCharacter(character);
-			//synchroPanel.CheckGrade();
-		});
+		//synchroButton.onClick.RemoveAllListeners();
+		//synchroButton.onClick.AddListener(() =>
+		//{
+		//	synchroPanel.gameObject.SetActive(true);
+		//	synchroPanel.SetCharacter(character);
+		//	//synchroPanel.CheckGrade();
+		//});
 
-		deviceButton.onClick.RemoveAllListeners();
-		deviceButton.onClick.AddListener(() =>
-		{
-			devicePanel.gameObject.SetActive(true);
-			devicePanel.SetCharacter(character);
-		});
+		//deviceButton.onClick.RemoveAllListeners();
+		//deviceButton.onClick.AddListener(() =>
+		//{
+		//	devicePanel.gameObject.SetActive(true);
+		//	devicePanel.SetCharacter(character);
+		//});
 
-		skillButton.onClick.RemoveAllListeners();
-		skillButton.onClick.AddListener(() =>
-		{
-			skillPanel.gameObject.SetActive(true);
-			skillPanel.SetCharacter(character);
-		});
+		//skillButton.onClick.RemoveAllListeners();
+		//skillButton.onClick.AddListener(() =>
+		//{
+		//	skillPanel.gameObject.SetActive(true);
+		//	skillPanel.SetCharacter(character);
+		//});
 	}
 
 	public void SetCharacter (Character data)
@@ -94,29 +94,29 @@ public class CharacterInfoText : MonoBehaviour
 		//SetDeviceInfo();
 	}
 
-	public void SetSkillInfo()
-	{
-		//var table = DataTableMgr.GetTable<>();
-		var skillText = skillButton.GetComponentInChildren<TextMeshProUGUI>();
-		var skillTable = DataTableMgr.GetTable<SkillTable>();
-		var datas = skillTable.GetSkillDatas(character.SkillID);
+	//public void SetSkillInfo()
+	//{
+	//	//var table = DataTableMgr.GetTable<>();
+	//	var skillText = skillButton.GetComponentInChildren<TextMeshProUGUI>();
+	//	var skillTable = DataTableMgr.GetTable<SkillTable>();
+	//	var datas = skillTable.GetSkillDatas(character.SkillID);
 
-		int skillID;
-		if (datas.Length == character.SkillLevel - 1)
-		{
-			skillID = -1;
-		}
-		else
-		{
-			skillID = datas[character.SkillLevel - 1].SkillLevelID;
-		}
+	//	int skillID;
+	//	if (datas.Length == character.SkillLevel - 1)
+	//	{
+	//		skillID = -1;
+	//	}
+	//	else
+	//	{
+	//		skillID = datas[character.SkillLevel - 1].SkillLevelID;
+	//	}
 
-		skillText.SetText(
-			$"Skill ID: {character.SkillID}\n" +
-			$"SkillLevel ID: {skillID}\n" +
-			$"SkillLevel: {character.SkillLevel}\n" +
-			$"(스킬업버튼)");
-	}
+	//	skillText.SetText(
+	//		$"Skill ID: {character.SkillID}\n" +
+	//		$"SkillLevel ID: {skillID}\n" +
+	//		$"SkillLevel: {character.SkillLevel}\n" +
+	//		$"(스킬업버튼)");
+	//}
 
 	public void SetLevelInfo()
 	{
@@ -127,15 +127,15 @@ public class CharacterInfoText : MonoBehaviour
 			$"(레벨업버튼)");
 	}
 
-	public void SetSynchroInfo()
-	{
-		var synchroText = synchroButton.GetComponentInChildren<TextMeshProUGUI>();
+	//public void SetSynchroInfo()
+	//{
+	//	var synchroText = synchroButton.GetComponentInChildren<TextMeshProUGUI>();
 
-		synchroText.SetText(
-			$"현재등급: {character.CharacterGrade}\n" +
-			$"이름: {character.Name}\n" +
-			$"(싱크로버튼)");
-	}
+	//	synchroText.SetText(
+	//		$"현재등급: {character.CharacterGrade}\n" +
+	//		$"이름: {character.Name}\n" +
+	//		$"(싱크로버튼)");
+	//}
 
 	public void SetClass_Range_Keyword()
 	{
@@ -157,14 +157,14 @@ public class CharacterInfoText : MonoBehaviour
 			$"(여기에 마크)");
 	}
 
-	public void SetDeviceInfo()
-	{
-		var deviceText = deviceButton.GetComponentInChildren<TextMeshProUGUI>();
+	//public void SetDeviceInfo()
+	//{
+	//	var deviceText = deviceButton.GetComponentInChildren<TextMeshProUGUI>();
 
-		deviceText.SetText(
-			$"코어: {character.DeviceCoreID}\n" +
-			$"엔진: {character.DeviceEngineID}");
-	}
+	//	deviceText.SetText(
+	//		$"코어: {character.DeviceCoreID}\n" +
+	//		$"엔진: {character.DeviceEngineID}");
+	//}
 
 	public void UpdateText()
 	{

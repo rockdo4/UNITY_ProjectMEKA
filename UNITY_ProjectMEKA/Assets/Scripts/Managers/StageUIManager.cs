@@ -177,7 +177,11 @@ public class StageUIManager : MonoBehaviour
     public void SetLockedPopUpWinodw()
     {
         // 팝업창 띄우고
+        Debug.Log("해금 안 됐다는 팝업 띄우기");
         // 글자는 스트링테이블에서 언락팝업값 가져오기 (언락글자 전체동일)
+
+        panelManager.SetNoticePanel("아직 해금 안됨", "확인");
+        //panelManager.SetPopUpPanel("뭐 할건가요?", () => { }, "예", "아니오");
     }
 
     public void IntoStageClassPanel(StageClass stageClass)
