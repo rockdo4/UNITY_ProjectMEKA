@@ -145,29 +145,22 @@ public class StageManager : MonoBehaviour
                         break;
                 }
             }
-            if (tempClearCount >= 0 && !stageSaveData.isCleared) // first clear
+            if (tempClearCount > 0)
             {
-                WinDataSave(stageSaveData, stageData, true);
+                WinDataSave(stageSaveData, stageData);
             }
             else
             {
-                if(tempClearCount == 0)
-                {
-                    gameState = GameState.Die;
-                }
-                else
-                {
-                    WinDataSave(stageSaveData, stageData, false);
-                }
+                gameState = GameState.Die;
             }
         }
     }
 
-    public void WinDataSave(StageSaveData stageSaveData, StageData stageData, bool isFirstWin)
+    public void WinDataSave(StageSaveData stageSaveData, StageData stageData)
     {
         gameState = GameState.Win;
 
-        if(isFirstWin)
+        if(!stageSaveData.isCleared)
         {
             stageSaveData.isCleared = true;
             stageSaveData.clearScore = tempClearCount;
@@ -176,21 +169,20 @@ public class StageManager : MonoBehaviour
             {
                 StageDataManager.Instance.selectedStageDatas[stageData.NextStageID].isUnlocked = true;
             }
-
-            StageDataManager.Instance.UpdatePlayData();
-
             for (int i = 0; i < rewardList.Count; ++i)
             {
                 ItemInventoryManager.Instance.AddRewardByID(rewardList[i].Item1, rewardList[i].Item2);
             }
         }
-        else
+        else if(tempClearCount > stageSaveData.clearScore)
         {
+            stageSaveData.clearScore = tempClearCount;
             for (int i = 1; i < rewardList.Count; ++i)
             {
                 ItemInventoryManager.Instance.AddRewardByID(rewardList[i].Item1, rewardList[i].Item2);
             }
         }
+        StageDataManager.Instance.UpdatePlayData();
     }
 
     public GameState DefenseModeWinCondition()

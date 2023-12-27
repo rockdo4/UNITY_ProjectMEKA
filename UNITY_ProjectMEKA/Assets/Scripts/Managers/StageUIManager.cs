@@ -176,12 +176,11 @@ public class StageUIManager : MonoBehaviour
 
     public void SetLockedPopUpWinodw()
     {
-        // 팝업창 띄우고
-        Debug.Log("해금 안 됐다는 팝업 띄우기");
-        // 글자는 스트링테이블에서 언락팝업값 가져오기 (언락글자 전체동일)
+        var stringTable = StageDataManager.Instance.stringTable;
+        var lockMessage = stringTable.GetString("lockMessage");
+        var ok = stringTable.GetString("ok");
 
-        panelManager.SetNoticePanel("아직 해금 안됨", "확인");
-        //panelManager.SetPopUpPanel("뭐 할건가요?", () => { }, "예", "아니오");
+        panelManager.SetNoticePanel(lockMessage, ok);
     }
 
     public void IntoStageClassPanel(StageClass stageClass)
@@ -230,7 +229,6 @@ public class StageUIManager : MonoBehaviour
 
     public void CreatSelectedStageButtons(Transform parentTr, Dictionary<int, StageSaveData> currentStageData)
     {
-        var stringBuilder = new StringBuilder();
         foreach (var stage in currentStageData)
         {
             // instantiate
@@ -254,6 +252,7 @@ public class StageUIManager : MonoBehaviour
 
             // clear score
             var count = stage.Value.clearScore;
+
             for(int i = 0; i < 3; ++i)
             {
                 if(count > i)
