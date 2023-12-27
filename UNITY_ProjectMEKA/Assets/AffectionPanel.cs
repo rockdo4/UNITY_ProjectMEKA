@@ -16,7 +16,7 @@ public class AffectionPanel : MonoBehaviour
 	public Button communicationButton;
 
 	[Header("Communication")]
-	public Button textWindow;
+	public RectTransform textPanel;
 	public RectTransform infoBox;
 	public RectTransform selectPanel;
 
@@ -118,9 +118,9 @@ public class AffectionPanel : MonoBehaviour
 
 		count = 0;
 
-		textWindow.gameObject.SetActive(true);
+		textPanel.gameObject.SetActive(true);
 		NextScript();
-		textWindow.onClick.AddListener(() =>
+		textPanel.GetComponentInChildren<Button>().onClick.AddListener(() =>
 		{
 			NextScript();
 		});
@@ -130,8 +130,8 @@ public class AffectionPanel : MonoBehaviour
 	{
 		if(count == -1)
 		{
-			textWindow.onClick.RemoveAllListeners();
-			textWindow.gameObject.SetActive(false);
+			textPanel.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
+			textPanel.gameObject.SetActive(false);
 			return;
 		}
 
@@ -172,7 +172,7 @@ public class AffectionPanel : MonoBehaviour
 			return;
 		}
 
-		textWindow.GetComponentInChildren<TextMeshProUGUI>().SetText(info.Script);
+		textPanel.GetComponentInChildren<TextMeshProUGUI>().SetText(info.Script);
 
 		if (info.Branch != -1)
 		{

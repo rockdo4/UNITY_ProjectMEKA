@@ -19,7 +19,6 @@ public class CharacterPanelManager : MonoBehaviour
 	public RectTransform characterAffectionPanel;
 	public Button enableButton;
 
-
 	private Vector3 characterInfoPos;
 
 	private void Awake()
