@@ -1,19 +1,34 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 using static Defines;
+using UnityEngine.TextCore.Text;
+using Unity.VisualScripting;
 
 public class StageUIManager : MonoBehaviour
 {
     public PanelManager panelManager;
+
+    // unlock system buttons
+    public CharacterInfoText characterInfoText;
     public Button storyStageButton;
     public Button assignmentStageButton;
     public Button challengeStageButton;
+    public Button[] deviceButtons = new Button[2];
+    public Button synchroButton;
+    public Button skillUpdateButton;
+    public GameObject gachaUnLockPanel;
+    public GameObject affectionLockPanel;
+    public SynchroPanel synchroPanel;
+    public DevicePanel devicePanel;
+    public SkillPanel skillPanel;
+    private Action DeviceButtonClickEvent;
+    private Action SyncroButtonClickEvent;
+    private Action SkillButtonClickEvent;
 
     public GameObject storyStageButtonPanel;
     public GameObject assignmentStageButtonPanel;
@@ -42,32 +57,150 @@ public class StageUIManager : MonoBehaviour
     private void Awake()
     {
         PlayDataManager.Init();
-        SetStageButtons(StageClass.Story);
-        SetStageButtons(StageClass.Assignment);
-        SetStageButtons(StageClass.Challenge);
-
-        storyStageButton.onClick.AddListener(() =>
-        {
-            ClassOnClick(StageClass.Story);
-            panelManager.ChangePanelMain();
-            panelManager.ChangePanelStoryStageChoice();
-        });
-        assignmentStageButton.onClick.AddListener(() =>
-        {
-            ClassOnClick(StageClass.Assignment);
-            panelManager.ChangePanelMain();
-            panelManager.ChangePanelAssignmentStageChoice();
-        });
-        challengeStageButton.onClick.AddListener(() =>
-        {
-            ClassOnClick(StageClass.Challenge);
-            panelManager.ChangePanelMain();
-            panelManager.ChangePanelChallengeStageChoice();
-        });
+        CreateStageButtons(StageClass.Story);
+        CreateStageButtons(StageClass.Assignment);
+        CreateStageButtons(StageClass.Challenge);
+        UpdateSystemUIByUnlock();
+        SetStageClassButtonsByUnlock();
+        SetSystemButtonsByUnlock();
     }
 
     private void Update()
     {
+    }
+
+    public void SetSystemButtonEvents()
+    {
+        DeviceButtonClickEvent = () => 
+        {
+            devicePanel.gameObject.SetActive(true);
+            devicePanel.SetCharacter(characterInfoText.character);
+        };
+
+        SyncroButtonClickEvent = () =>
+        {
+            synchroPanel.gameObject.SetActive(true);
+            synchroPanel.SetCharacter(characterInfoText.character);
+        };
+
+        SkillButtonClickEvent = () =>
+        {
+            skillPanel.gameObject.SetActive(true);
+            skillPanel.SetCharacter(characterInfoText.character);
+        };
+    }
+
+    public void SetStageClassButtonsByUnlock()
+    {
+        storyStageButton.onClick.AddListener(() =>
+        {
+            SetSelctedStageClassButtons(SystemForUnlock.None, StageClass.Story);
+        });
+        assignmentStageButton.onClick.AddListener(() =>
+        {
+            SetSelctedStageClassButtons(SystemForUnlock.AssignmentStage, StageClass.Assignment);
+        });
+        challengeStageButton.onClick.AddListener(() =>
+        {
+            SetSelctedStageClassButtons(SystemForUnlock.ChallengeStage, StageClass.Challenge);
+        });
+    }
+
+    public void SetSystemButtonsByUnlock()
+    {
+        foreach(var deviceButton in deviceButtons)
+        {
+            deviceButton.onClick.AddListener(() =>
+            {
+                SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
+            });
+        }
+
+        synchroButton.onClick.AddListener(() =>
+        {
+            SetSelectedSystemButtonsByUnlock(SystemForUnlock.Synchro);
+        });
+
+        skillUpdateButton.onClick.AddListener(() =>
+        {
+            SetSelectedSystemButtonsByUnlock(SystemForUnlock.Skill);
+        });
+    }
+
+    public void SetSelectedSystemButtonsByUnlock(SystemForUnlock systemType)
+    {
+        var systems = PlayDataManager.data.systemUnlockData;
+        var systemID = (int)systemType;
+        if (systems[systemID])
+        {
+            // 해당하는 패널로 이동
+            switch(systemType)
+            {
+                case SystemForUnlock.Device:
+                    DeviceButtonClickEvent();
+                    break;
+                case SystemForUnlock.Synchro:
+                    SyncroButtonClickEvent();
+                    break;
+                case SystemForUnlock.Skill:
+                    SkillButtonClickEvent();
+                    break;
+            }
+        }
+        else
+        {
+            SetLockedPopUpWinodw();
+        }
+    }
+
+    public void SetSelctedStageClassButtons(SystemForUnlock systemType, StageClass stageClass)
+    {
+        if(systemType != SystemForUnlock.None)
+        {
+            var systems = PlayDataManager.data.systemUnlockData;
+            var systemID = (int)systemType;
+            if (systems[systemID])
+            {
+                IntoStageClassPanel(stageClass);            
+            }
+            else
+            {
+                SetLockedPopUpWinodw();
+            }
+        }
+        else
+        {
+            IntoStageClassPanel(stageClass);
+        }
+    }
+
+    public void SetLockedPopUpWinodw()
+    {
+        // 팝업창 띄우고
+        // 글자는 스트링테이블에서 언락팝업값 가져오기 (언락글자 전체동일)
+    }
+
+    public void IntoStageClassPanel(StageClass stageClass)
+    {
+        ClassOnClick(stageClass);
+        panelManager.ChangePanelMain();
+        IntoSelectedStageClassPanel(stageClass);
+    }
+
+    public void IntoSelectedStageClassPanel(StageClass stageClass)
+    {
+        switch (stageClass)
+        {
+            case StageClass.Story:
+                panelManager.ChangePanelStoryStageChoice();
+                break;
+            case StageClass.Assignment:
+                panelManager.ChangePanelAssignmentStageChoice();
+                break;
+            case StageClass.Challenge:
+                panelManager.ChangePanelChallengeStageChoice();
+                break;
+        }
     }
 
     public void ClassOnClick(StageClass stageClass)
@@ -75,23 +208,23 @@ public class StageUIManager : MonoBehaviour
         StageDataManager.Instance.CurrentStageClass = stageClass;
     }
 
-    public void SetStageButtons(StageClass stageClass)
+    public void CreateStageButtons(StageClass stageClass)
     {
         switch (stageClass)
         {
             case StageClass.Story:
-                CreatStageButtons(storyStageButtonPanel.transform, PlayDataManager.data.storyStageDatas);
+                CreatSelectedStageButtons(storyStageButtonPanel.transform, PlayDataManager.data.storyStageDatas);
                 break;
             case StageClass.Assignment:
-                CreatStageButtons(assignmentStageButtonPanel.transform, PlayDataManager.data.assignmentStageDatas);
+                CreatSelectedStageButtons(assignmentStageButtonPanel.transform, PlayDataManager.data.assignmentStageDatas);
                 break;
             case StageClass.Challenge:
-                CreatStageButtons(challengeStageButtonPanel.transform, PlayDataManager.data.challengeStageDatas);
+                CreatSelectedStageButtons(challengeStageButtonPanel.transform, PlayDataManager.data.challengeStageDatas);
                 break;
         }
     }
 
-    public void CreatStageButtons(Transform parentTr, Dictionary<int, StageSaveData> currentStageData)
+    public void CreatSelectedStageButtons(Transform parentTr, Dictionary<int, StageSaveData> currentStageData)
     {
         var stringBuilder = new StringBuilder();
         foreach (var stage in currentStageData)
@@ -289,6 +422,33 @@ public class StageUIManager : MonoBehaviour
             mapInfoPanel.SetActive(true);
             stageInfoPanel.SetActive(false);
             monsterInfoPanel.SetActive(false);
+        }
+    }
+
+    public void UpdateSystemUIByUnlock()
+    {
+        // 시스템 해금 정보 읽어오기
+        // 스위치문 : 종류별로 true, false에 따라 패널 활성/비활성 or 팝업 띄우기
+
+        var systems = PlayDataManager.data.systemUnlockData;
+        for(int i = 0; i < systems.Count; ++i)
+        {
+            var systemType = (SystemForUnlock)i;
+            switch(systemType)
+            {
+                case SystemForUnlock.Gacha:
+                    if(systems[i]) // 해금 됐으면
+                    {
+                        gachaUnLockPanel.SetActive(false);
+                    }
+                    break;
+                case SystemForUnlock.Affection:
+                    if (systems[i]) // 해금 됐으면
+                    {
+                        affectionLockPanel.SetActive(false);
+                    }
+                    break;
+            }
         }
     }
 }
