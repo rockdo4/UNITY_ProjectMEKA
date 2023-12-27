@@ -29,11 +29,11 @@ public class PlayDataManager
     public static void Reset()
     {
         data = new SaveDataVC();
-        FirstGameSet();
+        FirstGameSet(data);
         Save();
     }
 
-    private static void FirstGameSet()
+    private static void FirstGameSet(SaveDataVC data)
     {
         data.IsFirstGame = true;
         data.BGMVolume = 0.5f;
@@ -80,9 +80,7 @@ public class PlayDataManager
 
     private static void FirstGameCharacterSaveDataSet()
     {
-
         var charTable = DataTableMgr.GetTable<CharacterTable>().GetOriginalTable();
-
         var storage = CharacterManager.Instance.m_CharacterStorage;
 
         foreach (var character in charTable)
@@ -106,7 +104,7 @@ public class PlayDataManager
             }
         }
 
-        Save();
+        data.characterStorage = storage;
         CharacterManager.Instance.CheckPlayData();
     }
 }
