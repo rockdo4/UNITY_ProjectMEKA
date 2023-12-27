@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38a402ef5031524cb76e3bec1e47542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  victonEffectName: 
   rb: {fileID: 0}
   initPos: {x: 0, y: 0, z: 0}
   waypointIndex: 0
@@ -170,6 +171,7 @@ MonoBehaviour:
   FirePosition: {fileID: 7034561075237896772}
   rangeInPlayers: []
   rangeInSecondPlayers: []
+  currentState: 0
   CurrentPos: {x: 0, y: 0, z: 0}
   CurrentGridPos: {x: 0, y: 0, z: 0}
   isArrival: 0
@@ -282,6 +284,7 @@ MonoBehaviour:
   enemyType: 0
   speed: 1
   isFly: 0
+  isMovingShot: 0
   isBlock: 1
 --- !u!1 &4046750843033361386
 GameObject:
@@ -781,6 +784,10 @@ PrefabInstance:
     - target: {fileID: 2664345091418729059, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
       propertyPath: m_Name
       value: EnemyCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664345091418729059, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

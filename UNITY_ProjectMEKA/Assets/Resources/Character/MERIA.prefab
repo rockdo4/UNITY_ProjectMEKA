@@ -157,6 +157,7 @@ MonoBehaviour:
   currnetAnimationController: {fileID: 0}
   firstLookPos: {fileID: 0}
   skillPivot: {x: 0, y: 0, z: 0}
+  trail: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -222,6 +223,7 @@ MonoBehaviour:
   occupation: 5
   critChance: 0
   fatalDamage: 1
+  isFirstTargetIsFly: 0
   experience: 0
   currentExperience: 0
 --- !u!114 &2503201362793710120
@@ -245,6 +247,7 @@ MonoBehaviour:
   yal: 0
   rangeAttack: 
   attackableTiles: []
+  currentSkillTimer: 0
   targetList: []
   skillDuration: 12
   isMe: 1

@@ -9,6 +9,8 @@ public class ArrangeJoystick : MonoBehaviour
     public Button cancelButton;
     public Button collectButton;
     public Button skillButton;
+    //임형준 추가public Image skillTimerBar;
+    public Image skillTimerBar;
     //public Button closeButton;
     public ArrangeJoystickHandler handler;
 
@@ -143,6 +145,10 @@ public class ArrangeJoystick : MonoBehaviour
         if (skillButton.gameObject.activeSelf)
         {
             skillButton.gameObject.SetActive(false);
+        }
+        if(skillTimerBar.gameObject.activeSelf)
+        {
+            skillTimerBar.gameObject.SetActive(false);
         }
 
         var skillType = stageManager.currentPlayer.GetComponent<SkillBase>().skillType;

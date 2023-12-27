@@ -19395,6 +19395,7 @@ MonoBehaviour:
   enemyType: 5
   speed: 1
   isFly: 0
+  isMovingShot: 0
   isBlock: 1
 --- !u!114 &2736269168576966422
 MonoBehaviour:
@@ -20228,6 +20229,10 @@ PrefabInstance:
     - target: {fileID: 2664345091418729059, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664345091418729059, guid: a8938229e4ff94a48ac7c548d4686d10, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

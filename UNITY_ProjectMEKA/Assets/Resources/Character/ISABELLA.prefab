@@ -11708,7 +11708,7 @@ MonoBehaviour:
   Hp: 114
   arrangeCost: 13
   arrangeCoolTime: 60
-  skill: 9
+  skill: 0
   cost: 0
   maxCost: 50
   skillCost: 50
@@ -11717,6 +11717,7 @@ MonoBehaviour:
   occupation: 5
   critChance: 0
   fatalDamage: 0
+  isFirstTargetIsFly: 0
   experience: 0
   currentExperience: 0
 --- !u!114 &5531138866722357468
@@ -11763,6 +11764,7 @@ MonoBehaviour:
   currnetAnimationController: {fileID: 0}
   firstLookPos: {fileID: 0}
   skillPivot: {x: 0, y: 0, z: 0}
+  trail: {fileID: 0}
   currentState: 0
   stageManager: {fileID: 0}
   isDie: 0
@@ -11800,6 +11802,7 @@ MonoBehaviour:
   yal: 0
   rangeAttack: 
   attackableTiles: []
+  currentSkillTimer: 0
   targetList: []
   figure: 1.2
   effectName: IsabellaSkillEffect
