@@ -49,21 +49,18 @@ public class StageUIManager : MonoBehaviour
         storyStageButton.onClick.AddListener(() =>
         {
             ClassOnClick(StageClass.Story);
-            StageDataManager.Instance.LoadPlayData();
             panelManager.ChangePanelMain();
             panelManager.ChangePanelStoryStageChoice();
         });
         assignmentStageButton.onClick.AddListener(() =>
         {
             ClassOnClick(StageClass.Assignment);
-            StageDataManager.Instance.LoadPlayData();
             panelManager.ChangePanelMain();
             panelManager.ChangePanelAssignmentStageChoice();
         });
         challengeStageButton.onClick.AddListener(() =>
         {
             ClassOnClick(StageClass.Challenge);
-            StageDataManager.Instance.LoadPlayData();
             panelManager.ChangePanelMain();
             panelManager.ChangePanelChallengeStageChoice();
         });
@@ -75,7 +72,7 @@ public class StageUIManager : MonoBehaviour
 
     public void ClassOnClick(StageClass stageClass)
     {
-        StageDataManager.Instance.SetCurrentStageClass(stageClass);
+        StageDataManager.Instance.CurrentStageClass = stageClass;
     }
 
     public void SetStageButtons(StageClass stageClass)

@@ -18,6 +18,18 @@ public class StageDataManager
     public StageSaveData selectedStageData;
     public Dictionary<int,StageSaveData> selectedStageDatas;
     private StageClass currentStageClass;
+    public StageClass CurrentStageClass
+    {
+        get
+        {
+            return currentStageClass;
+        }
+        set
+        {
+            currentStageClass = value;
+            LoadPlayData();
+        }
+    }
     public bool toStageChoicePanel;
     
     // tables
@@ -40,14 +52,9 @@ public class StageDataManager
         rewardTable = DataTableMgr.GetTable<RewardTable>();
     }
 
-    public void SetCurrentStageClass(StageClass stageClass)
-    {
-        currentStageClass = stageClass;
-    }
-
     public void UpdatePlayData()
     {
-        switch (currentStageClass)
+        switch (CurrentStageClass)
         {
             case StageClass.None:
                 break;
@@ -66,7 +73,7 @@ public class StageDataManager
 
     public void LoadPlayData()
     {
-        switch (currentStageClass)
+        switch (CurrentStageClass)
         {
             case StageClass.None:
                 break;

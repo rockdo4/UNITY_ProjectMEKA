@@ -254,6 +254,6 @@ public static class Defines
         Device,
         Synchro,
         Skill,
-        Challenge
+        ChallengeStage
     }
 }
