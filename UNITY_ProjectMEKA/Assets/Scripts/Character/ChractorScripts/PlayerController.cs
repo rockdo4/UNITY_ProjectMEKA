@@ -65,6 +65,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Header("있다면 이팩트 이름은 무엇인가")]
     public string effectName;
 
+    [SerializeField, Header("사운드 이름")]
+    public string sound;
+
     public RuntimeAnimatorController animationController;
     public RuntimeAnimatorController currnetAnimationController;
     private bool CharacterArrangeOne;
@@ -257,7 +260,7 @@ public class PlayerController : MonoBehaviour
 
     public void Hit()
     {
-
+        
         if (target == null)
         {
             return;
