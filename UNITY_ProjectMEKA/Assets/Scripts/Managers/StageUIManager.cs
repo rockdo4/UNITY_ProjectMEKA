@@ -274,7 +274,8 @@ public class StageUIManager : MonoBehaviour
 
             if (!stage.Value.isUnlocked)
             {
-                stageButtonGo.SetActive(false);
+                // for test
+                stageButtonGo.SetActive(true);
             }
         }
     }
