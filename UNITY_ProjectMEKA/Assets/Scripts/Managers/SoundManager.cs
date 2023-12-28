@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Playables;
@@ -31,7 +32,7 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        Init();
+        //Init();
     }
 
     public void Init()
@@ -118,17 +119,25 @@ public class SoundManager : MonoBehaviour
 
     public void PlayerSEAudio(string sound)
     {
-        Debug.Log(sound);
         foreach(var clip in audioClips)
         {
             if(clip.name == sound)
             {
-                seAudioSource.First().clip = clip.clip;
-                //seAudioSource.First().PlayOneShot(clip.clip);
-                seAudioSource.First().Play();
+                seAudioSource.First().PlayOneShot(clip.clip);
                 return;
             }
         }
-
+    }
+    public void PlayBGM(string bgm)
+    {
+        foreach (var clip in audioClips)
+        {
+            if (clip.name == bgm)
+            {
+                bgmAudioSource.First().PlayOneShot(clip.clip);
+                return;
+            }
+        }
+        
     }
 }
