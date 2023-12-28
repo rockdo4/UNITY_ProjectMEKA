@@ -48,16 +48,18 @@ public class PlayableProjectileAttackState : PlayableBaseState
         }
         else
         {
+            if (playerCtrl.target == null || !playerCtrl.target.activeInHierarchy || !playerCtrl.rangeInEnemys.Any())
+            {
+                playerCtrl.ani.SetTrigger("Idle");
+                playerCtrl.SetState(PlayerController.CharacterStates.Idle);
+
+            }
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
                 timer = playerCtrl.state.attackDelay;
                 
-                if(playerCtrl.target == null)
-                {
-                    playerCtrl.SetState(PlayerController.CharacterStates.Idle);
-
-                }
+                
                 if (playerCtrl.target.activeInHierarchy || playerCtrl.rangeInEnemys.Contains(playerCtrl.target))//59
                 {
                     playerCtrl.ani.SetTrigger("Attack");
@@ -67,7 +69,6 @@ public class PlayableProjectileAttackState : PlayableBaseState
             
         }
 
-        
     }
    
 }

@@ -84,6 +84,10 @@ public class HitSkillType : SkillBase
             timer = 0;
             player.state.cost -= skillCost;
             isSkillUsing = true;
+            if(skillSoundName != null)
+            {
+                SoundManager.instance.PlayerSFXAudio(skillSoundName);
+            }
             switch (skillType)
             {
                 case Defines.SkillType.Auto:
@@ -197,7 +201,10 @@ public class HitSkillType : SkillBase
     public void PalaSkillAttack()
     {
         var t = player.target.GetComponentInParent<IAttackable>();
-        t.OnAttack(saveDamage * 1.2f);
+        if(t != null)
+        {
+            t.OnAttack(saveDamage * 1.2f);
+        }
     }
     public void StunAttack()
     {

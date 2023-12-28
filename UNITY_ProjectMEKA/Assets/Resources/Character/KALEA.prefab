@@ -2412,8 +2412,8 @@ MonoBehaviour:
   parentPos: {fileID: 0}
   ChildPos: {fileID: 0}
   isHitEffect: 0
-  effectName: NormalSwordAttack
-  sound: 
+  effectName: 
+  sound: NormalSwordAttack
   animationController: {fileID: 9100000, guid: 00ea5458924634342b159644626773a0, type: 2}
   currnetAnimationController: {fileID: 0}
   firstLookPos: {fileID: 0}
@@ -2465,9 +2465,9 @@ MonoBehaviour:
   BulletType: 0
   flashName: 
   hitName: 
-  hang: 2
+  hang: 3
   yal: 1
-  rangeAttack: 0100000002000000
+  rangeAttack: 010000000200000001000000
   level: 0
   Hp: 0
   arrangeCost: 15
@@ -2496,6 +2496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee9e0a68442fbe3488554654cafcc6d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillSoundName: 
   skillCost: 20
   skillCoolTime: 30
   skillType: 0

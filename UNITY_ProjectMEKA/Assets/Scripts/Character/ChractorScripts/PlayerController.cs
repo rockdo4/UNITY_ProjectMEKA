@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -255,13 +256,13 @@ public class PlayerController : MonoBehaviour
     {
         stateManager.ChangeState(states[(int)state]);
         currentState = state;
-        Debug.Log($"{gameObject.name} state : {state}");
+        //Debug.Log($"{gameObject.name} state : {state}");
     }
     public void NormalAttackSound()
     {
         if (sound != null)
         {
-            SoundManager.instance.PlayerSEAudio(sound);
+            SoundManager.instance.PlayerSFXAudio(sound);
         }
     }
     public void Hit()
@@ -443,6 +444,7 @@ public class PlayerController : MonoBehaviour
                 obj.transform.position = newTargetPosition;
                 magic.damage = state.damage;
                 magic.target = target.transform;
+                magic.player = this;
                 obj.SetActive(false);
                 obj.SetActive(true);
                 break;

@@ -153,6 +153,7 @@ MonoBehaviour:
   ChildPos: {fileID: 0}
   isHitEffect: 0
   effectName: 
+  sound: Healing
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
   firstLookPos: {fileID: 0}
@@ -187,8 +188,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectInfos:
-  - objectName: Heal
-    perfab: {fileID: 8953845473985608632, guid: 3ff428deaf0b28643a679572cab02b93, type: 3}
+  - objectName: NeoHeal
+    perfab: {fileID: 3527601874502457674, guid: 47083acc802b45348959706e6003f4b9, type: 3}
     count: 10
   - objectName: MeriaSkillEffect
     perfab: {fileID: 8139558769267006628, guid: 529bbf6d77848824eba87511a832d260, type: 3}
@@ -206,7 +207,7 @@ MonoBehaviour:
   BulletName: 
   BulletType: 0
   flashName: 
-  hitName: Heal
+  hitName: NeoHeal
   hang: 4
   yal: 3
   rangeAttack: 000000000100000000000000010000000100000001000000010000000200000001000000010000000100000001000000
@@ -238,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375317c1b2b29d341824d604467b31de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillSoundName: BuffSkill
   skillCost: 50
   skillCoolTime: 20
   skillType: 1

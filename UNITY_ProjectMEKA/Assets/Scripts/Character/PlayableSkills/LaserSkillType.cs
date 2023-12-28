@@ -38,10 +38,7 @@ public class LaserSkillType : SkillBase
                 obj.GetComponent<PoolAble>().ReleaseObject();
             }
         }
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            UseSkill();
-        }
+        
     }
 
     public override void UseSkill()
@@ -51,6 +48,10 @@ public class LaserSkillType : SkillBase
             timer = 0;
             player.state.cost -= skillCost;
             isSkillUsing = true;
+            if(skillSoundName != null) 
+            {
+                SoundManager.instance.PlayerSFXAudio(skillSoundName);
+            }
             switch (skillType)
             {
                 case Defines.SkillType.Auto:

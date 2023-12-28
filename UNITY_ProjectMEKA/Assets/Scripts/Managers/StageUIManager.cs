@@ -21,6 +21,9 @@ public class StageUIManager : MonoBehaviour
     public Button[] deviceButtons = new Button[2];
     public Button synchroButton;
     public Button skillUpdateButton;
+    //임형준 추가
+    public Button volumeMute;
+
     public GameObject gachaUnLockPanel;
     public GameObject affectionLockPanel;
     public SynchroPanel synchroPanel;

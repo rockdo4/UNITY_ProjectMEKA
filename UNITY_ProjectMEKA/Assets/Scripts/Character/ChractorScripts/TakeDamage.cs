@@ -49,6 +49,10 @@ public class TakeDamage : MonoBehaviour, IAttackable
             if(enemy.shield > 0f)
             {
                 //enemy.shield -= damage;
+                if(damage <=0f)
+                {
+                    damage = 1f;
+                }
                 if (damage > enemy.shield)
                 {
                     float remainingDamage = damage - enemy.shield;

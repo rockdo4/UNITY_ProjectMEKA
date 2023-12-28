@@ -1,38 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Defines;
 
 public class Instantaneous : MonoBehaviour
 {
     private PlayerController player;
     private GameObject[] enemys;
+    private StageManager stageManager;
+    public Tile tile;
     private void Awake()
     {
         player = GetComponent<PlayerController>();
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
     }
     public void Shoot()
     {
+        player.NormalAttackSound();
         Vector3 os = player.target.transform.position;
-        Vector3Int CurrentGridPos = new Vector3Int(Mathf.FloorToInt(os.x), Mathf.FloorToInt(os.y), Mathf.FloorToInt(os.z));
-        enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        Vector3Int CurrentGridPos = new Vector3Int(Mathf.RoundToInt(os.x), Mathf.RoundToInt(os.y), Mathf.RoundToInt(os.z));
+        tile = stageManager.tileManager.GetCurrentTile(CurrentGridPos);
         IAttackable t = player.target.GetComponentInParent<IAttackable>();
         t.OnAttack(player.state.damage);
-        foreach (var enemy in enemys)
+        foreach (var en in tile.objectsOnTile) 
         {
-            if (CurrentGridPos == enemy.GetComponent<EnemyController>().CurrentGridPos)
+            if(en.tag == "Enemy")
             {
-                IAttackable aoeDamage = enemy.GetComponent<IAttackable>();
-                if (aoeDamage != null && enemy.gameObject != player.target.gameObject)
+                if (Random.Range(0f, 1f) >= player.state.critChance)
                 {
-                    if(Random.Range(0f,1f) >= player.state.critChance)
-                    {
-                        aoeDamage.OnAttack(player.state.damage * player.state.fatalDamage);
-                    }
-                    else
-                    {
-                        aoeDamage.OnAttack(player.state.damage);
-                    }
-                    //추후 주변 몬스터의 개수만큼 배율변경되도록 수정
+                    en.GetComponent<IAttackable>().OnAttack(player.state.damage * player.state.fatalDamage);
+                }
+                else
+                {
+                    en.GetComponent<IAttackable>().OnAttack(player.state.damage);
                 }
             }
         }

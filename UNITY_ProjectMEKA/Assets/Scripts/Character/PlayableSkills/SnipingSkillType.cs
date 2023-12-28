@@ -99,7 +99,10 @@ public class SnipingSkillType : SkillBase
         int i = 0;
         while(i < 5) 
         {
-
+            if(skillSoundName != null)
+            {
+                SoundManager.instance.PlayerSFXAudio(skillSoundName);
+            }
             //CheckOverlapBoxes();
             foreach(var onObject in attackableTiles)
             {
@@ -113,34 +116,13 @@ public class SnipingSkillType : SkillBase
                 }
             }
             i++;
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(1f);
             //yield return null;
         }
     }
     public void SnipingSingle()
     {
-        //if (targetList.Any())
-        //{
-        //    if (player.state.cost >= player.state.skillCost && timer >= player.state.skillCoolTime)
-        //    {
-        //        timer = 0;
-        //        player.state.cost -= skillCost;
-        //        isSkillUsing = true;
-        //        switch(skillT)
-        //        {
-        //            case SkillType.Attack:
-        //                SingleSnipingAttack();
-        //                break;
-        //            case SkillType.PlayerDamageUp:
-        //                SingleSnipingPlayerDamageUp();
-        //                break;
-        //            case SkillType.Shield:
-        //                SingleSnipingPlayerShield();
-        //                break;
-        //        }
-
-        //    }
-        //}
+        
         switch (skillT)
         {
             case SkillType.Attack:
@@ -224,6 +206,7 @@ public class SnipingSkillType : SkillBase
     IEnumerator AttackDelay(GameObject s)
     {
         yield return new WaitForSeconds(2f);
+        player.NormalAttackSound();
         s.GetComponent<IAttackable>().OnAttack(player.state.damage * figure);
         targetList.Clear();
         isSkillUsing = false;
