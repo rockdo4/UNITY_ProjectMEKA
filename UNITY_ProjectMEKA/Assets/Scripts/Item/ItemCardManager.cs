@@ -65,13 +65,13 @@ public class ItemCardManager : MonoBehaviour
 
 		//	UpdateItemCard();
 		//});
-
-		stringTable = DataTableMgr.GetTable<StringTable>();
-		itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
 	}
 
 	private void Start()
 	{
+		stringTable = DataTableMgr.GetTable<StringTable>();
+		itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
+
 		ObjectPoolManager.instance.AddObjectToPool("ItemCard", itemCardPrefab, 30);
 		UpdateItemCard();
 		dropdown.value = 0;
@@ -97,20 +97,21 @@ public class ItemCardManager : MonoBehaviour
 		foreach (var item in itemList)
 		{
 			var itemCard = ObjectPoolManager.instance.GetGo("ItemCard");
-			var text = itemCard.GetComponentInChildren<TextMeshProUGUI>();
+			var image = itemCard.GetComponent<Image>();
+			var quantity = itemCard.GetComponentInChildren<TextMeshProUGUI>();
 			var str = item.Name;
 
 			var info = itemInfoTable.GetItemData(item.ID);
 
-			text.SetText(item.Name + " : " + item.Count);
+			image.sprite = Resources.Load<Sprite>(info.ImagePath);
+			quantity.SetText($"x{item.Count}");
+
 			itemCard.GetComponent<Button>().onClick.AddListener(() => 
 			{
-				Debug.Log(("이름: " + str, "아이디: " + item.ID, "인스턴스아이디: " + item.InstanceID, "밸류: " + item.Value, "수량: " +item.Count));
-
-				itemInfoText.SetText($"{info.ImagePath}");
+				itemInfoText.SetText($"{stringTable.GetString(info.DescriptionStringID)}");
 				itemNameText.SetText($"{stringTable.GetString(info.NameStringID)}");
-				itemImage.sprite = Resources.Load<Sprite>(info.ImagePath);
 				itemGetInfoText.SetText($"{stringTable.GetString(info.NameStringID)}");
+				itemImage.sprite = Resources.Load<Sprite>(info.ImagePath);
 
 			});
 			itemCard.name = item.ToString();

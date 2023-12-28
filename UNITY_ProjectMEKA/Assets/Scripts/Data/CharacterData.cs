@@ -329,6 +329,8 @@ public class Character
 		}
 	}
 
+
+
 	public float WithdrawCost
 	{
 		get
@@ -370,6 +372,26 @@ public class Character
 		}
 	}
 
+	public string CharacterStanding
+	{
+		get
+		{
+			var charTable = DataTableMgr.GetTable<CharacterTable>();
+			var charData = charTable.GetCharacterData(CharacterID);
+			return charData.CharacterStanding;
+		}
+	}
+
+	public string CharacterHead
+	{
+		get
+		{
+			var charTable = DataTableMgr.GetTable<CharacterTable>();
+			var charData = charTable.GetCharacterData(CharacterID);
+			return charData.CharacterHead;
+		}
+	}
+
 	public int SkillID
 	{
 		get
@@ -394,11 +416,14 @@ public class CharacterData
 	public int WithdrawCost { get; set; }
 	public int ReArrangementCoolDown { get; set; }
 	public string ImagePath { get; set; }
+	public string CharacterStanding { get; set; }
+	public string CharacterHead { get; set; }
 	public string PortraitPath { get; set; }
 	public int SkillID { get; set; }
 	public int MaxSigma { get; set; }
 	public string OccupationInfoStringID { get; set; }
 	public string OccupationStringID { get; set; }
+	public int IsBasic { get; set; }
 }
 
 //캐릭터ID + 레벨을 ID로 사용해서 레벨에 따른 스탯 불러옴

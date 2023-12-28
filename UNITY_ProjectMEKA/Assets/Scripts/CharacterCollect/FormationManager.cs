@@ -7,20 +7,17 @@ using UnityEngine.UI;
 
 public enum UINumeric
 {
-	Name = 0,
-	Company,
-	Level,
-	HP,
-	Damage,
+	ATK = 0,
 	Armor,
-	AttackSpeed,
-	Cost,
-	CoolDown,
-	Block,
+	HP,
+	Speed,
+	CriHit,
+	CriDamage,
+	Name,
+	Lv,
 
 	
-	Class = 0,
-	AttackRange,
+	CharImage = 0,
 }
 
 public class FormationManager : MonoBehaviour
@@ -36,10 +33,12 @@ public class FormationManager : MonoBehaviour
 	public RectTransform characterCardScrollView;
 	public GameObject characterCardPrefab;
 
-	public RectTransform popupPanel;
+	public ModalWindow modalWindow;
 
+	[Header ("Button")]
 	public Button deleteButton;
 	public Button startButton;
+	public Button selectButton;
 
 	public TextMeshProUGUI[] textUiArr;
 	public Image[] imageUiArr;
@@ -53,12 +52,20 @@ public class FormationManager : MonoBehaviour
 	public TextMeshProUGUI currentPresetText;
 
 	private List<GameObject> activeFalseList;
-	private CardInfo[] cardList;
+	private SelectCardInfo[] cardList;
+
+	private CharacterTable characterTable;
 
 
 	private void Awake()
 	{
-		characterCard = GetComponentsInChildren<Button>();
+		characterCard = formationPanel.GetComponentsInChildren<Button>();
+
+		if(PlayDataManager.data == null)
+		{
+			PlayDataManager.Init();
+		}
+
 		formationList = PlayDataManager.data.formationList;
         activeFalseList = new List<GameObject>();
         selectedFormationList = 0;
@@ -99,17 +106,18 @@ public class FormationManager : MonoBehaviour
 
 			var button = characterCard[i].AddComponent<ButtonHoldListener>();
 
+			button.onClickButton = new UnityEngine.Events.UnityEvent();
 			button.onClickButton.AddListener(() =>
 			{
 				OpenCharacterList();
 				selectedFormationIndex = index;
 			});
 
+			button.holdButton = new UnityEngine.Events.UnityEvent();
 			button.holdButton.AddListener(() =>
 			{
 				if (formationList[selectedFormationList][index] != 0)
 				{
-					//var info = characterTable.GetCharacterData(formationList[selectedFormationList][index]);
 					var info = CharacterManager.Instance.m_CharacterStorage[formationList[selectedFormationList][index]];
 					OpenCharacterInfo(info);
                 }
@@ -121,14 +129,21 @@ public class FormationManager : MonoBehaviour
 		{
 			var panel = characterInfoPanel.GetComponent<CharacterInfoText>();
 			panel.SetPopUpPanel(
-				"정말 지우시겠습니까?",
-				() => OnClickDeleteCurrentFormation(),
+				"프리셋을 지우시겠습니까?",
+				() => DeleteCurrentFormation(),
 				"예", "아니오"
 				);
 		});
 
+		selectButton.onClick.RemoveAllListeners();
+		selectButton.onClick.AddListener(ChangeCharacterCard);
 
-		cardList = characterCardScrollView.GetComponentsInChildren<CardInfo>();
+		cardList = characterCardScrollView.GetComponentsInChildren<SelectCardInfo>();
+	}
+
+	private void Start()
+	{
+		characterTable = DataTableMgr.GetTable<CharacterTable>();
 	}
 
 	private void OnEnable()
@@ -147,7 +162,7 @@ public class FormationManager : MonoBehaviour
 
 		for (int i = 0; i < numberOfCharacters; i++)
 		{
-			characterCard[i].GetComponent<SelectCardInfo>().ChangeCardId(formationList[selectedFormationList][i]);
+			characterCard[i].GetComponent<SelectCardInfo>().ChangeFormationId(formationList[selectedFormationList][i]);
 		}
 
 		for (int i = 0; i < cardList.Length; i++)
@@ -196,8 +211,6 @@ public class FormationManager : MonoBehaviour
 	//CloseCharacterList
 	public void CloseCharacterList()
 	{
-		var table = DataTableMgr.GetTable<TestCharacterTable>();
-   
 		characterPanel.gameObject.SetActive(false);
 		ResetSelectCharacterCard();
 	}
@@ -207,6 +220,8 @@ public class FormationManager : MonoBehaviour
 	{
 		characterPanel.gameObject.SetActive(true);
 
+		CheckCollectCharacter();
+
 		for (int i = 0; i < cardList.Length; i++)
 		{
 			var id = cardList[i].GetCardID();
@@ -215,7 +230,6 @@ public class FormationManager : MonoBehaviour
 			{
 				if(formationList[selectedFormationList][j] == id)
 				{
-					//�ߺ�ĳ���� ������
 					cardList[i].gameObject.SetActive(false);
 					activeFalseList.Add(cardList[i].gameObject);
 				}
@@ -223,7 +237,6 @@ public class FormationManager : MonoBehaviour
 		}
 	}
 
-	//ĳ���� ī�� ���� �ִ��� Ȯ��
 	public void CheckCollectCharacter()
 	{
 		var table = DataTableMgr.GetTable<CharacterTable>();
@@ -263,7 +276,7 @@ public class FormationManager : MonoBehaviour
 	//캐릭터 카드 바꾸기
 	public void ChangeCharacterCard()
 	{
-		var cardInfo = characterCard[selectedFormationIndex].GetComponent<SelectCardInfo>();
+		var cardInfo = characterCard[selectedFormationIndex].GetComponent<Image>();
 		bool isDuplication = false;
 
 		for (int i = 0; i < numberOfCharacters; i++)
@@ -277,7 +290,7 @@ public class FormationManager : MonoBehaviour
 		if(!isDuplication)
 		{
 			//ī�� ���� �ٲ�
-			cardInfo.ChangeCardId(selectedCharacterID);
+			cardInfo.sprite = Resources.Load<Sprite>(CharacterManager.Instance.m_CharacterStorage[selectedCharacterID].ImagePath);
 
 			//selectedFormationList�����¿� selectedFormationIndex�ε����� ���̵� �ٲ�
 			formationList[selectedFormationList][selectedFormationIndex] = selectedCharacterID;
@@ -298,15 +311,21 @@ public class FormationManager : MonoBehaviour
 
 		selectedCharacterID = ID;
 
-		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(ID);
-		var stringTable = StageDataManager.Instance.stringTable;
+		var info = characterTable.GetCharacterData(ID);
+		var charInfo = CharacterManager.Instance.m_CharacterStorage[ID];
+
+		var stringTable = StageDataManager.Instance.stringTable; 
 
 		textUiArr[(int)UINumeric.Name].SetText(stringTable.GetString(info.CharacterNameStringID));
-		textUiArr[(int)UINumeric.Company].SetText(((Defines.Property)info.CharacterProperty).ToString());
-		textUiArr[(int)UINumeric.Level].SetText(((Defines.Occupation)info.CharacterOccupation).ToString());
+		textUiArr[(int)UINumeric.ATK].SetText(charInfo.Damage.ToString());
+		textUiArr[(int)UINumeric.Armor].SetText(charInfo.Armor.ToString());
+		textUiArr[(int)UINumeric.HP].SetText(charInfo.HP.ToString());
+		textUiArr[(int)UINumeric.Speed].SetText("--");
+		textUiArr[(int)UINumeric.CriHit].SetText("--");
+		textUiArr[(int)UINumeric.CriDamage].SetText("--");
 
-		textUiArr[(int)UINumeric.HP].SetText("Wt:"+info.ArrangementCost);
-		textUiArr[(int)UINumeric.Damage].SetText("Dmg:"+info.ReArrangementCoolDown);
+		imageUiArr[(int)UINumeric.CharImage].sprite = Resources.Load<Sprite>(info.ImagePath);
+		imageUiArr[(int)UINumeric.CharImage].preserveAspect = false;
 	}
 
 	public void ResetSelectCharacterCard()
@@ -314,13 +333,13 @@ public class FormationManager : MonoBehaviour
 		selectedCharacterID = 0;
 	}
 
-	//���� ������ �����
-	public void OnClickDeleteCurrentFormation()
+	//Delete Preset
+	public void DeleteCurrentFormation()
 	{
 		for (int i = 0; i < numberOfCharacters; i++)
 		{
 			formationList[selectedFormationList][i] = 0;
-			characterCard[i].GetComponent<SelectCardInfo>().ChangeCardId(0);
+			characterCard[i].GetComponent<SelectCardInfo>().ChangeFormationId(0);
 		}
 
 		UpdateActiveCard();
@@ -333,10 +352,6 @@ public class FormationManager : MonoBehaviour
 	{
 		characterInfoPanel.gameObject.SetActive(true);
 		characterInfoPanel.GetComponent<CharacterInfoText>().SetCharacter(info);
-
-		var pos = GetComponentInParent<Canvas>().gameObject.transform.position;
-
-		characterInfoPanel.position = pos;
 	}
 
 	public void UpdatePlayData()

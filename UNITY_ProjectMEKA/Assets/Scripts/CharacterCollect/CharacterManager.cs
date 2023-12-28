@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class CharacterManager
@@ -34,7 +35,15 @@ public class CharacterManager
 			chara.CurrentExp = 0;
 			chara.CharacterGrade = character.Value.InitialGrade;
 			chara.SkillLevel = 1;
-			chara.IsUnlock = false;
+
+			if(charTable.GetCharacterData(character.Value.CharacterID).IsBasic == 1)
+			{
+				chara.IsUnlock = true;
+			}
+			else
+			{
+				chara.IsUnlock = false;
+			}
 
 			chara.affection = new CharacterAffection();
 			chara.affection.AffectionLevel = 1;

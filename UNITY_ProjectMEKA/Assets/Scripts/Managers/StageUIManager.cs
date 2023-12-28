@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 using static Defines;
-using UnityEngine.TextCore.Text;
-using Unity.VisualScripting;
 
 public class StageUIManager : MonoBehaviour
 {
@@ -63,7 +61,8 @@ public class StageUIManager : MonoBehaviour
         UpdateSystemUIByUnlock();
         SetStageClassButtonsByUnlock();
         SetSystemButtonsByUnlock();
-    }
+        SetSystemButtonEvents();
+	}
 
     private void Update()
     {
@@ -137,13 +136,13 @@ public class StageUIManager : MonoBehaviour
             switch(systemType)
             {
                 case SystemForUnlock.Device:
-                    DeviceButtonClickEvent();
+                    DeviceButtonClickEvent?.Invoke();
                     break;
                 case SystemForUnlock.Synchro:
-                    SyncroButtonClickEvent();
+                    SyncroButtonClickEvent?.Invoke();
                     break;
                 case SystemForUnlock.Skill:
-                    SkillButtonClickEvent();
+                    SkillButtonClickEvent?.Invoke();
                     break;
             }
         }

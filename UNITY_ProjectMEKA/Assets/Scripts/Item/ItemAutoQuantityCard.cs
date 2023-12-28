@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ItemAutoQuantityCard : MonoBehaviour
 {
+	public Sprite defaultSprite;
 	public Image itemImage;
 	public TextMeshProUGUI mainText;
 	public TextMeshProUGUI haveQuantityText;
@@ -22,11 +23,6 @@ public class ItemAutoQuantityCard : MonoBehaviour
 	{
 		panel = GetComponentInParent<SynchroPanel>();
 		button = GetComponent<Button>();
-	}
-
-	private void OnEnable()
-	{
-		
 	}
 
 	private void OnDisable()
@@ -55,6 +51,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 			this.item = emptyItem;
 			ItemInventoryManager.Instance.AddItemByInstance(emptyItem, emptyItem.Count);
 
+			itemImage.sprite = Resources.Load<Sprite>(data.ImagePath);
 
 			SetItem(emptyItem, quantity);
 		}

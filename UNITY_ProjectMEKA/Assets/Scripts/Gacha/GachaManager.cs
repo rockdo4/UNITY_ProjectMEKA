@@ -45,6 +45,10 @@ public class GachaManager : MonoBehaviour
             {
                 continue;
             }
+            else if(item.Value.IsBasic == 1)
+            {
+                continue;
+            }
             else
             {
 				testPicker.Add(item.Key, item.Value.ArrangementCost);

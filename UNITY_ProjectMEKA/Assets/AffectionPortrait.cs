@@ -21,9 +21,10 @@ public class AffectionPortrait : MonoBehaviour
 
     public void UpdatePortrait()
     {
-        //characterImage.sprite = 
+        characterImage.sprite = Resources.Load<Sprite>(character.CharacterHead);
         characterName.SetText(character.Name);
         affectionLevel.SetText($"{character.affection.AffectionLevel}");
+        
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(characterName.rectTransform);
         LayoutRebuilder.ForceRebuildLayoutImmediate(affectionLevel.rectTransform);

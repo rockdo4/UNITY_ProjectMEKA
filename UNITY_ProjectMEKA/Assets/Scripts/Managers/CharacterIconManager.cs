@@ -86,6 +86,7 @@ public class CharacterIconManager : MonoBehaviour
             var iconImage = Resources.Load<Sprite>(characterTable.GetCharacterData(id).ImagePath);
 
             var iconPrefab = Resources.Load<GameObject>(characterIconPath);
+
             var iconGo = Instantiate(iconPrefab, Iconpanel.transform);
 
             var characterIcon = iconGo.GetComponent<CharacterIcon>();

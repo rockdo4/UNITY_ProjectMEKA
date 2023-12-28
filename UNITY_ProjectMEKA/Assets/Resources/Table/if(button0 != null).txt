@@ -1,0 +1,16 @@
+if(button0 != null)
+			{
+				button0.onClick.AddListener(() =>
+				{
+					Debug.Log("캐릭터 창 오픈");
+					characterAffectionPanel.gameObject.SetActive(true);
+					characterAffectionPanel.GetComponent<AffectionPanel>().SetCharacter(character.Value);
+				});
+			}
+
+
+
+			//cardImage.sprite = default;
+			cardText.SetText(
+				$"{stringTable.GetString(info.CharacterNameStringID)}\n" +
+				$"호감도 단계 : ?");
