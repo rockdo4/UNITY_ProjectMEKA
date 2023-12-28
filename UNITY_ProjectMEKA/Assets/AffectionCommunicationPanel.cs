@@ -192,7 +192,7 @@ public class AffectionCommunicationPanel : MonoBehaviour
 				buttons[index].onClick.AddListener(() => //선택지 버튼에 클릭 이벤트 넣기
 				{
 					selectPanel.gameObject.SetActive(false);
-					AddAffectionPoint(selects[index].Value); //선택지 호감도 증가
+					//AddAffectionPoint(selects[index].Value); //선택지 호감도 증가
 
 					if (selects[index].Branch != -1)
 					{
@@ -209,18 +209,18 @@ public class AffectionCommunicationPanel : MonoBehaviour
 
 		textPanel.GetComponentInChildren<TextMeshProUGUI>().SetText(info.Script);
 
+		if (info.Branch == 0)
+		{
+			AddAffectionPoint(info.Value);
+			count = -1;
+			return;
+		}
+
 		if (info.Branch != -1)
 		{
 			count = currentCommunicationList.FindIndex(x => x.ScriptID == info.Branch);
 			return;
 		}
-
-		if (info.Branch == 0) 
-		{
-			count = -1;
-			return;
-		}
-
 		count++;
 	}
 

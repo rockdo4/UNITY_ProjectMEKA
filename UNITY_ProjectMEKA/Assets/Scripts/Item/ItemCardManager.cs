@@ -18,17 +18,24 @@ public class ItemCardManager : MonoBehaviour
     public GameObject itemCardPrefab;
 
     [Header("아이템 정렬 선택")]
-    public TMP_Dropdown dropdown;
+    public Dropdown dropdown;
 
     [Header("아이템 검색창")]
     public TMP_InputField searchInputField;
 
 	[Header("검색 리셋 버튼")]
 	public Button resetButton;
+
+	[Header("아이템 정보창")]
+	public TextMeshProUGUI itemInfoText;
+	public TextMeshProUGUI itemGetInfoText;
+	public Image itemImage;
+	public TextMeshProUGUI itemNameText;
 	
 	private RectTransform itemCardScrollView;
 
-	private bool Once = true;
+	private StringTable stringTable;
+	private ItemInfoTable itemInfoTable;
 
 	private void Awake()
 	{
@@ -51,24 +58,23 @@ public class ItemCardManager : MonoBehaviour
             UpdateItemCard(list);
         });
 
-		resetButton.onClick.AddListener(() =>
-		{
-			dropdown.value = 0;
-			searchInputField.text = "";
+		//resetButton.onClick.AddListener(() =>
+		//{
+		//	dropdown.value = 0;
+		//	searchInputField.text = "";
 
-			UpdateItemCard();
-		});
+		//	UpdateItemCard();
+		//});
 
+		stringTable = DataTableMgr.GetTable<StringTable>();
+		itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
 	}
-	private void OnEnable()
+
+	private void Start()
 	{
-		if(Once)
-		{
-			return;
-		}
+		ObjectPoolManager.instance.AddObjectToPool("ItemCard", itemCardPrefab, 30);
 		UpdateItemCard();
 		dropdown.value = 0;
-		Once = false;
 	}
 
 	//카드 리스트 업데이트
@@ -94,12 +100,18 @@ public class ItemCardManager : MonoBehaviour
 			var text = itemCard.GetComponentInChildren<TextMeshProUGUI>();
 			var str = item.Name;
 
-			
+			var info = itemInfoTable.GetItemData(item.ID);
 
 			text.SetText(item.Name + " : " + item.Count);
 			itemCard.GetComponent<Button>().onClick.AddListener(() => 
 			{
 				Debug.Log(("이름: " + str, "아이디: " + item.ID, "인스턴스아이디: " + item.InstanceID, "밸류: " + item.Value, "수량: " +item.Count));
+
+				itemInfoText.SetText($"{info.ImagePath}");
+				itemNameText.SetText($"{stringTable.GetString(info.NameStringID)}");
+				itemImage.sprite = Resources.Load<Sprite>(info.ImagePath);
+				itemGetInfoText.SetText($"{stringTable.GetString(info.NameStringID)}");
+
 			});
 			itemCard.name = item.ToString();
 			itemCard.transform.SetParent(itemCardScrollView, false);

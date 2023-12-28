@@ -15,7 +15,6 @@ public class CharacterPanelManager : MonoBehaviour
 	public GameObject characterCardPrefab;
 
 	public RectTransform characterInfoPanel;
-	public RectTransform characterAffectionPanel;
 	public Button enableButton;
 
 	private Vector3 characterInfoPos;
@@ -67,8 +66,6 @@ public class CharacterPanelManager : MonoBehaviour
 		{
 			CharacterUnlockUpdate();
 		});
-
-		characterAffectionPanel.gameObject.SetActive(false);
 	}
 
 	public void CharacterUnlockUpdate()
