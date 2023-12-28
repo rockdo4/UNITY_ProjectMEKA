@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -5,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class AffectionCommunicationPanel : MonoBehaviour
 {
@@ -23,11 +25,16 @@ public class AffectionCommunicationPanel : MonoBehaviour
 	[Header("Etc")]
 	public Button closeButton;
 	public ModalWindow modalWindow;
+	public RectTransform cautionDaily;
+
+	[Header("Test")]
+	public Button timeReset;
 
 	private Character currCharacter;
 	private CommuinicationDictionary commuinicationDict;
 	private List<CommunicationData> currentCommunicationList;
 	private int count = 0;
+	private AffectionPortrait affectionPortrait;
 
 	private void Awake()
 	{
@@ -40,12 +47,19 @@ public class AffectionCommunicationPanel : MonoBehaviour
 		{
             OnClickCommunication();
         });
-    }
+
+		timeReset.onClick.AddListener(() =>
+		{
+			TimeReset();
+			CheckTime();
+		});
+	}
 
 	private void OnDisable()
 	{
 		commuinicationDict = null;
 		currentCommunicationList = null;
+		affectionPortrait = null;
 	}
 
 	public void SetCharacter(Character character)
@@ -53,6 +67,17 @@ public class AffectionCommunicationPanel : MonoBehaviour
 		currCharacter = character;
 
 		UpdateCharacter(currCharacter);
+		CheckTime();
+	}
+
+	public void SetPortrait(AffectionPortrait portrait)
+	{
+		affectionPortrait = portrait;
+	}
+
+	public void UpdatePortrait()
+	{
+		affectionPortrait.UpdatePortrait();
 	}
 
 	public void UpdateCharacter(Character character = null)
@@ -107,14 +132,16 @@ public class AffectionCommunicationPanel : MonoBehaviour
 		{
 			currCharacter.affection.AffectionLevel++;
 			currCharacter.affection.AffectionPoint -= info.AffectionPoint;
-
 			Debug.Log("호감도 레벨업");
+			UpdatePortrait();
 		}
 
 		currCharacter.affection.LastTime = System.DateTime.Now;
 
 		UpdateCharacter();
 		NoticeAffection(point);
+		DisableDailyAffection();
+		GameManager.Instance.SaveExecution();
 	}
 
 	public void OnClickCommunication()
@@ -256,5 +283,45 @@ public class AffectionCommunicationPanel : MonoBehaviour
 		LayoutRebuilder.ForceRebuildLayoutImmediate(affectionText.rectTransform);
 		LayoutRebuilder.ForceRebuildLayoutImmediate(characterName.rectTransform);
 		LayoutRebuilder.ForceRebuildLayoutImmediate(affectionSlider.rectTransform);
+	}
+
+	private void TimeReset()
+	{
+		currCharacter.affection.LastTime = default;
+	}
+
+	public void CheckTime()
+	{
+		var day = currCharacter.affection.LastTime.Date;
+		var sixAm = day.AddHours(6);
+		var tomorrow = sixAm.AddDays(1);
+
+		if(currCharacter.affection.LastTime < sixAm)
+		{
+			if(DateTime.Now > sixAm)
+			{
+				EnableDailyAffection();
+			}
+		}
+		else if(DateTime.Now > tomorrow)
+		{
+			EnableDailyAffection();
+		}
+		else
+		{
+			DisableDailyAffection();
+		}
+	}
+
+	private void EnableDailyAffection()
+	{
+		cautionDaily.gameObject.SetActive(false);
+		communicationButton.gameObject.SetActive(true);
+	}
+
+	private void DisableDailyAffection()
+	{
+		cautionDaily.gameObject.SetActive(true);
+		communicationButton.gameObject.SetActive(false);
 	}
 }
