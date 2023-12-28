@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2466019089191075869}
   - component: {fileID: 1833873528374367298}
   - component: {fileID: 1699580998511195374}
+  - component: {fileID: 3565322584571320425}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -46,7 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: c03dc94ebf1c3844097b305d40b3c801, type: 2}
-  bgmAudioSource: []
+  bgmAudioSource:
+  - {fileID: 3565322584571320425}
   seAudioSource:
   - {fileID: 1699580998511195374}
   audioClips:
@@ -56,6 +58,38 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 6ae533bcd33fccf4a9bdbc042b0ee92b, type: 3}
   - name: NormalSwordAttack
     clip: {fileID: 8300000, guid: 0fe36ba7a3fdc5e43bad373008b145ca, type: 3}
+  - name: NormalHammerAttack
+    clip: {fileID: 8300000, guid: cf38710cd38a9574f83600cc57e2b101, type: 3}
+  - name: NormalRifleAttack
+    clip: {fileID: 8300000, guid: df4d30ca1746dd3408286bb4c49f95e5, type: 3}
+  - name: NormalSniperAttack
+    clip: {fileID: 8300000, guid: af66162561d2eed40ad49268cab318bb, type: 3}
+  - name: BuffSkill
+    clip: {fileID: 8300000, guid: 5e1a9f876d3dafd47bc6b3dde25135fa, type: 3}
+  - name: NormalArrowAttack
+    clip: {fileID: 8300000, guid: d9419ba0bfac1e84a95418ac5851caf6, type: 3}
+  - name: NormalGetlingAttack
+    clip: {fileID: 8300000, guid: 3061c7b9b32d894478e4126ccce25ca3, type: 3}
+  - name: SkillButtonClick
+    clip: {fileID: 8300000, guid: a8584c04132cade4da58c27da47678c4, type: 3}
+  - name: UIButtonClick
+    clip: {fileID: 8300000, guid: 7708ea16819a95844a1d344c24925e82, type: 3}
+  - name: CharacterDie
+    clip: {fileID: 8300000, guid: 76a698ab18ce01343abc7352a440f534, type: 3}
+  - name: CharacterPut
+    clip: {fileID: 8300000, guid: 3572ad1f0f757d64892ec0c5173fabe8, type: 3}
+  - name: GachaMenuBGM
+    clip: {fileID: 8300000, guid: 26728bad8530044378dad6e9476caa1a, type: 3}
+  - name: VisualNovelMenuBGM
+    clip: {fileID: 8300000, guid: f3d74ea9772335a4294bc83e48a428df, type: 3}
+  - name: VisualNovelInGameBGM
+    clip: {fileID: 8300000, guid: acaa245c869de624eb35153f30d11845, type: 3}
+  - name: TuyubakaSkill
+    clip: {fileID: 8300000, guid: 46c1a069a61c87345863d80c61d84cff, type: 3}
+  - name: NormalBeastAttack
+    clip: {fileID: 8300000, guid: 75a3c76ee4beae04f8e68d2cea3e398c, type: 3}
+  - name: IyraSkill
+    clip: {fileID: 8300000, guid: 888cf9ace84f7494bb6888341ce2f7a2, type: 3}
 --- !u!82 &1699580998511195374
 AudioSource:
   m_ObjectHideFlags: 0
@@ -66,6 +100,102 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8401803517804528507, guid: c03dc94ebf1c3844097b305d40b3c801, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &3565322584571320425
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9193329368993453496}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 4196668784585907480, guid: c03dc94ebf1c3844097b305d40b3c801, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

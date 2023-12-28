@@ -507,10 +507,10 @@ public class IngameStageUIManager : MonoBehaviour
         // reward item setting
         for (int i = 0; i < 6; ++i)
         {
-            if ((i == 0 || i == 5) && stageSaveData.isCleared)
-            {
-                continue;
-            }
+            //if ((i == 0 || i == 5) && stageSaveData.isCleared)
+            //{
+            //    continue;
+            //}
 
             var rewardData = StageDataManager.Instance.rewardTable.GetStageData(stageData.RewardID);
             int id = 100;
@@ -616,6 +616,7 @@ public class IngameStageUIManager : MonoBehaviour
         var isCharacter = StageDataManager.Instance.characterLevelTable.GetLevelData(itemID) != null;
         var isSystem = Enum.IsDefined(typeof(SystemForUnlock), itemID);
         var stringTable = StageDataManager.Instance.stringTable;
+        var itemInfoTable = StageDataManager.Instance.itemInfoTable;
 
         if(!isItem && !isCharacter && !isSystem)
         {
@@ -628,6 +629,10 @@ public class IngameStageUIManager : MonoBehaviour
             var nameStringID = rewardItem.NameStringID;
             var name = stringTable.GetString(nameStringID);
             itemInfo.itemName.SetText(name);
+
+            var itemData = itemInfoTable.GetItemData(itemID);
+            Sprite itemSprite = Resources.Load<Sprite>(itemData.ImagePath);
+            itemInfo.itemImage.sprite = itemSprite;
         }
         else if(isCharacter)
         {
@@ -636,6 +641,8 @@ public class IngameStageUIManager : MonoBehaviour
             var characterData = StageDataManager.Instance.characterTable.GetCharacterData(characterId);
             var characterName = stringTable.GetString(characterData.CharacterNameStringID);
             itemInfo.itemName.SetText(characterName);
+
+            // 이미지 씌우기
         }
     }
 }

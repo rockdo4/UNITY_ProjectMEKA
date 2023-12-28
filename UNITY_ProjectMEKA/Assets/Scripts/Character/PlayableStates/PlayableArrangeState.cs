@@ -7,15 +7,17 @@ public class PlayableArrangeState : PlayableBaseState
     private RaycastHit hit;
     private Tile hitTile;
     private bool isOnPossibleTile;
+    private StageManager stageManager;
 
     public PlayableArrangeState(PlayerController player) : base(player)
     {
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
     }
 
     public override void Enter()
     {
         isOnPossibleTile = false;
-        Time.timeScale = 0.2f;
+        Time.timeScale = stageManager.CurrentSpeed * 0.2f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
         // Set arrange tile mesh
@@ -30,7 +32,7 @@ public class PlayableArrangeState : PlayableBaseState
     public override void Exit()
     {
         Debug.Log("arrange exit");
-        Time.timeScale = 1f;
+        Time.timeScale = stageManager.CurrentSpeed;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
         playerCtrl.firstLookPos = playerCtrl.transform;
     }
