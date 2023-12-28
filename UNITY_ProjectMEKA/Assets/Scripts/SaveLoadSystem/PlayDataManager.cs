@@ -66,7 +66,7 @@ public class PlayDataManager
             {
                 data.assignmentStageDatas.Add(stage.Key, saveData);
                 // 지정된 잠금 스테이지면, inUnlocked false
-                if(stage.Value.Lock)
+                if(stage.Value.Hard)
                 {
                     saveData.isUnlocked = false;
                 }

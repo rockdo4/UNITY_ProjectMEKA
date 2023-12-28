@@ -56,11 +56,17 @@ public class StageUIManager : MonoBehaviour
     public GameObject monsterInfoPopUpWindow;
 
     private StageTable stageTable;
+    private RewardTable rewardTable;
+    private string stageMonsterImagePath;
+    private int[] assignmentRewardIDArray;
 
     private void Awake()
     {
         PlayDataManager.Init();
         stageTable = StageDataManager.Instance.stageTable;
+        rewardTable = StageDataManager.Instance.rewardTable;
+        stageMonsterImagePath = "_stageMonsterImage";
+        assignmentRewardIDArray = new int[8] { 5110001, 5120001, 5130001, 5610001, 5610002, 5810001, 5820001, 5830003 };
         CreateStageButtons(StageClass.Story);
         CreateStageButtons(StageClass.Assignment);
         CreateStageButtons(StageClass.Challenge);
@@ -223,10 +229,10 @@ public class StageUIManager : MonoBehaviour
                 CreateStoryStageButtons(storyStageButtonPanel.transform, PlayDataManager.data.storyStageDatas);
                 break;
             case StageClass.Assignment:
-                CreateChallengeStageButtons(assignmentStageButtonPanel.transform, PlayDataManager.data.assignmentStageDatas);
+                CreateAssignmentAndChallengeStageButtons(assignmentStageButtonPanel.transform, PlayDataManager.data.assignmentStageDatas);
                 break;
             case StageClass.Challenge:
-                CreateChallengeStageButtons(challengeStageButtonPanel.transform, PlayDataManager.data.challengeStageDatas);
+                CreateAssignmentAndChallengeStageButtons(challengeStageButtonPanel.transform, PlayDataManager.data.challengeStageDatas);
                 break;
         }
     }
@@ -274,31 +280,61 @@ public class StageUIManager : MonoBehaviour
         }
     }
 
-    public void CreateChallengeStageButtons(Transform parentTr, Dictionary<int, StageSaveData> selectedStageData)
+    public void CreateAssignmentAndChallengeStageButtons(Transform parentTr, Dictionary<int, StageSaveData> selectedStageData)
     {
         foreach (var stage in selectedStageData)
         {
             // instantiate
             var stageButtonGo = Instantiate(assignmentAndChallengeButtonPrefab, parentTr);
+            
+            var stageButtonScript = stageButtonGo.GetComponent<StageButton>();
+            var stageMonsterImage = stageButtonScript.monsterImage;
+            var stageIndex = stageButtonScript.stageIndexText;
+            var stageRewardGuide = stageButtonScript.rewardGuideText;
+            var stageTableData = stageTable.GetStageData(stage.Key);
+            var rewardTableData = rewardTable.GetStageData(stageTableData.RewardID);
 
             // chapter + stage text apply
-            var stageButtonText = stageButtonGo.GetComponentInChildren<TextMeshProUGUI>();
             var chapter = StageDataManager.Instance.stageTable.GetStageData(stage.Key).ChapterNumber;
             var stageNumber = StageDataManager.Instance.stageTable.GetStageData(stage.Key).StageNumber;
-            var stageButtonName = new string($"{chapter} - {stageNumber}");
-            stageButtonText.SetText(stageButtonName);
+            var stageIndexText = new string($"{chapter} - {stageNumber}");
+            stageIndex.SetText(stageIndexText);
 
             // id apply
-            var stageButtonScript = stageButtonGo.GetComponent<StageButton>();
             stageButtonScript.stageID = stage.Key;
 
             // locked stage ui set
+            var hardFilter = stageButtonScript.hardBg;
+            var hardIcon = stageButtonScript.hardTag;
             var stageData = stageTable.GetStageData(stage.Key);
-            if(!(stage.Value.isUnlocked) && stageData.Lock)
+            if (stageData.Hard)
             {
-                // apply locked ui after it's released
+                hardFilter.SetActive(true);
+                hardIcon.SetActive(true);
             }
+            else
+            {
+                hardFilter.SetActive(false);
+                hardIcon.SetActive(false);
+            }
+
+            // general ui set
+            var stageMonsterResource = new string($"{stage.Key}{stageMonsterImagePath}");
+            stageMonsterImage.sprite = Resources.Load<Sprite>(stageMonsterResource);
+            // 보상 스트링은 스테이지테이블->보상테이블->아이템 4개 순회하면서 
             
+            foreach(var assignmentRewardID in assignmentRewardIDArray)
+            {
+                if(rewardTableData.Item1ID == assignmentRewardID)
+                {
+                    // 51로 시작하면 작전 보고서
+                    // 56으로 시작하면 테크 코어
+                    // 58로 시작하면 필드 매뉴얼
+                    // 스트링테이블에 일단 문장 다 추가하고 => 51_stageRewardGuide, 56_stageRewardGuide, 58...
+                    // 
+                }
+            }
+
             // on click set
             var stageButton = stageButtonGo.GetComponent<Button>();
             stageButton.onClick.AddListener(()=>
