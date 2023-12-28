@@ -58,15 +58,13 @@ public class StageUIManager : MonoBehaviour
     private StageTable stageTable;
     private RewardTable rewardTable;
     private string stageMonsterImagePath;
-    private int[] assignmentRewardIDArray;
 
     private void Awake()
     {
         PlayDataManager.Init();
         stageTable = StageDataManager.Instance.stageTable;
         rewardTable = StageDataManager.Instance.rewardTable;
-        stageMonsterImagePath = "_stageMonsterImage";
-        assignmentRewardIDArray = new int[8] { 5110001, 5120001, 5130001, 5610001, 5610002, 5810001, 5820001, 5830003 };
+        stageMonsterImagePath = "StageMonsterImage/0_stageMonsterImage";
         CreateStageButtons(StageClass.Story);
         CreateStageButtons(StageClass.Assignment);
         CreateStageButtons(StageClass.Challenge);
@@ -273,7 +271,7 @@ public class StageUIManager : MonoBehaviour
                 }
             }
 
-            if (stage.Value.isUnlocked)
+            if (!stage.Value.isUnlocked)
             {
                 stageButtonGo.SetActive(false);
             }
@@ -319,21 +317,11 @@ public class StageUIManager : MonoBehaviour
             }
 
             // general ui set
-            var stageMonsterResource = new string($"{stage.Key}{stageMonsterImagePath}");
+            var stageMonsterResource = stageMonsterImagePath.Replace("0", stage.Key.ToString());
             stageMonsterImage.sprite = Resources.Load<Sprite>(stageMonsterResource);
-            // 보상 스트링은 스테이지테이블->보상테이블->아이템 4개 순회하면서 
-            
-            foreach(var assignmentRewardID in assignmentRewardIDArray)
-            {
-                if(rewardTableData.Item1ID == assignmentRewardID)
-                {
-                    // 51로 시작하면 작전 보고서
-                    // 56으로 시작하면 테크 코어
-                    // 58로 시작하면 필드 매뉴얼
-                    // 스트링테이블에 일단 문장 다 추가하고 => 51_stageRewardGuide, 56_stageRewardGuide, 58...
-                    // 
-                }
-            }
+            // 스테이지 아이디 + 
+            var stageRewardGuideText = new string($"{stage.Key}_stageRewardGuide");
+            stageRewardGuide.SetText(stageRewardGuideText);
 
             // on click set
             var stageButton = stageButtonGo.GetComponent<Button>();
