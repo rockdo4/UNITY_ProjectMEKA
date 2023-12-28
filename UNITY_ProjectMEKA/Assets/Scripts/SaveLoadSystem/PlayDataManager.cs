@@ -74,7 +74,8 @@ public class PlayDataManager
 
         for(int i = 0; i < 7; ++i)
         {
-            data.systemUnlockData.Add(i + 1, false);
+            //for test
+            data.systemUnlockData.Add(i + 1, true);
         }
     }
 

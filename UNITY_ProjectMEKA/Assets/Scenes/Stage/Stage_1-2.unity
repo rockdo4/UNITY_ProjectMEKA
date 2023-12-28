@@ -229,6 +229,22 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1464522580}
+    - target: {fileID: 2239196023898252183, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2239196023898252183, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245433710705669714, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245433710705669714, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4319404990111276572, guid: 3fb5b668a2562d24faca428433f38f7a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -610,13 +626,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464522579}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.48682922, y: -0, z: -0, w: 0.87349725}
-  m_LocalPosition: {x: 1, y: 6.05, z: -9.09}
+  m_LocalRotation: {x: 0.49431965, y: -0, z: -0, w: 0.8692802}
+  m_LocalPosition: {x: 1, y: 5.22, z: -8.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 58.265, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 59.25, y: 0, z: 0}
 --- !u!114 &1464522585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,8 +793,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3050474710349698946, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].level
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3050474710349698946, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].level
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3050474710349698946, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3050474710349698946, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].level
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 3050474710349698946, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[1].count
@@ -811,6 +839,10 @@ PrefabInstance:
     - target: {fileID: 3368230018476705318, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558787842873884340, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4593514620442586178, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: waveInfos.Array.size
@@ -845,12 +877,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4593514620442586178, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].level
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 4593514620442586178, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[1].level
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 4593514620442586178, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].count
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4593514620442586178, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].level
-      value: 1
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 4593514620442586178, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[1].count
@@ -858,7 +898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4593514620442586178, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[1].level
-      value: 1
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 4593514620442586178, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: waveInfos.Array.data[1].enemySpawnInfos.Array.data[0].prefab
@@ -892,6 +932,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5925326932333921771, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 8630280107700790063, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: waveInfos.Array.data[0].gateType
       value: 1
@@ -900,9 +944,17 @@ PrefabInstance:
       propertyPath: waveInfos.Array.data[0].moveType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8630280107700790063, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].level
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 8863547098353349229, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
       propertyPath: waveInfos.Array.data[0].moveType
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8863547098353349229, guid: 33210291b199d834fa694fc5c3e12ddf, type: 3}
+      propertyPath: waveInfos.Array.data[0].enemySpawnInfos.Array.data[0].level
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

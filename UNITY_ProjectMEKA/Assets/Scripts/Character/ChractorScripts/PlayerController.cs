@@ -456,7 +456,7 @@ public class PlayerController : MonoBehaviour
             
         }
 
-        //StartCoroutine(AttackDelay());
+        StartCoroutine(AttackDelay());
     }
     public IEnumerator AttackDelay()
     {

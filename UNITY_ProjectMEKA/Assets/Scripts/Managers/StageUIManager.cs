@@ -449,7 +449,7 @@ public class StageUIManager : MonoBehaviour
                 case SystemForUnlock.Affection:
                     if (systems[i]) // ÇØ±Ý µÆÀ¸¸é
                     {
-                        affectionLockPanel.SetActive(false);
+                        //affectionLockPanel.SetActive(false);
                     }
                     break;
             }
