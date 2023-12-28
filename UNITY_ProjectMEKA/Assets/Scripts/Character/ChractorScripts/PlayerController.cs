@@ -257,7 +257,13 @@ public class PlayerController : MonoBehaviour
         currentState = state;
         Debug.Log($"{gameObject.name} state : {state}");
     }
-
+    public void NormalAttackSound()
+    {
+        if (sound != null)
+        {
+            SoundManager.instance.PlayerSEAudio(sound);
+        }
+    }
     public void Hit()
     {
         
