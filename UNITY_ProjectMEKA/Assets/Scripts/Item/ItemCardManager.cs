@@ -30,6 +30,9 @@ public class ItemCardManager : MonoBehaviour
 
 	private bool Once = true;
 
+	private StringTable stringTable;
+	private ItemInfoTable itemInfoTable;
+
 	private void Awake()
 	{
 		itemCardScrollView = GetComponent<RectTransform>();
@@ -59,7 +62,10 @@ public class ItemCardManager : MonoBehaviour
 			UpdateItemCard();
 		});
 
-	}
+		stringTable = StageDataManager.Instance.stringTable;
+        itemInfoTable = StageDataManager.Instance.itemInfoTable;
+
+    }
 	private void OnEnable()
 	{
 		if(Once)
@@ -69,7 +75,7 @@ public class ItemCardManager : MonoBehaviour
 		UpdateItemCard();
 		dropdown.value = 0;
 		Once = false;
-	}
+    }
 
 	//카드 리스트 업데이트
 	public void UpdateItemCard(List<Item> itemList = null)
@@ -91,17 +97,22 @@ public class ItemCardManager : MonoBehaviour
 		foreach (var item in itemList)
 		{
 			var itemCard = ObjectPoolManager.instance.GetGo("ItemCard");
-			var text = itemCard.GetComponentInChildren<TextMeshProUGUI>();
-			var str = item.Name;
+			var itemNameText = itemCard.GetComponentInChildren<TextMeshProUGUI>();
+			var itemImage = itemCard.GetComponent<Image>();
 
-			
+			// 12.28, MJ, Apply string table, itemInfoTable
+			var itemTableData = itemInfoTable.GetItemData(item.ID);
+            var itemImagePath = itemTableData.ImagePath;
+			var itemName = stringTable.GetString(itemTableData.NameStringID);
+			var itemInfo = stringTable.GetString(itemTableData.DescriptionStringID);
 
-			text.SetText(item.Name + " : " + item.Count);
+			itemImage.sprite = Resources.Load<Sprite>(itemImagePath);
+			itemNameText.SetText(itemName + " : " + item.Count);
 			itemCard.GetComponent<Button>().onClick.AddListener(() => 
 			{
-				Debug.Log(("이름: " + str, "아이디: " + item.ID, "인스턴스아이디: " + item.InstanceID, "밸류: " + item.Value, "수량: " +item.Count));
+				Debug.Log(("이름: " + itemName, "아이디: " + item.ID, "인스턴스아이디: " + item.InstanceID, "밸류: " + item.Value, "수량: " +item.Count));
 			});
-			itemCard.name = item.ToString();
+			itemCard.name = itemName;
 			itemCard.transform.SetParent(itemCardScrollView, false);
 			itemCard.gameObject.name = count++.ToString();
 			itemCard.transform.SetAsLastSibling();
