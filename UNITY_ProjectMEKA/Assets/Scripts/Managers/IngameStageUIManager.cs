@@ -639,7 +639,8 @@ public class IngameStageUIManager : MonoBehaviour
             var characterName = stringTable.GetString(characterData.CharacterNameStringID);
             itemInfo.itemName.SetText(characterName);
 
-            // 이미지 씌우기
+            Sprite itemSprite = Resources.Load<Sprite>(characterData.ImagePath);
+            itemInfo.itemImage.sprite = itemSprite;
         }
     }
 }
