@@ -85,7 +85,7 @@ public class PlayDataManager
         for(int i = 0; i < 7; ++i)
         {
             // юс╫ц
-            data.systemUnlockData.Add(i + 1, true);
+            data.systemUnlockData.Add(i + 1, false);
         }
     }
 
