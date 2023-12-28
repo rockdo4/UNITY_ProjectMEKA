@@ -69,6 +69,9 @@ public static class DataTableMgr
         var skillinfoTable = new SkillInfoTable();
         tables.Add(typeof(SkillInfoTable), skillinfoTable);
 
+        var monsterTable = new MonsterTable();
+        tables.Add(typeof(MonsterTable), monsterTable);
+
 		CharacterManager.Instance.InitCharacterStorage(charTable, characterLevelTable);
     }
 

@@ -6,21 +6,21 @@ using System.Globalization;
 using System.IO;
 using UnityEngine;
 
-public class MonsterLevelTable : DataTable
+public class MonsterTable : DataTable
 {
-    protected Dictionary<int, MonsterLevelData> monsterLevelDict = new Dictionary<int, MonsterLevelData>();
+    protected Dictionary<int, MonsterData> monsterDict = new Dictionary<int, MonsterData>();
 
     public int Count
     {
         get
         {
-            return monsterLevelDict.Count;
+            return monsterDict.Count;
         }
     }
 
-    public MonsterLevelTable()
+    public MonsterTable()
     {
-        path = "Table/MonsterLevelTable";
+        path = "Table/MonsterTable";
         Load();
     }
 
@@ -37,12 +37,12 @@ public class MonsterLevelTable : DataTable
 
         try
         {
-            var records = csv.GetRecords<MonsterLevelData>();
+            var records = csv.GetRecords<MonsterData>();
 
             foreach (var record in records)
             {
-                MonsterLevelData temp = record;
-                monsterLevelDict.Add(temp.MonsterLevelID, temp);
+                MonsterData temp = record;
+                monsterDict.Add(temp.MonsterID, temp);
             }
         }
         catch (Exception ex)
@@ -52,18 +52,19 @@ public class MonsterLevelTable : DataTable
         }
     }
 
-    public MonsterLevelData GetMonsterData(int ID)
+    public MonsterData GetMonsterData(int ID)
     {
-        if(monsterLevelDict.ContainsKey(ID))
+        if (monsterDict.ContainsKey(ID))
         {
-            var data = monsterLevelDict[ID];
+            var data = monsterDict[ID];
             return data;
         }
         return null;
     }
 
-    public Dictionary<int, MonsterLevelData> GetOriginalTable()
+    public Dictionary<int, MonsterData> GetOriginalTable()
     {
-        return new Dictionary<int, MonsterLevelData>(monsterLevelDict);
+        return new Dictionary<int, MonsterData>(monsterDict);
     }
+
 }
