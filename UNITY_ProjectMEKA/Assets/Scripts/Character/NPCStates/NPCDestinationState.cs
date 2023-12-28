@@ -98,8 +98,6 @@ public class NPCDestinationStates : NPCBaseState
     }
     void CheckPlayer()
     {
-
-        Debug.Log($"{enemyCtrl.gameObject.name} RangeInPlayers: {enemyCtrl.rangeInPlayers.Count}");
         foreach (var pl in enemyCtrl.rangeInPlayers)
         {
             PlayerController player = pl.GetComponentInParent<PlayerController>();

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Runtime.ConstrainedExecution;
+using UnityEditor;
 
 public class CharacterInfoText : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class CharacterInfoText : MonoBehaviour
 	//public DevicePanel devicePanel;
 	//public SkillPanel skillPanel;
 	public PanelManager panelManager;
+	public Button deviceEngine;
+	public Button deviceCore;
 
 	[Header("Text")]
 	public TextMeshProUGUI characterName;
@@ -31,19 +34,27 @@ public class CharacterInfoText : MonoBehaviour
 	public TextMeshProUGUI Armor;
 	public TextMeshProUGUI CriticalHit;
 	public TextMeshProUGUI CriticalDamage;
+	public TextMeshProUGUI level;
 
+	[Header("Etc")]
+	public Sprite defaultSprite;
 
 	[HideInInspector]
 	public Character character;
 
 	private CharacterTable characterTable;
 	private StringTable stringTable;
+	private ItemInfoTable itemInfoTable;
 
 	private void Start()
 	{
-		characterTable = DataTableMgr.GetTable<CharacterTable>();
-		stringTable = StageDataManager.Instance.stringTable;
-	}
+        if (characterTable == null)
+            characterTable = DataTableMgr.GetTable<CharacterTable>();
+        if (stringTable == null)
+            stringTable = StageDataManager.Instance.stringTable;
+		if(itemInfoTable == null)
+			itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
+    }
 
 	private void SetListener()
 	{
@@ -86,34 +97,60 @@ public class CharacterInfoText : MonoBehaviour
 
 		SetListener();
 		characterImage.sprite = Resources.Load<Sprite>(character.CharacterStanding);
-		characterImage.preserveAspect = true;
 
 		UpdateCharacter();
 	}
 
 	public void UpdateCharacter()
 	{
-		//SetSkillInfo();
-		//SetLevelInfo();
-		//SetSynchroInfo();
-		//SetClass_Range_Keyword();
-		//SetCompnayInfo();
-		//SetDeviceInfo();
+		UpdateStatus();
+		UpdateDevice();
+    }
+
+	public void UpdateDevice()
+	{
+        if (itemInfoTable == null)
+            itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
+
+        if (character.DeviceEngineID != 0)
+		{
+            deviceEngine.GetComponent<Image>().sprite = Resources.Load<Sprite>(itemInfoTable.GetItemData(88).ImagePath);
+        }
+		else
+		{
+            deviceEngine.GetComponent<Image>().sprite = defaultSprite;
+        }
+
+		if(character.DeviceCoreID != 0)
+		{
+			deviceCore.GetComponent<Image>().sprite = Resources.Load<Sprite>(itemInfoTable.GetItemData(99).ImagePath);
+        }
+		else
+		{
+            deviceCore.GetComponent<Image>().sprite = defaultSprite;
+        }
 	}
 
 	public void UpdateStatus()
 	{
-		var info = CharacterManager.Instance.m_CharacterStorage[character.CharacterID];
+		if(characterTable == null)
+			characterTable = DataTableMgr.GetTable<CharacterTable>();
+		if(stringTable == null)
+			stringTable = StageDataManager.Instance.stringTable;
 
-		var nameString = characterTable.GetCharacterData(character.CharacterID).CharacterNameStringID;
+        var info = CharacterManager.Instance.m_CharacterStorage[character.CharacterID];
+		var data = characterTable.GetCharacterData(character.CharacterID);
+		if(data == null) return;
+		var nameString = data.CharacterNameStringID;
 
-		characterName.SetText(stringTable.GetString(nameString));
+        characterName.SetText(stringTable.GetString(nameString));
 		Damage.SetText(info.Damage.ToString());
 		HP.SetText(info.HP.ToString());
 		//Speed.SetText(info.speed.ToString());
 		Armor.SetText(info.Armor.ToString());
 		CriticalHit.SetText("--");
 		CriticalDamage.SetText("--");
+		level.SetText($"{info.CharacterLevel}");
 	}
 
 	public void SetLevelInfo()

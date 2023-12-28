@@ -59,6 +59,9 @@ public class Character
 					for (int i = 0; i < ids.Length; i++)
 					{
 						var option = valueTable.GetDeviceValueData(ids[i]);
+						if(option == null)
+                            continue;
+                        
 						if (option.ID == 81102 || option.ID == 82102 || option.ID == 81203)
 						{
 							coefficient += option.Coefficient + option.Increase * (device.CurrLevel - 1);
@@ -73,7 +76,7 @@ public class Character
 
 			if(DeviceEngineID != 0)
 			{
-				var device = DeviceInventoryManager.Instance.m_DeviceStorage[DeviceCoreID];
+				var device = DeviceInventoryManager.Instance.m_DeviceStorage[DeviceEngineID];
 				if(device != null)
 				{
 					int[] ids =
@@ -87,7 +90,10 @@ public class Character
 					for (int i = 0; i < ids.Length; i++)
 					{
 						var option = valueTable.GetDeviceValueData(ids[i]);
-						if (option.ID == 81102 || option.ID == 82102 || option.ID == 81203)
+                        if (option == null)
+                            continue;
+
+                        if (option.ID == 81102 || option.ID == 82102 || option.ID == 81203)
 						{
 							coefficient += option.Coefficient;
 						}
@@ -140,7 +146,10 @@ public class Character
 					for (int i = 0; i < ids.Length; i++)
 					{
 						var option = valueTable.GetDeviceValueData(ids[i]);
-						if (option.ID == 81103 || option.ID == 82103 || option.ID == 81205)
+                        if (option == null)
+                            continue;
+
+                        if (option.ID == 81103 || option.ID == 82103 || option.ID == 81205)
 						{
 							coefficient += option.Coefficient;
 						}
@@ -168,7 +177,10 @@ public class Character
 					for (int i = 0; i < ids.Length; i++)
 					{
 						var option = valueTable.GetDeviceValueData(ids[i]);
-						if (option.ID == 81103 || option.ID == 82103 || option.ID == 81205)
+                        if (option == null)
+                            continue;
+
+                        if (option.ID == 81103 || option.ID == 82103 || option.ID == 81205)
 						{
 							coefficient += option.Coefficient;
 						}
@@ -220,7 +232,10 @@ public class Character
 					for (int i = 0; i < ids.Length; i++)
 					{
 						var option = valueTable.GetDeviceValueData(ids[i]);
-						if (option.ID == 81101 || option.ID == 82101 || option.ID == 81201)
+                        if (option == null)
+                            continue;
+
+                        if (option.ID == 81101 || option.ID == 82101 || option.ID == 81201)
 						{
 							coefficient += option.Coefficient;
 						}
@@ -248,7 +263,10 @@ public class Character
 					for (int i = 0; i < ids.Length; i++)
 					{
 						var option = valueTable.GetDeviceValueData(ids[i]);
-						if (option.ID == 81101 || option.ID == 82101 || option.ID == 81201)
+                        if (option == null)
+                            continue;
+
+                        if (option.ID == 81101 || option.ID == 82101 || option.ID == 81201)
 						{
 							coefficient += option.Coefficient;
 						}
@@ -293,7 +311,10 @@ public class Character
 					for (int i = 0; i < ids.Length; i++)
 					{
 						var option = valueTable.GetDeviceValueData(ids[i]);
-						if (option.ID == 82107)
+                        if (option == null)
+                            continue;
+
+                        if (option.ID == 82107)
 						{
 							value += option.Value;
 						}
@@ -317,7 +338,10 @@ public class Character
 					for (int i = 0; i < ids.Length; i++)
 					{
 						var option = valueTable.GetDeviceValueData(ids[i]);
-						if (option.ID == 82107)
+                        if (option == null)
+                            continue;
+
+                        if (option.ID == 82107)
 						{
 							value += option.Value;
 						}

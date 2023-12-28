@@ -51,6 +51,7 @@ public class DevicePanel : MonoBehaviour
 
 	public Button equipButton;
 	public Button enhanceButton;
+	public Button exitButton;
 
 	private Device selectedDevice;
 
@@ -69,6 +70,12 @@ public class DevicePanel : MonoBehaviour
 			deviceEnhancePanel.gameObject.SetActive(true);
 			deviceEnhancePanel.SetDeivce(selectedDevice);
 		});
+
+		exitButton.onClick.AddListener(() =>
+		{
+			characterInfoPanel.GetComponent<CharacterInfoText>().UpdateCharacter();
+            gameObject.SetActive(false);
+        });
 	}
 
 	private void Start()
