@@ -34,6 +34,7 @@ public class AffectionCommunicationPanel : MonoBehaviour
 	private CommuinicationDictionary commuinicationDict;
 	private List<CommunicationData> currentCommunicationList;
 	private int count = 0;
+	private int point = 0;
 	private AffectionPortrait affectionPortrait;
 
 	private void Awake()
@@ -149,6 +150,7 @@ public class AffectionCommunicationPanel : MonoBehaviour
 		if (!LoadCommunication()) return;
 
 		count = 0;
+		point = 0;
 
 		textPanel.gameObject.SetActive(true);
 		NextScript();
@@ -164,6 +166,8 @@ public class AffectionCommunicationPanel : MonoBehaviour
 		{
 			textPanel.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
 			textPanel.gameObject.SetActive(false);
+			AddAffectionPoint(point);
+			point = 0;
 			return;
 		}
 
@@ -211,7 +215,7 @@ public class AffectionCommunicationPanel : MonoBehaviour
 
 		if (info.Branch == 0)
 		{
-			AddAffectionPoint(info.Value);
+			point = info.Value;
 			count = -1;
 			return;
 		}
