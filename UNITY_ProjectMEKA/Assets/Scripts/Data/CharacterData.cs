@@ -329,6 +329,8 @@ public class Character
 		}
 	}
 
+
+
 	public float WithdrawCost
 	{
 		get

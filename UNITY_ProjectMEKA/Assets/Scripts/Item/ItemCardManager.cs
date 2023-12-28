@@ -65,13 +65,13 @@ public class ItemCardManager : MonoBehaviour
 
 		//	UpdateItemCard();
 		//});
-
-		stringTable = DataTableMgr.GetTable<StringTable>();
-		itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
 	}
 
 	private void Start()
 	{
+		stringTable = DataTableMgr.GetTable<StringTable>();
+		itemInfoTable = DataTableMgr.GetTable<ItemInfoTable>();
+
 		ObjectPoolManager.instance.AddObjectToPool("ItemCard", itemCardPrefab, 30);
 		UpdateItemCard();
 		dropdown.value = 0;

@@ -7,20 +7,17 @@ using UnityEngine.UI;
 
 public enum UINumeric
 {
-	Name = 0,
-	Company,
-	Level,
-	HP,
-	Damage,
+	ATK = 0,
 	Armor,
-	AttackSpeed,
-	Cost,
-	CoolDown,
-	Block,
+	HP,
+	Speed,
+	CriHit,
+	CriDamage,
+	Name,
+	Lv,
 
 	
-	Class = 0,
-	AttackRange,
+	CharImage = 0,
 }
 
 public class FormationManager : MonoBehaviour
@@ -36,7 +33,7 @@ public class FormationManager : MonoBehaviour
 	public RectTransform characterCardScrollView;
 	public GameObject characterCardPrefab;
 
-	public RectTransform popupPanel;
+	public ModalWindow modalWindow;
 
 	public Button deleteButton;
 	public Button startButton;
@@ -54,6 +51,8 @@ public class FormationManager : MonoBehaviour
 
 	private List<GameObject> activeFalseList;
 	private CardInfo[] cardList;
+
+	private CharacterTable characterTable;
 
 
 	private void Awake()
@@ -129,6 +128,11 @@ public class FormationManager : MonoBehaviour
 
 
 		cardList = characterCardScrollView.GetComponentsInChildren<CardInfo>();
+	}
+
+	private void Start()
+	{
+		characterTable = DataTableMgr.GetTable<CharacterTable>();
 	}
 
 	private void OnEnable()
@@ -298,15 +302,20 @@ public class FormationManager : MonoBehaviour
 
 		selectedCharacterID = ID;
 
-		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(ID);
+		var info = characterTable.GetCharacterData(ID);
+		var charInfo = CharacterManager.Instance.m_CharacterStorage[ID];
+
 		var stringTable = StageDataManager.Instance.stringTable;
 
 		textUiArr[(int)UINumeric.Name].SetText(stringTable.GetString(info.CharacterNameStringID));
-		textUiArr[(int)UINumeric.Company].SetText(((Defines.Property)info.CharacterProperty).ToString());
-		textUiArr[(int)UINumeric.Level].SetText(((Defines.Occupation)info.CharacterOccupation).ToString());
+		textUiArr[(int)UINumeric.ATK].SetText(charInfo.Damage.ToString());
+		textUiArr[(int)UINumeric.Armor].SetText(charInfo.Armor.ToString());
+		textUiArr[(int)UINumeric.HP].SetText(charInfo.HP.ToString());
+		textUiArr[(int)UINumeric.Speed].SetText(charInfo.ToString());
+		textUiArr[(int)UINumeric.CriHit].SetText("ㅠㅠ");
+		textUiArr[(int)UINumeric.CriDamage].SetText("ㅠㅠ");
 
-		textUiArr[(int)UINumeric.HP].SetText("Wt:"+info.ArrangementCost);
-		textUiArr[(int)UINumeric.Damage].SetText("Dmg:"+info.ReArrangementCoolDown);
+		imageUiArr[(int)UINumeric.CharImage].sprite = Resources.Load<Sprite>(info.PortraitPath);
 	}
 
 	public void ResetSelectCharacterCard()
