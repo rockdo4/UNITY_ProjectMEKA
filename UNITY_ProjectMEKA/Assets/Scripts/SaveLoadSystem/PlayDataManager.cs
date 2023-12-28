@@ -81,6 +81,7 @@ public class PlayDataManager
     private static void FirstGameCharacterSaveDataSet()
     {
         var charTable = DataTableMgr.GetTable<CharacterTable>().GetOriginalTable();
+        var table = DataTableMgr.GetTable<CharacterTable>();
         var storage = CharacterManager.Instance.m_CharacterStorage;
 
         foreach (var character in charTable)
@@ -91,7 +92,15 @@ public class PlayDataManager
             chara.CurrentExp = 0;
             chara.CharacterGrade = character.Value.InitialGrade;
             chara.SkillLevel = 1;
-            chara.IsUnlock = false;
+
+			if (table.GetCharacterData(character.Value.CharacterID).IsBasic == 1)
+			{
+				chara.IsUnlock = true;
+			}
+			else
+			{
+				chara.IsUnlock = false;
+			}
 
             chara.affection = new CharacterAffection();
             chara.affection.AffectionLevel = 1;

@@ -320,9 +320,9 @@ public class FormationManager : MonoBehaviour
 		textUiArr[(int)UINumeric.ATK].SetText(charInfo.Damage.ToString());
 		textUiArr[(int)UINumeric.Armor].SetText(charInfo.Armor.ToString());
 		textUiArr[(int)UINumeric.HP].SetText(charInfo.HP.ToString());
-		textUiArr[(int)UINumeric.Speed].SetText(charInfo.ToString());
-		textUiArr[(int)UINumeric.CriHit].SetText("ㅠㅠ");
-		textUiArr[(int)UINumeric.CriDamage].SetText("ㅠㅠ");
+		textUiArr[(int)UINumeric.Speed].SetText("--");
+		textUiArr[(int)UINumeric.CriHit].SetText("--");
+		textUiArr[(int)UINumeric.CriDamage].SetText("--");
 
 		imageUiArr[(int)UINumeric.CharImage].sprite = Resources.Load<Sprite>(info.ImagePath);
 		imageUiArr[(int)UINumeric.CharImage].preserveAspect = false;
