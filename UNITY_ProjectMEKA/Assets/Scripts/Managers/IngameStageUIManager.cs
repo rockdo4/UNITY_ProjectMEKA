@@ -61,7 +61,6 @@ public class IngameStageUIManager : MonoBehaviour
 	// skill
 	public TextMeshProUGUI skillTileGuideText;
 
-    private float currentTimeLeft;
     public bool currentPlayerChanged;
     public bool currentPlayerOnTile;
     private bool isInfoWindowOn = true;
@@ -369,8 +368,7 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void UpdateTimeProgress()
     {
-        currentTimeLeft -= Time.deltaTime;
-        timeProgressSlider.value = (float)(currentTimeLeft / stageManager.maxTime);
+        timeProgressSlider.value = (float)((stageManager.maxTime - stageManager.timer) / stageManager.maxTime);
     }
 
     public void LoseWindowSet()
@@ -497,7 +495,6 @@ public class IngameStageUIManager : MonoBehaviour
         }
 
         allMonsterCountText.SetText(stageManager.allMonsterCount.ToString());
-        currentTimeLeft = stageManager.maxTime;
     }
 
     public void InitResultPanel(StageData stageData, StageSaveData stageSaveData)
