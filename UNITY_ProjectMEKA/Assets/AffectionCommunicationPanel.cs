@@ -93,7 +93,7 @@ public class AffectionCommunicationPanel : MonoBehaviour
 
 		var info = DataTableMgr.GetTable<AffectionTable>().GetAffectionData(this.currCharacter.affection.AffectionLevel);
 
-		characterImage.sprite = Resources.Load<Sprite>("CharacterIcon/" + currCharacter.ImagePath);
+		characterImage.sprite = Resources.Load<Sprite>(currCharacter.CharacterStanding);
 		characterImage.preserveAspect = true;
 		characterName.SetText(currCharacter.Name);
 		affectionText.SetText($"{currCharacter.affection.AffectionLevel}");

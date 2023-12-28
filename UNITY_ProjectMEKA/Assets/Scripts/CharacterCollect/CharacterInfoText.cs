@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Runtime.ConstrainedExecution;
 
 public class CharacterInfoText : MonoBehaviour
 {
@@ -24,17 +25,24 @@ public class CharacterInfoText : MonoBehaviour
 
 	[Header("Text")]
 	public TextMeshProUGUI characterName;
-	public TextMeshProUGUI textInfo;
+	public TextMeshProUGUI Damage;
+	public TextMeshProUGUI HP;
+	public TextMeshProUGUI Speed;
+	public TextMeshProUGUI Armor;
+	public TextMeshProUGUI CriticalHit;
+	public TextMeshProUGUI CriticalDamage;
 
 
 	[HideInInspector]
 	public Character character;
 
 	private CharacterTable characterTable;
+	private StringTable stringTable;
 
 	private void Start()
 	{
 		characterTable = DataTableMgr.GetTable<CharacterTable>();
+		stringTable = StageDataManager.Instance.stringTable;
 	}
 
 	private void SetListener()
@@ -77,8 +85,7 @@ public class CharacterInfoText : MonoBehaviour
 		characterName.SetText(data.Name);
 
 		SetListener();
-		Debug.Log("CharacterIcon/" + character.ImagePath);
-		characterImage.sprite = Resources.Load<Sprite>("CharacterIcon/" + character.ImagePath);
+		characterImage.sprite = Resources.Load<Sprite>(character.CharacterStanding);
 		characterImage.preserveAspect = true;
 
 		UpdateCharacter();
@@ -94,29 +101,20 @@ public class CharacterInfoText : MonoBehaviour
 		//SetDeviceInfo();
 	}
 
-	//public void SetSkillInfo()
-	//{
-	//	//var table = DataTableMgr.GetTable<>();
-	//	var skillText = skillButton.GetComponentInChildren<TextMeshProUGUI>();
-	//	var skillTable = DataTableMgr.GetTable<SkillTable>();
-	//	var datas = skillTable.GetSkillDatas(character.SkillID);
+	public void UpdateStatus()
+	{
+		var info = CharacterManager.Instance.m_CharacterStorage[character.CharacterID];
 
-	//	int skillID;
-	//	if (datas.Length == character.SkillLevel - 1)
-	//	{
-	//		skillID = -1;
-	//	}
-	//	else
-	//	{
-	//		skillID = datas[character.SkillLevel - 1].SkillLevelID;
-	//	}
+		var nameString = characterTable.GetCharacterData(character.CharacterID).CharacterNameStringID;
 
-	//	skillText.SetText(
-	//		$"Skill ID: {character.SkillID}\n" +
-	//		$"SkillLevel ID: {skillID}\n" +
-	//		$"SkillLevel: {character.SkillLevel}\n" +
-	//		$"(스킬업버튼)");
-	//}
+		characterName.SetText(stringTable.GetString(nameString));
+		Damage.SetText(info.Damage.ToString());
+		HP.SetText(info.HP.ToString());
+		//Speed.SetText(info.speed.ToString());
+		Armor.SetText(info.Armor.ToString());
+		CriticalHit.SetText("--");
+		CriticalDamage.SetText("--");
+	}
 
 	public void SetLevelInfo()
 	{
@@ -166,41 +164,6 @@ public class CharacterInfoText : MonoBehaviour
 	//		$"엔진: {character.DeviceEngineID}");
 	//}
 
-	public void UpdateText()
-	{
-		if (textInfo == null)
-			return;
-
-		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(character.CharacterID);
-		var stringTable = StageDataManager.Instance.stringTable;
-
-		textInfo.SetText(
-			$"캐릭터 아이디 : {info.CharacterID}\n" +
-			$"캐릭터 이름 : {stringTable.GetString(info.CharacterNameStringID)}\n" +
-			$"캐릭터 속성 : {(Defines.Property)info.CharacterProperty}\n" +
-			$"캐릭터 직업 : {(Defines.Occupation)info.CharacterOccupation}\n" +
-			$"캐릭터 레벨 : {character.CharacterLevel}\n" +
-			$"캐릭터 등급 : {character.CharacterGrade}\n" +
-			$"캐릭터 해금 : {character.IsUnlock}");
-	}
-
-	public void SetText(Character data)
-	{
-		if (textInfo == null)
-			return;
-
-		var info = DataTableMgr.GetTable<CharacterTable>().GetCharacterData(data.CharacterID);
-        var stringTable = StageDataManager.Instance.stringTable;
-
-        textInfo.SetText(
-			$"캐릭터 아이디 : {info.CharacterID}\n" +
-			$"캐릭터 이름 : {stringTable.GetString(info.CharacterNameStringID)}\n" +
-			$"캐릭터 속성 : {(Defines.Property)info.CharacterProperty}\n" +
-			$"캐릭터 직업 : {(Defines.Occupation)info.CharacterOccupation}\n" +
-			$"캐릭터 레벨 : {data.CharacterLevel}\n" +
-			$"캐릭터 등급 : {data.CharacterGrade}\n" +
-			$"캐릭터 해금 : {data.IsUnlock}");
-	}
 
 	public void SetPopUpPanel(string text, Action yesAction, string yesText = null, string noText = null)
 	{

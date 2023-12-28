@@ -8,12 +8,10 @@ public class AffectionPanel : MonoBehaviour
     public RectTransform scrollContent;
     public AffectionPortrait affectionPrefab;
     public AffectionCommunicationPanel communicationPanel;
-    public List<AffectionPortrait> affectionPortraits;
 
     private void Awake()
     {
         communicationPanel.gameObject.SetActive(false);
-        affectionPortraits = new List<AffectionPortrait>();
 	}
 
     private void Start()
