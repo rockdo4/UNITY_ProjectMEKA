@@ -43,10 +43,7 @@ public class PlayableAttackState : PlayableBaseState
                     return;
                 }
 
-                if (playerCtrl.sound != null)
-                {
-                    SoundManager.instance.PlayerSEAudio(playerCtrl.sound);
-                }
+                
                 playerCtrl.ani.SetTrigger("Attack");
                 //playerCtrl.SetState(PlayerController.CharacterStates.Idle);
             }

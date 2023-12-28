@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -984,13 +984,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859691123}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5111431, y: 0, z: 0, w: 0.85949564}
-  m_LocalPosition: {x: -0.3, y: 7.55, z: -9.9}
+  m_LocalRotation: {x: 0.5006045, y: 0, z: 0, w: 0.8656761}
+  m_LocalPosition: {x: -0.3, y: 8.6, z: -9.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 61.48, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60.08, y: 0, z: 0}
 --- !u!114 &859691129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1059,6 +1059,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 454452469051980129, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 454452469051980129, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1009823246562728644, guid: 61fda182e6ba84f4aae700cc83b601e3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1506,6 +1514,7 @@ MonoBehaviour:
   gameState: 0
   tempClearCount: 0
   timer: 0
+  maxTime: 0
   defaultCost: 0
   currentCost: 0
   maxCost: 99
@@ -1539,11 +1548,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 21544532}
-  - {fileID: 132821260}
   - {fileID: 2057198290}
   - {fileID: 919387576021322767}
-  - {fileID: 1123018348}
   - {fileID: 1838859708030802869}
+  - {fileID: 132821260}
+  - {fileID: 1123018348}
   - {fileID: 859691128}
   - {fileID: 671564100}
   - {fileID: 1458759940}
