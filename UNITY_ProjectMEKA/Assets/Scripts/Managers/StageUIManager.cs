@@ -55,6 +55,7 @@ public class StageUIManager : MonoBehaviour
 
     private StageTable stageTable;
     private RewardTable rewardTable;
+    private MonsterTable monsterTable;
     private string stageMonsterImagePath;
 
     private void Awake()
@@ -62,6 +63,7 @@ public class StageUIManager : MonoBehaviour
         PlayDataManager.Init();
         stageTable = StageDataManager.Instance.stageTable;
         rewardTable = StageDataManager.Instance.rewardTable;
+        monsterTable = DataTableMgr.GetTable<MonsterTable>();
         stageMonsterImagePath = "StageMonsterImage/0_stageMonsterImage";
         CreateStageButtons(StageClass.Story);
         CreateStageButtons(StageClass.Assignment);
@@ -416,12 +418,13 @@ public class StageUIManager : MonoBehaviour
         // 이 수 만큼 프리팹 생성, 아이콘에 스프라이트 씌워주기
         for (int i = 0; i < monsterLevelIDArray.Length; ++i)
         {
-            // sprite는 나중에 몬스터 테이블에 몬스터 기본 id, 이름, 이미지 경로 이렇게 3개만 있게 만들고 가져와서 쓰기
-            //var id = monsterLevelIDArray[i].Substring(0, monsterLevelIDArray.Length-2);
+            var monsterID = int.Parse(monsterLevelIDArray[i].Substring(0, monsterLevelIDArray[i].Length-2));
 
+            Debug.Log(monsterID);
+            var monsterTableData = monsterTable.GetMonsterData(monsterID);
+            var monsterIconPath = monsterTableData.IconPath;
             var icon = Instantiate(monsterButtonPrefab, monsterInfoPanel.transform);
-            icon.GetComponentInChildren<TextMeshProUGUI>().SetText((i + 1).ToString());
-
+            icon.GetComponent<Image>().sprite = Resources.Load<Sprite>(monsterIconPath);
             var iconScript = icon.GetComponent<MonsterIcon>();
             iconScript.Init(this, int.Parse(monsterLevelIDArray[i]), stringTable);
         }
