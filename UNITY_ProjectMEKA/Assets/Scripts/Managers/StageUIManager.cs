@@ -31,7 +31,8 @@ public class StageUIManager : MonoBehaviour
     public GameObject storyStageButtonPanel;
     public GameObject assignmentStageButtonPanel;
     public GameObject challengeStageButtonPanel;
-    public GameObject stageButtonPrefab;
+    public GameObject storyStageButtonPrefab;
+    public GameObject assignmentAndChallengeButtonPrefab;
 
     public GameObject stageInfoParentPanel;
     public GameObject stageInfoPanel;
@@ -52,9 +53,16 @@ public class StageUIManager : MonoBehaviour
     public GameObject monsterButtonPrefab;
     public GameObject monsterInfoPopUpWindow;
 
+    private StageTable stageTable;
+    private RewardTable rewardTable;
+    private string stageMonsterImagePath;
+
     private void Awake()
     {
         PlayDataManager.Init();
+        stageTable = StageDataManager.Instance.stageTable;
+        rewardTable = StageDataManager.Instance.rewardTable;
+        stageMonsterImagePath = "StageMonsterImage/0_stageMonsterImage";
         CreateStageButtons(StageClass.Story);
         CreateStageButtons(StageClass.Assignment);
         CreateStageButtons(StageClass.Challenge);
@@ -215,23 +223,23 @@ public class StageUIManager : MonoBehaviour
         switch (stageClass)
         {
             case StageClass.Story:
-                CreatSelectedStageButtons(storyStageButtonPanel.transform, PlayDataManager.data.storyStageDatas);
+                CreateStoryStageButtons(storyStageButtonPanel.transform, PlayDataManager.data.storyStageDatas);
                 break;
             case StageClass.Assignment:
-                CreatSelectedStageButtons(assignmentStageButtonPanel.transform, PlayDataManager.data.assignmentStageDatas);
+                CreateAssignmentAndChallengeStageButtons(assignmentStageButtonPanel.transform, PlayDataManager.data.assignmentStageDatas);
                 break;
             case StageClass.Challenge:
-                CreatSelectedStageButtons(challengeStageButtonPanel.transform, PlayDataManager.data.challengeStageDatas);
+                CreateAssignmentAndChallengeStageButtons(challengeStageButtonPanel.transform, PlayDataManager.data.challengeStageDatas);
                 break;
         }
     }
 
-    public void CreatSelectedStageButtons(Transform parentTr, Dictionary<int, StageSaveData> currentStageData)
+    public void CreateStoryStageButtons(Transform parentTr, Dictionary<int, StageSaveData> selectedStageData)
     {
-        foreach (var stage in currentStageData)
+        foreach (var stage in selectedStageData)
         {
             // instantiate
-            var stageButtonGo = Instantiate(stageButtonPrefab, parentTr);
+            var stageButtonGo = Instantiate(storyStageButtonPrefab, parentTr);
 
             // chapter + stage text apply
             var stageButtonText = stageButtonGo.GetComponentInChildren<TextMeshProUGUI>();
@@ -245,13 +253,11 @@ public class StageUIManager : MonoBehaviour
             // id apply
             var stageButtonScript = stageButtonGo.GetComponent<StageButton>();
             stageButtonScript.stageID = stage.Key;
-
             var stageButton = stageButtonGo.GetComponent<Button>();
             stageButton.onClick.AddListener(SetStageInfoWindow);
 
             // clear score
             var count = stage.Value.clearScore;
-
             for(int i = 0; i < 3; ++i)
             {
                 if(count > i)
@@ -264,11 +270,71 @@ public class StageUIManager : MonoBehaviour
                 }
             }
 
-            // active false
             if (!stage.Value.isUnlocked)
             {
                 stageButtonGo.SetActive(false);
             }
+        }
+    }
+
+    public void CreateAssignmentAndChallengeStageButtons(Transform parentTr, Dictionary<int, StageSaveData> selectedStageData)
+    {
+        foreach (var stage in selectedStageData)
+        {
+            // instantiate
+            var stageButtonGo = Instantiate(assignmentAndChallengeButtonPrefab, parentTr);
+            
+            var stageButtonScript = stageButtonGo.GetComponent<StageButton>();
+            var stageMonsterImage = stageButtonScript.monsterImage;
+            var stageIndex = stageButtonScript.stageIndexText;
+            var stageRewardGuide = stageButtonScript.rewardGuideText;
+            var stageTableData = stageTable.GetStageData(stage.Key);
+            var rewardTableData = rewardTable.GetStageData(stageTableData.RewardID);
+
+            // chapter + stage text apply
+            var chapter = StageDataManager.Instance.stageTable.GetStageData(stage.Key).ChapterNumber;
+            var stageNumber = StageDataManager.Instance.stageTable.GetStageData(stage.Key).StageNumber;
+            var stageIndexText = new string($"{chapter} - {stageNumber}");
+            stageIndex.SetText(stageIndexText);
+
+            // id apply
+            stageButtonScript.stageID = stage.Key;
+
+            // locked stage ui set
+            var hardFilter = stageButtonScript.hardBg;
+            var hardIcon = stageButtonScript.hardTag;
+            var stageData = stageTable.GetStageData(stage.Key);
+            if (stageData.Hard)
+            {
+                hardFilter.SetActive(true);
+                hardIcon.SetActive(true);
+            }
+            else
+            {
+                hardFilter.SetActive(false);
+                hardIcon.SetActive(false);
+            }
+
+            // general ui set
+            var stageMonsterResource = stageMonsterImagePath.Replace("0", stage.Key.ToString());
+            stageMonsterImage.sprite = Resources.Load<Sprite>(stageMonsterResource);
+            // 스테이지 아이디 + 
+            var stageRewardGuideText = new string($"{stage.Key}_stageRewardGuide");
+            stageRewardGuide.SetText(stageRewardGuideText);
+
+            // on click set
+            var stageButton = stageButtonGo.GetComponent<Button>();
+            stageButton.onClick.AddListener(()=>
+            {
+                if(stage.Value.isUnlocked)
+                {
+                    SetStageInfoWindow();
+                }
+                else
+                {
+                    SetLockedPopUpWinodw();
+                }
+            });
         }
     }
 
@@ -302,8 +368,6 @@ public class StageUIManager : MonoBehaviour
 
         var stageHeader = new string($"{stageTable.ChapterNumber} - {stageTable.StageNumber} {stringTable.GetString(stageNameID)}");
         stageHeaderText.SetText(stageHeader);
-
-
 
         // 스테이지 인포
         var mission1 = stringTable.GetString(stageMission1ID);

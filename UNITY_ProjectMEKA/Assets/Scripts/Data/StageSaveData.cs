@@ -26,6 +26,7 @@ public class StageData
     public string MapImagePath { get; set; }
     public string MapSoundPath { get; set; }
     public int NextStageID { get; set; }
+    public bool Hard { get; set; }
     public int Mission1Type { get; set; }
     public int Mission1Value { get; set; }
     public int Mission2Type { get; set; }

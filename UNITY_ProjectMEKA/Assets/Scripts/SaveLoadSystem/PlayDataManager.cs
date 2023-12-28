@@ -65,16 +65,27 @@ public class PlayDataManager
             else if(stage.Value.Class == (int)StageClass.Assignment)
             {
                 data.assignmentStageDatas.Add(stage.Key, saveData);
+                // 지정된 잠금 스테이지면, inUnlocked false
+                if(stage.Value.Hard)
+                {
+                    saveData.isUnlocked = false;
+                }
+                else
+                {
+                    saveData.isUnlocked = true;
+                }
             }
             else if(stage.Value.Class == (int)StageClass.Challenge)
             {
                 data.challengeStageDatas.Add(stage.Key, saveData);
+                saveData.isUnlocked = true;
             }
         }
 
         for(int i = 0; i < 7; ++i)
         {
-            data.systemUnlockData.Add(i + 1, false);
+            // 임시
+            data.systemUnlockData.Add(i + 1, true);
         }
     }
 
