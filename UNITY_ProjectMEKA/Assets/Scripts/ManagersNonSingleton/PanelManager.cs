@@ -45,6 +45,9 @@ public class PanelManager : MonoBehaviour
 	public RectTransform challengeStageChoicePanel;
 	private Vector3 challengeStageChoicePos;
 
+	public RectTransform affectionPanel;
+	private Vector3 affectionPos;
+
 	[Header("PopUp Panel")]
 	public ModalWindow popUpPanel;
 
@@ -64,6 +67,7 @@ public class PanelManager : MonoBehaviour
         storyStageChoicePos = storyStageChoicePanel.position;
         assignmentStageChoicePos = assignmentStageChoicePanel.position;
         challengeStageChoicePos = challengeStageChoicePanel.position;
+		affectionPos = affectionPanel.position;
 
         previousPanel = mainPanel;
         previousPos = mainPos;
@@ -145,6 +149,14 @@ public class PanelManager : MonoBehaviour
         challengeStageChoicePanel.position = mainPos;
         mainPanel.position = previousPos;
     }
+
+	public void ChangePanelAffection()
+	{
+		previousPos = affectionPos;
+		previousPanel = affectionPanel;
+		affectionPanel.position = mainPos;
+		mainPanel.position = previousPos;
+	}
 
 	public void LoadFormation()
 	{

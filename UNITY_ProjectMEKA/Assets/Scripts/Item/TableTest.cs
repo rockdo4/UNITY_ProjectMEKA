@@ -7,13 +7,10 @@ public class TableTest : MonoBehaviour
 {
 	public ItemCardManager itemCardManager;
 
-	private void Start()
-	{
-	}
-
 	public void OnClickAddItem()
 	{
-		int[] arr = { 5110001, 5120001, 5130001, 5610001, 5620001, 5630001, 5710001, 5720001, 5730001, 5810001, 5810002 , 5810003 };
+		int[] arr = { 5910001, 5110001, 5120001, 5130001, 5610001, 5610002, 5610003, 
+			5610004, 5610005, 5610006, 5610007, 5710001, 5720001, 5730001, 5810001, 5820001, 5830003, 5740001 };
 
 		var table = DataTableMgr.GetTable<ItemInfoTable>();
 

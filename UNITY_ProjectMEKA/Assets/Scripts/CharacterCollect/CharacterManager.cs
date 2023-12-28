@@ -62,9 +62,6 @@ public class CharacterManager
 			return;
 		}
 
-		if(PlayDataManager.data.characterStorage != null)
-		{
-			m_CharacterStorage = PlayDataManager.data.characterStorage;
-		}
+		m_CharacterStorage = PlayDataManager.data.characterStorage;
 	}
 }

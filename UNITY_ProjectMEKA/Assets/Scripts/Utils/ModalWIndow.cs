@@ -69,7 +69,7 @@ public class ModalWindow : MonoBehaviour
 		yesButton.onClick.AddListener(() =>
 		{
 			gameObject.SetActive(false);
-			GameManager.Instance.SaveExecution();
+			//GameManager.Instance.SaveExecution();
 		});
 
 		gameObject.SetActive(true);
