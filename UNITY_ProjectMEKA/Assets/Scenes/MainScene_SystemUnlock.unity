@@ -623,6 +623,7 @@ MonoBehaviour:
   subOptionValue3: {fileID: 270562566}
   equipButton: {fileID: 220601997}
   enhanceButton: {fileID: 988502940}
+  exitButton: {fileID: 0}
 --- !u!1 &18127715
 GameObject:
   m_ObjectHideFlags: 0
@@ -10480,9 +10481,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1644099654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 90, y: -37.650013}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &548283319
@@ -11284,8 +11285,17 @@ MonoBehaviour:
   companyButton: {fileID: 0}
   enhancePanel: {fileID: 863540071}
   panelManager: {fileID: 1704917223}
+  deviceEngine: {fileID: 0}
+  deviceCore: {fileID: 0}
   characterName: {fileID: 1999105204}
-  textInfo: {fileID: 0}
+  Damage: {fileID: 0}
+  HP: {fileID: 0}
+  Speed: {fileID: 0}
+  Armor: {fileID: 0}
+  CriticalHit: {fileID: 0}
+  CriticalDamage: {fileID: 0}
+  level: {fileID: 0}
+  defaultSprite: {fileID: 0}
 --- !u!1 &584046167
 GameObject:
   m_ObjectHideFlags: 0
@@ -15406,9 +15416,10 @@ MonoBehaviour:
   characterInfoPanel: {fileID: 578372457}
   characterCardScrollView: {fileID: 567874440}
   characterCardPrefab: {fileID: 3706411763328831598, guid: 930b6865c1147a145807241a0471e1de, type: 3}
-  popupPanel: {fileID: 204579627}
+  modalWindow: {fileID: 0}
   deleteButton: {fileID: 595944086}
   startButton: {fileID: 989650979}
+  selectButton: {fileID: 0}
   textUiArr:
   - {fileID: 2135943192}
   - {fileID: 1088407309}
@@ -18853,14 +18864,20 @@ MonoBehaviour:
   itemID: f1f84d0001204e0011474e00
   levelText: {fileID: 1351822787}
   damageText: {fileID: 1602335208}
+  afterDamageText: {fileID: 0}
   armorText: {fileID: 1728124127}
+  afterArmorText: {fileID: 0}
   hpText: {fileID: 491523757}
+  afterHpText: {fileID: 0}
   expText: {fileID: 2028765052}
+  expBar: {fileID: 0}
+  expPercent: {fileID: 0}
   reportItemCard:
   - {fileID: 1744056317506275174}
   - {fileID: 2056849759}
   - {fileID: 2080289823}
   applyButton: {fileID: 627410398}
+  exitButton: {fileID: 0}
   infoPanel: {fileID: 578372460}
 --- !u!1 &863761208
 GameObject:
@@ -19511,7 +19528,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 64.23695, y: 0}
   m_SizeDelta: {x: 75.3648, y: 26.6899}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &886760802
@@ -29817,6 +29834,8 @@ MonoBehaviour:
   selectPanel: {fileID: 914265568}
   closeButton: {fileID: 60851434}
   modalWindow: {fileID: 297062020}
+  cautionDaily: {fileID: 0}
+  timeReset: {fileID: 0}
 --- !u!1 &1384752593
 GameObject:
   m_ObjectHideFlags: 0
@@ -36703,7 +36722,8 @@ MonoBehaviour:
   storyStageButtonPanel: {fileID: 1279574384}
   assignmentStageButtonPanel: {fileID: 2141051560}
   challengeStageButtonPanel: {fileID: 1307743243}
-  stageButtonPrefab: {fileID: 7055700305110128761, guid: ba67c3ea1fa01ef4c96d1403e23fa1ea, type: 3}
+  storyStageButtonPrefab: {fileID: 0}
+  assignmentAndChallengeButtonPrefab: {fileID: 0}
   stageInfoParentPanel: {fileID: 1732097672}
   stageInfoPanel: {fileID: 2021995364}
   monsterInfoPanel: {fileID: 908230202}
@@ -40055,7 +40075,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterCardPrefab: {fileID: 1215139466491143739, guid: 86137896019f433429227258f4527473, type: 3}
   characterInfoPanel: {fileID: 578372457}
-  characterAffectionPanel: {fileID: 5413264044481523901}
   enableButton: {fileID: 67375548}
 --- !u!114 &1799672345
 MonoBehaviour:
@@ -43472,9 +43491,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemCardPrefab: {fileID: 3706411763328831598, guid: db41ce08272be044b87d72466b4889d0, type: 3}
-  dropdown: {fileID: 649387545}
+  dropdown: {fileID: 0}
   searchInputField: {fileID: 1838268378}
   resetButton: {fileID: 1855689813}
+  itemInfoText: {fileID: 0}
+  itemGetInfoText: {fileID: 0}
+  itemImage: {fileID: 0}
+  itemNameText: {fileID: 0}
 --- !u!1001 &1979359124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47845,7 +47868,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 64.23695, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2147417634
@@ -49295,6 +49318,8 @@ MonoBehaviour:
   selectPanel: {fileID: 0}
   closeButton: {fileID: 18574443}
   modalWindow: {fileID: 297062020}
+  cautionDaily: {fileID: 0}
+  timeReset: {fileID: 0}
 --- !u!222 &5623304855929307150
 CanvasRenderer:
   m_ObjectHideFlags: 0
