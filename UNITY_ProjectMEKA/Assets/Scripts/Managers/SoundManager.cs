@@ -17,6 +17,7 @@ public class SoundManager : MonoBehaviour
     public List<AudioSource> bgmAudioSource;
     public List<AudioSource> SFXAudioSource;
     private string currentSceneName;
+    private string saveSceneName;
     [System.Serializable]
     public class AudioClipList
     {
@@ -55,14 +56,24 @@ public class SoundManager : MonoBehaviour
     {
         //Init();
         currentSceneName = SceneManager.GetActiveScene().name;
+        saveSceneName = currentSceneName;
         PlayBGM("MainSceneBGM");
+
     }
     private void Update()
     {
         if(currentSceneName != SceneManager.GetActiveScene().name) 
         {
             currentSceneName = SceneManager.GetActiveScene().name;
-            PlayBGM("InGameBGM");
+            if(currentSceneName == saveSceneName)
+            {
+                PlayBGM("MainSceneBGM");
+            }
+            else
+            {
+                PlayBGM("InGameBGM");
+
+            }
         }
     }
     public void Init()
