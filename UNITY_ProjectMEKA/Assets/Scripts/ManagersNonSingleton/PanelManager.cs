@@ -82,7 +82,7 @@ public class PanelManager : MonoBehaviour
 			ChangePanelAssignmentStageChoice();
 			StageDataManager.Instance.toAssignmentStageChoicePanel = false;
 		}
-		else
+		else if(StageDataManager.Instance.toChallengeStageChoicePanel)
 		{
 			ChangePanelChallengeStageChoice();
 			StageDataManager.Instance.toChallengeStageChoicePanel = false;
