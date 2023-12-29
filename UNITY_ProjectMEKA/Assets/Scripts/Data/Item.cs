@@ -38,4 +38,6 @@ public class ItemInfo
 	public int Rare { get; set; }
 	public int Value { get; set; }
 	public string ImagePath { get; set; }
+
+	public string AcquisitionPathStringID { get; set; }
 }
