@@ -22,17 +22,20 @@ public class Instantaneous : MonoBehaviour
         tile = stageManager.tileManager.GetCurrentTile(CurrentGridPos);
         IAttackable t = player.target.GetComponentInParent<IAttackable>();
         t.OnAttack(player.state.damage);
-        foreach (var en in tile.objectsOnTile) 
+        if (tile != null)
         {
-            if(en.tag == "Enemy")
+            foreach (var en in tile.objectsOnTile)
             {
-                if (Random.Range(0f, 1f) >= player.state.critChance)
+                if (en.tag == "Enemy")
                 {
-                    en.GetComponent<IAttackable>().OnAttack(player.state.damage * player.state.fatalDamage);
-                }
-                else
-                {
-                    en.GetComponent<IAttackable>().OnAttack(player.state.damage);
+                    if (Random.Range(0f, 1f) >= player.state.critChance)
+                    {
+                        en.GetComponent<IAttackable>().OnAttack(player.state.damage * player.state.fatalDamage);
+                    }
+                    else
+                    {
+                        en.GetComponent<IAttackable>().OnAttack(player.state.damage);
+                    }
                 }
             }
         }
