@@ -30,7 +30,9 @@ public class StageDataManager
             LoadPlayData();
         }
     }
-    public bool toStageChoicePanel;
+    public bool toStoryStageChoicePanel;
+    public bool toAssignmentStageChoicePanel;
+    public bool toChallengeStageChoicePanel;
     
     // tables
     public StageTable stageTable;
