@@ -109,7 +109,7 @@ public class ItemCardManager : MonoBehaviour
 			{
 				itemInfoText.SetText($"{stringTable.GetString(info.DescriptionStringID)}");
 				itemNameText.SetText($"{stringTable.GetString(info.NameStringID)}");
-				itemGetInfoText.SetText($"{stringTable.GetString(info.NameStringID)}");
+				itemGetInfoText.SetText($"{stringTable.GetString(info.AcquisitionPathStringID)}");
 				itemImage.sprite = Resources.Load<Sprite>(info.ImagePath);
 
 			});

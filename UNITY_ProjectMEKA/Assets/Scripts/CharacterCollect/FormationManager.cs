@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
@@ -109,8 +110,8 @@ public class FormationManager : MonoBehaviour
 			button.onClickButton = new UnityEngine.Events.UnityEvent();
 			button.onClickButton.AddListener(() =>
 			{
-				OpenCharacterList();
 				selectedFormationIndex = index;
+				OpenCharacterList(index);
 			});
 
 			button.holdButton = new UnityEngine.Events.UnityEvent();
@@ -216,8 +217,46 @@ public class FormationManager : MonoBehaviour
 	}
 
 	//OpenCharacterList
-	public void OpenCharacterList()
+	public void OpenCharacterList(int index)
 	{
+		if(formationList[selectedFormationList][index] != 0)
+		{
+			int ID = formationList[selectedFormationList][index];
+
+            var info = characterTable.GetCharacterData(ID);
+            var charInfo = CharacterManager.Instance.m_CharacterStorage[ID];
+
+            var stringTable = StageDataManager.Instance.stringTable;
+
+            textUiArr[(int)UINumeric.Lv].SetText(charInfo.CharacterLevel.ToString());
+            textUiArr[(int)UINumeric.Name].SetText(stringTable.GetString(info.CharacterNameStringID));
+            textUiArr[(int)UINumeric.ATK].SetText(charInfo.Damage.ToString());
+            textUiArr[(int)UINumeric.Armor].SetText(charInfo.Armor.ToString());
+            textUiArr[(int)UINumeric.HP].SetText(charInfo.HP.ToString());
+            textUiArr[(int)UINumeric.Speed].SetText("--");
+            textUiArr[(int)UINumeric.CriHit].SetText("--");
+            textUiArr[(int)UINumeric.CriDamage].SetText("--");
+
+            imageUiArr[(int)UINumeric.CharImage].sprite = Resources.Load<Sprite>(info.ImagePath);
+            imageUiArr[(int)UINumeric.CharImage].preserveAspect = false;
+        }
+		else
+		{
+            textUiArr[(int)UINumeric.Lv].SetText("0");
+            textUiArr[(int)UINumeric.Name].SetText("--");
+            textUiArr[(int)UINumeric.ATK].SetText("--");
+            textUiArr[(int)UINumeric.Armor].SetText("--");
+            textUiArr[(int)UINumeric.HP].SetText("--");
+            textUiArr[(int)UINumeric.Speed].SetText("--");
+            textUiArr[(int)UINumeric.CriHit].SetText("--");
+            textUiArr[(int)UINumeric.CriDamage].SetText("--");
+
+			imageUiArr[(int)UINumeric.CharImage].sprite = default;
+            imageUiArr[(int)UINumeric.CharImage].preserveAspect = false;
+			selectedCharacterID = 0;
+        }
+
+
 		characterPanel.gameObject.SetActive(true);
 
 		CheckCollectCharacter();
@@ -314,8 +353,9 @@ public class FormationManager : MonoBehaviour
 		var info = characterTable.GetCharacterData(ID);
 		var charInfo = CharacterManager.Instance.m_CharacterStorage[ID];
 
-		var stringTable = StageDataManager.Instance.stringTable; 
+		var stringTable = StageDataManager.Instance.stringTable;
 
+		textUiArr[(int)UINumeric.Lv].SetText(charInfo.CharacterLevel.ToString());
 		textUiArr[(int)UINumeric.Name].SetText(stringTable.GetString(info.CharacterNameStringID));
 		textUiArr[(int)UINumeric.ATK].SetText(charInfo.Damage.ToString());
 		textUiArr[(int)UINumeric.Armor].SetText(charInfo.Armor.ToString());
