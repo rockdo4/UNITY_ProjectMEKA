@@ -43,8 +43,8 @@ public class ModalWindow : MonoBehaviour
 		yesButton.onClick.RemoveAllListeners();
 		yesButton.onClick.AddListener(() =>
 		{
-			yesAction();
 			gameObject.SetActive(false);
+			yesAction();
 			GameManager.Instance.SaveExecution();
 		});
 
