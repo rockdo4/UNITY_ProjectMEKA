@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
             stateManager.firstArranged = false;
             stateManager.secondArranged = false;
             stateManager.created = false;
-            Time.timeScale = 1.0f;
+            Time.timeScale = stageManager.CurrentSpeed;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
             gameObject.SetActive(false);
         });
