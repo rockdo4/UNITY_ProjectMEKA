@@ -17,7 +17,7 @@ public class StageUIManager : MonoBehaviour
     public Button assignmentStageButton;
     public Button challengeStageButton;
     public Button[] deviceButtons = new Button[2];
-    public Button synchroButton;
+    public Button[] synchroButtons;
     public Button skillUpdateButton;
     public GameObject gachaUnLockPanel;
     public GameObject affectionLockPanel;
@@ -125,10 +125,14 @@ public class StageUIManager : MonoBehaviour
             });
         }
 
-        synchroButton.onClick.AddListener(() =>
+        foreach(var sunchroButton in synchroButtons)
         {
-            SetSelectedSystemButtonsByUnlock(SystemForUnlock.Synchro);
-        });
+            sunchroButton.onClick.AddListener(() =>
+            {
+                SetSelectedSystemButtonsByUnlock(SystemForUnlock.Synchro);
+            });
+        }
+ 
 
         skillUpdateButton.onClick.AddListener(() =>
         {

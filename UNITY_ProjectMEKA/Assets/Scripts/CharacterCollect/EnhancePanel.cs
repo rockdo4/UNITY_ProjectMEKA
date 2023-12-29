@@ -28,7 +28,6 @@ public class EnhancePanel : MonoBehaviour
 	[Header("버튼")]
 	public Button applyButton;
 	public Button exitButton;
-	public Button synchroButton;
 
 	[Header("패널")]
 	public SynchroPanel synchroPanel;
@@ -55,12 +54,6 @@ public class EnhancePanel : MonoBehaviour
             gameObject.SetActive(false);
         });
 
-		synchroButton.onClick.AddListener(() =>
-		{
-            synchroPanel.gameObject.SetActive(true);
-            synchroPanel.SetCharacter(currCharacter);
-			gameObject.SetActive(false);
-        });
 	}
 
 	public void OnEnable()
