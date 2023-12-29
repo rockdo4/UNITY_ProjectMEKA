@@ -26,7 +26,7 @@ public class CharacterInfoText : MonoBehaviour
 	public Button deviceEngine;
 	public Button deviceCore;
 
-	[Header("Text")]
+	[Header("Info")]
 	public TextMeshProUGUI characterName;
 	public TextMeshProUGUI Damage;
 	public TextMeshProUGUI HP;
@@ -35,6 +35,8 @@ public class CharacterInfoText : MonoBehaviour
 	public TextMeshProUGUI CriticalHit;
 	public TextMeshProUGUI CriticalDamage;
 	public TextMeshProUGUI level;
+	public TextMeshProUGUI expPercent;
+	public Image expBar;
 
 	[Header("Etc")]
 	public Sprite defaultSprite;
@@ -105,7 +107,21 @@ public class CharacterInfoText : MonoBehaviour
 	{
 		UpdateStatus();
 		UpdateDevice();
+		UpdateExp();
     }
+
+	public void UpdateExp()
+	{
+		var exp = character.CurrentExp;
+		var table = DataTableMgr.GetTable<ExpTable>().GetOriginalTable();
+		var require = table[character.CharacterLevel].RequireExp;
+
+		float ratio = (float)exp / require;
+		if(ratio > 1) ratio = 1;
+
+        expBar.fillAmount = ratio;
+		expPercent.SetText($"{(int)(ratio * 100)}%");
+	}
 
 	public void UpdateDevice()
 	{

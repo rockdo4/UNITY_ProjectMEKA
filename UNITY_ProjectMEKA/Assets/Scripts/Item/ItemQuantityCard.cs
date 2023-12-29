@@ -58,6 +58,7 @@ public class ItemQuantityCard : MonoBehaviour
 
         if(panel.CheckFull())
         {
+            panel.infoPanel.SetNoticePanel("현재 최대 레벨에 도달 했습니다.", "확인");
             selectedQuantity--;
         }
 

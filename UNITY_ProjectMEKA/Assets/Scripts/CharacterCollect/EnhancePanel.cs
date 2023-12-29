@@ -22,12 +22,18 @@ public class EnhancePanel : MonoBehaviour
 	public TextMeshProUGUI expPercent;
 
     public ItemQuantityCard[] reportItemCard;
+	[Header("이미지")]
+	public Image characterImage;
 
 	[Header("버튼")]
 	public Button applyButton;
 	public Button exitButton;
+	public Button synchroButton;
 
+	[Header("패널")]
+	public SynchroPanel synchroPanel;
 	public CharacterInfoText infoPanel;
+
 	private Character currCharacter;
 	private bool isFull = false;
 	private List<ExpData> table;
@@ -47,6 +53,13 @@ public class EnhancePanel : MonoBehaviour
 		{
 			infoPanel.UpdateCharacter();
             gameObject.SetActive(false);
+        });
+
+		synchroButton.onClick.AddListener(() =>
+		{
+            synchroPanel.gameObject.SetActive(true);
+            synchroPanel.SetCharacter(currCharacter);
+			gameObject.SetActive(false);
         });
 	}
 
@@ -91,12 +104,17 @@ public class EnhancePanel : MonoBehaviour
 		Debug.Log(("ID",result));
 		var levelData = DataTableMgr.GetTable<CharacterLevelTable>().GetLevelData(result);
 
+		characterImage.sprite = Resources.Load<Sprite>(currCharacter.CharacterStanding);
+
 		UpdateTargetLevel();
 	}
 
 	public LevelData CalculateData(int totalExp, out int remain)
 	{
-		int currentLevel = currCharacter.CharacterLevel;
+        if (table == null)
+            table = DataTableMgr.GetTable<ExpTable>().GetOriginalTable();
+
+        int currentLevel = currCharacter.CharacterLevel;
 		int targetLevel = currentLevel;
 		int maxLevel = currCharacter.CharacterGrade * 10;
 
@@ -158,12 +176,13 @@ public class EnhancePanel : MonoBehaviour
 
 		//expText.SetText($"경험치 : {currCharacter.CurrentExp} >> {remainExp}");
 		var ratio = (float)remainExp / table[data.CharacterLevel].RequireExp;
+        if (ratio > 1) ratio = 1;
         expBar.fillAmount = ratio;
 		expPercent.SetText($"{(int)(ratio * 100)}%");
 
         int maxLevel = currCharacter.CharacterGrade * 10;
 
-        if(levelData.CharacterLevel >= maxLevel)
+        if(data.CharacterLevel >= maxLevel)
 		{
             isFull = true;
         }
@@ -205,12 +224,13 @@ public class EnhancePanel : MonoBehaviour
 
         //expText.SetText($"경험치 : {currCharacter.CurrentExp} >> {remainExp}");
         var ratio = (float)remainExp / table[data.CharacterLevel].RequireExp;
+		if(ratio > 1) ratio = 1;
         expBar.fillAmount = ratio;
         expPercent.SetText($"{(int)(ratio * 100)}%");
 
         int maxLevel = currCharacter.CharacterGrade * 10;
 
-        if (levelData.CharacterLevel >= maxLevel)
+        if (data.CharacterLevel >= maxLevel)
         {
             isFull = true;
         }

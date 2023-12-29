@@ -10,6 +10,7 @@ public class SynchroPanel : MonoBehaviour
 
 	public Image[] leftStar;
 	public Image[] rightStar;
+	public Image characterImage;
 
 	public ItemAutoQuantityCard[] synchroItemCard;
 	public TextMeshProUGUI beforeLevel;
@@ -18,7 +19,6 @@ public class SynchroPanel : MonoBehaviour
 	[Header("etc")]
 	public Button applyButton;
 	public CharacterInfoText infoPanel;
-	public RectTransform resultPanel;
 
 	private SynchroData synchroInfoData;
 	private Character currCharacter;
@@ -46,24 +46,6 @@ public class SynchroPanel : MonoBehaviour
 				"예", "아니오"
 				);
 		});
-
-		//applyButton.onClick.AddListener(() =>
-		//{
-		//	//ApplySynchro();
-
-		//	foreach (var card in synchroItemCard)
-		//	{
-		//		card.ConsumeItem();
-		//		card.SetText();
-		//	}
-
-		//	//UpdateTargetLevel();
-		//});
-	}
-
-	private void OnEnable()
-	{
-		
 	}
 
 	//버튼 누르면 실행됨
@@ -76,8 +58,9 @@ public class SynchroPanel : MonoBehaviour
         }
 
 		currCharacter = character;
+        characterImage.sprite = Resources.Load<Sprite>(currCharacter.CharacterStanding);
 
-		var grade = currCharacter.CharacterGrade;
+        var grade = currCharacter.CharacterGrade;
 		var occupation = charTable.GetCharacterData(currCharacter.CharacterID).CharacterOccupation;
 
 		synchroInfoData = synchroTable.GetSynchroData(grade, occupation);
@@ -207,15 +190,6 @@ public class SynchroPanel : MonoBehaviour
 
 		if(isRequired)
 		{
-			infoPanel.SetNoticePanel("싱크로 성공", "확인");
-		}
-		else
-		{
-			infoPanel.SetNoticePanel("싱크로 실패", "확인");
-		}
-
-		if(isRequired)
-		{
 			currCharacter.CharacterGrade++;
 
 			foreach (var card in synchroItemCard)
@@ -224,23 +198,15 @@ public class SynchroPanel : MonoBehaviour
 				card.SetText();
 			}
 
-			OpenResultPanel();
-		}
+            infoPanel.SetNoticePanel("싱크로 성공", "확인");
+        }
 		else
 		{
-			Debug.Log("재료가 모자랍니다.");
-		}
+            infoPanel.SetNoticePanel("싱크로 실패", "확인");
+        }
 
 		UpdateRequired();
 		
 		GameManager.Instance.SaveExecution();
-	}
-
-	public void OpenResultPanel()
-	{
-		Debug.Log("대충 패널 열렸다고 침");
-		//resultPanel.gameObject.SetActive(true);
-
-		//resultPanel 별 개수 세팅
 	}
 }
