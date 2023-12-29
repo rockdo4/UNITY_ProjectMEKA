@@ -162,10 +162,14 @@ public class CharacterInfoText : MonoBehaviour
         characterName.SetText(stringTable.GetString(nameString));
 		Damage.SetText(info.Damage.ToString());
 		HP.SetText(info.HP.ToString());
-		//Speed.SetText(info.speed.ToString());
+		Speed.SetText(info.ATKSpd);
 		Armor.SetText(info.Armor.ToString());
-		CriticalHit.SetText("--");
-		CriticalDamage.SetText("--");
+
+		Debug.Log(info.CriChance);
+		Debug.Log(info.CriDMG);
+
+		CriticalHit.SetText($"{info.CriChance}%");
+		CriticalDamage.SetText($"{info.CriDMG}%");
 		level.SetText($"{info.CharacterLevel}");
 	}
 
