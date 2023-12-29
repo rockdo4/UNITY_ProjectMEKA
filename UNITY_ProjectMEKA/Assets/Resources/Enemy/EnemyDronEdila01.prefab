@@ -665,6 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38a402ef5031524cb76e3bec1e47542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  victonEffectName: 
   rb: {fileID: 0}
   initPos: {x: 0, y: 0, z: 0}
   waypointIndex: 0
@@ -679,6 +680,7 @@ MonoBehaviour:
   FirePosition: {fileID: 4103419772093779262}
   rangeInPlayers: []
   rangeInSecondPlayers: []
+  currentState: 0
   CurrentPos: {x: 0, y: 0, z: 0}
   CurrentGridPos: {x: 0, y: 0, z: 0}
   isArrival: 0
@@ -744,7 +746,7 @@ MonoBehaviour:
   lv: 1
   id: 23101
   name: E1
-  property: 0
+  property: 3
   maxHp: 100
   armor: 0
   damage: 10
@@ -764,6 +766,7 @@ MonoBehaviour:
   enemyType: 0
   speed: 1
   isFly: 0
+  isMovingShot: 0
   isBlock: 1
 --- !u!1 &8936931625051696101
 GameObject:
