@@ -1066,6 +1066,7 @@ MonoBehaviour:
   ChildPos: {fileID: 0}
   isHitEffect: 0
   effectName: 
+  sound: NormalHammerAttack
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
   firstLookPos: {fileID: 0}
@@ -1120,9 +1121,9 @@ MonoBehaviour:
   BulletType: 0
   flashName: 
   hitName: 
-  hang: 2
+  hang: 3
   yal: 1
-  rangeAttack: 0100000002000000
+  rangeAttack: 010000000200000001000000
   level: 0
   Hp: 0
   arrangeCost: 0
@@ -1151,6 +1152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ab6e8ef7cf4b748912ba1c46fd1479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillSoundName: 
   skillCost: 50
   skillCoolTime: 20
   skillType: 1

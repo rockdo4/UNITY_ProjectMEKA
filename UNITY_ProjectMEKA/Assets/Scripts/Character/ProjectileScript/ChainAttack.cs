@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using static Defines;
 
 public class ChainAttack : MonoBehaviour
 {
@@ -13,9 +14,14 @@ public class ChainAttack : MonoBehaviour
     private float sTimer;
     private bool isOne = false;
     public DamageDeleteTime ddt;
+    public PlayerController player;
+    private Tile tile;
+    private StageManager stageManager;
+
     public void Start()
     {
         ddt = GetComponent<DamageDeleteTime>();
+        stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
     }
     public void Update()
     {
@@ -46,24 +52,32 @@ public class ChainAttack : MonoBehaviour
 
     public void Explosion()
     {
+        player.NormalAttackSound();
         Vector3 os = transform.position;
-        Vector3Int CurrentGridPos = new Vector3Int(Mathf.FloorToInt(os.x), Mathf.FloorToInt(os.y), Mathf.FloorToInt(os.z));
+        Vector3Int CurrentGridPos = new Vector3Int(Mathf.RoundToInt(os.x), Mathf.RoundToInt(os.y), Mathf.RoundToInt(os.z));
 
-        enemys = GameObject.FindGameObjectsWithTag("Enemy");
-
-        foreach (var enemy in enemys)
+        tile = stageManager.tileManager.GetCurrentTile(CurrentGridPos);
+        if(player.target != null)
         {
-            if (CurrentGridPos == enemy.GetComponent<EnemyController>().CurrentGridPos&&enemy.activeSelf)
+            IAttackable t = player.target.GetComponentInParent<IAttackable>();
+            t.OnAttack(player.state.damage);
+        }
+        
+        foreach (var en in tile.objectsOnTile)
+        {
+            if (en.tag == "Enemy")
             {
-                IAttackable aoeDamage = enemy.GetComponent<IAttackable>();
-
-                if (aoeDamage != null)
+                if (Random.Range(0f, 1f) >= player.state.critChance)
                 {
-                    aoeDamage.OnAttack(damage);//추후 주변 몬스터의 개수만큼 배율변경되도록 수정
+                    en.GetComponent<IAttackable>().OnAttack(player.state.damage * player.state.fatalDamage);
+                }
+                else
+                {
+                    en.GetComponent<IAttackable>().OnAttack(player.state.damage);
                 }
             }
         }
-        
+
     }
 
     private void ReleaseObject()

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class SkillBase : MonoBehaviour
 {
+    [SerializeField, Header("스킬 사운드 이름")]
+    public string skillSoundName;
+
     [SerializeField, Header("스킬 코스트")]//p
     public float skillCost;
 

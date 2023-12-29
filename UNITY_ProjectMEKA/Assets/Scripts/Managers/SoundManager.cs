@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 // 싱글톤
 public class SoundManager : MonoBehaviour
@@ -14,8 +15,9 @@ public class SoundManager : MonoBehaviour
 
     public AudioMixer audioMixer;
     public List<AudioSource> bgmAudioSource;
-    public List<AudioSource> seAudioSource;
-
+    public List<AudioSource> SFXAudioSource;
+    private string currentSceneName;
+    private string saveSceneName;
     [System.Serializable]
     public class AudioClipList
     {
@@ -23,18 +25,57 @@ public class SoundManager : MonoBehaviour
         public AudioClip clip;
     }
     public List<AudioClipList> audioClips;
-
+    private Dictionary<string, AudioClip> dicAudioClips;
     private void Awake()
     {
+        if (instance != null && instance != this)//한개만 존재하도록 수정
+        {
+            Destroy(gameObject); 
+            return;
+        }
+
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        dicAudioClips = new Dictionary<string, AudioClip>();
+        foreach (var clip in audioClips)
+        {
+            if (!dicAudioClips.ContainsKey(clip.name))
+            {
+                dicAudioClips.Add(clip.name, clip.clip);
+            }
+            else
+            {
+                Debug.Log("사운드 딕셔너리 이름 겹침");
+            }
+
+        }
     }
 
     private void Start()
     {
         //Init();
-    }
+        currentSceneName = SceneManager.GetActiveScene().name;
+        saveSceneName = currentSceneName;
+        PlayBGM("MainSceneBGM");
 
+    }
+    private void Update()
+    {
+        if(currentSceneName != SceneManager.GetActiveScene().name) 
+        {
+            currentSceneName = SceneManager.GetActiveScene().name;
+            if(currentSceneName == saveSceneName)
+            {
+                PlayBGM("MainSceneBGM");
+            }
+            else
+            {
+                PlayBGM("InGameBGM");
+
+            }
+        }
+    }
     public void Init()
     {
         PlayDataManager.Init();
@@ -117,27 +158,25 @@ public class SoundManager : MonoBehaviour
         PlayDataManager.Save();
     }
 
-    public void PlayerSEAudio(string sound)
+    public void PlayerSFXAudio(string sound)
     {
-        foreach(var clip in audioClips)
+        if(dicAudioClips.ContainsKey(sound))
         {
-            if(clip.name == sound)
-            {
-                seAudioSource.First().PlayOneShot(clip.clip);
-                return;
-            }
+            SFXAudioSource.First().PlayOneShot(dicAudioClips[sound]);
         }
     }
     public void PlayBGM(string bgm)
     {
-        foreach (var clip in audioClips)
+        foreach(var b in bgmAudioSource)//bgm여러개일 경우의 기반
         {
-            if (clip.name == bgm)
-            {
-                bgmAudioSource.First().PlayOneShot(clip.clip);
-                return;
-            }
+            b.clip = dicAudioClips[bgm];
+            b.loop = true;
+            b.Play();
+            return;
         }
         
+        //bgmAudioSource.First().clip = dicAudioClips[bgm];
+        //bgmAudioSource.First().loop = true;
+        //bgmAudioSource.First().Play();
     }
 }

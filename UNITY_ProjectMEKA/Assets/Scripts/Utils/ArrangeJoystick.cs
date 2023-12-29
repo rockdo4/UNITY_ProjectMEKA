@@ -142,6 +142,9 @@ public class ArrangeJoystick : MonoBehaviour
     public void SkillEvent()
     {
         Debug.Log("skill event");
+        //testcode
+        SoundManager.instance.PlayerSFXAudio("SkillButtonClick");
+
         if (skillButton.gameObject.activeSelf)
         {
             skillButton.gameObject.SetActive(false);

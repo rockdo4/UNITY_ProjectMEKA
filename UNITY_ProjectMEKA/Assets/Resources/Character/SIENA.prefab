@@ -15943,6 +15943,7 @@ MonoBehaviour:
   ChildPos: {fileID: 0}
   isHitEffect: 0
   effectName: 
+  sound: NormalCasterAttack
   animationController: {fileID: 0}
   currnetAnimationController: {fileID: 0}
   firstLookPos: {fileID: 0}
@@ -15973,11 +15974,11 @@ MonoBehaviour:
     count: 5
   lv: 0
   id: 11302
-  name: SIENA
+  name: "\uC2DC\uC5D0\uB098"
   property: 1
-  maxHp: 100
-  armor: 1
-  damage: 50
+  maxHp: 77
+  armor: 19
+  damage: 31
   attackDelay: 1
   shield: 0
   maxShield: 0
@@ -15989,9 +15990,9 @@ MonoBehaviour:
   yal: 3
   rangeAttack: 010000000100000001000000010000000200000001000000010000000100000001000000
   level: 0
-  Hp: 0
-  arrangeCost: 0
-  arrangeCoolTime: 0
+  Hp: 77
+  arrangeCost: 14
+  arrangeCoolTime: 40
   skill: 0
   cost: 0
   maxCost: 0
@@ -16028,8 +16029,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c331262c9c7e9419ce64e67924e3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillCost: 0
-  skillCoolTime: 0
+  skillSoundName: SienaSkill
+  skillCost: 10
+  skillCoolTime: 20
   skillType: 3
   isSkillUsing: 0
   isRangeOut: 1

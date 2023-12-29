@@ -36,6 +36,10 @@ public class CanDie : MonoBehaviour
     {
         if (state.Hp <= 0f)
         {
+            if(GetComponent<PlayerController>())
+            {
+                SoundManager.instance.PlayerSFXAudio("CharacterDie");
+            }
             action.Invoke();
             updateUI.Invoke();
 

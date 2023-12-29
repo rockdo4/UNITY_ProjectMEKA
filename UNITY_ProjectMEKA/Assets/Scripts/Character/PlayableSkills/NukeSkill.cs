@@ -42,6 +42,10 @@ public class NukeSkill : SkillBase
             if (timer >= 5f)
             {
                 GameObject[] obj = GameObject.FindGameObjectsWithTag("Enemy");
+                if(skillSoundName != null) 
+                {
+                    SoundManager.instance.PlayerSFXAudio(skillSoundName);
+                }
                 foreach (var ob in obj)
                 {
                     if(ob.activeInHierarchy)

@@ -37,6 +37,10 @@ public class ProjectileTypeSkill : SkillBase
             timer = 0;
             player.state.cost -= skillCost;
             isSkillUsing = true;
+            if(skillSoundName != null)
+            {
+                SoundManager.instance.PlayerSFXAudio(skillSoundName);
+            }
             switch (skillType)
             {
                 case Defines.SkillType.Auto:

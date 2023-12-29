@@ -35,6 +35,7 @@ public class PlayableArrangeState : PlayableBaseState
         Time.timeScale = stageManager.CurrentSpeed;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
         playerCtrl.firstLookPos = playerCtrl.transform;
+        SoundManager.instance.PlayerSFXAudio("CharacterPut");
     }
 
     public override void Update()

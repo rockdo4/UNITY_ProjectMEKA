@@ -49,4 +49,17 @@ public class TileManager
         }
         return new Vector3Int(-100,-100,-100);
     }
+    
+    public Tile GetCurrentTile(Vector3Int index)
+    {
+        foreach(var t in allTiles)
+        {
+            if(t.Item2 == index)
+            {
+                return t.Item1;
+            }
+        }
+
+        return null;
+    }
 }
