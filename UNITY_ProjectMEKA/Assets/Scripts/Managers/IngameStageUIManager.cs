@@ -292,8 +292,26 @@ public class IngameStageUIManager : MonoBehaviour
     public void CloseScene()
     {
         Time.timeScale = 1f;
-        StageDataManager.Instance.toStageChoicePanel = true;
-        //SceneManager.LoadScene("MainScene");
+
+        // 현재 스테이지 아이디 두번째 자리수 = 2 -> PR
+        // 현재 스테이지 아이디 두번째 자리수 = 3 -> CN
+        // 나머지 스토리
+
+        var stageIDString = stageManager.stageID.ToString();
+        Debug.Log(stageIDString[1]);
+        if(Equals(stageIDString[1],'2'))
+        {
+            StageDataManager.Instance.toAssignmentStageChoicePanel = true;
+        }
+        else if (Equals(stageIDString[1], '3'))
+        {
+            StageDataManager.Instance.toChallengeStageChoicePanel = true;
+        }
+        else
+        {
+            StageDataManager.Instance.toStoryStageChoicePanel = true;
+        }
+
         SceneManager.LoadScene("MainScene_UI_Merge_2");
     }
 

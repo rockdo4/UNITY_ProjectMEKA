@@ -72,10 +72,20 @@ public class PanelManager : MonoBehaviour
         previousPanel = mainPanel;
         previousPos = mainPos;
 
-        if (StageDataManager.Instance.toStageChoicePanel)
+        if (StageDataManager.Instance.toStoryStageChoicePanel)
 		{
 			ChangePanelStoryStageChoice();
-			StageDataManager.Instance.toStageChoicePanel = false;
+			StageDataManager.Instance.toStoryStageChoicePanel = false;
+		}
+		else if(StageDataManager.Instance.toAssignmentStageChoicePanel)
+		{
+			ChangePanelAssignmentStageChoice();
+			StageDataManager.Instance.toAssignmentStageChoicePanel = false;
+		}
+		else
+		{
+			ChangePanelChallengeStageChoice();
+			StageDataManager.Instance.toChallengeStageChoicePanel = false;
 		}
     }
 
