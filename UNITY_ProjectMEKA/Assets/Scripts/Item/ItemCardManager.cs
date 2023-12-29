@@ -66,7 +66,6 @@ public class ItemCardManager : MonoBehaviour
 		//	UpdateItemCard();
 		//});
 	}
-
 	private void Start()
 	{
 		stringTable = DataTableMgr.GetTable<StringTable>();

@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class ItemQuantityCard : MonoBehaviour
 {
     public Image itemImage;
-    public TextMeshProUGUI quantityText;
+    public TextMeshProUGUI itemCount;
+    public TextMeshProUGUI selectItemCount;
     public EnhancePanel panel;
     private Button button;
 
@@ -54,6 +55,12 @@ public class ItemQuantityCard : MonoBehaviour
             return;
 
         selectedQuantity++;
+
+        if(panel.CheckFull())
+        {
+            selectedQuantity--;
+        }
+
 		SetText();
 	}
 
@@ -61,12 +68,14 @@ public class ItemQuantityCard : MonoBehaviour
     {
         if(item != null)
         {
-			quantityText.SetText($"{selectedQuantity} / {item.Count}");
+            itemCount.SetText($"{selectedQuantity}");
+            selectItemCount.SetText($"{item.Count}");
 		}
         else
         {
             Debug.Log("아이템이 없습니다.");
-			quantityText.SetText($"{selectedQuantity} / {0}");
+            itemCount.SetText($"{selectedQuantity}");
+            selectItemCount.SetText($"{0}");
 		}
     }
 

@@ -11,31 +11,43 @@ public class EnhancePanel : MonoBehaviour
 	public int[] itemID;
 
 	public TextMeshProUGUI levelText;
-	public TextMeshProUGUI damageText;
-	public TextMeshProUGUI armorText;
-	public TextMeshProUGUI hpText;
-	public TextMeshProUGUI expText;
+    public TextMeshProUGUI damageText;
+    public TextMeshProUGUI afterDamageText;
+    public TextMeshProUGUI armorText;
+    public TextMeshProUGUI afterArmorText;
+    public TextMeshProUGUI hpText;
+    public TextMeshProUGUI afterHpText;
+    public TextMeshProUGUI expText;
+	public Image expBar;
+	public TextMeshProUGUI expPercent;
 
-	public ItemQuantityCard[] reportItemCard;
+    public ItemQuantityCard[] reportItemCard;
+
+	[Header("버튼")]
 	public Button applyButton;
+	public Button exitButton;
 
 	public CharacterInfoText infoPanel;
 	private Character currCharacter;
+	private bool isFull = false;
+	private List<ExpData> table;
 
 	private void Awake()
 	{
 		applyButton.onClick.AddListener(() => 
 		{
-			ApplyUpgradeLevel();
-
-			foreach(var card in reportItemCard)
-			{
-				card.ConsumeItem();
-				card.SetText();
+			infoPanel.SetPopUpPanel("강화하시겠습니까?", () => 
+			{ 
+				ExecuteUpgrade();
 			}
-
-			UpdateTargetLevel();
+			,"예", "아니오");
 		});
+
+		exitButton.onClick.AddListener(() =>
+		{
+			infoPanel.UpdateCharacter();
+            gameObject.SetActive(false);
+        });
 	}
 
 	public void OnEnable()
@@ -45,9 +57,27 @@ public class EnhancePanel : MonoBehaviour
 			reportItemCard[i].SetItem(itemID[i]);
 			reportItemCard[i].SetText();
 		}
-
 		currCharacter = infoPanel.character;
+		isFull = false;
 	}
+
+    private void Start()
+    {
+        table = DataTableMgr.GetTable<ExpTable>().GetOriginalTable();
+    }
+
+    public void ExecuteUpgrade()
+	{
+        ApplyUpgradeLevel();
+
+        foreach (var card in reportItemCard)
+        {
+            card.ConsumeItem();
+            card.SetText();
+        }
+
+        UpdateTargetLevel();
+    }
 
 	public void SetCharacter(Character character)
 	{
@@ -66,7 +96,6 @@ public class EnhancePanel : MonoBehaviour
 
 	public LevelData CalculateData(int totalExp, out int remain)
 	{
-		var table = DataTableMgr.GetTable<ExpTable>().GetOriginalTable();
 		int currentLevel = currCharacter.CharacterLevel;
 		int targetLevel = currentLevel;
 		int maxLevel = currCharacter.CharacterGrade * 10;
@@ -114,16 +143,31 @@ public class EnhancePanel : MonoBehaviour
 		}
 
 		var data = CalculateData(totalExp, out remainExp);
-
-		int result = CombineID(currCharacter.CharacterID, currCharacter.CharacterLevel);
+        int result = CombineID(currCharacter.CharacterID, currCharacter.CharacterLevel);
 		var levelData = DataTableMgr.GetTable<CharacterLevelTable>().GetLevelData(result);
+		if(table == null)
+            table = DataTableMgr.GetTable<ExpTable>().GetOriginalTable();
 
-		levelText.SetText($"레벨 : {levelData.CharacterLevel}	>>	{data.CharacterLevel}");
-		damageText.SetText($"공격력 : {levelData.CharacterDamage}	>>	{data.CharacterDamage}");
-		armorText.SetText($"방어력 : {levelData.CharacterArmor}	>>	{data.CharacterArmor}");
-		hpText.SetText($"체력 : {levelData.CharacterHP}	>>	{data.CharacterHP}");
-		expText.SetText($"경험치 : {currCharacter.CurrentExp} >> {remainExp}");
-	}
+		levelText.SetText($"{data.CharacterLevel}");
+		damageText.SetText($"{levelData.CharacterDamage}");
+		afterDamageText.SetText($"{data.CharacterDamage}");
+		armorText.SetText($"{levelData.CharacterArmor}");
+		afterArmorText.SetText($"{data.CharacterArmor}");
+		hpText.SetText($"{levelData.CharacterHP}");
+		afterHpText.SetText($"{data.CharacterHP}");
+
+		//expText.SetText($"경험치 : {currCharacter.CurrentExp} >> {remainExp}");
+		var ratio = (float)remainExp / table[data.CharacterLevel].RequireExp;
+        expBar.fillAmount = ratio;
+		expPercent.SetText($"{(int)(ratio * 100)}%");
+
+        int maxLevel = currCharacter.CharacterGrade * 10;
+
+        if(levelData.CharacterLevel >= maxLevel)
+		{
+            isFull = true;
+        }
+    }
 
 	public void ApplyUpgradeLevel()
 	{
@@ -148,14 +192,30 @@ public class EnhancePanel : MonoBehaviour
 
 		int result = CombineID(currCharacter.CharacterID, currCharacter.CharacterLevel);
 		var levelData = DataTableMgr.GetTable<CharacterLevelTable>().GetLevelData(result);
+        if (table == null)
+            table = DataTableMgr.GetTable<ExpTable>().GetOriginalTable();
 
-		levelText.SetText($"레벨 : {levelData.CharacterLevel}	>>	{data.CharacterLevel}");
-		damageText.SetText($"공격력 : {levelData.CharacterDamage}	>>	{data.CharacterDamage}");
-		armorText.SetText($"방어력 : {levelData.CharacterArmor}	>>	{data.CharacterArmor}");
-		hpText.SetText($"체력 : {levelData.CharacterHP}	>>	{data.CharacterHP}");
-		expText.SetText($"경험치 : {currCharacter.CurrentExp} >> {remainExp}");
+        levelText.SetText($"{data.CharacterLevel}");
+        damageText.SetText($"{levelData.CharacterDamage}");
+        afterDamageText.SetText($"{data.CharacterDamage}");
+        armorText.SetText($"{levelData.CharacterArmor}");
+        afterArmorText.SetText($"{data.CharacterArmor}");
+        hpText.SetText($"{levelData.CharacterHP}");
+        afterHpText.SetText($"{data.CharacterHP}");
 
-		GameManager.Instance.SaveExecution();
+        //expText.SetText($"경험치 : {currCharacter.CurrentExp} >> {remainExp}");
+        var ratio = (float)remainExp / table[data.CharacterLevel].RequireExp;
+        expBar.fillAmount = ratio;
+        expPercent.SetText($"{(int)(ratio * 100)}%");
+
+        int maxLevel = currCharacter.CharacterGrade * 10;
+
+        if (levelData.CharacterLevel >= maxLevel)
+        {
+            isFull = true;
+        }
+
+        GameManager.Instance.SaveExecution();
 	}
 
 	public int CombineID(int characterID, int level)
@@ -177,5 +237,12 @@ public class EnhancePanel : MonoBehaviour
 		int.TryParse(stringBuilder.ToString(), out int result);
 
 		return result;
+	}
+
+	public bool CheckFull()
+	{
+		if (isFull)
+			return true;
+		return false;
 	}
 }
