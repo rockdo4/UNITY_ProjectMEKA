@@ -258,7 +258,7 @@ public class StageManager : MonoBehaviour
     {
         var stageData = StageDataManager.Instance.stageTable.GetStageData(stageID);
 
-        if (currentHouseLife <= 0)
+        if (currentHouseLife <= 0 || timer >= maxTime)
         {
             return GameState.Die;
         }

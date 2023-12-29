@@ -61,7 +61,6 @@ public class IngameStageUIManager : MonoBehaviour
 	// skill
 	public TextMeshProUGUI skillTileGuideText;
 
-    private float currentTimeLeft;
     public bool currentPlayerChanged;
     public bool currentPlayerOnTile;
     private bool isInfoWindowOn = true;
@@ -295,7 +294,7 @@ public class IngameStageUIManager : MonoBehaviour
         Time.timeScale = 1f;
         StageDataManager.Instance.toStageChoicePanel = true;
         //SceneManager.LoadScene("MainScene");
-        SceneManager.LoadScene("MainScene_UI_Merge");
+        SceneManager.LoadScene("MainScene_UI_Merge_2");
     }
 
     public void ChangeCharacterInfo()
@@ -369,8 +368,7 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void UpdateTimeProgress()
     {
-        currentTimeLeft -= Time.deltaTime;
-        timeProgressSlider.value = (float)(currentTimeLeft / stageManager.maxTime);
+        timeProgressSlider.value = (float)((stageManager.maxTime - stageManager.timer) / stageManager.maxTime);
     }
 
     public void LoseWindowSet()
@@ -497,7 +495,6 @@ public class IngameStageUIManager : MonoBehaviour
         }
 
         allMonsterCountText.SetText(stageManager.allMonsterCount.ToString());
-        currentTimeLeft = stageManager.maxTime;
     }
 
     public void InitResultPanel(StageData stageData, StageSaveData stageSaveData)
@@ -505,12 +502,12 @@ public class IngameStageUIManager : MonoBehaviour
         SetStageInfo(stageData);
 
         // reward item setting
-        for (int i = 0; i < 6; ++i)
+        for (int i = 0; i < 9; ++i)
         {
-            //if ((i == 0 || i == 5) && stageSaveData.isCleared)
-            //{
-            //    continue;
-            //}
+            if ((i == 0) && stageSaveData.isCleared)
+            {
+                continue;
+            }
 
             var rewardData = StageDataManager.Instance.rewardTable.GetStageData(stageData.RewardID);
             int id = 100;
@@ -582,9 +579,47 @@ public class IngameStageUIManager : MonoBehaviour
                     }
                     break;
                 case 5:
-                    if(rewardData.SystemUnlock != 0)
+                    if(rewardData.Item5ID != 0)
                     {
-                        id = rewardData.SystemUnlock;
+                        id = rewardData.Item5ID;
+                        count = rewardData.Item5Count;
+                        itemInfo.itemCountText.SetText(rewardData.Item5Count.ToString());
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
+                case 6:
+                    if (rewardData.Item6ID != 0)
+                    {
+                        id = rewardData.Item6ID;
+                        count = rewardData.Item6Count;
+                        itemInfo.itemCountText.SetText(rewardData.Item6Count.ToString());
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
+                case 7:
+                    if (rewardData.Item7ID != 0)
+                    {
+                        id = rewardData.Item7ID;
+                        count = rewardData.Item7Count;
+                        itemInfo.itemCountText.SetText(rewardData.Item7Count.ToString());
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
+                case 8:
+                    if (rewardData.Item8ID != 0)
+                    {
+                        id = rewardData.Item8ID;
+                        count = rewardData.Item8Count;
+                        itemInfo.itemCountText.SetText(rewardData.Item8Count.ToString());
                     }
                     else
                     {
@@ -642,7 +677,8 @@ public class IngameStageUIManager : MonoBehaviour
             var characterName = stringTable.GetString(characterData.CharacterNameStringID);
             itemInfo.itemName.SetText(characterName);
 
-            // 이미지 씌우기
+            Sprite itemSprite = Resources.Load<Sprite>(characterData.ImagePath);
+            itemInfo.itemImage.sprite = itemSprite;
         }
     }
 }

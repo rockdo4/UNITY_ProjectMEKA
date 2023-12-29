@@ -20,5 +20,12 @@ public class RewardData
     public int Item3Count { get; set;}
     public int Item4ID { get; set;}
     public int Item4Count { get; set;}
-    public int SystemUnlock { get; set; }
+    public int Item5ID { get; set;}
+    public int Item5Count { get; set;}
+    public int Item6ID { get; set;}
+    public int Item6Count { get; set;}
+    public int Item7ID { get; set;}
+    public int Item7Count { get; set;}
+    public int Item8ID { get; set;}
+    public int Item8Count { get; set;}
 }

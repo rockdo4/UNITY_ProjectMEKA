@@ -35,8 +35,6 @@ public class StageData
     public int Mission3Value { get; set; }
     public float StageTime { get; set; }
     public int HouseLife { get; set; }
-    public int IsConfigurable { get; set; }
-    public int ConfigureID { get; set; }
     public int EventID { get; set; }
     public int RewardID { get; set; }
     public int RecommendedLevel { get; set; }
