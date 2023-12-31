@@ -298,6 +298,8 @@ GameObject:
   - component: {fileID: 792920316}
   - component: {fileID: 792920315}
   - component: {fileID: 792920319}
+  - component: {fileID: 792920321}
+  - component: {fileID: 792920320}
   m_Layer: 20
   m_Name: Camera
   m_TagString: MainCamera
@@ -371,6 +373,8 @@ MonoBehaviour:
   minDistance: 5
   rotationSpeed: 5
   zoomSpeed: 5
+  initRotation: {x: 0, y: 0, z: 0, w: 0}
+  initPos: {x: 0, y: 0, z: 0}
 --- !u!114 &792920316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,6 +474,35 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &792920320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792920313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace07452cffa13b47a363d01b8289cf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothFactor: 10
+--- !u!114 &792920321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792920313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a75f16cf7742c4d82047565e6b53ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  perspectiveZoomSpeed: 0.5
+  orthoZoomSpeed: 0.5
+  minZoomDistance: 10
+  maxZoomDistance: 60
 --- !u!1 &1087799233 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3175604609971750992, guid: 3b9c639d6b3a9c24fb0d079a2592d883, type: 3}

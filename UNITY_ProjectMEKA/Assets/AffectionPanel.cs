@@ -45,6 +45,7 @@ public class AffectionPanel : MonoBehaviour
                 communicationPanel.gameObject.SetActive(true);
                 communicationPanel.SetCharacter(character.Value);
                 communicationPanel.SetPortrait(card);
+                SoundManager.instance.PlayBGM("VisualNovelMenuBGM");
             });
 		}
     }

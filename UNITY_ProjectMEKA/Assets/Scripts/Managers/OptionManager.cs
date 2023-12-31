@@ -127,6 +127,9 @@ public class OptionManager : MonoBehaviour
         if(button == soundButton)
         {
             currentSoundType = (SoundType)index;
+            SoundManager.instance.OnOffMasterVolume(SoundManager.instance.muteVolum);
+            SoundManager.instance.muteVolum = !SoundManager.instance.muteVolum;
+            
         }
         else if(button == pauseButton)
         {
