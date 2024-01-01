@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using static Defines;
 using TMPro;
+using static PlayerController;
 
 public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
@@ -11,8 +12,11 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     public GameObject characterPrefab;
     public GameObject characterGo;
     private PlayerController playerController;
+    private CharacterState characterState;
 
+    public Image characterImage;
     public TextMeshProUGUI costText;
+    public Image propertyImage;
     public GameObject redFilter;
     public GameObject blackFilter;
     public Slider coolTimeSlider;
@@ -41,11 +45,30 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 		SetObjectPooling(characterGo);
 
 		playerController = characterGo.GetComponent<PlayerController>();
+        characterState = characterGo.GetComponent<CharacterState>();
+
+        Init();
+
+        characterGo.SetActive(false);
+    }
+
+    public void Init()
+    {
         cost = playerController.state.arrangeCost;
         costText.text = cost.ToString();
+
+        var id = characterState.id;
+        var characterImagePath = StageDataManager.Instance.characterTable.GetCharacterData(id).ImagePath;
+        characterImage.sprite = Resources.Load<Sprite>(characterImagePath);
+        propertyImage.sprite = characterState.property switch
+        {
+            Property.Prime => Resources.Load<Sprite>("CharacterIcon/PrimeIcon"),
+            Property.Grieve => Resources.Load<Sprite>("CharacterIcon/GrieveIcon"),
+            Property.Edila => Resources.Load<Sprite>("CharacterIcon/EdilaIcon"),
+        };
+
         arrangeCoolTime = playerController.state.arrangeCoolTime;
         timer = arrangeCoolTime;
-        characterGo.SetActive(false);
     }
 
     private void Update()
