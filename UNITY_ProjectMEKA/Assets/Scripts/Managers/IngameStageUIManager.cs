@@ -14,7 +14,7 @@ public class IngameStageUIManager : MonoBehaviour
     private StageManager stageManager;
 
     // panels
-    public GameObject characterInfoPanel;
+    public CharacterInfo characterInfoPanel;
     public GameObject waveCountPanel;
     public GameObject monsterCountPanel;
     public GameObject ResultPanel;
@@ -179,7 +179,7 @@ public class IngameStageUIManager : MonoBehaviour
             case WindowMode.None:
                 // 캐릭터 인포 off
                 ClearTileMesh();
-                characterInfoPanel.SetActive(false);
+                characterInfoPanel.gameObject.SetActive(false);
                 joystick.gameObject.SetActive(false);
                 skillTileGuideText.gameObject.SetActive(false);
                 currentPlayerOnTile = false;
@@ -189,12 +189,13 @@ public class IngameStageUIManager : MonoBehaviour
                 // 캐릭터 타일위 아니면 인포 on
                 if(!currentPlayerOnTile)
                 {
-                    characterInfoPanel.SetActive(true);
-                    ChangeCharacterInfo();
+                    characterInfoPanel.gameObject.SetActive(true);
+                    characterInfoPanel.SetCharacterInfo();
+                    //ChangeCharacterInfo();
                 }
                 else if(currentPlayerOnTile && isInfoWindowOn)
                 {
-                    characterInfoPanel.SetActive(false);
+                    characterInfoPanel.gameObject.SetActive(false);
                     isInfoWindowOn = false;
                 }
                 joystick.gameObject.SetActive(false);
@@ -216,8 +217,9 @@ public class IngameStageUIManager : MonoBehaviour
                 break;
             case WindowMode.Setting:
                 // 캐릭터 인포 on
-                characterInfoPanel.SetActive(true);
-                ChangeCharacterInfo();
+                characterInfoPanel.gameObject.SetActive(true);
+                characterInfoPanel.SetCharacterInfo();
+                //ChangeCharacterInfo();
                 joystick.gameObject.SetActive(true);
                 joystick.SetPositionToCurrentPlayer(stageManager.currentPlayer.transform);
                 joystickHandler.gameObject.SetActive(false);
