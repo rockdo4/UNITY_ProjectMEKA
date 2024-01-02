@@ -49,7 +49,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 			emptyItem.InstanceID = id;
 
 			this.item = emptyItem;
-			ItemInventoryManager.Instance.AddItemByInstance(emptyItem, emptyItem.Count);
+			//ItemInventoryManager.Instance.AddItemByInstance(emptyItem, emptyItem.Count);
 
 			itemImage.sprite = Resources.Load<Sprite>(data.ImagePath);
 
