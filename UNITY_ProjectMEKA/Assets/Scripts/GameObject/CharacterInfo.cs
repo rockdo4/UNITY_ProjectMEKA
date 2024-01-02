@@ -13,24 +13,27 @@ public class CharacterInfo : MonoBehaviour
 
     public Image characterImage;
     public Image mechaImage;
-    public Image attackAreaImage;
-    public Image skillAreaImage;
+    public Image attackRangeImage;
+    public Image skillRangeImage;
     public Image skillIconImage;
 
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI occupationText;
     public TextMeshProUGUI nameText;
+    public TextMeshProUGUI skillNameText;
     public TextMeshProUGUI skillTypeText;
-    public TextMeshProUGUI characterInfoText;
+    public TextMeshProUGUI skillInfoText;
 
-    private string characterImagePathID;
+    private string skillNameStringIDKey;
+    private string skillInfoStringIDKey;
 
     private void OnEnable()
     {
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         stringTable = StageDataManager.Instance.stringTable;
         skillInfoTable = DataTableMgr.GetTable<SkillInfoTable>();
-        characterImagePathID = "Standing";        
+        skillNameStringIDKey = "_skillName";
+        skillInfoStringIDKey = "_skillInfo";
     }
 
     private void Start()
@@ -41,7 +44,7 @@ public class CharacterInfo : MonoBehaviour
     {
         var characterId = stageManager.currentPlayer.state.id;
         var characterState = stageManager.currentPlayer.state;
-        var characterSkillType = stageManager.currentPlayer.skillState.skillType;
+        var characterSkillState = stageManager.currentPlayer.skillState;
         var characterData = StageDataManager.Instance.characterTable.GetCharacterData(characterId);
 
         // 수정하기
@@ -55,27 +58,35 @@ public class CharacterInfo : MonoBehaviour
         var name = stringTable.GetString(nameStringID);
         nameText.SetText(name);
 
-        var skillType = stringTable.GetString(characterSkillType.ToString());
+        var skillType = stringTable.GetString(characterSkillState.skillType.ToString());
         skillTypeText.SetText(skillType);
 
         var characterInfoStringID = characterData.OccupationInfoStringID;
         var characterInfo = stringTable.GetString(characterInfoStringID);
-        characterInfoText.SetText(characterInfo);
-
-        //public Image mechaImage;
-        //public Image attackAreaImage;
-        //public Image skillAreaImage;
-        //public Image skillIconImage;
+        skillInfoText.SetText(characterInfo);
 
         var characterImagePath = characterData.CharacterStanding;
         characterImage.sprite = Resources.Load<Sprite>(characterImagePath);
 
+        var mechaImagePath = characterData.MechaImagePath;
+        mechaImage.sprite = Resources.Load<Sprite>(mechaImagePath);
+
+        var attackRangeImagePath = characterData.AttackRangeImagePath;
+        attackRangeImage.sprite = Resources.Load<Sprite>(attackRangeImagePath);
+
         var skillID = characterData.SkillID;
+        //var skillLevelID = characterSkillState.
         var skillDatas = skillInfoTable.GetSkillDatas(skillID);
         var skillImagePath = skillDatas[0].ImagePath;
         skillIconImage.sprite = Resources.Load<Sprite>(skillImagePath);
 
-        // mecha 이미지 : 캐릭터아이디_mecha로 리소스 폴더에 찾아서 연결
-        // attackArea, skillArea, skillIcon도 마찬가지
+        var skillRangeImagePath = characterData.SkillRangeImagePath;
+        skillRangeImage.sprite = Resources.Load<Sprite>(skillRangeImagePath);
+
+        var skillNameStringID = new string($"{skillID}{skillNameStringIDKey}");
+        var skillName = stringTable.GetString(skillNameStringID);
+        skillNameText.SetText(skillName);
+
+        //var skillInfoStringID = new string($"{}");
     }
 }
