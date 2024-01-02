@@ -25,7 +25,7 @@ public class PlayableArrangeState : PlayableBaseState
         // Set arrange tile mesh
         if (!playerCtrl.stateManager.firstArranged)
         {
-            playerCtrl.transform.forward = Vector3.forward;
+            playerCtrl.transform.forward = Vector3.right;
         }
 
         Debug.Log($"arrange enter, arragable tiles {playerCtrl.arrangableTiles.Count}, attackable tiles {playerCtrl.attackableTiles.Count}");

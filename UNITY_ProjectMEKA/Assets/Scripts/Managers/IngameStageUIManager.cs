@@ -258,11 +258,13 @@ public class IngameStageUIManager : MonoBehaviour
                 break;
             case WindowMode.Win:
                 ResultPanel.SetActive(true);
+                characterInfoPanel.gameObject.SetActive(false);
                 WinWindowSet();
                 Time.timeScale = 0f;
                 break;
             case WindowMode.Lose:
                 ResultPanel.SetActive(true);
+                characterInfoPanel.gameObject.SetActive(false);
                 LoseWindowSet();
                 Time.timeScale = 0f;
                 break;
