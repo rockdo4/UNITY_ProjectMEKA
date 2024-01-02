@@ -87,6 +87,12 @@ public class CharacterInfo : MonoBehaviour
         var skillName = stringTable.GetString(skillNameStringID);
         skillNameText.SetText(skillName);
 
-        //var skillInfoStringID = new string($"{}");
+        var skillIDString = skillID.ToString();
+        var startSkillLevelID = skillIDString.Substring(0, skillIDString.Length - 2);
+        var endSkillLevelID = skillIDString.Substring(skillIDString.Length - 2);
+        var skillLevel = characterSkillState.skillLevel;
+        var skillInfoStringID = new string($"{startSkillLevelID}{skillLevel}{endSkillLevelID}{skillInfoStringIDKey}");
+        var skillInfo = stringTable.GetString(skillInfoStringID);
+        skillInfoText.SetText(skillInfo);
     }
 }

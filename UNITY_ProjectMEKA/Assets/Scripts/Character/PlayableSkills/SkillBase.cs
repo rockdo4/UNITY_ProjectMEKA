@@ -17,6 +17,9 @@ public abstract class SkillBase : MonoBehaviour
     [SerializeField, Header("스킬 타입")]
     public Defines.SkillType skillType;
 
+    // 1.2, 김민지, 스킬레벨id 추가
+    public int skillLevel;
+
     [HideInInspector]
     public bool isSkillUsing;
 

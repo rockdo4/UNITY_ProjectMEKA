@@ -38,6 +38,7 @@ public class CharacterIconManager : MonoBehaviour
                 
                 //var characterState = prefab.GetComponent<CharacterState>();
                 var characterState = prefab.GetComponent<PlayerState>();
+                var skillState = prefab.GetComponent<SkillBase>();
 
                 if(characterState == null)
                 {
@@ -50,12 +51,14 @@ public class CharacterIconManager : MonoBehaviour
                     var stringTable = StageDataManager.Instance.stringTable;
                     //characterState.arrangeCost = data.ArrangementCost;
 
-					characterState.name = stringTable.GetString(characterData.CharacterNameStringID);
+                    characterState.name = stringTable.GetString(characterData.CharacterNameStringID);
                     characterState.property = (Property)characterData.CharacterProperty;
                     characterState.occupation = (Occupation)characterData.CharacterOccupation;
                     characterState.arrangeCost = characterData.ArrangementCost;
                     characterState.arrangeCoolTime = characterData.ReArrangementCoolDown;
-					characterState.damage = data.Damage;
+                    characterState.level = data.CharacterLevel;
+                    skillState.skillLevel = data.SkillLevel;
+                    characterState.damage = data.Damage;
 					characterState.maxHp = data.HP;
 					characterState.Hp = data.HP;
 					characterState.armor = data.Armor;

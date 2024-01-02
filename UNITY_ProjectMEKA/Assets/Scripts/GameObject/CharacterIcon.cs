@@ -109,7 +109,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         }
 	}
 
-	public void CreateCharacter()
+	public void ActiveCharacter()
     {
         characterGo.SetActive(true);
         created = true;
@@ -180,7 +180,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         {
             if (arrangePossible && isCostEnough)
             {
-                CreateCharacter();
+                ActiveCharacter();
             }
             stageManager.currentPlayer = playerController;
             stageManager.currentPlayerIcon = playerController.icon;

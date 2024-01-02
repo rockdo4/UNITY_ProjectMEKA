@@ -330,7 +330,6 @@ public class StageUIManager : MonoBehaviour
             // general ui set
             var stageMonsterResource = stageMonsterImagePath.Replace("0", stage.Key.ToString());
             stageMonsterImage.sprite = Resources.Load<Sprite>(stageMonsterResource);
-            // 스테이지 아이디 + 
             var stageRewardGuideText = new string($"{stage.Key}_stageRewardGuide");
             stageRewardGuide.SetText(stageRewardGuideText);
 
