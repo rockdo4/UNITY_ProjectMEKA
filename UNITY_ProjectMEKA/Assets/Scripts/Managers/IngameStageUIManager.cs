@@ -76,6 +76,7 @@ public class IngameStageUIManager : MonoBehaviour
     private SkillInfoTable skillInfoTable;
 
     LinkedList<Tile> tempTiles = new LinkedList<Tile>();
+    LinkedList<Tile> tempAttackableTiles = new LinkedList<Tile>();
 
     private void OnEnable()
     {
@@ -192,7 +193,6 @@ public class IngameStageUIManager : MonoBehaviour
                 {
                     characterInfoPanel.gameObject.SetActive(true);
                     characterInfoPanel.SetCharacterInfo();
-                    //ChangeCharacterInfo();
                 }
                 else if(currentPlayerOnTile && isInfoWindowOn)
                 {
@@ -201,7 +201,9 @@ public class IngameStageUIManager : MonoBehaviour
                 }
                 joystick.gameObject.SetActive(false);
                 stageManager.currentPlayer.ArrangableTileSet(stageManager.currentPlayer.state.occupation);
+                //stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
                 ChangeArrangableTileMesh();
+                //ChangeAttackableTileMesh(true);
                 break;
             case WindowMode.SecondArrange:
                 //characterInfoPanel.SetActive(false);
@@ -252,16 +254,17 @@ public class IngameStageUIManager : MonoBehaviour
                     skillButton.GetComponent<Image>().sprite = Resources.Load<Sprite>(skillInfo[0].ImagePath);
 
                 }
-
-                ChangeAttackableTileMesh();
+                ChangeAttackableTileMesh(false);
                 break;
             case WindowMode.Win:
                 ResultPanel.SetActive(true);
+                characterInfoPanel.gameObject.SetActive(false);
                 WinWindowSet();
                 Time.timeScale = 0f;
                 break;
             case WindowMode.Lose:
                 ResultPanel.SetActive(true);
+                characterInfoPanel.gameObject.SetActive(false);
                 LoseWindowSet();
                 Time.timeScale = 0f;
                 break;
@@ -433,14 +436,22 @@ public class IngameStageUIManager : MonoBehaviour
         }
     }
 
-    public void ChangeAttackableTileMesh()
+    public void ChangeAttackableTileMesh(bool isFirstArranging)
     {
-        ClearTileMesh();
+        if(isFirstArranging == false)
+        {
+            ClearTileMesh();
+        }
+        else
+        {
+            ClearAttackableTileMesh();
+        }
 
         foreach (var tile in stageManager.currentPlayer.attackableTiles)
         {
             tile.SetTileMaterial(Tile.TileMaterial.Attack);
             tempTiles.AddLast(tile);
+            tempAttackableTiles.AddLast(tile);
         }
     }
 
@@ -494,6 +505,23 @@ public class IngameStageUIManager : MonoBehaviour
             }
         }
         tempTiles.Clear();
+    }
+
+    public void ClearAttackableTileMesh()
+    {
+        foreach(var tile in tempAttackableTiles)
+        {
+            // 얘네 돌면서 어레인지 가능한지 체크 후 어레인지로 바꾸기
+            if(stageManager.currentPlayer.arrangableTiles.Contains(tile))
+            {
+                tile.SetTileMaterial(Tile.TileMaterial.Arrange);
+            }
+            else
+            {
+                tile.ClearTileMesh();
+            }
+        }
+        tempAttackableTiles.Clear();
     }
 
     public void Init()

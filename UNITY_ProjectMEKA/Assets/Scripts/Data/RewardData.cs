@@ -28,4 +28,8 @@ public class RewardData
     public int Item7Count { get; set;}
     public int Item8ID { get; set;}
     public int Item8Count { get; set;}
+    public int Item9ID { get; set;}
+    public int Item9Count { get; set;}
+    public int Item10ID { get; set;}
+    public int Item10Count { get; set;}
 }
