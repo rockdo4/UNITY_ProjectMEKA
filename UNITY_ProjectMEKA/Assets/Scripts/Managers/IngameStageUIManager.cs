@@ -314,7 +314,7 @@ public class IngameStageUIManager : MonoBehaviour
             StageDataManager.Instance.toStoryStageChoicePanel = true;
         }
 
-        SceneManager.LoadScene("MainScene_UI_Merge_2");
+        SceneManager.LoadScene("MainScene");
     }
 
     public void ChangeCharacterInfo()
