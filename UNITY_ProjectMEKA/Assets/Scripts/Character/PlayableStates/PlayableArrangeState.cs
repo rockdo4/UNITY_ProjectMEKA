@@ -54,14 +54,15 @@ public class PlayableArrangeState : PlayableBaseState
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
-                    if (!playerCtrl.stageManager.ingameStageUIManager.currentPlayerOnTile)
+                    hitTile = hit.transform.GetComponentInChildren<Tile>();
+                    var isCurrentPlayerOnTile = playerCtrl.stageManager.ingameStageUIManager.currentPlayerOnTile;
+                    var isTileObstacle = hitTile.tileType == TileType.Obstacle;
+                    if (!isCurrentPlayerOnTile && !isTileObstacle)
                     {
                         playerCtrl.stageManager.ingameStageUIManager.currentPlayerOnTile = true;
                         isOnPossibleTile = false;
                     }
-
                     var pos = hit.point;
-                    hitTile = hit.transform.GetComponentInChildren<Tile>();
                     if (hitTile.arrangePossible && playerCtrl.arrangableTiles.Contains(hitTile))
                     {
                         pos = hit.transform.parent.position;
