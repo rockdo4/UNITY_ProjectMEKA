@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 using static Defines;
+using System.Collections;
 
 public class StageUIManager : MonoBehaviour
 {
@@ -57,6 +58,11 @@ public class StageUIManager : MonoBehaviour
     private RewardTable rewardTable;
     private MonsterTable monsterTable;
     private string stageMonsterImagePath;
+
+    //limhyeoungjun add loading screen
+    public GameObject loadingScreen;
+    public Image loadingFillImage; 
+    public Text loadingText;
 
     private void Awake()
     {
@@ -451,23 +457,48 @@ public class StageUIManager : MonoBehaviour
         switch (stageTableData.Class)
         {
             case (int)StageClass.Story:
-                var sceneNames1 = Utils.GetSceneNames(StageClass.Story);
-                panelManager.LoadFormation();
-                SceneManager.LoadScene(sceneNames1[stageTableData.Index]);
+                //var sceneNames1 = Utils.GetSceneNames(StageClass.Story);
+                //panelManager.LoadFormation();
+                //SceneManager.LoadScene(sceneNames1[stageTableData.Index]);
+                LoadSceneAsync(Utils.GetSceneNames(StageClass.Story)[stageTableData.Index]);
                 break;
             case (int)StageClass.Assignment:
-                var sceneNames2 = Utils.GetSceneNames(StageClass.Assignment);
-                panelManager.LoadFormation();
-                SceneManager.LoadScene(sceneNames2[stageTableData.Index]);
+                //var sceneNames2 = Utils.GetSceneNames(StageClass.Assignment);
+                //panelManager.LoadFormation();
+                //SceneManager.LoadScene(sceneNames2[stageTableData.Index]);
+                LoadSceneAsync(Utils.GetSceneNames(StageClass.Assignment)[stageTableData.Index]);
                 break;
             case (int)StageClass.Challenge:
-                var sceneNames3 = Utils.GetSceneNames(StageClass.Challenge);
-                panelManager.LoadFormation();
-                SceneManager.LoadScene(sceneNames3[stageTableData.Index]);
+                //var sceneNames3 = Utils.GetSceneNames(StageClass.Challenge);
+                //panelManager.LoadFormation();
+                //SceneManager.LoadScene(sceneNames3[stageTableData.Index]);
+                LoadSceneAsync(Utils.GetSceneNames(StageClass.Challenge)[stageTableData.Index]);
                 break;
         }
     }
+    private void LoadSceneAsync(string sceneName)
+    {
+        panelManager.LoadFormation();
+        StartCoroutine(LoadAsynchronously(sceneName));
+    }
 
+    IEnumerator LoadAsynchronously(string sceneName)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        loadingScreen.SetActive(true);
+
+        while (!asyncLoad.isDone)
+        {
+            float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
+
+            loadingFillImage.fillAmount = progress;
+
+            loadingText.text = (progress * 100).ToString("F0") + "%";
+
+            yield return null;
+        }
+    }
     public void StageInfoWindowOn()
     {
         if(!stageInfoPanel.activeSelf)
@@ -524,4 +555,5 @@ public class StageUIManager : MonoBehaviour
             }
         }
     }
+    
 }

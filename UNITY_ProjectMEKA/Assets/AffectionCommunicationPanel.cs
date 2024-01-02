@@ -41,11 +41,13 @@ public class AffectionCommunicationPanel : MonoBehaviour
 	{
 		closeButton.onClick.AddListener(() =>
 		{
+			SoundManager.instance.PlayBGM("MainSceneBGM");
 			gameObject.SetActive(false);
 		});
 
         communicationButton.onClick.AddListener(() =>
 		{
+			SoundManager.instance.PlayBGM("VisualNovelInGameBGM");
             OnClickCommunication();
         });
 

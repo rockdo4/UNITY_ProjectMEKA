@@ -200,10 +200,13 @@ public class HitSkillType : SkillBase
     }
     public void PalaSkillAttack()
     {
-        var t = player.target.GetComponentInParent<IAttackable>();
-        if(t != null)
+        if(player.target != null)
         {
-            t.OnAttack(saveDamage * 1.2f);
+            var t = player.target.GetComponentInParent<IAttackable>();
+            if (t != null)
+            {
+                t.OnAttack(saveDamage * 1.2f);
+            }
         }
     }
     public void StunAttack()

@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-/*
-	public
-
-	- void ChangePanelMain() : ����ȭ������ ���ư��� ex) ESC ��ư ������ ���ư���
-	- void ChangePanelCharacterWindow() : ĳ���� â���� ����
-	- void ChangePanelGacha() : ��í â���� ����
-
-*/
 
 public class PanelManager : MonoBehaviour
 {
@@ -93,7 +85,8 @@ public class PanelManager : MonoBehaviour
 	{
 		previousPanel.position = previousPos;
 		mainPanel.position = mainPos;
-
+        SoundManager.instance.PlayerSFXAudio("UIButtonClick");
+        SoundManager.instance.PlayBGM("MainSceneBGM");
 	}
 
 	public void ChangePanelCharacterWindow()
@@ -102,14 +95,18 @@ public class PanelManager : MonoBehaviour
 		previousPanel = characterWindowPanel;
 		characterWindowPanel.position = mainPos;
 		mainPanel.position = previousPos;
-	}
+        SoundManager.instance.PlayerSFXAudio("UIButtonClick");
 
-	public void ChangePanelGacha()
+    }
+
+    public void ChangePanelGacha()
 	{
 		previousPos = gachaPos;
 		previousPanel = gachaPanel;
 		gachaPanel.position = mainPos;
 		mainPanel.position = previousPos;
+		SoundManager.instance.PlayerSFXAudio("UIButtonClick");
+		SoundManager.instance.PlayBGM("GachaMenuBGM");
 	}
 
 	public void ChangePanelFormation()
@@ -118,57 +115,71 @@ public class PanelManager : MonoBehaviour
 		previousPanel = formationPanel;
 		formationPanel.position = mainPos;
 		mainPanel.position = previousPos;
-	}
+        SoundManager.instance.PlayerSFXAudio("UIButtonClick");
 
-	public void ChangePanelInventory()
+    }
+
+    public void ChangePanelInventory()
 	{
         previousPos = inventoryPos;
         previousPanel = inventoryPanel;
         inventoryPanel.position = mainPos;
         mainPanel.position = previousPos;
+        SoundManager.instance.PlayerSFXAudio("UIButtonClick");
+
     }
 
-	//12.10, �����, �������������г� �߰�
-	public void ChangePanelStageClass()
+    //12.10, �����, �������������г� �߰�
+    public void ChangePanelStageClass()
 	{
         previousPos = stageClassPos;
 		previousPanel = stageClassPanel;
 		stageClassPanel.position = mainPos;
 		mainPanel.position = previousPos;
+        SoundManager.instance.PlayerSFXAudio("UIButtonClick");
+
     }
 
-	//12.12, �����, �������������г� �߰�
-	public void ChangePanelStoryStageChoice()
+    //12.12, �����, �������������г� �߰�
+    public void ChangePanelStoryStageChoice()
 	{
         previousPos = storyStageChoicePos;
         previousPanel = storyStageChoicePanel;
         storyStageChoicePanel.position = mainPos;
         mainPanel.position = previousPos;
+        SoundManager.instance.PlayerSFXAudio("UIButtonClick");
+
     }
-	public void ChangePanelAssignmentStageChoice()
+    public void ChangePanelAssignmentStageChoice()
 	{
         previousPos = assignmentStageChoicePos;
         previousPanel = assignmentStageChoicePanel;
         assignmentStageChoicePanel.position = mainPos;
         mainPanel.position = previousPos;
+        SoundManager.instance.PlayerSFXAudio("UIButtonClick");
+
     }
-	public void ChangePanelChallengeStageChoice()
+    public void ChangePanelChallengeStageChoice()
 	{
         previousPos = challengeStageChoicePos;
         previousPanel = challengeStageChoicePanel;
         challengeStageChoicePanel.position = mainPos;
         mainPanel.position = previousPos;
+        SoundManager.instance.PlayerSFXAudio("UIButtonClick");
+
     }
 
-	public void ChangePanelAffection()
+    public void ChangePanelAffection()
 	{
 		previousPos = affectionPos;
 		previousPanel = affectionPanel;
 		affectionPanel.position = mainPos;
 		mainPanel.position = previousPos;
-	}
+        SoundManager.instance.PlayerSFXAudio("UIButtonClick");
 
-	public void LoadFormation()
+    }
+
+    public void LoadFormation()
 	{
 		var formation = formationPanel.GetComponent<FormationManager>();
 		if (formation == null)

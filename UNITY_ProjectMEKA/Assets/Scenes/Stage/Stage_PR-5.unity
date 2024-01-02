@@ -669,6 +669,8 @@ GameObject:
   - component: {fileID: 2108349824}
   - component: {fileID: 2108349823}
   - component: {fileID: 2108349822}
+  - component: {fileID: 2108349828}
+  - component: {fileID: 2108349827}
   m_Layer: 20
   m_Name: Camera
   m_TagString: MainCamera
@@ -802,6 +804,8 @@ MonoBehaviour:
   minDistance: 5
   rotationSpeed: 5
   zoomSpeed: 5
+  initRotation: {x: 0, y: 0, z: 0, w: 0}
+  initPos: {x: 0, y: 0, z: 0}
 --- !u!114 &2108349824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -841,6 +845,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 58.265, y: 0, z: 0}
+--- !u!114 &2108349827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2108349820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace07452cffa13b47a363d01b8289cf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothFactor: 10
+--- !u!114 &2108349828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2108349820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a75f16cf7742c4d82047565e6b53ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  perspectiveZoomSpeed: 0.5
+  orthoZoomSpeed: 0.5
+  minZoomDistance: 10
+  maxZoomDistance: 60
 --- !u!4 &919387577636830412
 Transform:
   m_ObjectHideFlags: 0
