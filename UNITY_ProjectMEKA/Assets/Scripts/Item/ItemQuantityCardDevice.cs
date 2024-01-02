@@ -60,11 +60,12 @@ public class ItemQuantityCardDevice : MonoBehaviour
 
         selectedQuantity++;
 
-        //if(panel.CheckFull())
-        //{
-        //    //panel.infoPanel.SetNoticePanel("현재 최대 레벨에 도달 했습니다.", "확인");
-        //    selectedQuantity--;
-        //}
+        if(panel.CheckFull())
+        {
+			panel.devicePanel.characterInfoPanel.GetComponent<CharacterInfoText>().SetNoticePanel("현재 최대 레벨에 도달 했습니다.", "확인");
+            selectedQuantity--;
+		}
+
 
 		SetText();
 	}

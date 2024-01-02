@@ -15,7 +15,7 @@ public class DevicePanel : MonoBehaviour
 {
 	private GachaSystem<int> coreOption;
 	private GachaSystem<int> engineOption;
-	private GachaSystem<int> subOption;
+	public GachaSystem<int> subOption;
 
 	private DeviceOptionTable deviceOptionTable;
 	private DeviceValueTable deviceValueTable;
@@ -133,7 +133,6 @@ public class DevicePanel : MonoBehaviour
 
 		deviceDict = DeviceInventoryManager.Instance.m_DeviceStorage;
 		currCharacter = character;
-		characterName.SetText(currCharacter.Name);
 
 		UpdateEquipedDeivce();
 		UpdateDeviceCard();
@@ -141,47 +140,43 @@ public class DevicePanel : MonoBehaviour
 
 	public void UpdateEquipedDeivce()
 	{
-		if(currCharacter.DeviceCoreID != 0)
-		{
-			coreItem.GetComponentInChildren<TextMeshProUGUI>().SetText(deviceDict[currCharacter.DeviceCoreID].Name);
-			coreItem.onClick.RemoveAllListeners();
-			coreItem.onClick.AddListener(() =>
-			{
-				SetDeviceInfoText(deviceDict[currCharacter.DeviceCoreID]);
-				selectedDevice = deviceDict[currCharacter.DeviceCoreID];
-			});
-		}
-		else
-		{
-			coreItem.GetComponentInChildren<TextMeshProUGUI>().SetText("비어있음");
-			coreItem.onClick.RemoveAllListeners();
-			coreItem.onClick.AddListener(() =>
-			{
-				SetDeviceInfoText(null);
-				selectedDevice = null;
-			});
-		}
+		//if(currCharacter.DeviceCoreID != 0)
+		//{
+		//	coreItem.onClick.RemoveAllListeners();
+		//	coreItem.onClick.AddListener(() =>
+		//	{
+		//		SetDeviceInfoText(deviceDict[currCharacter.DeviceCoreID]);
+		//		selectedDevice = deviceDict[currCharacter.DeviceCoreID];
+		//	});
+		//}
+		//else
+		//{			
+		//	coreItem.onClick.RemoveAllListeners();
+		//	coreItem.onClick.AddListener(() =>
+		//	{
+		//		SetDeviceInfoText(null);
+		//		selectedDevice = null;
+		//	});
+		//}
 
-		if(currCharacter.DeviceEngineID != 0)
-		{
-			engineItem.GetComponentInChildren<TextMeshProUGUI>().SetText(deviceDict[currCharacter.DeviceEngineID].Name);
-			engineItem.onClick.RemoveAllListeners();
-			engineItem.onClick.AddListener(() =>
-			{
-				SetDeviceInfoText(deviceDict[currCharacter.DeviceEngineID]);
-				selectedDevice = deviceDict[currCharacter.DeviceEngineID];
-			});
-		}
-		else
-		{
-			engineItem.GetComponentInChildren<TextMeshProUGUI>().SetText("비어있음");
-			engineItem.onClick.RemoveAllListeners();
-			engineItem.onClick.AddListener(() =>
-			{
-				SetDeviceInfoText(null);
-				selectedDevice = null;
-			});
-		}
+		//if(currCharacter.DeviceEngineID != 0)
+		//{
+		//	engineItem.onClick.RemoveAllListeners();
+		//	engineItem.onClick.AddListener(() =>
+		//	{
+		//		SetDeviceInfoText(deviceDict[currCharacter.DeviceEngineID]);
+		//		selectedDevice = deviceDict[currCharacter.DeviceEngineID];
+		//	});
+		//}
+		//else
+		//{
+		//	engineItem.onClick.RemoveAllListeners();
+		//	engineItem.onClick.AddListener(() =>
+		//	{
+		//		SetDeviceInfoText(null);
+		//		selectedDevice = null;
+		//	});
+		//}
 	}
 
 	public void CreateDevice(int PartType)
@@ -402,6 +397,8 @@ public class DevicePanel : MonoBehaviour
 		}
 		else
 		{
+			subOption3.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption3ID).Name);
+
 			float subValue3 = deviceValueTable.GetDeviceValueData(device.SubOption3ID).Coefficient;
 			if (subValue3 != 0)
 			{

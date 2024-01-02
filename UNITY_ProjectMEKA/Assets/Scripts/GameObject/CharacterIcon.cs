@@ -43,6 +43,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         //Instantiate Character
         characterGo = Instantiate(characterPrefab);
 		SetObjectPooling(characterGo);
+        SetSkill(characterGo);
 
 		playerController = characterGo.GetComponent<PlayerController>();
         characterState = characterGo.GetComponent<CharacterState>();
@@ -109,6 +110,76 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
         }
 	}
 
+    public void SetSkill(GameObject characterGo)
+    {
+        var state = characterGo.GetComponent<PlayerState>();
+        var character = CharacterManager.Instance.m_CharacterStorage[state.id];
+
+        var table = DataTableMgr.GetTable<SkillInfoTable>();
+        var datas = table.GetSkillDatas(character.SkillID);
+        var data = datas[character.SkillLevel - 1];
+
+		if(characterGo.GetComponent<BuffSkilType>() != null)
+        {
+            var skill = characterGo.GetComponent<BuffSkilType>();
+            skill.skillCost = data.UseSigma;
+            skill.skillCoolTime = data.CoolTime;
+            skill.skillDuration = data.Duration;
+            skill.figure = (data.SkillDamageCoefficient != 0) ? data.SkillDamageCoefficient : data.SkillValueIncrease;
+            skill.addCost = (data.ArrangeCostSec != 0) ? data.ArrangeCostSec : data.ArrangeCostRecovery;
+		}
+        else if(characterGo.GetComponent<SnipingSkillType>() != null)
+        {
+			var skill = characterGo.GetComponent<SnipingSkillType>();
+			skill.skillCost = data.UseSigma;
+			skill.skillCoolTime = data.CoolTime;
+			skill.duration = data.Duration;
+			skill.figure = (data.SkillDamageCoefficient != 0) ? data.SkillDamageCoefficient : data.SkillValueIncrease;
+		}
+        else if(characterGo.GetComponent<HitSkillType>() != null)
+        {
+			var skill = characterGo.GetComponent<HitSkillType>();
+			skill.skillCost = data.UseSigma;
+			skill.skillCoolTime = data.CoolTime;
+			skill.skillDuration = data.Duration;
+			skill.figure = (data.SkillDamageCoefficient != 0) ? data.SkillDamageCoefficient : data.SkillValueIncrease;
+		}
+        else if(characterGo.GetComponent<ProjectileTypeSkill>() != null)
+        {
+			var skill = characterGo.GetComponent<ProjectileTypeSkill>();
+			skill.skillCost = data.UseSigma;
+			skill.skillCoolTime = data.CoolTime;
+		}
+        else if(characterGo.GetComponent<ChageAttackStileSkill>() != null)
+        {
+			var skill = characterGo.GetComponent<ChageAttackStileSkill>();
+			skill.skillCost = data.UseSigma;
+			skill.skillCoolTime = data.CoolTime;
+			skill.skillDuration = data.Duration;
+		}
+        else if(characterGo.GetComponent<PassiveTypeSkill>() != null)
+        {
+			var skill = characterGo.GetComponent<PassiveTypeSkill>();
+			skill.skillCost = data.UseSigma;
+			skill.skillCoolTime = data.CoolTime;
+			skill.figure = (data.SkillDamageCoefficient != 0) ? data.SkillDamageCoefficient : data.SkillValueIncrease;
+		}
+        else if(characterGo.GetComponent<NukeSkill>() != null)
+        {
+			var skill = characterGo.GetComponent<NukeSkill>();
+			skill.skillCost = data.UseSigma;
+			skill.skillCoolTime = data.CoolTime;
+		}
+        else if(characterGo.GetComponent<LaserSkillType>() != null)
+        {
+			var skill = characterGo.GetComponent<LaserSkillType>();
+			skill.skillCost = data.UseSigma;
+			skill.skillCoolTime = data.CoolTime;
+			skill.skillDuration = data.Duration;
+			skill.figure = (data.SkillDamageCoefficient != 0) ? data.SkillDamageCoefficient : data.SkillValueIncrease;
+		}
+	}
+
 	public void ActiveCharacter()
     {
         characterGo.SetActive(true);
@@ -171,7 +242,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 
         if(stageManager.ingameStageUIManager == null)
         {
-            Debug.Log("Ёнюс");
+            Debug.Log("О©╫О©╫О©╫О©╫");
         }
         var isPossibleMode = (stageManager.ingameStageUIManager.windowMode == WindowMode.None) || (stageManager.ingameStageUIManager.windowMode == WindowMode.FirstArrange);
         var isCostEnough = stageManager.currentCost > cost;

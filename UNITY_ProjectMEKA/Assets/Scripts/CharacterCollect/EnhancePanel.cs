@@ -254,8 +254,6 @@ public class EnhancePanel : MonoBehaviour
 
 	public bool CheckFull()
 	{
-		if (isFull)
-			return true;
-		return false;
+		return isFull;
 	}
 }
