@@ -25,7 +25,8 @@ public class PlayableIdleState : PlayableBaseState
             playerCtrl.trail.gameObject.SetActive(false);
 
         }
-        playerCtrl.CurrentGridPos = new Vector3Int(Mathf.FloorToInt(playerCtrl.transform.position.x), Mathf.FloorToInt(playerCtrl.transform.position.y), Mathf.FloorToInt(playerCtrl.transform.position.z));
+        //playerCtrl.CurrentGridPos = new Vector3Int(Mathf.FloorToInt(playerCtrl.transform.position.x), Mathf.FloorToInt(playerCtrl.transform.position.y), Mathf.FloorToInt(playerCtrl.transform.position.z));
+        playerCtrl.CurrentGridPos = Utils.Vector3ToVector3Int(playerCtrl.transform.position);
     }
 
     public override void Exit()

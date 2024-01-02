@@ -41,7 +41,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     private void Start()
     {
         //Instantiate Character
-        characterGo = Instantiate(characterPrefab);
+        characterGo = Instantiate(characterPrefab, Vector3.zero, Quaternion.identity * Quaternion.Euler(0, 90, 0));
 		SetObjectPooling(characterGo);
         SetSkill(characterGo);
 

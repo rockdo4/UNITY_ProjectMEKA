@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static Defines;
 
@@ -8,6 +9,7 @@ public class PlayableArrangeState : PlayableBaseState
     private Tile hitTile;
     private bool isOnPossibleTile;
     private StageManager stageManager;
+    public Vector3Int prevGridPos;
 
     public PlayableArrangeState(PlayerController player) : base(player)
     {
@@ -41,9 +43,9 @@ public class PlayableArrangeState : PlayableBaseState
     public override void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        playerCtrl.CurrentGridPos = Utils.Vector3ToVector3Int(playerCtrl.transform.position);
 
-
-        if(!playerCtrl.stateManager.firstArranged)
+        if (!playerCtrl.stateManager.firstArranged)
         {
             if(Input.GetMouseButton(0))
             {
@@ -62,12 +64,21 @@ public class PlayableArrangeState : PlayableBaseState
                         playerCtrl.stageManager.ingameStageUIManager.currentPlayerOnTile = true;
                         isOnPossibleTile = false;
                     }
+
                     var pos = hit.point;
                     if (hitTile.arrangePossible && playerCtrl.arrangableTiles.Contains(hitTile))
                     {
                         pos = hit.transform.parent.position;
                         pos.y = hit.transform.GetComponentInChildren<Tile>().height;
                         isOnPossibleTile = true;
+
+                        if (prevGridPos != playerCtrl.CurrentGridPos)
+                        {
+                            Debug.Log("어택타일셋");
+                            stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
+                            stageManager.ingameStageUIManager.ChangeAttackableTileMesh(true);
+                            prevGridPos = playerCtrl.CurrentGridPos;
+                        }
                     }
                     else
                     {
