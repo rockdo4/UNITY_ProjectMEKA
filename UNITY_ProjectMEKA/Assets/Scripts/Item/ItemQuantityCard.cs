@@ -38,6 +38,11 @@ public class ItemQuantityCard : MonoBehaviour
 	public void SetItem(int id)
     {
         var item = ItemInventoryManager.Instance.GetItemByID(id);
+
+        var itemTable = DataTableMgr.GetTable<ItemInfoTable>();
+        var data = itemTable.GetItemData(id);
+        itemImage.sprite = Resources.Load<Sprite>(data.ImagePath);
+
         SetItem(item);
     }
 

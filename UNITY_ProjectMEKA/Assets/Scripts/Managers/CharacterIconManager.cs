@@ -8,22 +8,18 @@ public class CharacterIconManager : MonoBehaviour
 {
     public GameObject Iconpanel;
     private StageManager stageManager;
+    public GameObject characterIconPrefab;
     private List<GameObject> characterPrefabs = new List<GameObject>();
     private List<GameObject> characterIconPrefabs = new List<GameObject>();
 
     public int currentCharacterCount;
-
-    public CharacterTable characterTable;
     private string characterPrefabPath;
-    private string characterIconPath;
 
     private void Awake()
     {
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         characterPrefabPath = "Character";
-        characterIconPath = "CharacterIcon/CharacterIconPrefab";
         currentCharacterCount = DataHolder.formation.Length;
-        characterTable = DataTableMgr.GetTable<CharacterTable>();
         SetCharacters();
         CreateIconGameObjects();
     }
@@ -33,7 +29,7 @@ public class CharacterIconManager : MonoBehaviour
         for(int i = 0; i < currentCharacterCount; i++)
         {
             var id = DataHolder.formation[i];
-            var characterData = characterTable.GetCharacterData(id);
+            var characterData = StageDataManager.Instance.characterTable.GetCharacterData(id);
             GameObject[] prefabs = Resources.LoadAll<GameObject>(characterPrefabPath);
 
             foreach (var prefab in prefabs)
@@ -47,10 +43,6 @@ public class CharacterIconManager : MonoBehaviour
                 {
                     Debug.Log("없음");
                 }
-                else
-                {
-                    //Debug.Log(characterState.id);
-                }
 
                 if(characterState.id == id)
                 {
@@ -63,7 +55,6 @@ public class CharacterIconManager : MonoBehaviour
                     characterState.occupation = (Occupation)characterData.CharacterOccupation;
                     characterState.arrangeCost = characterData.ArrangementCost;
                     characterState.arrangeCoolTime = characterData.ReArrangementCoolDown;
-
 					characterState.damage = data.Damage;
 					characterState.maxHp = data.HP;
 					characterState.Hp = data.HP;
@@ -83,18 +74,9 @@ public class CharacterIconManager : MonoBehaviour
         for(int i = 0; i < currentCharacterCount; i++)
         {
             var id = DataHolder.formation[i];
-            var iconImage = Resources.Load<Sprite>(characterTable.GetCharacterData(id).ImagePath);
-
-            var iconPrefab = Resources.Load<GameObject>(characterIconPath);
-
-            var iconGo = Instantiate(iconPrefab, Iconpanel.transform);
-
+            var iconGo = Instantiate(characterIconPrefab, Iconpanel.transform);
             var characterIcon = iconGo.GetComponent<CharacterIcon>();
-            var characterIconImage = iconGo.GetComponent<Image>();
-
             characterIcon.characterPrefab = characterPrefabs[i];
-            characterIconImage.sprite = iconImage;
-
             characterIconPrefabs.Add(iconGo);
         }
     }

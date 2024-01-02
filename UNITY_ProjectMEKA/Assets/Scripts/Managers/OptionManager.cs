@@ -18,8 +18,7 @@ public enum SpeedType
 {
     x1,
     x2,
-    x4,
-    x8
+    x3,
 }
 
 public class OptionManager : MonoBehaviour
@@ -31,12 +30,12 @@ public class OptionManager : MonoBehaviour
 
     public Sprite[] soundButtonSprites = new Sprite[2];
     public Sprite[] pauseButtonSprites = new Sprite[2];
-    public Sprite[] speedButtonSprites = new Sprite[4];
+    public Sprite[] speedButtonSprites = new Sprite[3];
 
     public Button soundButton; // sprite : soundOn, soundMute
     public Button exitButton;
     public Button pauseButton; // sprite : pause, play
-    public Button speedButton; // sprite : 1,2,4,8 배속
+    public Button speedButton; // sprite : 1,2,3 배속
 
     public SoundType currentSoundType;
     public PlayType currentPlayType;
@@ -163,11 +162,8 @@ public class OptionManager : MonoBehaviour
             case SpeedType.x2:
                 stageManager.CurrentSpeed = 2f;
                 break;
-            case SpeedType.x4:
-                stageManager.CurrentSpeed = 4f;
-                break;
-            case SpeedType.x8:
-                stageManager.CurrentSpeed = 8f;
+            case SpeedType.x3:
+                stageManager.CurrentSpeed = 3f;
                 break;
         }
         Time.timeScale = stageManager.CurrentSpeed;

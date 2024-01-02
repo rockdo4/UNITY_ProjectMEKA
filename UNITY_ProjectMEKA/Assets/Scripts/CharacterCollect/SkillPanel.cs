@@ -12,7 +12,7 @@ public class SkillPanel : MonoBehaviour
     public TextMeshProUGUI skillDescriptionText;
     public Transform skillLevelInfoScroll;
 	public Button applyButton;
-    public ItemAutoQuantitySkillCard[] requireItems;
+    public ItemSkillCard[] requireItems;
 
 	[Header("InfoPanel")]
 	public CharacterInfoText infoPanel;
@@ -21,8 +21,9 @@ public class SkillPanel : MonoBehaviour
 
     private SkillUpgradeTable skillUpgradeTable;
 	private SkillTable skillTable;
+	private SkillInfoTable skillInfoTable;
 
-	private void Awake()
+    private void Awake()
 	{
 		applyButton.onClick.AddListener(() =>
 		{
@@ -71,8 +72,10 @@ public class SkillPanel : MonoBehaviour
 			skillUpgradeTable = DataTableMgr.GetTable<SkillUpgradeTable>();
 		if(skillTable == null)
 			skillTable = DataTableMgr.GetTable<SkillTable>();
+		if(skillInfoTable == null)
+			skillInfoTable = DataTableMgr.GetTable<SkillInfoTable>();
 
-		if (character == null)
+        if (character == null)
 		{
 			Debug.Log("캐릭터가 없습니다");
 			return;
@@ -106,6 +109,12 @@ public class SkillPanel : MonoBehaviour
 		requireItems[2].SetItem(info.Tier3ID, info.RequireTier3);
 
 		UpdateAfterSetCharacter();
+
+        var datas = skillInfoTable.GetSkillDatas(currCharacter.SkillID);
+		var path = datas[0].ImagePath;
+		Debug.Log(path);
+
+        skillIconImage.sprite = Resources.Load<Sprite>(path);
 	}
 
 	private void UpdateAfterSetCharacter()

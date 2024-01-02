@@ -233,11 +233,11 @@ public class FormationManager : MonoBehaviour
             textUiArr[(int)UINumeric.ATK].SetText(charInfo.Damage.ToString());
             textUiArr[(int)UINumeric.Armor].SetText(charInfo.Armor.ToString());
             textUiArr[(int)UINumeric.HP].SetText(charInfo.HP.ToString());
-            textUiArr[(int)UINumeric.Speed].SetText("--");
-            textUiArr[(int)UINumeric.CriHit].SetText("--");
-            textUiArr[(int)UINumeric.CriDamage].SetText("--");
+			textUiArr[(int)UINumeric.Speed].SetText(charInfo.ATKSpd);
+			textUiArr[(int)UINumeric.CriHit].SetText($"{charInfo.CriChance}");
+			textUiArr[(int)UINumeric.CriDamage].SetText($"{charInfo.CriDMG}");
 
-            imageUiArr[(int)UINumeric.CharImage].sprite = Resources.Load<Sprite>(info.ImagePath);
+			imageUiArr[(int)UINumeric.CharImage].sprite = Resources.Load<Sprite>(info.ImagePath);
             imageUiArr[(int)UINumeric.CharImage].preserveAspect = false;
         }
 		else
@@ -360,9 +360,9 @@ public class FormationManager : MonoBehaviour
 		textUiArr[(int)UINumeric.ATK].SetText(charInfo.Damage.ToString());
 		textUiArr[(int)UINumeric.Armor].SetText(charInfo.Armor.ToString());
 		textUiArr[(int)UINumeric.HP].SetText(charInfo.HP.ToString());
-		textUiArr[(int)UINumeric.Speed].SetText("--");
-		textUiArr[(int)UINumeric.CriHit].SetText("--");
-		textUiArr[(int)UINumeric.CriDamage].SetText("--");
+		textUiArr[(int)UINumeric.Speed].SetText(charInfo.ATKSpd);
+		textUiArr[(int)UINumeric.CriHit].SetText($"{charInfo.CriChance}");
+		textUiArr[(int)UINumeric.CriDamage].SetText($"{charInfo.CriDMG}");
 
 		imageUiArr[(int)UINumeric.CharImage].sprite = Resources.Load<Sprite>(info.ImagePath);
 		imageUiArr[(int)UINumeric.CharImage].preserveAspect = false;

@@ -425,6 +425,42 @@ public class Character
 			return charData.SkillID;
 		}
 	}
+
+	public string ATKSpd
+	{
+		get
+		{
+			var levelTable = DataTableMgr.GetTable<CharacterLevelTable>();
+
+			var id = CharacterID * 100 + CharacterLevel;
+			var levelData = levelTable.GetLevelData(id);
+			return levelData.CharacterATKSpd;
+		}
+	}
+
+	public int CriChance
+	{
+		get
+		{
+			var levelTable = DataTableMgr.GetTable<CharacterLevelTable>();
+
+			var id = CharacterID * 100 + CharacterLevel;
+			var levelData = levelTable.GetLevelData(id);
+			return levelData.CharacterCriChance;
+		}
+	}
+
+	public int CriDMG
+	{
+		get
+		{
+			var levelTable = DataTableMgr.GetTable<CharacterLevelTable>();
+
+			var id = CharacterID * 100 + CharacterLevel;
+			var levelData = levelTable.GetLevelData(id);
+			return levelData.CharacterCriDMG;
+		}
+	}
 }
 
 //캐릭터 정보
@@ -460,6 +496,9 @@ public class LevelData
 	public float CharacterDamage { get; set; }
 	public float CharacterArmor { get; set; }
 	public float CharacterHP { get; set; }
+	public string CharacterATKSpd { get; set; }
+	public int CharacterCriChance { get; set; }
+	public int CharacterCriDMG { get; set; }
 }
 
 //레벨업하기 위한 경험치 정보

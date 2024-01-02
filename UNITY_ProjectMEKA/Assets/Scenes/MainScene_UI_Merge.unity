@@ -12450,7 +12450,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &578372457
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12552,6 +12552,8 @@ MonoBehaviour:
   CriticalHit: {fileID: 724975283}
   CriticalDamage: {fileID: 289548669}
   level: {fileID: 1489051286}
+  expPercent: {fileID: 0}
+  expBar: {fileID: 0}
   defaultSprite: {fileID: 21300000, guid: 7ed6d9a5ecf582e4a82b2f8de72aec20, type: 3}
 --- !u!1 &578931156
 GameObject:
@@ -19119,14 +19121,22 @@ MonoBehaviour:
   itemID: f1f84d0001204e0011474e00
   levelText: {fileID: 1351822787}
   damageText: {fileID: 1602335208}
+  afterDamageText: {fileID: 0}
   armorText: {fileID: 1728124127}
+  afterArmorText: {fileID: 0}
   hpText: {fileID: 491523757}
+  afterHpText: {fileID: 0}
   expText: {fileID: 2028765052}
+  expBar: {fileID: 0}
+  expPercent: {fileID: 0}
   reportItemCard:
   - {fileID: 1744056317506275174}
   - {fileID: 2056849759}
   - {fileID: 2080289823}
+  characterImage: {fileID: 0}
   applyButton: {fileID: 627410398}
+  exitButton: {fileID: 0}
+  synchroPanel: {fileID: 0}
   infoPanel: {fileID: 578372460}
 --- !u!1 &866975529
 GameObject:
@@ -32335,6 +32345,7 @@ MonoBehaviour:
   - {fileID: 689231519}
   - {fileID: 224413694}
   - {fileID: 1110418553}
+  characterImage: {fileID: 0}
   synchroItemCard:
   - {fileID: 697938316}
   - {fileID: 855677414}
@@ -32343,7 +32354,6 @@ MonoBehaviour:
   afterLevel: {fileID: 164976451}
   applyButton: {fileID: 102775305}
   infoPanel: {fileID: 578372460}
-  resultPanel: {fileID: 0}
 --- !u!1 &1518529584
 GameObject:
   m_ObjectHideFlags: 0
@@ -36361,7 +36371,7 @@ MonoBehaviour:
   deviceButtons:
   - {fileID: 594638423}
   - {fileID: 1519638670}
-  synchroButton: {fileID: 1769624855}
+  synchroButtons: []
   skillUpdateButton: {fileID: 846957762}
   gachaUnLockPanel: {fileID: 474127825}
   affectionLockPanel: {fileID: 1539465797}
