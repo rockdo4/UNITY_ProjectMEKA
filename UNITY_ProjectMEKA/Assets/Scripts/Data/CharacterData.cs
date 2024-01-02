@@ -479,7 +479,11 @@ public class CharacterData
 	public string CharacterStanding { get; set; }
 	public string CharacterHead { get; set; }
 	public string PortraitPath { get; set; }
-	public int SkillID { get; set; }
+	public string MechaImagePath { get; set; }
+	public string AttackRangeImagePath { get; set; }
+	public string SkillRangeImagePath { get; set; }
+
+    public int SkillID { get; set; }
 	public int MaxSigma { get; set; }
 	public string OccupationInfoStringID { get; set; }
 	public string OccupationStringID { get; set; }

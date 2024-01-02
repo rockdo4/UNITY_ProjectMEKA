@@ -9,6 +9,7 @@ public class CharacterInfo : MonoBehaviour
 {
     public StageManager stageManager;
     private StringTable stringTable;
+    private SkillInfoTable skillInfoTable;
 
     public Image characterImage;
     public Image mechaImage;
@@ -28,6 +29,7 @@ public class CharacterInfo : MonoBehaviour
     {
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
         stringTable = StageDataManager.Instance.stringTable;
+        skillInfoTable = DataTableMgr.GetTable<SkillInfoTable>();
         characterImagePathID = "Standing";        
     }
 
@@ -42,6 +44,7 @@ public class CharacterInfo : MonoBehaviour
         var characterSkillType = stageManager.currentPlayer.skillState.skillType;
         var characterData = StageDataManager.Instance.characterTable.GetCharacterData(characterId);
 
+        // 수정하기
         levelText.SetText(characterState.level.ToString());
 
         var occupationStringID = characterData.OccupationStringID;
@@ -59,7 +62,6 @@ public class CharacterInfo : MonoBehaviour
         var characterInfo = stringTable.GetString(characterInfoStringID);
         characterInfoText.SetText(characterInfo);
 
-        //public Image characterImage;
         //public Image mechaImage;
         //public Image attackAreaImage;
         //public Image skillAreaImage;
@@ -67,6 +69,11 @@ public class CharacterInfo : MonoBehaviour
 
         var characterImagePath = characterData.CharacterStanding;
         characterImage.sprite = Resources.Load<Sprite>(characterImagePath);
+
+        var skillID = characterData.SkillID;
+        var skillDatas = skillInfoTable.GetSkillDatas(skillID);
+        var skillImagePath = skillDatas[0].ImagePath;
+        skillIconImage.sprite = Resources.Load<Sprite>(skillImagePath);
 
         // mecha 이미지 : 캐릭터아이디_mecha로 리소스 폴더에 찾아서 연결
         // attackArea, skillArea, skillIcon도 마찬가지
