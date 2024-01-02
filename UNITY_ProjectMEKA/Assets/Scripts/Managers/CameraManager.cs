@@ -27,7 +27,6 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log(stageManager.ingameStageUIManager == null);
         if (!camMove.IsDragging)
         {
             if (stageManager.ingameStageUIManager.windowMode == WindowMode.Setting)
@@ -38,18 +37,32 @@ public class CameraManager : MonoBehaviour
                 }
 
                 target = stageManager.currentPlayer.transform;
+                //// 각도 러프
+                //Quaternion targetRotation = Quaternion.LookRotation(target.position - transform.position);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * 2f);
+
+                //// 무빙 러프
+                //Vector3 directionToTarget = (target.position - transform.position).normalized;
+                //var targetPosition = target.position - directionToTarget * minDistance;
+
+                //if (Vector3.Distance(transform.position, target.position) > minDistance)
+                //{
+                //    transform.position = Vector3.Lerp(transform.position, targetPosition, zoomSpeed * Time.deltaTime * 2f);
+                //}
+
+                // 카메라의 고정된 위치와 각도를 설정
+                Vector3 cameraOffset = Quaternion.AngleAxis(-10, Vector3.right) * Vector3.back;
+                cameraOffset *= minDistance;
+                Vector3 cameraPosition = target.position + cameraOffset + Vector3.up * minDistance;
+                Quaternion targetRotation = Quaternion.LookRotation(target.position - cameraPosition);
+
                 // 각도 러프
-                Quaternion targetRotation = Quaternion.LookRotation(target.position - transform.position);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * 2f);
 
                 // 무빙 러프
-                Vector3 directionToTarget = (target.position - transform.position).normalized;
-                var targetPosition = target.position - directionToTarget * minDistance;
+                transform.position = Vector3.Lerp(transform.position, cameraPosition, zoomSpeed * Time.deltaTime * 2f);
 
-                if (Vector3.Distance(transform.position, target.position) > minDistance)
-                {
-                    transform.position = Vector3.Lerp(transform.position, targetPosition, zoomSpeed * Time.deltaTime * 2f);
-                }
+
             }
             else if (stageManager.ingameStageUIManager.windowMode == WindowMode.Skill)
             {
@@ -74,4 +87,7 @@ public class CameraManager : MonoBehaviour
             }
         }
     }
+
+
+
 }

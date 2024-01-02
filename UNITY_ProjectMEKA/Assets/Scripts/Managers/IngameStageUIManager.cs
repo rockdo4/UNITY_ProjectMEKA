@@ -57,7 +57,7 @@ public class IngameStageUIManager : MonoBehaviour
     private Button skillButton;
     //임형준 추가 스킬 쿨타임바
     private Image skillTimerBar;
-
+    private List<GameObject> bgs = new List<GameObject>();
 	// skill
 	public TextMeshProUGUI skillTileGuideText;
 
@@ -85,6 +85,7 @@ public class IngameStageUIManager : MonoBehaviour
         collectButton = joystick.collectButton;
         skillButton = joystick.skillButton;
         skillTimerBar = joystick.skillTimerBar;
+        bgs = joystick.bgs;
         isInfoWindowOn = true;
         timeProgressSlider.value = 1f;
     }
@@ -207,6 +208,10 @@ public class IngameStageUIManager : MonoBehaviour
                 //ChangeCharacterInfo();
                 ClearTileMesh();
                 joystick.gameObject.SetActive(true);
+                foreach (var bg in bgs)
+                {
+                    bg.SetActive(true);
+                }
                 joystick.SetPositionToCurrentPlayer(stageManager.currentPlayer.transform);
                 joystickHandler.gameObject.SetActive(true);
                 cancelButton.gameObject.SetActive(false);
@@ -225,6 +230,10 @@ public class IngameStageUIManager : MonoBehaviour
                 joystickHandler.gameObject.SetActive(false);
                 cancelButton.gameObject.SetActive(false);
                 collectButton.gameObject.SetActive(true);
+                foreach (var bg in bgs)
+                {
+                    bg.SetActive(false);
+                }
                 //closeButton.gameObject.SetActive(true);
                 if (stageManager.currentPlayer.skillState.skillType != SkillType.Auto)
                 {
@@ -235,6 +244,10 @@ public class IngameStageUIManager : MonoBehaviour
 
                     skillButton.gameObject.SetActive(true);
                     skillTimerBar.gameObject.SetActive(true);
+                    foreach(var bg in bgs)
+                    {
+                        bg.SetActive(false);
+                    }
 
                     skillButton.GetComponent<Image>().sprite = Resources.Load<Sprite>(skillInfo[0].ImagePath);
 
