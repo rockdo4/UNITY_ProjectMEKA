@@ -15,7 +15,7 @@ public class DevicePanel : MonoBehaviour
 {
 	private GachaSystem<int> coreOption;
 	private GachaSystem<int> engineOption;
-	private GachaSystem<int> subOption;
+	public GachaSystem<int> subOption;
 
 	private DeviceOptionTable deviceOptionTable;
 	private DeviceValueTable deviceValueTable;
@@ -402,6 +402,8 @@ public class DevicePanel : MonoBehaviour
 		}
 		else
 		{
+			subOption3.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption3ID).Name);
+
 			float subValue3 = deviceValueTable.GetDeviceValueData(device.SubOption3ID).Coefficient;
 			if (subValue3 != 0)
 			{
