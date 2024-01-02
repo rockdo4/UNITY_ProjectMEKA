@@ -19,7 +19,7 @@ public class CharacterPanelManager : MonoBehaviour
 
 	private Vector3 characterInfoPos;
 
-	private void Awake()
+	private void Start()
 	{
 		dict = DataTableMgr.GetTable<CharacterTable>();
 		var stringTable = StageDataManager.Instance.stringTable;
@@ -37,10 +37,18 @@ public class CharacterPanelManager : MonoBehaviour
 				continue;
 			}
 
+
 			var card = Instantiate(characterCardPrefab, transform);
 			card.name = stringTable.GetString(characterInfo.CharacterNameStringID);
-			card.GetComponent<Image>().sprite = Resources.Load<Sprite>(characterInfo.PortraitPath);
-			card.GetComponent<CardInfo>().ChangeCardId(characterInfo.CharacterID);
+
+			var port = card.GetComponent<SetPortrait>();
+			if(port != null)
+			{
+                port.SetCharacterInfo(character.Value);
+            }
+
+			//card.GetComponent<Image>().sprite = Resources.Load<Sprite>(characterInfo.PortraitPath);
+			//card.GetComponent<CardInfo>().ChangeCardId(characterInfo.CharacterID);
 
 			var button = card.GetComponent<Button>();
 
@@ -70,23 +78,24 @@ public class CharacterPanelManager : MonoBehaviour
 
 	public void CharacterUnlockUpdate()
 	{
-		var count = transform.childCount;
+		var list = GetComponentsInChildren<SetPortrait>();
 
-		for(int i = 0; i < count; i++)
+		foreach(var item in list)
 		{
-			var card = transform.GetChild(i); 
-			var info = card.GetComponent<CardInfo>();
-			var id = info.GetCardID();
+            var id = item.GetCardID();
+            var info = dict.GetCharacterData(id);
 
-			if(CharacterManager.Instance.m_CharacterStorage[id].IsUnlock)
+			if (CharacterManager.Instance.m_CharacterStorage[id].IsUnlock)
 			{
-				card.GetComponent<Button>().interactable = true;
-			}
-			else
+                item.GetComponent<Button>().interactable = true;
+				item.SetUnLock();
+            }
+            else
 			{
-				card.GetComponent<Button>().interactable = false;
-			}
-		}
+                item.GetComponent<Button>().interactable = false;
+				item.SetLock();
+            }
+        }
 	}
 
 	public void PickUpCharacter(int ID)

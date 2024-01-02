@@ -733,6 +733,7 @@ GameObject:
   - component: {fileID: 3334858149559809493}
   - component: {fileID: 6931666545015319985}
   - component: {fileID: 6165919921327719034}
+  - component: {fileID: 6448403866371699251}
   m_Layer: 5
   m_Name: PortraitPrefab
   m_TagString: Untagged
@@ -848,6 +849,28 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6448403866371699251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7047707996244857454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f188f300ed7157449acbf711afc5dde4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterImage: {fileID: 5597010893726617603}
+  characterName: {fileID: 5344684643693143533}
+  characterLevel: {fileID: 5474791358847094026}
+  characterClass: {fileID: 5333951548805113386}
+  characterProperty: {fileID: 2463384973901897948}
+  characterSynchro:
+  - {fileID: 2415886194193711925}
+  - {fileID: 2715294048729334363}
+  - {fileID: 3581326890251333991}
+  - {fileID: 2808855176150879995}
 --- !u!1 &8156720703291617457
 GameObject:
   m_ObjectHideFlags: 0
