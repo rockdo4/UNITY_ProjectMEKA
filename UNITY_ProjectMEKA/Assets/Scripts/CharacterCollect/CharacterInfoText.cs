@@ -37,6 +37,7 @@ public class CharacterInfoText : MonoBehaviour
 	public TextMeshProUGUI level;
 	public TextMeshProUGUI expPercent;
 	public Image expBar;
+	public Image[] grade; 
 
 	[Header("Etc")]
 	public Sprite defaultSprite;
