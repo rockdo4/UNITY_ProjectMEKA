@@ -109,7 +109,25 @@ public class CharacterInfoText : MonoBehaviour
 		UpdateStatus();
 		UpdateDevice();
 		UpdateExp();
-    }
+		UpdateGrade();
+	}
+
+	public void UpdateGrade()
+	{
+		var characterGrade = character.CharacterGrade;
+
+		for(int i = 0; i < grade.Length; i++)
+		{
+			if (i + 3 == characterGrade)
+			{
+				grade[i].gameObject.SetActive(true);
+			}
+			else
+			{
+				grade[i].gameObject.SetActive(false);
+			}
+		}
+	}
 
 	public void UpdateExp()
 	{
@@ -165,9 +183,6 @@ public class CharacterInfoText : MonoBehaviour
 		HP.SetText(info.HP.ToString());
 		Speed.SetText(info.ATKSpd);
 		Armor.SetText(info.Armor.ToString());
-
-		Debug.Log(info.CriChance);
-		Debug.Log(info.CriDMG);
 
 		CriticalHit.SetText($"{info.CriChance}%");
 		CriticalDamage.SetText($"{info.CriDMG}%");

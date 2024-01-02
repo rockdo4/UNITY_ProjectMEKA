@@ -37,4 +37,9 @@ public class DeviceInfo : MonoBehaviour
 	{
 		text.SetText(device.Name);
 	}
+
+	public Device GetDevice()
+	{
+		return device;
+	}
 }
