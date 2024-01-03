@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using static Defines;
 
 public class IngameStageUIManager : MonoBehaviour
@@ -14,19 +15,22 @@ public class IngameStageUIManager : MonoBehaviour
     private StageManager stageManager;
 
     // panels
+    [SerializeField, Header("패널")]
     public CharacterInfo characterInfoPanel;
     public GameObject waveCountPanel;
     public GameObject monsterCountPanel;
-    public GameObject ResultPanel;
+    public GameObject resultPanelWin;
+    public GameObject resultPanelLose;
     public GameObject itemParentPanel;
-    public GameObject starsParentPanel;
 
     // character info
+    [SerializeField, Header("캐릭터 인포")]
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI characterOccupation;
     public TextMeshProUGUI characterDescription;
 
     // cost & wave & monster & life & time infos
+    [SerializeField, Header("기본 UI")]
     public Slider timeProgressSlider;
     public TextMeshProUGUI costText;
     public TextMeshProUGUI leftWaveHeaderText;
@@ -38,15 +42,22 @@ public class IngameStageUIManager : MonoBehaviour
     public Image costSlider;
 
     // Result info
+    [SerializeField, Header("결과창")]
     public TextMeshProUGUI stageInfoText;
-    public TextMeshProUGUI missionClearText;
-    public GameObject starPrefab;
+    public GameObject[] stars = new GameObject[3];
     public GameObject itemPrefab;
     public Image itemImage;
     public TextMeshProUGUI itemCount;
     public TextMeshProUGUI itemName;
+    public Button backButtonWin;
+    public Button backButtonLose;
+    public Button replayButton;
+    //private UnityEvent BackWin;
+    //private UnityEvent BackLose;
+    //private UnityEvent Replay;
 
     // joystick
+    [SerializeField, Header("조이스틱")]
     public ArrangeJoystick joystick;
     private ArrangeJoystickHandler joystickHandler;
     public TextMeshProUGUI cancelText;
@@ -56,6 +67,7 @@ public class IngameStageUIManager : MonoBehaviour
     private Button collectButton;
     private Button skillButton;
     //임형준 추가 스킬 쿨타임바
+    [SerializeField, Header("스킬")]
     private Image skillTimerBar;
     private List<GameObject> bgs = new List<GameObject>();
 	// skill
@@ -89,6 +101,9 @@ public class IngameStageUIManager : MonoBehaviour
         bgs = joystick.bgs;
         isInfoWindowOn = true;
         timeProgressSlider.value = 1f;
+        backButtonWin.onClick.AddListener(CloseScene);
+        backButtonLose.onClick.AddListener(CloseScene);
+        replayButton.onClick.AddListener(ReplayEvent);
     }
 
     private void Awake()
@@ -127,10 +142,8 @@ public class IngameStageUIManager : MonoBehaviour
             return;
         }
 
-        CloseResultWindow();
+        //CloseResultWindow();
         CloseCharacterInfoWindow();
-        
-        
     }
 
     public void UpdateWindowMode()
@@ -257,13 +270,13 @@ public class IngameStageUIManager : MonoBehaviour
                 ChangeAttackableTileMesh(false);
                 break;
             case WindowMode.Win:
-                ResultPanel.SetActive(true);
+                resultPanelWin.SetActive(true);
                 characterInfoPanel.gameObject.SetActive(false);
                 WinWindowSet();
                 Time.timeScale = 0f;
                 break;
             case WindowMode.Lose:
-                ResultPanel.SetActive(true);
+                resultPanelLose.SetActive(true);
                 characterInfoPanel.gameObject.SetActive(false);
                 LoseWindowSet();
                 Time.timeScale = 0f;
@@ -331,6 +344,13 @@ public class IngameStageUIManager : MonoBehaviour
         }
 
         SceneManager.LoadScene("MainScene");
+    }
+
+    public void ReplayEvent()
+    {
+        Time.timeScale = 1f;
+        var currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
     }
 
     public void ChangeCharacterInfo()
@@ -409,19 +429,26 @@ public class IngameStageUIManager : MonoBehaviour
 
     public void LoseWindowSet()
     {
-        var missionFailText = StageDataManager.Instance.stringTable.GetString("missionFail");
-        itemParentPanel.SetActive(false);
-        missionClearText.SetText(missionFailText);
-        missionClearText.color = Color.red;
+        //var missionFailText = StageDataManager.Instance.stringTable.GetString("missionFail");
+        //itemParentPanel.SetActive(false);
     }
 
     public void WinWindowSet()
     {
         var starNumber = stageManager.tempClearCount;
+        var tempNumber = 0;
 
-        for(int i = 0; i < starNumber; ++i)
+        for(int i = 0; i < stars.Length; ++i)
         {
-            Instantiate(starPrefab, starsParentPanel.transform);
+            tempNumber++;
+            if(tempNumber <= starNumber)
+            {
+                stars[i].SetActive(true);
+            }
+            else
+            {
+                stars[i].SetActive(false);
+            }
         }
     }
 
@@ -687,6 +714,30 @@ public class IngameStageUIManager : MonoBehaviour
                         itemGo.SetActive(false);
                     }
                     break;
+                case 9:
+                    if (rewardData.Item9ID != 0)
+                    {
+                        id = rewardData.Item9ID;
+                        count = rewardData.Item9Count;
+                        itemInfo.itemCountText.SetText(rewardData.Item9Count.ToString());
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
+                case 10:
+                    if (rewardData.Item10ID != 0)
+                    {
+                        id = rewardData.Item10ID;
+                        count = rewardData.Item10Count;
+                        itemInfo.itemCountText.SetText(rewardData.Item10Count.ToString());
+                    }
+                    else
+                    {
+                        itemGo.SetActive(false);
+                    }
+                    break;
             }
             SetItemInfo(id, itemInfo);
             stageManager.rewardList.Add((id, count));
@@ -699,9 +750,8 @@ public class IngameStageUIManager : MonoBehaviour
         var chapter = stageData.ChapterNumber;
         var number = stageData.StageNumber;
         var name = StageDataManager.Instance.stringTable.GetString(stageData.StageNameStringID);
-        stageInfoText.SetText($"{chapter} - {number} {name}");
+        stageInfoText.SetText($"{chapter} - {number}\n{name}");
         var clearText = StageDataManager.Instance.stringTable.GetString("missionClear");
-        missionClearText.SetText(clearText);
     }
 
     public void SetItemInfo(int itemID, RewardItemInfo itemInfo)
