@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System;
 using static Defines;
 using System.Collections;
+using Michsky.MUIP;
 
 public class StageUIManager : MonoBehaviour
 {
@@ -17,7 +18,8 @@ public class StageUIManager : MonoBehaviour
     public Button storyStageButton;
     public Button assignmentStageButton;
     public Button challengeStageButton;
-    public Button[] deviceButtons = new Button[2];
+    public Button deviceCoreButton;
+    public Button deviceEngineButton;
     public Button[] synchroButtons;
     public Button skillUpdateButton;
     public GameObject gachaUnLockPanel;
@@ -123,13 +125,17 @@ public class StageUIManager : MonoBehaviour
 
     public void SetSystemButtonsByUnlock()
     {
-        foreach(var deviceButton in deviceButtons)
+        deviceCoreButton.onClick.AddListener(() =>
         {
-            deviceButton.onClick.AddListener(() =>
-            {
-                SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
-            });
-        }
+			SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
+			devicePanel.ShowCore();
+		});
+
+        deviceEngineButton.onClick.AddListener(() =>
+        {
+            SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
+            devicePanel.ShowEngine();
+		});
 
         foreach(var sunchroButton in synchroButtons)
         {
