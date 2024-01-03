@@ -125,17 +125,22 @@ public class StageUIManager : MonoBehaviour
 
     public void SetSystemButtonsByUnlock()
     {
-        deviceCoreButton.onClick.AddListener(() =>
+        if(deviceCoreButton != null)
         {
-			SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
-			devicePanel.ShowCore();
-		});
-
-        deviceEngineButton.onClick.AddListener(() =>
+            deviceCoreButton.onClick.AddListener(() =>
+            {
+                SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
+                devicePanel.ShowCore();
+            });
+        }
+        if(deviceEngineButton != null)
         {
-            SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
-            devicePanel.ShowEngine();
-		});
+            deviceEngineButton.onClick.AddListener(() =>
+            {
+                SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
+                devicePanel.ShowEngine();
+            });
+        }
 
         foreach(var sunchroButton in synchroButtons)
         {
