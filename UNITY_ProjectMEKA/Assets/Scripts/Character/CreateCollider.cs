@@ -135,8 +135,10 @@ public class CreateCollider : MonoBehaviour
         }
         player.state.ConvertTo2DArray();
 
-        Vector3 forward = -transform.parent.forward;
-        Vector3 right = transform.parent.right;
+        //Vector3 forward = -transform.parent.forward;
+        //Vector3 right = transform.parent.right;
+        Vector3 forward = transform.parent.right;
+        Vector3 right = -transform.parent.forward;
         Vector3 parentScale = transform.parent.localScale;
 
         int characterRow = 0;

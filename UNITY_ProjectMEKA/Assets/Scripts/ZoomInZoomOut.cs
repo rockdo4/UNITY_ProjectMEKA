@@ -50,6 +50,18 @@ public class ZoomInZoomOut : MonoBehaviour
                     cameraComponent.fieldOfView = Mathf.Clamp(cameraComponent.fieldOfView, minZoomDistance, maxZoomDistance);
                 }
             }
+            //else 
+            //{
+                
+            //    float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+
+            //    float currentFOV = cameraComponent.fieldOfView;
+
+            //    currentFOV -= scrollInput * orthoZoomSpeed;
+            //    currentFOV = Mathf.Clamp(currentFOV, minZoomDistance, maxZoomDistance);
+
+            //    cameraComponent.fieldOfView = currentFOV;
+            //}
         }
     }
     
