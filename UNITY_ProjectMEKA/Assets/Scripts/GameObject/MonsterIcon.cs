@@ -2,15 +2,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MonsterIcon : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class MonsterIcon : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     public int MonsterLevelId;
     public StageUIManager stageUIManager;
     public GameObject monsterInfoPopUpWindow;
     public StringTable stringTable;
     private MonsterLevelData monsterLevelData;
+	private bool isDragging = false;
 
-    public void Init(StageUIManager stageUIManager, int id, StringTable stringTable)
+	public void Init(StageUIManager stageUIManager, int id, StringTable stringTable)
     {
         this.stageUIManager = stageUIManager;
         this.stringTable = stringTable;
@@ -19,7 +20,16 @@ public class MonsterIcon : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         monsterLevelData = DataTableMgr.GetTable<MonsterLevelTable>().GetMonsterData(MonsterLevelId);
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+	private void Update()
+	{
+		if(monsterInfoPopUpWindow.activeSelf)
+        {
+            var pos = Input.GetTouch(0).position;
+			monsterInfoPopUpWindow.transform.position = new Vector3(pos.x, pos.y, monsterInfoPopUpWindow.transform.position.z);
+		}
+	}
+
+	public void OnPointerDown(PointerEventData eventData)
     {
         if (!monsterInfoPopUpWindow.activeSelf)
         {
@@ -31,16 +41,23 @@ public class MonsterIcon : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         var rect = GetComponent<RectTransform>().rect;
         var iconPos = transform.position;
 
-        iconPos.x += rect.width * 2f;
-        iconPos.y += rect.height * 4f;
+        iconPos.x += rect.width * 1.1f;
+        iconPos.y += rect.height * 2.2f;
 
         monsterInfoPopUpWindow.transform.position = iconPos;
-    }
+	}
 
-    public void OnPointerUp(PointerEventData eventData)
+	public void OnDrag(PointerEventData eventData)
+	{
+        if(Utils.IsButtonLayer("UIButton"))
+        {
+            monsterInfoPopUpWindow.SetActive(false);
+        }
+	}
+	public void OnPointerUp(PointerEventData eventData)
     {
-        // ÆË¾÷Ã¢ ¾×Æ¼ºê false
-        monsterInfoPopUpWindow.SetActive(false);
+		// ¸¶¿ì½º¸¦ ¶¿ ¶§¸¸ ÆË¾÷Ã¢À» ´ÝÀ½
+		monsterInfoPopUpWindow.SetActive(false);
     }
 
     public void SetMonsterInfo()
@@ -60,4 +77,5 @@ public class MonsterIcon : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         monsterInfoPopUpWindow.transform.GetChild(2).GetComponent<TextMeshProUGUI>().SetText(hpText);
         monsterInfoPopUpWindow.transform.GetChild(3).GetComponent<TextMeshProUGUI>().SetText(shieldText);
     }
+
 }
