@@ -15,12 +15,22 @@ public class DrawLine : MonoBehaviour
     {
         Debug.Log("DrawLine Start");
         lineRenderer = GetComponent<LineRenderer>();
-        StartCoroutine(DrawLineSmoothly());
+        StartCoroutine(DrawLineOverTime());
+    }
+
+    IEnumerator DrawLineOverTime()
+    {
+        for (int i = 0; i < points.Length; i++)
+        {
+            lineRenderer.positionCount = i + 1;
+            lineRenderer.SetPosition(i, points[i].position);
+            yield return new WaitForSeconds(1f / drawSpeed);
+        }
     }
 
     IEnumerator DrawLineSmoothly()
     {
-        Vector3 startPosition = points[1].transform.parent.transform.InverseTransformPoint(points[0].parent.TransformPoint(Vector3.zero));
+        Vector3 startPosition = points[0].position; //points[1].transform.parent.transform.InverseTransformPoint(points[0].parent.TransformPoint(Vector3.zero));
 
         for (int i = 1; i < points.Length; i++)
         {
