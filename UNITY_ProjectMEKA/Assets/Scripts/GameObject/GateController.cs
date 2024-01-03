@@ -57,6 +57,8 @@ public class GateController : MonoBehaviour
 
     [SerializeField, Header("웨이브 정보 세팅")]
     public List<WaveInfo> waveInfos;
+    public DrawLine lineRenderer;
+    public GameObject enemyPath;
 
     private StageManager stageManager;
 
@@ -69,7 +71,6 @@ public class GateController : MonoBehaviour
     protected Vector3 spawnInitPos;
 
     protected Vector3 enemyPathInitPos;
-    protected GameObject enemyPath;
     protected Rigidbody enemyPathRb;
     protected Vector3 targetPos = Vector3.zero;
     protected Vector3 enemyPathDirection;
@@ -89,6 +90,15 @@ public class GateController : MonoBehaviour
             if(wave.waypointGo != null)
             {
                 var waypointCount = wave.waypointGo.transform.childCount;
+                if(lineRenderer.points.Length == 0)
+                {
+                    lineRenderer.points = new Transform[waypointCount + 2];
+                    lineRenderer.points[0] = transform;
+                    for(int i = 0; i < waypointCount; ++i)
+                    {
+                        lineRenderer.points[i + 1] = wave.waypointGo.transform.GetChild(i).transform;
+                    }
+                }
                 wave.waypoints = new Transform[waypointCount + 1];
                 for (int i = 0; i < waypointCount; ++i)
                 {
@@ -97,7 +107,6 @@ public class GateController : MonoBehaviour
             }
         }
 
-        enemyPath = transform.GetChild(1).gameObject;
         enemyPathRb = enemyPath.GetComponent<Rigidbody>();
         enemyPathInitPos = enemyPath.transform.localPosition;
         if (enemyPath == null)
@@ -140,11 +149,14 @@ public class GateController : MonoBehaviour
                     {
                         waveInfo.waypoints = new Transform[1];
                         waveInfo.waypoints[0] = waveInfo.house;
+                        lineRenderer.points[1] = waveInfo.house;
                     }
                     else
                     {
                         var count = waveInfo.waypoints.Length - 1;
+                        var pointCount = lineRenderer.points.Length - 1;
                         waveInfo.waypoints[count] = waveInfo.house;
+                        lineRenderer.points[pointCount] = waveInfo.house;
                     }
                 }
             }
@@ -155,7 +167,8 @@ public class GateController : MonoBehaviour
         enemyPathRb.transform.LookAt(targetPos);
         pathDuration = waveInfos[currentWave].pathDuration;
         pathDone = false;
-
+        lineRenderer.drawSpeed = pathSpeed;
+        Debug.Log("GateController Awake");
     }
 
     private void Start()
