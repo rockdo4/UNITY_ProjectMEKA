@@ -15,7 +15,7 @@ public class DevicePanel : MonoBehaviour
 {
 	private GachaSystem<int> coreOption;
 	private GachaSystem<int> engineOption;
-	private GachaSystem<int> subOption;
+	public GachaSystem<int> subOption;
 
 	private DeviceOptionTable deviceOptionTable;
 	private DeviceValueTable deviceValueTable;
@@ -34,6 +34,7 @@ public class DevicePanel : MonoBehaviour
 	public TextMeshProUGUI characterName;
 	public Button coreItem;
 	public Button engineItem;
+	public Image deviceImage;
 
 
 	[Header("Device Info")]
@@ -56,10 +57,12 @@ public class DevicePanel : MonoBehaviour
 	private Device selectedDevice;
 
 	private Character currCharacter;
+	private int selectedPartType;
 
 
 	private void Awake()
 	{
+		selectedPartType = 0;
 		coreOption = new GachaSystem<int>();
 		engineOption = new GachaSystem<int>();
 		subOption = new GachaSystem<int>();
@@ -76,6 +79,9 @@ public class DevicePanel : MonoBehaviour
 			characterInfoPanel.GetComponent<CharacterInfoText>().UpdateCharacter();
             gameObject.SetActive(false);
         });
+
+		coreItem.onClick.AddListener(ShowCore);
+		engineItem.onClick.AddListener(ShowEngine);
 	}
 
 	private void Start()
@@ -123,6 +129,50 @@ public class DevicePanel : MonoBehaviour
 		GameManager.Instance.SaveExecution();
 	}
 
+	public void ShowCore()
+	{
+		var items = scrollContent.GetComponentsInChildren<DeviceInfo>();
+
+		foreach (var item in items)
+		{
+			var device = item.GetDevice();
+			if (device == null) continue;
+
+			if (device.PartType == (int)DevicePartType.Core)
+			{
+				item.gameObject.SetActive(true);
+			}
+			else if(device.PartType == (int)DevicePartType.Engine)
+			{
+				item.gameObject.SetActive(false);
+			}
+		}
+
+		selectedPartType = 1;
+	}
+
+	public void ShowEngine()
+	{
+		var items = scrollContent.GetComponentsInChildren<DeviceInfo>();
+
+		foreach (var item in items)
+		{
+			var device = item.GetDevice();
+			if (device == null) continue;
+
+			if (device.PartType == (int)DevicePartType.Core)
+			{
+				item.gameObject.SetActive(false);
+			}
+			else if (device.PartType == (int)DevicePartType.Engine)
+			{
+				item.gameObject.SetActive(true);
+			}
+		}
+
+		selectedPartType = 2;
+	}
+
 	public void SetCharacter(Character character)
 	{
 		if(character == null)
@@ -133,7 +183,6 @@ public class DevicePanel : MonoBehaviour
 
 		deviceDict = DeviceInventoryManager.Instance.m_DeviceStorage;
 		currCharacter = character;
-		characterName.SetText(currCharacter.Name);
 
 		UpdateEquipedDeivce();
 		UpdateDeviceCard();
@@ -141,47 +190,43 @@ public class DevicePanel : MonoBehaviour
 
 	public void UpdateEquipedDeivce()
 	{
-		if(currCharacter.DeviceCoreID != 0)
-		{
-			coreItem.GetComponentInChildren<TextMeshProUGUI>().SetText(deviceDict[currCharacter.DeviceCoreID].Name);
-			coreItem.onClick.RemoveAllListeners();
-			coreItem.onClick.AddListener(() =>
-			{
-				SetDeviceInfoText(deviceDict[currCharacter.DeviceCoreID]);
-				selectedDevice = deviceDict[currCharacter.DeviceCoreID];
-			});
-		}
-		else
-		{
-			coreItem.GetComponentInChildren<TextMeshProUGUI>().SetText("비어있음");
-			coreItem.onClick.RemoveAllListeners();
-			coreItem.onClick.AddListener(() =>
-			{
-				SetDeviceInfoText(null);
-				selectedDevice = null;
-			});
-		}
+		//if(currCharacter.DeviceCoreID != 0)
+		//{
+		//	coreItem.onClick.RemoveAllListeners();
+		//	coreItem.onClick.AddListener(() =>
+		//	{
+		//		SetDeviceInfoText(deviceDict[currCharacter.DeviceCoreID]);
+		//		selectedDevice = deviceDict[currCharacter.DeviceCoreID];
+		//	});
+		//}
+		//else
+		//{			
+		//	coreItem.onClick.RemoveAllListeners();
+		//	coreItem.onClick.AddListener(() =>
+		//	{
+		//		SetDeviceInfoText(null);
+		//		selectedDevice = null;
+		//	});
+		//}
 
-		if(currCharacter.DeviceEngineID != 0)
-		{
-			engineItem.GetComponentInChildren<TextMeshProUGUI>().SetText(deviceDict[currCharacter.DeviceEngineID].Name);
-			engineItem.onClick.RemoveAllListeners();
-			engineItem.onClick.AddListener(() =>
-			{
-				SetDeviceInfoText(deviceDict[currCharacter.DeviceEngineID]);
-				selectedDevice = deviceDict[currCharacter.DeviceEngineID];
-			});
-		}
-		else
-		{
-			engineItem.GetComponentInChildren<TextMeshProUGUI>().SetText("비어있음");
-			engineItem.onClick.RemoveAllListeners();
-			engineItem.onClick.AddListener(() =>
-			{
-				SetDeviceInfoText(null);
-				selectedDevice = null;
-			});
-		}
+		//if(currCharacter.DeviceEngineID != 0)
+		//{
+		//	engineItem.onClick.RemoveAllListeners();
+		//	engineItem.onClick.AddListener(() =>
+		//	{
+		//		SetDeviceInfoText(deviceDict[currCharacter.DeviceEngineID]);
+		//		selectedDevice = deviceDict[currCharacter.DeviceEngineID];
+		//	});
+		//}
+		//else
+		//{
+		//	engineItem.onClick.RemoveAllListeners();
+		//	engineItem.onClick.AddListener(() =>
+		//	{
+		//		SetDeviceInfoText(null);
+		//		selectedDevice = null;
+		//	});
+		//}
 	}
 
 	public void CreateDevice(int PartType)
@@ -208,8 +253,18 @@ public class DevicePanel : MonoBehaviour
 		int.TryParse(sb.ToString(), out int id);
 
 		device.InstanceID = id;
-		device.Name = "아이템";
-		device.Description = "장비템임";
+
+		if(PartType == 1)
+		{
+			device.Name = "디바이스 코어";
+			device.Description = "디바이스 메카의 코어에 사용하는 부품이다.";
+		}
+		else if(PartType == 2)
+		{
+			device.Name = "디바이스 엔진";
+			device.Description = "디바이스 메카의 엔진에 사용하는 부품이다.";
+		}
+		
 		device.CurrLevel = 1;
 		device.MaxLevel = 10;
 		device.PartType = PartType;
@@ -303,15 +358,31 @@ public class DevicePanel : MonoBehaviour
 			item.name = device.Value.Name;
 			item.transform.SetParent(scrollContent, false);
 			item.gameObject.name = count++.ToString();
+			item.GetComponent<DeviceInfo>().SetDevice(device.Value);
 			item.transform.SetAsLastSibling();
 
-			if(device.Value.TargetCharacterID != 0)
+			if (device.Value.TargetCharacterID != 0)
 			{
 				item.SetActive(false);
 			}
 			else
 			{
 				item.SetActive(true);
+
+				if (selectedPartType == 1)
+				{
+					if (device.Value.PartType == 1)
+						item.SetActive(true);
+					else
+						item.SetActive(false);
+				}
+				else if (selectedPartType == 2)
+				{
+					if (device.Value.PartType == 2)
+						item.SetActive(true);
+					else
+						item.SetActive(false);
+				}
 			}
 		}
 	}
@@ -339,10 +410,8 @@ public class DevicePanel : MonoBehaviour
 			return;
 		}
 
-
 		deviceName.SetText(device.Name);
 		level.SetText(device.CurrLevel.ToString());
-		type.SetText(device.PartType.ToString());
 
 		mainOption.SetText(deviceOptionTable.GetDeviceOptionData(device.MainOptionID).Name);
 
@@ -402,6 +471,8 @@ public class DevicePanel : MonoBehaviour
 		}
 		else
 		{
+			subOption3.SetText(deviceOptionTable.GetDeviceOptionData(device.SubOption3ID).Name);
+
 			float subValue3 = deviceValueTable.GetDeviceValueData(device.SubOption3ID).Coefficient;
 			if (subValue3 != 0)
 			{

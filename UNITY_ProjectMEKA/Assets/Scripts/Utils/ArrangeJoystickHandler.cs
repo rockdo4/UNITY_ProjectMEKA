@@ -147,7 +147,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Up);
                 stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
-                characterInfoUIManager.ChangeAttackableTileMesh();
+                characterInfoUIManager.ChangeAttackableTileMesh(false);
             }
         }
         else if (go == directions[(int)Defines.RotationDirection.Right])
@@ -160,7 +160,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Right);
                 stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
-                characterInfoUIManager.ChangeAttackableTileMesh();
+                characterInfoUIManager.ChangeAttackableTileMesh(false);
             }
         }
         else if (go == directions[(int)Defines.RotationDirection.Down])
@@ -173,7 +173,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Down);
                 stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
-                characterInfoUIManager.ChangeAttackableTileMesh();
+                characterInfoUIManager.ChangeAttackableTileMesh(false);
             }
         }
         else
@@ -186,7 +186,7 @@ public class ArrangeJoystickHandler : MonoBehaviour, IPointerDownHandler, IDragH
             {
                 playerState.RotatePlayer(Defines.RotationDirection.Left);
                 stageManager.currentPlayer.AttackableTileSet(stageManager.currentPlayer.state.occupation);
-                characterInfoUIManager.ChangeAttackableTileMesh();
+                characterInfoUIManager.ChangeAttackableTileMesh(false);
             }
         }
 

@@ -39,7 +39,7 @@ public static class Debug
     {
         UnityEngine.Debug.Log(message);
     }
-
+    
     [System.Diagnostics.Conditional("ENABLE_DEBUG_LOG")]
     public static void Log(object message, UnityEngine.Object context)
     {

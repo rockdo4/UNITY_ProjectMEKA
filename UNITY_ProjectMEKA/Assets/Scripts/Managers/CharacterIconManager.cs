@@ -49,7 +49,6 @@ public class CharacterIconManager : MonoBehaviour
                 {
                     var data = CharacterManager.Instance.m_CharacterStorage[id];
                     var stringTable = StageDataManager.Instance.stringTable;
-                    //characterState.arrangeCost = data.ArrangementCost;
 
                     characterState.name = stringTable.GetString(characterData.CharacterNameStringID);
                     characterState.property = (Property)characterData.CharacterProperty;

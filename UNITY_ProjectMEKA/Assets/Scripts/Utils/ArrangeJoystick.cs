@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using static PlayerController;
 using static Defines;
+using System.Collections.Generic;
 
 public class ArrangeJoystick : MonoBehaviour
 {
@@ -13,10 +14,12 @@ public class ArrangeJoystick : MonoBehaviour
     public Image skillTimerBar;
     //public Button closeButton;
     public ArrangeJoystickHandler handler;
+    public List<GameObject> bgs = new List<GameObject>();
 
     private StageManager stageManager;
     private IngameStageUIManager characterInfoUIManager;
     private float yOffset = 1f;
+
 
     public UnityEvent ArrangeDone = new UnityEvent();
 
@@ -148,10 +151,12 @@ public class ArrangeJoystick : MonoBehaviour
         if (skillButton.gameObject.activeSelf)
         {
             skillButton.gameObject.SetActive(false);
+            
         }
         if(skillTimerBar.gameObject.activeSelf)
         {
             skillTimerBar.gameObject.SetActive(false);
+            
         }
 
         var skillType = stageManager.currentPlayer.GetComponent<SkillBase>().skillType;

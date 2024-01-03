@@ -51,13 +51,11 @@ public class CameraMove : MonoBehaviour
 
             if (IsDragging)
             {
-                //Camera.main.transform.position = resetCamera - difference;
                 Vector3 targetPosition = resetCamera - difference;
                 Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, Time.deltaTime * smoothFactor);
 
             }
 
-            // 추가: 두 번째 손가락이 화면을 터치하면 카메라 위치 리셋
             if (Input.touchCount == 2 && Input.GetTouch(1).phase == TouchPhase.Began)
             {
                 Camera.main.transform.position = resetCamera;
