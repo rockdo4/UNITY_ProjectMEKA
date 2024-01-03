@@ -16,6 +16,7 @@ public class CameraManager : MonoBehaviour
     private Transform target;
     private float threshold = 0.1f;
     private CameraMove camMove;
+    public float initZoom;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class CameraManager : MonoBehaviour
         initPos = transform.position;
         initRotation = transform.rotation;
         camMove = GetComponent<CameraMove>();
+        initZoom = Camera.main.fieldOfView;
     }
 
     private void Update()
@@ -37,39 +39,22 @@ public class CameraManager : MonoBehaviour
                 }
 
                 target = stageManager.currentPlayer.transform;
-                //// 각도 러프
-                //Quaternion targetRotation = Quaternion.LookRotation(target.position - transform.position);
-                //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * 2f);
-
-                //// 무빙 러프
-                //Vector3 directionToTarget = (target.position - transform.position).normalized;
-                //var targetPosition = target.position - directionToTarget * minDistance;
-
-                //if (Vector3.Distance(transform.position, target.position) > minDistance)
-                //{
-                //    transform.position = Vector3.Lerp(transform.position, targetPosition, zoomSpeed * Time.deltaTime * 2f);
-                //}
-
-                // 카메라의 고정된 위치와 각도를 설정
+                
                 Vector3 cameraOffset = Quaternion.AngleAxis(-10, Vector3.right) * Vector3.back;
                 cameraOffset *= minDistance;
                 Vector3 cameraPosition = target.position + cameraOffset + Vector3.up * minDistance;
                 Quaternion targetRotation = Quaternion.LookRotation(target.position - cameraPosition);
 
-                // 각도 러프
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * 2f);
 
-                // 무빙 러프
                 transform.position = Vector3.Lerp(transform.position, cameraPosition, zoomSpeed * Time.deltaTime * 2f);
 
-
+                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, initZoom, 5 * Time.deltaTime * 2f); //initZoom;
             }
             else if (stageManager.ingameStageUIManager.windowMode == WindowMode.Skill)
             {
-                // 각도 러프
                 transform.rotation = Quaternion.Lerp(transform.rotation, initRotation, rotationSpeed * Time.deltaTime * 4f);
 
-                // 무빙 러프
                 transform.position = Vector3.Lerp(transform.position, initPos, zoomSpeed * Time.deltaTime * 4f);
 
                 if (Quaternion.Angle(transform.rotation, initRotation) < threshold && Vector3.Distance(transform.position, initPos) < threshold)
@@ -79,11 +64,11 @@ public class CameraManager : MonoBehaviour
             }
             else
             {
-                // 각도 러프
                 transform.rotation = Quaternion.Lerp(transform.rotation, initRotation, rotationSpeed * Time.deltaTime * 2f);
 
-                // 무빙 러프
                 transform.position = Vector3.Lerp(transform.position, initPos, zoomSpeed * Time.deltaTime * 2f);
+
+                //Camera.main.fieldOfView = initZoom;
             }
         }
     }
