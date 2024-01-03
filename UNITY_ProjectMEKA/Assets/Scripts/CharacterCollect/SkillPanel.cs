@@ -16,6 +16,7 @@ public class SkillPanel : MonoBehaviour
 
 	[Header("InfoPanel")]
 	public CharacterInfoText infoPanel;
+	public Transform scrollView;
 
     private Character currCharacter;
 
@@ -115,6 +116,13 @@ public class SkillPanel : MonoBehaviour
 		Debug.Log(path);
 
         skillIconImage.sprite = Resources.Load<Sprite>(path);
+
+		var contents = scrollView.GetComponentsInChildren<SkillScript>();
+
+		for(int i=0; i<contents.Length; i++)
+		{
+			contents[i].SetSkill(currCharacter.SkillID, i + 1);
+		}
 	}
 
 	private void UpdateAfterSetCharacter()

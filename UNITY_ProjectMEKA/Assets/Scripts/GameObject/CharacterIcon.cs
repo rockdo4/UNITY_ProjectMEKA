@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using static Defines;
 using TMPro;
 using static PlayerController;
+using Unity.VisualScripting;
 
 public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
@@ -66,7 +67,8 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
             Property.Prime => Resources.Load<Sprite>("CharacterIcon/PrimeIcon"),
             Property.Grieve => Resources.Load<Sprite>("CharacterIcon/GrieveIcon"),
             Property.Edila => Resources.Load<Sprite>("CharacterIcon/EdilaIcon"),
-        };
+            Property.None => Resources.Load<Sprite>("CharacterIcon/NoneIcon"),
+        }; 
 
         arrangeCoolTime = playerController.state.arrangeCoolTime;
         timer = arrangeCoolTime;

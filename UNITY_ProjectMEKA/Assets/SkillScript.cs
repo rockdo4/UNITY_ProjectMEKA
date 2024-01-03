@@ -13,8 +13,17 @@ public class SkillScript : MonoBehaviour
     {
         skillInfoTable = DataTableMgr.GetTable<SkillInfoTable>();
     }
-    public void SetSkill(int id)
+    public void SetSkill(int id, int level)
     {
-        
+        if (skillInfoTable == null)
+            skillInfoTable = DataTableMgr.GetTable<SkillInfoTable>();
+
+        var stringTable = DataTableMgr.GetTable<StringTable>();
+        var datas = skillInfoTable.GetSkillDatas(id);
+
+        var levelID = datas[level - 1].SkillLevelID;
+
+        skillLevel.SetText(level.ToString());
+        skillDescription.SetText(stringTable.GetString($"{levelID}_skillInfo"));
     }
 }

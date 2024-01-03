@@ -357,6 +357,7 @@ GameObject:
   - component: {fileID: 1422042522670569059}
   - component: {fileID: 2380248038563438315}
   - component: {fileID: 3227563814209319748}
+  - component: {fileID: 231465055770624242}
   m_Layer: 5
   m_Name: SkillDescriptionEachLevel
   m_TagString: Untagged
@@ -371,7 +372,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7572648575892179740}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -437,3 +438,17 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &231465055770624242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7572648575892179740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10fdf49b571fe7b4db4b2f9839cf7e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillLevel: {fileID: 4252593133216529766}
+  skillDescription: {fileID: 7790631117189243913}
