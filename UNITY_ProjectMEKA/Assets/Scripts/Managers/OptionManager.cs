@@ -43,10 +43,14 @@ public class OptionManager : MonoBehaviour
 
     private string buttonLayerName;
 
+    public StageUIManager stageUIManager;
+
     private void Awake()
     {
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
+   
         ingameUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
+
         buttonLayerName = LayerMask.LayerToName(gameObject.layer);
         optionButton = GetComponent<Button>();
         optionPanel = transform.GetChild(0).gameObject;
