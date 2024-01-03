@@ -13,6 +13,9 @@ public class StageButton : MonoBehaviour
     public TextMeshProUGUI stageIndexText;
     public TextMeshProUGUI rewardGuideText;
 
+    public Sprite clearOn;
+    public Sprite clearOff;
+
     private Button stageButton;
 
     private void Awake()
