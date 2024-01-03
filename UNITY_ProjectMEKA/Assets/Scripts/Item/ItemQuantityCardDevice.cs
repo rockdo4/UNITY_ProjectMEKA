@@ -66,7 +66,6 @@ public class ItemQuantityCardDevice : MonoBehaviour
             selectedQuantity--;
 		}
 
-
 		SetText();
 	}
 

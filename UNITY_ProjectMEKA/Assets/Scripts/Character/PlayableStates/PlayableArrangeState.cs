@@ -38,6 +38,8 @@ public class PlayableArrangeState : PlayableBaseState
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
         playerCtrl.firstLookPos = playerCtrl.transform;
         SoundManager.instance.PlayerSFXAudio("CharacterPut");
+
+        
     }
 
     public override void Update()
