@@ -276,17 +276,23 @@ public class StageUIManager : MonoBehaviour
 
             // clear score
             var count = stage.Value.clearScore;
-            for(int i = 0; i < 3; ++i)
-            {
-                if(count > i)
-                {
-                    stageButtonGo.transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
-                }
-                else
-                {
-                    stageButtonGo.transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
-                }
-            }
+
+            if(count >= 1)
+				stageButtonGo.GetComponent<Image>().sprite = stageButtonScript.clearOn;
+			else
+				stageButtonGo.GetComponent<Image>().sprite = stageButtonScript.clearOff;
+
+            //for (int i = 0; i < 3; ++i)
+            //         {
+            //             if (count > i)
+            //             {
+            //                 stageButtonGo.transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
+            //             }
+            //             else
+            //             {
+            //                 stageButtonGo.transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+            //             }
+            //         }
 
             if (!stage.Value.isUnlocked)
             {
@@ -372,7 +378,7 @@ public class StageUIManager : MonoBehaviour
     public void SetStageInfoPanel(StringTable stringTable, StageData stageTable)
     {
         // 버튼들 텍스트
-        stageButtonText.SetText(stringTable.GetString("stage"));
+        //stageButtonText.SetText(stringTable.GetString("stage"));
         monsterButtonText.SetText(stringTable.GetString("monsterInfo"));
         mapButtonText.SetText(stringTable.GetString("mapInfo"));
 
