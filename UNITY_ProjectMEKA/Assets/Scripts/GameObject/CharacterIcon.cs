@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using static Defines;
 using TMPro;
 using static PlayerController;
-using Unity.VisualScripting;
 
 public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {

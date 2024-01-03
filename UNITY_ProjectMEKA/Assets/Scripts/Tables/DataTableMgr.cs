@@ -72,6 +72,9 @@ public static class DataTableMgr
         var monsterTable = new MonsterTable();
         tables.Add(typeof(MonsterTable), monsterTable);
 
+        var tutorialTable = new TutorialTable();
+        tables.Add(typeof(TutorialTable), tutorialTable);
+
 		CharacterManager.Instance.InitCharacterStorage(charTable, characterLevelTable);
     }
 
