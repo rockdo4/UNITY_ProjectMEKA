@@ -19,10 +19,16 @@ public class CameraMove : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (characterInfoUIManager.windowMode == WindowMode.None)
+        if (characterInfoUIManager.windowMode == WindowMode.None && !cm.IsCameraFocusedOnCharacter())
         {
             if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
             {
+                if (cm.initMovePos.y != transform.position.y && cm.initRotation.x != transform.rotation.x && characterInfoUIManager.windowMode != WindowMode.Setting)
+                {
+                    // 캐릭터를 바라보기 전의 카메라 위치와 회전으로 리셋
+                    Camera.main.transform.position = cm.initPos;
+                    Camera.main.transform.rotation = cm.initRotation;
+                }
                 Touch touch = Input.GetTouch(0);
                 Ray ray = Camera.main.ScreenPointToRay(touch.position);
                 Plane groundPlane = new Plane(Vector3.up, Vector3.zero);

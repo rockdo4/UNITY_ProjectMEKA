@@ -6,11 +6,11 @@ using static Defines;
 public class ZoomInZoomOut : MonoBehaviour
 {
    
-    public float perspectiveZoomSpeed = 0.5f;        // 줌인/아웃 속도
-    public float orthoZoomSpeed = 0.5f;              // 정사영 모드에서 줌인/아웃 속도
+    public float perspectiveZoomSpeed = 0.5f;        
+    public float orthoZoomSpeed = 0.5f;           
 
-    public float minZoomDistance = 10.0f;             // 최소 줌 거리
-    public float maxZoomDistance = 60.0f;            // 최대 줌 거리
+    public float minZoomDistance = 10.0f;      
+    public float maxZoomDistance = 60.0f;        
 
     private Camera cameraComponent;
     private IngameStageUIManager characterInfoUIManager;

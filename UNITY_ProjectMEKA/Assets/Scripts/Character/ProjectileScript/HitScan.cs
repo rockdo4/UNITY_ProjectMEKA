@@ -22,7 +22,9 @@ public class HitScan : MonoBehaviour
 
         var FlashInstance = ObjectPoolManager.instance.GetGo(player.state.flashName);
         FlashInstance.transform.position = player.FirePosition.transform.position;
-        FlashInstance.transform.rotation = Quaternion.LookRotation(player.target.transform.position);
+        //FlashInstance.transform.rotation = Quaternion.LookRotation(player.target.transform.position);
+        Vector3 targetDirection = player.target.transform.position - player.FirePosition.transform.position;
+        FlashInstance.transform.rotation = Quaternion.LookRotation(targetDirection);
         FlashInstance.SetActive(false);
         FlashInstance.SetActive(true);
         FlashInstance.GetComponent<PoolAble>().ReleaseObject(2f);

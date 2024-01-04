@@ -17,7 +17,11 @@ public class CameraManager : MonoBehaviour
     private float threshold = 0.1f;
     private CameraMove camMove;
     public float initZoom;
-
+    private IngameStageUIManager characterInfoUIManager;
+    public bool isMoving;
+    public Vector3 initMovePos;
+    public Quaternion initMoveRotation;
+    
     private void Awake()
     {
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
@@ -25,17 +29,14 @@ public class CameraManager : MonoBehaviour
         initRotation = transform.rotation;
         camMove = GetComponent<CameraMove>();
         initZoom = Camera.main.fieldOfView;
+        characterInfoUIManager = GameObject.FindGameObjectWithTag(Tags.characterInfoUIManager).GetComponent<IngameStageUIManager>();
+        initMovePos = transform.position;
+        initMoveRotation = transform.rotation;
     }
 
     private void Update()
     {
-        if(Input.GetMouseButton(0)) 
-        {
-            transform.rotation = Quaternion.Lerp(transform.rotation, initRotation, rotationSpeed * Time.deltaTime * 2f);
-
-            transform.position = Vector3.Lerp(transform.position, initPos, zoomSpeed * Time.deltaTime * 2f);
-
-        }
+        
         if (!camMove.IsDragging)
         {
             if (stageManager.ingameStageUIManager.windowMode == WindowMode.Setting)
@@ -57,6 +58,7 @@ public class CameraManager : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, cameraPosition, zoomSpeed * Time.deltaTime * 2f);
 
                 Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, initZoom, 5 * Time.deltaTime * 2f); //initZoom;
+                
             }
             else if (stageManager.ingameStageUIManager.windowMode == WindowMode.Skill)
             {
@@ -78,8 +80,13 @@ public class CameraManager : MonoBehaviour
                 //Camera.main.fieldOfView = initZoom;
             }
         }
+        
     }
 
-
+    public bool IsCameraFocusedOnCharacter()
+    {
+        return stageManager.ingameStageUIManager.windowMode == WindowMode.Setting ||
+               stageManager.ingameStageUIManager.windowMode == WindowMode.Skill;
+    }
 
 }
