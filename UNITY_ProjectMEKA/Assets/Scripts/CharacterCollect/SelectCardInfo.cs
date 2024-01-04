@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Defines;
 
 public class SelectCardInfo : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class SelectCardInfo : MonoBehaviour
 	public TextMeshProUGUI levelText;
 	public TextMeshProUGUI nameText;
 	public Image[] starImages;
+	public Image propertyImage;
 	private int cardID = 0;
 
 	public void ChangeCardId(int id)
@@ -25,6 +27,14 @@ public class SelectCardInfo : MonoBehaviour
 			cardImage.sprite = Resources.Load<Sprite>(data.CharacterHead);
 			levelText.SetText($"{data.CharacterLevel}");
 			nameText.SetText(stringTable.GetString(info.CharacterNameStringID));
+
+			propertyImage.sprite = info.CharacterProperty switch
+			{
+				(int)Property.Prime => Resources.Load<Sprite>("CharacterIcon/PrimeIcon"),
+				(int)Property.Grieve => Resources.Load<Sprite>("CharacterIcon/GrieveIcon"),
+				(int)Property.Edila => Resources.Load<Sprite>("CharacterIcon/EdilaIcon"),
+				(int)Property.None => Resources.Load<Sprite>("CharacterIcon/NoneIcon"),
+			};
 		}
 		else if(id == 0)
 		{

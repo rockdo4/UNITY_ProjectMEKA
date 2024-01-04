@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Defines;
 
 public class SetPortrait : MonoBehaviour
 {
@@ -36,9 +37,16 @@ public class SetPortrait : MonoBehaviour
         characterName.SetText(stringTable.GetString(characterData.CharacterNameStringID));
         characterLevel.SetText(character.CharacterLevel.ToString());
         //characterClass.sprite = Resources.Load<Sprite>(characterData.ClassIconPath);
-        //characterProperty.sprite = Resources.Load<Sprite>(characterData.PropertyIconPath);
 
-        for (int i = 0; i < characterSynchro.Length; i++)
+		characterProperty.sprite = characterData.CharacterProperty switch
+		{
+			(int)Property.Prime => Resources.Load<Sprite>("CharacterIcon/PrimeIcon"),
+			(int)Property.Grieve => Resources.Load<Sprite>("CharacterIcon/GrieveIcon"),
+			(int)Property.Edila => Resources.Load<Sprite>("CharacterIcon/EdilaIcon"),
+			(int)Property.None => Resources.Load<Sprite>("CharacterIcon/NoneIcon"),
+		};
+
+		for (int i = 0; i < characterSynchro.Length; i++)
         {
             if (i + 3 == character.CharacterGrade)
             {
