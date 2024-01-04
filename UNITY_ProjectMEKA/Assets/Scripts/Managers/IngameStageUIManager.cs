@@ -554,15 +554,15 @@ public class IngameStageUIManager : MonoBehaviour
     public void Init()
     {
         var joystickButtonsParentTr = joystick.transform.GetChild(5);
-        cancelText = joystickButtonsParentTr.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
-        collectText = joystickButtonsParentTr.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+        //cancelText = joystickButtonsParentTr.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+        //collectText = joystickButtonsParentTr.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
         //skillText = joystickButtonsParentTr.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
 
         var arrangement = stringTable.GetString("arrangement");
         var cancel = stringTable.GetString("cancel");
         var arrangeCancel = new string($"{arrangement}\n{cancel}");
-        cancelText.SetText(arrangeCancel);
-        collectText.SetText(stringTable.GetString("collection"));
+        //cancelText.SetText(arrangeCancel);
+        //collectText.SetText(stringTable.GetString("collection"));
         //skillText.SetText(stringTable.GetString("skill"));
         killMonsterHeaderText.SetText(stringTable.GetString("killMonsterCount"));
 
