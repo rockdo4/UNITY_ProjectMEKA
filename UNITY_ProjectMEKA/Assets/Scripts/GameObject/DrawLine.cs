@@ -6,54 +6,99 @@ using static GateController;
 
 public class DrawLine : MonoBehaviour
 {
-    LineRenderer lineRenderer;
-    public Transform[] points;
+    private LineRenderer lineRenderer;
+    public Vector3[] points;
     public float yPos;
     public float drawSpeed;
-    [HideInInspector]
-    public List<WaveInfo> waveInfos;
+    public Vector3 startPoint;
 
     void Start()
     {
         Debug.Log("DrawLine Start");
         lineRenderer = GetComponent<LineRenderer>();
         // 모든 포인트 순회하면서 ypos 조작
-        // 동시에 라인렌더러에 포인트카운트, setposition
-        //StartCoroutine(DrawLineOverTime());
+        //for(int i = 0; i < points.Length; i++)
+        //{
+        //    // yPos modefy
+        //    var point = points[i].position;
+        //    point.y = yPos;
+        //    points[i].position = point;
+
+        //    // lineRenderer pointCount, setPosition
+        //    lineRenderer.positionCount = i + 1;
+        //    lineRenderer.SetPosition(i, points[i].position);
+        //}
     }
 
-    IEnumerator DrawLineOverTime()
+    public void SetPoints(Transform[] wayPoints, Transform house)
     {
-        for (int i = 0; i < points.Length; i++)
-        {
-            lineRenderer.positionCount = i + 1;
-            lineRenderer.SetPosition(i, points[i].position);
-            yield return new WaitForSeconds(1f / drawSpeed);
-        }
-    }
+        Debug.Log("SetPoints");
+        var count = wayPoints.Length + 1;
+        points = new Vector3[count];
+        //points[0] = startPoint;
+        //var startPos = startPoint;
+        //startPos.y = yPos;
+        //points[0] = startPos;
+        
+        //points[points.Length - 1] = house;
 
-    IEnumerator DrawLineSmoothly()
-    {
-        Vector3 startPosition = points[0].position; //points[1].transform.parent.transform.InverseTransformPoint(points[0].parent.TransformPoint(Vector3.zero));
-
-        for (int i = 1; i < points.Length; i++)
+        for (int i = 0; i < count; i++)
         {
-            Vector3 endPosition = points[i].position;
-            float t = 0f;
-            while (t < 1f)
+            // yPos modefy
+            if(i == 0)
             {
-                t += Time.deltaTime * drawSpeed;
-                Vector3 newPosition = Vector3.Lerp(startPosition, endPosition, t);
-                lineRenderer.positionCount = i + 1;
-                lineRenderer.SetPosition(i, newPosition);
-                yield return null;
+                //points[i] = startPoint;
+                var startPos = startPoint;
+                startPos.y = yPos;
+                points[i] = startPos;
             }
-            startPosition = endPosition;
+            else
+            {
+                //points[i] = wayPoints[i - 1].position;
+                var point = wayPoints[i - 1].position;
+                point.y = yPos;
+                points[i] = point;
+            }
+
+            // lineRenderer pointCount, setPosition
+            lineRenderer.positionCount = i + 1;
+            lineRenderer.SetPosition(i, points[i]);
         }
     }
+
+    //IEnumerator DrawLineOverTime()
+    //{
+    //    for (int i = 0; i < points.Length; i++)
+    //    {
+    //        lineRenderer.positionCount = i + 1;
+    //        lineRenderer.SetPosition(i, points[i].position);
+    //        yield return new WaitForSeconds(1f / drawSpeed);
+    //    }
+    //}
+
+    //IEnumerator DrawLineSmoothly()
+    //{
+    //    Vector3 startPosition = points[0].position; //points[1].transform.parent.transform.InverseTransformPoint(points[0].parent.TransformPoint(Vector3.zero));
+
+    //    for (int i = 1; i < points.Length; i++)
+    //    {
+    //        Vector3 endPosition = points[i].position;
+    //        float t = 0f;
+    //        while (t < 1f)
+    //        {
+    //            t += Time.deltaTime * drawSpeed;
+    //            Vector3 newPosition = Vector3.Lerp(startPosition, endPosition, t);
+    //            lineRenderer.positionCount = i + 1;
+    //            lineRenderer.SetPosition(i, newPosition);
+    //            yield return null;
+    //        }
+    //        startPosition = endPosition;
+    //    }
+    //}
 
     public void ErasePoints()
     {
         lineRenderer.positionCount = 0;
+        points = new Vector3[0];
     }
 }
