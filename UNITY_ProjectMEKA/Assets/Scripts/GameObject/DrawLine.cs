@@ -16,6 +16,7 @@ public class DrawLine : MonoBehaviour
     {
         Debug.Log("DrawLine Start");
         lineRenderer = GetComponent<LineRenderer>();
+        yPos = 0.7f;
         gameObject.SetActive(false);
     }
 

@@ -158,7 +158,6 @@ public class GateController : MonoBehaviour
         pathDuration = waveInfos[currentWave].pathDuration;
         pathDone = false;
         lineRenderer.startPoint = transform.position;
-        lineRenderer.yPos = targetPos.y;
         lineRenderer.drawSpeed = pathSpeed;
         Debug.Log("GateController Awake");
     }
