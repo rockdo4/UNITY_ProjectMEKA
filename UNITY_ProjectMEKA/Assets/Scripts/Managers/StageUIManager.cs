@@ -37,11 +37,14 @@ public class StageUIManager : MonoBehaviour
     public GameObject storyStageButtonPrefab;
     public GameObject assignmentAndChallengeButtonPrefab;
 
+    [Header("StageInfoPanel")]
     public GameObject stageInfoParentPanel;
     public GameObject stageInfoPanel;
     public GameObject monsterInfoPanel;
     public GameObject mapInfoPanel;
     public Transform stageInfoStarPanel;
+
+    [Header("StageInfo Text")]
     public TextMeshProUGUI stageButtonText;
     public TextMeshProUGUI monsterButtonText;
     public TextMeshProUGUI mapButtonText;
@@ -375,7 +378,7 @@ public class StageUIManager : MonoBehaviour
         var stageData = StageDataManager.Instance.stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
         SetStageInfoPanel(stringTable, stageData);
         SetMonsterInfoPanel(stringTable, stageData);
-        SetMapInfoPanel();
+        SetMapInfoPanel(stringTable, stageData);
 
         StageInfoWindowOn();
     }
@@ -449,17 +452,19 @@ public class StageUIManager : MonoBehaviour
             Debug.Log(monsterID);
             var monsterTableData = monsterTable.GetMonsterData(monsterID);
             var monsterIconPath = monsterTableData.IconPath;
-            var icon = Instantiate(monsterButtonPrefab, monsterInfoPanel.transform);
+            var icon = Instantiate(monsterButtonPrefab, monsterInfoPanel.GetComponentInChildren<Children>().transform);
             icon.GetComponent<Image>().sprite = Resources.Load<Sprite>(monsterIconPath);
             var iconScript = icon.GetComponent<MonsterIcon>();
             iconScript.Init(this, int.Parse(monsterLevelIDArray[i]), stringTable);
         }
     }
 
-    public void SetMapInfoPanel()
+    public void SetMapInfoPanel(StringTable stringTable, StageData stageTable)
     {
-
-    }
+        var child = mapInfoPanel.GetComponentInChildren<Children>();
+        var mapImage = child.GetComponent<Image>();
+        mapImage.sprite = Resources.Load<Sprite>(stageTable.MapImagePath);
+	}
 
     public void CloseStageInfoWindow()
     {
@@ -530,7 +535,7 @@ public class StageUIManager : MonoBehaviour
         if(!monsterInfoPanel.activeSelf)
         {
             monsterInfoPanel.SetActive(true);
-            stageInfoPanel.SetActive(false);
+            //stageInfoPanel.SetActive(false);
             mapInfoPanel.SetActive(false);
         }
     }
@@ -540,7 +545,7 @@ public class StageUIManager : MonoBehaviour
         if(!mapInfoPanel.activeSelf)
         {
             mapInfoPanel.SetActive(true);
-            stageInfoPanel.SetActive(false);
+            //stageInfoPanel.SetActive(false);
             monsterInfoPanel.SetActive(false);
         }
     }
