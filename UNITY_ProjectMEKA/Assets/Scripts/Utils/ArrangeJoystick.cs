@@ -14,7 +14,7 @@ public class ArrangeJoystick : MonoBehaviour
     public Image skillTimerBar;
     //public Button closeButton;
     public ArrangeJoystickHandler handler;
-    public List<GameObject> bgs = new List<GameObject>();
+    public GameObject backGround;
 
     private StageManager stageManager;
     private IngameStageUIManager characterInfoUIManager;
