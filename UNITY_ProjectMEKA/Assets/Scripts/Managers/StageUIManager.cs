@@ -352,7 +352,8 @@ public class StageUIManager : MonoBehaviour
             // general ui set
             var stageMonsterResource = stageMonsterImagePath.Replace("0", stage.Key.ToString());
             stageMonsterImage.sprite = Resources.Load<Sprite>(stageMonsterResource);
-            var stageRewardGuideText = new string($"{stage.Key}_stageRewardGuide");
+            var stageRewardGuideStringID = new string($"{stage.Key}_stageRewardGuide");
+            var stageRewardGuideText = StageDataManager.Instance.stringTable.GetString(stageRewardGuideStringID);
             stageRewardGuide.SetText(stageRewardGuideText);
 
             // on click set
