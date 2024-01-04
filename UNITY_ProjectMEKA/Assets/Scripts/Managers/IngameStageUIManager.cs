@@ -17,8 +17,6 @@ public class IngameStageUIManager : MonoBehaviour
     // panels
     [SerializeField, Header("패널")]
     public CharacterInfo characterInfoPanel;
-    public GameObject waveCountPanel;
-    public GameObject monsterCountPanel;
     public GameObject resultPanelWin;
     public GameObject resultPanelLose;
     public GameObject itemParentPanel;
@@ -60,9 +58,6 @@ public class IngameStageUIManager : MonoBehaviour
     [SerializeField, Header("조이스틱")]
     public ArrangeJoystick joystick;
     private ArrangeJoystickHandler joystickHandler;
-    public TextMeshProUGUI cancelText;
-    public TextMeshProUGUI collectText;
-    public TextMeshProUGUI skillText;
     private Button cancelButton;
     private Button collectButton;
     private Button skillButton;
@@ -93,6 +88,7 @@ public class IngameStageUIManager : MonoBehaviour
     private void OnEnable()
     {
         stageManager = GameObject.FindGameObjectWithTag(Tags.stageManager).GetComponent<StageManager>();
+        joystick = GameObject.FindGameObjectWithTag(Tags.joystick).GetComponent<ArrangeJoystick>();
         joystickHandler = joystick.handler;
         cancelButton = joystick.cancelButton;
         collectButton = joystick.collectButton;
@@ -554,15 +550,15 @@ public class IngameStageUIManager : MonoBehaviour
     public void Init()
     {
         var joystickButtonsParentTr = joystick.transform.GetChild(5);
-        cancelText = joystickButtonsParentTr.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
-        collectText = joystickButtonsParentTr.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+        //cancelText = joystickButtonsParentTr.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+        //collectText = joystickButtonsParentTr.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
         //skillText = joystickButtonsParentTr.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
 
         var arrangement = stringTable.GetString("arrangement");
         var cancel = stringTable.GetString("cancel");
         var arrangeCancel = new string($"{arrangement}\n{cancel}");
-        cancelText.SetText(arrangeCancel);
-        collectText.SetText(stringTable.GetString("collection"));
+        //cancelText.SetText(arrangeCancel);
+        //collectText.SetText(stringTable.GetString("collection"));
         //skillText.SetText(stringTable.GetString("skill"));
         killMonsterHeaderText.SetText(stringTable.GetString("killMonsterCount"));
 
