@@ -29,6 +29,13 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetMouseButton(0)) 
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, initRotation, rotationSpeed * Time.deltaTime * 2f);
+
+            transform.position = Vector3.Lerp(transform.position, initPos, zoomSpeed * Time.deltaTime * 2f);
+
+        }
         if (!camMove.IsDragging)
         {
             if (stageManager.ingameStageUIManager.windowMode == WindowMode.Setting)
