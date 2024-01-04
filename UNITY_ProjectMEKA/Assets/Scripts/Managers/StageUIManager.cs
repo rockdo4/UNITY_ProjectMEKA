@@ -134,7 +134,8 @@ public class StageUIManager : MonoBehaviour
             {
                 SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
                 devicePanel.ShowCore();
-            });
+				devicePanel.ShowCore();
+			});
         }
         if(deviceEngineButton != null)
         {
@@ -142,7 +143,8 @@ public class StageUIManager : MonoBehaviour
             {
                 SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
                 devicePanel.ShowEngine();
-            });
+				devicePanel.ShowEngine();
+			});
         }
 
         foreach(var sunchroButton in synchroButtons)

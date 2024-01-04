@@ -2,12 +2,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using System.Runtime.ConstrainedExecution;
-using UnityEditor;
+using static Defines;
 
 public class CharacterInfoText : MonoBehaviour
 {
 	public Image characterImage;
+	public Image characterPropertyImage;
 
 	[Header("Button")]
 	public Button enhanceButton;
@@ -16,6 +16,8 @@ public class CharacterInfoText : MonoBehaviour
 	//public Button skillButton;
 	public Button classButton;
 	public Button companyButton;
+	public Button rangeButton;
+	public Button skillRangeButton;
 
 	[Header("Panel")]
 	public EnhancePanel enhancePanel;
@@ -37,7 +39,8 @@ public class CharacterInfoText : MonoBehaviour
 	public TextMeshProUGUI level;
 	public TextMeshProUGUI expPercent;
 	public Image expBar;
-	public Image[] grade; 
+	public Image[] grade;
+	public Image rangeImage;
 
 	[Header("Etc")]
 	public Sprite defaultSprite;
@@ -66,6 +69,18 @@ public class CharacterInfoText : MonoBehaviour
 		{
 			enhancePanel.gameObject.SetActive(true);
 			enhancePanel.SetCharacter(character);
+		});
+
+		rangeButton.onClick.RemoveAllListeners();
+		rangeButton.onClick.AddListener(() =>
+		{
+			UpdateAttackRange();
+		});
+
+		skillRangeButton.onClick.RemoveAllListeners();
+		skillRangeButton.onClick.AddListener(() =>
+		{
+			UpdateSkillRange();
 		});
 
 		//synchroButton.onClick.RemoveAllListeners();
@@ -110,6 +125,34 @@ public class CharacterInfoText : MonoBehaviour
 		UpdateDevice();
 		UpdateExp();
 		UpdateGrade();
+		UpdateAttackRange();
+		UpdatePropertyImage();
+	}
+
+	public void UpdatePropertyImage()
+	{
+		var info = characterTable.GetCharacterData(character.CharacterID);
+		//characterPropertyImage.sprite = Resources.Load<Sprite>();
+
+		characterPropertyImage.sprite = info.CharacterProperty switch
+		{
+			(int)Property.Prime => Resources.Load<Sprite>("CharacterIcon/PrimeIcon"),
+			(int)Property.Grieve => Resources.Load<Sprite>("CharacterIcon/GrieveIcon"),
+			(int)Property.Edila => Resources.Load<Sprite>("CharacterIcon/EdilaIcon"),
+			(int)Property.None => Resources.Load<Sprite>("CharacterIcon/NoneIcon"),
+		};
+	}
+
+	public void UpdateAttackRange()
+	{
+		var info = characterTable.GetCharacterData(character.CharacterID);
+		rangeImage.sprite = Resources.Load<Sprite>(info.AttackRangeImagePath);
+	}
+
+	public void UpdateSkillRange()
+	{
+		var info = characterTable.GetCharacterData(character.CharacterID);
+		rangeImage.sprite = Resources.Load<Sprite>(info.SkillRangeImagePath);
 	}
 
 	public void UpdateGrade()
