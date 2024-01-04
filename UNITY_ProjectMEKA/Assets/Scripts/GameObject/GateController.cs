@@ -214,7 +214,7 @@ public class GateController : MonoBehaviour
             return;
         }
 
-        if (pathDone)
+        if (pathDone || !waveInfos[currentWave].pathGuideOn)
         {
             SpawnEnemies();
             return;
