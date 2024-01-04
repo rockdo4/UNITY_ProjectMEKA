@@ -90,15 +90,6 @@ public class GateController : MonoBehaviour
             if(wave.waypointGo != null)
             {
                 var waypointCount = wave.waypointGo.transform.childCount;
-                //if(lineRenderer.points.Length == 0)
-                //{
-                //    lineRenderer.points = new Transform[waypointCount + 2];
-                //    lineRenderer.points[0] = transform;
-                //    for(int i = 0; i < waypointCount; ++i)
-                //    {
-                //        lineRenderer.points[i + 1] = wave.waypointGo.transform.GetChild(i).transform;
-                //    }
-                //}
                 wave.waypoints = new Transform[waypointCount + 1];
                 for (int i = 0; i < waypointCount; ++i)
                 {
@@ -156,7 +147,6 @@ public class GateController : MonoBehaviour
                         var count = waveInfo.waypoints.Length - 1;
                         var pointCount = lineRenderer.points.Length - 1;
                         waveInfo.waypoints[count] = waveInfo.house;
-                        //lineRenderer.points[pointCount] = waveInfo.house;
                     }
                 }
             }
@@ -233,19 +223,20 @@ public class GateController : MonoBehaviour
         }
 
         pathDuration -= Time.deltaTime;
-        if ((pathDuration <= 0f && !pathDone) || (!waveInfos[currentWave].pathGuideOn && !pathDone))
+        //if ((pathDuration <= 0f && pathDone) || (!waveInfos[currentWave].pathGuideOn && pathDone))
+        //{
+        //    waypointIndex = 0;
+        //    enemyPath.transform.localPosition = enemyPathInitPos;
+        //    enemyPath.GetComponent<ParticleSystem>().Clear();
+        //    enemyPath.GetComponent<ParticleSystem>().Stop();
+        //    enemyPath.SetActive(false);
+        //    //pathDone = true;
+        //    // lineRender points 지워주기
+        //    lineRenderer.ErasePoints();
+        //}
+        if (waveInfos[currentWave].pathGuideOn && !pathDone)
         {
-            waypointIndex = 0;
-            enemyPath.transform.localPosition = enemyPathInitPos;
-            enemyPath.GetComponent<ParticleSystem>().Clear();
-            enemyPath.GetComponent<ParticleSystem>().Stop();
-            enemyPath.SetActive(false);
-            pathDone = true;
-            // lineRender points 지워주기
-            lineRenderer.ErasePoints();
-        }
-        else if (waveInfos[currentWave].pathGuideOn && !pathDone && pathDuration > 0f)
-        {
+            Debug.Log("wave spawn");
             // lineRenderer points에 현재 웨이브의 웨이포인트 할당
             if(lineRenderer.points.Length == 0)
             {
@@ -412,6 +403,13 @@ public class GateController : MonoBehaviour
                 enemyPath.GetComponent<ParticleSystem>().Clear();
                 enemyPath.GetComponent<ParticleSystem>().Stop();
                 enemyPath.SetActive(false);
+                Debug.Log($"path duration : {pathDuration}");
+                if(pathDuration <= 0)
+                {
+                    Debug.Log("pathDone");
+                    pathDone = true;
+                    lineRenderer.ErasePoints();
+                }
                 return;
             }
             targetPos = waveInfo.waypoints[waypointIndex].position;
