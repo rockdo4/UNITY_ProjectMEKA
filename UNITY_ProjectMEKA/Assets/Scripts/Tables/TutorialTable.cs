@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using UnityEngine;
+using System.Diagnostics;
 
 public class TutorialTable : DataTable
 {
@@ -33,7 +34,7 @@ public class TutorialTable : DataTable
 			var records = csv.GetRecords<TutorialData>();
 
 			var list = new List<TutorialData>();
-			int page = 1;
+			int page = 0;
 
 			foreach ( var record in records )
 			{
