@@ -11,17 +11,45 @@ public class DrawLine : MonoBehaviour
     public float yPos;
     public float drawSpeed;
     public Vector3 startPoint;
+    private float tempAlphaValue;
+    private float fadeSpeed = 0.01f;
+    private bool lineOn;
 
     void Start()
     {
         Debug.Log("DrawLine Start");
         lineRenderer = GetComponent<LineRenderer>();
         yPos = 0.7f;
+        tempAlphaValue = 0f;
+        var color = new Color(255, 255, 255, tempAlphaValue);
+        lineRenderer.startColor = color;
+        lineRenderer.endColor = color;
         gameObject.SetActive(false);
     }
 
-    public void SetPoints(Transform[] wayPoints, Transform house)
+    private void Update()
     {
+        // Ω√¿€ 0~255
+        if(lineOn && tempAlphaValue <= 255f)
+        {
+            tempAlphaValue += Time.timeScale * fadeSpeed;
+            var color = new Color(255, 255, 255, tempAlphaValue);
+            lineRenderer.startColor = color;
+            lineRenderer.endColor = color;
+        }
+        // ≥° 255~0
+        else if(!lineOn && tempAlphaValue >= 0f)
+        {
+            tempAlphaValue -= Time.timeScale * fadeSpeed;
+            var color = new Color(255, 255, 255, tempAlphaValue);
+            lineRenderer.startColor = color;
+            lineRenderer.endColor = color;
+        }
+    }
+
+    public void SetPoints(Transform[] wayPoints)
+    {
+        lineOn = true;
         gameObject.SetActive(true);
         Debug.Log("SetPoints");
         var count = wayPoints.Length + 1;
@@ -52,7 +80,9 @@ public class DrawLine : MonoBehaviour
 
     public void ErasePoints()
     {
-        lineRenderer.positionCount = 0;
+        lineOn = false;
+
+        //lineRenderer.positionCount = 0;
         points = new Vector3[0];
     }
 }

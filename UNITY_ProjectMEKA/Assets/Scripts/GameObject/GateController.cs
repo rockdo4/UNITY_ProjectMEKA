@@ -239,7 +239,7 @@ public class GateController : MonoBehaviour
             // lineRenderer points에 현재 웨이브의 웨이포인트 할당
             if(lineRenderer.points.Length == 0)
             {
-                lineRenderer.SetPoints(waveInfos[currentWave].waypoints, waveInfos[currentWave].house);
+                lineRenderer.SetPoints(waveInfos[currentWave].waypoints);
             }
             switch (waveInfos[currentWave].moveType)
             {
