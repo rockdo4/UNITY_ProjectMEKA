@@ -18,7 +18,7 @@ public class DrawLine : MonoBehaviour
     {
         Debug.Log("DrawLine Start");
         lineRenderer = GetComponent<LineRenderer>();
-        yPos = 0.7f;
+        //yPos = 0.7f;
         tempAlphaValue = 0f;
         var color = new Color(255, 255, 255, tempAlphaValue);
         lineRenderer.startColor = color;
