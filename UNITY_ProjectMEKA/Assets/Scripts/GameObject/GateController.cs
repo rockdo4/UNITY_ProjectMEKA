@@ -164,6 +164,7 @@ public class GateController : MonoBehaviour
 
         targetPos = waveInfos[currentWave].waypoints[waypointIndex].position;
         targetPos.y = enemyPathInitPos.y;
+        lineRenderer.yPos = targetPos.y;
         enemyPathRb.transform.LookAt(targetPos);
         pathDuration = waveInfos[currentWave].pathDuration;
         pathDone = false;

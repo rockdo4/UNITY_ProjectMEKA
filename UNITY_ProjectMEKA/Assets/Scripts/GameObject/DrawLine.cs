@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static GateController;
 
@@ -7,6 +8,7 @@ public class DrawLine : MonoBehaviour
 {
     LineRenderer lineRenderer;
     public Transform[] points;
+    public float yPos;
     public float drawSpeed;
     [HideInInspector]
     public List<WaveInfo> waveInfos;
@@ -15,7 +17,9 @@ public class DrawLine : MonoBehaviour
     {
         Debug.Log("DrawLine Start");
         lineRenderer = GetComponent<LineRenderer>();
-        StartCoroutine(DrawLineOverTime());
+        // 모든 포인트 순회하면서 ypos 조작
+        // 동시에 라인렌더러에 포인트카운트, setposition
+        //StartCoroutine(DrawLineOverTime());
     }
 
     IEnumerator DrawLineOverTime()
