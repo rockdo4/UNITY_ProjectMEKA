@@ -9,7 +9,6 @@ public class DrawLine : MonoBehaviour
     private LineRenderer lineRenderer;
     public Vector3[] points;
     public float yPos;
-    public float drawSpeed;
     public Vector3 startPoint;
     private float tempAlphaValue;
     private float fadeSpeed = 0.01f;
@@ -30,7 +29,7 @@ public class DrawLine : MonoBehaviour
     private void Update()
     {
         // Ω√¿€ 0~255
-        if(lineOn && tempAlphaValue <= 255f)
+        if(lineOn && tempAlphaValue <= 1)
         {
             tempAlphaValue += Time.timeScale * fadeSpeed;
             var color = new Color(255, 255, 255, tempAlphaValue);
@@ -40,6 +39,7 @@ public class DrawLine : MonoBehaviour
         // ≥° 255~0
         else if(!lineOn && tempAlphaValue >= 0f)
         {
+            Debug.Log(tempAlphaValue);
             tempAlphaValue -= Time.timeScale * fadeSpeed;
             var color = new Color(255, 255, 255, tempAlphaValue);
             lineRenderer.startColor = color;

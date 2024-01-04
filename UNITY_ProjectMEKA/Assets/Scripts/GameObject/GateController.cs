@@ -158,7 +158,6 @@ public class GateController : MonoBehaviour
         pathDuration = waveInfos[currentWave].pathDuration;
         pathDone = false;
         lineRenderer.startPoint = transform.position;
-        lineRenderer.drawSpeed = pathSpeed;
         Debug.Log("GateController Awake");
     }
 
@@ -235,7 +234,6 @@ public class GateController : MonoBehaviour
         //}
         if (waveInfos[currentWave].pathGuideOn && !pathDone)
         {
-            Debug.Log("wave spawn");
             // lineRenderer points에 현재 웨이브의 웨이포인트 할당
             if(lineRenderer.points.Length == 0)
             {
@@ -449,6 +447,12 @@ public class GateController : MonoBehaviour
             enemyPath.GetComponent<ParticleSystem>().Clear();
             enemyPath.GetComponent<ParticleSystem>().Stop();
             enemyPath.SetActive(false);
+            if (pathDuration <= 0)
+            {
+                Debug.Log("pathDone");
+                pathDone = true;
+                lineRenderer.ErasePoints();
+            }
             return;
         }
     }
@@ -493,6 +497,12 @@ public class GateController : MonoBehaviour
                 enemyPath.GetComponent<ParticleSystem>().Clear();
                 enemyPath.GetComponent<ParticleSystem>().Stop();
                 enemyPath.SetActive(false);
+                if (pathDuration <= 0)
+                {
+                    Debug.Log("pathDone");
+                    pathDone = true;
+                    lineRenderer.ErasePoints();
+                }
                 return;
             }
             waypointIndex++;
