@@ -198,7 +198,7 @@ public class SoundManager : MonoBehaviour
     {
         if(value)
         {
-            SetMasterVolume(PlayDataManager.data.MasterVolume);
+            SetMasterVolume(PlayDataManager.data.MasterVolume * 2f);
         }
         else
         {
