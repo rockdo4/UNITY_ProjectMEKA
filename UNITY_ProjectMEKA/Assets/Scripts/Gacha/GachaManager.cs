@@ -46,7 +46,8 @@ public class GachaManager : MonoBehaviour
                 if (CheckDiamond(200))
                 {
                     Gacha1();
-                    ItemInventoryManager.Instance.m_ItemStorage[diamond].Count -= 200;
+					int index = ItemInventoryManager.Instance.m_ItemStorage.FindIndex(x => x.ID == diamond);
+					ItemInventoryManager.Instance.m_ItemStorage[index].Count -= 200;
                 }
                 else
                 {
@@ -62,7 +63,8 @@ public class GachaManager : MonoBehaviour
                 if (CheckDiamond(2000))
                 {
                     Gacha10();
-                    ItemInventoryManager.Instance.m_ItemStorage[diamond].Count -= 2000;
+					int index = ItemInventoryManager.Instance.m_ItemStorage.FindIndex(x => x.ID == diamond);
+					ItemInventoryManager.Instance.m_ItemStorage[index].Count -= 2000;
                 }
                 else
                 {
@@ -98,14 +100,18 @@ public class GachaManager : MonoBehaviour
     public bool CheckDiamond(int count)
     {
         bool check = false;
+        int index = ItemInventoryManager.Instance.m_ItemStorage.FindIndex(x => x.ID == diamond);
 
-        if (ItemInventoryManager.Instance.m_ItemStorage.Find(x => x.ID == diamond) == null)
+		if (ItemInventoryManager.Instance.m_ItemStorage.Find(x => x.ID == diamond) == null)
         {
             check = false;
-        }
-        else if(ItemInventoryManager.Instance.m_ItemStorage[diamond].Count >= count)
+		}
+        else if(index != -1)
         {
-            check = true;
+			if(ItemInventoryManager.Instance.m_ItemStorage[index].Count >= count)
+            {
+				check = true;
+			}
         }
 
         if(!check) modalWindow.Notice("다이아가 부족합니다.", "확인");
