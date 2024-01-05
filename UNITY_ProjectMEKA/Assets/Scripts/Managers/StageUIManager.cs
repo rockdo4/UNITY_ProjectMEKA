@@ -68,6 +68,7 @@ public class StageUIManager : MonoBehaviour
     public GameObject loadingScreen;
     public Image loadingFillImage; 
     public Text loadingText;
+    public Button tutorialButton;
 
     private void Awake()
     {
@@ -123,6 +124,10 @@ public class StageUIManager : MonoBehaviour
         challengeStageButton.onClick.AddListener(() =>
         {
             SetSelctedStageClassButtons(SystemForUnlock.ChallengeStage, StageClass.Challenge);
+        });
+        tutorialButton.onClick.AddListener(() =>
+        {
+            SoundManager.instance.PlayerSFXAudio("UIButtonClick");
         });
     }
 

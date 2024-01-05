@@ -4239,6 +4239,7 @@ GameObject:
   - component: {fileID: 134930372}
   - component: {fileID: 134930371}
   - component: {fileID: 134930370}
+  - component: {fileID: 134930374}
   m_Layer: 5
   m_Name: OptionButton (1)
   m_TagString: Untagged
@@ -4363,6 +4364,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 134930368}
   m_CullTransparentMesh: 1
+--- !u!114 &134930374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134930368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87872409cf0e06c4384e349560df79d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundButton: {fileID: 2072425481}
+  exitButton: {fileID: 347857015}
+  soundMuteImage: {fileID: 21300000, guid: 972d87981c73fd445b90dd8aaa7c6e13, type: 3}
 --- !u!1 &136803744
 GameObject:
   m_ObjectHideFlags: 0
@@ -49910,6 +49926,7 @@ MonoBehaviour:
   loadingScreen: {fileID: 57670546}
   loadingFillImage: {fileID: 1396662103}
   loadingText: {fileID: 959400030}
+  tutorialButton: {fileID: 1809589276}
 --- !u!4 &1677829976
 Transform:
   m_ObjectHideFlags: 0
@@ -63956,7 +63973,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114543570447839668}
   m_HandleRect: {fileID: 224671345840812966}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -64005,7 +64022,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114543570556852608}
   m_HandleRect: {fileID: 224671347342400402}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
