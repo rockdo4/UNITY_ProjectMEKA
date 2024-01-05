@@ -131,7 +131,8 @@ public class DevicePanel : MonoBehaviour
 
 	public void ShowCore()
 	{
-		var items = scrollContent.GetComponentsInChildren<DeviceInfo>();
+		UpdateDeviceCard();
+        var items = scrollContent.GetComponentsInChildren<DeviceInfo>();
 
 		foreach (var item in items)
 		{
@@ -153,7 +154,8 @@ public class DevicePanel : MonoBehaviour
 
 	public void ShowEngine()
 	{
-		var items = scrollContent.GetComponentsInChildren<DeviceInfo>();
+		UpdateDeviceCard();
+        var items = scrollContent.GetComponentsInChildren<DeviceInfo>();
 
 		foreach (var item in items)
 		{
@@ -231,6 +233,9 @@ public class DevicePanel : MonoBehaviour
 
 	public void CreateDevice(int PartType)
 	{
+		if (PartType < 1) PartType = 1;
+		if (PartType > 2) PartType = 2;
+
 		var device = new Device();
 
 		switch (PartType)

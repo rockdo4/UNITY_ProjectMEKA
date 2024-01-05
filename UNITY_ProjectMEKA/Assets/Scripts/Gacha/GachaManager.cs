@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,11 @@ public class GachaManager : MonoBehaviour
     public Image imagePrefab;
 
     public CharacterPanelManager characterManager;
+    public ModalWindow modalWindow;
+
+    [Header("Gacha Button")]
+    public Button gacha1Button;
+    public Button gacha10Button;
 
     [Header("testPicker")]
     private GachaSystem<int> testPicker;
@@ -27,10 +33,43 @@ public class GachaManager : MonoBehaviour
     private Coroutine gachaCoroutine;
     private float timer = 0.5f;
     private float time = 0f;
+    private const int diamond = 5920001;
 
     private void Awake()
     {
         testPicker = new GachaSystem<int>();
+
+        gacha1Button.onClick.AddListener(() => 
+        {
+            modalWindow.Show("다이아 200개를 사용하여\n가챠를 돌리시겠습니까?", () =>
+            {
+                if (CheckDiamond(200))
+                {
+                    Gacha1();
+                    ItemInventoryManager.Instance.m_ItemStorage[diamond].Count -= 200;
+                }
+                else
+                {
+                   // modalWindow.Notice("다이아가 부족합니다.", "확인");
+                }
+            }, "확인", "취소");
+        });
+
+        gacha10Button.onClick.AddListener(() => 
+        { 
+            modalWindow.Show("다이아 2000개를 사용하여\n가챠를 돌리시겠습니까?", () =>
+            {
+                if (CheckDiamond(2000))
+                {
+                    Gacha10();
+                    ItemInventoryManager.Instance.m_ItemStorage[diamond].Count -= 2000;
+                }
+                else
+                {
+                    
+                }
+            }, "확인", "취소");
+        });
 	}
 
     private void Start()
@@ -54,6 +93,24 @@ public class GachaManager : MonoBehaviour
 				testPicker.Add(item.Key, item.Value.ArrangementCost);
 			}
         }
+    }
+
+    public bool CheckDiamond(int count)
+    {
+        bool check = false;
+
+        if (ItemInventoryManager.Instance.m_ItemStorage.Find(x => x.ID == diamond) == null)
+        {
+            check = false;
+        }
+        else if(ItemInventoryManager.Instance.m_ItemStorage[diamond].Count >= count)
+        {
+            check = true;
+        }
+
+        if(!check) modalWindow.Notice("다이아가 부족합니다.", "확인");
+
+        return check;
     }
 
     public void Gacha1()

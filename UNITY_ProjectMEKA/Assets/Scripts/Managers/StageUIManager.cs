@@ -138,9 +138,8 @@ public class StageUIManager : MonoBehaviour
             deviceCoreButton.onClick.AddListener(() =>
             {
                 SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
-                devicePanel.ShowCore();
 				devicePanel.ShowCore();
-			});
+            });
         }
         if(deviceEngineButton != null)
         {
@@ -148,8 +147,7 @@ public class StageUIManager : MonoBehaviour
             {
                 SetSelectedSystemButtonsByUnlock(SystemForUnlock.Device);
                 devicePanel.ShowEngine();
-				devicePanel.ShowEngine();
-			});
+            });
         }
 
         foreach(var sunchroButton in synchroButtons)
@@ -479,6 +477,7 @@ public class StageUIManager : MonoBehaviour
         stageInfoParentPanel.SetActive(false);
     }
 
+    //여기서 배틀 스타트
     public void OnClickBattleStart()
     {
         var stageTableData = StageDataManager.Instance.stageTable.GetStageData(StageDataManager.Instance.selectedStageData.stageID);
@@ -507,7 +506,13 @@ public class StageUIManager : MonoBehaviour
     }
     private void LoadSceneAsync(string sceneName)
     {
-        panelManager.LoadFormation();
+        bool isVaild = panelManager.LoadFormation();
+
+        if (!isVaild)
+        {
+            Debug.Log("DataHolder is not Vaild");
+            return;
+        }
         StartCoroutine(LoadAsynchronously(sceneName));
     }
 

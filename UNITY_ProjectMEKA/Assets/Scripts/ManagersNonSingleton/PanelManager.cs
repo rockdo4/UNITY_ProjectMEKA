@@ -179,25 +179,25 @@ public class PanelManager : MonoBehaviour
 
     }
 
-    public void LoadFormation()
+    public bool LoadFormation()
 	{
 		var formation = formationPanel.GetComponent<FormationManager>();
 		if (formation == null)
 		{
 			Debug.LogError("FormationManager ���ҷ���");
-			return;
+			return false;
 		}
 		formation.SetHolderFormation();
 
 		if (DataHolder.isVaild)
 		{
-			//UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
-			//UnityEngine.SceneManagement.SceneManager.LoadScene("BUGLHJ");
-			//UnityEngine.SceneManagement.SceneManager.LoadScene("Bug_KimMinji");
+			return true;
 		}
 		else
 		{
-			Debug.Log("DataHolder is not Vaild");
+			popUpPanel.gameObject.SetActive(true);
+			popUpPanel.Notice("캐릭터를 편성해야 합니다", "확인");
+			return false;
 		}
 
 	}

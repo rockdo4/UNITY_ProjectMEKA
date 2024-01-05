@@ -22,7 +22,7 @@ public class CharacterInfoText : MonoBehaviour
 	[Header("Panel")]
 	public EnhancePanel enhancePanel;
 	//public SynchroPanel synchroPanel;
-	//public DevicePanel devicePanel;
+	public DevicePanel devicePanel;
 	//public SkillPanel skillPanel;
 	public PanelManager panelManager;
 	public Button deviceEngine;

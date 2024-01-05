@@ -177,7 +177,7 @@ public class DeviceEnhance : MonoBehaviour
 
 		textLevel.SetText($"{currDevice.CurrLevel}");
 		var ratio = (float)remainExp / expData[targetLevel - 1].RequireExp;
-		if (ratio > 1)
+		if (ratio > 1 || ratio < 0)
 			ratio = 1;
 
 		textExp.SetText($"{(int)(ratio * 100)}%");
@@ -289,8 +289,8 @@ public class DeviceEnhance : MonoBehaviour
 		textLevel.SetText($"{targetLevel}");
 
 		var ratio = (float)remainExp / expData[targetLevel - 1].RequireExp;
-		if(ratio > 1)
-			ratio = 1;
+        if (ratio > 1 || ratio < 0)
+            ratio = 1;
 
 		textExp.SetText($"{(int)(ratio * 100)}%");
 		imageExp.fillAmount = ratio;

@@ -31,6 +31,7 @@ public class ItemCardManager : MonoBehaviour
 	public TextMeshProUGUI itemGetInfoText;
 	public Image itemImage;
 	public TextMeshProUGUI itemNameText;
+	public Transform itemUsePanel;
 	
 	private RectTransform itemCardScrollView;
 
@@ -112,6 +113,15 @@ public class ItemCardManager : MonoBehaviour
 				itemGetInfoText.SetText($"{stringTable.GetString(info.AcquisitionPathStringID)}");
 				itemImage.sprite = Resources.Load<Sprite>(info.ImagePath);
 
+				if(item.ID == 5740001)
+                {
+                    itemUsePanel.gameObject.SetActive(true);
+                    itemUsePanel.GetComponent<ItemUsePanel>().SetItem(item);
+                }
+                else
+				{
+                 
+                }
 			});
 			itemCard.name = item.ToString();
 			itemCard.transform.SetParent(itemCardScrollView, false);
