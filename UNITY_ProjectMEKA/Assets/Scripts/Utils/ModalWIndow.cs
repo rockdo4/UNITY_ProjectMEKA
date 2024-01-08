@@ -10,6 +10,7 @@ public class ModalWindow : MonoBehaviour
 	public TextMeshProUGUI titleText;
 	public Button yesButton;
 	public Button noButton;
+	public Button outSideButton;
 
 	private void Awake()
 	{
@@ -33,6 +34,8 @@ public class ModalWindow : MonoBehaviour
 
 	public void Show(string text, Action yesAction, string yesText = "", string noText = "")
 	{
+		outSideButton.interactable = false;
+
 		var modalWindow = this;
 
 		titleText.SetText(text);
@@ -59,7 +62,9 @@ public class ModalWindow : MonoBehaviour
 
 	public void Notice(string text, string yesText = "")
 	{
-		var modalWindow = this;
+        outSideButton.interactable = true;
+
+        var modalWindow = this;
 
 		titleText.SetText(text);
 		yesButton.GetComponentInChildren<TextMeshProUGUI>().SetText(yesText);
