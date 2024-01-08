@@ -38,7 +38,7 @@ public class HPBar : MonoBehaviour
 
     void Update()
     {
-        canvas.transform.LookAt(Camera.main.transform);
+        //canvas.transform.LookAt(Camera.main.transform);
 
         float hpFraction;
         float shieldFraction;
@@ -56,6 +56,30 @@ public class HPBar : MonoBehaviour
 
         image.rectTransform.sizeDelta = new Vector2(originalWidth * hpFraction, image.rectTransform.sizeDelta.y);
         shield.rectTransform.sizeDelta = new Vector2(originalWidth * shieldFraction, shield.rectTransform.sizeDelta.y);
+        Vector3 toCamera = (Camera.main.transform.position - canvas.transform.position).normalized;
+
+        
+        Vector3[] directions = {
+        Vector3.forward, // ºÏ
+        Vector3.back,    // ³²
+        Vector3.right,   // µ¿
+        Vector3.left     // ¼­
+        };
+
+        float maxDot = -Mathf.Infinity;
+        Vector3 nearestDirection = Vector3.forward;
+
+        foreach (Vector3 dir in directions)
+        {
+            float dot = Vector3.Dot(toCamera, dir);
+            if (dot > maxDot)
+            {
+                maxDot = dot;
+                nearestDirection = dir;
+            }
+        }
+
+        canvas.transform.rotation = Quaternion.LookRotation(nearestDirection);
     }
 }
 

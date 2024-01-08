@@ -126,7 +126,7 @@ public class OptionManager : MonoBehaviour
                 break;
             }
         }
-
+        
         if(button == soundButton)
         {
             currentSoundType = (SoundType)index;

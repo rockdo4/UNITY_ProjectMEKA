@@ -49,6 +49,7 @@ public class TutorialPanel : MonoBehaviour
 				currentTutorialList = list;
 				currentIndex = 1;
 				SetCurrentBook();
+				SoundManager.instance.PlayerSFXAudio("UIButtonClick");
 			});
 			obj.GetComponentInChildren<TextMeshProUGUI>().SetText(stringTable.GetString(list[0].Content));
 		}
