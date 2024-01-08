@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114072687405176810, guid: cc867808284c5e54cbe40a7326f71482, type: 3}
       propertyPath: m_Value
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114227273122462294, guid: cc867808284c5e54cbe40a7326f71482, type: 3}
       propertyPath: m_Size
@@ -1594,6 +1594,81 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224658209539074428, guid: cc867808284c5e54cbe40a7326f71482, type: 3}
   m_PrefabInstance: {fileID: 2099756690}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &48723351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 48723352}
+  - component: {fileID: 48723354}
+  - component: {fileID: 48723353}
+  m_Layer: 5
+  m_Name: Character
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &48723352
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48723351}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 57670547}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 380.99994, y: -159.99998}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &48723353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48723351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -311243317, guid: d23251e00c82217438741349da28f50e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &48723354
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48723351}
+  m_CullTransparentMesh: 1
 --- !u!1001 &49240884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2046,6 +2121,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1396662101}
+  - {fileID: 48723352}
   m_Father: {fileID: 1670843570}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -12473,7 +12549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114072687405176810, guid: cc867808284c5e54cbe40a7326f71482, type: 3}
       propertyPath: m_Value
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114227273122462294, guid: cc867808284c5e54cbe40a7326f71482, type: 3}
       propertyPath: m_Size
@@ -49216,6 +49292,12 @@ MonoBehaviour:
   loadingFillImage: {fileID: 1396662103}
   loadingText: {fileID: 959400030}
   tutorialButton: {fileID: 1809589276}
+  loadingChatacterImage:
+  - {fileID: -311243317, guid: d23251e00c82217438741349da28f50e, type: 3}
+  - {fileID: -125352591, guid: d23251e00c82217438741349da28f50e, type: 3}
+  - {fileID: 1874651091, guid: d23251e00c82217438741349da28f50e, type: 3}
+  - {fileID: -698746329, guid: d23251e00c82217438741349da28f50e, type: 3}
+  loadingCharacter: {fileID: 48723353}
 --- !u!4 &1677829976
 Transform:
   m_ObjectHideFlags: 0
@@ -63103,7 +63185,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114543570556852608}
   m_HandleRect: {fileID: 224671347342400402}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

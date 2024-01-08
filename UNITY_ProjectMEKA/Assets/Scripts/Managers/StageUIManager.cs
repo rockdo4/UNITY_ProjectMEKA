@@ -69,6 +69,8 @@ public class StageUIManager : MonoBehaviour
     public Image loadingFillImage; 
     public Text loadingText;
     public Button tutorialButton;
+    public List<Sprite> loadingChatacterImage;
+    public Image loadingCharacter;
 
     private void Awake()
     {
@@ -521,9 +523,17 @@ public class StageUIManager : MonoBehaviour
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
         loadingScreen.SetActive(true);
+        int i = 0;
 
         while (!asyncLoad.isDone)
         {
+            if(i >= loadingChatacterImage.Count)
+            {
+                i = 0; 
+            }
+            loadingCharacter.sprite = loadingChatacterImage[i];
+            ++i;
+
             float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
 
             loadingFillImage.fillAmount = progress;
