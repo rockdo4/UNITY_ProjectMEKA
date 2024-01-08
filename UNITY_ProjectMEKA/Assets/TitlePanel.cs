@@ -26,11 +26,19 @@ public class TitlePanel : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.anyKeyDown)
-		{
-			StopAllCoroutines();
-			pressStart.enabled = true;
-			SceneManager.LoadScene("MainScene");
-		}
+		//if (Input.anyKeyDown)
+		//{
+		//	StopAllCoroutines();
+		//	pressStart.enabled = true;
+		//	SceneManager.LoadScene("MainScene");
+		//}
+	}
+
+	public void OnClickStartButton()
+	{
+		Debug.LogWarning("Start");
+		StopAllCoroutines();
+		pressStart.enabled = true;
+		SceneManager.LoadScene("MainScene");
 	}
 }
