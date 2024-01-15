@@ -17,7 +17,16 @@ public class ItemCheatEditor : Editor
 			{
 				itemCheat.RunFunction();
 			}
-		} 
+		}
+
+		if (GUILayout.Button("AddAllItem"))
+		{
+			ItemCheat itemCheat = (ItemCheat)target;
+			if (itemCheat != null)
+			{
+				itemCheat.RunFunction2();
+			}
+		}
 	} 
 }
 
@@ -37,5 +46,10 @@ public class ItemCheat : MonoBehaviour
 	public void RunFunction()
 	{
 		cardManager.UpdateItemCard();
+	}
+
+	public void RunFunction2()
+	{
+		cardManager.GetComponentInParent<TableTest>().OnClickAddItem();
 	}
 }
