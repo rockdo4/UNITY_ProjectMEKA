@@ -171,47 +171,63 @@ public class StageUIManager : MonoBehaviour
     {
         var systems = PlayDataManager.data.systemUnlockData;
         var systemID = (int)systemType;
-        if (systems[systemID])
+        // 해당하는 패널로 이동
+        switch (systemType)
         {
-            // 해당하는 패널로 이동
-            switch(systemType)
-            {
-                case SystemForUnlock.Device:
-                    DeviceButtonClickEvent?.Invoke();
-                    break;
-                case SystemForUnlock.Synchro:
-                    SyncroButtonClickEvent?.Invoke();
-                    break;
-                case SystemForUnlock.Skill:
-                    SkillButtonClickEvent?.Invoke();
-                    break;
-            }
+            case SystemForUnlock.Device:
+                DeviceButtonClickEvent?.Invoke();
+                break;
+            case SystemForUnlock.Synchro:
+                SyncroButtonClickEvent?.Invoke();
+                break;
+            case SystemForUnlock.Skill:
+                SkillButtonClickEvent?.Invoke();
+                break;
         }
-        else
-        {
-            SetLockedPopUpWinodw();
-        }
+
+        //if (systems[systemID])
+        //{
+        //    // 해당하는 패널로 이동
+        //    switch(systemType)
+        //    {
+        //        case SystemForUnlock.Device:
+        //            DeviceButtonClickEvent?.Invoke();
+        //            break;
+        //        case SystemForUnlock.Synchro:
+        //            SyncroButtonClickEvent?.Invoke();
+        //            break;
+        //        case SystemForUnlock.Skill:
+        //            SkillButtonClickEvent?.Invoke();
+        //            break;
+        //    }
+        //}
+        //else
+        //{
+        //    SetLockedPopUpWinodw();
+        //}
     }
 
     public void SetSelctedStageClassButtons(SystemForUnlock systemType, StageClass stageClass)
     {
-        if(systemType != SystemForUnlock.None)
-        {
-            var systems = PlayDataManager.data.systemUnlockData;
-            var systemID = (int)systemType;
-            if (systems[systemID])
-            {
-                IntoStageClassPanel(stageClass);            
-            }
-            else
-            {
-                SetLockedPopUpWinodw();
-            }
-        }
-        else
-        {
-            IntoStageClassPanel(stageClass);
-        }
+        IntoStageClassPanel(stageClass);
+
+        //if (systemType != SystemForUnlock.None)
+        //{
+        //    var systems = PlayDataManager.data.systemUnlockData;
+        //    var systemID = (int)systemType;
+        //    if (systems[systemID])
+        //    {
+        //        IntoStageClassPanel(stageClass);            
+        //    }
+        //    else
+        //    {
+        //        SetLockedPopUpWinodw();
+        //    }
+        //}
+        //else
+        //{
+        //    IntoStageClassPanel(stageClass);
+        //}
     }
 
     public void SetLockedPopUpWinodw()
@@ -297,22 +313,10 @@ public class StageUIManager : MonoBehaviour
 			else
 				stageButtonGo.GetComponent<Image>().sprite = stageButtonScript.clearOff;
 
-            //for (int i = 0; i < 3; ++i)
-            //         {
-            //             if (count > i)
-            //             {
-            //                 stageButtonGo.transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
-            //             }
-            //             else
-            //             {
-            //                 stageButtonGo.transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
-            //             }
-            //         }
-
-            if (!stage.Value.isUnlocked)
-            {
-                stageButtonGo.SetActive(false);
-            }
+            //if (!stage.Value.isUnlocked)
+            //{
+            //    stageButtonGo.SetActive(false);
+            //}
         }
     }
 
@@ -365,14 +369,16 @@ public class StageUIManager : MonoBehaviour
             var stageButton = stageButtonGo.GetComponent<Button>();
             stageButton.onClick.AddListener(()=>
             {
-                if(stage.Value.isUnlocked)
-                {
-                    SetStageInfoWindow();
-                }
-                else
-                {
-                    SetLockedPopUpWinodw();
-                }
+                SetStageInfoWindow();
+
+                //if (stage.Value.isUnlocked)
+                //{
+                //    SetStageInfoWindow();
+                //}
+                //else
+                //{
+                //    SetLockedPopUpWinodw();
+                //}
             });
         }
     }
@@ -585,16 +591,20 @@ public class StageUIManager : MonoBehaviour
             switch(systemType)
             {
                 case SystemForUnlock.Gacha:
-                    if(systems[i]) // 해금 됐으면
-                    {
-                        gachaUnLockPanel.SetActive(false);
-                    }
+                    gachaUnLockPanel.SetActive(false);
+
+                    //if (systems[i]) // 해금 됐으면
+                    //{
+                    //    gachaUnLockPanel.SetActive(false);
+                    //}
                     break;
                 case SystemForUnlock.Affection:
-                    if (systems[i]) // 해금 됐으면
-                    {
-                        affectionLockPanel.SetActive(false);
-                    }
+                    affectionLockPanel.SetActive(false);
+
+                    //if (systems[i]) // 해금 됐으면
+                    //{
+                    //    affectionLockPanel.SetActive(false);
+                    //}
                     break;
             }
         }
