@@ -3,11 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //아이템 객체
+[System.Serializable]
 public class Item
 {
-	public int ID { get; set; }
-	public int InstanceID { get; set; }
-	public int Count { get; set; }
+	[HideInInspector]
+	public int id;
+	[HideInInspector]
+	public int instanceID;
+	public int count;
+
+	public int ID { get { return id; } set { id = value; } }
+	public int InstanceID { get { return instanceID; } set { instanceID = value; } }
+	public int Count { get { return count; } set { count = value; } }
+
+	[SerializeField]
+	private string itemName; // 새로운 private 필드 추가
 	public string Name 
 	{ 
 		get
@@ -16,6 +26,13 @@ public class Item
 			var nameID = DataTableMgr.GetTable<ItemInfoTable>().GetItemData(ID).NameStringID;
             var name = stringTable.GetString(nameID);
 			return name;
+		}
+		set
+		{
+			itemName = value;
+			var stringTable = DataTableMgr.GetTable<StringTable>();
+			var nameID = DataTableMgr.GetTable<ItemInfoTable>().GetItemData(ID).NameStringID;
+			itemName = stringTable.GetString(nameID);
 		}
 	}
 

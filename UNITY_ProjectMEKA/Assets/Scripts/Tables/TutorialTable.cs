@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using UnityEngine;
-using System.Diagnostics;
 
 public class TutorialTable : DataTable
 {

@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemUsePanel : MonoBehaviour
+public class ItemUsePanel: MonoBehaviour
 {
     public Button image;
     public TextMeshProUGUI selectCount;
