@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,6 +38,9 @@ public class ItemAutoQuantityCard : MonoBehaviour
 		if (item != null)
 		{
 			SetItem(item, quantity);
+			var itemTable = DataTableMgr.GetTable<ItemInfoTable>();
+			var data = itemTable.GetItemData(id);
+			itemImage.sprite = Resources.Load<Sprite>(data.ImagePath);
 		}
 		else
 		{
@@ -63,7 +67,7 @@ public class ItemAutoQuantityCard : MonoBehaviour
 		requiredQuantity = quantity;
 		selectedQuantity = item.Count;
 
-		if(mainText!= null)
+		if (mainText!= null)
 		{
 			mainText.SetText(item.Name);
 		}
