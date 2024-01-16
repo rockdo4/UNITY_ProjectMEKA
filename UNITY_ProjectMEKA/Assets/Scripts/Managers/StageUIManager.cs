@@ -71,7 +71,9 @@ public class StageUIManager : MonoBehaviour
     public Button tutorialButton;
     public List<Sprite> loadingChatacterImage;
     public Image loadingCharacter;
-
+    private bool easterEgg = false;
+    public GameObject easterEggImage;
+    private float timer;
     private void Awake()
     {
         PlayDataManager.Init();
@@ -87,9 +89,41 @@ public class StageUIManager : MonoBehaviour
         SetSystemButtonsByUnlock();
         SetSystemButtonEvents();
 	}
-
+    
     private void Update()
     {
+        if(Input.touchCount == 5)
+        {
+            foreach (Touch touch in Input.touches)
+            {
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    if (touch.deltaPosition.y < 0)
+                    {
+                        easterEgg = true;
+                    }
+                }
+            }
+        }
+        if(easterEgg)
+        {
+            EasterEgg();
+        }
+        if(easterEggImage.activeSelf)
+        {
+            timer += Time.deltaTime;
+            if(timer > 1.5f)
+            {
+                timer = 0;
+                easterEggImage.SetActive(false);
+            }
+        }
+
+    }
+    private void EasterEgg()
+    {
+        easterEggImage.SetActive(true);
+        easterEgg = false;
     }
 
     public void SetSystemButtonEvents()

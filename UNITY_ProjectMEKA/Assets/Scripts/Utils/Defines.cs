@@ -95,11 +95,11 @@ public static class Defines
     public enum EnemyType
     {
         None,
-        Monster,//�⺻������ ������
-        LongDistance,//���Ÿ���
-        Offensive,//������
-        OhYaBung,//���ߺ�||����
-        YangSehyung,//�缼��
+        Monster,
+        LongDistance,
+        Offensive,
+        OhYaBung,
+        YangSehyung,
     }
     public enum HouseType
     {

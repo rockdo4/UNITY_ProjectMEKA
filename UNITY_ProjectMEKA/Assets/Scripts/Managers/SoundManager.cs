@@ -31,7 +31,7 @@ public class SoundManager : MonoBehaviour
     public bool muteVolum;
     private void Awake()
     {
-        if (instance != null && instance != this)//한개만 존재하도록 수정
+        if (instance != null && instance != this)
         {
             Destroy(gameObject); 
             return;
