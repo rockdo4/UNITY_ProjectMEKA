@@ -729,7 +729,10 @@ public class IngameStageUIManager : MonoBehaviour
                     break;
             }
             SetItemInfo(id, itemInfo);
-            stageManager.rewardList.Add((id, count));
+            if(id != 100)
+            {
+                stageManager.rewardList.Add((id, count));
+            }
         }
     }
 

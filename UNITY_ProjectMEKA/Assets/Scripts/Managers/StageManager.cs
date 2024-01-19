@@ -170,19 +170,17 @@ public class StageManager : MonoBehaviour
             {
                 StageDataManager.Instance.selectedStageDatas[stageData.NextStageID].isUnlocked = true;
             }
-            for (int i = 0; i < rewardList.Count; ++i)
-            {
-                ItemInventoryManager.Instance.AddRewardByID(rewardList[i].Item1, rewardList[i].Item2);
-            }
         }
         else if(tempClearCount > stageSaveData.clearScore)
         {
             stageSaveData.clearScore = tempClearCount;
-            for (int i = 1; i < rewardList.Count; ++i)
-            {
-                ItemInventoryManager.Instance.AddRewardByID(rewardList[i].Item1, rewardList[i].Item2);
-            }
         }
+
+        for (int i = 0; i < rewardList.Count; ++i)
+        {
+            ItemInventoryManager.Instance.AddRewardByID(rewardList[i].Item1, rewardList[i].Item2);
+        }
+
         StageDataManager.Instance.UpdatePlayData();
     }
 
