@@ -40,7 +40,10 @@ public class ItemCheat : MonoBehaviour
 	private void Start()
 	{
 		inven = ItemInventoryManager.Instance.m_ItemStorage;
-	}	
+
+		ItemInventoryManager.Instance.AddRewardByID(5920001, 100000);
+
+    }	
 
 	// 버튼이 눌렸을 때 실행될 함수
 	public void RunFunction()

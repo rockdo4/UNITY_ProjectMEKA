@@ -105,19 +105,19 @@ public class StageUIManager : MonoBehaviour
                 }
             }
         }
-        if(easterEgg)
-        {
-            EasterEgg();
-        }
-        if(easterEggImage.activeSelf)
-        {
-            timer += Time.deltaTime;
-            if(timer > 1.5f)
-            {
-                timer = 0;
-                easterEggImage.SetActive(false);
-            }
-        }
+        //if(easterEgg)
+        //{
+        //    EasterEgg();
+        //}
+        //if(easterEggImage.activeSelf)
+        //{
+        //    timer += Time.deltaTime;
+        //    if(timer > 1.5f)
+        //    {
+        //        timer = 0;
+        //        easterEggImage.SetActive(false);
+        //    }
+        //}
 
     }
     private void EasterEgg()
